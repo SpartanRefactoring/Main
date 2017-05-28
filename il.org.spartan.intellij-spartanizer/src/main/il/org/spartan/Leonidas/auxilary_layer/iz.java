@@ -433,4 +433,8 @@ public enum iz {
     public static boolean optional(Encapsulator e) {
         return e instanceof Optional;
     }
+
+    public static boolean modifierListOwner(PsiElement e) {
+        return typeCheck(PsiModifierListOwner.class, e);
+    }
 }

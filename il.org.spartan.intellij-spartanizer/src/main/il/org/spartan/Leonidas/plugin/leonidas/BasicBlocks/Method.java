@@ -2,22 +2,20 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
-import il.org.spartan.Leonidas.auxilary_layer.az;
-import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * @author Sharon
  * @since 13.5.17
  */
-public class Method extends GenericEncapsulator {
-    public static final String TEMPLATE = "method";
-    Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
-
+public class Method extends ModifiableElement {
+    private static final String TEMPLATE = "method";
+    private Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
 
     public Method(Encapsulator e) {
         super(e, TEMPLATE);
@@ -44,6 +42,7 @@ public class Method extends GenericEncapsulator {
     public boolean generalizes(Encapsulator e) {
         if (!super.generalizes(e) || !iz.method(e.getInner())) return false;
         PsiMethod m = az.method(e.getInner());
+
         return matcherReturnType.match(m.getReturnTypeElement()) &&
                 matcherParameters.match(m.getParameterList()) &&
                 matcherCodeBlock.match(m.getBody());
@@ -61,13 +60,5 @@ public class Method extends GenericEncapsulator {
         m.matcherParameters = new Matcher(Utils.wrapWithList(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getParameterList())), map);
         m.matcherCodeBlock = new Matcher(Utils.wrapWithList(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getBody())), map);
         return m;
-    }
-
-    /* Constraints Methods */
-
-    public void startsWith(Object o) {
-        if (o instanceof String) {
-            addConstraint(e -> az.method(e.inner).getName().startsWith((String) o));
-        }
     }
 }
