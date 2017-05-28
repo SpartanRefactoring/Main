@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
  * @author Dor Ma'ayan
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
-public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclaration>//
+public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x3523CE8186A3EAECL;
 
@@ -44,13 +44,20 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int i = 0;
         for (final SingleVariableDeclaration ¢ : $) {
-          SimpleName n = d.getAST().newSimpleName(¢.getType().toString() + i++);
-          while (getAll.names(d.getBody()).contains(n))
-            n.setIdentifier(¢.getType().toString() + i++);
+          SimpleName n = d.getAST().newSimpleName(¢.getType().toString().split("<")[0].toLowerCase() + i++);
+          while (checkContains(getAll.names(d), n))
+            n.setIdentifier(¢.getType().toString() + (i++));
           misc.rename(¢.getName(), n, d, r, g);
         }
       }
     }.spanning(d);
+  }
+  static boolean checkContains(List<SimpleName> names, SimpleName name) {
+    for (SimpleName n : names) {
+      if (n.getIdentifier().equals(name.getIdentifier()))
+        return true;
+    }
+    return false;
   }
   static String prefix(final Type ¢) {
     return abbreviate.it(¢);

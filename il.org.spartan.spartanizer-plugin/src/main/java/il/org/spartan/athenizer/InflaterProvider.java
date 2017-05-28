@@ -66,10 +66,10 @@ public class InflaterProvider extends OperationsProvider {
         .add(MethodInvocation.class, //
             new OutlineTernaryMethodInvocation(), //
             null) //
-        .add(MethodDeclaration.class, //
-            new MethodDeclarationNameExpander(),
-            // //new AddModifiersToMethodDeclaration(), //
-            null) //
+//        .add(MethodDeclaration.class, //
+//            new MethodDeclarationNameExpander(),
+//            // //new AddModifiersToMethodDeclaration(), //
+//            null) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryBloater(), //
             null) //

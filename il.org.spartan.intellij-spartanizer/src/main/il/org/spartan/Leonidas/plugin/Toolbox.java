@@ -3,10 +3,13 @@ package il.org.spartan.Leonidas.plugin;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -21,11 +24,12 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.reflect.Modifier.isAbstract;
 
 /**
- * @author Oren Afek, michalcohen, Amir Sagiv
+ * @author Oren Afek, michalcohen, Amir Sagiv, Roey Maor
  * @since 01-12-2016
  */
 public class Toolbox implements ApplicationComponent {
@@ -164,9 +168,27 @@ public class Toolbox implements ApplicationComponent {
                 .findFirst()
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
     }
-
+    /*This should work on any tree!*/
     public void executeSingleTipper(PsiElement e, String tipperName){
-        return;
+        Tipper tipper = getTipperByName(tipperName);
+        if(tipper == null) {System.out.println("\nNull tipper!\n"); return;}
+        if(e == null) {System.out.println("\nNull element!\n"); return;}
+
+        Wrapper<PsiElement> toReplace = new Wrapper<>(null);
+        Wrapper<Boolean> modified = new Wrapper<>(false);
+        e.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitElement(PsiElement el) {
+                super.visitElement(el);
+                if(modified.get()){return;}
+                if(tipper.canTip(el)){
+                    toReplace.set(el);
+                    modified.set(true);
+                }
+            }
+        });
+        assert(modified.get());
+        tipper.tip(toReplace.get()).go(new PsiRewrite());
     }
 
     /**
@@ -191,7 +213,7 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public Tipper getTipperByName(String name){
-        Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name()==name).findFirst();
+        Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
         if(res.isPresent()){
             return res.get();
         }

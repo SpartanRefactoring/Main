@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 /**
  * @author michalcohen
@@ -19,7 +20,7 @@ public class AnyNumberOfTest extends PsiTypeHelper {
 
     public void testGetNumberOfOccurrences() throws Exception {
         Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("anyNumberOf(statement(1));"));
-        AnyNumberOf ano = new AnyNumberOf().create(n.getChildren().get(0));
+        AnyNumberOf ano = new AnyNumberOf().create(n.getChildren().get(0), new HashMap<>());
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}"));
         EncapsulatorIterator it = e.iterator();
         assertEquals(ano.getNumberOfOccurrences(it), 1);

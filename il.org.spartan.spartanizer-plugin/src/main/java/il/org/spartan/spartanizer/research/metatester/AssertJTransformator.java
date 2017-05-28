@@ -7,6 +7,8 @@ import java.util.regex.*;
 
 import fluent.ly.*;
 
+import static il.org.spartan.spartanizer.research.metatester.MetaTesterStringUtils.getTemplatedValues;
+
 /** @author Oren Afek
  * @since 19.5.17 */
 public class AssertJTransformator {
@@ -26,14 +28,7 @@ public class AssertJTransformator {
   private static String getReplacerString(final String replacePattern, final String[] args) {
     return String.format(replacePattern, (Object[]) args);
   }
-  private static String[] getTemplatedValues(final String s, final String pattern) {
-    final Matcher m = Pattern.compile(pattern).matcher(s);
-    final List<String> $ = new ArrayList<>();
-    // m.find();
-    for (int ¢ = 1; ¢ <= m.groupCount() && m.matches(); ++¢)
-      $.add(m.group(¢));
-    return $.toArray(new String[$.size()]);
-  }
+  
   static String replace(final String $, final String matchPattern, final String replacePattern) {
     try {
       return replace($, matchPattern, replacePattern, naturalsByTemplateString(replacePattern));

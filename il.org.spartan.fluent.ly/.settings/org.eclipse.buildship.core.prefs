@@ -8,4 +8,4 @@ containers=org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debu
 derived.resources=.gradle,build
 eclipse.preferences.version=1
 natures=org.eclipse.jdt.core.javanature
-project.path=\:fluent.ly
+project.path=\:il.org.spartan.fluent.ly

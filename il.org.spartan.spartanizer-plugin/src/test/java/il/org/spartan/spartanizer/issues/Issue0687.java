@@ -43,9 +43,6 @@ public class Issue0687 {
   @Test public void testGetEmpty() {
     assert getAll.names((Block) make.ast("{}")).isEmpty();
   }
-  @Test public void testGetNull() {
-    azzert.isNull(getAll.names(null));
-  }
   @Test public void testGetOneNameSize() {
     assert getAll.names((Block) make.ast("{a=1+1;}")).size() == 1;
   }
