@@ -222,9 +222,11 @@ public interface type {
       static final long serialVersionUID = -0x702EDE52D8CBFF3AL;
       {
         for (Certain ¢ : Certain.values()) {
-          put(¢.unboxed, ¢);
-          put(¢.boxed, ¢);
-          put("java.lang." + ¢.boxed, ¢);
+          ¢.unboxed.ifPresent(s->put(s,¢));
+          ¢.boxed.ifPresent(s->{
+            put(s, ¢);
+            put("java.lang." + s, ¢);
+          });
         }
       }
     };
@@ -552,13 +554,13 @@ public interface type {
       , STRING(null, "must be string: \"\"+a, a.toString(), f()+null, not f()+g()", "String")//
       ;
       final String description;
-      final String unboxed;
-      final String boxed;
+      final Optional<String> unboxed;
+      final Optional<String> boxed;
 
       Certain(final String unboxed, final String description, final String boxed) {
-        this.unboxed = unboxed;
+        this.unboxed = Optional.ofNullable(unboxed);
         this.description = description;
-        this.boxed = boxed;
+        this.boxed = Optional.of(boxed);
       }
       @Override public Certain asPrimitiveCertain() {
         return this;
@@ -573,7 +575,7 @@ public interface type {
         return description;
       }
       @Override public String key() {
-        return unboxed == null ? boxed : unboxed;
+        return unboxed.isPresent() ? unboxed.get() : boxed.get();
       }
       @Override public Iterable<Certain> options() {
         return a.singleton.list(this);
