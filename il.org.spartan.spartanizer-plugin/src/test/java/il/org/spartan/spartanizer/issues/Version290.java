@@ -75,12 +75,12 @@ public class Version290 {
   /** Introduced by Yogi on Wed-Apr-12-11:06:45-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta6FinalAbNewAaIntc2dccacca() {
-    trimmingOf("int a = 6; final A b = new A(a); int c = 2 + d; c(c + a); c(c * a);") //
+    trimmingOf("int a = 6; final A b = new A(a); int c = 2 + d; c(a+c); c(c * a);") //
         .using(new LocalInitializedUnusedRemove(), VariableDeclarationFragment.class) //
-        .gives("int a=6;new A(a);int c=2+d;c(c+a);c(c*a);") //
+        .gives("int a=6;new A(a);int c=2+d;c(a+c);c(c*a);") //
         .using(new InfixMultiplicationSort(), InfixExpression.class) //
-        .gives("int a=6;new A(a);int c=2+d;c(c+a);c(a*c);") //
-        .gives("int a=6;new A(a);int c=d+2;c(c+a);c(a*c);") //
+        .gives("int a=6;new A(a);int c=2+d;c(a+c);c(a*c);") //
+        .gives("int a=6;new A(a);int c=d+2;c(a+c);c(a*c);") //
         .stays() //
     ;
   }

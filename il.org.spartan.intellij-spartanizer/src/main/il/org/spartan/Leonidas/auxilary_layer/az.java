@@ -123,4 +123,8 @@ public enum az {
     public static PsiDocComment javadoc(PsiElement e){
         return e == null || !iz.javadoc(e) ? null : (PsiDocComment) e;
     }
+
+    public static PsiModifierListOwner modifierListOwner(PsiElement e) {
+        return e != null && !iz.modifierListOwner(e) ? null : (PsiModifierListOwner) e;
+    }
 }

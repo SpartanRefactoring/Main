@@ -1,6 +1,10 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sharon KL & Michal Cohen & Oren Afek
@@ -33,7 +37,7 @@ public class BooleanLiteral extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         return new BooleanLiteral(e);
     }
 }
