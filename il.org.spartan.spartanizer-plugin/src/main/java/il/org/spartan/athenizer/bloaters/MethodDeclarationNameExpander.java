@@ -44,7 +44,7 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int i = 0;
         for (final SingleVariableDeclaration ¢ : $) {
-          SimpleName n = d.getAST().newSimpleName(¢.getType().toString().toLowerCase() + i++);
+          SimpleName n = d.getAST().newSimpleName(¢.getType().toString().split("<")[0].toLowerCase() + i++);
           while (checkContains(getAll.names(d), n))
             n.setIdentifier(¢.getType().toString() + (i++));
           misc.rename(¢.getName(), n, d, r, g);
