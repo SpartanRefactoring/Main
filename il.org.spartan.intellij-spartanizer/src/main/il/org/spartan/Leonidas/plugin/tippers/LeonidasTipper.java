@@ -71,8 +71,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             public void go(PsiRewrite r) {
                 if (canTip(node)) {
                     Wrapper<Integer> i = new Wrapper<>(0);
+                    PsiJavaFile f = getPsiTreeFromString(file.getName(), file.getText());
                     Map<Integer, List<PsiElement>> map = matcher.extractInfo(node, i);
                     replace(node, map, i.get(), r);
+                    file = f;
                 }
             }
         };
@@ -92,16 +94,11 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, Integer numberOfRoots, PsiRewrite r) {
         List<PsiElement> elements = getReplacingForest(m, r);
         PsiElement prev = treeToReplace.getPrevSibling();
-        while(prev != null && iz.whiteSpace(prev)){
-            prev = prev.getPrevSibling();
-        }
         PsiElement last = treeToReplace;
         for (int i = 1; i < numberOfRoots; i++){
             last = last.getNextSibling();
         }
         PsiElement parent = treeToReplace.getParent();
-        r.deleteByRange(parent, treeToReplace, last);
-        //parent.deleteChildRange(treeToReplace, last);
         if (prev == null){
             prev = parent.getFirstChild();
             for (PsiElement element : elements){
@@ -112,7 +109,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 r.addAfter(parent, prev, element);
             }
         }
-
+        r.deleteByRange(parent, treeToReplace, last);
     }
 
     /**
@@ -195,7 +192,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the generic tree representing the "from" template
      */
     private List<Encapsulator> getReplacerRootTree() {
-        PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
+        PsiMethod replacer = getInterfaceMethod("replacer");
         giveIdToStubElements(replacer);
         return getForestFromMethod(replacer);
     }

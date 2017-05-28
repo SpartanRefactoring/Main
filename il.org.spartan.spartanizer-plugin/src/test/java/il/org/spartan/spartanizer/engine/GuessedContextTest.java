@@ -93,7 +93,7 @@ public final class GuessedContextTest {
   }
   @Test public void e03() {
     trimmingOf("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
-        .gives("/* * This is a comment */ int i = 5, j = 3; int k = j+2, m = k + j -19; y(2*m - k/m + i);");
+        .gives("/* * This is a comment */ int i=5,j=3;int k=j+2,m=k+j-19;y(i+(m*2-k/m));");
   }
   @Test public void e10() {
     trimmingOf(

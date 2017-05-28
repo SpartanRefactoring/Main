@@ -21,9 +21,11 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
-/** An interface for fluent api, used to determine the __ of an expression from
- * it's structure and context. Use __.get to find the __ of an expression.
+/** An interface for fluent api, used to determine the type of an expression
+ * from it's structure and context. Use type.get to find the type of an
+ * expression.
  * @author Yossi Gil
  * @author Dor Maayan
  * @author Niv Shalmon
@@ -47,11 +49,11 @@ public interface type {
     }
   };
 
-  /** adds a new __ to the system */
+  /** adds a new type to the system */
   static inner.implementation baptize(final String name) {
     return baptize(name, "anonymously born");
   }
-  /** adds a new __ to the system, with fitting description */
+  /** adds a new type to the system, with fitting description */
   static inner.implementation baptize(final String name, final String description) {
     return have(name) ? bring(name) : new inner.implementation() {
       @Override public String description() {
@@ -65,12 +67,12 @@ public interface type {
       }
     }.join();
   }
-  /** @return the __ object with a given name, or null if no such name exists in
-   *         the system */
+  /** @return the type object with a given name, or null if no such name exists
+   *         in the system */
   static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
-  /** @return whether a __ with a given name exists in the system */
+  /** @return whether a type with a given name exists in the system */
   static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
@@ -87,8 +89,8 @@ public interface type {
     return type.of(¢) == LONG;
   }
   /** @param x JD
-   * @return {@code true} <i>if</i> the parameter is an expression whose __ is
-   *         provably not of __ {@link String}, in the sense used in applying
+   * @return {@code true} <i>if</i> the parameter is an expression whose type is
+   *         provably not of type {@link String}, in the sense used in applying
    *         the {@code +} operator to concatenate strings. If returns true, can
    *         safely assume that {@code +} is used for addition in this
    *         context */
@@ -130,7 +132,7 @@ public interface type {
     return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
   }
   // TODO Matteo: Nano-pattern of values: not implemented
-  /** @return the __ object of the expression */
+  /** @return the type object of the expression */
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }
@@ -154,8 +156,8 @@ public interface type {
   default boolean isAlphaNumeric() {
     return is.in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
-  /** @return whethereither a Primitive.Certain, Primitive.Odd.NULL or a
-   *         baptized __ */
+  /** @return whether either a Primitive.Certain, Primitive.Odd.NULL or a
+   *         baptized type */
   default boolean isCertain() {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
@@ -171,13 +173,14 @@ public interface type {
   default boolean isNumeric() {
     return is.in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
-  /** @return the formal name of this __, the key under which it is stored in
+  /** @return the formal name of this type, the key under which it is stored in
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
 
-  /** An interface with one method- __, overloaded for many different parameter
-   * types. Can be used to find the __ of an expression thats known at compile
-   * time by using overloading. Only use for testing, mainly for testing of __.
+  /** An interface with one method- type, overloaded for many different
+   * parameter types. Can be used to find the type of an expression thats known
+   * at compile time by using overloading. Only use for testing, mainly for
+   * testing of type.
    * @author Niv Shalmon
    * @since 2016 */
   @SuppressWarnings("unused")
@@ -216,9 +219,20 @@ public interface type {
 
   enum inner {
     ;
-    private static final String propertyName = "spartan __";
-    /** All __ that were ever born , as well as all primitive types */
-    static final Map<String, implementation> types = new LinkedHashMap<>();
+    private static final String propertyName = "spartan type";
+    /** All type that were ever born , as well as all primitive types */
+    static final Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
+      static final long serialVersionUID = -0x702EDE52D8CBFF3AL;
+      {
+        for (Certain ¢ : Certain.values()) {
+          ¢.unboxed.ifPresent(λ -> put(λ, ¢));
+          ¢.boxed.ifPresent(λ -> {
+            put(λ, ¢);
+            put("java.lang." + λ, ¢);
+          });
+        }
+      }
+    };
 
     private static implementation get(final Expression ¢) {
       return (implementation) (property.has(¢, propertyName) ? property.get(¢, propertyName) : property.set(¢, propertyName, lookUp(¢, lookDown(¢))));
@@ -245,6 +259,10 @@ public interface type {
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
+    private static implementation lookDown(final SimpleName ¢){
+      Namespace $ = Environment.of(¢);
+      return !$.has(¢.getIdentifier()) ? NOTHING : (implementation) $.get(¢.getIdentifier()).getType();
+    }
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
@@ -260,27 +278,29 @@ public interface type {
         case STRING_LITERAL:
           return STRING;
         case ASSIGNMENT:
-          return lookDown((Assignment) ¢);
+          return lookDown(az.assignment(¢));
         case CAST_EXPRESSION:
-          return lookDown((CastExpression) ¢);
+          return lookDown(az.castExpression(¢));
         case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) ¢);
+          return lookDown(az.classInstanceCreation(¢));
         case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) ¢);
+          return lookDown(az.conditionalExpression(¢));
         case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) ¢);
+          return lookDown(az.infixExpression(¢));
         case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) ¢);
+          return lookDown(az.methodInvocation(¢));
         case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) ¢);
+          return lookDown(az.numberLiteral(¢));
         case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) ¢);
+          return lookDown(az.parenthesizedExpression(¢));
         case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) ¢);
+          return lookDown(az.postfixExpression(¢));
         case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) ¢);
+          return lookDown(az.prefixExpression(¢));
         case VARIABLE_DECLARATION_EXPRESSION:
-          return lookDown((VariableDeclarationExpression) ¢);
+          return lookDown(az.variableDeclarationExpression(¢));
+        case SIMPLE_NAME:
+          return lookDown(az.simpleName(¢));
         default:
           return NOTHING;
       }
@@ -312,11 +332,23 @@ public interface type {
     private static implementation lookDown(final VariableDeclarationExpression ¢) {
       return baptize(step.type(¢) + "");
     }
+    /**
+     * performs the lookup process for InfixExpressions. 
+     */
+    private static implementation lookup(final InfixExpression x, final implementation i, final InfixExpression.Operator o) {
+      final implementation $ = i.aboveBinaryOperator(o);
+      if (o != op.PLUS2)
+        return $;
+      ASTNode context = x.getParent();
+      while (context!= null && iz.parenthesizedExpression(context))
+        context = context.getParent();
+      return context == null || !iz.infixExpression(context) ? $ : lookup(az.infixExpression(context), $, az.infixExpression(context).getOperator());
+    }
     /** @param x JD
-     * @param i most specific __ information already known, usually from
+     * @param i most specific type information already known, usually from
      *        lookdown
-     * @return most spefici __ information for x, based on the currently known
-     *         __ information and the context in which x appears */
+     * @return most spefici type information for x, based on the currently known
+     *         type information and the context in which x appears */
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
@@ -331,7 +363,7 @@ public interface type {
             case POSTFIX_EXPRESSION:
               return i.asNumeric();
             case INFIX_EXPRESSION:
-              return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+              return lookup(az.infixExpression(context),i,az.infixExpression(context).getOperator());
             case PREFIX_EXPRESSION:
               return i.above(az.prefixExpression(context).getOperator());
             case ASSERT_STATEMENT:
@@ -351,7 +383,7 @@ public interface type {
 
     // an interface for inner methods that shouldn'tipper be public
     private interface implementation extends type {
-      /** To be used to determine the __ of something that o was used on
+      /** To be used to determine the type of something that o was used on
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
@@ -392,7 +424,7 @@ public interface type {
       default implementation asNumericUnderOperation() {
         return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
       }
-      /** used to determine whether an integral __ behaves as itself under
+      /** used to determine whether an integral type behaves as itself under
        * operations or as an INT.
        * @return whether one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
        *         false otherwise. */
@@ -405,11 +437,11 @@ public interface type {
         return is.in(this, NOTHING, NULL);
       }
       default implementation join() {
-        assert !have(key()) : "fault: the dictionary should not have __ " + key() + "\n receiver is " + this + "\n This is all I know";
+        assert !have(key()) : "fault: the dictionary should not have type " + key() + "\n receiver is " + this + "\n This is all I know";
         inner.types.put(key(), this);
         return this;
       }
-      /** To be used to determine the __ of the result of o being used on the
+      /** To be used to determine the type of the result of o being used on the
        * caller
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
@@ -500,7 +532,7 @@ public interface type {
     enum Types implements Odd {
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
       /** TOOD: Dor, take note that in certain situations, null could be a
-       * {@link Boolean} __ */
+       * {@link Boolean} type */
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       ;
       private final String description;
@@ -519,11 +551,11 @@ public interface type {
     }
   }
 
-  /** Primitive __ or a set of primitive types
+  /** Primitive type or a set of primitive types
    * @author Yossi Gil
    * @since 2016 */
   interface Primitive extends inner.implementation {
-    /** @return All {@link Certain} types that an expression of this __ can
+    /** @return All {@link Certain} types that an expression of this type can
      *         be **/
     Iterable<Certain> options();
 
@@ -540,17 +572,16 @@ public interface type {
       , INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()", "Integer")//
       , LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()", "Long")//
       , SHORT("short", "must be short: (short)15, nothing else", "Short")//
-      , STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()", null)//
+      , STRING(null, "must be string: \"\"+a, a.toString(), f()+null, not f()+g()", "String")//
       ;
       final String description;
-      final String key;
+      final Optional<String> unboxed;
+      final Optional<String> boxed;
 
-      Certain(final String key, final String description, final String s) {
-        this.key = key;
+      Certain(final String unboxed, final String description, final String boxed) {
+        this.unboxed = Optional.ofNullable(unboxed);
         this.description = description;
-        inner.types.put(key, this);
-        if (s != null)
-          inner.types.put(s, this);
+        this.boxed = Optional.of(boxed);
       }
       @Override public Certain asPrimitiveCertain() {
         return this;
@@ -565,14 +596,14 @@ public interface type {
         return description;
       }
       @Override public String key() {
-        return key;
+        return (!unboxed.isPresent() ? boxed : unboxed).get();
       }
       @Override public Iterable<Certain> options() {
         return a.singleton.list(this);
       }
     }
 
-    /** A set of {@link Primitive.Certain} types, where the expressions __
+    /** A set of {@link Primitive.Certain} types, where the expressions type
      * cannot be determined for certain
      * @author Yossi Gil
      * @author Niv Shalmon
@@ -605,4 +636,4 @@ public interface type {
       }
     }
   }
-} // end of interface __
+} // end of interface type

@@ -12,6 +12,7 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.tipping.TipperCategory;
 import org.apache.commons.io.IOUtils;
+import org.eclipse.swt.internal.win32.TOOLINFO;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +42,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
                 new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
                     @Override
                     protected void run() throws Throwable {
-                        if (!Toolbox.getInstance().playground) {
+                        if ( (!Toolbox.getInstance().playground) && (!Toolbox.getInstance().testing) ) {
                             createEnvironment(e);
                         }
                         e.replace(e_tag);

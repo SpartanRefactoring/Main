@@ -1,9 +1,5 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import com.intellij.psi.PsiForStatement;
-import com.intellij.psi.PsiIfStatement;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
-
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
@@ -21,7 +17,6 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     }
 
     @Override
-    @Leonidas(PsiForStatement.class)
     public void matcher() {
         new Template(() -> {
             /** start */
@@ -37,7 +32,6 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     }
 
     @Override
-    @Leonidas(PsiIfStatement.class)
     public void replacer() {
         new Template(() -> {
             /** start */
