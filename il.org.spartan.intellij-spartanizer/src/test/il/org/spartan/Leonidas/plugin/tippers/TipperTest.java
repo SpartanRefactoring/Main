@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.PsiTypeHelper;;
@@ -35,18 +36,20 @@ public class TipperTest{
     Boolean leonidasMode; //whether we are testing a leonidas or non-leonidas tipper
     PsiTypeHelper junitTest; //The junit class instance that is being tested (the one that creates a TipperTest object)
     private Boolean setup = false;
+    private Boolean printsToScreen;
 
-    TipperTest(Tipper t, PsiTypeHelper test){
+    TipperTest(Tipper t, PsiTypeHelper test, Boolean prints){
         this.tipper = t;
         this.leonidasMode = false;
         this.junitTest = test;
-
+        this.printsToScreen = prints;
     }
 
-    TipperTest(LeonidasTipperDefinition l,PsiTypeHelper test){
+    TipperTest(LeonidasTipperDefinition l,PsiTypeHelper test,Boolean prints){
         this.leonidasTipper = l;
         this.leonidasMode = true;
         this.junitTest = test;
+        this.printsToScreen = prints;
     }
 
 
@@ -70,6 +73,11 @@ public class TipperTest{
         setup = true;
     }
 
+    private void log(String s){
+        if(!printsToScreen) {return;}
+        System.out.println(s);
+    }
+
     public void check(){
         if(!setup) {
             try {
@@ -80,17 +88,40 @@ public class TipperTest{
         }
         Map<String,String> examples = getExamples();
         Toolbox toolbox = Toolbox.getInstance();
-        System.out.println(toolbox.getAllTippers().stream().map(t -> t.name()).collect(Collectors.toList()));
+        toolbox.testing = true;
+        //System.out.println(toolbox.getAllTippers().stream().map(t -> t.name()).collect(Collectors.toList()));
         for (Map.Entry<String,String> entry : examples.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             String beforeFileString = before+key+after;
             PsiFile file = junitTest.createTestFileFromString(beforeFileString);
-            System.out.println("before: \n"+file.getText()+"\n");
-            //toolbox.executeSingleTipper(file,getTipperName());
-            System.out.println("after: \n"+file.getText()+"\n");
+            Project p = file.getProject();
+            log("before: \n"+file.getText()+"\n");
+            Boolean tipperAffected = toolbox.executeSingleTipper(file,getTipperName());
+            if(!tipperAffected){
+                if(value != null) {
+                    ; //error - tipper should have affected
+                    assert(false);
+                }
+                else{
+                    ; //ok
+                }
+            }
+            else{
+                if(value == null){
+                    ;  //error - tipper should not have affected
+                    assert(false);
+                }
+                else{
+                    ; //ok
+                }
+            }
+
+            log("after: \n"+file.getText()+"\n");
 
         }
+
+        toolbox.testing = false;
     }
     private boolean byExample(String input, String output){
         if(!setup) {
