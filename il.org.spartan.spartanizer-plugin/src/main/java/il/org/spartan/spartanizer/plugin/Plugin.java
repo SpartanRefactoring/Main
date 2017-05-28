@@ -29,6 +29,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
  * @since 2015/09/06 (Updated - auto initialization of the plugin)
  * @since 2.6 (Updated - apply nature to newly opened projects) */
 public final class Plugin extends AbstractUIPlugin implements IStartup {
+  public static final String ID = "il.org.spartan.plugin";
   private static final String NEW_PROJECT = "new_project";
   private static Plugin plugin;
   private static boolean listening;

@@ -18,7 +18,7 @@ public class CleanOperation extends WidgetOperation {
   private String mode = current;
 
   @Override public String imageURL() {
-    return "platform:/plugin/org.eclipse.mylyn.commons.ui/icons/elcl16/checkboxcleared.gif";
+    return "file:/plugin/pictures/cleanIcon.png";
   }
   @Override public String description() {
     return "clean project";
