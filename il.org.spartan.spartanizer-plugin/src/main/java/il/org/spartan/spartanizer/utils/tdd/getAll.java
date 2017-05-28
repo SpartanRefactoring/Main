@@ -79,6 +79,19 @@ public enum getAll {
     });
     return $;
   }
+  public static List<SimpleName> names(final MethodDeclaration b) {
+    if (b == null)
+      return null;
+    final List<SimpleName> $ = an.empty.list();
+    // noinspection SameReturnValue
+    b.accept(new ASTVisitor(true) {
+      @Override public boolean visit(final SimpleName ¢) {
+        $.add(¢);
+        return true;
+      }
+    });
+    return $;
+  }
   /** returns a list of all instances of expressions at given method
    * @author Koby Ben Shimol
    * @author Yuval Simon
