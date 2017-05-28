@@ -54,6 +54,7 @@ public class Issue0455 {
   }
   @Test public void lambdaBodyHasMoreThenOneStatementStays() {
     trimmingOf("x -> {double y = -x + Math.PI; System.out.println(x / y); System.out.println(x / (2*y));}")//
+        .gives("x->{double y=Math.PI-x;System.out.println(x/y);System.out.println(x/(2*y));}") //
         .stays();
   }
   @Test public void nestedLambdaExpression() {
