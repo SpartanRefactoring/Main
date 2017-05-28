@@ -1,12 +1,14 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.PsiTypeHelper;;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author @roey maor
@@ -78,13 +80,14 @@ public class TipperTest{
         }
         Map<String,String> examples = getExamples();
         Toolbox toolbox = Toolbox.getInstance();
+        System.out.println(toolbox.getAllTippers().stream().map(t -> t.name()).collect(Collectors.toList()));
         for (Map.Entry<String,String> entry : examples.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             String beforeFileString = before+key+after;
-            PsiElement file = junitTest.createTestFileFromString(beforeFileString);
+            PsiFile file = junitTest.createTestFileFromString(beforeFileString);
             System.out.println("before: \n"+file.getText()+"\n");
-            toolbox.executeSingleTipper(file,getTipperName());
+            //toolbox.executeSingleTipper(file,getTipperName());
             System.out.println("after: \n"+file.getText()+"\n");
 
         }

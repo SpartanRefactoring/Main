@@ -24,11 +24,12 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.reflect.Modifier.isAbstract;
 
 /**
- * @author Oren Afek, michalcohen, Amir Sagiv
+ * @author Oren Afek, michalcohen, Amir Sagiv, Roey Maor
  * @since 01-12-2016
  */
 public class Toolbox implements ApplicationComponent {
@@ -172,20 +173,22 @@ public class Toolbox implements ApplicationComponent {
         Tipper tipper = getTipperByName(tipperName);
         if(tipper == null) {System.out.println("\nNull tipper!\n"); return;}
         if(e == null) {System.out.println("\nNull element!\n"); return;}
-        e.accept(new JavaRecursiveElementVisitor() {
-            Boolean modified = false;
 
+        Wrapper<PsiElement> toReplace = new Wrapper<>(null);
+        Wrapper<Boolean> modified = new Wrapper<>(false);
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                if(modified){return;}
-                System.out.println("\n"+tipper.name()+"\n");
-                if(tipper.canTip(e)){
-                    //tipper.tip(e).go(new PsiRewrite());
-                    modified = true;
+            public void visitElement(PsiElement el) {
+                super.visitElement(el);
+                if(modified.get()){return;}
+                if(tipper.canTip(el)){
+                    toReplace.set(el);
+                    modified.set(true);
                 }
             }
         });
+        assert(modified.get());
+        tipper.tip(toReplace.get()).go(new PsiRewrite());
     }
 
     /**
@@ -210,7 +213,7 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public Tipper getTipperByName(String name){
-        Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name()==name).findFirst();
+        Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
         if(res.isPresent()){
             return res.get();
         }
