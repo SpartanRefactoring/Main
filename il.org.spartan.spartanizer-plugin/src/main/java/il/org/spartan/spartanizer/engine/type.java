@@ -21,6 +21,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
 /** An interface for fluent api, used to determine the type of an expression
  * from it's structure and context. Use type.get to find the type of an
@@ -258,6 +259,10 @@ public interface type {
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
+    private static implementation lookDown(final SimpleName ¢){
+      Namespace $ = Environment.of(¢);
+      return !$.has(¢.getIdentifier()) ? NOTHING : (implementation) $.get(¢.getIdentifier()).getType();
+    }
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
@@ -273,27 +278,29 @@ public interface type {
         case STRING_LITERAL:
           return STRING;
         case ASSIGNMENT:
-          return lookDown((Assignment) ¢);
+          return lookDown(az.assignment(¢));
         case CAST_EXPRESSION:
-          return lookDown((CastExpression) ¢);
+          return lookDown(az.castExpression(¢));
         case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) ¢);
+          return lookDown(az.classInstanceCreation(¢));
         case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) ¢);
+          return lookDown(az.conditionalExpression(¢));
         case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) ¢);
+          return lookDown(az.infixExpression(¢));
         case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) ¢);
+          return lookDown(az.methodInvocation(¢));
         case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) ¢);
+          return lookDown(az.numberLiteral(¢));
         case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) ¢);
+          return lookDown(az.parenthesizedExpression(¢));
         case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) ¢);
+          return lookDown(az.postfixExpression(¢));
         case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) ¢);
+          return lookDown(az.prefixExpression(¢));
         case VARIABLE_DECLARATION_EXPRESSION:
-          return lookDown((VariableDeclarationExpression) ¢);
+          return lookDown(az.variableDeclarationExpression(¢));
+        case SIMPLE_NAME:
+          return lookDown(az.simpleName(¢));
         default:
           return NOTHING;
       }
