@@ -170,13 +170,19 @@ public class Toolbox implements ApplicationComponent {
     /*This should work on any tree!*/
     public void executeSingleTipper(PsiElement e, String tipperName){
         Tipper tipper = getTipperByName(tipperName);
-        if(tipper == null) {return;}
+        if(tipper == null) {System.out.println("\nNull tipper!\n"); return;}
+        if(e == null) {System.out.println("\nNull element!\n"); return;}
         e.accept(new JavaRecursiveElementVisitor() {
+            Boolean modified = false;
+
             @Override
             public void visitElement(PsiElement e) {
                 super.visitElement(e);
+                if(modified){return;}
+                System.out.println("\n"+tipper.name()+"\n");
                 if(tipper.canTip(e)){
-                    tipper.tip(e).go(new PsiRewrite());
+                    //tipper.tip(e).go(new PsiRewrite());
+                    modified = true;
                 }
             }
         });
