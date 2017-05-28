@@ -1,7 +1,5 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import il.org.spartan.Leonidas.plugin.leonidas.LeonidasUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,17 +22,21 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     @Override
     public void matcher() {
         new Template(() -> {
+            /** start */
             if (booleanExpression(0)) {
                 statement(1);
             }
+            /** end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
+            /** start */
             if (booleanExpression(0))
                 statement(1);
+            /** end */
         });
     }
 

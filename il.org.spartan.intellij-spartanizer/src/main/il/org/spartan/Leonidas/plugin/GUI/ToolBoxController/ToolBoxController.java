@@ -7,6 +7,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
+import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
@@ -45,7 +46,7 @@ class ToolBoxController extends JFrame {
 
     public ToolBoxController() {
         super("Spartanizer ToolBox Controller");
-
+        LeonidasIcon.apply(this);
         list = new CheckBoxList();
         List<Tipper> tipsList = Toolbox.getInstance().getCurrentTippers();
         List<Tipper> allTipsList = Toolbox.getInstance().getAllTippers();

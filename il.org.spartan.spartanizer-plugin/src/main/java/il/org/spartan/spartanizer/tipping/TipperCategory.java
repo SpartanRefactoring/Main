@@ -220,7 +220,7 @@ public interface TipperCategory {
   }
 
   interface ScopeReduction extends Structural {
-    String toString = "Scope reduction";
+    String toString = "Scope reduction to the minimum necessary";
 
     @Override default String description() {
       return toString;
@@ -237,7 +237,7 @@ public interface TipperCategory {
 
   /** Use alphabetical, or some other ordering, when order does not matter */
   interface Sorting extends Idiomatic {
-    String toString = "Sorting";
+    String toString = "Sorting of Annotations and Modifiers";
 
     @Override default String description() {
       return toString;

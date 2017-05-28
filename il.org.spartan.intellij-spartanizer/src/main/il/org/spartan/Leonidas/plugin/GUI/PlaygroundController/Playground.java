@@ -7,6 +7,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
+import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Spartanizer;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 
@@ -46,6 +47,7 @@ public class Playground extends JFrame {
 
     public Playground() {
         super("Spartanizer Playground");
+        LeonidasIcon.apply(this);
         setContentPane(mainPanel);
         setPreferredSize(new Dimension(600, 600));
         setResizable(false);

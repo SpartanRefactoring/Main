@@ -387,6 +387,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.commands">
      <command id="il.org.spartan.SpartanizeSelection" name="Selection"/>
      <command id= "il.org.spartan.CentToIt" name="CentToIt"/>
+     <command id= "il.org.spartan.LongNames" name="LongNames"/>
      <command id="il.org.spartan.SpartanizeCurrent" name="Window"/>
      <command id="il.org.spartan.SpartanizeAll" name="Project"/>
      <command id="il.org.spartan.ZoomTool" name="Window"/>
@@ -415,6 +416,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.handlers">
    <handler commandId="il.org.spartan.SpartanizeSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.CentToIt" class="il.org.spartan.spartanizer.plugin.CentToParam"/>
+   <handler commandId="il.org.spartan.LongNames" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
@@ -460,7 +462,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        <command
        tooltip="Inflate"
          commandId="il.org.spartan.AthensInflate" 
-         icon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/etool16/segment_edit.png" 
+         icon="plugin/pictures/athenizer.png"
          id="il.org.spartan.plugin.toolbars.TextButton">
        </command>
        <command
@@ -576,6 +578,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Shortcuts -->
 <extension point="org.eclipse.ui.bindings">
+	<key sequence="Ctrl+Alt+G"
+		commandId="il.org.spartan.LongNames"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+4"
 		commandId="il.org.spartan.TipsToggleOnOff"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -609,16 +614,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+W"
 		commandId="il.org.spartan.SpartanWidget"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
- <key
-       commandId="il.org.spartan.ZoomIn"
-       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-       sequence="Ctrl+=">
- </key>
- <key
-       commandId="il.org.spartan.ZoomOut"
-       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-       sequence="Ctrl+-">
- </key>
 	<key sequence="Ctrl+Alt+F"
 		commandId="il.org.spartan.Linguistic"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -633,7 +628,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CleanOperation" />
-
 </extension>
 
 </plugin>
