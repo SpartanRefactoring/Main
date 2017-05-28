@@ -1,15 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
-
-import com.intellij.lang.java.JavaLanguage;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.PsiType;
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
-import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
-import il.org.spartan.Leonidas.plugin.Spartanizer;
+import il.org.spartan.Leonidas.PsiTypeHelper;;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
@@ -39,7 +31,7 @@ public class TipperTest{
     Tipper tipper = null;
     LeonidasTipperDefinition leonidasTipper = null;
     Boolean leonidasMode; //whether we are testing a leonidas or non-leonidas tipper
-    PsiTypeHelper junitTest;
+    PsiTypeHelper junitTest; //The junit class instance that is being tested (the one that creates a TipperTest object)
     private Boolean setup = false;
 
     TipperTest(Tipper t, PsiTypeHelper test){
@@ -64,6 +56,13 @@ public class TipperTest{
         return tipper.getExamples();
     }
 
+    private String getTipperName(){
+        if(leonidasMode){
+            return leonidasTipper.getClass().getSimpleName();
+        }
+        return tipper.name();
+    }
+
     private void setUp(){
         if(setup) return;
         setup = true;
@@ -78,16 +77,17 @@ public class TipperTest{
             }
         }
         Map<String,String> examples = getExamples();
+        Toolbox toolbox = Toolbox.getInstance();
         for (Map.Entry<String,String> entry : examples.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             String beforeFileString = before+key+after;
-            System.out.println(beforeFileString);
-            PsiElement beforeElement = junitTest.createTestFileFromString(beforeFileString);
-            //System.out.println(beforeElement.getText());
+            PsiElement file = junitTest.createTestFileFromString(beforeFileString);
+            System.out.println("before: \n"+file.getText()+"\n");
+            toolbox.executeSingleTipper(file,getTipperName());
+            System.out.println("after: \n"+file.getText()+"\n");
 
         }
-        //Spartanizer.spartanizeElementWithTipper(null,"lala");
     }
     private boolean byExample(String input, String output){
         if(!setup) {
