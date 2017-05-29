@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 
@@ -9,13 +10,11 @@ import java.util.Map;
 
 /**
  * @author Sharon LK
+ *
+ * //TODO fix like method
  */
-public class FieldDeclaration extends GenericMethodCallBasedBlock {
-    public static final String TEMPLATE = "fieldDeclaration";
-
-    public FieldDeclaration(PsiElement e) {
-        super(e, TEMPLATE);
-    }
+public class FieldDeclaration extends ModifiableElement {
+    public static final String TEMPLATE = "field";
 
     public FieldDeclaration(Encapsulator n) {
         super(n, TEMPLATE);
@@ -26,7 +25,16 @@ public class FieldDeclaration extends GenericMethodCallBasedBlock {
      */
     @SuppressWarnings("unused")
     protected FieldDeclaration() {
-        super(TEMPLATE);
+    }
+
+    @Override
+    public boolean conforms(PsiElement other) {
+        return iz.fieldDeclaration(other) && az.fieldDeclaration(other).getName().startsWith(TEMPLATE);
+    }
+
+    @Override
+    public Integer extractId(PsiElement e) {
+        return Integer.parseInt(az.fieldDeclaration(e).getName().substring(TEMPLATE.length()));
     }
 
     @Override

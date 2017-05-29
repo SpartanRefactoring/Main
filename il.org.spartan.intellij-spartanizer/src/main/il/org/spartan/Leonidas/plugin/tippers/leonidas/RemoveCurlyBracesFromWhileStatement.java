@@ -45,8 +45,8 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
     }
 
     @Override
-    public Map<String,String> getExamples(){
-        Map<String,String> examples = new HashMap<>();
+    public Map<String, String> getExamples() {
+        Map<String, String> examples = new HashMap<>();
         examples.put("int x=5; Object a,b; while(a.hashCode()!=x){x = b.hashCode();}","int x=5; Object a,b; while(a.hashCode()!=x) x = b.hashCode();");
         return examples;
     }
