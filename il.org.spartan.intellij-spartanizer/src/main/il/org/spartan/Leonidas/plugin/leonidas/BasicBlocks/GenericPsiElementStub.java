@@ -65,7 +65,7 @@ public class GenericPsiElementStub {
      * <p>
      * The above code example represents a union of a method and a statement.
      *
-     * @param id   the serial no to distinct between several statements in the same tipper
+     * @param id      the serial no to distinct between several statements in the same tipper
      * @param objects list of objects this union represents
      * @return Union object that allows putting constraints on the union
      */
@@ -158,6 +158,27 @@ public class GenericPsiElementStub {
      */
     public static Object optional(Object o) {
         return new Object();
+    }
+
+
+    /**
+     * Method stub representing a boolean literal, i.e. <code>"I'm Groot"</code>
+     *
+     * @param id the serial number to distinguish between several String literal in the same
+     *           tipper
+     * @return stub object (no real use)
+     */
+    public static Object stringLiteral(int id) {
+        return stringLiteral();
+    }
+
+    /**
+     * Method stub representing a boolean literal, i.e. <code>"I'm Groot"</code>
+     *
+     * @return stub object (no real use)
+     */
+    private static Object stringLiteral() {
+        return "";
     }
 
     public static Object anyNumberOf(Object o) {
