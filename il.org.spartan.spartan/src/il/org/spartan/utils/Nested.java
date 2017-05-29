@@ -12,18 +12,19 @@ public interface Nested<T> extends Duplo<T> {
     //
   }
 
-  @Override default NeighborsMerger<T> neighborsMerger() {
+  @Override default Merge<T> merge() {
+    // TODO looks buggy to me --yg
     return (self, others) -> {
       Stream<T> $ = Stream.empty();
       for (final Duplo<T> ¢ : others)
-        $ = Stream.concat(¢.neighborsStream(), selfStream());
+        $ = Stream.concat(¢.fullStream(), selfStream());
       return $;
     };
   }
 
   interface Compound<T> extends Nested<T>, Duplo.Compound<T> {
     Nested<T> parent();
-    @Override default Iterable<Duplo<T>> neighbors() {
+    @Override default Iterable<Duplo<T>> components() {
       return a.singleton.list(parent());
     }
   }
