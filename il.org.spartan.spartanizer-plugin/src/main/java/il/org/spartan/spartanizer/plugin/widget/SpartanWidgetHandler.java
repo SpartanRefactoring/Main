@@ -205,7 +205,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   }
   static Canvas createImage(final Shell s) {
     final int w = R, h = R, fixX = -10 * R / 100;
-    final Image i = Dialogs.image("file:/plugin/pictures/athenizer.png", IMAGE_ID + R, λ -> λ);
+    final Image i = Dialogs.image("file:/plugin/pictures/athenizerBig.png", IMAGE_ID + R, λ -> λ);
     final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     $.addPaintListener((final PaintEvent ¢) -> {
       ¢.gc.drawImage(i, 0, 0);
