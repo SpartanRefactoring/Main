@@ -11,6 +11,11 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
  * @author AnnaBel7
  * @since 23-12-2016
  */
+
+/*
+List<int> l = new List<>();
+l.get(l.size()-1) -> last(l);
+ */
 public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> {
 
     @SuppressWarnings("ConstantConditions")

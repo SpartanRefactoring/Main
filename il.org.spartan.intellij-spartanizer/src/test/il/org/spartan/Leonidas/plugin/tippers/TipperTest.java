@@ -147,5 +147,7 @@ public class TipperTest{
         return false;
     }
 
-
+    //wrap in class
+    //wrap in method
+    //inside a method call - expression
 }
