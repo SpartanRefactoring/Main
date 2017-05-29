@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016-09 */
 public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarationExpression>//
-    implements TipperCategory.Centification {
+    implements Nominal.Trivialization {
   private static final long serialVersionUID = -0x3270F722CF10D188L;
 
   @Override public String description(final VariableDeclarationExpression ¢) {

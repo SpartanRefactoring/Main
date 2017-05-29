@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * </code> </br>
  * @author Dor Ma'ayan
  * @since 2017-05-24 */
-public class AnonymizeAllParameters extends EagerTipper<MethodDeclaration> implements TipperCategory.NameOfResult {
+public class AnonymizeAllParameters extends EagerTipper<MethodDeclaration> implements Nominal.Result {
   private static final long serialVersionUID = 1;
 
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {

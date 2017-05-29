@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = -0x333F3DD43690324EL;
 
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
