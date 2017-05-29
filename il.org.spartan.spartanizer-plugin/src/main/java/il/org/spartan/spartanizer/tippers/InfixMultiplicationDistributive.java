@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression>
     //
-    implements TipperCategory.Arithmetics, TipperCategory.CommnonFactoring {
+    implements TipperCategory.Arithmetics.Symbolic, TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -0x381154E4E51D0081L;
 
   private static boolean IsSimpleMultiplication(final Expression $) {
