@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2017-01-22 */
 public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPattern //
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.CommonFactorOut {
   @Property Statement sequencer;
   @Property List<Statement> thenStatements;
   @Property Block block;

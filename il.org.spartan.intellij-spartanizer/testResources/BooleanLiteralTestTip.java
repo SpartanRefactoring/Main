@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import com.intellij.psi.PsiWhileStatement;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
 

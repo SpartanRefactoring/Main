@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
 public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclaration>//
-    implements TipperCategory.Abbreviation {
+    implements Nominal.Abbreviation {
   private static final long serialVersionUID = -0x259B3C93867F64ABL;
 
   static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {

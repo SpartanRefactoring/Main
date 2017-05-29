@@ -71,7 +71,7 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
   public Image image() {
     final String s = imageURL();
     final Image $ = Dialogs.image(s, s, scale());
-    return $ != null ? $ : Dialogs.image("platform:/plugin/org.eclipse.ui.intro.universal/icons/welcome16.gif", "defualt widget", λ -> λ);
+    return $ != null ? $ : Dialogs.image("file:/plugin/pictures/athenizer.png", "defualt widget", λ -> λ);
   }
   /** Scaling the image of the operation, does nothing by default.
    * @return scaler for SWT image of this operation. */

@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern//
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = 0x69CDEE55CA481121L;
   private Assignment nextAssignment;
   private ExpressionStatement nextExpressionStatement;

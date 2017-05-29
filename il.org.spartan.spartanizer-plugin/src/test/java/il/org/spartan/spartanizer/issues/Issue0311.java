@@ -88,14 +88,15 @@ public class Issue0311 {
         .stays();
   }
   @Test public void for_3a() {
-    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;}return false;}").gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;}return false;}")
+    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;}return false;}")//
+        .gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;}return false;}")//
         .gives("c(int i){for(int p=i,a=0;p<10;--a){++p;}return false;}")//
         .gives("c(int i){for(int p=i,a=0;p<10;--a)++p;return false;}")//
         .stays();
   }
   @Test public void for_3b() {
-    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;k+=p+a;}return false;}")
-        .gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;k+=p+a;}return false;}")//
+    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;k+=a+p;}return false;}")//
+        .gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;k+=a+p;}return false;}")//
         .stays();
   }
   @Test public void for_5() {

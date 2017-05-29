@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2017-05-14 */
 public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
-    implements TipperCategory.Centification {
+    implements Nominal.Trivialization {
   private static final long serialVersionUID = 0x5583F2CE00B4000L;
 
   @Override public String description(@SuppressWarnings("unused") final FieldDeclaration ¢) {

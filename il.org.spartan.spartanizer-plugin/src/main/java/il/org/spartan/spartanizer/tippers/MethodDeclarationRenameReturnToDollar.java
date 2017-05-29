@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil (v3)
  * @since 2013/01/01 */
 public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<MethodDeclaration>//
-    implements TipperCategory.NameOfResult {
+    implements Nominal.Result {
   private static final long serialVersionUID = 0x4B329AA4BF7D15AFL;
 
   @Override public String description(final MethodDeclaration ¢) {

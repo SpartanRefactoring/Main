@@ -94,9 +94,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, Integer numberOfRoots, PsiRewrite r) {
         List<PsiElement> elements = getReplacingForest(m, r);
         PsiElement prev = treeToReplace.getPrevSibling();
-        while(prev != null && iz.whiteSpace(prev)){
-            prev = prev.getPrevSibling();
-        }
         PsiElement last = treeToReplace;
         for (int i = 1; i < numberOfRoots; i++){
             last = last.getNextSibling();

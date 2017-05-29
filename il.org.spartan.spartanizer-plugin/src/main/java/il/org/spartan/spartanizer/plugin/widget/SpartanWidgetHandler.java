@@ -204,14 +204,14 @@ public class SpartanWidgetHandler extends AbstractHandler {
     c.setSize(s == null ? minimalButtonSize : new Point(Math.max(s.x, minimalButtonSize.x), Math.max(s.y, minimalButtonSize.y)));
   }
   static Canvas createImage(final Shell s) {
-    final int w = R, h = R, fixX = -10 * R / 100;
-    final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID + R, λ -> λ.scaledTo(-w, h));
+    final int w = R, h = R;
+    final Image i = Dialogs.image("file:/plugin/pictures/athenizerBig.png", IMAGE_ID + R, λ -> λ.scaledTo(w, h));
     final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     $.addPaintListener((final PaintEvent ¢) -> {
       ¢.gc.drawImage(i, 0, 0);
       $.setSize(w, h);
     });
-    $.setLocation(R / 2 - fixX + r, R / 2 + r);
+    $.setLocation(R / 2+r, R / 2+r);
     $.pack();
     return $;
   }

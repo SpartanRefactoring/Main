@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-20
  * @see issue #1110 */
 public class AssignmentAndAssignmentToSameKill extends GoToNextStatement<Assignment> //
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = -0x1E2F6B6CADD65C0DL;
 
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {

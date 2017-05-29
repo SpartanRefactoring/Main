@@ -12,7 +12,7 @@ import il.org.spartan.utils.*;
  * @since 2016/05/08 */
 public final class ParameterRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends AbstractVariableDeclarationChangeName<N>//
-    implements TipperCategory.Anonymization {
+    implements Nominal.Anonymization {
   private static final long serialVersionUID = 0x28D6776DBEFFA844L;
 
   @Override public String description(final N ¢) {
