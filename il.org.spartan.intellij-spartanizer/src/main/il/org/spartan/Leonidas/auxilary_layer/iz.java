@@ -10,6 +10,8 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 
+import java.lang.Class;
+
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
 
