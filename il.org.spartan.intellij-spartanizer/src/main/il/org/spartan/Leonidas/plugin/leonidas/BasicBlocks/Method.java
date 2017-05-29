@@ -25,17 +25,12 @@ public class Method extends ModifiableElement {
      * For reflection use DO NOT REMOVE!
      */
     public Method() {
-        super();
+        super(TEMPLATE);
     }
 
     @Override
-    public boolean conforms(PsiElement other) {
-        return iz.method(other) && az.method(other).getName().startsWith(TEMPLATE);
-    }
-
-    @Override
-    public Integer extractId(PsiElement e) {
-        return Integer.parseInt(az.method(e).getName().substring(TEMPLATE.length()));
+    protected String getName(PsiElement e) {
+        return iz.method(e) ? az.method(e).getName() : null;
     }
 
     @Override

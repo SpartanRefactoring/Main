@@ -127,4 +127,8 @@ public enum az {
     public static PsiModifierListOwner modifierListOwner(PsiElement e) {
         return e != null && !iz.modifierListOwner(e) ? null : (PsiModifierListOwner) e;
     }
+
+    public static PsiTypeElement type(PsiElement e) {
+        return e != null && !iz.type(e) ? null : (PsiTypeElement) e;
+    }
 }

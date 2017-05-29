@@ -25,6 +25,7 @@ public class FieldDeclaration extends ModifiableElement {
      */
     @SuppressWarnings("unused")
     protected FieldDeclaration() {
+        super(TEMPLATE);
     }
 
     @Override
@@ -35,6 +36,11 @@ public class FieldDeclaration extends ModifiableElement {
     @Override
     public Integer extractId(PsiElement e) {
         return Integer.parseInt(az.fieldDeclaration(e).getName().substring(TEMPLATE.length()));
+    }
+
+    @Override
+    protected String getName(PsiElement e) {
+        return iz.fieldDeclaration(e) ? az.fieldDeclaration(e).getName() : null;
     }
 
     @Override
