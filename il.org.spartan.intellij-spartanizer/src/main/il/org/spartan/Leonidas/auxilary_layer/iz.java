@@ -290,6 +290,17 @@ public enum iz {
     }
 
     /**
+     * Determine whether a node is a boolean literal
+     *
+     * @param ¢ pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
+     * literal
+     */
+    public static boolean stringLiteral(final PsiElement ¢) {
+        return typeCheck(PsiLiteralExpression.class, ¢) && ((PsiLiteralExpression) ¢).getValue() instanceof String;
+    }
+
+    /**
      * @param ¢ JD
      * @return true iff ¢ is "boolean"
      */
