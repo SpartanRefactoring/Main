@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static il.org.spartan.spartanizer.research.metatester.AssertShutter.shutDown;
+import static il.org.spartan.spartanizer.research.metatester.AssertSilencer.shutDown;
 import static il.org.spartan.spartanizer.research.metatester.FileUtils.makePath;
 import static il.org.spartan.spartanizer.research.metatester.FileUtils.packageName;
 

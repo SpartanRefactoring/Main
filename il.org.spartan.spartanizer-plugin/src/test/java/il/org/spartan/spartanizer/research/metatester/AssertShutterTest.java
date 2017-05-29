@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.research.metatester;
 
 import org.junit.Test;
 
-import static il.org.spartan.spartanizer.research.metatester.AssertShutter.shutDown;
+import static il.org.spartan.spartanizer.research.metatester.AssertSilencer.shutDown;
 import static org.junit.Assert.assertEquals;
 
 /**
