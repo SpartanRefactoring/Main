@@ -1,5 +1,6 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
@@ -13,6 +14,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import fluent.ly.*;
+import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** A widget containing a list of projects and some buttons. Used to configure
  * specific operations. "configure" button is used to open a dialog, allowing
@@ -201,8 +203,19 @@ public class OperationListEditor extends ListEditor {
   @Override protected String getNewInputObject() {
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
-    return $.getResult() == null ? null : $.getResult().description();
+    String res = $.getResult() == null ? null : $.getResult().description();
+    if(res!=null) {
+      long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
+      WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID,null, res);
+      this.elements_list.add(0,new AbstractMap.SimpleEntry<>(res,woe));
+      List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+      l.add(woe);
+      WidgetPreferences.storeEntries(l);
+    }
+    return res;
   }
+  
+
   @Override protected String createList(final String[] items) {
     return separate.these(items).by(DELIMETER);
   }
