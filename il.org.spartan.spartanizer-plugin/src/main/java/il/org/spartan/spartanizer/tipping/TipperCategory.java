@@ -97,10 +97,26 @@ public interface TipperCategory {
   }
 
   interface Arithmetics extends TipperCategory {
-    String toString = "Rewrite expressions in a more canonical form";
+    String toString = "Rewrite an arithmetical expressions in a more canonical form";
 
     @Override default String description() {
       return toString;
+    }
+
+    interface Numeric extends Arithmetics {
+      String toString = "Symbolic simplfication of an arithmetical expression";
+
+      @Override default String description() {
+        return toString;
+      }
+    }
+
+    interface Symbolic extends Arithmetics {
+      String toString = "Symbolic simplfication of an arithmetical expression";
+
+      @Override default String description() {
+        return toString;
+      }
     }
   }
 
