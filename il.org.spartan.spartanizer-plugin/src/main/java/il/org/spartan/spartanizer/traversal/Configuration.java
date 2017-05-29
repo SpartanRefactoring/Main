@@ -122,6 +122,7 @@ public class Configuration {
   List<Tipper<? extends ASTNode>> get(final ASTNode ¢) {
     return get(¢.getNodeType());
   }
+  /** Clears the toolbox except of the given tippers */
   @SafeVarargs public final Configuration restrictTo(final Tipper<?>... ts) {
     Stream.of(implementation).filter(Objects::nonNull).forEach(x -> x.removeIf(λ -> !is.in(λ, ts)));
     return this;
