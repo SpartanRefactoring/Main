@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Amir Sagiv
  * @Date 24-05-2017
  */
-public class Identifier extends GenericEncapsulator {
+public class Identifier extends NamedElement {
     public static final String TEMPLATE = "identifier";
 
     public Identifier(Encapsulator e) {
@@ -23,17 +23,12 @@ public class Identifier extends GenericEncapsulator {
      * For reflection use DO NOT REMOVE!
      */
     public Identifier() {
-        super();
+        super(TEMPLATE);
     }
 
     @Override
-    public boolean conforms(PsiElement other) {
-        return iz.identifier(other) && az.identifier(other).getText().startsWith(TEMPLATE);
-    }
-
-    @Override
-    public Integer extractId(PsiElement e) {
-        return Integer.parseInt(az.identifier(e).getText().substring(TEMPLATE.length()));
+    protected String getName(PsiElement e) {
+        return iz.identifier(e) ? az.identifier(e).getText() : null;
     }
 
     @Override
@@ -53,9 +48,6 @@ public class Identifier extends GenericEncapsulator {
 
     /* Constraints Methods */
 
-    public void startsWith(String s) {
-        addConstraint(e -> az.identifier(e.inner).getText().startsWith(s));
-    }
 
     public void contains(String s) {
         addConstraint(e -> az.identifier(e.inner).getText().contains(s));

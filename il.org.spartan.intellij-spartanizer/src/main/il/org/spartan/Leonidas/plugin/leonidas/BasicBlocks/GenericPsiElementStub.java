@@ -126,4 +126,5 @@ public class GenericPsiElementStub {
     public static Object anyNumberOf(Object o) {
         return new Object();
     }
+
 }

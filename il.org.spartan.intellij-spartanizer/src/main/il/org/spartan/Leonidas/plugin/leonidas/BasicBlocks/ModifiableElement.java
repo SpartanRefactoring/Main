@@ -14,7 +14,7 @@ import static il.org.spartan.Leonidas.auxilary_layer.Existence.*;
  * @author michalcohen
  * @since 28-05-2017.
  */
-public abstract class ModifiableElement extends GenericEncapsulator {
+public abstract class ModifiableElement extends NamedElement {
 
     @UserControlled
     Existence isPublic = DO_NOT_CARE;
@@ -35,7 +35,9 @@ public abstract class ModifiableElement extends GenericEncapsulator {
         super(e, template);
     }
 
-    public ModifiableElement() {}
+    public ModifiableElement(String template) {
+        super(template);
+    }
 
     private boolean checkConstraint(Existence ex, PsiModifierListOwner mlo, Function<PsiModifierListOwner, Boolean> f){
         switch (ex){
