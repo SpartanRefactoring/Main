@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2016-09 */
 public final class LambdaRenameSingleParameterToLambda extends NodePattern<LambdaExpression>//
-    implements TipperCategory.Centification {
+    implements Nominal.Trivialization {
   private static final long serialVersionUID = -0x2CF705A7699A0E07L;
   private VariableDeclarationFragment fragment;
   private SimpleName name;
