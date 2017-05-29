@@ -11,7 +11,7 @@ import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 2015-09-05 */
-public final class IfFooElseFoo extends IfAbstractPattern implements TipperCategory.CommnonFactoring {
+public final class IfFooElseFoo extends IfAbstractPattern implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = -0x104869FF3436EC68L;
 
   public IfFooElseFoo() {

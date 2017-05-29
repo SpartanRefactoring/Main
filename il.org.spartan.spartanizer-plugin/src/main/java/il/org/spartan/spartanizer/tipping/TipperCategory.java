@@ -30,18 +30,18 @@ public interface TipperCategory {
 
   Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> hierarchy = anonymous.ly(() -> {
     final Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> $ = new HashMap<>();
-    $.put(Nominal.class, Arrays.asList(Abbreviation.class, Anonymization.class, NameOfResult.class));
+    $.put(Nominal.class, Arrays.asList(Nominal.Abbreviation.class, Nominal.Anonymization.class, Nominal.Result.class));
     $.put(Structural.class, Arrays.asList(Collapse.class, Loops.class, Deadcode.class, EarlyReturn.class, NOP.class, ScopeReduction.class,
         Shortcircuit.class, SyntacticBaggage.class));
-    $.put(Abbreviation.class, an.empty.list());
-    $.put(Anonymization.class, an.empty.list());
+    $.put(Nominal.Abbreviation.class, an.empty.list());
+    $.put(Nominal.Anonymization.class, an.empty.list());
     $.put(Arithmetics.class, an.empty.list());
     $.put(Loops.class, an.empty.list());
     $.put(Bloater.class, an.empty.list());
-    $.put(Centification.class, an.empty.list());
-    $.put(CommnonFactoring.class, Arrays.asList(Ternarization.class));
+    $.put(Nominal.Trivialization.class, an.empty.list());
+    $.put(CommonFactorOut.class, Arrays.asList(Ternarization.class));
     $.put(Deadcode.class, an.empty.list());
-    $.put(NameOfResult.class, an.empty.list());
+    $.put(Nominal.Result.class, an.empty.list());
     $.put(EarlyReturn.class, an.empty.list());
     $.put(EmptyCycles.class, an.empty.list());
     $.put(Idiomatic.class, Arrays.asList(Sorting.class));
@@ -57,7 +57,7 @@ public interface TipperCategory {
     $.put(Sorting.class, an.empty.list());
     $.put(SyntacticBaggage.class, an.empty.list());
     $.put(Ternarization.class, an.empty.list());
-    $.put(Collapse.class, Arrays.asList(CommnonFactoring.class));
+    $.put(Collapse.class, Arrays.asList(CommonFactorOut.class));
     return $;
   });
   Map<Class<? extends TipperCategory>, Class<? extends TipperCategory>> reversedHierarchy = anonymous.ly(() -> {
@@ -80,27 +80,27 @@ public interface TipperCategory {
     return $;
   });
 
-  interface Abbreviation extends Nominal {
-    String toString = "One letter convention for locals";
-
-    @Override default String description() {
-      return toString;
-    }
-  }
-
-  interface Anonymization extends Nominal {
-    String toString = "Naming convention for anonymizing unused parameters";
-
-    @Override default String description() {
-      return toString;
-    }
-  }
-
   interface Arithmetics extends TipperCategory {
-    String toString = "Rewrite expressions in a more canonical form";
+    String toString = "Rewrite an arithmetical expressions in a more canonical form";
 
     @Override default String description() {
       return toString;
+    }
+
+    interface Numeric extends Arithmetics {
+      @SuppressWarnings("hiding") String toString = "Numeric simplfication of an arithmetical expression";
+
+      @Override default String description() {
+        return toString;
+      }
+    }
+
+    interface Symbolic extends Arithmetics {
+      @SuppressWarnings("hiding") String toString = "Symbolic simplfication of an arithmetical expression";
+
+      @Override default String description() {
+        return toString;
+      }
     }
   }
 
@@ -120,18 +120,10 @@ public interface TipperCategory {
     }
   }
 
-  interface Centification extends Nominal {
-    String toString = "Centification";
-
-    @Override default String description() {
-      return toString;
-    }
-  }
-
   /** A specialized {@link Collapse} carried out, by factoring out some common
    * element */
-  interface CommnonFactoring extends Collapse { // S2
-    String toString = "Distributive refactoring";
+  interface CommonFactorOut extends Collapse { // S2
+    String toString = "Factor out a common syntactical element";
 
     @Override default String description() {
       return toString;
@@ -140,14 +132,6 @@ public interface TipperCategory {
 
   interface Deadcode extends Structural {
     String toString = "Eliminate code that is never executed";
-
-    @Override default String description() {
-      return toString;
-    }
-  }
-
-  interface NameOfResult extends Nominal {
-    String toString = "Naming convention for the result variable";
 
     @Override default String description() {
       return toString;
@@ -163,7 +147,7 @@ public interface TipperCategory {
   }
 
   interface EmptyCycles extends TipperCategory {
-    String toString = "churn";
+    String toString = "Eliminate code which seems whose functions look like CPU churn and nothing else";
   }
 
   interface Idiomatic extends TipperCategory {
@@ -244,7 +228,7 @@ public interface TipperCategory {
     }
   }
 
-  interface SyntacticBaggage extends Structural {// S1
+  interface SyntacticBaggage extends Structural {
     String toString = "Remove syntactical element that contributes nothing to semantics";
 
     @Override default String description() {
@@ -252,7 +236,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Ternarization extends CommnonFactoring { // S3
+  interface Ternarization extends CommonFactorOut {
     String toString = "Convert conditional statement to the conditional, ?:, operator";
 
     @Override default String description() {

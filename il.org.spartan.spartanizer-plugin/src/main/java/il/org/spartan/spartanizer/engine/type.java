@@ -21,9 +21,11 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
-/** An interface for fluent api, used to determine the type of an expression from
- * it's structure and context. Use type.get to find the type of an expression.
+/** An interface for fluent api, used to determine the type of an expression
+ * from it's structure and context. Use type.get to find the type of an
+ * expression.
  * @author Yossi Gil
  * @author Dor Maayan
  * @author Niv Shalmon
@@ -65,8 +67,8 @@ public interface type {
       }
     }.join();
   }
-  /** @return the type object with a given name, or null if no such name exists in
-   *         the system */
+  /** @return the type object with a given name, or null if no such name exists
+   *         in the system */
   static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
@@ -175,9 +177,10 @@ public interface type {
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
 
-  /** An interface with one method- type, overloaded for many different parameter
-   * types. Can be used to find the type of an expression thats known at compile
-   * time by using overloading. Only use for testing, mainly for testing of type.
+  /** An interface with one method- type, overloaded for many different
+   * parameter types. Can be used to find the type of an expression thats known
+   * at compile time by using overloading. Only use for testing, mainly for
+   * testing of type.
    * @author Niv Shalmon
    * @since 2016 */
   @SuppressWarnings("unused")
@@ -222,10 +225,10 @@ public interface type {
       static final long serialVersionUID = -0x702EDE52D8CBFF3AL;
       {
         for (Certain ¢ : Certain.values()) {
-          ¢.unboxed.ifPresent(s->put(s,¢));
-          ¢.boxed.ifPresent(s->{
-            put(s, ¢);
-            put("java.lang." + s, ¢);
+          ¢.unboxed.ifPresent(λ -> put(λ, ¢));
+          ¢.boxed.ifPresent(λ -> {
+            put(λ, ¢);
+            put("java.lang." + λ, ¢);
           });
         }
       }
@@ -256,6 +259,10 @@ public interface type {
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
+    private static implementation lookDown(final SimpleName ¢){
+      Namespace $ = Environment.of(¢);
+      return !$.has(¢.getIdentifier()) ? NOTHING : (implementation) $.get(¢.getIdentifier()).getType();
+    }
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
@@ -271,27 +278,29 @@ public interface type {
         case STRING_LITERAL:
           return STRING;
         case ASSIGNMENT:
-          return lookDown((Assignment) ¢);
+          return lookDown(az.assignment(¢));
         case CAST_EXPRESSION:
-          return lookDown((CastExpression) ¢);
+          return lookDown(az.castExpression(¢));
         case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) ¢);
+          return lookDown(az.classInstanceCreation(¢));
         case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) ¢);
+          return lookDown(az.conditionalExpression(¢));
         case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) ¢);
+          return lookDown(az.infixExpression(¢));
         case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) ¢);
+          return lookDown(az.methodInvocation(¢));
         case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) ¢);
+          return lookDown(az.numberLiteral(¢));
         case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) ¢);
+          return lookDown(az.parenthesizedExpression(¢));
         case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) ¢);
+          return lookDown(az.postfixExpression(¢));
         case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) ¢);
+          return lookDown(az.prefixExpression(¢));
         case VARIABLE_DECLARATION_EXPRESSION:
-          return lookDown((VariableDeclarationExpression) ¢);
+          return lookDown(az.variableDeclarationExpression(¢));
+        case SIMPLE_NAME:
+          return lookDown(az.simpleName(¢));
         default:
           return NOTHING;
       }
@@ -323,6 +332,18 @@ public interface type {
     private static implementation lookDown(final VariableDeclarationExpression ¢) {
       return baptize(step.type(¢) + "");
     }
+    /**
+     * performs the lookup process for InfixExpressions. 
+     */
+    private static implementation lookup(final InfixExpression x, final implementation i, final InfixExpression.Operator o) {
+      final implementation $ = i.aboveBinaryOperator(o);
+      if (o != op.PLUS2)
+        return $;
+      ASTNode context = x.getParent();
+      while (context!= null && iz.parenthesizedExpression(context))
+        context = context.getParent();
+      return context == null || !iz.infixExpression(context) ? $ : lookup(az.infixExpression(context), $, az.infixExpression(context).getOperator());
+    }
     /** @param x JD
      * @param i most specific type information already known, usually from
      *        lookdown
@@ -342,7 +363,7 @@ public interface type {
             case POSTFIX_EXPRESSION:
               return i.asNumeric();
             case INFIX_EXPRESSION:
-              return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+              return lookup(az.infixExpression(context),i,az.infixExpression(context).getOperator());
             case PREFIX_EXPRESSION:
               return i.above(az.prefixExpression(context).getOperator());
             case ASSERT_STATEMENT:
@@ -575,7 +596,7 @@ public interface type {
         return description;
       }
       @Override public String key() {
-        return unboxed.isPresent() ? unboxed.get() : boxed.get();
+        return (!unboxed.isPresent() ? boxed : unboxed).get();
       }
       @Override public Iterable<Certain> options() {
         return a.singleton.list(this);

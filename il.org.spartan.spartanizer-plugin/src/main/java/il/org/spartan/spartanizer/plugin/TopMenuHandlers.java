@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
+import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
@@ -14,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Ori Roth
  * @since 2.6 */
 public class TopMenuHandlers extends AbstractHandler {
-  @SuppressWarnings("serial") public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
+  @SuppressWarnings({ "serial", "unchecked" }) public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
     {
       put("il.org.spartan.SpartanizeSelection", e -> {
         final Selection s = Selection.Util.current();
@@ -22,8 +23,8 @@ public class TopMenuHandlers extends AbstractHandler {
       });
       put("il.org.spartan.CentToIt", λ -> SpartanizationHandler.applicator().restrictTo(new MethodDeclarationRenameSingleParameter()).manyPasses()
           .selection(Selection.Util.getAllCompilationUnits()).go());
-      put("il.org.spartan.LongNames", λ -> SpartanizationHandler.applicator().restrictTo(new MethodDeclarationNameExpander()).manyPasses()
-          .selection(Selection.Util.getAllCompilationUnits()).go());
+      put("il.org.spartan.LongNames", λ -> SpartanizationHandler.applicator().restrictTo(MethodDeclaration.class, new MethodDeclarationNameExpander())
+          .manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
       put("il.org.spartan.SpartanizeCurrent",
           λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getCurrentCompilationUnit()).go());
       put("il.org.spartan.SpartanizeAll",

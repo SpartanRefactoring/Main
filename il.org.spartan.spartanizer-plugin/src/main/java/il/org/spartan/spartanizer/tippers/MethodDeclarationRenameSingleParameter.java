@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016-09 */
 public final class MethodDeclarationRenameSingleParameter extends EagerTipper<MethodDeclaration>//
-    implements TipperCategory.Centification {
+    implements Nominal.Trivialization {
   private static final long serialVersionUID = 0x5583F2C8E00B4000L;
 
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration ¢) {

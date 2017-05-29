@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.resource.*;
 import org.eclipse.swt.*;
@@ -46,13 +47,25 @@ public enum Dialogs {
   public static Image image(final String url, final String $, final Function<ImageData, ImageData> scale) {
     if (!images.containsKey($))
       try {
-        final ImageData d = ImageDescriptor.createFromURL(new URL(url)).getImageData();
+        final ImageData d = ImageDescriptor.createFromURL(getURL(url)).getImageData();
         images.put($, d == null ? null : new Image(null, scale.apply(d)));
       } catch (final MalformedURLException ¢) {
         note.bug(¢);
         images.put($, null);
       }
     return images.get($);
+  }
+  private static URL getURL(final String url) throws MalformedURLException {
+    final URL $ = new URL(url);
+    switch ($.getProtocol()) {
+      case "file":
+        return FileLocator.find(Platform.getBundle(Plugin.ID), new Path($.getPath()), null);
+      default:
+        note.bug("Dialogs#getURL: URL protocol " + $.getProtocol() + " not supported");
+        //$FALL-THROUGH$
+      case "platform":
+        return $;
+    }
   }
   /** Simple dialog, waits for user operation. Does not trim the received
    * message.

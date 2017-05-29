@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = -0x23F015E81A561C0DL;
 
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {

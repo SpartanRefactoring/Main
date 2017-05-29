@@ -63,8 +63,8 @@ public class Issue0312 {
         .stays();
   }
   @Test public void chocolate2() {
-    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
-        .gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=¢+j;")//
+    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=j+i;")//
+        .gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=j+¢;")//
         .stays();
   }
   @Test public void issue54ForPlain() {
@@ -79,7 +79,7 @@ public class Issue0312 {
         .stays();
   }
   @Test public void t18() {
-    trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}")//
+    trimmingOf("while(b==q){int i;double tipper; x=i+tipper;}")//
         .stays();
   }
 }
