@@ -154,6 +154,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         }
         current = Utils.getNextActualSibling(current);
         List<Encapsulator> roots = new ArrayList<>();
+        if (iz.declarationStatement(current) && iz.classDeclaration(current.getFirstChild()))
+            current = current.getFirstChild();
         rootType = current.getClass();
         while (current != null && (!iz.javadoc(current) || !az.javadoc(current).getText().contains("end"))) {
             roots.add(Pruning.prune(Encapsulator.buildTreeFromPsi(current), map));

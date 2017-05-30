@@ -3,7 +3,8 @@ package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 import java.util.HashMap;
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
@@ -14,7 +15,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  */
 public class FluentSetter implements LeonidasTipperDefinition {
 
-    class Type2 {}
     /**
      * Write here additional constraints on the matcher tree.
      * The structural constraint are of the form:
@@ -33,7 +33,7 @@ public class FluentSetter implements LeonidasTipperDefinition {
         new Template(() -> {
             /** start */
             class Class0 {
-                void method1(Type2 id3){
+                void method1(Type2 identifier3) {
                     anyNumberOf(statement(4));
                 }
             }
@@ -46,7 +46,7 @@ public class FluentSetter implements LeonidasTipperDefinition {
         new Template(() -> {
             /** start */
             class Class0 {
-                Class0 method1(Type2 id3){
+                Class0 method1(Type2 identifier3) {
                     anyNumberOf(statement(4));
                     return this;
                 }
@@ -66,5 +66,8 @@ public class FluentSetter implements LeonidasTipperDefinition {
         Map<String, String> examples = new HashMap<>();
         // <enter examples>
         return examples;
+    }
+
+    class Type2 {
     }
 }

@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,8 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        return iz.statement(e.getInner()) && !iz.blockStatement(e.getInner());
+    public MatchingResult generalizes(Encapsulator e) {
+        return new MatchingResult(iz.statement(e.getInner()) && !iz.blockStatement(e.getInner()));
     }
 
     @Override

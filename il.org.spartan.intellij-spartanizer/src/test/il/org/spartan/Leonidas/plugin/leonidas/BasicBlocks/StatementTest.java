@@ -22,10 +22,10 @@ public class StatementTest extends PsiTypeHelper {
 
 
     public void testGeneralizes() throws Exception {
-        assert statement.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x + 1;")));
-        assert !statement.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x+1")));
-        assert !statement.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("{int x; int y;}")));
-        assert statement.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("for(;;){}")));
+        assert statement.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x + 1;"))).matches();
+        assert !statement.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x+1"))).matches();
+        assert !statement.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("{int x; int y;}"))).matches();
+        assert statement.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("for(;;){}"))).matches();
     }
 
 
