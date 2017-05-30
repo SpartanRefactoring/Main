@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.psi.PsiType;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class BooleanExpression extends Expression {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
+    public MatchingResult generalizes(Encapsulator e) {
         return super.generalizes(e);
     }
 

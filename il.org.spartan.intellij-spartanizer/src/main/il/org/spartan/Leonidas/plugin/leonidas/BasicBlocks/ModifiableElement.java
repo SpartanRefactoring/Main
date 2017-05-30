@@ -5,6 +5,7 @@ import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
 import il.org.spartan.Leonidas.plugin.UserControlled;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.function.Function;
 
@@ -48,15 +49,15 @@ public abstract class ModifiableElement extends NamedElement {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        if (!super.generalizes(e)) return false;
+    public MatchingResult generalizes(Encapsulator e) {
+        if (super.generalizes(e).notMatches()) return new MatchingResult(false);
         PsiModifierListOwner mlo = az.modifierListOwner(inner);
-        return checkConstraint(isPublic, mlo, haz::publicModifier) &&
+        return new MatchingResult(checkConstraint(isPublic, mlo, haz::publicModifier) &&
                 checkConstraint(isPrivate, mlo, haz::privateModifier) &&
                 checkConstraint(isProtected, mlo, haz::protectedModifier) &&
                 checkConstraint(isStatic, mlo, haz::staticModifier) &&
                 checkConstraint(isFinal, mlo, haz::finalModifier) &&
-                checkConstraint(isAbstract, mlo, haz::abstractModifier);
+                checkConstraint(isAbstract, mlo, haz::abstractModifier));
     }
 
     /* Constraints Methods */

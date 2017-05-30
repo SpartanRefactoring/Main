@@ -32,12 +32,12 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
         assert playground.getOutput().equals("while (x == 0)\n    x = 1;");
     }
 
-    /*
+
     public void testLeonidasTipper3() {
         preparePlayground("!(!(x))");
         assert playground.getOutput().equals("x");
     }
-    */
+
 
     public void testNanoTipper1() {
         preparePlayground("l.get(l.size()-1)");

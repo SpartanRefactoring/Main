@@ -151,7 +151,7 @@ public interface Configurations {
           new MethodDeclarationRenameReturnToDollar(), //
           new BodyDeclarationModifiersSort<>(), //
           new MethodDeclarationRenameSingleParameter(), //
-          new ConstructorRenameParameters(), //
+//          new ConstructorRenameParameters(), //
           new ConstructorEmptyRemove(), //
           new MethodDeclarationConstructorMoveToInitializers(), //
           new MethodDeclarationOverrideDegenerateRemove(), //
