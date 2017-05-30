@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,8 @@ public class Identifier extends NamedElement {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        return super.generalizes(e) && iz.identifier(e.getInner());
+    public MatchingResult generalizes(Encapsulator e) {
+        return new MatchingResult(super.generalizes(e).matches() && iz.identifier(e.getInner()));
     }
 
     @Override

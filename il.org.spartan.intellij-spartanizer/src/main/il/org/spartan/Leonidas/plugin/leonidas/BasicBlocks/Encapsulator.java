@@ -69,8 +69,8 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
 
     @Override
     public void accept(EncapsulatorVisitor v) {
-        v.visit(this);
         children.forEach(child -> child.accept(v));
+        v.visit(this);
     }
 
     @Override

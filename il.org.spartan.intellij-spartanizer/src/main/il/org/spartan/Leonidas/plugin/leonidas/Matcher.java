@@ -42,26 +42,7 @@ public class Matcher {
      * @return true iff the tree of the user matcher the roots and holds through all the constraints.
      */
     public boolean match(PsiElement treeToMatch) {
-        MatchingResult mr = new MatchingResult(false);
-        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++){
-            List<Encapsulator> potentialRoots = new ArrayList<>();
-            PsiElement c = treeToMatch;
-            MatchingResult m = new MatchingResult(true);
-            for (int j = 0; j < i; j++){
-                potentialRoots.add(Encapsulator.buildTreeFromPsi(c));
-                c = c.getNextSibling();
-            }
-            m.combineWith(matchingRecursion(new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots)));
-            if (m.matches()){
-                mr.combineWith(m);
-                mr.setMatches();
-                break;
-            }
-        }
-        if (mr.notMatches()) return false;
-        Map<Integer, List<PsiElement>> info = mr.getMap();
-        return info.keySet().stream()
-                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)));
+        return getMatchingResult(treeToMatch, new Wrapper<>(0)).matches();
     }
 
     /**
@@ -104,8 +85,10 @@ public class Matcher {
     private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
         MatchingResult m = new MatchingResult(true);
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
-            if (!iz.conforms(cursor.value(), needle.value()) || (needle.hasNext() != cursor.hasNext()))
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value());
+            if (ic.notMatches() || (needle.hasNext() != cursor.hasNext()))
                 return m.setNotMatches();
+            m.combineWith(ic);
             if (needle.value().isGeneric()) {
                 m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
                 cursor.matchedWithGeneric();
@@ -129,9 +112,11 @@ public class Matcher {
             return m.setMatches();
         }
         for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
-            if (!iz.conforms(needle.value(), cursor.value()) || (needle.hasNext() ^ cursor.hasNext())) {
+            MatchingResult ic = iz.conforms(needle.value(), cursor.value());
+            if (ic.notMatches() || (needle.hasNext() ^ cursor.hasNext())) {
                 return m.setNotMatches();
             }
+            m.combineWith(ic);
             if (needle.value().isGeneric()) {
                 m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
                 cursor.matchedWithGeneric();
@@ -188,11 +173,8 @@ public class Matcher {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * @param treeToMatch - The patterns from which we extract the IDs
-     * @return a mapping between an ID to a PsiElement
-     */
-    public Map<Integer, List<PsiElement>> extractInfo(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
+    public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
+        MatchingResult mr = new MatchingResult(false);
         for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++){
             List<Encapsulator> potentialRoots = new ArrayList<>();
             PsiElement c = treeToMatch;
@@ -203,11 +185,25 @@ public class Matcher {
             }
             m.combineWith(matchingRecursion(new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots)));
             if (m.matches()){
+                mr.combineWith(m);
+                mr.setMatches();
                 numberOfNeighbors.set(i);
-                return m.getMap();
+                break;
             }
         }
-        return null;
+        if (mr.notMatches()) return mr;
+        Map<Integer, List<PsiElement>> info = mr.getMap();
+        return info.keySet().stream()
+                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)))
+                ? mr : mr.setNotMatches();
+    }
+
+    /**
+     * @param treeToMatch - The patterns from which we extract the IDs
+     * @return a mapping between an ID to a PsiElement
+     */
+    public Map<Integer, List<PsiElement>> extractInfo(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
+        return getMatchingResult(treeToMatch, numberOfNeighbors).getMap();
     }
 
     /**

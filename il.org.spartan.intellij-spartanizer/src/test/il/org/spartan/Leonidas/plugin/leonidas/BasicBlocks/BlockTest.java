@@ -21,12 +21,12 @@ public class BlockTest extends PsiTypeHelper {
 
     public void testGeneralizes() throws Exception {
         PsiElement e = createTestBlockStatementFromString("{int x=0;}");
-        assert block.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert block.generalizes(Encapsulator.buildTreeFromPsi(e)).matches();
         e = createTestCodeBlockFromString("{int x=0;}");
-        assert block.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert block.generalizes(Encapsulator.buildTreeFromPsi(e)).matches();
         e = createTestStatementFromString("int x=0;");
-        assert block.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert block.generalizes(Encapsulator.buildTreeFromPsi(e)).matches();
         e = createTestExpression("x++");
-        assert !block.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert !block.generalizes(Encapsulator.buildTreeFromPsi(e)).matches();
     }
 }
