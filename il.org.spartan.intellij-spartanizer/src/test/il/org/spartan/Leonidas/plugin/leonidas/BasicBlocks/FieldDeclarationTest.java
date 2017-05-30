@@ -15,13 +15,13 @@ public class FieldDeclarationTest extends PsiTypeHelper {
     }
 
     public void testFieldDeclaration() {
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x;"))));
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x, y;"))));
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int[] x = new int[5];"))));
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("public static final String s = \"dsa\""))));
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x"))));
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true"))));
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("int a() {return 0;}"))));
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("void a(int x) {}"))));
+        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x;"))).matches());
+        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x, y;"))).matches());
+        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int[] x = new int[5];"))).matches());
+        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("public static final String s = \"dsa\""))).matches());
+        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x"))).matches());
+        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true"))).matches());
+        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("int a() {return 0;}"))).matches());
+        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("void a(int x) {}"))).matches());
     }
 }

@@ -27,7 +27,7 @@ public class ExpressionTest extends PsiTypeHelper {
     }
 
     public void testGeneralizes() throws Exception {
-        assert expression.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 1")));
-        assert !expression.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;")));
+        assert expression.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 1"))).matches();
+        assert !expression.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;"))).matches();
     }
 }

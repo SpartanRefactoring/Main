@@ -602,7 +602,7 @@ public class izTest extends PsiTypeHelper {
                 e3 = Encapsulator.buildTreeFromPsi(_e3),
                 e4 = Encapsulator.buildTreeFromPsi(_e4);
 
-        assert iz.conforms(e1, e2);
-        assert iz.conforms(e3, e4);
+        assert iz.conforms(e1, e2).matches();
+        assert iz.conforms(e3, e4).matches();
     }
 }

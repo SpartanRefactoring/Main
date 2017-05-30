@@ -33,7 +33,7 @@ public class Optional extends Quantifier {
 
     @Override
     public int getNumberOfOccurrences(EncapsulatorIterator it) {
-        return iz.conforms(it.value(), internal) ? 1 : 0;
+        return iz.conforms(it.value(), internal).matches() ? 1 : 0;
     }
 
 }
