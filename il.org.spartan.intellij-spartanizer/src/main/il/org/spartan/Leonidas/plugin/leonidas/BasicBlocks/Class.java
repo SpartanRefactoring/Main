@@ -1,7 +1,9 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
-import com.intellij.psi.*;
-import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
@@ -55,13 +57,13 @@ public class Class extends NamedElement{
         return c;
     }
 
-    private void getAllPermiutation(List<Integer[]> l, int location, List<Integer> remains, Integer[] prefix) {
+    private void getAllPermutation(List<Integer[]> l, int location, List<Integer> remains, Integer[] prefix) {
         if (location < 0) l.add(prefix.clone());
         for (Integer remain : remains) {
             List<Integer> newRemains = new LinkedList<>(remains);
             prefix[location] = remain;
             newRemains.remove(remain);
-            getAllPermiutation(l, location - 1, newRemains, prefix);
+            getAllPermutation(l, location - 1, newRemains, prefix);
         }
     }
 
@@ -75,9 +77,9 @@ public class Class extends NamedElement{
         List<Integer[]> fieldsPermutation = new LinkedList<>();
         List<Integer[]> methodsPermutation = new LinkedList<>();
         List<Integer[]> innerClassesPermutation = new LinkedList<>();
-        getAllPermiutation(fieldsPermutation, fields.length - 1, IntStream.range(0, fields.length).boxed().collect(Collectors.toList()), new Integer[fields.length]);
-        getAllPermiutation(methodsPermutation, methods.length - 1, IntStream.range(0, methods.length).boxed().collect(Collectors.toList()), new Integer[methods.length]);
-        getAllPermiutation(innerClassesPermutation, innerClasses.length - 1, IntStream.range(0, innerClasses.length).boxed().collect(Collectors.toList()), new Integer[innerClasses.length]);
+        getAllPermutation(fieldsPermutation, fields.length - 1, IntStream.range(0, fields.length).boxed().collect(Collectors.toList()), new Integer[fields.length]);
+        getAllPermutation(methodsPermutation, methods.length - 1, IntStream.range(0, methods.length).boxed().collect(Collectors.toList()), new Integer[methods.length]);
+        getAllPermutation(innerClassesPermutation, innerClasses.length - 1, IntStream.range(0, innerClasses.length).boxed().collect(Collectors.toList()), new Integer[innerClasses.length]);
         boolean b = super.generalizes(e).matches() && fieldsPermutation.stream().anyMatch(perm -> {
             for (int i = 0; i < fields.length; i++) {
                 if (!fieldsMatcher.get(i).match(fields[perm[i]])) {
@@ -106,13 +108,4 @@ public class Class extends NamedElement{
         return new MatchingResult(b);
     }
 
-    @Override
-    public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
-        PsiClass c = az.classDeclaration(elements.get(0));
-        if (iz.type(inner)){
-            super.replaceByRange(Utils.wrapWithList(JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c)), r);
-        } else {
-            super.replaceByRange(elements, r);
-        }
-    }
 }

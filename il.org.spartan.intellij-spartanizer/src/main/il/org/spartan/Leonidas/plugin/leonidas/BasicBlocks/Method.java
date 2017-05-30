@@ -60,4 +60,11 @@ public class Method extends ModifiableElement {
         m.matcherCodeBlock = new Matcher(Utils.wrapWithList(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getBody())), map);
         return m;
     }
+
+    /*
+    @Override
+    public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
+        PsiMethod e = az.method(elements.get(0));
+        az.method(inner).setName(e.getName());
+    }*/
 }

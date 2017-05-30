@@ -33,7 +33,7 @@ public class FluentSetter implements LeonidasTipperDefinition {
         new Template(() -> {
             /** start */
             class Class0 {
-                void method1(Type2 identifier3) {
+                void method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                 }
             }
@@ -46,7 +46,7 @@ public class FluentSetter implements LeonidasTipperDefinition {
         new Template(() -> {
             /** start */
             class Class0 {
-                Class0 method1(Type2 identifier3) {
+                Class0 method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                     return this;
                 }
@@ -68,6 +68,6 @@ public class FluentSetter implements LeonidasTipperDefinition {
         return examples;
     }
 
-    class Type2 {
+    class Class2 {
     }
 }
