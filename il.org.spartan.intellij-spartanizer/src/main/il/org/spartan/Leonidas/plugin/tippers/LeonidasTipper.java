@@ -121,8 +121,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         List<Encapsulator> rootsCopy = getReplacerRootTree();
         List<PsiElement> elements = new LinkedList<>();
         rootsCopy.forEach(rootCopy -> {
-            if (rootCopy.isGeneric())
+            if (rootCopy.isGeneric()) {
                 elements.addAll(m.get(az.generic(rootCopy).getId())); //TODO
+            }
             else {
                 rootCopy.accept(e -> {
                     if (!e.isGeneric()) return;
