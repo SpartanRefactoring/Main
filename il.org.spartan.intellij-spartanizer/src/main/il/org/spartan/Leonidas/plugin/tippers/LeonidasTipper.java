@@ -95,19 +95,22 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         List<PsiElement> elements = getReplacingForest(m, r);
         PsiElement prev = treeToReplace.getPrevSibling();
         PsiElement last = treeToReplace;
-        for (int i = 1; i < numberOfRoots; i++){
+        for (int i = 1; i < numberOfRoots; i++) {
             last = last.getNextSibling();
         }
         PsiElement parent = treeToReplace.getParent();
-        if (prev == null){
+        if (prev == null) {
             prev = parent.getFirstChild();
-            for (PsiElement element : elements){
+            for (PsiElement element : elements) {
                 r.addBefore(parent, prev, element);
             }
         } else {
-            for (PsiElement element : elements){
+            for (PsiElement element : elements) {
                 r.addAfter(parent, prev, element);
             }
+        }
+        if (parent.getParent() instanceof PsiMethodCallExpression) {
+            treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
         }
         r.deleteByRange(parent, treeToReplace, last);
     }
