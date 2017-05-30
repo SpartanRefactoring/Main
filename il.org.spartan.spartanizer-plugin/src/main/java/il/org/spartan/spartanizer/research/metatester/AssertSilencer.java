@@ -11,7 +11,7 @@ import static il.org.spartan.spartanizer.research.metatester.MetaTesterStringUti
  * @author Oren Afek
  * @since 5/25/2017.
  */
-public class AssertShutter {
+public class AssertSilencer {
 
 
     private static boolean isAssertJFormatted(String code) {

@@ -12,17 +12,18 @@ import il.org.spartan.utils.Int;
 import il.org.spartan.utils.Pair;
 import il.org.spartan.utils.UnderConstruction;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.text.edits.TextEdit;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static il.org.spartan.spartanizer.research.metatester.AssertShutter.shutDown;
+import static il.org.spartan.spartanizer.research.metatester.AssertSilencer.shutDown;
 import static il.org.spartan.spartanizer.research.metatester.FileUtils.makePath;
 import static il.org.spartan.spartanizer.research.metatester.FileUtils.packageName;
 
@@ -34,29 +35,12 @@ import static il.org.spartan.spartanizer.research.metatester.FileUtils.packageNa
  */
 @UnderConstruction("OrenAfek -- 12/04/2017")
 public class ASTTestClassGenerator implements TestClassGenerator {
-    class Test {
-        public ASTNode source;
-        public List<MemberValuePair> values;
-
-        public Test(final ASTNode source, final List<MemberValuePair> values) {
-            this.source = source;
-            this.values = values;
-        }
-    }
-
-    private ASTNode root;
-
-    enum SourceLineType {
-        TEST, OTHER;
-    }
-
-    Set<Test> sourceLines;
+    public final String packageName;
     private final Class<?> testClass;
     private final String sourcePath;
-    public final String packageName;
     private final Int testNoGenerator = Int.valueOf(0);
-
-
+    Set<Test> sourceLines;
+    private ASTNode root;
     public ASTTestClassGenerator(final Class<?> testClass) {
         this.testClass = testClass;
         sourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", testClass));
@@ -64,7 +48,80 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         sourceLines = new HashSet<>();
     }
 
-    private String addTrailers(String classCode) {
+    private static List<String> prefixes(final Test t) {
+        final List<String> $ = an.empty.list();
+        final StringBuilder prefix = new StringBuilder();
+        step.statements((MethodDeclaration) t.source).stream().map(λ -> {
+            prefix.append(λ + "\n");
+            return prefix + "";
+        }).forEach($::add);
+        return $;
+    }
+
+    public static List<String> suffixes(final Test t) {
+        List<String> allStatements = step.statements((MethodDeclaration) t.source).stream()
+                .map(Object::toString)
+                .map(TestTransformator::transformIfPossible)
+                .collect(Collectors.toList());
+
+
+        Int i = new Int(-1);
+        return allStatements.stream()
+                .map(s -> new Pair<>(i.next(), copyOf(allStatements)))
+                .map(p -> {
+                    p.second.set(p.first, shutDown(p.second.get(p.first)));
+                    return p.second;
+                })
+                .map(l -> l.stream().reduce((s1, s2) -> s1 + s2).orElse(""))
+                .collect(Collectors.toList());
+    }
+
+    private static <T> List<T> copyOf(List<T> l) {
+        List<T> copy = new ArrayList<>(l);
+        Collections.copy(copy, l);
+        return copy;
+    }
+
+    private static <T> String removeBraces(final List<T> l) {
+        final StringBuilder $ = new StringBuilder();
+        l.stream().forEach(e -> $.append(e + ", "));
+        return $.substring(0, $.length() - 2);
+    }
+
+    private static ASTNode makeAST(final File originalSourceFile) {
+        return wizard.ast(readAll(originalSourceFile));
+    }
+
+    private static String readAll(final File f) {
+        final StringBuilder $ = new StringBuilder();
+        try (final BufferedReader linesStream = new BufferedReader(new FileReader(f))) {
+            String line = linesStream.readLine();
+            for (; line != null; ) {
+                $.append(line).append("\n");
+                line = linesStream.readLine();
+            }
+            return $ + "";
+        } catch (final IOException x) {
+            return note.bug(x);
+        }
+    }
+
+    private String addImport(ASTNode source, String importDeclaration) {
+        CompilationUnit cu = az.compilationUnit(source.getRoot());
+
+        ListRewrite lr = ASTRewrite.create(cu.getAST()).getListRewrite(cu, CompilationUnit.IMPORTS_PROPERTY);
+        final ImportDeclaration id = source.getAST().newImportDeclaration();
+        id.setName(source.getAST().newName(importDeclaration));
+        lr.insertLast(id, null);
+        final TextEdit te;
+        /*try {
+            te = lr.getASTRewrite()
+            te.apply(new Document());
+        } catch (BadLocationException | JavaModelException e) {
+            note.bug(e);
+        }*/
+
+        // step.importDeclarations(az.typeDeclaration(source))
         return "";
     }
 
@@ -104,33 +161,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         return loadClass(testClassName, format.code($), testClass, sourcePath);
     }
 
-    private static List<String> prefixes(final Test t) {
-        final List<String> $ = an.empty.list();
-        final StringBuilder prefix = new StringBuilder();
-        step.statements((MethodDeclaration) t.source).stream().map(λ -> {
-            prefix.append(λ + "\n");
-            return prefix + "";
-        }).forEach($::add);
-        return $;
-    }
-
-    public static List<String> suffixes(final Test t) {
-        List<String> allStatements = step.statements((MethodDeclaration) t.source).stream()
-                .map(Object::toString)
-                .map(AssertJTransformator::transformIfPossible)
-                .collect(Collectors.toList());
-
-        Int i = new Int(-1);
-        return allStatements.stream().map(s -> new Pair<>(i.next(), allStatements))
-                .map(p -> {
-                    p.second.set(p.first, shutDown(p.second.get(p.first)));
-                    return p.second;
-                })
-                .map(l -> l.stream().reduce((s1, s2) -> s1 + "\n" + s2).orElse(""))
-                .collect(Collectors.toList());
-    }
-
-
     private void removeUnnecessaryImports() {
         final List<Class<?>> importsToRemove = as.list(MetaTester.class);
         root.accept(new ASTVisitor() {
@@ -151,7 +181,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         return new StringBuilder(str).replace(start, pattern.length() + 1, replacer).toString();
     }
 
-
     private String testClassSkeleton(final List<List<String>> tests) {
         removeOriginalTestsFromTree();
         final StringBuilder $ = new StringBuilder();
@@ -161,12 +190,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         $.append("\n}\n");
         return $.toString().replaceFirst("@SuppressWarnings\\([\"a-zA-Z0-9-{}]*\\)[\n\t\r ]*public class", "public class").replace("public class",
                 "@SuppressWarnings(\"all\") public class");
-    }
-
-    private static <T> String removeBraces(final List<T> l) {
-        final StringBuilder $ = new StringBuilder();
-        l.stream().forEach(e -> $.append(e + ", "));
-        return $.substring(0, $.length() - 2);
     }
 
     @SuppressWarnings("boxing")
@@ -194,21 +217,17 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         return $;
     }
 
-    private static ASTNode makeAST(final File originalSourceFile) {
-        return wizard.ast(readAll(originalSourceFile));
+    enum SourceLineType {
+        TEST, OTHER
     }
 
-    private static String readAll(final File f) {
-        final StringBuilder $ = new StringBuilder();
-        try (final BufferedReader linesStream = new BufferedReader(new FileReader(f))) {
-            String line = linesStream.readLine();
-            for (; line != null; ) {
-                $.append(line).append("\n");
-                line = linesStream.readLine();
-            }
-            return $ + "";
-        } catch (final IOException x) {
-            return note.bug(x);
+    class Test {
+        public ASTNode source;
+        public List<MemberValuePair> values;
+
+        public Test(final ASTNode source, final List<MemberValuePair> values) {
+            this.source = source;
+            this.values = values;
         }
     }
 }

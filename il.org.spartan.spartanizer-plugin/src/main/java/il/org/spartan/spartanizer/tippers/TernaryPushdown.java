@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression>//
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = -0x77C40E8DAFC91AFBL;
 
   static Expression pushdown(final ConditionalExpression x) {

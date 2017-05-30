@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-05-08 */
 public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleVariableDeclaration>
     //
-    implements TipperCategory.Anonymization {
+    implements Nominal.Anonymization {
   private static final long serialVersionUID = 0x238DC1F9DD6723DAL;
   static final boolean BY_ANNOTATION = false;
 

@@ -14,6 +14,11 @@ import static il.org.spartan.Leonidas.auxilary_layer.step.*;
  * @since 01-12-2016
  */
 
+/*
+() -> {sout;} => () -> sout;
+() -> {return x;} => () -> x;
+ */
+
 public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLambdaExpression> {
 
     @Override

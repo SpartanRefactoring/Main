@@ -10,6 +10,8 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 
+import java.lang.Class;
+
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
 
@@ -287,6 +289,17 @@ public enum iz {
      */
     public static boolean booleanLiteral(final PsiElement ¢) {
         return typeCheck(PsiLiteralExpression.class, ¢) && ((PsiLiteralExpression) ¢).getValue() instanceof Boolean;
+    }
+
+    /**
+     * Determine whether a node is a boolean literal
+     *
+     * @param ¢ pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
+     * literal
+     */
+    public static boolean stringLiteral(final PsiElement ¢) {
+        return typeCheck(PsiLiteralExpression.class, ¢) && ((PsiLiteralExpression) ¢).getValue() instanceof String;
     }
 
     /**

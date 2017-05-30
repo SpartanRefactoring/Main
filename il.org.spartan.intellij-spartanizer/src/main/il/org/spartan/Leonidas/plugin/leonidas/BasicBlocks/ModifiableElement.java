@@ -4,31 +4,40 @@ import com.intellij.psi.PsiModifierListOwner;
 import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
+import il.org.spartan.Leonidas.plugin.UserControlled;
 
 import java.util.function.Function;
 
-import static il.org.spartan.Leonidas.auxilary_layer.Existence.DOES_NOT_EXISTS;
-import static il.org.spartan.Leonidas.auxilary_layer.Existence.DO_NOT_CARE;
-import static il.org.spartan.Leonidas.auxilary_layer.Existence.MUST_EXISTS;
+import static il.org.spartan.Leonidas.auxilary_layer.Existence.*;
 
 /**
  * @author michalcohen
  * @since 28-05-2017.
  */
-public abstract class ModifiableElement extends GenericEncapsulator {
+public abstract class ModifiableElement extends NamedElement {
 
-    Existence isPublic = DO_NOT_CARE,
-            isProtected = DO_NOT_CARE,
-            isPrivate = DO_NOT_CARE,
-            isStatic = DO_NOT_CARE,
-            isAbstract = DO_NOT_CARE,
-            isFinal = DO_NOT_CARE;
+    @UserControlled
+    Existence isPublic = DO_NOT_CARE;
+    @UserControlled
+    Existence isProtected = DO_NOT_CARE;
+    @UserControlled
+    Existence isPrivate = DO_NOT_CARE;
+    @UserControlled
+    Existence isStatic = DO_NOT_CARE;
+    @UserControlled
+    Existence isAbstract = DO_NOT_CARE;
+    @UserControlled
+    Existence isFinal = DO_NOT_CARE;
+
+    String name = "";
 
     public ModifiableElement(Encapsulator e, String template) {
         super(e, template);
     }
 
-    public ModifiableElement() {}
+    public ModifiableElement(String template) {
+        super(template);
+    }
 
     private boolean checkConstraint(Existence ex, PsiModifierListOwner mlo, Function<PsiModifierListOwner, Boolean> f){
         switch (ex){

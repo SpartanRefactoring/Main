@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-3-23 */
 public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
-    implements TipperCategory.Arithmetics {
+    implements TipperCategory.Arithmetics.Symbolic {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
   @Override public ASTNode replacement(final Assignment $) {

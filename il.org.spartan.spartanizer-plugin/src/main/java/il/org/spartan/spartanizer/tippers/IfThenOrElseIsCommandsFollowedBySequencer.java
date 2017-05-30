@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement>//
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = 0x5E1F4E074777B1C3L;
 
   static boolean endsWithSequencer(final Statement ¢) {

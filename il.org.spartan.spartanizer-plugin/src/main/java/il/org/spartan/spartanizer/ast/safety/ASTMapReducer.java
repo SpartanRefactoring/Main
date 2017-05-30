@@ -5,6 +5,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -30,7 +31,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return $;
   }
   protected R compound(final Expression... ¢) {
-    return foldl(as.list(¢));
+    return foldl(as.list(¢).stream().filter(λ -> λ != null).collect(Collectors.toList()));
   }
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
@@ -160,6 +161,12 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((FieldAccess) ¢);
       case EXPRESSION_METHOD_REFERENCE:
         return map((ExpressionMethodReference) ¢);
+      case VARIABLE_DECLARATION_EXPRESSION:
+        return map((VariableDeclarationExpression) ¢);
+      case TYPE_LITERAL:
+        return map((TypeLiteral) ¢);
+      case CREATION_REFERENCE:
+        return map((CreationReference) ¢);
       default:
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
@@ -262,7 +269,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
       case SYNCHRONIZED_STATEMENT:
         return map((SynchronizedStatement) ¢);
       case THROW_STATEMENT:
-        return map((SuperConstructorInvocation) ¢);
+        return map((ThrowStatement) ¢);
       case TRY_STATEMENT:
         return map((TryStatement) ¢);
       case TYPE_DECLARATION_STATEMENT:
@@ -273,6 +280,17 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((WhileStatement) ¢);
       default:
         assert fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", wizard.nodeName(¢)));
+        return reduce();
+    }
+  }
+  // TODO yossi gil: check if it is needed (mapping a Type node)
+  @SuppressWarnings("unused")
+  protected R map(final Type ¢) {
+    if (¢ == null)
+      return reduce();
+    switch (¢.getNodeType()) {
+      default:
+        assert true || fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", wizard.nodeName(¢)));
         return reduce();
     }
   }
@@ -299,6 +317,9 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         map(¢.getFinally())//
     );
   }
+  protected R map(final ThrowStatement ¢) {
+    return map(expression(¢));
+  }
   protected R map(final TypeDeclarationStatement ¢) {
     return map(¢.getDeclaration());
   }
@@ -310,6 +331,10 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   }
   protected R map(final WhileStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
+  }
+  // TODO yossi gil: check if it's alright
+  protected R map(@SuppressWarnings("unused") final CreationReference ¢) {
+    return reduce();
   }
   protected R reduce(final Collection<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclarationFragment::getInitializer).map(this::map).reduce(this::reduce).orElse(reduce());
