@@ -1,9 +1,10 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+
 
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.*;
@@ -13,6 +14,7 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
 import fluent.ly.*;
+import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** A dialog to descrive a configuration of an operation widget
  * @author Raviv Rachmiel
@@ -20,31 +22,40 @@ import fluent.ly.*;
 // TODO: Raviv Rachmiel, make use of the required column in configurations
 public class ConfigWidgetPreferencesDialog extends Dialog {
   String widgetName;
-  String[][] configurations;
   IPreferenceStore store;
   long widgetSerialID;
+  String[][] configurations;
+  Map<String, String> confMap;
+  WidgetOperationEntry woe;
+  String resName;
 
-  public ConfigWidgetPreferencesDialog(final Shell parentShell, final String widgetName, final String[][] configurations, final long widgetSerialID,
-      final IPreferenceStore store) {
+  public ConfigWidgetPreferencesDialog(final Shell parentShell,
+      WidgetOperationEntry woe, long serialID, final IPreferenceStore store ) {
     super(parentShell);
-    this.widgetName = widgetName;
-    this.configurations = configurations;
+    this.widgetName = woe.getName();
     this.store = store;
-    this.widgetSerialID = widgetSerialID;
+    this.widgetSerialID = serialID;
+    this.woe = woe;
+    this.configurations = woe.getWidgetOp().configurationComponents();
+    this.confMap = new HashMap<>();
+    this.resName = woe.getName();
   }
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);
+    resName = createString($, "Widget Name",resName);
     for (final String[] comp : configurations) {
       if ("String".equals(comp[1]))
-        comp[2] = createString($, comp[2]);
+        confMap.put(comp[0], createString($, comp[2],woe.getConfiguration().get(comp[0])));
       if ("Boolean".equals(comp[1]))
-        comp[2] = createBoolean($, comp[2]) + "";
+        confMap.put(comp[0], createBoolean($, comp[2],woe.getConfiguration().get(comp[0])));
       else { // if("List".equals(comp[1]))
-        final Button[] res = createList($, Arrays.copyOfRange(comp, 2, comp.length - 1));
+        final Button[] res = createList($, Arrays.copyOfRange(comp, 2, comp.length - 1),woe.getConfiguration().get(comp[0]));
         int count = 2;
         for (final Button ¢ : res) {
-          if (¢.getSelection())
+          if (¢.getSelection()) {
+            confMap.put(comp[0], comp[count]);
             comp[count] += "-V";
+          }
           ++count;
         }
       }
@@ -60,16 +71,17 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   @Override protected Point getInitialSize() {
     return new Point(450, 300);
   }
-  private static String createString(final Composite container, final String name) {
+  private static String createString(final Composite container, final String name,String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     final Text $ = new Text(container, SWT.BORDER);
+    $.setText(defaultValue);
     $.setLayoutData(dataRes);
     return $.getText();
   }
-  @SuppressWarnings("boxing") private static Boolean createBoolean(final Composite container, final String name) {
+  private static String createBoolean(final Composite container, final String name,String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
@@ -77,9 +89,10 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     final Button $ = new Button(container, SWT.CHECK);
     $.setText(name);
     $.setLayoutData(dataRes);
-    return $.getSelection();
+    $.setSelection("true".equals(defaultValue.toLowerCase()));
+    return $.getSelection()? "true" : "false";
   }
-  private static Button[] createList(final Composite container, final String[] options) {
+  private static Button[] createList(final Composite container, final String[] options,String defaultValue) {
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
@@ -88,6 +101,8 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     for (final String ¢ : options) {
       $[count] = new Button(container, SWT.RADIO);
       $[count].setSelection(false);
+      if(¢.equals(defaultValue))
+        $[count].setSelection(true);
       $[count].setText(¢);
       $[count].setBounds(10, 25 * count + 5, 75, 30);
       ++count;
@@ -101,7 +116,12 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     } catch (@SuppressWarnings("unused") final IOException x) {
       note.bug();
     }
-    store().setValue("CONF_" + widgetSerialID, String.valueOf(Base64.getEncoder().encode(out.toByteArray())));
+    final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+    l.get(l.indexOf(woe)).setConfMap(confMap);
+    l.get(l.indexOf(woe)).setName(resName);
+    woe.setConfMap(confMap);
+    woe.setName(resName);
+    WidgetPreferences.storeEntries(l);
     super.okPressed();
   }
 }

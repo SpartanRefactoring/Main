@@ -18,7 +18,7 @@ public class CleanOperation extends WidgetOperation {
   private String mode = current;
 
   @Override public String imageURL() {
-    return "file:/plugin/pictures/cleanIcon.png";
+    return "file:/plugin/pictures/cleanIconSmall.png";
   }
   @Override public String description() {
     return "clean project";

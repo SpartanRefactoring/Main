@@ -54,14 +54,14 @@ public enum PreferencesResources {
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
   public enum TipperGroup {
-    Abbreviation(TipperCategory.Abbreviation.class), //
+    Abbreviation(Nominal.Abbreviation.class), //
     Arithmetic(TipperCategory.Arithmetics.class), //
-    Anonymization(TipperCategory.Anonymization.class), //
+    Anonymization(Nominal.Anonymization.class), //
     Collapse(TipperCategory.Collapse.class), //
-    CommonFactoring(TipperCategory.CommnonFactoring.class), //
-    Centification(TipperCategory.Centification.class), //
+    CommonFactoring(TipperCategory.CommonFactorOut.class), //
+    Centification(Nominal.Trivialization.class), //
     Deadcode(TipperCategory.Deadcode.class), //
-    Dollarization(TipperCategory.NameOfResult.class), //
+    Dollarization(Nominal.Result.class), //
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //

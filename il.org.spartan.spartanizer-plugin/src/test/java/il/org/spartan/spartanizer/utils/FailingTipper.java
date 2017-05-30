@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth
  * @since 2017-04-13 */
 @SuppressWarnings("unused")
-public class FailingTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Abbreviation {
+public class FailingTipper<N extends ASTNode> extends Tipper<N> implements Nominal.Abbreviation {
   private static final long serialVersionUID = 0x7FE33D08914707AFL;
 
   @Override public boolean canTip(final N __) {

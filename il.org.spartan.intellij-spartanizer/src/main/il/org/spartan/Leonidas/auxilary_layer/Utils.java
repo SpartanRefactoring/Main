@@ -5,12 +5,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,6 +156,12 @@ public enum Utils {
         return l;
     }
 
+    public static List<PsiElement> wrapWithList(PsiElement e){
+        List<PsiElement> l = new LinkedList<>();
+        l.add(e);
+        return l;
+    }
+
     public static PsiElement getNextActualSibling(PsiElement e){
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
@@ -171,5 +179,13 @@ public enum Utils {
             current = getNextActualSibling(current);
         }
         return i;
+    }
+
+    public static Method getDeclaredMethod(Class<?> c, String name, Class<?>... parameterTypes) throws NoSuchMethodException {
+        if (c.equals(Object.class)) throw new NoSuchMethodException();
+        try {
+            return c.getDeclaredMethod(name, parameterTypes);
+        } catch (NoSuchMethodException e) {}
+        return getDeclaredMethod(c.getSuperclass(), name, parameterTypes);
     }
 }

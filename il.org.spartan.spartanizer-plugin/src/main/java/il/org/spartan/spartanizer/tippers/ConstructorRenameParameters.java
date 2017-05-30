@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code class A {int x;A(int y,int x) {this.x = x;}}} <br/>
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-28 */
-public class ConstructorRenameParameters extends EagerTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
+public class ConstructorRenameParameters extends EagerTipper<MethodDeclaration> implements Nominal.Fields {
   private static final long serialVersionUID = -0x6A3AE2731FF74B0BL;
 
   @Override public Tip tip(final MethodDeclaration d) {

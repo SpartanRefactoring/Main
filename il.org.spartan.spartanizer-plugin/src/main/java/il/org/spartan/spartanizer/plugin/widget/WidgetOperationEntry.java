@@ -11,7 +11,7 @@ import java.util.*;
 public class WidgetOperationEntry implements Serializable {
   private static final long serialVersionUID = -0x295E9D34CC34A530L;
   public final long widgetSUID;
-  public final Map<String, String> configuration;
+  public Map<String, String> configuration;
   private String name;
   private boolean isEnabled;
 
@@ -32,6 +32,8 @@ public class WidgetOperationEntry implements Serializable {
   public void toggleEnabled() {
     isEnabled = !isEnabled;
   }
+  
+
   public void setEnabled(final boolean flag) {
     isEnabled = flag;
   }
@@ -41,6 +43,11 @@ public class WidgetOperationEntry implements Serializable {
   public String getName() {
     return name;
   }
+  
+  public void setConfMap(Map<String,String> m) {
+    this.configuration = m;
+  }
+  
   public WidgetOperation getWidgetOp() {
     for (final WidgetOperation $ : WidgetOperationPoint.allOperations)
       if (widgetSUID == ObjectStreamClass.lookup($.getClass()).getSerialVersionUID())
@@ -49,6 +56,9 @@ public class WidgetOperationEntry implements Serializable {
   }
   public ConfigurationsMap getConfigurationMap() {
     return new ConfigurationsMap(configuration);
+  }
+  public Map<String,String> getConfiguration() {
+    return configuration;
   }
   @Override public int hashCode() {
     return (int) (widgetSUID ^ widgetSUID >>> 32)

@@ -28,7 +28,7 @@ public class DemoTipper implements LeonidasTipperDefinition {
      public void matcher() {
         new Template(() -> {
             class Type0 {
-                void method1$method$(Type2 id3){
+                void method1(Type2 id3){
                     anyNumberOf(Statement(4));
                 }
             }
