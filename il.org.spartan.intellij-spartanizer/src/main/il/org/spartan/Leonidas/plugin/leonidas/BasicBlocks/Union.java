@@ -70,18 +70,25 @@ public class Union extends GenericMethodCallBasedBlock {
         arguments.remove(0);
 
         arguments.forEach(arg -> {
+            GenericEncapsulator encapsulator = null;
+
             if (arg.getText().startsWith("method")) {
-                encapsulators.add(new Method());
+                encapsulator = new Method();
             } else if (arg.getText().startsWith("statement")) {
-                encapsulators.add(new Statement());
+                encapsulator = new Statement();
             } else if (arg.getText().startsWith("anyBlock")) {
-                encapsulators.add(new Block());
+                encapsulator = new Block();
             } else if (arg.getText().startsWith("booleanExpression")) {
-                encapsulators.add(new BooleanExpression());
+                encapsulator = new BooleanExpression();
             } else if (arg.getText().startsWith("booleanLiteral")) {
-                encapsulators.add(new BooleanLiteral());
+                encapsulator = new BooleanLiteral();
             } else if (arg.getText().startsWith("expression")) {
-                encapsulators.add(new Expression());
+                encapsulator = new Expression();
+            }
+
+            if (encapsulator != null) {
+                int id = az.integer(step.firstParameterExpression(az.methodCallExpression(arg)));
+                encapsulators.add(encapsulator);
             }
         });
     }
