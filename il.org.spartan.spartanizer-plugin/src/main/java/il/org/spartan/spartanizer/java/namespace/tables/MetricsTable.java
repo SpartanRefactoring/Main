@@ -45,7 +45,6 @@ public class MetricsTable extends NominalTables {
       protected void done(final String path) {
         summarize(path);
         reset();
-        System.err.println(" " + path + " Done");
       }
       public void summarize(final String path) {
         initializeWriter();
