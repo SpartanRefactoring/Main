@@ -202,10 +202,10 @@ public enum iz {
     public static MatchingResult conforms(Encapsulator e1, Encapsulator e2) {
         if (literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner()))
             return new MatchingResult(true);
-        MatchingResult m = genericConforms(e1, e2);
-        if (m.matches()) return m;
-        if (elseConforms(e1.getInner(), e2.getInner())) return new MatchingResult(true);
-        return new MatchingResult(false);
+        if (iz.generic(e2)){
+            return genericConforms(e1, e2);
+        }
+        return new MatchingResult(elseConforms(e1.getInner(), e2.getInner()));
     }
 
     public static boolean whiteSpace(PsiElement e) {
