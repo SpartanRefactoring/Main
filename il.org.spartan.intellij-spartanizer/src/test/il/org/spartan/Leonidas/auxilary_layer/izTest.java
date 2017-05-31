@@ -605,4 +605,14 @@ public class izTest extends PsiTypeHelper {
         assert iz.conforms(e1, e2).matches();
         assert iz.conforms(e3, e4).matches();
     }
+
+    public void testArithmetic() {
+        assertTrue(iz.arithmetic(createTestExpression("3")));
+        assertTrue(iz.arithmetic(createTestExpression("3 + 5")));
+        assertTrue(iz.arithmetic(createTestExpression("3 + 5 * 8")));
+
+        assertFalse(iz.arithmetic(createTestExpression("true")));
+        assertFalse(iz.arithmetic(createTestExpression("x && y")));
+        assertFalse(iz.arithmetic(createTestExpression("3 + i")));
+    }
 }
