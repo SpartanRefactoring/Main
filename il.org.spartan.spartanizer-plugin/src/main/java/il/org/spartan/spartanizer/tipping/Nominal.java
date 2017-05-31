@@ -8,7 +8,7 @@ public interface Nominal extends TipperCategory {
   /** TODO Yossi Gil: document class
    * @author Yossi Gil
    * @since 2017-05-29 */
-  public interface Fields extends Nominal {
+  interface Fields extends Nominal {
     @SuppressWarnings("hiding") String toString = "Use standard names for fields and parametrs assigned to fields";
 
     @Override default String description() {

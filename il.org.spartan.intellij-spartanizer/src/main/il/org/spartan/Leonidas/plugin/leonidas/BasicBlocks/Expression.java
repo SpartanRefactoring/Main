@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
+import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
@@ -64,5 +65,9 @@ public class Expression extends GenericMethodCallBasedBlock {
         return type;
     }
 
+    /* Constraints */
 
+    public void mustBeArithmetic() {
+        addConstraint(e -> iz.expression(e.inner) && iz.arithmetic(az.expression(e.inner)));
+    }
 }

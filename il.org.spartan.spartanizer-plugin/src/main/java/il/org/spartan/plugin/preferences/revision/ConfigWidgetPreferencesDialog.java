@@ -30,11 +30,11 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   String resName;
 
   public ConfigWidgetPreferencesDialog(final Shell parentShell,
-      WidgetOperationEntry woe, long serialID, final IPreferenceStore store ) {
+      WidgetOperationEntry woe, long widgetSerialID, final IPreferenceStore store ) {
     super(parentShell);
     this.widgetName = woe.getName();
     this.store = store;
-    this.widgetSerialID = serialID;
+    this.widgetSerialID = widgetSerialID;
     this.woe = woe;
     this.configurations = woe.getWidgetOp().configurationComponents();
     this.confMap = new HashMap<>();
