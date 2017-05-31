@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
@@ -8,14 +9,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Sharon KL & Michal Cohen & Oren Afek
- * @since 5/3/2017.
+ * @author Oren Afek
+ * @since 30/5/2017.
  */
-public class BooleanLiteral extends GenericMethodCallBasedBlock {
+public class Throwable extends GenericMethodCallBasedBlock {
+    private static final String TEMPLATE = "throwable";
 
-    private static final String TEMPLATE = "booleanLiteral";
+    @SuppressWarnings("unused")
+    public Throwable(PsiElement e) {
+        super(e, TEMPLATE);
+    }
 
-    public BooleanLiteral(Encapsulator n) {
+    public Throwable(Encapsulator n) {
         super(n, TEMPLATE);
     }
 
@@ -23,22 +28,22 @@ public class BooleanLiteral extends GenericMethodCallBasedBlock {
      * For reflection use DO NOT REMOVE!
      */
     @SuppressWarnings("unused")
-    protected BooleanLiteral() {
+    protected Throwable() {
         super(TEMPLATE);
     }
 
     @Override
     public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(iz.booleanLiteral(e.getInner()));
+        return new MatchingResult(super.generalizes(e).matches() && iz.expression(e.getInner()));
     }
 
     @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return prev.getText().equals(next.getText());
+        return next != null && prev.getText().equals(next.getText());
     }
 
     @Override
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        return new BooleanLiteral(e);
+        return new Throwable(e);
     }
 }

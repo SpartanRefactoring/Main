@@ -6,6 +6,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 import il.org.spartan.Leonidas.plugin.leonidas.PreservesIterator;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 /**
  * @author Oren Afek
- * @since 5/14/2017.
+ * @since 14-05-2017.
  */
 public abstract class Quantifier extends GenericMethodCallBasedBlock {
 
@@ -34,8 +35,8 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        return (internal != null && iz.generic(internal)) && az.generic(internal).generalizes(e);
+    public MatchingResult generalizes(Encapsulator e) {
+        return new MatchingResult(internal != null && iz.generic(internal) && az.generic(internal).generalizes(e).matches());
     }
 
     @Override

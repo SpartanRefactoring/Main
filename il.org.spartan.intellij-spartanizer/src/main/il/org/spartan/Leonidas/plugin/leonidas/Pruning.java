@@ -23,14 +23,19 @@ public class Pruning {
      */
     public static Encapsulator prune(Encapsulator n, Map<Integer, List<Matcher.Constraint>> map) {
         assert (n != null);
-        final Wrapper<Encapsulator> o = new Wrapper<>();
-        n.accept(e1 -> Toolbox.getInstance().getGenericsBasicBlocks().stream()
-                .filter(ge -> ge.conforms(e1.getInner()))
+        n.accept(e1 -> {
+            if (e1 != n) {
+                Toolbox.getInstance().getGenericsBasicBlocks().stream()
+                        .filter(ge -> ge.conforms(e1.getInner()))
+                        .findFirst()
+                        .ifPresent(g -> g.prune(e1, map));
+            }
+        });
+        final Wrapper<Encapsulator> o = new Wrapper<>(n);
+        Toolbox.getInstance().getGenericsBasicBlocks().stream()
+                .filter(ge -> ge.conforms(n.getInner()))
                 .findFirst()
-                .ifPresent(g -> o.set(g.prune(e1, map))));
-        if (Toolbox.getInstance().getGenericsBasicBlocks().stream()
-                .anyMatch(ge -> ge.conforms(n.getInner())))
-            return o.get();
-        return n;
+                .ifPresent(g -> o.set(g.prune(n, map)));
+        return o.get();
     }
 }

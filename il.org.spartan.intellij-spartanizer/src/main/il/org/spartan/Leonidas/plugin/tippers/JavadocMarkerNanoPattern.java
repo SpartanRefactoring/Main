@@ -57,7 +57,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
     }
 
     @Override
-    public Class<? extends PsiMethod> getPsiClass() {
+    public Class<? extends PsiMethod> getOperableType() {
         return PsiMethodImpl.class;
     }
 

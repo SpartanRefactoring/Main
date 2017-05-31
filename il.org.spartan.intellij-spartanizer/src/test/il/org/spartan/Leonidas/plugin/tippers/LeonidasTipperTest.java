@@ -95,7 +95,7 @@ public class LeonidasTipperTest extends PsiTypeHelper {
     public void testGetPsiClass() {
         $ = createTestObject();
         Mockito.when(builderMock.getRootElementType()).then(x -> testClassType);
-        assertEquals(testClassType, $.getPsiClass());
+        assertEquals(testClassType, $.getOperableType());
     }
 
 

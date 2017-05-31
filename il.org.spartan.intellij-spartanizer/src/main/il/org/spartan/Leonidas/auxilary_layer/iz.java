@@ -9,6 +9,7 @@ import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.lang.Class;
 
@@ -186,8 +187,9 @@ public enum iz {
         return (iz.javaToken(e1) && iz.javaToken(e2) && az.javaToken(e1).getText().equals(az.javaToken(e2).getText()));
     }
 
-    private static boolean genericConforms(Encapsulator e1, Encapsulator e2) {
-        return iz.generic(e2) && az.generic(e2).generalizes(e1);
+    private static MatchingResult genericConforms(Encapsulator e1, Encapsulator e2) {
+        if (!iz.generic(e2)) return new MatchingResult(false);
+        return az.generic(e2).generalizes(e1);
     }
 
     private static boolean elseConforms(PsiElement e1, PsiElement e2) {
@@ -197,9 +199,13 @@ public enum iz {
     /**
      * e2 is the generic tree
      */
-    public static boolean conforms(Encapsulator e1, Encapsulator e2) {
-        return literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner()) ||
-                genericConforms(e1, e2) || elseConforms(e1.getInner(), e2.getInner());
+    public static MatchingResult conforms(Encapsulator e1, Encapsulator e2) {
+        if (literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner()))
+            return new MatchingResult(true);
+        if (iz.generic(e2)){
+            return genericConforms(e1, e2);
+        }
+        return new MatchingResult(elseConforms(e1.getInner(), e2.getInner()));
     }
 
     public static boolean whiteSpace(PsiElement e) {

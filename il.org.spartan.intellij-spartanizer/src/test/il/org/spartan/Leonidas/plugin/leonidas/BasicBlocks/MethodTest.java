@@ -37,8 +37,8 @@ public class MethodTest extends PsiTypeHelper {
         //TODO @sharon
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestMethodFromString("public void method0() {}"));
         method = (Method) method.create(e, new HashMap<>());
-        assertTrue(method.generalizes(buildTreeFromPsi(createTestMethodFromString("public void m() {}"))));
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestMethodFromString("public int m() {}"))));
+        assertTrue(method.generalizes(buildTreeFromPsi(createTestMethodFromString("public void m() {}"))).matches());
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestMethodFromString("public int m() {}"))).matches());
 //        assertTrue(method.generalizes(buildTreeFromPsi(createTestMethodFromString("public void m(int i) {}"))));
 //        assertTrue(method.generalizes(buildTreeFromPsi(createTestMethodFromString("public void m(String s) {}"))));
 //        assertTrue(method.generalizes(buildTreeFromPsi(createTestMethodFromString("public int m() {return 123}"))));
@@ -46,18 +46,18 @@ public class MethodTest extends PsiTypeHelper {
 
     public void testDoesNotGeneralizeStatements() {
         //TODO @sharon
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("x++;"))));
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("x = y + z;"))));
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("m();"))));
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("return 's';"))));
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("x++;"))).matches());
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("x = y + z;"))).matches());
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("m();"))).matches());
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestStatementFromString("return 's';"))).matches());
     }
 
     public void testDoesNotGeneralizeExpressions() {
         //TODO @sharon
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("x + y"))));
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("true"))));
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("x++"))));
-        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("a()"))));
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("x + y"))).matches());
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("true"))).matches());
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("x++"))).matches());
+        assertFalse(method.generalizes(buildTreeFromPsi(createTestExpression("a()"))).matches());
     }
 
 
