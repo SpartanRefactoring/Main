@@ -6,6 +6,7 @@ import java.util.Map;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.stringLiteral;
 
 /**
+ * Change Order in Equals (Prevents NullPointerException)
  * @author Oren Afek
  * @since 5/29/2017.
  */
