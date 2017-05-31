@@ -24,7 +24,7 @@ public interface Tipper<T extends PsiElement> {
 
     Tip tip(T node);
 
-    Class<? extends T> getPsiClass();
+    Class<? extends T> getOperableType();
 
     default Map<String,String> getExamples() {return new HashMap<String,String>();}
 }

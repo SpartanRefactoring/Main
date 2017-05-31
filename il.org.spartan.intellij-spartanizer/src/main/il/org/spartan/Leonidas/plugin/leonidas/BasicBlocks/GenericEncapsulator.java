@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,7 +70,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
         GenericEncapsulator ge = create(upperElement, map);
         if (isGeneric())
             ge.putId(ge.extractId(e.getInner()));
-        return ge.getParent() == null ? ge : upperElement.generalizeWith(ge);
+        return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
     }
 
     protected abstract boolean goUpwards(Encapsulator prev, Encapsulator next);
@@ -90,18 +91,17 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @return true iff I can generalize with e
      */
     @SuppressWarnings("InfiniteRecursion")
-    public boolean generalizes(Encapsulator e) {
-        // Check if there is any constraint that cannot be accepted with the given element
-        return constraints.stream()
-                .filter(c -> !c.accept(e))
-                .count() == 0;
+    public MatchingResult generalizes(Encapsulator e) {
+        return new MatchingResult(constraints.stream()
+                .allMatch(c -> c.accept(e)));
     }
 
-    public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
-        assert parent != null;
+    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (parent == null) return elements;
         List<PsiElement> l = Lists.reverse(elements);
         l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
         r.deleteByRange(inner.getParent(), inner, inner);
+        return elements;
     }
 
     /**

@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,8 @@ public class StringLiteral extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        return iz.stringLiteral(e.getInner());
+    public MatchingResult generalizes(Encapsulator e) {
+        return new MatchingResult(iz.stringLiteral(e.getInner()));
     }
 
     @Override

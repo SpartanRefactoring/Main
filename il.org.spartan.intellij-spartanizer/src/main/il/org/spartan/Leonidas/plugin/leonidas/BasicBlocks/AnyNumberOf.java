@@ -17,7 +17,6 @@ import java.util.Map;
 public class AnyNumberOf extends Quantifier {
 
     private static final String TEMPLATE = "anyNumberOf";
-    Encapsulator internal;
 
     public AnyNumberOf(PsiElement e, Encapsulator i) {
         super(e, TEMPLATE, i);
@@ -33,7 +32,7 @@ public class AnyNumberOf extends Quantifier {
         Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
         i.value().getParent().accept(n -> {
-            if (generalizes(n)) count.set(count.get() + 1);
+            if (generalizes(n).matches()) count.set(count.get() + 1);
         });
         return count.get();
     }

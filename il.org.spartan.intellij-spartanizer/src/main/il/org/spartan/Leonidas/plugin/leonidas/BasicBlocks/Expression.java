@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
 import java.util.Map;
@@ -45,8 +46,8 @@ public class Expression extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        return super.generalizes(e) && iz.expression(e.getInner());
+    public MatchingResult generalizes(Encapsulator e) {
+        return new MatchingResult(super.generalizes(e).matches() && iz.expression(e.getInner()));
     }
 
     @Override

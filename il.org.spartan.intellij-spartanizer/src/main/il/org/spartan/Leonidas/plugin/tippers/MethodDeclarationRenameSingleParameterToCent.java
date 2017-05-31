@@ -54,16 +54,16 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
 								¢.getParameterList().getParameters()[0].getNameIdentifier().getText());
 				r.replace(¢.getParameterList().getParameters()[0].getNameIdentifier(), cent);
 				List<PsiIdentifier> references = Utils.getAllReferences(¢.getBody(), i);
-				Stream<PsiIdentifier> fields = references.stream()
-						.filter(q -> iz.javaToken(q.getPrevSibling().getPrevSibling()));
-				references.removeAll(fields.collect(Collectors.toList()));
+				List<PsiIdentifier> fields = references.stream()
+						.filter(q -> iz.javaToken(q.getPrevSibling().getPrevSibling()) || iz.methodCallExpression(q.getParent().getParent())).collect(Collectors.toList());
+				references.removeAll(fields);
                 references.forEach(s -> r.replace(s, cent));
             }
         };
     }
 
     @Override
-    public Class<? extends PsiMethod> getPsiClass() {
+    public Class<? extends PsiMethod> getOperableType() {
         return PsiMethodImpl.class;
     }
 

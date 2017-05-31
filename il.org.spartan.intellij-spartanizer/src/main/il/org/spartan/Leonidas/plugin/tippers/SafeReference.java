@@ -81,8 +81,8 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
 	}
 
     @Override
-    public Class<? extends PsiConditionalExpression> getPsiClass() {
-        return PsiConditionalExpressionImpl.class;
+	public Class<? extends PsiConditionalExpression> getOperableType() {
+		return PsiConditionalExpressionImpl.class;
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -5,6 +5,7 @@ import com.intellij.psi.PsiExpression;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,14 +51,8 @@ public class Union extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        for (GenericEncapsulator encapsulator : encapsulators) {
-            if (encapsulator.generalizes(e)) {
-                return true;
-            }
-        }
-
-        return false;
+    public MatchingResult generalizes(Encapsulator e) {
+        return encapsulators.stream().map(encapsulator -> encapsulator.generalizes(e)).filter(MatchingResult::matches).findFirst().orElse(new MatchingResult(false));
     }
 
     /**

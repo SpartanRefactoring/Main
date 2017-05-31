@@ -24,10 +24,10 @@ public class IdentifierTest extends PsiTypeHelper {
     }
 
     public void testGeneralizes() {
-        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("x"))));
-        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("y"))));
-        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x++;"))));
-        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("true && false"))));
-        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 2"))));
+        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("x"))).matches());
+        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("y"))).matches());
+        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x++;"))).matches());
+        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("true && false"))).matches());
+        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 2"))).matches());
     }
 }
