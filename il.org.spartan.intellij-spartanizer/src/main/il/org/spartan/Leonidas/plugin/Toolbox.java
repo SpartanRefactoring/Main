@@ -6,7 +6,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
@@ -24,7 +23,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.lang.reflect.Modifier.isAbstract;
 
@@ -128,9 +126,9 @@ public class Toolbox implements ApplicationComponent {
 
         this.allTipperMap.values().forEach(element -> element.forEach(tipper -> {
             if (list.contains(tipper.name())) {
-                tipperMap.putIfAbsent(tipper.getPsiClass(), new CopyOnWriteArrayList<>());
-                operableTypes.add(tipper.getPsiClass());
-                tipperMap.get(tipper.getPsiClass()).add(tipper);
+                tipperMap.putIfAbsent(tipper.getOperableType(), new CopyOnWriteArrayList<>());
+                operableTypes.add(tipper.getOperableType());
+                tipperMap.get(tipper.getOperableType()).add(tipper);
             }
         }));
 
@@ -146,11 +144,11 @@ public class Toolbox implements ApplicationComponent {
     }
 
     private Toolbox add(Tipper<? extends PsiElement> t) {
-        tipperMap.putIfAbsent(t.getPsiClass(), new CopyOnWriteArrayList<>());
-        operableTypes.add(t.getPsiClass());
-        tipperMap.get(t.getPsiClass()).add(t);
-        allTipperMap.putIfAbsent(t.getPsiClass(), new CopyOnWriteArrayList<>());
-        allTipperMap.get(t.getPsiClass()).add(t);
+        tipperMap.putIfAbsent(t.getOperableType(), new CopyOnWriteArrayList<>());
+        operableTypes.add(t.getOperableType());
+        tipperMap.get(t.getOperableType()).add(t);
+        allTipperMap.putIfAbsent(t.getOperableType(), new CopyOnWriteArrayList<>());
+        allTipperMap.get(t.getOperableType()).add(t);
         return this;
     }
 

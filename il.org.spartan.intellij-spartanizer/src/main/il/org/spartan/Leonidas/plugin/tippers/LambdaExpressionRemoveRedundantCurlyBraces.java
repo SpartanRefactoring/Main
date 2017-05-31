@@ -69,7 +69,7 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
     }
 
     @Override
-    public Class<? extends PsiLambdaExpression> getPsiClass() {
+    public Class<? extends PsiLambdaExpression> getOperableType() {
         return PsiLambdaExpressionImpl.class;
     }
 

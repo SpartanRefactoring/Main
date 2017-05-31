@@ -48,7 +48,7 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 	}
 
     @Override
-    public Class<? extends PsiConditionalExpression> getPsiClass() {
+    public Class<? extends PsiConditionalExpression> getOperableType() {
         return PsiConditionalExpressionImpl.class;
     }
 

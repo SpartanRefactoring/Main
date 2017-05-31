@@ -35,7 +35,7 @@ public class NoTip<T extends PsiElement> implements Tipper<T> {
     }
 
     @Override
-    public Class<? extends T> getPsiClass() {
+    public Class<? extends T> getOperableType() {
         return null;
     }
 }
