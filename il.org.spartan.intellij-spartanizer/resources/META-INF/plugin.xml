@@ -27,6 +27,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
+        <projectService serviceInterface="il.org.spartan.Leonidas.plugin.ToolboxStateService"
+                        serviceImplementation="il.org.spartan.Leonidas.plugin.ToolboxStateService"/>
     </extensions>
 
     <application-components>
@@ -38,7 +40,7 @@
     </application-components>
 
     <actions>
-        <group  id="LeonidasGroup" text="Leonidas" description="Group For Leonidas Services" >
+        <group id="LeonidasGroup" text="Leonidas" description="Group For Leonidas Services">
             <add-to-group group-id="MainMenu" relative-to-action="RefactoringMenu" anchor="after"/>
         </group>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
