@@ -33,11 +33,11 @@ import static java.lang.reflect.Modifier.isAbstract;
  */
 public class Toolbox implements ApplicationComponent {
 
-
     private static final Logger logger = new Logger(Toolbox.class);
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new ConcurrentHashMap<>();
     private final Set<VirtualFile> excludedFiles = new HashSet<>();
     private final Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
+    private final ToolboxStateService toolboxStateService = ToolboxStateService.getInstance();
     public boolean playground = false;
     public boolean testing = true;
     public boolean replaced = false;
@@ -90,7 +90,7 @@ public class Toolbox implements ApplicationComponent {
                 });
     }
 
-    public List<LeonidasTipperDefinition> getAllTipperInstances(){
+    public List<LeonidasTipperDefinition> getAllTipperInstances() {
         return tipperInstances;
     }
 
@@ -170,14 +170,21 @@ public class Toolbox implements ApplicationComponent {
                 .findFirst()
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
     }
+
     /*This should work on any tree!
     * Returns true if the tipper changed anything.
     * false otherwise.
     * */
-    public boolean executeSingleTipper(PsiElement e, String tipperName){
+    public boolean executeSingleTipper(PsiElement e, String tipperName) {
         Tipper tipper = getTipperByName(tipperName);
-        if(tipper == null) {System.out.println("\nNull tipper!\n"); return false;}
-        if(e == null) {System.out.println("\nNull element!\n"); return false;}
+        if (tipper == null) {
+            System.out.println("\nNull tipper!\n");
+            return false;
+        }
+        if (e == null) {
+            System.out.println("\nNull element!\n");
+            return false;
+        }
 
         Wrapper<PsiElement> toReplace = new Wrapper<>(null);
         Wrapper<Boolean> modified = new Wrapper<>(false);
@@ -185,14 +192,18 @@ public class Toolbox implements ApplicationComponent {
             @Override
             public void visitElement(PsiElement el) {
                 super.visitElement(el);
-                if(modified.get()){return;}
-                if(tipper.canTip(el)){
+                if (modified.get()) {
+                    return;
+                }
+                if (tipper.canTip(el)) {
                     toReplace.set(el);
                     modified.set(true);
                 }
             }
         });
-        if(!modified.get()) {return false;}
+        if (!modified.get()) {
+            return false;
+        }
         tipper.tip(toReplace.get()).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
         return true;
     }
@@ -204,6 +215,7 @@ public class Toolbox implements ApplicationComponent {
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
     public boolean canTip(PsiElement e) {
+//        toolboxStateService.setCheck(toolboxStateService.getCheck() + 1);
         return (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) && tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)));
     }
 
@@ -218,9 +230,9 @@ public class Toolbox implements ApplicationComponent {
         return new NoTip<>();
     }
 
-    public Tipper getTipperByName(String name){
+    public Tipper getTipperByName(String name) {
         Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
-        if(res.isPresent()){
+        if (res.isPresent()) {
             return res.get();
         }
         return null;

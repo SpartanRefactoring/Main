@@ -28,7 +28,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
         <projectService serviceInterface="il.org.spartan.Leonidas.plugin.ToolboxStateService"
-                        serviceImplementation="il.org.spartan.Leonidas.plugin.ToolboxStateService"/>
+                        serviceImplementation="il.org.spartan.Leonidas.plugin.ToolboxStateService" overrides="true"/>
     </extensions>
 
     <application-components>
@@ -36,6 +36,10 @@
             <implementation-class>
                 il.org.spartan.Leonidas.plugin.Toolbox
             </implementation-class>
+        </component>
+        <component>
+            <implementation-class>il.org.spartan.Leonidas.plugin.ToolboxStateService</implementation-class>
+            <interface-class>il.org.spartan.Leonidas.plugin.ToolboxStateService</interface-class>
         </component>
     </application-components>
 
