@@ -34,10 +34,20 @@ public class GenericPsiElementStub {
         return true;
     }
 
-    public static Object expression(int id) {
-        return true;
+    public static <T> T expression(int id) {
+        return null;
     }
 
+    /**
+     * method stub representing a throwable for leonidas tippers
+     *
+     * @param id the serial no to distinct between several boolean expressions in the same tipper
+     * @return true
+     * @implNote the return value type in @link{{@link Error} Error} so the tipper won't throw a <u>checked exception</u>
+     */
+    public static Error throwable(int id) {
+        return new Error();
+    }
 
 
     /**

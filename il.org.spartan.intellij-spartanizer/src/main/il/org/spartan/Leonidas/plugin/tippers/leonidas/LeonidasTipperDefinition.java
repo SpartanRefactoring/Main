@@ -1,8 +1,12 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.HashMap;
-import java.util.function.Supplier;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author Sharon Kuninin, Oren Afek
@@ -25,6 +29,23 @@ public interface LeonidasTipperDefinition {
     default void constraints() {
     }
 
+    default Map<String, String> getExamples() {
+        return new HashMap<String, String>();
+    }
+
+    /*
+    Defines code examples and results after applying the tipper. This is used to test the tipper.
+     */
+
+    enum UnderConstructionReason {INCOMPLETE, UNTESTED, BROKEN_MATCHER, BROKEN_REPLACER}
+
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    @interface TipperUnderConstruction {
+        UnderConstructionReason value() default UnderConstructionReason.INCOMPLETE;
+    }
+
     /**
      * Defined a generic template of code.
      */
@@ -40,14 +61,9 @@ public interface LeonidasTipperDefinition {
         /**
          * Will be used when ever the method inside the template returns something.
          * For example: !booleanExpression(0) or if(booleanExpression(0) return expression(1);
+         *
          * @param __ When creating an instance for this param, the method "get" will be override to define the template.
          */
         public Template(Supplier<?> __) {/**/}
     }
-
-    /*
-    Defines code examples and results after applying the tipper. This is used to test the tipper.
-     */
-
-    default Map<String,String> getExamples() {return new HashMap<String,String>();}
 }
