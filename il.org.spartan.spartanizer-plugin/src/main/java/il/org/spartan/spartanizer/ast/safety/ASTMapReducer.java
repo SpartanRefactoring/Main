@@ -288,11 +288,9 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   protected R map(final Type ¢) {
     if (¢ == null)
       return reduce();
-    switch (¢.getNodeType()) {
-      default:
-        assert true || fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", wizard.nodeName(¢)));
-        return reduce();
-    }
+    ¢.getNodeType();
+    assert true || fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", wizard.nodeName(¢)));
+    return reduce();
   }
   protected R map(final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), foldl(arguments(¢)));

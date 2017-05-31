@@ -388,6 +388,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SpartanizeSelection" name="Selection"/>
      <command id= "il.org.spartan.CentToIt" name="CentToIt"/>
      <command id= "il.org.spartan.LongNames" name="LongNames"/>
+     <command id= "il.org.spartan.ShortNames" name="ShortNames"/>
      <command id="il.org.spartan.SpartanizeCurrent" name="Window"/>
      <command id="il.org.spartan.SpartanizeAll" name="Project"/>
      <command id="il.org.spartan.ZoomTool" name="Window"/>
@@ -417,6 +418,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanizeSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.CentToIt" class="il.org.spartan.spartanizer.plugin.CentToParam"/>
    <handler commandId="il.org.spartan.LongNames" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.ShortNames" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
@@ -578,8 +580,11 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Shortcuts -->
 <extension point="org.eclipse.ui.bindings">
-	<key sequence="Ctrl+Alt+Y"
+	<key sequence="Ctrl+8"
 		commandId="il.org.spartan.LongNames"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+9"
+		commandId="il.org.spartan.ShortNames"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+4"
 		commandId="il.org.spartan.TipsToggleOnOff"

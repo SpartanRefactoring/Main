@@ -13,6 +13,9 @@ import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.lang.Class;
 
+import static com.intellij.psi.JavaTokenType.DOUBLE_LITERAL;
+import static com.intellij.psi.JavaTokenType.FLOAT_LITERAL;
+import static com.intellij.psi.JavaTokenType.INTEGER_LITERAL;
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
 
@@ -455,5 +458,31 @@ public enum iz {
 
     public static boolean modifierListOwner(PsiElement e) {
         return typeCheck(PsiModifierListOwner.class, e);
+    }
+
+    /**
+     * Checks whether the given element is arithmetic or not. An arithmetic element is one that
+     * contains only literal numerical elements, connected by mathematical operators. The following
+     * are examples of arithmetic expressions:
+     *
+     *  3
+     *  3 + 4
+     *  5 * 6
+     *
+     * @param e element to check
+     * @return <code>true</code> if the element is arithmetic, <code>false</code> otherwise
+     */
+    public static boolean arithmetic(PsiExpression e) {
+        if (iz.literal(e)) {
+            IElementType type = az.javaToken(az.literal(e).getFirstChild()).getTokenType();
+            return type == INTEGER_LITERAL || type == DOUBLE_LITERAL || type == FLOAT_LITERAL;
+        }
+
+        if (!iz.binaryExpression(e)) {
+            return false;
+        }
+
+        PsiBinaryExpression be = az.binaryExpression(e);
+        return arithmetic(be.getLOperand()) && arithmetic(be.getROperand());
     }
 }
