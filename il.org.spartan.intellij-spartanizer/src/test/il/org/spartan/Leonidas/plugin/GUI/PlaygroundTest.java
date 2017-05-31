@@ -67,4 +67,5 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
         assert !playground.isDisplayable();
     }
 
+
 }

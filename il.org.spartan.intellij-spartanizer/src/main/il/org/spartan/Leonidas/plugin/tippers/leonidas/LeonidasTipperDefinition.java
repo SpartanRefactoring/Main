@@ -1,8 +1,8 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import java.util.HashMap;
-import java.util.function.Supplier;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author Sharon Kuninin, Oren Afek
@@ -23,6 +23,21 @@ public interface LeonidasTipperDefinition {
      * Defines additional constraints that need to apply on the code of the user so it will be matched.
      */
     default void constraints() {
+    }
+
+    /**
+     * Defines examples of applications of the current tip.
+     *
+     * @return mapping between the code of the user, and the resulting code after the tip is applied.
+     */
+    default Map<String, String> getExamples() {
+        return new HashMap<>();
+    }
+
+    /**
+     * Defines additional replacing rules that will be performed on the code of the replacing tree.
+     */
+    default void replacingRules() {
     }
 
     /**
@@ -49,5 +64,5 @@ public interface LeonidasTipperDefinition {
     Defines code examples and results after applying the tipper. This is used to test the tipper.
      */
 
-    default Map<String,String> getExamples() {return new HashMap<String,String>();}
+
 }

@@ -80,7 +80,7 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
     }
 
     @Override
-    public Class<PsiConditionalExpressionImpl> getPsiClass() {
+    public Class<PsiConditionalExpressionImpl> getOperableType() {
         return PsiConditionalExpressionImpl.class;
     }
 

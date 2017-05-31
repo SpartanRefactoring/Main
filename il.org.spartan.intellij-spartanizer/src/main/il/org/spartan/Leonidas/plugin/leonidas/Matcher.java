@@ -130,6 +130,7 @@ public class Matcher {
      * @param map     a mapping between id of generic elements and lists of constraints.
      */
     private void buildMatcherTree(Matcher matcher, Map<Integer, List<Constraint>> map) {
+        if (map == null) return;
         matcher.getGenericElements()
                 .forEach((i, e) -> java.util.Optional.ofNullable(map.get(i)).ifPresent(z -> z.forEach(j -> {
                     if (j instanceof StructuralConstraint)

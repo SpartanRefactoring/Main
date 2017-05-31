@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiTypeElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
@@ -16,7 +17,7 @@ import java.util.Map;
  * @author amirsagiv83, michalcohen
  * @since 29-05-2017.
  */
-public class Type extends NamedElement{
+public class Type extends NamedElement {
 
     private static final String TEMPLATE = "Class";
 
@@ -47,13 +48,15 @@ public class Type extends NamedElement{
     }
 
     @Override
-    public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
+    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         if (iz.classDeclaration(elements.get(0))) {
             PsiClass c = az.classDeclaration(elements.get(0));
-            super.replaceByRange(Utils.wrapWithList(JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c)), r);
-        } else {
-            super.replaceByRange(elements, r);
+            PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c);
+            r.replace(inner, pte);
+            return Utils.wrapWithList(pte);
+
         }
+        return super.replaceByRange(elements, m, r);
     }
 }
 
