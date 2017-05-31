@@ -4,9 +4,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiMethod;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
-import il.org.spartan.Leonidas.auxilary_layer.az;
-import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
@@ -25,7 +23,7 @@ import java.util.stream.IntStream;
 public class Class extends NamedElement{
 
     private static final String TEMPLATE = "Class";
-    private List<Matcher> fieldsMatcher, methodsMatcher, innerClassesMatcher;
+    private List<Matcher> fieldsMatchers, methodsMatchers, innerClassesMatchers;
 
     public Class(Encapsulator e) {
         super(e, TEMPLATE);
@@ -51,9 +49,12 @@ public class Class extends NamedElement{
     @Override
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         Class c = new Class(e);
-        c.fieldsMatcher = Arrays.stream(az.classDeclaration(e.getInner()).getAllFields()).map(f -> new Matcher(Utils.wrapWithList(Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)), map)).collect(Collectors.toList());
-        c.methodsMatcher = Arrays.stream(az.classDeclaration(e.getInner()).getAllMethods()).map(m -> new Matcher(Utils.wrapWithList(Pruning.prune(Encapsulator.buildTreeFromPsi(m), map)), map)).collect(Collectors.toList());
-        c.innerClassesMatcher = Arrays.stream(az.classDeclaration(e.getInner()).getAllInnerClasses()).map(ic -> new Matcher(Utils.wrapWithList(Pruning.prune(Encapsulator.buildTreeFromPsi(ic), map)), map)).collect(Collectors.toList());
+        List<Encapsulator> fields = Arrays.stream(az.classDeclaration(e.getInner()).getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
+        List<Encapsulator> methods = Arrays.stream(az.classDeclaration(e.getInner()).getMethods()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
+        List<Encapsulator> innerClasses = Arrays.stream(az.classDeclaration(e.getInner()).getInnerClasses()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
+        c.fieldsMatchers = fields.stream().map(f -> new Matcher(Utils.wrapWithList(f), map)).collect(Collectors.toList());
+        c.methodsMatchers = methods.stream().map(m -> new Matcher(Utils.wrapWithList(m), map)).collect(Collectors.toList());
+        c.innerClassesMatchers = innerClasses.stream().map(ic -> new Matcher(Utils.wrapWithList(ic), map)).collect(Collectors.toList());
         return c;
     }
 
@@ -80,32 +81,47 @@ public class Class extends NamedElement{
         getAllPermutation(fieldsPermutation, fields.length - 1, IntStream.range(0, fields.length).boxed().collect(Collectors.toList()), new Integer[fields.length]);
         getAllPermutation(methodsPermutation, methods.length - 1, IntStream.range(0, methods.length).boxed().collect(Collectors.toList()), new Integer[methods.length]);
         getAllPermutation(innerClassesPermutation, innerClasses.length - 1, IntStream.range(0, innerClasses.length).boxed().collect(Collectors.toList()), new Integer[innerClasses.length]);
-        boolean b = super.generalizes(e).matches() && fieldsPermutation.stream().anyMatch(perm -> {
-            for (int i = 0; i < fields.length; i++) {
-                if (!fieldsMatcher.get(i).match(fields[perm[i]])) {
-                    return false;
-                }
-            }
-            return true;
-        });
-        b = b && super.generalizes(e).matches() && methodsPermutation.stream().anyMatch(perm -> {
-            for (int i = 0; i < methods.length; i++) {
-                if (!methodsMatcher.get(i).match(methods[perm[i]])) {
-                    return false;
-                }
-            }
-            return true;
-        });
-
-        b = b && super.generalizes(e).matches() && innerClassesPermutation.stream().anyMatch(perm -> {
-            for (int i = 0; i < innerClasses.length; i++) {
-                if (!innerClassesMatcher.get(i).match(innerClasses[perm[i]])) {
-                    return false;
-                }
-            }
-            return true;
-        });
-        return new MatchingResult(b);
+        MatchingResult mm = new MatchingResult(true);
+        if (!super.generalizes(e).matches())
+            return new MatchingResult(false);
+        mm.combineWith(matchInnerElement(fieldsPermutation, fields, fieldsMatchers));
+        mm.combineWith(matchInnerElement(methodsPermutation, methods, methodsMatchers));
+        mm.combineWith(matchInnerElement(innerClassesPermutation, innerClasses, innerClassesMatchers));
+        return mm;
     }
 
+    private MatchingResult matchInnerElement(List<Integer[]> permutations, PsiElement[] innerElements, List<Matcher> matchers) {
+        Wrapper<Integer> dummy = new Wrapper<>(0);
+        return permutations.stream().map(perm -> {
+            MatchingResult mmm = new MatchingResult(true);
+            for (int i = 0; i < innerElements.length; i++) {
+                MatchingResult mmmm = matchers.get(i).getMatchingResult(innerElements[perm[i]], dummy);
+                if (mmmm.notMatches()) {
+                    return mmmm;
+                }
+                mmm.combineWith(mmmm);
+            }
+            return mmm;
+        }).filter(mmmm -> mmmm.matches()).findFirst().orElse(new MatchingResult(false));
+    }
+
+    @Override
+    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> map, PsiRewrite r) {
+        PsiClass psiClass = az.classDeclaration(elements.get(0));
+        PsiClass innerAsClass = az.classDeclaration(inner);
+        innerAsClass.setName(psiClass.getName());
+        List<Encapsulator> methods = Arrays.stream(innerAsClass.getMethods()).map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList());
+        List<Encapsulator> fields = Arrays.stream(innerAsClass.getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), null)).collect(Collectors.toList());
+        List<Encapsulator> innerClasses = Arrays.stream(innerAsClass.getInnerClasses()).map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList());
+        List<Encapsulator> prunedChildren = new LinkedList<>();
+        prunedChildren.addAll(methods);
+        prunedChildren.addAll(fields);
+        prunedChildren.addAll(innerClasses);
+        prunedChildren.forEach(c -> c.accept(n -> {
+            if (!n.isGeneric()) return;
+            GenericEncapsulator ge = az.generic(n);
+            ge.replaceByRange(map.get(ge.getId()), map, r);
+        }));
+        return Utils.wrapWithList(inner);
+    }
 }

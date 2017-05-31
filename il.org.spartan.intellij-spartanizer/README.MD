@@ -39,7 +39,7 @@ The plugin can be installed in one of two options:
 - Click On the "IntelliJSpartanizer.jar"
 - Save the file on your disk, remember the location
 - Open Intellij IDEA
-- Go to File -> Settings -> Plugins -> Install il.org.spartan.Leonidas.plugin from disk
+- Go to File -> Settings -> Plugins -> Install plugin from disk
 
 ![image](https://cloud.githubusercontent.com/assets/15859817/21104064/ce276d7a-c08d-11e6-9ce6-32698e89cc71.png)
 

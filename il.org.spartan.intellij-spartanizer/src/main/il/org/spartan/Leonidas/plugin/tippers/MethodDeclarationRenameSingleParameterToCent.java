@@ -63,7 +63,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
     }
 
     @Override
-    public Class<? extends PsiMethod> getPsiClass() {
+    public Class<? extends PsiMethod> getOperableType() {
         return PsiMethodImpl.class;
     }
 

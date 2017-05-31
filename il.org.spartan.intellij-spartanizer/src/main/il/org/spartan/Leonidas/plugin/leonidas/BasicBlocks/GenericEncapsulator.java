@@ -96,11 +96,12 @@ public abstract class GenericEncapsulator extends Encapsulator {
                 .allMatch(c -> c.accept(e)));
     }
 
-    public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
-        assert parent != null;
+    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (parent == null) return elements;
         List<PsiElement> l = Lists.reverse(elements);
         l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
         r.deleteByRange(inner.getParent(), inner, inner);
+        return elements;
     }
 
     /**
