@@ -35,11 +35,10 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
     return ¢.getName() + "";
   }
   @Override public Tip tip(final MethodDeclaration d) {
-    
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
-    final List<SingleVariableDeclaration> $ = parameters(d).stream().filter(λ -> λ.getName().getIdentifier().length() == 1)
+    final List<SingleVariableDeclaration> $ = parameters(d).stream().filter(λ -> λ.getName().getIdentifier().length() <= 2)
         .collect(Collectors.toList());
     return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
