@@ -39,10 +39,8 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     return ¢.isEnabled();
   }
   public static void onConfigure(final WidgetOperationEntry ¢) {
-    final WidgetOperation wo = ¢.getWidgetOp();
-    if (wo != null)
-      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-          ¢ ,¢.widgetSUID, store()).open();
+    if (¢.getWidgetOp() != null)
+      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢, ¢.widgetSUID, store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ",

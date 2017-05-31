@@ -45,19 +45,18 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int i = 0;
         for (final SingleVariableDeclaration ¢ : $) {
-          SimpleName n = d.getAST().newSimpleName(¢.getType().toString().split("<")[0].toLowerCase() + i++);
+          SimpleName n = d.getAST().newSimpleName((¢.getType() + "").split("<")[0].toLowerCase() + i++);
           while (checkContains(getAll.names(d), n))
-            n.setIdentifier(¢.getType().toString() + (i++));
+            n.setIdentifier(¢.getType() + "" + i++);
           misc.rename(¢.getName(), n, d, r, g);
         }
       }
     }.spanning(d);
   }
-  static boolean checkContains(List<SimpleName> names, SimpleName name) {
-    for (SimpleName n : names) {
-      if (n.getIdentifier().equals(name.getIdentifier()))
+  static boolean checkContains(List<SimpleName> ns, SimpleName n) {
+    for (SimpleName ¢ : ns)
+      if (¢.getIdentifier().equals(n.getIdentifier()))
         return true;
-    }
     return false;
   }
   static String prefix(final Type ¢) {
