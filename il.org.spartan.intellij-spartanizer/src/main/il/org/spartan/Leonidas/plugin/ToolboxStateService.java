@@ -17,6 +17,21 @@ import org.jetbrains.annotations.Nullable;
                 @Storage("ToolboxStateService.xml")}
 )
 public class ToolboxStateService implements PersistentStateComponent<ToolboxStateService> {
+    private int check;
+
+    @Nullable
+    public static ToolboxStateService getInstance() {
+        return ServiceManager.getService(ToolboxStateService.class);
+    }
+
+    int getCheck() {
+        return check;
+    }
+
+    void setCheck(int val) {
+        check = val;
+    }
+
     @Nullable
     @Override
     public ToolboxStateService getState() {
@@ -26,10 +41,5 @@ public class ToolboxStateService implements PersistentStateComponent<ToolboxStat
     @Override
     public void loadState(ToolboxStateService state) {
         XmlSerializerUtil.copyBean(state, this);
-    }
-
-    @Nullable
-    public static ToolboxStateService getInstance() {
-        return ServiceManager.getService(ToolboxStateService.class);
     }
 }
