@@ -44,8 +44,8 @@ public class WidgetOperationEntry implements Serializable {
     return name;
   }
   
-  public void setConfMap(Map<String,String> m) {
-    this.configuration = m;
+  public void setConfMap(Map<String,String> ¢) {
+    this.configuration = ¢;
   }
   
   public WidgetOperation getWidgetOp() {

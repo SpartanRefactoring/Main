@@ -302,8 +302,8 @@ public class XMLSpartan {
       fl.create(new ByteArrayInputStream("".getBytes()), true, new NullProgressMonitor());
       if (!commit(fl, i) || !fl.exists())
         return null;
-    };
-    Reader reader = new InputStreamReader(fl.getContents(),"UTF-8");
+    }
+    Reader reader = new InputStreamReader(fl.getContents(), "UTF-8");
     InputSource is = new InputSource(reader);
     is.setEncoding("UTF-8");
     final Document $ = b.parse(is);

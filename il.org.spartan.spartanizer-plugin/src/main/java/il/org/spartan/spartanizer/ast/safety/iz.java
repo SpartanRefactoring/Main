@@ -118,11 +118,9 @@ public interface iz {
     if (b == null)
       return false;
     Statement p = az.statement(parent(b));
-    while (!iz.ifStatement(p)) {
+    for (; !iz.ifStatement(p); p = az.statement(p.getParent()))
       if (p == null || !is.in(p.getNodeType(), WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT))
         return false;
-      p = az.statement(p.getParent());
-    }
     final IfStatement parent = az.ifStatement(p);
     for (Statement current = ¢; current != null;)
       switch (current.getNodeType()) {

@@ -19,7 +19,6 @@ public class AssertShutterTest {
 
     @Test
     public void cantShutDownNotAssertJ() {
-        String $1 = "assertEquals(0,q.remove());";
-        assertEquals($1, shutDown($1));
+        assertEquals("assertEquals(0,q.remove());", shutDown("assertEquals(0,q.remove());"));
     }
 }

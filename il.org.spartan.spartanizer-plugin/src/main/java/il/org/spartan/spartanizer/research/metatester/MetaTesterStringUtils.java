@@ -23,14 +23,14 @@ public class MetaTesterStringUtils {
 
     public static String getTemplatedValue(final String s, final String... patterns) {
         return Arrays.stream(patterns)
-                .map(p -> getTemplatedValues(s, p))
-                .filter(c -> c.length >= 1)
-                .map(c -> c[0])
+                .map(λ -> getTemplatedValues(s, λ))
+                .filter(λ -> λ.length >= 1)
+                .map(λ -> λ[0])
                 .findFirst().orElse("");
     }
 
     public static String getTemplatedValue(final String s, final String pattern) {
-        String[] candidates = getTemplatedValues(s, pattern);
-        return candidates.length > 0 ? candidates[0] : "";
+        String[] $ = getTemplatedValues(s, pattern);
+        return $.length <= 0 ? "" : $[0];
     }
 }

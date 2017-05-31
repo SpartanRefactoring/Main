@@ -19,13 +19,13 @@ import static il.org.spartan.spartanizer.research.metatester.MetaTesterStringUti
  */
 public interface TestTransformator {
 
-    static String transformIfPossible(final String s) {
-        return TestTransformator.transformIfPossible(s, AssertJTransformator.class);
+    static String transformIfPossible(final String ¢) {
+        return TestTransformator.transformIfPossible(¢, AssertJTransformator.class);
     }
 
     static String transformIfPossible(final String s, Class<?> ofType) {
         return Arrays.stream(ofType.getDeclaredMethods())
-                .filter(m -> m.isAnnotationPresent(Order.class))
+                .filter(λ -> λ.isAnnotationPresent(Order.class))
                 .sorted(Comparator.comparingInt(λ -> λ.getAnnotation(Order.class).value())).map(λ -> (String) safeInvoke(λ, s.trim()))
                 .filter(λ -> !λ.equals(s.trim())).findFirst().orElse(s);
     }
