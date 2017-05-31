@@ -17,7 +17,6 @@ import java.util.Map;
 public class AnyNumberOf extends Quantifier {
 
     private static final String TEMPLATE = "anyNumberOf";
-    Encapsulator internal;
 
     public AnyNumberOf(PsiElement e, Encapsulator i) {
         super(e, TEMPLATE, i);

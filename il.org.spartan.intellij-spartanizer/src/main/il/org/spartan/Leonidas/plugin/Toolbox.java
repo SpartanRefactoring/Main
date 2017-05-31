@@ -12,6 +12,7 @@ import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -136,6 +137,8 @@ public class Toolbox implements ApplicationComponent {
 
     private void createLeonidasTippers() {
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
+                .stream()
+                .filter(c -> !c.isAnnotationPresent(TipperUnderConstruction.class))
                 .forEach(c -> {
                     String source = Utils.getSourceCode(c);
                     if (!source.equals(""))

@@ -10,17 +10,17 @@ import java.util.Map;
 
 /**
  * @author Oren Afek
- * @since 5/3/2017.
+ * @since 30/5/2017.
  */
-public class Statement extends GenericMethodCallBasedBlock {
+public class Throwable extends GenericMethodCallBasedBlock {
+    private static final String TEMPLATE = "throwable";
 
-    private static final String TEMPLATE = "statement";
-
-    public Statement(PsiElement e) {
+    @SuppressWarnings("unused")
+    public Throwable(PsiElement e) {
         super(e, TEMPLATE);
     }
 
-    public Statement(Encapsulator n) {
+    public Throwable(Encapsulator n) {
         super(n, TEMPLATE);
     }
 
@@ -28,24 +28,22 @@ public class Statement extends GenericMethodCallBasedBlock {
      * For reflection use DO NOT REMOVE!
      */
     @SuppressWarnings("unused")
-    protected Statement() {
+    protected Throwable() {
         super(TEMPLATE);
     }
 
     @Override
     public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(iz.statement(e.getInner()) && !iz.blockStatement(e.getInner()));
+        return new MatchingResult(super.generalizes(e).matches() && iz.expression(e.getInner()));
     }
 
     @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return !prev.getText().endsWith(";") && (prev.getText().equals(next.getText()) || next.getText().equals(prev.getText() + ";"));
+        return next != null && prev.getText().equals(next.getText());
     }
 
     @Override
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        return new Statement(e);
+        return new Throwable(e);
     }
-
-
 }
