@@ -142,16 +142,15 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     name(t.tipperName());
     return this;
   }
-  
-  public <N extends ASTNode> NewGUIApplicator restrictTo(final Class<N> c, final Tipper<N>... ts) {
+  @SuppressWarnings("unchecked") public <N extends ASTNode> NewGUIApplicator restrictTo(final Class<N> c, final Tipper<N>... ts) {
     inner.setSelection(selection());
-    /**TODO Dor set name*/
-    //inner.setName(t.description());
+    /** TODO Dor set name */
+    // inner.setName(t.description());
     inner.traversal.notUseProjectPreferences();
     inner.traversal.configuration.setTo(c, ts);
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
-    /**TODO Dor set name*/
-    //name(t.tipperName());
+    /** TODO Dor set name */
+    // name(t.tipperName());
     return this;
   }
   public Applicator restrictTo(final Class<? extends Tipper<? extends ASTNode>> tipperClass) {

@@ -1,7 +1,10 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
+import java.util.function.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.eclipse.swt.graphics.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
@@ -27,6 +30,9 @@ public class CleanOperation extends WidgetOperation {
     return new String[][] { //
         { MODE, "List", current, all, "Required" },//
     };
+  }
+  @Override public Function<ImageData, ImageData> scale() {
+    return λ -> λ.scaledTo(25,25);
   }
   @Override protected ConfigurationsMap defaultConfiguration() {
     return new ConfigurationsMap().put(MODE, current);

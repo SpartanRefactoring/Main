@@ -15,37 +15,42 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Ori Roth
  * @since 2.6 */
 public class TopMenuHandlers extends AbstractHandler {
-  @SuppressWarnings({ "serial", "unchecked" }) public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
-    {
-      put("il.org.spartan.SpartanizeSelection", e -> {
-        final Selection s = Selection.Util.current();
-        SpartanizationHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
-      });
-      put("il.org.spartan.CentToIt", λ -> SpartanizationHandler.applicator().restrictTo(new MethodDeclarationRenameSingleParameter()).manyPasses()
-          .selection(Selection.Util.getAllCompilationUnits()).go());
-      put("il.org.spartan.LongNames", λ -> SpartanizationHandler.applicator().restrictTo(MethodDeclaration.class, new MethodDeclarationNameExpander())
-          .manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
-      put("il.org.spartan.SpartanizeCurrent",
-          λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getCurrentCompilationUnit()).go());
-      put("il.org.spartan.SpartanizeAll",
-          λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
-      put("il.org.spartan.ZoomTool", λ -> {
-        if (InflateHandler.active.get() || showZoomToolMessage())
-          InflateHandler.goWheelAction();
-      });
-      put("il.org.spartan.ZoomSelection", e -> {
-        final Selection s = Selection.Util.current().setUseBinding();
-        if (s.isTextSelection)
-          InflateHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
-        else if (InflateHandler.active.get() || showZoomToolMessage())
-          InflateHandler.goWheelAction();
-      });
-      put("il.org.spartan.ZoomIn", λ -> {/***/
-      });
-      put("il.org.spartan.ZoomOut", λ -> {/***/
-      });
-    }
-  };
+  @SuppressWarnings({ "serial",
+      "unchecked" }) public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
+        {
+          put("il.org.spartan.SpartanizeSelection", e -> {
+            final Selection s = Selection.Util.current();
+            SpartanizationHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
+          });
+          put("il.org.spartan.CentToIt", λ -> SpartanizationHandler.applicator().restrictTo(new MethodDeclarationRenameSingleParameter()).manyPasses()
+              .selection(Selection.Util.getAllCompilationUnits()).go());
+          put("il.org.spartan.ShortNames",
+              λ -> SpartanizationHandler.applicator().restrictTo(MethodDeclaration.class, new MethodDeclarationNameShorter()).manyPasses()
+                  .selection(Selection.Util.getAllCompilationUnits()).go());
+          put("il.org.spartan.LongNames",
+              λ -> SpartanizationHandler.applicator().restrictTo(MethodDeclaration.class, new MethodDeclarationNameExpander()).manyPasses()
+                  .selection(Selection.Util.getAllCompilationUnits()).go());
+          put("il.org.spartan.SpartanizeCurrent",
+              λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getCurrentCompilationUnit()).go());
+          put("il.org.spartan.SpartanizeAll",
+              λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
+          put("il.org.spartan.ZoomTool", λ -> {
+            if (InflateHandler.active.get() || showZoomToolMessage())
+              InflateHandler.goWheelAction();
+          });
+          put("il.org.spartan.ZoomSelection", e -> {
+            final Selection s = Selection.Util.current().setUseBinding();
+            if (s.isTextSelection)
+              InflateHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
+            else if (InflateHandler.active.get() || showZoomToolMessage())
+              InflateHandler.goWheelAction();
+          });
+          put("il.org.spartan.ZoomIn", λ -> {/***/
+          });
+          put("il.org.spartan.ZoomOut", λ -> {/***/
+          });
+        }
+      };
 
   @Override public Object execute(final ExecutionEvent ¢) {
     final String id = ¢.getCommand().getId();

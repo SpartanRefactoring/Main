@@ -128,7 +128,7 @@ public class InflateHandler extends AbstractHandler {
     if (!(i instanceof FileEditorInput))
       return;
     final IFile f = ((IFileEditorInput) i).getFile();
-    if (f != null && f.getFileExtension().equals("java"))
+    if (f != null && "java".equals(f.getFileExtension()))
       Eclipse.runAsynchronouslyInUIThread(() -> {
         final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
         text.getDisplay().addFilter(SWT.MouseWheel, l);

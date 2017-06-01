@@ -194,7 +194,7 @@ public class OperationListEditor extends ListEditor {
   }
   @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
     super.doFillIntoGrid(parent, numColumns);
-    // getButtonBoxControl(parent).dispose();
+    getButtonBoxControl(parent).dispose(); //removing this will add the ADD,REMOVE,DOWN,UP buttons
   }
   @Override protected String[] parseString(final String stringList) {
     return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER)
@@ -204,14 +204,14 @@ public class OperationListEditor extends ListEditor {
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
     String res = $.getResult() == null ? null : $.getResult().description();
-    if(res!=null) {
-      long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
-      WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID,null, res);
-      this.elements_list.add(0,new AbstractMap.SimpleEntry<>(res,woe));
-      List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-      l.add(woe);
-      WidgetPreferences.storeEntries(l);
-    }
+    if (res == null)
+      return res;
+    long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
+    WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, null, res);
+    this.elements_list.add(0, new AbstractMap.SimpleEntry<>(res, woe));
+    List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+    l.add(woe);
+    WidgetPreferences.storeEntries(l);
     return res;
   }
   

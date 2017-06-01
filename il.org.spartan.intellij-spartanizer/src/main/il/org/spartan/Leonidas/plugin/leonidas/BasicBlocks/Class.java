@@ -24,6 +24,7 @@ public class Class extends NamedElement{
 
     private static final String TEMPLATE = "Class";
     private List<Matcher> fieldsMatchers, methodsMatchers, innerClassesMatchers;
+    List<Encapsulator> fields, methods, innerClasses;
 
     public Class(Encapsulator e) {
         super(e, TEMPLATE);
@@ -49,12 +50,12 @@ public class Class extends NamedElement{
     @Override
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         Class c = new Class(e);
-        List<Encapsulator> fields = Arrays.stream(az.classDeclaration(e.getInner()).getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
-        List<Encapsulator> methods = Arrays.stream(az.classDeclaration(e.getInner()).getMethods()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
-        List<Encapsulator> innerClasses = Arrays.stream(az.classDeclaration(e.getInner()).getInnerClasses()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
-        c.fieldsMatchers = fields.stream().map(f -> new Matcher(Utils.wrapWithList(f), map)).collect(Collectors.toList());
-        c.methodsMatchers = methods.stream().map(m -> new Matcher(Utils.wrapWithList(m), map)).collect(Collectors.toList());
-        c.innerClassesMatchers = innerClasses.stream().map(ic -> new Matcher(Utils.wrapWithList(ic), map)).collect(Collectors.toList());
+        c.fields = Arrays.stream(az.classDeclaration(e.getInner()).getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
+        c.methods = Arrays.stream(az.classDeclaration(e.getInner()).getMethods()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
+        c.innerClasses = Arrays.stream(az.classDeclaration(e.getInner()).getInnerClasses()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
+        c.fieldsMatchers = c.fields.stream().map(f -> new Matcher(Utils.wrapWithList(f), map)).collect(Collectors.toList());
+        c.methodsMatchers = c.methods.stream().map(m -> new Matcher(Utils.wrapWithList(m), map)).collect(Collectors.toList());
+        c.innerClassesMatchers = c.innerClasses.stream().map(ic -> new Matcher(Utils.wrapWithList(ic), map)).collect(Collectors.toList());
         return c;
     }
 
@@ -72,37 +73,39 @@ public class Class extends NamedElement{
     public MatchingResult generalizes(Encapsulator e) {
         if (!iz.classDeclaration(e.inner)) return new MatchingResult(false);
         PsiClass c = az.classDeclaration(e.inner);
-        PsiField[] fields = c.getFields();
-        PsiMethod[] methods = c.getMethods();
-        PsiClass[] innerClasses = c.getInnerClasses();
+        PsiField[] fieldsOfInstance = c.getFields();
+        PsiMethod[] methodsOfInstance = c.getMethods();
+        PsiClass[] innerClassesOfInstance = c.getInnerClasses();
         List<Integer[]> fieldsPermutation = new LinkedList<>();
         List<Integer[]> methodsPermutation = new LinkedList<>();
         List<Integer[]> innerClassesPermutation = new LinkedList<>();
-        getAllPermutation(fieldsPermutation, fields.length - 1, IntStream.range(0, fields.length).boxed().collect(Collectors.toList()), new Integer[fields.length]);
-        getAllPermutation(methodsPermutation, methods.length - 1, IntStream.range(0, methods.length).boxed().collect(Collectors.toList()), new Integer[methods.length]);
-        getAllPermutation(innerClassesPermutation, innerClasses.length - 1, IntStream.range(0, innerClasses.length).boxed().collect(Collectors.toList()), new Integer[innerClasses.length]);
-        MatchingResult mm = new MatchingResult(true);
+        getAllPermutation(fieldsPermutation, fields.size() - 1, IntStream.range(0, fields.size()).boxed().collect(Collectors.toList()), new Integer[fields.size()]);
+        getAllPermutation(methodsPermutation, methods.size() - 1, IntStream.range(0, methods.size()).boxed().collect(Collectors.toList()), new Integer[methods.size()]);
+        getAllPermutation(innerClassesPermutation, innerClasses.size() - 1, IntStream.range(0, innerClasses.size()).boxed().collect(Collectors.toList()), new Integer[innerClasses.size()]);
+        MatchingResult mr = new MatchingResult(true);
         if (!super.generalizes(e).matches())
             return new MatchingResult(false);
-        mm.combineWith(matchInnerElement(fieldsPermutation, fields, fieldsMatchers));
-        mm.combineWith(matchInnerElement(methodsPermutation, methods, methodsMatchers));
-        mm.combineWith(matchInnerElement(innerClassesPermutation, innerClasses, innerClassesMatchers));
-        return mm;
+        mr.combineWith(matchInnerElement(fieldsPermutation, fieldsOfInstance, fieldsMatchers));
+        mr.combineWith(matchInnerElement(methodsPermutation, methodsOfInstance, methodsMatchers));
+        mr.combineWith(matchInnerElement(innerClassesPermutation, innerClassesOfInstance, innerClassesMatchers));
+        return mr;
     }
 
     private MatchingResult matchInnerElement(List<Integer[]> permutations, PsiElement[] innerElements, List<Matcher> matchers) {
+        if (permutations.size() == 1 && permutations.get(0).length == 0) return new MatchingResult(true);
         Wrapper<Integer> dummy = new Wrapper<>(0);
         return permutations.stream().map(perm -> {
-            MatchingResult mmm = new MatchingResult(true);
+            MatchingResult mr = new MatchingResult(false);
             for (int i = 0; i < innerElements.length; i++) {
-                MatchingResult mmmm = matchers.get(i).getMatchingResult(innerElements[perm[i]], dummy);
-                if (mmmm.notMatches()) {
-                    return mmmm;
+                MatchingResult imr = matchers.get(i).getMatchingResult(innerElements[perm[i]], dummy);
+                if (imr.notMatches()) {
+                    return imr;
                 }
-                mmm.combineWith(mmmm);
+                mr.combineWith(imr);
+                mr.setMatches();
             }
-            return mmm;
-        }).filter(mmmm -> mmmm.matches()).findFirst().orElse(new MatchingResult(false));
+            return mr;
+        }).filter(mr -> mr.matches()).findFirst().orElse(new MatchingResult(false));
     }
 
     @Override

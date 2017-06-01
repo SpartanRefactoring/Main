@@ -1,8 +1,9 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.BooleanExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Method;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Throwable;
 
+import java.lang.Class;
 import java.util.function.Supplier;
 
 /**
@@ -14,6 +15,13 @@ public abstract class The {
 
     public Method asMethod;
     public BooleanExpression asBooleanExpression;
+    public il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Class asClass;
+    public Expression asExpression;
+    public FieldDeclaration asFieldDeclaration;
+    public Identifier asIdentifier;
+    public Statement asStatement;
+    public StringLiteral asStringLiteral;
+    public Throwable asThrowable;
 
     public static The element(int id) {
         return the;

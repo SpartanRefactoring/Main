@@ -70,16 +70,8 @@ public class Issue1354 extends TipperTest<Block> {
             .stays();
   }
   @Test public void test05() {
-    trimmingOf("if (o == null)"//
-        + "      while (f()) " + "       for (Element e : data) {"//
-        + "         if (e == null)"//
-        + "            return $;"//
-        + "       }"//
-        + "    else"//
-        + "      while(g()) {"//
-        + "        if (o.equals(e))"//
-        + "          return ¢;"//
-        + "      }")//
+    trimmingOf("if (o == null)      while (f())        for (Element e : data) {         if (e == null)            return $;       }"
+        + "    else      while(g()) {        if (o.equals(e))          return ¢;      }")//
             .stays();
   }
 }
