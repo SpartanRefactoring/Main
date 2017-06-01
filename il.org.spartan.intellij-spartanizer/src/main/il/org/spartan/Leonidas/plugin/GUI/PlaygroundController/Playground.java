@@ -1,7 +1,10 @@
 package il.org.spartan.Leonidas.plugin.GUI.PlaygroundController;
 
 import com.intellij.lang.java.JavaLanguage;
-import com.intellij.psi.*;
+import com.intellij.psi.JavaRecursiveElementVisitor;
+import com.intellij.psi.PsiErrorElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -59,6 +62,9 @@ public class Playground extends JFrame {
     }
 
     private void spartanizeButtonClicked() {
+        if (inputArea.getText().trim().isEmpty()) {
+            return;
+        }
         Toolbox.getInstance().playground = true;
         PsiFile file = null;
         final boolean[] worked = {true};
