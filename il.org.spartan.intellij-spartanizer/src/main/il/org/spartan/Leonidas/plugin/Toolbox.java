@@ -77,6 +77,10 @@ public class Toolbox implements ApplicationComponent {
         initBasicBlocks();
         createLeonidasTippers();
         initializeAllTipperClassesInstances();
+        if (toolboxStateService.getTippers().keySet().isEmpty()) {
+            (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
+                    .forEach(c -> toolboxStateService.addTipper(c.getSimpleName()));
+        }
     }
 
     private void initializeAllTipperClassesInstances() {
@@ -133,6 +137,7 @@ public class Toolbox implements ApplicationComponent {
             }
         }));
 
+        toolboxStateService.updateAllTippers(list);
     }
 
     private void createLeonidasTippers() {
@@ -215,7 +220,6 @@ public class Toolbox implements ApplicationComponent {
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
     public boolean canTip(PsiElement e) {
-//        toolboxStateService.setCheck(toolboxStateService.getCheck() + 1);
         return (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) && tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)));
     }
 

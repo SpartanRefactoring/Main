@@ -27,8 +27,9 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
-        <projectService serviceInterface="il.org.spartan.Leonidas.plugin.ToolboxStateService"
-                        serviceImplementation="il.org.spartan.Leonidas.plugin.ToolboxStateService" overrides="true"/>
+        <applicationService serviceInterface="il.org.spartan.Leonidas.plugin.ToolboxStateService"
+                            serviceImplementation="il.org.spartan.Leonidas.plugin.ToolboxStateService"
+                            overrides="true"/>
     </extensions>
 
     <application-components>
