@@ -11,7 +11,6 @@ import il.org.spartan.athenizer.bloaters.*;
  * @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 8-12-2016 */
-//check git commit\push widget actions
 @SuppressWarnings("static-method")
 public class Issue0883 {
   @Test public void test0() {
