@@ -53,7 +53,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       }
     }.spanning(d);
   }
-  private static String description(final MethodDeclaration d, final String name, final SimpleName $) {
+  @SuppressWarnings("unused") private static String description(final MethodDeclaration d, final String name, final SimpleName $) {
     return "Rename '" + $ + "' to the chosen prefrence (main variable returned by " + d.getName() + ")";
   }
 }
