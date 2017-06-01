@@ -464,7 +464,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        <command
        tooltip="Inflate"
          commandId="il.org.spartan.AthensInflate" 
-         icon="plugin/pictures/athenizer.png"
+         icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png"
          id="il.org.spartan.plugin.toolbars.TextButton">
        </command>
        <command
