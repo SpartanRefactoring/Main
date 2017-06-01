@@ -37,7 +37,8 @@ public class Toolbox implements ApplicationComponent {
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new ConcurrentHashMap<>();
     private final Set<VirtualFile> excludedFiles = new HashSet<>();
     private final Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
-    private final ToolboxStateService toolboxStateService = ToolboxStateService.getInstance();
+    //TODO: @Amir Sagiv this should be uncommented
+//    private final ToolboxStateService toolboxStateService = ToolboxStateService.getInstance();
     public boolean playground = false;
     public boolean testing = true;
     public boolean replaced = false;
@@ -77,10 +78,11 @@ public class Toolbox implements ApplicationComponent {
         initBasicBlocks();
         createLeonidasTippers();
         initializeAllTipperClassesInstances();
-        if (toolboxStateService.getTippers().keySet().isEmpty()) {
-            (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
-                    .forEach(c -> toolboxStateService.addTipper(c.getSimpleName()));
-        }
+        //TODO: @Amir Sagiv this should be uncommented
+//        if (toolboxStateService.getTippers().keySet().isEmpty()) {
+//            (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
+//                    .forEach(c -> toolboxStateService.addTipper(c.getSimpleName()));
+//        }
     }
 
     private void initializeAllTipperClassesInstances() {
@@ -137,7 +139,8 @@ public class Toolbox implements ApplicationComponent {
             }
         }));
 
-        toolboxStateService.updateAllTippers(list);
+        //TODO: @Amir Sagiv this should be uncommented
+//        toolboxStateService.updateAllTippers(list);
     }
 
     private void createLeonidasTippers() {
