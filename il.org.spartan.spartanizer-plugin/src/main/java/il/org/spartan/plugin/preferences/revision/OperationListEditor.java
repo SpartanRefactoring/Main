@@ -171,7 +171,7 @@ public class OperationListEditor extends ListEditor {
       }
     });
     parent.addDisposeListener(λ -> {
-      //configureButton = null;
+      configureButton = null;
       ableButton = null;
     });
     getList().addSelectionListener(new SelectionListener() {
