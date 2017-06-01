@@ -36,7 +36,7 @@ public class ZoomerOperation extends WidgetOperation {
     }
   }
   @Override public String imageURL() {
-    return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/menu.gif";
+    return "platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png";
   }
   @Override public String description() {
     return "zoom in code";
