@@ -1,5 +1,9 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
+import java.util.function.*;
+
+import org.eclipse.swt.graphics.*;
+
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
@@ -34,6 +38,9 @@ public class ZoomerOperation extends WidgetOperation {
         InflateHandler.applicator().setPasses(¢.currentSelecetion.textSelection == null ? 1 : 20).selection(¢.currentSelecetion.setUseBinding()).go();
         break;
     }
+  }
+  @Override public Function<ImageData, ImageData> scale() {
+    return λ -> λ.scaledTo(20, 20);
   }
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png";
