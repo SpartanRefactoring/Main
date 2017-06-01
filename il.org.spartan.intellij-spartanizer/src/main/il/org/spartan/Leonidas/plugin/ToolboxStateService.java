@@ -7,6 +7,10 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Anna Belozovsky
  * @since 31/05/2017
@@ -17,19 +21,33 @@ import org.jetbrains.annotations.Nullable;
                 @Storage("ToolboxStateService.xml")}
 )
 public class ToolboxStateService implements PersistentStateComponent<ToolboxStateService> {
-    private int check;
+    private Map<String, Boolean> tippers = new HashMap<>();
 
     @Nullable
     public static ToolboxStateService getInstance() {
         return ServiceManager.getService(ToolboxStateService.class);
     }
 
-    int getCheck() {
-        return check;
+    Map<String, Boolean> getTippers() {
+        return tippers;
     }
 
-    void setCheck(int val) {
-        check = val;
+    void updateTipper(String tipperName, boolean val) {
+        tippers.put(tipperName, val);
+    }
+
+    void addTipper(String tipperName) {
+        tippers.put(tipperName, true);
+    }
+
+    void updateAllTippers(List<String> activeTippers) {
+        tippers.keySet().forEach(tipper -> {
+            if (activeTippers.contains(tipper)) {
+                tippers.put(tipper, true);
+            } else {
+                tippers.put(tipper, false);
+            }
+        });
     }
 
     @Nullable
