@@ -55,7 +55,7 @@ public interface accumulate<T, C extends Collection<T>> {
   }
   /** @param tss JD
    * @return <code><b>this</b></code> */
-  default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
+  @SuppressWarnings("unchecked") default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ¢ : tss)
       addAll(¢);
     return this;
