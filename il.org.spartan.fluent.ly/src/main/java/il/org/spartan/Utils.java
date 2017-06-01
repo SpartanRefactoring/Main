@@ -351,7 +351,7 @@ public interface Utils {
         $[¢] = fluent.ly.box.it(is[¢]);
       return $;
     }
-    @Test public void addAllTypical() {
+    @SuppressWarnings("unchecked") @Test public void addAllTypical() {
       final Set<String> ss = new HashSet<>();
       accumulate.to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
       azzert.nay(ss.contains("E"));

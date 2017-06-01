@@ -580,8 +580,8 @@ public enum extract {
   public static List<String> identifiers(final Name n) {
     return names(n).stream().map(λ -> λ.getIdentifier()).collect(toList());
   }
-  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> methodArguments(final MethodDeclaration n) {
-    return n.parameters();
+  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> methodArguments(final MethodDeclaration ¢) {
+    return ¢.parameters();
   }
   /** extract VariableDeclarationFragment type, including fixing array type for statement such as <code> double[] dd[]; <code> */
   public static Type type(final VariableDeclarationFragment ¢) {

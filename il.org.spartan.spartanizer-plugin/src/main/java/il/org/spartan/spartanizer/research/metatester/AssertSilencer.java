@@ -25,13 +25,13 @@ public class AssertSilencer {
 
     private static String shutDownAssertJ(String code) {
         assert isAssertJFormatted(code);
-        String assertThatParam = getTemplatedValue(code, "assertThat\\((.*)\\)\\.(.*)", "assertThat\\((.*)\\)(.*)");
-        return !assertThatParam.equals("") && isStatement(assertThatParam) ? assertThatParam + ";" : code;
+        String $ = getTemplatedValue(code, "assertThat\\((.*)\\)\\.(.*)", "assertThat\\((.*)\\)(.*)");
+        return "".equals($) || !isStatement($) ? code : $ + ";";
     }
 
 
     public static String shutDown(String test) {
-        return isAssertJFormatted(test) ? shutDownAssertJ(test) : test;
+        return !isAssertJFormatted(test) ? test : shutDownAssertJ(test);
     }
 
 

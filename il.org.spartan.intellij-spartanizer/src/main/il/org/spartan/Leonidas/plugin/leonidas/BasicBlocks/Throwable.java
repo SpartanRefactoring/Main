@@ -46,4 +46,6 @@ public class Throwable extends GenericMethodCallBasedBlock {
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         return new Throwable(e);
     }
+
+
 }

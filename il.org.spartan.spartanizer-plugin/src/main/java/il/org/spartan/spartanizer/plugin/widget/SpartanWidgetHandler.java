@@ -233,7 +233,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
         ¢.gc.drawImage(i, r / 2, r / 2);
       $.setSize(2 * r, 2 * r);
     });
-    $.setLocation(p.x - r, p.y - r);
+    $.setLocation((p.x) - r, (p.y) - r);
     $.pack();
     final Region rg = s.getRegion();
     rg.add(circle(r, p.x, p.y));
