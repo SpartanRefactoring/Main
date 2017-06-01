@@ -5,27 +5,32 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
 import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
 
 /**
- * Collapse Ternary If Throw No Else Throw
+ * for(?;true;?) => for(?;;?)
  *
  * @author Oren Afek
- * @since 30/5/2017.
+ * @since 31/05/2017
  */
-
 @TipperUnderConstruction(BROKEN_MATCHER)
-public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefinition {
+public class ForTrueConditionRemove implements LeonidasTipperDefinition {
+
+    int identifier0;
+    int identifier1;
+
+    @Override
+    public void constraints() {
+
+    }
 
     @Override
     public void matcher() {
         new Template(() -> {
             /** start */
-            if (booleanExpression(0))
-                statement(1);
-            statement(2);
+            for (int identifier0 = expression(1); true; identifier1++)
+                anyNumberOf(statement(2));
             /** end */
         });
     }
@@ -34,16 +39,22 @@ public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefiniti
     public void replacer() {
         new Template(() -> {
             /** start */
-            Object x = booleanExpression(0) ? statement(1) : statement(2);
+            for (int identifier0 = expression(1); ; identifier1++)
+                anyNumberOf(statement(2));
             /** end */
         });
     }
 
+    /**
+     * Defines code examples and results after applying the tipper.
+     * This is used to test the tipper.
+     * example:
+     * examples.put("!(!(x > 4))", "x > 4");
+     */
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("if (goophy != bucks) throw new LooneyToonesException(); throw SameLooneyToones();",
-                        "throw goophy != bucks ? new LooneyToonesException() : SameLooneyToones();")
+                .put("for(int i = 0; true; ++i){System.out.println(i);}", "for(int i = 0;; ++i){System.out.println(i);}")
                 .map();
     }
 }
