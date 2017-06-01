@@ -9,6 +9,12 @@ import org.junit.*;
  * @since 2017-05-14 */
 @SuppressWarnings("static-method")
 public class RenamingTests {
+  @Ignore
+  @Test public void bug() {
+    trimmingOf("class Classes{private final Map<IProject, Boolean> enabled; private Checker t;}")//
+        .gives("class Classes{private Namer namer;private Checker checker;}")// TODO dor maayan fix to correct gives
+        .stays();
+  }
   @Test public void test0() {
     trimmingOf("class Classes{private Namer a;private Checker t;}")//
         .gives("class Classes{private Namer namer;private Checker checker;}")//
