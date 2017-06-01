@@ -171,7 +171,7 @@ public class OperationListEditor extends ListEditor {
       }
     });
     parent.addDisposeListener(λ -> {
-      configureButton = null;
+      //configureButton = null;
       ableButton = null;
     });
     getList().addSelectionListener(new SelectionListener() {
@@ -194,7 +194,7 @@ public class OperationListEditor extends ListEditor {
   }
   @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
     super.doFillIntoGrid(parent, numColumns);
-    // getButtonBoxControl(parent).dispose();
+    getButtonBoxControl(parent).dispose(); //removing this will add the ADD,REMOVE,DOWN,UP buttons
   }
   @Override protected String[] parseString(final String stringList) {
     return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER)

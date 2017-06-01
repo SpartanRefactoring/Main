@@ -38,9 +38,11 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperationEntry ¢) {
     return ¢.isEnabled();
   }
-  public static void onConfigure(final WidgetOperationEntry ¢) {
-    if (¢.getWidgetOp() != null)
-      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢, ¢.widgetSUID, store()).open();
+
+  public static void onConfigure(@SuppressWarnings("unused") final WidgetOperationEntry ¢) {
+    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Configuration", "Will be available in later realeses");
+   // if (¢.getWidgetOp() != null)
+    //  new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢, ¢.widgetSUID, store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ",
