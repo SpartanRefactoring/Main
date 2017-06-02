@@ -9,9 +9,9 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2017-03-27 */
 public abstract class FragmentPattern extends NodePattern<VariableDeclarationFragment> {
   private static final long serialVersionUID = -0x5D2F121B3027EFA6L;
-  protected Expression initializer;
-  protected SimpleName name;
-  protected String identifier;
+  @Property protected Expression initializer;
+  @Property protected SimpleName name;
+  @Property protected String identifier;
 
   @Override protected ASTNode highlight() {
     return name;
