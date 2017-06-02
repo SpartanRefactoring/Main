@@ -3,7 +3,7 @@
     <!-- Important notice:
         Please make sure the 'name' appears as the last element in the 'id', otherwise there
     is a problem retrieving the plugin descriptor during runtime -->
-    <id>il.ac.technion.yearlyproject2016.team8.Spartanizer</id>
+    <id>il.ac.technion.yearlyproject2016.team8</id>
     <name>Spartanizer</name>
     <version>0.4</version>
     <vendor email="oren.afek@cs.technion.ac.il" url="http://www.cs.technion.ac.il">Team 8</vendor>

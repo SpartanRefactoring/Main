@@ -5,27 +5,35 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
 import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
 
 /**
- * Collapse Ternary If Throw No Else Throw
+ * Remove Unnecessary Assignment.
  *
  * @author Oren Afek
- * @since 30/5/2017.
+ * @since 02/06/2017
  */
-
 @TipperUnderConstruction(BROKEN_MATCHER)
-public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefinition {
+public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefinition {
+
+    Object identifier0;
+
+    Class3 identifier4() {
+        return null;
+    }
+
+    @Override
+    public void constraints() {
+        //the(expression(1)).isNot(() -> identifier4());
+    }
 
     @Override
     public void matcher() {
         new Template(() -> {
             /** start */
-            if (booleanExpression(0))
-                expression(1);
-            expression(2);
+            identifier0 = expression(1);
+            identifier0 = expression(2);
             /** end */
         });
     }
@@ -34,7 +42,7 @@ public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefiniti
     public void replacer() {
         new Template(() ->
                 /** start */
-                booleanExpression(0) ? expression(1) : expression(2)
+                identifier0 = expression(2)
                 /** end */
         );
     }
@@ -42,8 +50,11 @@ public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefiniti
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("if (goophy != bucks) throw new LooneyToonesException(); throw SameLooneyToones();",
-                        "throw goophy != bucks ? new LooneyToonesException() : SameLooneyToones();")
+                .put("x = 1; x = 2;", "x = 2;")
+                .put("x.y = 1; x.y = 2;", "x.y = 2")
                 .map();
+    }
+
+    class Class3 {
     }
 }
