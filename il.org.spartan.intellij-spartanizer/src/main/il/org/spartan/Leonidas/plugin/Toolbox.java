@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin;
 
+import com.google.gson.Gson;
+import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -39,6 +41,7 @@ public class Toolbox implements ApplicationComponent {
     private final Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
     //TODO: @Amir Sagiv this should be uncommented
 //    private final ToolboxStateService toolboxStateService = ToolboxStateService.getInstance();
+
     public boolean playground = false;
     public boolean testing = true;
     public boolean replaced = false;
@@ -83,6 +86,12 @@ public class Toolbox implements ApplicationComponent {
 //            (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
 //                    .forEach(c -> toolboxStateService.addTipper(c.getSimpleName()));
 //        }
+
+        String savedTippers = PropertiesComponent.getInstance().getValue("savedTippers");
+        if(savedTippers != null && savedTippers!= "") {
+            List<String> tipperNames = new Gson().fromJson(savedTippers, List.class);
+            updateTipperList(tipperNames);
+        }
     }
 
     private void initializeAllTipperClassesInstances() {
@@ -138,6 +147,16 @@ public class Toolbox implements ApplicationComponent {
                 tipperMap.get(tipper.getOperableType()).add(tipper);
             }
         }));
+
+        List<String> activeTippersNames = new ArrayList<>();
+        this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
+            activeTippersNames.add(tipper.name());
+        }));
+        String jsonTips = new Gson().toJson(activeTippersNames);
+        PropertiesComponent.getInstance().setValue("savedTippers",jsonTips,"");
+
+
+
 
         //TODO: @Amir Sagiv this should be uncommented
 //        toolboxStateService.updateAllTippers(list);
