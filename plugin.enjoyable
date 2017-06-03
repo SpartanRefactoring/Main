@@ -1,12 +1,6 @@
 {
   "name" : "(default)",
   "entries" : {
-    "1133:49684:1~Axis 2~Low" : {
-      "speed" : 15,
-      "type" : "mouse scroll",
-      "smooth" : true,
-      "direction" : 1
-    },
     "1133:49684:1~Button 1" : {
       "type" : "key press",
       "key" : 59
@@ -16,6 +10,20 @@
       "type" : "mouse scroll",
       "smooth" : true,
       "direction" : -1
+    },
+    "1133:49684:1~Axis 2~Low" : {
+      "speed" : 15,
+      "type" : "mouse scroll",
+      "smooth" : true,
+      "direction" : 1
+    },
+    "1133:49684:1~Axis 1~Low" : {
+      "type" : "key press",
+      "key" : 25
+    },
+    "1133:49684:1~Axis 1~High" : {
+      "type" : "key press",
+      "key" : 28
     }
   }
 }
