@@ -1,22 +1,19 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.throwable;
 
 /**
- * Collapse Ternary If Throw No Else Throw
+ * Collapse if(b)throw $; throw % => throw b ? $ : %
  *
  * @author Oren Afek
- * @since 30/5/2017.
+ * @since 30/5/2017
  */
 
-//@TipperUnderConstruction(BROKEN_MATCHER)
 public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefinition {
 
     @Override
@@ -24,19 +21,19 @@ public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefiniti
         new Template(() -> {
             /** start */
             if (booleanExpression(0))
-                expression(1);
-            expression(2);
+                throw throwable(1);
+            throw throwable(2);
             /** end */
         });
     }
 
     @Override
     public void replacer() {
-        new Template(() ->
-                /** start */
-                booleanExpression(0) ? expression(1) : expression(2)
-                /** end */
-        );
+        new Template(() -> {
+            /** start */
+            throw booleanExpression(0) ? throwable(1) : throwable(2);
+            /** end */
+        });
     }
 
     @Override
