@@ -79,9 +79,7 @@ public interface TestTransformator {
 
     static String replace(final String s, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
         try {
-            final String[] a = getTemplatedValues(s, matchPattern);
-            String[] $ = new String[orderOfTemplatedValues.length];
-            $ = rearange(a, $, orderOfTemplatedValues);
+            String[] $ = rearange(getTemplatedValues(s, matchPattern), (new String[orderOfTemplatedValues.length]), orderOfTemplatedValues);
             return s.replaceAll(matchPattern, getReplacerString(replacePattern, $));
         } catch (@SuppressWarnings("unused") final Exception e) {
             return s;

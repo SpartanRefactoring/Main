@@ -61,6 +61,6 @@ public class HeadlesSpartanizer extends ASTInFilesVisitor {
     tearDown();
   }
   public final String fixedPoint(final String from) {
-    return traversals.fixed(from + "");
+    return traversals.fixed(from);
   }
 }
