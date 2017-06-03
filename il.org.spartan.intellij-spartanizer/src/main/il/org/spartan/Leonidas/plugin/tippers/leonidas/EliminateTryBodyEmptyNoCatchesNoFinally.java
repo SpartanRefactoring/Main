@@ -31,11 +31,11 @@ public class EliminateTryBodyEmptyNoCatchesNoFinally implements LeonidasTipperDe
 
     @Override
     public void replacer() {
-        new Template(() -> {
-            /** start */
-            anyNumberOf(statement(0));
-            /** end */
-        });
+        new Template(() ->
+                /** start */
+                anyNumberOf(statement(0))
+                /** end */
+        );
     }
 
     @Override
