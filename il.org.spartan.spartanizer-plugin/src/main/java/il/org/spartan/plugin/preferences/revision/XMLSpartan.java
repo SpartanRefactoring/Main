@@ -317,8 +317,7 @@ public class XMLSpartan {
     if (ns != null && ns.getLength() == 1 && validate($, ((Element) ns.item(0)).getAttribute(VERSION)))
       return $;
     final Collection<String> ls = createEnabledList($);
-    Document ret = b.newDocument();
-    ret = initialize(ret);
+    Document ret = initialize(b.newDocument());
     updateEnabledTippers(ret, ls);
     commit(fl, ret);
     return ret;

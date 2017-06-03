@@ -63,7 +63,7 @@ public interface type {
         return name;
       }
       @Override public String toString() {
-        return name + "";
+        return name;
       }
     }.join();
   }
