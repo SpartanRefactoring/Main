@@ -2,7 +2,7 @@ package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 /**
  * Change x+=1 to postfix incremental operator x++
- * 
+ *
  * @author Sharon LK
  */
 public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition {
