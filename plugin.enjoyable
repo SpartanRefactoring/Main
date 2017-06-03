@@ -1,0 +1,21 @@
+{
+  "name" : "(default)",
+  "entries" : {
+    "1133:49684:1~Axis 2~Low" : {
+      "speed" : 15,
+      "type" : "mouse scroll",
+      "smooth" : true,
+      "direction" : 1
+    },
+    "1133:49684:1~Button 1" : {
+      "type" : "key press",
+      "key" : 59
+    },
+    "1133:49684:1~Axis 2~High" : {
+      "speed" : 15,
+      "type" : "mouse scroll",
+      "smooth" : true,
+      "direction" : -1
+    }
+  }
+}
