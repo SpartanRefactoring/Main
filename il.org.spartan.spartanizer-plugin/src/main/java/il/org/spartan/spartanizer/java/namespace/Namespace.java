@@ -78,7 +78,7 @@ public final class Namespace implements Environment {
     return description("");
   }
   public String description(final String indent) {
-    return indent + name + "" + flat + (children.isEmpty() ? ""
+    return indent + name + flat + (children.isEmpty() ? ""
         : ":\n" + separate.these(children.stream().map(λ -> λ.description(indent + "  ")).toArray()).by("\n" + indent + "- "));
   }
   /** @return whether {@link Environment} is empty. */
@@ -362,9 +362,9 @@ public final class Namespace implements Environment {
   }
   public String generateName(final String ¢) {
     int postface = 0;
-    String $ = ¢ + "" + ++postface;
+    String $ = ¢ + ++postface;
     while (hasComplex($))
-      $ = ¢ + "" + ++postface;
+      $ = ¢ + ++postface;
     return $;
   }
   // Add new Name to the namespace

@@ -17,11 +17,10 @@ public class AddModifiersToEnums extends ReplaceCurrentNode<EnumDeclaration> imp
   @Override public String description(@SuppressWarnings("unused") EnumDeclaration __) {
     return "add all the unecessary modifiers to the enum";
   }
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(EnumDeclaration d) {
-    EnumDeclaration $ = copy.of(d);
-    List<Modifier> lst = extract.modifiers(d);
-    if (!lst.contains(d.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD)))
-      $.modifiers().add(d.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD));
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(EnumDeclaration ¢) {
+    EnumDeclaration $ = copy.of(¢);
+    if (!extract.modifiers(¢).contains(¢.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD)))
+      $.modifiers().add(¢.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD));
     return $;
   }
 }

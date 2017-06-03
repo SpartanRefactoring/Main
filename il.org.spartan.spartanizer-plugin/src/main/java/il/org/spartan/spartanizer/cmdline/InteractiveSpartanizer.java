@@ -41,7 +41,7 @@ public class InteractiveSpartanizer {
    * @param from what to process
    * @return trimmed text */
   public String fixedPoint(final String from) {
-    return traversals.fixed(from + "");
+    return traversals.fixed(from);
   }
   public String fixedPoint(final ASTNode from) {
     return traversals.fixed(from + "");

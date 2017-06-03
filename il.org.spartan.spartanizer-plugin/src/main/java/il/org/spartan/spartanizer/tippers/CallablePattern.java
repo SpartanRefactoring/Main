@@ -14,10 +14,12 @@ public abstract class CallablePattern extends NodePattern<MethodDeclaration> {
   protected List<SingleVariableDeclaration> parameters;
   protected SimpleName name;
   protected Block body;
+  protected Javadoc jdoc;
 
   public CallablePattern() {
     property("parameters", () -> parameters = parameters(current));
     property("name", () -> name = current.getName());
     property("body", () -> body = current.getBody());
+    property("JavaDOC", () -> jdoc = current.getJavadoc());
   }
 }
