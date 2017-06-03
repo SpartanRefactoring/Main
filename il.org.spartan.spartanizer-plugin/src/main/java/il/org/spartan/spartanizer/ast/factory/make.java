@@ -439,6 +439,9 @@ public enum make {
     return from(¢).identifier(notation.cent);
   }
   public static SimpleName newLowerCamelCase(final SimpleName old, final Type t) {
-    return from(old).identifier((t + "").substring(0, 1).toLowerCase() + (t + "").substring(1));
+    return from(old).identifier((t.toString().split("<")[0]).substring(0, 1).toLowerCase() + (t + "").substring(1));
+  }
+  public static SimpleName newLowerCamelCase(final SimpleName old, final String t) {
+    return from(old).identifier((t).substring(0, 1).toLowerCase() + t.substring(1));
   }
 }
