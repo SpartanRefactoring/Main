@@ -31,7 +31,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
 
   @Override protected boolean prerequisite(final InfixExpression ¢) {
     return (¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.CONDITIONAL_OR)
-        && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand())) && !(iz.lambdaExpression(¢.getParent()));
+        && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand())) && !iz.lambdaExpression(¢.getParent());
   }
   @Override public Tip tip(final InfixExpression ¢) {
     final VariableDeclarationStatement $ = getSeperate(¢.getLeftOperand()), v2 = getSeperate(¢.getRightOperand());

@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.traversal.Traversal.*;
@@ -592,7 +591,7 @@ public final class typeTest {
       azzert.that(of(as.getExpression()), is(BOOLEAN));
       azzert.that(of(as.getMessage()), is(STRING));
     }
-  //see issue 888
+    // see issue 888
     @Test public void context23() {
       final InfixExpression e = az.infixExpression(into.e("b+2-5"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
@@ -605,7 +604,7 @@ public final class typeTest {
       azzert.that(of(e.getRightOperand()), is(INT));
       final InfixExpression e2 = az.infixExpression(e.getLeftOperand());
       azzert.that(of(e2.getRightOperand()), is(NUMERIC));
-      azzert.that(of(az.infixExpression(az.parenthesizedExpression(e2.getLeftOperand()).getExpression()).getLeftOperand()),is(NUMERIC));
+      azzert.that(of(az.infixExpression(az.parenthesizedExpression(e2.getLeftOperand()).getExpression()).getLeftOperand()), is(NUMERIC));
     }
     @Test public void InDecreamentSemantics01() {
       azzert.that(Axiom.type(i++), is(INT));

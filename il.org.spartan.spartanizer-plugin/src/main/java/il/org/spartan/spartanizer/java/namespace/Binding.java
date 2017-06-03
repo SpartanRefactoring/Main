@@ -74,7 +74,7 @@ public class Binding {
   @Override public int hashCode() {
     return (self == null ? 0 : self.hashCode()) + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31);
   }
-  public type getType(){
+  public type getType() {
     return type;
   }
 }

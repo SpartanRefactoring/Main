@@ -55,7 +55,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   public static void changeCentToParam() {
     for (final IProject p : getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
-      if(doc == null)
+      if (doc == null)
         continue;
       doc.getDocumentElement().normalize();
       doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("param");
@@ -67,7 +67,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   public static void changeBackToCent() {
     for (final IProject p : getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
-      if(doc == null)
+      if (doc == null)
         continue;
       doc.getDocumentElement().normalize();
       doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("cent");
@@ -79,7 +79,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final IProject[] projects = getAllSpartanizerProjects();
     for (final IProject p : projects) {
       final Document doc = XMLSpartan.getXML(p);
-      if(doc == null)
+      if (doc == null)
         continue;
       doc.getDocumentElement().normalize();
       doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue(singleParameterRadio.getPreferenceStore().getString("Cent"));

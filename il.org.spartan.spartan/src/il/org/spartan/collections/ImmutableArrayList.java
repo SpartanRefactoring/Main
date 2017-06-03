@@ -200,8 +200,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * to ensure that it can hold at least the number of elements specified by the
    * minimum capacity argument.
    * @param minCapacity the desired minimum capacity */
-  @SuppressWarnings({ "static-method", "unused" }) //
-  public void ensureCapacity(final int minCapacity) {
+  @SuppressWarnings("static-method") public void ensureCapacity(final int minCapacity) {
     fail();
   }
   /** Returns the element at the specified position in this list.

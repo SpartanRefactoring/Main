@@ -36,7 +36,7 @@ public class MethodDeclarationNameShorter extends EagerTipper<MethodDeclaration>
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int i = 0;
         for (final SingleVariableDeclaration ¢ : $) {
-          SimpleName n = d.getAST().newSimpleName((¢.getType() + "").split("<")[0].toLowerCase().charAt(0) +""+ i++);
+          final SimpleName n = d.getAST().newSimpleName((¢.getType() + "").split("<")[0].toLowerCase().charAt(0) + "" + i++);
           while (checkContains(getAll.names(d), n))
             n.setIdentifier(¢.getType() + "" + i++);
           misc.rename(¢.getName(), n, d, r, g);
@@ -44,8 +44,8 @@ public class MethodDeclarationNameShorter extends EagerTipper<MethodDeclaration>
       }
     }.spanning(d);
   }
-  static boolean checkContains(List<SimpleName> ns, SimpleName n) {
-    for (SimpleName ¢ : ns)
+  static boolean checkContains(final List<SimpleName> ns, final SimpleName n) {
+    for (final SimpleName ¢ : ns)
       if (¢.getIdentifier().equals(n.getIdentifier()))
         return true;
     return false;
