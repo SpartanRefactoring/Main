@@ -73,41 +73,40 @@ public class Class extends NamedElement{
     public MatchingResult generalizes(Encapsulator e) {
         if (!iz.classDeclaration(e.inner)) return new MatchingResult(false);
         PsiClass c = az.classDeclaration(e.inner);
-        PsiField[] fieldsOfInstance = c.getFields();
-        PsiMethod[] methodsOfInstance = c.getMethods();
-        PsiClass[] innerClassesOfInstance = c.getInnerClasses();
-        List<Integer[]> fieldsPermutation = new LinkedList<>();
-        List<Integer[]> methodsPermutation = new LinkedList<>();
-        List<Integer[]> innerClassesPermutation = new LinkedList<>();
-        getAllPermutation(fieldsPermutation, fields.size() - 1, IntStream.range(0, fields.size()).boxed().collect(Collectors.toList()), new Integer[fields.size()]);
-        getAllPermutation(methodsPermutation, methods.size() - 1, IntStream.range(0, methods.size()).boxed().collect(Collectors.toList()), new Integer[methods.size()]);
-        getAllPermutation(innerClassesPermutation, innerClasses.size() - 1, IntStream.range(0, innerClasses.size()).boxed().collect(Collectors.toList()), new Integer[innerClasses.size()]);
         MatchingResult mr = new MatchingResult(true);
         if (!super.generalizes(e).matches())
             return new MatchingResult(false);
-        mr.combineWith(matchInnerElement(fieldsPermutation, fieldsOfInstance, fieldsMatchers));
-        mr.combineWith(matchInnerElement(methodsPermutation, methodsOfInstance, methodsMatchers));
-        mr.combineWith(matchInnerElement(innerClassesPermutation, innerClassesOfInstance, innerClassesMatchers));
+        mr.combineWith(matchInnerElements(c.getFields(), fieldsMatchers));
+        mr.combineWith(matchInnerElements(c.getMethods(), methodsMatchers));
+        mr.combineWith(matchInnerElements(c.getInnerClasses(), innerClassesMatchers));
         return mr;
     }
 
-    private MatchingResult matchInnerElement(List<Integer[]> permutations, PsiElement[] innerElements, List<Matcher> matchers) {
-        if (permutations.size() == 1 && permutations.get(0).length == 0) return new MatchingResult(true);
-        Wrapper<Integer> dummy = new Wrapper<>(0);
-        return permutations.stream().map(perm -> {
-            MatchingResult mr = new MatchingResult(false);
-            for (int i = 0; i < innerElements.length; i++) {
-                MatchingResult imr = matchers.get(i).getMatchingResult(innerElements[perm[i]], dummy);
-                if (imr.notMatches()) {
-                    return imr;
-                }
-                mr.combineWith(imr);
-                mr.setMatches();
-            }
-            return mr;
-        }).filter(mr -> mr.matches()).findFirst().orElse(new MatchingResult(false));
+    private MatchingResult matchInnerElements(PsiElement[] innerElements, List<Matcher> matchers){
+        if (matchers.size() == 0) return new MatchingResult(true);
+        List<List<MatchingResult>> l = matchers.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
+        MatchingResult[] ass = new MatchingResult[matchers.size()];
+        if (!matchInnerElementAux(l, matchers.size() - 1, new LinkedList<>(), ass)){
+            return new MatchingResult(false);
+        }
+        MatchingResult mr = new MatchingResult(true);
+        Arrays.stream(ass).forEach(a -> mr.combineWith(a));
+        return mr;
     }
 
+    private boolean matchInnerElementAux(List<List<MatchingResult>> l, int i, List<MatchingResult> used, MatchingResult[] ass){
+        if (i < 0) return true;
+        for (MatchingResult mr : l.get(i)){
+            if (used.contains(mr)) continue;
+            used.add(mr);
+            ass[i] = mr;
+            if (matchInnerElementAux(l, i - 1, used, ass))
+                return true;
+            used.remove(mr);
+        }
+        return false;
+    }
+    
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> map, PsiRewrite r) {
         PsiClass psiClass = az.classDeclaration(elements.get(0));

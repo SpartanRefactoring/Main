@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.az;
+import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 
@@ -39,6 +40,8 @@ public class Replacer {
             last = last.getNextSibling();
         }
         PsiElement parent = treeToReplace.getParent();
+        if (iz.declarationStatement(parent))
+            return;
         if (prev == null) {
             prev = parent.getFirstChild();
             for (PsiElement element : elements) {
@@ -49,8 +52,11 @@ public class Replacer {
                 r.addAfter(parent, prev, element);
             }
         }
-        if (parent.getParent() instanceof PsiMethodCallExpression) {
+        if (iz.methodCallExpression(parent.getParent())) {
             treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
+        }
+        if (parent.getChildren().length <= 1){
+            return;
         }
         r.deleteByRange(parent, treeToReplace, last);
     }

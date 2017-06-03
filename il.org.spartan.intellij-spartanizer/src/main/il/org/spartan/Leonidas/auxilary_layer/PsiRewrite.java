@@ -48,7 +48,6 @@ public class PsiRewrite {
     /**
      * @param parent the tree to replace.
      * @param first the replacing tree.
-     * @return the new tree that was inserted to the path of the tree that was replaced.
      */
     public void deleteByRange(PsiElement parent, PsiElement first, PsiElement last) {
         Toolbox.getInstance().replaced = true;
@@ -63,7 +62,6 @@ public class PsiRewrite {
 
     /**
      * @param prev the replacing tree.
-     * @return the new tree that was inserted to the path of the tree that was replaced.
      */
     public void addAfter(PsiElement parent, PsiElement prev, PsiElement element) {
         Toolbox.getInstance().replaced = true;
@@ -78,7 +76,6 @@ public class PsiRewrite {
 
     /**
      * @param next the replacing tree.
-     * @return the new tree that was inserted to the path of the tree that was replaced.
      */
     public void addBefore(PsiElement parent, PsiElement next, PsiElement element) {
         Toolbox.getInstance().replaced = true;
