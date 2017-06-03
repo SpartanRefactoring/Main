@@ -86,7 +86,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).setNodeValue(returnParameterRadio.getPreferenceStore().getString("Dollar"));
       XMLSpartan.commit(p, doc);
     }
-    notation.cent = singleParameterRadio.getPreferenceStore().getString("Cent");
+    notation.cent = "cent".equals(singleParameterRadio.getPreferenceStore().getString("Cent")) ? "¢"
+        : singleParameterRadio.getPreferenceStore().getString("Cent");
     notation.return$ = returnParameterRadio.getPreferenceStore().getString("Dollar");
   }
   /** Build the preferences page by adding controls */
