@@ -198,10 +198,11 @@ public class Toolbox implements ApplicationComponent {
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
     }
 
-    /*This should work on any tree!
-    * Returns true if the tipper changed anything.
-    * false otherwise.
-    * */
+    /**
+     * @param e Psi tree
+     * @param tipperName The name of the tipper to execure on e.
+     * @return True if the tipper changed anything, false otherwise.
+     * */
     public boolean executeSingleTipper(PsiElement e, String tipperName) {
         Tipper tipper = getTipperByName(tipperName);
         if (tipper == null) {

@@ -1,13 +1,17 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
+
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.INCOMPLETE;
 
 /**
  * Testing!
  *
  * @author Sharon
  */
+@TipperUnderConstruction(INCOMPLETE)
 public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     int x;
     @Override
