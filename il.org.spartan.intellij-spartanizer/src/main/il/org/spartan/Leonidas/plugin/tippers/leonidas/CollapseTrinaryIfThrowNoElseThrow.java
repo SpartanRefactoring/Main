@@ -16,7 +16,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @since 30/5/2017.
  */
 
-@TipperUnderConstruction(BROKEN_MATCHER)
+//@TipperUnderConstruction(BROKEN_MATCHER)
 public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefinition {
 
     @Override

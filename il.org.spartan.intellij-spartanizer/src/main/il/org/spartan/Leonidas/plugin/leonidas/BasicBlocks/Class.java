@@ -106,7 +106,7 @@ public class Class extends NamedElement{
         }
         return false;
     }
-    
+
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> map, PsiRewrite r) {
         PsiClass psiClass = az.classDeclaration(elements.get(0));
