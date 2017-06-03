@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import il.org.spartan.Leonidas.auxilary_layer.iz;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     }
 
     private void initializeElements(Encapsulator e, List<Encapsulator> l) {
-        l.add(e);
+        if (!iz.whiteSpace(e.getInner())) l.add(e);
         e.getActualChildren().forEach(c -> initializeElements(c, l));
     }
 
