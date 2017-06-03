@@ -183,7 +183,7 @@ public class Integers {
     return this;
   }
   /** @param capacity new hash table size */
-  @SuppressWarnings("unused") protected void subclassReset(final int capacity) {
+  protected void subclassReset(final int capacity) {
     //
   }
   /** Find the index in the hash table of the parameter

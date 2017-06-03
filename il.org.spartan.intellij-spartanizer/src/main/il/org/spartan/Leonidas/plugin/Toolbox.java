@@ -43,7 +43,7 @@ public class Toolbox implements ApplicationComponent {
 //    private final ToolboxStateService toolboxStateService = ToolboxStateService.getInstance();
 
     public boolean playground = false;
-    public boolean testing = true;
+    public boolean testing = false;
     public boolean replaced = false;
     private Map<Class<? extends PsiElement>, List<Tipper>> allTipperMap = new ConcurrentHashMap<>();
     private List<GenericEncapsulator> blocks = new ArrayList<>();

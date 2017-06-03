@@ -303,8 +303,8 @@ public class XMLSpartan {
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
-    Reader reader = new InputStreamReader(fl.getContents(), "UTF-8");
-    InputSource is = new InputSource(reader);
+    final Reader reader = new InputStreamReader(fl.getContents(), "UTF-8");
+    final InputSource is = new InputSource(reader);
     is.setEncoding("UTF-8");
     final Document $ = b.parse(is);
     if ($ == null)
@@ -317,7 +317,7 @@ public class XMLSpartan {
     if (ns != null && ns.getLength() == 1 && validate($, ((Element) ns.item(0)).getAttribute(VERSION)))
       return $;
     final Collection<String> ls = createEnabledList($);
-    Document ret = initialize(b.newDocument());
+    final Document ret = initialize(b.newDocument());
     updateEnabledTippers(ret, ls);
     commit(fl, ret);
     return ret;

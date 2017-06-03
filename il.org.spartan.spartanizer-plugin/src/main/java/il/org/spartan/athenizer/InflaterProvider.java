@@ -49,7 +49,8 @@ public class InflaterProvider extends OperationsProvider {
             new PrefixToInfix(), //
             null) //
         .add(SwitchStatement.class, //
-            new CasesSplit(), new SwitchMissingDefaultAdd(), //
+            new CasesSplit(),//
+            new SwitchMissingDefaultAdd(), //
             null)//
         .add(Assignment.class, //
             new AssignmentOperatorBloater(), //
@@ -66,13 +67,13 @@ public class InflaterProvider extends OperationsProvider {
         .add(MethodInvocation.class, //
             new OutlineTernaryMethodInvocation(), //
             null) //
-//        .add(MethodDeclaration.class, //
-//            // new MethodDeclarationNameExpander(),
-//            // new AddModifiersToMethodDeclaration(), //
-//            null) //
-//        .add(EnumDeclaration.class, //
-//            new AddModifiersToEnums(), //
-//            null) //
+        // .add(MethodDeclaration.class, //
+        // // new MethodDeclarationNameExpander(),
+        // // new AddModifiersToMethodDeclaration(), //
+        // null) //
+        // .add(EnumDeclaration.class, //
+        // new AddModifiersToEnums(), //
+        // null) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryBloater(), //
             null) //
@@ -93,8 +94,12 @@ public class InflaterProvider extends OperationsProvider {
             new LongIfBloater(), //
             null) //
         .add(InfixExpression.class, //
-            new ParenthesesBloater(), new TernaryPushup(), //
+            new ParenthesesBloater(),//
+            new TernaryPushup(), //
             null) //
+        .add(VariableDeclarationFragment.class, //
+            new LocalInitializedCollection(),//
+            null)//
     ;//
   }
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {

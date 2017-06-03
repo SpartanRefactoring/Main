@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2017-03-30 */
 public abstract class NonEmptyMethodDeclaration extends CallablePattern {
   private static final long serialVersionUID = 0x480901F48385E850L;
+
   public NonEmptyMethodDeclaration() {
     andAlso("Must not be constructor ", () -> !current.isConstructor());
     andAlso("Applicable only on non empty methods", () -> haz.anyStatements(current()));

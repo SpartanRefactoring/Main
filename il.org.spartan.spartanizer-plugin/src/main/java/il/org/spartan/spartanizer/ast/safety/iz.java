@@ -125,7 +125,7 @@ public interface iz {
     for (Statement current = ¢; current != null;)
       switch (current.getNodeType()) {
         case IF_STATEMENT:
-          IfStatement s = az.ifStatement(current);
+          final IfStatement s = az.ifStatement(current);
           if (elze(s) == null)
             return (!eq(s, az.astNode(the.firstOf(statements(az.block(elze(parent)))))) || misc.recursiveElse(s) != null || elze(parent) == null)
                 && (elze(parent) == null || misc.recursiveElse(s) == null)
