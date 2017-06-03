@@ -12,7 +12,7 @@ public class ASTTestClassGeneratorTest {
   @Before public void set$() {
     $ = new ASTTestClassGenerator(Void.class);
   }
-  @SuppressWarnings("unused") @Test public void suffixesTest() {
+  @Test @SuppressWarnings("unused") public void suffixesTest() {
     $.new Test(wizard.ast("@Test public void f() { assertEquals(0,q.remove());\n assertEquals(1,q.remove()); }"), an.empty.list());
   }
 }
