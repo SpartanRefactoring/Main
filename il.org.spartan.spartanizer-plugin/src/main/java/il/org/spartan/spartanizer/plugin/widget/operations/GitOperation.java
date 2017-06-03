@@ -26,7 +26,7 @@ public abstract class GitOperation extends WidgetOperation {
     return (popup = ¢.getBoolean(POPUP)) != null;
   }
   @Override protected ConfigurationsMap defaultConfiguration() {
-   return new ConfigurationsMap().put(POPUP, true);
+    return new ConfigurationsMap().put(POPUP, true);
   }
   protected abstract void gitOperation(Git g) throws Throwable;
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext c) throws Throwable {

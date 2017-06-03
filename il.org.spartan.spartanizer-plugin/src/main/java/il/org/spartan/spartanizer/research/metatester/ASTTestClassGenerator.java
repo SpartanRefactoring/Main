@@ -46,26 +46,17 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     packageName = packageName("\\.", testClass);
     sourceLines = new HashSet<>();
   }
-  private static List<String> prefixes(final Test t) {
-    final List<String> $ = an.empty.list();
-    final StringBuilder prefix = new StringBuilder();
-    step.statements((MethodDeclaration) t.source).stream().map(λ -> {
-      prefix.append(λ + "\n");
-      return prefix + "";
-    }).forEach($::add);
-    return $;
-  }
   public static List<String> suffixes(final Test t) {
-    List<String> allStatements = step.statements((MethodDeclaration) t.source).stream().map(Object::toString)
+    final List<String> allStatements = step.statements((MethodDeclaration) t.source).stream().map(Object::toString)
         .map(TestTransformator::transformIfPossible).collect(Collectors.toList());
-    Int i = new Int(-1);
+    final Int i = new Int(-1);
     return allStatements.stream().map(s -> new Pair<>(i.next(), copyOf(allStatements))).map(p -> {
       p.second.set(p.first, shutDown(p.second.get(p.first)));
       return p.second;
     }).map(l -> l.stream().reduce((s1, s2) -> s1 + s2).orElse("")).collect(Collectors.toList());
   }
-  private static <T> List<T> copyOf(List<T> l) {
-    List<T> copy = new ArrayList<>(l);
+  private static <T> List<T> copyOf(final List<T> l) {
+    final List<T> copy = new ArrayList<>(l);
     Collections.copy(copy, l);
     return copy;
   }
@@ -89,18 +80,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     } catch (final IOException x) {
       return note.bug(x);
     }
-  }
-  private String addImport(ASTNode source, String importDeclaration) {
-    CompilationUnit cu = az.compilationUnit(source.getRoot());
-    ListRewrite lr = ASTRewrite.create(cu.getAST()).getListRewrite(cu, CompilationUnit.IMPORTS_PROPERTY);
-    final ImportDeclaration id = source.getAST().newImportDeclaration();
-    id.setName(source.getAST().newName(importDeclaration));
-    lr.insertLast(id, null);
-    final TextEdit te;
-    /* try { te = lr.getASTRewrite() te.apply(new Document()); } catch
-     * (BadLocationException | JavaModelException e) { note.bug(e); } */
-    // step.importDeclarations(az.typeDeclaration(source))
-    return "";
   }
   private void modifyClass() {
     root.accept(new ASTVisitor() {
@@ -143,10 +122,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         return false;
       }
     });
-  }
-  private String replaceLast(String str, String pattern, String replacer) {
-    int start = str.lastIndexOf(pattern);
-    return new StringBuilder(str).replace(start, pattern.length() + 1, replacer).toString();
   }
   private String testClassSkeleton(final List<List<String>> tests) {
     removeOriginalTestsFromTree();

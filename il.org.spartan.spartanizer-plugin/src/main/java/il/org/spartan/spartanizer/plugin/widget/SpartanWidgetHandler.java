@@ -40,13 +40,11 @@ public class SpartanWidgetHandler extends AbstractHandler {
     return null;
   }
   public static void launchWidget(final Function<Point, Point> startLocation) {
-    /* if the widget doesn't work due to a class not found exception
-     * uncomment the next command, run the widget, disable an operation
-     * from the widget preferences page and then close the runtime eclipse
-     * and remove this line. That should override the old preferences
-     * and solve the issue
-     */
-    //WidgetPreferences.storeDefaultEntries();
+    /* if the widget doesn't work due to a class not found exception uncomment
+     * the next command, run the widget, disable an operation from the widget
+     * preferences page and then close the runtime eclipse and remove this line.
+     * That should override the old preferences and solve the issue */
+    // WidgetPreferences.storeDefaultEntries();
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return;
@@ -211,7 +209,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
       ¢.gc.drawImage(i, 0, 0);
       $.setSize(w, h);
     });
-    $.setLocation(R / 2+r, R / 2+r);
+    $.setLocation(R / 2 + r, R / 2 + r);
     $.pack();
     return $;
   }
@@ -233,7 +231,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
         ¢.gc.drawImage(i, r / 2, r / 2);
       $.setSize(2 * r, 2 * r);
     });
-    $.setLocation((p.x) - r, (p.y) - r);
+    $.setLocation(p.x - r, p.y - r);
     $.pack();
     final Region rg = s.getRegion();
     rg.add(circle(r, p.x, p.y));

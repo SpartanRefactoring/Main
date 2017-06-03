@@ -3,11 +3,9 @@ package il.org.spartan.athenizer.zoomin.expanders;
 import org.junit.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
-/**
- * TODO dormaayn: document class
- * @author  dormaayn
- * @since  2017-05-23 
- */
+/** TODO dormaayn: document class
+ * @author dormaayn
+ * @since 2017-05-23 */
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue1392 {

@@ -46,7 +46,7 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
     andAlso("Assigned value is deterministic", //
         () -> sideEffects.deterministic(origin));
   }
-   @Override public String description() {
+  @Override public String description() {
     return "Consolidate assignment to " + to + " with subsequent similar assignment";
   }
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {

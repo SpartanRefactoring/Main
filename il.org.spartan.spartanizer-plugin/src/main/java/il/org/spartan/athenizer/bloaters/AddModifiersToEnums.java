@@ -12,11 +12,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public class AddModifiersToEnums extends ReplaceCurrentNode<EnumDeclaration> implements TipperCategory.Bloater {
   private static final long serialVersionUID = 1;
 
-  @Override public String description(@SuppressWarnings("unused") EnumDeclaration __) {
+  @Override public String description(@SuppressWarnings("unused") final EnumDeclaration __) {
     return "add all the unecessary modifiers to the enum";
   }
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(EnumDeclaration ¢) {
-    EnumDeclaration $ = copy.of(¢);
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final EnumDeclaration ¢) {
+    final EnumDeclaration $ = copy.of(¢);
     if (!extract.modifiers(¢).contains(¢.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD)))
       $.modifiers().add(¢.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD));
     return $;

@@ -12,8 +12,8 @@ public abstract class AssignmentPattern extends NodePattern<Assignment> {
   protected Operator operator;
 
   public AssignmentPattern() {
-      needs("to",()->to = current.getLeftHandSide());
-      needs("from",()->from = current.getLeftHandSide());
-      needs("operator", ()->operator = current.getOperator());
+    needs("to", () -> to = current.getLeftHandSide());
+    needs("from", () -> from = current.getLeftHandSide());
+    needs("operator", () -> operator = current.getOperator());
   }
 }

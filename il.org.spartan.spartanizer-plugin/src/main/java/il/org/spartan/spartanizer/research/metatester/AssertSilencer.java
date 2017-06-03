@@ -7,32 +7,22 @@ import org.eclipse.jdt.core.dom.ASTNode;
 
 import static il.org.spartan.spartanizer.research.metatester.MetaTesterStringUtils.getTemplatedValue;
 
-/**
- * @author Oren Afek
- * @since 5/25/2017.
- */
+/** @author Oren Afek
+ * @since 5/25/2017. */
 public class AssertSilencer {
-
-
-    private static boolean isAssertJFormatted(String code) {
-        return (code.trim().startsWith("assertThat"));
-    }
-
-    private static boolean isStatement(String code) {
-        ASTNode ast = wizard.ast(code);
-        return iz.expressionStatement(ast) || iz.expressionStatement(step.parent(ast));
-    }
-
-    private static String shutDownAssertJ(String code) {
-        assert isAssertJFormatted(code);
-        String $ = getTemplatedValue(code, "assertThat\\((.*)\\)\\.(.*)", "assertThat\\((.*)\\)(.*)");
-        return "".equals($) || !isStatement($) ? code : $ + ";";
-    }
-
-
-    public static String shutDown(String test) {
-        return !isAssertJFormatted(test) ? test : shutDownAssertJ(test);
-    }
-
-
+  private static boolean isAssertJFormatted(final String code) {
+    return code.trim().startsWith("assertThat");
+  }
+  private static boolean isStatement(final String code) {
+    final ASTNode ast = wizard.ast(code);
+    return iz.expressionStatement(ast) || iz.expressionStatement(step.parent(ast));
+  }
+  private static String shutDownAssertJ(final String code) {
+    assert isAssertJFormatted(code);
+    final String $ = getTemplatedValue(code, "assertThat\\((.*)\\)\\.(.*)", "assertThat\\((.*)\\)(.*)");
+    return "".equals($) || !isStatement($) ? code : $ + ";";
+  }
+  public static String shutDown(final String test) {
+    return !isAssertJFormatted(test) ? test : shutDownAssertJ(test);
+  }
 }
