@@ -1,7 +1,5 @@
 package il.org.spartan.athenizer.bloaters;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
