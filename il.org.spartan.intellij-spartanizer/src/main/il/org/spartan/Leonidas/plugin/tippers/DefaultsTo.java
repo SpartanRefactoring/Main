@@ -55,7 +55,7 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
     //TODO change to better description
     @Override
     public String description(PsiConditionalExpression x) {
-        return "Replace to ??";
+        return "Change to defaults-to syntax";
     }
 
     @Override
