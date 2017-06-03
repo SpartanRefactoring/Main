@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-
-
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -29,27 +27,26 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   WidgetOperationEntry woe;
   String resName;
 
-  public ConfigWidgetPreferencesDialog(final Shell parentShell,
-      WidgetOperationEntry woe, long widgetSerialID, final IPreferenceStore store ) {
+  public ConfigWidgetPreferencesDialog(final Shell parentShell, final WidgetOperationEntry woe, final long widgetSerialID, final IPreferenceStore store) {
     super(parentShell);
-    this.widgetName = woe.getName();
+    widgetName = woe.getName();
     this.store = store;
     this.widgetSerialID = widgetSerialID;
     this.woe = woe;
-    this.configurations = woe.getWidgetOp().configurationComponents();
-    this.confMap = new HashMap<>();
-    this.resName = woe.getName();
+    configurations = woe.getWidgetOp().configurationComponents();
+    confMap = new HashMap<>();
+    resName = woe.getName();
   }
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);
-    resName = createString($, "Widget Name",resName);
+    resName = createString($, "Widget Name", resName);
     for (final String[] comp : configurations) {
       if ("String".equals(comp[1]))
-        confMap.put(comp[0], createString($, comp[2],woe.getConfiguration().get(comp[0])));
+        confMap.put(comp[0], createString($, comp[2], woe.getConfiguration().get(comp[0])));
       if ("Boolean".equals(comp[1]))
-        confMap.put(comp[0], createBoolean($, comp[2],woe.getConfiguration().get(comp[0])));
+        confMap.put(comp[0], createBoolean($, comp[2], woe.getConfiguration().get(comp[0])));
       else { // if("List".equals(comp[1]))
-        final Button[] res = createList($, Arrays.copyOfRange(comp, 2, comp.length - 1),woe.getConfiguration().get(comp[0]));
+        final Button[] res = createList($, Arrays.copyOfRange(comp, 2, comp.length - 1), woe.getConfiguration().get(comp[0]));
         int count = 2;
         for (final Button ¢ : res) {
           if (¢.getSelection()) {
@@ -71,7 +68,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   @Override protected Point getInitialSize() {
     return new Point(450, 300);
   }
-  private static String createString(final Composite container, final String name,String defaultValue) {
+  private static String createString(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
@@ -81,7 +78,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     $.setLayoutData(dataRes);
     return $.getText();
   }
-  private static String createBoolean(final Composite container, final String name,String defaultValue) {
+  private static String createBoolean(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
@@ -90,9 +87,9 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     $.setText(name);
     $.setLayoutData(dataRes);
     $.setSelection("true".equals(defaultValue.toLowerCase()));
-    return $.getSelection()? "true" : "false";
+    return $.getSelection() ? "true" : "false";
   }
-  private static Button[] createList(final Composite container, final String[] options,String defaultValue) {
+  private static Button[] createList(final Composite container, final String[] options, final String defaultValue) {
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
@@ -101,7 +98,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     for (final String ¢ : options) {
       $[count] = new Button(container, SWT.RADIO);
       $[count].setSelection(false);
-      if(¢.equals(defaultValue))
+      if (¢.equals(defaultValue))
         $[count].setSelection(true);
       $[count].setText(¢);
       $[count].setBounds(10, 25 * count + 5, 75, 30);

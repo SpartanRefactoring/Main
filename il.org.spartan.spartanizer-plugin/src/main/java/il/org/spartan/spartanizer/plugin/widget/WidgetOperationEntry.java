@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.plugin.widget;
 import java.io.*;
 import java.util.*;
 
-
 /** A widget operation with it's configuration
  * @author Niv Shalmon
  * @author Raviv Rachmiel
@@ -32,8 +31,6 @@ public class WidgetOperationEntry implements Serializable {
   public void toggleEnabled() {
     isEnabled = !isEnabled;
   }
-  
-
   public void setEnabled(final boolean flag) {
     isEnabled = flag;
   }
@@ -43,11 +40,9 @@ public class WidgetOperationEntry implements Serializable {
   public String getName() {
     return name;
   }
-  
-  public void setConfMap(Map<String,String> ¢) {
-    this.configuration = ¢;
+  public void setConfMap(final Map<String, String> ¢) {
+    configuration = ¢;
   }
-  
   public WidgetOperation getWidgetOp() {
     for (final WidgetOperation $ : WidgetOperationPoint.allOperations)
       if (widgetSUID == ObjectStreamClass.lookup($.getClass()).getSerialVersionUID())
@@ -57,7 +52,7 @@ public class WidgetOperationEntry implements Serializable {
   public ConfigurationsMap getConfigurationMap() {
     return new ConfigurationsMap(configuration);
   }
-  public Map<String,String> getConfiguration() {
+  public Map<String, String> getConfiguration() {
     return configuration;
   }
   @Override public int hashCode() {

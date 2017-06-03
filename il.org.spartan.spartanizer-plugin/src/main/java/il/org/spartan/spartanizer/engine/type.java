@@ -224,7 +224,7 @@ public interface type {
     static final Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
       static final long serialVersionUID = -0x702EDE52D8CBFF3AL;
       {
-        for (Certain ¢ : Certain.values()) {
+        for (final Certain ¢ : Certain.values()) {
           ¢.unboxed.ifPresent(λ -> put(λ, ¢));
           ¢.boxed.ifPresent(λ -> {
             put(λ, ¢);
@@ -259,8 +259,8 @@ public interface type {
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
-    private static implementation lookDown(final SimpleName ¢){
-      Namespace $ = Environment.of(¢);
+    private static implementation lookDown(final SimpleName ¢) {
+      final Namespace $ = Environment.of(¢);
       return !$.has(¢.getIdentifier()) ? NOTHING : (implementation) $.get(¢.getIdentifier()).getType();
     }
     /** @param x JD
@@ -332,15 +332,13 @@ public interface type {
     private static implementation lookDown(final VariableDeclarationExpression ¢) {
       return baptize(step.type(¢) + "");
     }
-    /**
-     * performs the lookup process for InfixExpressions. 
-     */
+    /** performs the lookup process for InfixExpressions. */
     private static implementation lookup(final InfixExpression x, final implementation i, final InfixExpression.Operator o) {
       final implementation $ = i.aboveBinaryOperator(o);
       if (o != op.PLUS2)
         return $;
       ASTNode context = x.getParent();
-      while (context!= null && iz.parenthesizedExpression(context))
+      while (context != null && iz.parenthesizedExpression(context))
         context = context.getParent();
       return context == null || !iz.infixExpression(context) ? $ : lookup(az.infixExpression(context), $, az.infixExpression(context).getOperator());
     }
@@ -363,7 +361,7 @@ public interface type {
             case POSTFIX_EXPRESSION:
               return i.asNumeric();
             case INFIX_EXPRESSION:
-              return lookup(az.infixExpression(context),i,az.infixExpression(context).getOperator());
+              return lookup(az.infixExpression(context), i, az.infixExpression(context).getOperator());
             case PREFIX_EXPRESSION:
               return i.above(az.prefixExpression(context).getOperator());
             case ASSERT_STATEMENT:

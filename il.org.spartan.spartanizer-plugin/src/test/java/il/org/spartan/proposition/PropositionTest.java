@@ -18,11 +18,9 @@ import static fluent.ly.azzert.instanceOf;
 import static fluent.ly.azzert.is;
 import static il.org.spartan.utils.Proposition.*;
 
-/**
- * Tests class  {@link Proposition}
- * @author  Yossi Gil  {@code     Yossi.Gil@GMail.COM}
- * @since  2017-03-08 
- */
+/** Tests class {@link Proposition}
+ * @author Yossi Gil {@code     Yossi.Gil@GMail.COM}
+ * @since 2017-03-08 */
 @RunWith(MetaTester.class)
 @SuppressWarnings("static-method")
 public class PropositionTest {

@@ -41,7 +41,7 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     final SimpleName ¢ = make.newCent(d);
-    return new Tip("Rename Single paraemter " + $ +" to the chosen prefrence", getClass(), $) {
+    return new Tip("Rename Single paraemter " + $ + " to the chosen prefrence", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, d, r, g);
         ParameterAbbreviate.fixJavadoc(d, $, ¢ + "", r, g);

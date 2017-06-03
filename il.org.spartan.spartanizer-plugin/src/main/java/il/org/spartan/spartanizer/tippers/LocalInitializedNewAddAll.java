@@ -18,10 +18,7 @@ import il.org.spartan.utils.*;
  * a.addAll(x)
  * } to {@code
  * T a = as.list(x)
- * }
- * 
- * tests in {@link Issue1314}
- * 
+ * } tests in {@link Issue1314}
  * @author Yossi Gil
  * @since 2017-03-02 */
 public final class LocalInitializedNewAddAll extends LocalInitialized {

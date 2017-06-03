@@ -284,8 +284,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     }
   }
   // TODO yossi gil: check if it is needed (mapping a Type node)
-  @SuppressWarnings("unused")
-  protected R map(final Type ¢) {
+  @SuppressWarnings("unused") protected R map(final Type ¢) {
     if (¢ == null)
       return reduce();
     ¢.getNodeType();

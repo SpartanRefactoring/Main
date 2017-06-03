@@ -151,11 +151,11 @@ public interface Configurations {
           new MethodDeclarationRenameReturnToDollar(), //
           new BodyDeclarationModifiersSort<>(), //
           new MethodDeclarationRenameSingleParameter(), //
-//          new ConstructorRenameParameters(), //
+          // new ConstructorRenameParameters(), //
           new ConstructorEmptyRemove(), //
           new MethodDeclarationConstructorMoveToInitializers(), //
           new MethodDeclarationOverrideDegenerateRemove(), //
-         // new AnonymizeAllParameters(), //
+          // new AnonymizeAllParameters(), //
           null)
       .add(MethodInvocation.class, //
           new MethodInvocationEqualsWithLiteralString(), //

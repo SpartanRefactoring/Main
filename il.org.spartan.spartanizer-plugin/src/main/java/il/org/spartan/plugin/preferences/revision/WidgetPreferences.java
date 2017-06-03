@@ -31,7 +31,7 @@ public enum WidgetPreferences {
   public static void storeSize(final int ¢) {
     store().setValue(PreferencesResources.WIDGET_SIZE, ¢);
   }
-  public static void storeDefaultSize(){
+  public static void storeDefaultSize() {
     store().setToDefault(PreferencesResources.WIDGET_SIZE);
   }
   /** @return the size of the widget or null if an exception occurred */
@@ -47,7 +47,7 @@ public enum WidgetPreferences {
     }
     store().setValue(PreferencesResources.WIDGET_OPERATION_CONFIGURATION, Base64.getEncoder().encodeToString(out.toByteArray()));
   }
-  public static void storeDefaultEntries(){
+  public static void storeDefaultEntries() {
     store().setToDefault(PreferencesResources.WIDGET_OPERATION_CONFIGURATION);
   }
   @SuppressWarnings("unchecked") public static List<WidgetOperationEntry> readEntries() {

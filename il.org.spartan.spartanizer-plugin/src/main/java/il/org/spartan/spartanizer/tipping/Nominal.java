@@ -17,32 +17,32 @@ public interface Nominal extends TipperCategory {
   }
 
   interface Result extends Nominal {
-    @SuppressWarnings("hiding")  String toString = "Naming convention for the result variable";
-  
+    @SuppressWarnings("hiding") String toString = "Naming convention for the result variable";
+
     @Override default String description() {
       return toString;
     }
   }
 
   interface Trivialization extends Nominal {
-    @SuppressWarnings("hiding")  String toString = "Centification";
-  
+    @SuppressWarnings("hiding") String toString = "Centification";
+
     @Override default String description() {
       return toString;
     }
   }
 
   interface Abbreviation extends Nominal {
-    @SuppressWarnings("hiding")  String toString = "One letter convention for locals";
-  
+    @SuppressWarnings("hiding") String toString = "One letter convention for locals";
+
     @Override default String description() {
       return toString;
     }
   }
 
   interface Anonymization extends Nominal {
-    @SuppressWarnings("hiding")  String toString = "Naming convention for anonymizing unused parameters";
-  
+    @SuppressWarnings("hiding") String toString = "Naming convention for anonymizing unused parameters";
+
     @Override default String description() {
       return toString;
     }
