@@ -507,7 +507,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <command commandId="il.org.spartan.TipsToggleOnOff" style="push" mnemonic="T"/>
     </menu>
     <menu label="Athenize..." mnemonic="A">
-      <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="C" label="Current Selection"/>
+      <!--<command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="C" label="Current Selection"/>-->
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="A" label="Active Window"/>
     </menu>
     <menu label="Zoomer" mnemonic="Z">

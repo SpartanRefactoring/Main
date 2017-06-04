@@ -224,7 +224,6 @@ public interface Configurations {
           new BodyDeclarationModifiersSort<>(), //
           new AnnotationSort<>(), //
           new FieldInitializedSerialVersionUIDToHexadecimal(), //
-          new RenameClassFields(), //
           null) //
       .add(CastExpression.class, //
           new CastToDouble2Multiply1(), //
