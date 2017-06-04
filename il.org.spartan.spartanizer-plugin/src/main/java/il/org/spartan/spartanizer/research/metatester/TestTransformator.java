@@ -67,8 +67,8 @@ public interface TestTransformator {
   }
   static String replace(final String s, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
     try {
-      final String[] $ = rearange(getTemplatedValues(s, matchPattern), new String[orderOfTemplatedValues.length], orderOfTemplatedValues);
-      return s.replaceAll(matchPattern, getReplacerString(replacePattern, $));
+      return s.replaceAll(matchPattern, getReplacerString(replacePattern,
+          rearange(getTemplatedValues(s, matchPattern), new String[orderOfTemplatedValues.length], orderOfTemplatedValues)));
     } catch (@SuppressWarnings("unused") final Exception e) {
       return s;
     }

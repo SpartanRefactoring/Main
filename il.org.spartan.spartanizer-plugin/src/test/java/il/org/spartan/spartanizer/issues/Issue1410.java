@@ -61,27 +61,11 @@ public class Issue1410 extends TipperTest<Block> {
             .stays();
   }
   @Test public void test04() {
-    trimmingOf("int size = list.size();" //
-        + "    if (element == null) {"//
-        + "      for (Object e : list)"//
-        + "        if (e == null)"//
-        + "         return ¢;" + "        else" + "         return a;"//
-        + "    } else"//
-        + "       for (Object e : list)"//
-        + "          if (element.equals(e))"//
-        + "            return ¢;"//
-        + "    return -1;"//
-        + "  }")//
-            .gives("int size = list.size();" //
-                + "    if (element == null) "//
-                + "      for (Object e : list)"//
-                + "         if (e == null)"//
-                + "           return ¢;" + "         else" + "           return a;"//
-                + "    else"//
-                + "     for (Object e : list)"//
-                + "        if (element.equals(e))"//
-                + "          return ¢;"//
-                + "    return -1;"//
-                + "  }");
+    trimmingOf("int size = list.size();    if (element == null) {      for (Object e : list)        if (e == null)"
+        + "         return ¢;        else         return a;    } else       for (Object e : list)          if (element.equals(e))"
+        + "            return ¢;    return -1;  }")//
+            .gives("int size = list.size();    if (element == null)       for (Object e : list)         if (e == null)"
+                + "           return ¢;         else           return a;    else     for (Object e : list)"
+                + "        if (element.equals(e))          return ¢;    return -1;  }");
   }
 }
