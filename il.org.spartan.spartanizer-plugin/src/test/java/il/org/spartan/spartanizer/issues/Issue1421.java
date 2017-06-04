@@ -63,16 +63,16 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
       //
     }
     public void from0() {
-      List<Integer> x = new ArrayList<>(ys);
+      new ArrayList<>(ys);
     }
     public void from1() {
-      testUtils t = new testUtils(ys);
+      new testUtils(ys);
     }
     public void from2() {
-      Object x = new HashSet<Integer>(zs);
+      new HashSet<Integer>(zs);
     }
     public void from3() {
-      HashSet<Integer> x = new HashSet<>(zs);
+      new HashSet<>(zs);
     }
     public void f(Integer x){
       //

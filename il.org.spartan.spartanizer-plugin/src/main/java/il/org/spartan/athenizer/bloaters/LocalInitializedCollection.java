@@ -39,14 +39,8 @@ public class LocalInitializedCollection extends LocalInitialized {
         () -> hasAddAll(type.resolveBinding()));
   }
   private static boolean isCollection(final ITypeBinding tb) {
-    if (tb == null)
-      return false;
-    if ("java.util.Collection".equals(tb.getQualifiedName().split("<")[0]))
-      return true;
-    return as.list(tb.getInterfaces()).stream()//
-        .filter(LocalInitializedCollection::isCollection)//
-        .findAny()//
-        .isPresent();
+    return tb != null && ("java.util.Collection".equals(tb.getQualifiedName().split("<")[0])
+        || as.list(tb.getInterfaces()).stream().filter(LocalInitializedCollection::isCollection).findAny().isPresent());
   }
   private static boolean hasEmptyConstructor(final ITypeBinding tb) {
     return tb != null && as.list(tb.getDeclaredMethods()).stream()//
@@ -56,22 +50,10 @@ public class LocalInitializedCollection extends LocalInitialized {
         .isPresent();
   }
   private static boolean hasAddAll(final ITypeBinding tb) {
-    if (tb == null)
-      return false;
-    return as.list(tb.getDeclaredMethods()).stream()
-        .filter(λ -> "addAll".equals(λ.getName()))//
-        .filter(λ -> λ.getParameterTypes().length == 1)//
-        .filter(λ -> isCollection(λ.getParameterTypes()[0]))//
-        .findAny()//
-        .isPresent()//
-        || as.list(tb.getSuperclass()).stream()//
-        .filter(LocalInitializedCollection::hasAddAll)//
-        .findAny()//
-        .isPresent()//
-        || as.list(tb.getInterfaces()).stream()//
-        .filter(LocalInitializedCollection::hasAddAll)//
-        .findAny()//
-        .isPresent();
+    return tb != null && (as.list(tb.getDeclaredMethods()).stream().filter(λ -> "addAll".equals(λ.getName())).filter(λ -> λ.getParameterTypes().length == 1)
+        .filter(λ -> isCollection(λ.getParameterTypes()[0])).findAny().isPresent()
+        || as.list(tb.getSuperclass()).stream().filter(LocalInitializedCollection::hasAddAll).findAny().isPresent()
+        || as.list(tb.getInterfaces()).stream().filter(LocalInitializedCollection::hasAddAll).findAny().isPresent());
   }
   @Override public Examples examples() {
     //bloater requires binding which causes test to fail
