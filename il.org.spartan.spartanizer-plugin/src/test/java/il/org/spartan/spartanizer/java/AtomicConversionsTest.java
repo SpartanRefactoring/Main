@@ -57,12 +57,12 @@ public final class AtomicConversionsTest {
     assert !atomic.isDouble(1L);
     assert atomic.isLong(1L);
     assert atomic.isFloat(2F);
-    assert atomic.isFloat(2F + f);
+    assert atomic.isFloat(f + 2F);
     assert atomic.isFloat(1L + 2F);
   }
   @Test public void mod() {
     assert atomic.isLong(l / i);
-    assert atomic.isLong(l + i);
+    assert atomic.isLong(i + l);
     assert atomic.isLong(l % i);
     assert atomic.isLong(i % l);
   }

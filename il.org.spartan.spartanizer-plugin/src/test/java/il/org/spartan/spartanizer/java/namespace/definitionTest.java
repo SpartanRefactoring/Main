@@ -457,7 +457,7 @@ class ZZZ___Fixture_ModelClass {
                   return ¢ + "";
                 };
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
-              return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
+              return sum(super.hashCode(), ¢ + hashCode() * $.hashCode());
             return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();
           }
           @ScopeSize(4) @method int sum(@ScopeSize(1) @parameter final int a, @ScopeSize(1) @parameter final int b) {
@@ -469,7 +469,7 @@ class ZZZ___Fixture_ModelClass {
         @local final int c0 = localVariableInTryBlock - localVariableNewClass;
         --localVariableNewClass;
         localVariableNewClass ^= localVariableInTryBlock;
-        @ScopeSize(5) @knows({ "localVariableNewClass", "raisin" }) @local int raisin = localVariableInTryBlock + localVariableNewClass;
+        @ScopeSize(5) @knows({ "localVariableNewClass", "raisin" }) @local int raisin = localVariableNewClass + localVariableInTryBlock;
         @ScopeSize(3) @local int c8;
         ++localVariableNewClass;
         c8 = ++raisin;
@@ -490,17 +490,16 @@ class ZZZ___Fixture_ModelClass {
         }
         for (@knows("carrot") final int carrot : toString().toCharArray()) {
           @knows("carrot") final int cherry = 2 * carrot * (carrot - 21) + 2;
-          q(carrot * cherry + cherry);
+          q(cherry + carrot * cherry);
         }
-        for (@ScopeSize(6) @for¢ int melon = 0, ¢ = 0 + melon; ¢ < 10 * melon; melon *= 2, --melon, ¢ = melon) {
+        for (@ScopeSize(6) @for¢ int melon = 0, ¢ = melon; ¢ < 10 * melon; melon *= 2, --melon, ¢ = melon) {
           @knows({ "melon", "¢" }) final int variableInPlainFor = 2 * melon + hashCode();
           q(melon * hashCode() + variableInPlainFor * variableInPlainFor);
           ¢ += melon;
           q(melon * hashCode() + variableInPlainFor * variableInPlainFor);
         }
-        for (@ScopeSize(8) @for¢ int pear, j = 0, variableInPlainFor = 12, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
-          @knows({ "variableInPlainFor", "pear", "j", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = 2 * hashCode() + j
-              + variableInPlainFor;
+        for (@ScopeSize(8) @for¢ int pear, j = 0, variableInPlainFor = 12, ¢ = j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
+          @knows({ "variableInPlainFor", "pear", "j", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = j + variableInPlainFor + 2 * hashCode();
           pear = hashCode() * anotherVariableInAnotherPlainFor;
           anotherVariableInAnotherPlainFor >>>= pear;
           ¢ += j + anotherVariableInAnotherPlainFor;

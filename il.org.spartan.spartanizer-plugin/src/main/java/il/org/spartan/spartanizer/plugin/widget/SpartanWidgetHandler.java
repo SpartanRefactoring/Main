@@ -58,7 +58,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
-    closeButton.setLocation(R / 2 + r, 2 * R - closeButton.getSize().y / 2 + r);
+    closeButton.setLocation(r + R / 2, r + (2 * R - closeButton.getSize().y / 2));
     closeButton.addListener(SWT.Selection, __ -> {
       shell.close();
       active.set(false);
@@ -79,7 +79,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     setControl(canvas, setSolid, setTransparent);
     setMovable(display, canvas, shell);
     final Region region = new Region();
-    region.add(circle(R, R + r, R + r));
+    region.add(circle(R, r + R, r + R));
     region.add(closeButton.getBounds());
     final Rectangle size = region.getBounds();
     shell.setSize(size.width, size.height);
@@ -129,11 +129,11 @@ public class SpartanWidgetHandler extends AbstractHandler {
     R = widgetSize;
     circles = new Point[] { //
         new Point(2 * r, 2 * R)//
-        , new Point(r, R + r)//
+        , new Point(r, r + R)//
         , new Point(2 * r, 2 * r)//
-        , new Point(R + r, r)//
+        , new Point(r + R, r)//
         , new Point(2 * R, 2 * r)//
-        , new Point(2 * R + r, R + r)//
+        , new Point(r + 2 * R, r + R)//
         , new Point(2 * R, 2 * R)//
     };
     return true;
@@ -188,9 +188,9 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
-      $[2 * i] = offsetX + x;
-      $[2 * i + 1] = offsetY + y;
-      $[8 * r - 2 * i - 2] = offsetX + x;
+      $[2 * i] = x + offsetX;
+      $[2 * i + 1] = y + offsetY;
+      $[8 * r - 2 * i - 2] = x + offsetX;
       $[8 * r - 2 * i - 1] = offsetY - y;
     }
     return $;
@@ -209,7 +209,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
       ¢.gc.drawImage(i, 0, 0);
       $.setSize(w, h);
     });
-    $.setLocation(R / 2 + r, R / 2 + r);
+    $.setLocation(r + R / 2, r + R / 2);
     $.pack();
     return $;
   }

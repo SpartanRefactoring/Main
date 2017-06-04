@@ -11,7 +11,7 @@ public class FixturePlainFor extends MetaFixture {
     for (@knows({ "f/1", "$", "i" }) int i = 0; i < a.length; ++i)
       for (@knows({ "f/1", "$", "i", "j" }) int j = 0; j < a.length; ++j) {
         @knows({ "f/1", "$", "i", "j", "f" }) final int f = hashCode();
-        $ += f * i * j + f;
+        $ += f + f * i * j;
       }
     return $;
   }

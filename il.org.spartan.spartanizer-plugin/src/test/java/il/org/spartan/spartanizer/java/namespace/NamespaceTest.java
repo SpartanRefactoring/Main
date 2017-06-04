@@ -16,7 +16,7 @@ class NamespaceFixture {
     l = $ * k;
     @knows("k") int s = l + k * k * l;
     s *= s + 2;
-    f(k + s * hashCode() + l + $ * s);
+    f(k + l + $ * s + s * hashCode());
   }
 
   int f(final int a) {

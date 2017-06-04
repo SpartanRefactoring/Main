@@ -27,6 +27,6 @@ public class FixtureTryResources extends MetaFixture {
     }
     @foreign("$") final int x = hashCode() >>> 3;
     @knows("$") final int $ = 100 * hashCode() >>> 3;
-    return f() == x ? x + $ : 2 * hashCode();
+    return f() == x ? $ + x : 2 * hashCode();
   }
 }

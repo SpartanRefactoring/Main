@@ -51,8 +51,7 @@ public enum WidgetPreferences {
     store().setToDefault(PreferencesResources.WIDGET_OPERATION_CONFIGURATION);
   }
   @SuppressWarnings("unchecked") public static List<WidgetOperationEntry> readEntries() {
-    final String forString = store().getString(PreferencesResources.WIDGET_OPERATION_CONFIGURATION);
-    final byte[] theOutBarr = Base64.getDecoder().decode(forString);
+    final byte[] theOutBarr = Base64.getDecoder().decode(store().getString(PreferencesResources.WIDGET_OPERATION_CONFIGURATION));
     final ByteArrayInputStream in = new ByteArrayInputStream(theOutBarr);
     List<WidgetOperationEntry> $ = null;
     try {
