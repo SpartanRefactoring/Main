@@ -334,7 +334,7 @@ public final class Namespace implements Environment {
     return addChild(new Namespace(this, childName));
   }
   @Override public String toString() {
-    return name + "" + flat;
+    return name + flat;
   }
   static boolean init(final Namespace n, final Iterable<? extends ASTNode> children) {
     children.forEach(n::fillScope);

@@ -32,12 +32,12 @@ public class KnowsTest extends MetaFixture {
   public static int g(final int x, final int y) {
     @knows({ "x", "y", "$" }) final int $ = x * y;
     @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
-    return x * z + y + $;
+    return $ + y + x * z;
   }
   public static int h(final int x, final int y) {
     @knows({ "x", "y", "$" }) final int $ = x * y;
     @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
-    return x * z + y + $;
+    return $ + y + x * z;
   }
 
   final String repository;

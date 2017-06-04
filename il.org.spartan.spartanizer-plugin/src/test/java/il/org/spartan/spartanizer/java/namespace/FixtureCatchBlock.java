@@ -52,7 +52,7 @@ public class FixtureCatchBlock extends MetaFixture {
     } finally {
       @foreign("$") final int a = hashCode() * hashCode();
       @knows("a") final int z = a * a + hashCode();
-      f(a * z + z + hashCode());
+      f(z + a * z + hashCode());
     }
     return 3;
   }
@@ -72,11 +72,11 @@ public class FixtureCatchBlock extends MetaFixture {
       @knows({ "a2", "x" }) @foreign("r") final int a2 = hashCode() * hashCode();
       f(a2 * x.hashCode());
       @knows({ "a2", "x" }) final int r = hashCode();
-      f(r * a2 * a2 + r);
+      f(r + r * a2 * a2);
     } finally {
       @foreign("r") final int a = hashCode() * hashCode();
       @knows("a") final int r = hashCode();
-      f(a * a * r + r);
+      f(r + a * a * r);
     }
   }
 }
