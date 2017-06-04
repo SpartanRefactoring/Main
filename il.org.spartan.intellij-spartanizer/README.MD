@@ -45,7 +45,7 @@ The plugin can be installed in one of two options:
 
 ![image](https://cloud.githubusercontent.com/assets/15859817/21104107/f2ee4598-c08d-11e6-8a14-552dd2a3b8aa.png)
 
-- Choose the IntelliJSpartanizer.jar
+- Choose the IntelliJSpartanizer.zip
 - Press Apply and then OK
 - Press OK when prompt to restart
 
