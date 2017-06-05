@@ -36,7 +36,7 @@ The plugin can be installed in one of two options:
 - Go to: https://github.com/TechnionYP5777/IntelliJ-Spartanizer/releases
 
 ![1](https://cloud.githubusercontent.com/assets/15859817/21103983/64400a8e-c08d-11e6-96b6-f14785bf132a.PNG)
-- Click On the "IntelliJSpartanizer.jar"
+- Click On the "IntelliJSpartanizer.jar" (or zip)
 - Save the file on your disk, remember the location
 - Open Intellij IDEA
 - Go to File -> Settings -> Plugins -> Install plugin from disk
@@ -45,7 +45,7 @@ The plugin can be installed in one of two options:
 
 ![image](https://cloud.githubusercontent.com/assets/15859817/21104107/f2ee4598-c08d-11e6-8a14-552dd2a3b8aa.png)
 
-- Choose the IntelliJSpartanizer.zip
+- Choose the IntelliJSpartanizer.jar (or zip)
 - Press Apply and then OK
 - Press OK when prompt to restart
 
