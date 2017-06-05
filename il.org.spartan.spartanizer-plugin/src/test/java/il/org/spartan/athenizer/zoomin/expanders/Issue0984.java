@@ -44,4 +44,8 @@ public class Issue0984 {
         .gives("if(y){o.f(a1,pp,x?a2:b2);}else{o.f(b1,pp,x?a2:b2);}")//
         .gives("if(y){if(x)o.f(a1,pp,a2);else o.f(a1,pp,b2);}else{if(x)o.f(b1,pp,a2);else o.f(b1,pp,b2);}");
   }
+  @Test public void e() {
+    bloatingOf("setSelection((¢ == null) || (¢.textSelection == null) ? null : ¢.textSelection);") //
+        .stays();
+  }
 }
