@@ -65,12 +65,12 @@ public interface TestTransformator {
       $[¢] = original[order[¢]];
     return $;
   }
-  static String replace(final String s, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
+  static String replace(final String $, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
     try {
-      return s.replaceAll(matchPattern, getReplacerString(replacePattern,
-          rearange(getTemplatedValues(s, matchPattern), new String[orderOfTemplatedValues.length], orderOfTemplatedValues)));
+      return $.replaceAll(matchPattern, getReplacerString(replacePattern,
+          rearange(getTemplatedValues($, matchPattern), new String[orderOfTemplatedValues.length], orderOfTemplatedValues)));
     } catch (@SuppressWarnings("unused") final Exception e) {
-      return s;
+      return $;
     }
   }
 
