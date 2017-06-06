@@ -100,6 +100,7 @@ public class Playground extends JFrame {
 
     private void clearButtonClicked() {
         outputArea.setText("");
+        inputArea.setText("");
     }
 
     private void closeButtonClicked() {
