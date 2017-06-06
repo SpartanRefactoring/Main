@@ -36,7 +36,7 @@ public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
       return null;
     final SimpleName $ = az.variableDeclrationFragment((ASTNode) d.fragments().get(0)).getName();
     assert $ != null;
-    final SimpleName ¢ = make.newLowerCamelCase($, d.getType().toString().split("<")[0]);
+    final SimpleName ¢ = make.newLowerCamelCase($, (d.getType() + "").split("<")[0]);
     return ¢.getIdentifier().equals($.getIdentifier()) ? null : new Tip("Rename paraemter " + $ + " to  " + ¢, getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, wrapper, r, g);
