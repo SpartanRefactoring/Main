@@ -23,7 +23,6 @@ public class EliminateTryBodyEmptyNoCatchesNoFinally implements LeonidasTipperDe
             try {
                 anyNumberOf(statement(0));
             } finally {
-
             }
             /** end */
         });
