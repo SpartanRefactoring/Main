@@ -39,6 +39,8 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
         () -> not.nil(sequencer = az.sequencer(the.lastOf(thenStatements))));
     andAlso("Last in subsequent statements ends with the same sequencer", //
         () -> wizard.eq(sequencer, the.lastOf(subsequentStatements)));
+    andAlso("List of statements doesn't declare a variable used by the sequencer", //
+        () -> !declaredVarAppearsInSequencer(subsequentStatements));
   }
 
   private static final long serialVersionUID = 0x6F3B3E10E4F678DFL;
@@ -75,5 +77,19 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     for (final Statement x : move)
       listRewrite3.remove(x, g);
     return r;
+  }
+  private static boolean declaredVarAppearsInSequencer(List<Statement> subsequentStatements) {
+    Statement ret = az.returnStatement(the.lastOf(subsequentStatements));
+    if (ret == null)
+      return false;
+    for(Statement s : subsequentStatements) {
+      VariableDeclarationStatement v = az.variableDeclarationStatement(s);
+      if (v == null)
+        continue;
+      for (VariableDeclarationFragment f : step.fragments(v))
+        if (iz.containsName(f.getName(), ret))
+          return true;
+    }
+    return false;
   }
 }
