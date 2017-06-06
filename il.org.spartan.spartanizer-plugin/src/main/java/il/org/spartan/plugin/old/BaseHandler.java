@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.plugin.*;
  * @author Yossi Gil: major refactoring 2013/07/11
  * @since 2013/07/01 */
 abstract class BaseHandler extends AbstractHandler {
+  /** [[SuppressWarningsSpartan]] */
   private final GUITraversal inner = new GUITraversal();
 
   @Override public Void execute(final ExecutionEvent $) throws ExecutionException {

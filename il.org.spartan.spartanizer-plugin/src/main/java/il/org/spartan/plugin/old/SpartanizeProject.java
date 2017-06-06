@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
 public final class SpartanizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
   private final StringBuilder status = new StringBuilder();
-  private ICompilationUnit currentCompilationUnit;
+  private ICompilationUnit iCompilationUnit;
   IJavaProject javaProject;
   final List<ICompilationUnit> todo = an.empty.list();
   private int initialCount;
@@ -65,7 +65,7 @@ public final class SpartanizeProject extends BaseHandler {
       return eclipse.announce(status + "No tips found.");
     manyPasses();
     todo.clear();
-    todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
+    todo.addAll(eclipse.facade.compilationUnits(iCompilationUnit));
     final int $ = countTips();
     return eclipse.announce(status + "Spartanizing '" + javaProject.getElementName() + "' project \nCompleted in " + passNumber + " passes. \n"
         + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\nTips before: " + initialCount
@@ -115,12 +115,12 @@ public final class SpartanizeProject extends BaseHandler {
     return $.get() || todo.isEmpty();
   }
   public void start() {
-    currentCompilationUnit = eclipse.currentCompilationUnit();
-    status.append("Starting at compilation unit: ").append(currentCompilationUnit.getElementName()).append("\n");
-    javaProject = currentCompilationUnit.getJavaProject();
+    iCompilationUnit = eclipse.currentCompilationUnit();
+    status.append("Starting at compilation unit: ").append(iCompilationUnit.getElementName()).append("\n");
+    javaProject = iCompilationUnit.getJavaProject();
     status.append("Java project is: ").append(javaProject.getElementName()).append("\n");
     todo.clear();
-    todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
+    todo.addAll(eclipse.facade.compilationUnits(iCompilationUnit));
     status.append("Found ").append(todo.size()).append(" compilation units, ");
     initialCount = countTips();
     status.append("with ").append(initialCount).append(" tips.\n");
