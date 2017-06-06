@@ -24,4 +24,25 @@ public class Issue1105 {
         .stays() //
     ;
   }
+  @Test public void Issue1412() {
+    trimmingOf("protected char[] escape(int cp) {" + //
+        "if (cp <= 0xffff) {" + //
+        "char[] dest = new char[9];" + //
+        "dest[0] = '%';" + //
+        "return dest;" + //
+        "}" + //
+        "if (cp > 0x10ffff)" + //
+        "throw new IllegalArgumentException(\"Invalid unicode character value \" + cp);" + //
+        "char[] dest = new char[12];" + //
+        "dest[0] = '%';" + //
+        "return dest;" + //
+        "}") //
+            .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
+            .stays(); //
+  }
+  @Test public void Issue1412_2() {
+    trimmingOf("protected A a() { final B b = c.d(e(f)); if (b == null) { int t = g.h(i, j); return t; } int t = g.k(b, C).h(i, j); return t; }") //
+        .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
+        .stays(); //
+  }
 }
