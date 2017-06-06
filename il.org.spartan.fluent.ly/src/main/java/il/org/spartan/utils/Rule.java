@@ -49,8 +49,8 @@ import fluent.ly.*;
  * parameters. Defunct {@link #describe(Object)} and
  * {@link #description(Object)}.
  * </nl>
- * @param <T> __ of elements for which the rule is applicable
- * @param <R> __ of result of applying this rule
+ * @param <T> type of elements for which the rule is applicable
+ * @param <R> type of result of applying this rule
  * @author Yossi Gil
  * @since 2017-03-10 */
 public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
@@ -59,8 +59,8 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   }
   /** Gives the ability to perform an action on object {@code T} t, only if
    * predicate(t) takes place.
-   * @param <T> __ of elements for which the rule is applicable
-   * @param <R> __ of result of applying this rule
+   * @param <T> type of elements for which the rule is applicable
+   * @param <R> type of result of applying this rule
    * @param p a predicate
    * @return a lambda of type {@link OnApplicator}
    * @author Yossi Gil
@@ -271,7 +271,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       return note.bug(this,
           new IllegalStateException(//
               format(//
-                  "Invalid order of method calls on a %s (dynamic __ %):\n", //
+                  "Invalid order of method calls on a %s (dynamic type %):\n", //
                   English.name(Rule.class), //
                   English.name(this)) //
                   + //
