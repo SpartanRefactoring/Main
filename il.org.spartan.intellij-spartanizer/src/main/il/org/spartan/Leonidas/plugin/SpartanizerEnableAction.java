@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
+import icons.Icons;
 
 /**
  * @author michalcohen
@@ -26,6 +27,7 @@ public class SpartanizerEnableAction extends AnAction {
         Presentation presentation = e.getPresentation();
         presentation.setText((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? "Enable" : "Disable")
 				+ " Spartanization In Current File");
+        presentation.setIcon((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? Icons.Enable : Icons.Disable));
         DaemonCodeAnalyzer.getInstance(p).restart();
     }
 }
