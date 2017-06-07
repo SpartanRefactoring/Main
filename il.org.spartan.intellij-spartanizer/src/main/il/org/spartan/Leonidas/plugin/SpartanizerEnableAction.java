@@ -25,7 +25,7 @@ public class SpartanizerEnableAction extends AnAction {
 			tb.excludeFile(psiFile);
         Presentation presentation = e.getPresentation();
         presentation.setText((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? "Enable" : "Disable")
-				+ " Spartanization");
+				+ " Spartanization In Current File");
         DaemonCodeAnalyzer.getInstance(p).restart();
     }
 }

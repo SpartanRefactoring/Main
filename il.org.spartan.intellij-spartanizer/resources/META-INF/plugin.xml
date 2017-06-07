@@ -50,7 +50,7 @@
             <add-to-group group-id="MainMenu" relative-to-action="RefactoringMenu" anchor="after"/>
         </group>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
-                text="Disable Spartanization">
+                text="Disable Spartanization In Current File">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerAction" id="myPlugin3"
