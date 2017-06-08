@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.athenizer.bloaters.*;
+import il.org.spartan.athenizer.zoomers.*;
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
