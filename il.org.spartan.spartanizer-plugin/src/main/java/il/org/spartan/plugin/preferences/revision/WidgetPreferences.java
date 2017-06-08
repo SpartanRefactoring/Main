@@ -21,7 +21,7 @@ public enum WidgetPreferences {
       , new GitPushOperation()//
       , new GitCommitOperation()//
       , new SpartanizationOperation()//
-      , new ZoomerOperation()//
+      , new AthenizerOperation()//
       , new CleanOperation()//
       , null//
   };

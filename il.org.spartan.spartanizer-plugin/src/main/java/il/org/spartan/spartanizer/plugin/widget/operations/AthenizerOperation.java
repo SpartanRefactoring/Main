@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
 /** zoom in code from widget operation Issue #1229
  * @author Raviv Rachmiel
  * @since 2017-04-27 */
-public class ZoomerOperation extends WidgetOperation {
+public class AthenizerOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x543A88984C660B4CL;
   public static final String TYPE = "type";
   private String type = "Current file";
@@ -46,6 +46,6 @@ public class ZoomerOperation extends WidgetOperation {
     return "platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png";
   }
   @Override public String description() {
-    return "zoom in code";
+    return "Athenize";
   }
 }
