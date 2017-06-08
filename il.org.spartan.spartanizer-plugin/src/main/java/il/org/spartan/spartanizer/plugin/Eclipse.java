@@ -12,6 +12,7 @@ import java.util.stream.*;
 
 import javax.tools.*;
 
+import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -22,6 +23,8 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.eclipse.ui.commands.*;
+import org.eclipse.ui.handlers.*;
 import org.eclipse.ui.texteditor.*;
 
 import fluent.ly.*;
@@ -162,5 +165,11 @@ public class Eclipse {
   public static boolean isCompiling(final String filePath) {
     final JavaCompiler c = ToolProvider.getSystemJavaCompiler();
     return c != null && c.run(null, null, null, Objects.requireNonNull(filePath)) == 0;
+  }
+  public static void commandSetToggle(final String commandId, final boolean toggle) {
+    ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
+    Command command = commandService.getCommand(commandId);
+    State state = command.getState(RegistryToggleState.STATE_ID);
+    state.setValue(Boolean.valueOf(toggle));
   }
 }
