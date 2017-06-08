@@ -12,7 +12,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
-import il.org.spartan.athenizer.bloaters.*;
+import il.org.spartan.athenizer.zoomers.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
 

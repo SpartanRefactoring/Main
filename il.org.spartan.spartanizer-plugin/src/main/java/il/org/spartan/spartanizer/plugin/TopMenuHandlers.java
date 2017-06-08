@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
-import il.org.spartan.athenizer.bloaters.*;
+import il.org.spartan.athenizer.zoomers.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Some simple handlers to be used by the GUI.
