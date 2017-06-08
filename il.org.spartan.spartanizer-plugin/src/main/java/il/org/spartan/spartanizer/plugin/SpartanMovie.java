@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.lang.reflect.*;
 import java.util.List;
+import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -15,7 +14,6 @@ import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.old.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.
@@ -28,7 +26,7 @@ public class SpartanMovie extends AbstractHandler {
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
-    final List<ICompilationUnit> compilationUnits = getCompilationUnits();
+    final List<ICompilationUnit> compilationUnits = Selection.Util.getAllCompilationUnits().inner.stream().map(x -> x.descriptor).collect(Collectors.toList());
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
     final IWorkbenchPage page = window == null ? null : window.getActivePage();
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
@@ -102,14 +100,6 @@ public class SpartanMovie extends AbstractHandler {
     } catch (final CoreException m) {
       note.bug(m);
       return new IMarker[0];
-    }
-  }
-  private static List<ICompilationUnit> getCompilationUnits() {
-    try {
-      return eclipse.compilationUnits(eclipse.currentCompilationUnit(), nullProgressMonitor);
-    } catch (final JavaModelException ¢) {
-      note.bug(¢);
-      return an.empty.list();
     }
   }
   static boolean focus(final IWorkbenchPage p, final IFile f) {

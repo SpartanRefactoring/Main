@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.plugin.old.RefreshAll.*;
-
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -108,7 +106,7 @@ public final class Builder extends IncrementalProjectBuilder {
     }
   }
   private void build(final IProgressMonitor ¢) throws CoreException {
-    if (waitingForRefresh.remove(getProject()))
+    if (Eclipse.waitingForRefresh.remove(getProject()))
       fullBuild(¢);
     else
       incrementalBuild(getDelta(getProject()));
