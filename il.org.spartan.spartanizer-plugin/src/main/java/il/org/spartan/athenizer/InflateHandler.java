@@ -17,6 +17,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
+import org.eclipse.ui.handlers.*;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
 
@@ -36,7 +37,8 @@ public class InflateHandler extends AbstractHandler {
   public static final Bool active = new Bool();
   private static final IPartListener pageListener = pageListener();
 
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override public Object execute(final ExecutionEvent e) throws ExecutionException {
+    HandlerUtil.toggleCommandState(e.getCommand());
     final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }

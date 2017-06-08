@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
@@ -69,7 +68,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     return new GUITraversal().setMarker($);
   }
 
-  interface fixers {
+  @SuppressWarnings("deprecation") interface fixers {
     String APPLY_TO_FILE = "Apply to compilation unit";
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";

@@ -1,6 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
@@ -53,7 +52,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   }
   /** Change all the centifications in the code to param */
   public static void changeCentToParam() {
-    for (final IProject p : getAllSpartanizerProjects()) {
+    for (final IProject p : Eclipse.getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
       if (doc == null)
         continue;
@@ -65,7 +64,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   }
   /** Change all the single parameters to cent */
   public static void changeBackToCent() {
-    for (final IProject p : getAllSpartanizerProjects()) {
+    for (final IProject p : Eclipse.getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
       if (doc == null)
         continue;
@@ -76,7 +75,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     notation.cent = "¢";
   }
   private void commitNotations() {
-    final IProject[] projects = getAllSpartanizerProjects();
+    final Collection<IProject> projects = Eclipse.getAllSpartanizerProjects();
     for (final IProject p : projects) {
       final Document doc = XMLSpartan.getXML(p);
       if (doc == null)

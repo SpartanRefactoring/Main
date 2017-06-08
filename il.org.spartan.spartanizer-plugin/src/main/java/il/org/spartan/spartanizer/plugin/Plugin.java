@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
@@ -16,7 +15,6 @@ import org.w3c.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -40,7 +38,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     return plugin;
   }
   private static void startSpartan() {
-    RefreshAll.go();
+    Eclipse.refreshAllSpartanizeds();
   }
   public Plugin() {
     plugin = this;
@@ -105,7 +103,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           Job.createSystem(pm -> {
             try {
               if (mp.type.equals(NEW_PROJECT)) {
-                eclipse.addNature(mp.p);
+                Eclipse.addSpartanizerNature(mp.p);
                 mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
               }
             } catch (final Exception ¢) {
@@ -132,7 +130,8 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
       ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
       ZOOMER_AUTO_ACTIVISION_VALUE.set(store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
-      final Document doc = XMLSpartan.getXML(getAllSpartanizerProjects()[0]);
+      Eclipse.commandSetToggle("il.org.spartan.AthensInflate", store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
+      final Document doc = XMLSpartan.getXML(Eclipse.getAllSpartanizerProjects().get(0));
       doc.getDocumentElement().normalize();
       notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
           : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();

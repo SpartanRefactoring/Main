@@ -50,26 +50,31 @@
             <add-to-group group-id="MainMenu" relative-to-action="RefactoringMenu" anchor="after"/>
         </group>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
-                text="Disable Spartanization">
+                text="Disable Spartanization In Current File"
+                icon="Icons.Disable">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerAction" id="myPlugin3"
-                text="Spartanize">
+                text="Spartanize"
+                icon="Icons.LeonidasSmall">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroundControllerAction"
                 id="myPlugin5"
-                text="Playground">
+                text="Playground"
+                icon="Icons.Playground">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.GUI.ToolBoxController.ToolBoxControllerAction"
                 id="myPlugin6"
-                text="ToolBox Controller">
+                text="ToolBox Controller"
+                icon="Icons.Tool_Box_Controller">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.GUI.About.AboutAction"
                 id="myPlugin7"
-                text="About">
+                text="About"
+                icon="Icons.Info">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
     </actions>

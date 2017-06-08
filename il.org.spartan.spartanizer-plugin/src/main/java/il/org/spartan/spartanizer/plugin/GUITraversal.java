@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.utils.fault.*;
 
 import java.util.*;
@@ -17,7 +16,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -171,8 +169,8 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     getProgressMonitor().done();
     return traversal.rewriteCount();
   }
-  private IProgressMonitor newSubProgressMonitor() {
-    return eclipse.newSubMonitor(getProgressMonitor());
+  @SuppressWarnings("deprecation") private IProgressMonitor newSubProgressMonitor() {
+    return Eclipse.newSubMonitor(getProgressMonitor());
   }
   /** @param iCompilationUnit the compilationUnit to set
    * @return */
@@ -280,8 +278,8 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       }
     };
   }
-  private Collection<ICompilationUnit> getUnits() throws JavaModelException {
-    return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(getProgressMonitor()));
+  @SuppressWarnings("static-method") private Collection<ICompilationUnit> getUnits() {
+    return Selection.Util.getAllCompilationUnits().getCompilationUnits();
   }
   private TextFileChange init(final WrappedCompilationUnit ¢) {
     iCompilationUnit(¢.descriptor);
