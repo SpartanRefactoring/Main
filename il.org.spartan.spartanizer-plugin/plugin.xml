@@ -466,7 +466,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
          id="il.org.spartan.plugin.toolbars.GlassesButton">
        </command>-->
        <command
-       tooltip="Inflate"
+       tooltip="Athenize"
          commandId="il.org.spartan.AthensInflate" 
          icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png"
          id="il.org.spartan.plugin.toolbars.InflateButton"
@@ -632,7 +632,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension-point id="il.org.spartan.widgetoperation" name="Widget Operation" schema="plugin/schema/il.org.spartan.widgetoperation.exsd"/>
 <extension point="il.org.spartan.widgetoperation">
 <widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.SpartanizationOperation" />
-	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.ZoomerOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.AthenizerOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.RunOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPullOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
