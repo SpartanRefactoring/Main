@@ -44,7 +44,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
      * the next command, run the widget, disable an operation from the widget
      * preferences page and then close the runtime eclipse and remove this line.
      * That should override the old preferences and solve the issue */
-    // WidgetPreferences.storeDefaultEntries();
+     //WidgetPreferences.storeDefaultEntries();
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return;

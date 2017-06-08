@@ -49,6 +49,77 @@ public class OperationListEditor extends ListEditor {
     configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
     configureButton.setText("Configure operation");
     configureButton.setEnabled(false);
+    this.getDownButton().addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @SuppressWarnings("synthetic-access") void onSelection() {
+        final int i = getList().getSelectionIndex() +1;
+        if (i < 0)
+          return;
+        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        if(l.size()-i<=1)
+          return;
+        //else
+        System.out.println("we are on - " + l.get(i).getName());
+        System.out.println(l);
+        System.out.println("TODO BOM - Down");
+        Collections.swap(l, i, i+1);
+        WidgetPreferences.storeEntries(l);
+        System.out.println(l);
+        //resLE.loadDefault();
+       
+      }
+    });
+    this.getUpButton().addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @SuppressWarnings("synthetic-access") void onSelection() {
+        final int i = getList().getSelectionIndex() - 1;
+        if (i < 0)
+          return;
+        if(i==0)
+          return;
+        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        //else
+        System.out.println("we are on - " + l.get(i).getName());
+        System.out.println(l);
+        System.out.println("TODO BOM - UP");
+        Collections.swap(l, i-1, i);
+        WidgetPreferences.storeEntries(l);
+        System.out.println(l);
+        //resLE.loadDefault();
+       
+      }
+    });
+    this.getRemoveButton().addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @SuppressWarnings("synthetic-access") void onSelection() {
+        final int i = getList().getSelectionIndex();
+        if (i < 0)
+          return;
+        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        if(l.get(i).isEnabled())
+          l.get(i).disable();
+        //else
+        l.remove(i);
+        WidgetPreferences.storeEntries(l);
+        //resLE.loadDefault();
+       
+      }
+    });
   }
   OperationListEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
       final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
@@ -152,6 +223,7 @@ public class OperationListEditor extends ListEditor {
           ableButton.setText("Enable operation");
           configureButton.setEnabled(false);
         }
+       
       }
     });
     configureButton.setVisible(true);
@@ -194,7 +266,7 @@ public class OperationListEditor extends ListEditor {
   }
   @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
     super.doFillIntoGrid(parent, numColumns);
-   // getButtonBoxControl(parent).dispose(); // removing this will add the
+    getButtonBoxControl(parent).dispose(); // removing this will add the
                                            // ADD,REMOVE,DOWN,UP buttons
   }
   @Override protected String[] parseString(final String stringList) {
@@ -222,4 +294,6 @@ public class OperationListEditor extends ListEditor {
     if (getList() != null && getList().getSelectionIndex() >= 0 && ableButton != null)
       ableButton.setEnabled(true);
   }
+  
+  
 }
