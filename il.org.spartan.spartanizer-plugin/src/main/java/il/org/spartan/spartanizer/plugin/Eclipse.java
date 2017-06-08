@@ -1,17 +1,17 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.plugin.old.RefreshAll.*;
-
 import static java.util.stream.Collectors.*;
 
 import java.lang.reflect.*;
 import java.text.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.*;
 import java.util.stream.*;
 
 import javax.tools.*;
 
+import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -22,14 +22,18 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.eclipse.ui.commands.*;
+import org.eclipse.ui.handlers.*;
 import org.eclipse.ui.texteditor.*;
 
 import fluent.ly.*;
+import il.org.spartan.*;
 
 /** Eclipse common utilities.
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-03-21 */
 public class Eclipse {
+  public static Set<IProject> waitingForRefresh = Collections.synchronizedSet(new HashSet<>());
   private static final boolean REFRESH_OPENS_DIALOG = false;
   /** Height of default tooltips. */
   public static final int TOOLTIP_HEIGHT = 25;
@@ -162,5 +166,50 @@ public class Eclipse {
   public static boolean isCompiling(final String filePath) {
     final JavaCompiler c = ToolProvider.getSystemJavaCompiler();
     return c != null && c.run(null, null, null, Objects.requireNonNull(filePath)) == 0;
+  }
+  public static void commandSetToggle(final String commandId, final boolean toggle) {
+    ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
+    Command command = commandService.getCommand(commandId);
+    State state = command.getState(RegistryToggleState.STATE_ID);
+    state.setValue(Boolean.valueOf(toggle));
+  }
+  public static List<IProject> getAllSpartanizerProjects() {
+    return Arrays.stream(ResourcesPlugin.getWorkspace().getRoot().getProjects()).filter(p -> {
+      try {
+        return p.isOpen() && p.getNature(Nature.NATURE_ID) != null;
+      } catch (CoreException x) {
+        note.bug(x);
+        return false;
+      }
+    }).collect(Collectors.toList());
+  }
+  @Deprecated @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
+    return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
+  }
+  public static void refreshAllSpartanizeds() {
+    as.list(ResourcesPlugin.getWorkspace().getRoot().getProjects()).forEach(λ -> refreshSpartanized(λ));
+  }
+  public static void refreshSpartanized(final IProject p) {
+    final IProgressMonitor npm = new NullProgressMonitor();
+    new Thread(() -> {
+      try {
+        if (p.isOpen() && p.getNature(Nature.NATURE_ID) != null) {
+          waitingForRefresh.add(p);
+          p.touch(npm);
+        }
+        // see issue #767
+        // p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
+      } catch (final CoreException ¢) {
+        note.bug(new Eclipse(), ¢);
+      }
+    }).run();
+  }
+  public static void addSpartanizerNature(final IProject p) throws CoreException {
+    final IProjectDescription d = p.getDescription();
+    final String[] natures = d.getNatureIds();
+    if (as.list(natures).contains(Nature.NATURE_ID))
+      return; // Already got the nature
+    d.setNatureIds(Utils.append(natures, Nature.NATURE_ID));
+    p.setDescription(d, null);
   }
 }

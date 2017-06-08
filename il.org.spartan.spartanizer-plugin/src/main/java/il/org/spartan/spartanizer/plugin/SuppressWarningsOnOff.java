@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.plugin.old.eclipse.*;
-
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
@@ -59,12 +57,13 @@ public enum SuppressWarningsOnOff {
    * @param pm progress monitor for the operation
    * @param m marked code to be disabled
    * @param tipper deactivation {@link Type} */
-  public void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+  @SuppressWarnings("deprecation") public void deactivate(final IProgressMonitor pm, final IMarker m, final Type t)
+      throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
+    textChange.setEdit(createRewrite(Eclipse.newSubMonitor(pm), m, t).rewriteAST());
     textChange.perform(pm);
     pm.done();
   }
