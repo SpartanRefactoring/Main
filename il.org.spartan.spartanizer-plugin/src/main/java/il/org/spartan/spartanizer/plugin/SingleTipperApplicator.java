@@ -1,6 +1,4 @@
-package il.org.spartan.plugin.old;
-
-import static il.org.spartan.plugin.old.eclipse.*;
+package il.org.spartan.spartanizer.plugin;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -22,9 +20,11 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 
-/** TODO Ori Roth <ori.rothh@gmail.com> please add a description
+/** Apply a single tipper to a specific code scope (declaration/file/project).
  * @author Ori Roth <ori.rothh@gmail.com>
- * @since Oct 16, 2016 */
+ * @since Oct 16, 2016
+ * @deprecated old omplementation, needs revision */
+@Deprecated
 public final class SingleTipperApplicator {
   private static ASTRewrite createRewrite(//
       final IProgressMonitor pm, //
@@ -59,7 +59,8 @@ public final class SingleTipperApplicator {
       v.applyLocal(w, u);
     return v.tipper;
   }
-  public void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+  @SuppressWarnings("deprecation") public void go(final IProgressMonitor pm, final IMarker m, final Type t)
+      throws IllegalArgumentException, CoreException {
     if (Type.PROJECT.equals(t)) {
       goProject(pm, m);
       return;
@@ -71,18 +72,19 @@ public final class SingleTipperApplicator {
       return;
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
     textChange.setTextType("java");
-    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
+    textChange.setEdit(createRewrite(Eclipse.newSubMonitor(pm), m, t, null, null).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
-    if (Type.FILE.equals(t))
-      eclipse.announce("Done applying " + w.description() + " tip to " + u.getElementName());
+    // if (Type.FILE.equals(t))
+    // eclipse.announce("Done applying " + w.description() + " tip to " +
+    // u.getElementName());
     pm.done();
   }
-  @SuppressWarnings("boxing") public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
-    final ICompilationUnit cu = eclipse.currentCompilationUnit();
+  @SuppressWarnings({ "boxing", "deprecation" }) public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
+    final ICompilationUnit cu = Selection.Util.getCurrentCompilationUnit().inner.get(0).descriptor;
     if (cu == null)
       return;
-    final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
+    final List<WrappedCompilationUnit> todo = Selection.Util.getAllCompilationUnits().inner;
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
@@ -92,7 +94,7 @@ public final class SingleTipperApplicator {
       pm.done();
       return;
     }
-    for (final Integer i : range.from(0).to(SpartanizeProject.MAX_PASSES)) {
+    for (final Integer i : range.from(0).to(NewGUIApplicator.PASSES_MANY)) {
       final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
       final Int pn = new Int(i + 1);
       final Bool canelled = new Bool();
@@ -101,7 +103,8 @@ public final class SingleTipperApplicator {
           px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), todo.size());
           int n = 0;
           final Collection<ICompilationUnit> exhausted = an.empty.list();
-          for (final ICompilationUnit u : todo) {
+          for (final WrappedCompilationUnit wu : todo) {
+            final ICompilationUnit u = wu.descriptor;
             if (px.isCanceled()) {
               canelled.set();
               break;
@@ -109,7 +112,7 @@ public final class SingleTipperApplicator {
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
             textChange.setTextType("java");
             try {
-              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
+              textChange.setEdit(createRewrite(Eclipse.newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
             } catch (JavaModelException | IllegalArgumentException ¢) {
               note.bug(this, ¢);
               exhausted.add(u);
@@ -137,7 +140,8 @@ public final class SingleTipperApplicator {
         break;
     }
     pm.done();
-    eclipse.announce("Done applying " + w.description() + " tip to " + jp.getElementName());
+    // eclipse.announce("Done applying " + w.description() + " tip to " +
+    // jp.getElementName());
   }
 
   public enum Type {
