@@ -54,7 +54,7 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("for(int i = 0; true; ++i){System.out.println(i);}", "for(int i = 0;; ++i){System.out.println(i);}")
+                .put("for(int i = 0; true; ++i){\n\tSystem.out.println(i);\n}", "for(int i = 0;; ++i){\n\tSystem.out.println(i);\n}")
                 .map();
     }
 }

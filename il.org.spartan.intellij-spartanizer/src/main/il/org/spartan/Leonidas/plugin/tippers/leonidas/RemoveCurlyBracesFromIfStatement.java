@@ -43,7 +43,7 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     @Override
     public Map<String,String> getExamples(){
         Map<String,String> examples = new HashMap<>();
-        examples.put("int x=5; Object a,b; if(a.hashCode()!=x){x = b.hashCode();}","int x=5; Object a,b; if(a.hashCode()!=x) x = b.hashCode();");
+        examples.put("int x=5;\nObject a,b;\nif(a.hashCode()!=x){\n\tx = b.hashCode();\n}","int x=5;\nObject a,b;\nif(a.hashCode()!=x)\n\tx = b.hashCode();");
         return examples;
     }
 }

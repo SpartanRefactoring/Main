@@ -40,7 +40,7 @@ public class EliminateTryBodyEmptyNoCatchesNoFinally implements LeonidasTipperDe
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("try { System.out.println(69); } finally {}", "System.out.println(69);")
+                .put("try { \n\tSystem.out.println(69);\n} finally {}", "System.out.println(69);")
                 .map();
     }
 }

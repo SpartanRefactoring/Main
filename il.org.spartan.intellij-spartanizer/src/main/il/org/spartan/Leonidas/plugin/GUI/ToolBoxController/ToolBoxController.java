@@ -9,14 +9,18 @@ import com.intellij.uiDesigner.core.Spacer;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Toolbox;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -29,7 +33,7 @@ class ToolBoxController extends JFrame {
     private JButton clearAllButton;
     private JButton selectAllButton;
     private JSplitPane splitPanel;
-    private JPanel rightPannel;
+    private JPanel rightPanel;
     private JPanel infoPanel;
     private JPanel buttonsPanel;
     private JScrollPane tippersPane;
@@ -70,7 +74,27 @@ class ToolBoxController extends JFrame {
                 if (index > -1 && index < list.getNumOfElements()) {
                     JCheckBox checkbox = (JCheckBox)
                             list.getModel().getElementAt(index);
-                    textArea1.setText(checkbox.getText());
+                    Map<String, String> examples = null;
+                    LeonidasTipperDefinition ltd = Toolbox.getInstance().getTipperInstanceByName(checkbox.getText());
+                    if(ltd == null) {
+                        Tipper tipper = Toolbox.getInstance().getTipperByName(checkbox.getText());
+                        examples = tipper.getExamples();
+                    }else{ // leonidasTipper
+                        examples = ltd.getExamples();
+                    }
+                    String before="";
+                    String after = "";
+                    for (Map.Entry<String,String> entry : examples.entrySet()) {
+                        before = entry.getKey();
+                        after = entry.getValue();
+                        if(before == null || after == null){
+                            continue;
+                        }
+                        break;
+                    }
+                    String text = "Before:\n" + before+ "\n\n" +
+                            "After:\n" + after;
+                    textArea1.setText(text);
                 }
             }
         });
@@ -82,7 +106,7 @@ class ToolBoxController extends JFrame {
         applyButton.addActionListener(e -> applyListener());
 
         setContentPane(mainPanel);
-        setPreferredSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(1200, 600));
         setResizable(false);
         pack();
         setVisible(true);
@@ -126,12 +150,12 @@ class ToolBoxController extends JFrame {
         splitPanel.setDividerSize(10);
         splitPanel.setEnabled(false);
         mainPanel.add(splitPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
-        rightPannel = new JPanel();
-        rightPannel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        splitPanel.setRightComponent(rightPannel);
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        splitPanel.setRightComponent(rightPanel);
         infoPanel = new JPanel();
         infoPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        rightPannel.add(infoPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        rightPanel.add(infoPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Choose the tippers you want to be notified on:");
         infoPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -140,7 +164,7 @@ class ToolBoxController extends JFrame {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayoutManager(2, 3, new Insets(0, 10, 20, 10), -1, -1));
         buttonsPanel.setEnabled(true);
-        rightPannel.add(buttonsPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        rightPanel.add(buttonsPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         applyButton = new JButton();
         applyButton.setText("Apply");
         buttonsPanel.add(applyButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
