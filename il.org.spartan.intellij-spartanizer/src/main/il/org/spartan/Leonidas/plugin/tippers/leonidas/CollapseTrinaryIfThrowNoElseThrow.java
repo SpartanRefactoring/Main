@@ -39,7 +39,7 @@ public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefiniti
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("if (goophy != bucks) throw new LooneyToonesException(); throw SameLooneyToones();",
+                .put("if (goophy != bucks)\n\tthrow new LooneyToonesException();\nthrow SameLooneyToones();",
                         "throw goophy != bucks ? new LooneyToonesException() : SameLooneyToones();")
                 .map();
     }

@@ -41,7 +41,7 @@ public class StringLiteralEqualsChangeOrder implements LeonidasTipperDefinition 
     @Override
     public Map<String, String> getExamples() {
         Map<String, String> examples = new HashMap<>();
-        examples.put("String s = \"Hello!\"; System.out.println(s.equals(\"Bye\"));", "String s = \"Hello!\"; System.out.println(\"Bye\".equals(s));");
+        examples.put("String s = \"Hello!\";\nSystem.out.println(s.equals(\"Bye\"));", "String s = \"Hello!\"; System.out.println(\"Bye\".equals(s));");
         return examples;
     }
 }
