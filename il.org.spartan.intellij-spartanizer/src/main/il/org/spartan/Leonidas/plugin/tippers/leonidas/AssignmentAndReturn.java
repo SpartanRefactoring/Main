@@ -45,7 +45,7 @@ public class AssignmentAndReturn implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("String looney = \"Toons\"; return lonney;", "return looney = \"Toons\";")
+                .put("String looney = \"Toons\";\nreturn lonney;", "return looney = \"Toons\";")
                 .map();
     }
 }

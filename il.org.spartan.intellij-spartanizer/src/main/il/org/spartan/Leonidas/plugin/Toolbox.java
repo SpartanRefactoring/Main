@@ -264,6 +264,14 @@ public class Toolbox implements ApplicationComponent {
         }
         return null;
     }
+    public LeonidasTipperDefinition getTipperInstanceByName(String name) {
+        for(LeonidasTipperDefinition t : tipperInstances){
+            if(t.getClass().getName().substring(t.getClass().getName().lastIndexOf(".")+1).equals(name)){
+                return t;
+            }
+        }
+        return null;
+    }
 
     public boolean checkExcluded(PsiFile f) {
         return f == null || excludedFiles.contains(f.getVirtualFile());
