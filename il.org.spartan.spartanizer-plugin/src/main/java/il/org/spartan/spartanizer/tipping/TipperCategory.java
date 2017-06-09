@@ -6,6 +6,7 @@ import java.util.Map.*;
 
 import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import il.org.spartan.spartanizer.tipping.TipperCategory.Theory.*;
 
 /** Classification of tippers
  * @author Yossi Gil
@@ -32,10 +33,10 @@ public interface TipperCategory {
     $.put(Inlining.class, an.empty.list());
     $.put(Modular.class, an.empty.list());
     $.put(Nanos.class, an.empty.list());
-    $.put(NOP.class, Arrays.asList(NOP.onBooleans.class, NOP.onNumbers.class, NOP.onStrings.class));
+    $.put(NOP.class, Arrays.asList(NOP.onBooleans.class, NOP.onNumbers.class, Theory.Strings.class));
     $.put(NOP.onBooleans.class, an.empty.list());
     $.put(NOP.onNumbers.class, an.empty.list());
-    $.put(NOP.onStrings.class, an.empty.list());
+    $.put(Theory.Strings.class, an.empty.list());
     $.put(ScopeReduction.class, an.empty.list());
     $.put(Shortcircuit.class, an.empty.list());
     $.put(Sorting.class, an.empty.list());
@@ -80,31 +81,6 @@ public interface TipperCategory {
     return TipperGroup.find(this);
   }
 
-  interface Arithmetics extends TipperCategory.Theory {
-    String toString = "Rewrite an arithmetical expressions in a more canonical form";
-
-    @Override default String description() {
-      return toString;
-    }
-
-    interface Numeric extends Arithmetics {
-      @SuppressWarnings("hiding") String toString = "Numeric simplfication of an arithmetical expression";
-
-      @Override default String description() {
-        return toString;
-      }
-    }
-
-    interface Symbolic extends Arithmetics {
-      @SuppressWarnings("hiding") String toString = "Symbolic simplfication of an arithmetical expression";
-
-      @Override default String description() {
-        return toString;
-      }
-    }
-  }
-interface Theory extends TipperCategory {
-}
   interface Bloater extends TipperCategory {
     String toString = "Make code as verbose as possible";
 
@@ -113,7 +89,7 @@ interface Theory extends TipperCategory {
     }
   }
 
-  interface Collapse extends Structural {
+  interface Collapse extends CommonFactorOut {
     String toString = "Shorten code by merging two adjacent syntactical elements into one";
 
     @Override default String description() {
@@ -123,7 +99,7 @@ interface Theory extends TipperCategory {
 
   /** A specialized {@link Collapse} carried out, by factoring out some common
    * element */
-  interface CommonFactorOut extends Collapse { // S2
+  interface CommonFactorOut extends Structural { // S2
     String toString = "Factor out a common syntactical element";
 
     @Override default String description() {
@@ -131,7 +107,7 @@ interface Theory extends TipperCategory {
     }
   }
 
-  interface Deadcode extends Structural {
+  interface Deadcode extends Theory.Logical {
     String toString = "Eliminate code that is never executed";
 
     @Override default String description() {
@@ -192,7 +168,7 @@ interface Theory extends TipperCategory {
     }
   }
 
-  interface NOP extends Structural {
+  interface NOP extends TipperCategory {
     String toString = "Eliminate an operation whose computation does nothing";
 
     @Override default String description() {
@@ -206,14 +182,10 @@ interface Theory extends TipperCategory {
     interface onNumbers extends Arithmetics.Symbolic {
       @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on numbers";
     }
-
-    interface onStrings extends NOP {
-      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on strings";
-    }
   }
 
   interface ScopeReduction extends Structural {
-    String toString = "Scope reduction to the minimum necessary";
+    String toString = "Reduction of scope to the smallest possible";
 
     @Override default String description() {
       return toString;
@@ -236,16 +208,6 @@ interface Theory extends TipperCategory {
       return toString;
     }
   }
-  interface Logical extends TipperCategory.Theory {
-  }
-
-  interface Strings extends TipperCategory.Theory {
-    String toString = "Rewrite a string expression a more canonical form";
-
-    @Override default String description() {
-      return toString;
-    }
-  }
 
   interface SyntacticBaggage extends Structural {
     String toString = "Remove syntactical element that contributes nothing to semantics";
@@ -260,6 +222,51 @@ interface Theory extends TipperCategory {
 
     @Override default String description() {
       return toString;
+    }
+  }
+
+  @SuppressWarnings("hiding")
+  interface Theory extends TipperCategory {
+    String toString = "Simplifcation using a theory of some kind";
+
+    @Override default String description() {
+      return toString;
+    }
+
+    interface Arithmetics extends TipperCategory.Theory {
+      String toString = "Rewrite an arithmetical expressions in a more canonical form";
+
+      @Override default String description() {
+        return toString;
+      }
+
+      interface Numeric extends Arithmetics {
+        String toString = "Numeric simplfication of an arithmetical expression";
+
+        @Override default String description() {
+          return toString;
+        }
+      }
+
+      interface Symbolic extends Arithmetics {
+        String toString = "Symbolic simplfication of an arithmetical expression";
+
+        @Override default String description() {
+          return toString;
+        }
+      }
+    }
+
+    interface Logical extends TipperCategory.Theory {
+      String toString = "Rewrite a boolean expression in a more canonical form";
+    }
+
+    interface Strings extends TipperCategory.Theory {
+      String toString = "Rewrite a string expression in a more canonical form";
+
+      @Override default String description() {
+        return toString;
+      }
     }
   }
 }

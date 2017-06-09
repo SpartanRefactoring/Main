@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2-12-2016 */
 public class InfixLessEqualsToLess extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Arithmetics.Symbolic {
+    implements TipperCategory.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = 0x33256C45179502ABL;
 
   @Override public ASTNode replacement(final InfixExpression ¢) {

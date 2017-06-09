@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends NodePattern<ConditionalExpression>//
-    implements TipperCategory.CommonFactorOut {
+    implements TipperCategory.EmptyCycles {
   private static final long serialVersionUID = -0x5E134C6C247F2774L;
 
   public TernaryEliminate() {

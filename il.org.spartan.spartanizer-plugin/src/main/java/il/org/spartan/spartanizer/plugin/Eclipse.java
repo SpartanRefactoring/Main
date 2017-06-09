@@ -11,7 +11,6 @@ import java.util.stream.*;
 
 import javax.tools.*;
 
-import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -168,17 +167,15 @@ public class Eclipse {
     return c != null && c.run(null, null, null, Objects.requireNonNull(filePath)) == 0;
   }
   public static void commandSetToggle(final String commandId, final boolean toggle) {
-    ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
-    Command command = commandService.getCommand(commandId);
-    State state = command.getState(RegistryToggleState.STATE_ID);
-    state.setValue(Boolean.valueOf(toggle));
+    PlatformUI.getWorkbench().getService(ICommandService.class).getCommand(commandId).getState(RegistryToggleState.STATE_ID)
+        .setValue(Boolean.valueOf(toggle));
   }
   public static List<IProject> getAllSpartanizerProjects() {
     return Arrays.stream(ResourcesPlugin.getWorkspace().getRoot().getProjects()).filter(p -> {
       try {
         return p.isOpen() && p.getNature(Nature.NATURE_ID) != null;
-      } catch (CoreException x) {
-        note.bug(x);
+      } catch (CoreException ¢) {
+        note.bug(¢);
         return false;
       }
     }).collect(Collectors.toList());

@@ -55,7 +55,7 @@ public enum PreferencesResources {
    * allowing to get the set preference value for each of them */
   public enum TipperGroup {
     Abbreviation(Nominal.Abbreviation.class), //
-    Arithmetic(TipperCategory.Arithmetics.class), //
+    Arithmetic(TipperCategory.Theory.Arithmetics.class), //
     Anonymization(Nominal.Anonymization.class), //
     Collapse(TipperCategory.Collapse.class), //
     CommonFactoring(TipperCategory.CommonFactorOut.class), //
@@ -76,7 +76,7 @@ public enum PreferencesResources {
     Shortcut(TipperCategory.Shortcircuit.class), //
     Thrashing(TipperCategory.EmptyCycles.class), //
     NOOPOnBooleans(TipperCategory.NOP.onBooleans.class), //
-    NOOPOnStrings(TipperCategory.NOP.onStrings.class), //
+    NOOPOnStrings(TipperCategory.Theory.Strings.class), //
     NOOPOnNumbers(TipperCategory.NOP.onNumbers.class), //
     ;
     public static TipperGroup find(final TipperCategory ¢) {

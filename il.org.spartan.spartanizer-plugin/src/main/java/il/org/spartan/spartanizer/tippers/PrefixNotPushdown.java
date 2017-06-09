@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
-    implements TipperCategory.Idiomatic {
+    implements TipperCategory.Theory.Logical {
   private static final long serialVersionUID = -0x7E23B23DBCE1545DL;
 
   /** A utility function, which tries to simplify a boolean expression, whose

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Niv Shalmon
  * @since 2016-08-29 */
 public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.NOP.onStrings {
+    implements TipperCategory.Theory.Strings {
   private static final long serialVersionUID = -0x17CCB52A168511EBL;
 
   @Override public String description() {

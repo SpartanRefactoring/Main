@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpression>//
-    implements TipperCategory.NOP {
+    implements TipperCategory.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = -0x6ACC6AD3D77236F4L;
 
   private static NumberLiteral literal(final Expression ¢) {

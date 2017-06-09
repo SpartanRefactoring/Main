@@ -26,7 +26,7 @@ public class SpartanMovie extends AbstractHandler {
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
-    final List<ICompilationUnit> compilationUnits = Selection.Util.getAllCompilationUnits().inner.stream().map(x -> x.descriptor).collect(Collectors.toList());
+    final List<ICompilationUnit> compilationUnits = Selection.Util.getAllCompilationUnits().inner.stream().map(λ -> λ.descriptor).collect(Collectors.toList());
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
     final IWorkbenchPage page = window == null ? null : window.getActivePage();
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();

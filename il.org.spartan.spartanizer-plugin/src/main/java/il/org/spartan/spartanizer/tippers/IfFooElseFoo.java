@@ -28,8 +28,6 @@ public final class IfFooElseFoo extends IfAbstractPattern implements TipperCateg
     return "Eliminate 'if' with two identical branches";
   }
   @Override public Examples examples() {
-    return //
-    convert("if(f()==g())h();else h();")//
-        .to("f();g();h();");
+    return convert("if(f()==g())h();else h();").to("f();g();h();");
   }
 }

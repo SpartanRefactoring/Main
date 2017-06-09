@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Idiomatic {
+    implements TipperCategory.Sorting {
   private static final long serialVersionUID = -0x2958F3B5F7F3C3D1L;
   private static final Comparator<Expression> specifity = new specificity();
 

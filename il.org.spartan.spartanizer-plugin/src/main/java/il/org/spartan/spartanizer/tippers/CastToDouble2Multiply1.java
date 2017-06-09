@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpression>//
-    implements TipperCategory.Arithmetics.Symbolic {
+    implements TipperCategory.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = -0x159736130C9F5D80L;
 
   private static NumberLiteral literal(final Expression ¢) {
