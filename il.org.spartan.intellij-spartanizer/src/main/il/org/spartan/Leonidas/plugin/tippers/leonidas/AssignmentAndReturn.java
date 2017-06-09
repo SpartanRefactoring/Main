@@ -10,9 +10,8 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * Assignment and return
  *
  * @author Oren Afek
- * @since 31/5/2017
+ * @since 31-5-2017
  */
-
 public class AssignmentAndReturn implements LeonidasTipperDefinition {
 
     Object identifier0;

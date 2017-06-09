@@ -10,7 +10,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * Remove Unnecessary Assignment.
  *
  * @author Oren Afek
- * @since 02/06/2017
+ * @since 02-06-2017
  */
 public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefinition {
 

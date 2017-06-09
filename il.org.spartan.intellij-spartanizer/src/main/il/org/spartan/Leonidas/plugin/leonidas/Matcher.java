@@ -127,6 +127,7 @@ public class Matcher {
                 cursor.matchedWithGeneric();
             }
         }
+        needle.next();
         return m;
     }
 
