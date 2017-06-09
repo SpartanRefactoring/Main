@@ -12,22 +12,6 @@ import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
  * @since Sep 28, 2016 */
 @FunctionalInterface
 public interface TipperCategory {
-  String description();
-  /** Returns the preference group to which the tipper belongs to. This method
-   * should be overridden for each tipper and should return one of the values of
-   * {@link TipperGroup}
-   * @return preference group this tipper belongs to */
-  default TipperGroup tipperGroup() {
-    return TipperGroup.find(this);
-  }
-  default Class<? extends TipperCategory> lowestCategory() {
-    Class<? extends TipperCategory> $ = TipperCategory.class;
-    for (final Class<? extends TipperCategory> ¢ : hierarchy.keySet())
-      if (¢.isInstance(this) && $.isAssignableFrom(¢))
-        $ = ¢;
-    return $;
-  }
-
   Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> hierarchy = anonymous.ly(() -> {
     final Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> $ = new HashMap<>();
     $.put(Nominal.class, Arrays.asList(Nominal.Abbreviation.class, Nominal.Anonymization.class, Nominal.Result.class));
@@ -80,7 +64,23 @@ public interface TipperCategory {
     return $;
   });
 
-  interface Arithmetics extends TipperCategory {
+  String description();
+  default Class<? extends TipperCategory> lowestCategory() {
+    Class<? extends TipperCategory> $ = TipperCategory.class;
+    for (final Class<? extends TipperCategory> ¢ : hierarchy.keySet())
+      if (¢.isInstance(this) && $.isAssignableFrom(¢))
+        $ = ¢;
+    return $;
+  }
+  /** Returns the preference group to which the tipper belongs to. This method
+   * should be overridden for each tipper and should return one of the values of
+   * {@link TipperGroup}
+   * @return preference group this tipper belongs to */
+  default TipperGroup tipperGroup() {
+    return TipperGroup.find(this);
+  }
+
+  interface Arithmetics extends TipperCategory.Theory {
     String toString = "Rewrite an arithmetical expressions in a more canonical form";
 
     @Override default String description() {
@@ -103,17 +103,18 @@ public interface TipperCategory {
       }
     }
   }
-
-  interface Loops extends Structural {
-    String toString = "Spartan use of Java loop syntax";
+interface Theory extends TipperCategory {
+}
+  interface Bloater extends TipperCategory {
+    String toString = "Make code as verbose as possible";
 
     @Override default String description() {
       return toString;
     }
   }
 
-  interface Bloater extends TipperCategory {
-    String toString = "Make code as verbose as possible";
+  interface Collapse extends Structural {
+    String toString = "Shorten code by merging two adjacent syntactical elements into one";
 
     @Override default String description() {
       return toString;
@@ -166,6 +167,14 @@ public interface TipperCategory {
     }
   }
 
+  interface Loops extends Structural {
+    String toString = "Spartan use of Java loop syntax";
+
+    @Override default String description() {
+      return toString;
+    }
+  }
+
   /** Auxiliary __: non public intentionally */
   interface Modular extends TipperCategory {
     String toString = "Make modular changes to code";
@@ -190,11 +199,11 @@ public interface TipperCategory {
       return toString;
     }
 
-    interface onBooleans extends NOP {
+    interface onBooleans extends Logical {
       @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on booleans";
     }
 
-    interface onNumbers extends NOP {
+    interface onNumbers extends Arithmetics.Symbolic {
       @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on numbers";
     }
 
@@ -227,6 +236,16 @@ public interface TipperCategory {
       return toString;
     }
   }
+  interface Logical extends TipperCategory.Theory {
+  }
+
+  interface Strings extends TipperCategory.Theory {
+    String toString = "Rewrite a string expression a more canonical form";
+
+    @Override default String description() {
+      return toString;
+    }
+  }
 
   interface SyntacticBaggage extends Structural {
     String toString = "Remove syntactical element that contributes nothing to semantics";
@@ -238,14 +257,6 @@ public interface TipperCategory {
 
   interface Ternarization extends CommonFactorOut {
     String toString = "Convert conditional statement to the conditional, ?:, operator";
-
-    @Override default String description() {
-      return toString;
-    }
-  }
-
-  interface Collapse extends Structural {
-    String toString = "Shorten code by merging two adjacent syntactical elements into one";
 
     @Override default String description() {
       return toString;
