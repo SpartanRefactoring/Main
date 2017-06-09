@@ -6,6 +6,7 @@ import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
+import icons.Icons;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
@@ -14,6 +15,7 @@ import il.org.spartan.Leonidas.plugin.tipping.TipperCategory;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.swt.internal.win32.TOOLINFO;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +37,33 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @return an element tip to apply on e.
      */
     public Tip tip(final N e) {
+        PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
+        try {
+            srcDir.checkCreateSubdirectory("spartanizer");
+            Object[] options = {"Accept",
+                    "Cancel"};
+
+            int n = JOptionPane.showOptionDialog(new JFrame(),
+                    "You are about to apply a nano pattern.\n" +
+                            "Please notice that nano pattern tippers are " +
+                            "code transformations that require adding a '.java' file " +
+                            "to your project directory.\n" +
+                            "To apply the tip, press the Accept button.",
+                    "SpartanizerUtils",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    Icons.Leonidas,
+                    options,
+                    options[1]);
+            if(n == 1){
+                return new Tip(description(e), e, this.getClass()) {
+                    @Override
+                    public void go(PsiRewrite r) {
+
+                    }
+                };
+            }
+        } catch (Exception ex) {}
         return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
