@@ -19,7 +19,7 @@
         <tipper enabled="true" id="-7502939324573443092"/>
         <tipper enabled="true" id="-1555771651723844992"/>
         <tipper enabled="true" id="-7695643321354565364"/>
-        <tipper enabled="true" id="-6638105215049141624"/>
+        <tipper enabled="false" id="-6638105215049141624"/>
         <tipper enabled="true" id="6308185220779727829"/>
         <tipper enabled="true" id="-2855334552468199138"/>
         <tipper enabled="true" id="1656113602362467840"/>
@@ -30,22 +30,21 @@
         <tipper enabled="true" id="4375161244863616313"/>
         <tipper enabled="true" id="-5409462387889550538"/>
         <tipper enabled="true" id="-9212172232007324810"/>
-        <tipper enabled="false" id="-2477420682938910320"/>
+        <tipper enabled="true" id="-2477420682938910320"/>
         <tipper enabled="true" id="3496864953281334906"/>
         <tipper enabled="true" id="-5353123467714120198"/>
         <tipper enabled="true" id="2174891198673495792"/>
         <tipper enabled="true" id="-3384979771292763464"/>
         <tipper enabled="true" id="3038270702130812581"/>
-        <tipper enabled="false" id="385127230110121984"/>
         <tipper enabled="true" id="-8750113331278505320"/>
         <tipper enabled="true" id="1956893636347087064"/>
         <tipper enabled="true" id="1319731512145811654"/>
         <tipper enabled="true" id="-8103296515828492553"/>
-        <tipper enabled="true" id="-5815591308727978558"/>
+        <tipper enabled="false" id="-5815591308727978558"/>
         <tipper enabled="true" id="7460439456362668944"/>
         <tipper enabled="true" id="3971327019011226138"/>
         <tipper enabled="true" id="2135500968807051621"/>
-        <tipper enabled="false" id="4315491163164760502"/>
+        <tipper enabled="true" id="4315491163164760502"/>
         <tipper enabled="true" id="2547606833786954080"/>
         <tipper enabled="true" id="-4773914669041733973"/>
         <tipper enabled="true" id="3626620363572251195"/>
@@ -103,14 +102,14 @@
         <tipper enabled="true" id="-4282740939895750794"/>
         <tipper enabled="true" id="8587376936334392420"/>
         <tipper enabled="true" id="5103878942470840938"/>
-        <tipper enabled="true" id="5418563334058087855"/>
-        <tipper enabled="true" id="6162035659739185152"/>
+        <tipper enabled="false" id="5418563334058087855"/>
+        <tipper enabled="false" id="6162035659739185152"/>
         <tipper enabled="false" id="620491849203631403"/>
         <tipper enabled="true" id="-6339897616387193324"/>
-        <tipper enabled="false" id="-1582058371478921273"/>
+        <tipper enabled="true" id="-1582058371478921273"/>
         <tipper enabled="true" id="-318973030784465509"/>
         <tipper enabled="true" id="-875185107180196417"/>
-        <tipper enabled="true" id="6764541766975586375"/>
+        <tipper enabled="false" id="6764541766975586375"/>
         <tipper enabled="true" id="4265122877786904832"/>
         <tipper enabled="true" id="7490692444066432956"/>
         <tipper enabled="true" id="-7169963565517331905"/>
@@ -119,9 +118,9 @@
         <tipper enabled="true" id="7689054690155443332"/>
         <tipper enabled="false" id="2597846433179905741"/>
         <tipper enabled="true" id="-2709826205107840171"/>
-        <tipper enabled="true" id="2561917041949221850"/>
+        <tipper enabled="false" id="2561917041949221850"/>
         <tipper enabled="true" id="2942670719772764228"/>
-        <tipper enabled="true" id="321955529348174125"/>
+        <tipper enabled="false" id="321955529348174125"/>
         <tipper enabled="true" id="-2515749220517264334"/>
         <tipper enabled="true" id="-1674967177889976551"/>
         <tipper enabled="true" id="2775485343542030030"/>
@@ -133,15 +132,15 @@
         <tipper enabled="true" id="3283417047801813557"/>
         <tipper enabled="true" id="-8498615008338345991"/>
         <tipper enabled="true" id="-6688424526648227862"/>
-        <tipper enabled="true" id="-3634676628162924936"/>
+        <tipper enabled="false" id="-3634676628162924936"/>
         <tipper enabled="true" id="6215455250967484555"/>
         <tipper enabled="true" id="929095358016977298"/>
         <tipper enabled="true" id="1477509470490701826"/>
-        <tipper enabled="false" id="-2866629311596528031"/>
+        <tipper enabled="true" id="-2866629311596528031"/>
         <tipper enabled="true" id="-6925930851197136485"/>
         <tipper enabled="true" id="6685864331590860235"/>
         <tipper enabled="true" id="748535255358071695"/>
-        <tipper enabled="false" id="-4268240777527142541"/>
+        <tipper enabled="true" id="-4268240777527142541"/>
         <tipper enabled="true" id="6714687738774731933"/>
         <tipper enabled="true" id="-7344214948464934471"/>
         <tipper enabled="true" id="1334179326644184831"/>
@@ -150,8 +149,8 @@
         <tipper enabled="true" id="8867383151468342949"/>
         <tipper enabled="true" id="-8610595251612382642"/>
         <tipper enabled="true" id="-855471283048149285"/>
-        <tipper enabled="false" id="-5672012043383066061"/>
-        <tipper enabled="false" id="2617178983354697602"/>
+        <tipper enabled="true" id="-5672012043383066061"/>
+        <tipper enabled="true" id="2617178983354697602"/>
         <tipper enabled="true" id="7932037869493886974"/>
         <tipper enabled="true" id="-401300117746539825"/>
         <tipper enabled="true" id="-2214012312380722330"/>
@@ -162,18 +161,18 @@
         <tipper enabled="true" id="2013380508545213297"/>
         <tipper enabled="true" id="-5595277222526598517"/>
         <tipper enabled="true" id="-212967427070060695"/>
-        <tipper enabled="false" id="3689810666505415184"/>
-        <tipper enabled="true" id="-3945693304397811549"/>
+        <tipper enabled="true" id="3689810666505415184"/>
+        <tipper enabled="false" id="-3945693304397811549"/>
         <tipper enabled="true" id="-8887752937006192444"/>
         <tipper enabled="true" id="6954094761117949540"/>
         <tipper enabled="true" id="8644185174325773037"/>
         <tipper enabled="true" id="-3150743394756288696"/>
         <tipper enabled="true" id="8349592040340894302"/>
-        <tipper enabled="true" id="1374481738232963085"/>
+        <tipper enabled="false" id="1374481738232963085"/>
         <tipper enabled="true" id="217715865763761857"/>
         <tipper enabled="true" id="-9097148639014944004"/>
         <tipper enabled="true" id="-574482795207645961"/>
         <tipper enabled="true" id="4825405081215291398"/>
-        <tipper enabled="true" id="-3240064673505742343"/>
+        <tipper enabled="false" id="-3240064673505742343"/>
     </tippers>
 </spartan>
