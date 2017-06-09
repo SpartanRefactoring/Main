@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11 */
 public final class StringFromStringBuilder extends ClassInstanceCreationPattern //
-    implements TipperCategory.Idiomatic {
+    implements TipperCategory.Strings {
   private static final long serialVersionUID = -0x27A02FA5B2C416E2L;
   private Expression simplification;
   private List<MethodInvocation> invocations;
