@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -77,14 +76,7 @@ public class Configuration {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
-      assert ¢.tipperGroup() != null : fault.specifically(//
-          String.format("Did you forget to use create an enum instance in %s \nfor the %s of tipper %s \n (description= %s)?", //
-              TipperGroup.class.getSimpleName(), //
-              TipperCategory.class.getSimpleName(), //
-              Tippers.name(¢), //
-              ¢.description()));//
-      if (¢.tipperGroup().isEnabled())
-        get(nodeType).add(¢);
+      get(nodeType).add(¢);
     }
     return this;
   }
