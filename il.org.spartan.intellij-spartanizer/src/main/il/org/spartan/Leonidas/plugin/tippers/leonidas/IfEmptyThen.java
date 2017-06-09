@@ -49,7 +49,7 @@ public class IfEmptyThen implements LeonidasTipperDefinition {
     @Override
     public Map<String,String> getExamples(){
         Map<String,String> examples = new HashMap<>();
-        examples.put("int x=5; Object a,b; if(a!=b); else{x = 8;}","int x=5; Object a,b; if(!(a!=b)){x = 8;}");
+        examples.put("int x=5;\nObject a,b;\nif(a!=b)\n\t;\nelse{\n\tx = 8;\n}","int x=5;\nObject a,b;\n if(!(a!=b)){\n\tx = 8;\n}");
         return examples;
     }
 }
