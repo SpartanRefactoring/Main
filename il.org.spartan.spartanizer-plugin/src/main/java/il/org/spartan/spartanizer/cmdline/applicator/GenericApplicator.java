@@ -96,10 +96,8 @@ public class GenericApplicator {
   }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = configuration.firstTipper(¢);
-    final TipperGroup g = $.tipperGroup();
-    if (!selectedTipperGroups.contains(g.name()))
+    if (!selectedTipperGroups.contains($.tipperGroup().name()))
       return null;
-    System.out.println("selected tipper: " + g.name());
     return $;
   }
 }

@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * @author Niv Shalmon
  * @since 2016-09-1 */
 public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression>//
-    implements TipperCategory.Strings {
+    implements TipperCategory.Theory.Strings {
   private static final long serialVersionUID = 0x3CB7B1F8BB26D539L;
 
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {

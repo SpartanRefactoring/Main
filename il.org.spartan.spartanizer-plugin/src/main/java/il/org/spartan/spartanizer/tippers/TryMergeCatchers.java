@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
 public class TryMergeCatchers extends ReplaceCurrentNode<TryStatement>//
-    implements TipperCategory.Collapse {
+    implements TipperCategory.CommonFactorOut {
   private static final long serialVersionUID = -0x75F125528ECF8007L;
 
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final TryStatement s) {
