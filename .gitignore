@@ -106,8 +106,7 @@ core
 .depend
 .dropbox
 javadoc
-lex.yy.c 
-lib
+lex.yy.c
 .libs
 obj
 out
@@ -196,8 +195,7 @@ il.org.spartan.spartanizer
 javadoc
 *.lakexmk
 *.ldf
-lex.yy.c 
-lib
+lex.yy.c
 .libs
 *.listing
 .~lock.*
