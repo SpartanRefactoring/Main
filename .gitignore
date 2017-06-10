@@ -87,7 +87,6 @@ $.*
 *.tsv
 *.vrb
 *.vtc
-*.xml
 *.yy.c
 *.yy.cpp
 *.yy.h
