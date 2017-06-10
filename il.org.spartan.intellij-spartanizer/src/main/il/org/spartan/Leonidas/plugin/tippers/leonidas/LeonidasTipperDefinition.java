@@ -29,12 +29,7 @@ public interface LeonidasTipperDefinition {
     default void constraints() {
     }
 
-    /*
-    Defines code examples and results after applying the tipper. This is used to test the tipper.
-     */
-
     enum UnderConstructionReason {INCOMPLETE, UNTESTED, BROKEN_MATCHER, BROKEN_REPLACER}
-
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
