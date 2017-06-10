@@ -25,7 +25,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="89ccb" class="javax.swing.JTextArea" binding="inputArea">
+              <component id="e00" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="inputArea">
                 <constraints/>
                 <properties>
                   <text value=""/>
@@ -40,7 +40,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="7606e" class="javax.swing.JTextArea" binding="outputArea">
+              <component id="dacd3" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="outputArea">
                 <constraints/>
                 <properties/>
               </component>
