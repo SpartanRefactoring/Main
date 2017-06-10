@@ -201,7 +201,8 @@ public class Matcher {
         if (mr.notMatches()) return mr;
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
-                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)))
+                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)) &&
+                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e)))))
                 ? mr : mr.setNotMatches();
     }
 
@@ -221,6 +222,7 @@ public class Matcher {
         roots.forEach(root -> root.accept(e -> {
             if (e.isGeneric()) {
                 tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
+                tmp.putAll(az.generic(e).getGenericElements());
             }
         }));
         return tmp;
@@ -283,6 +285,10 @@ public class Matcher {
         public void setElement(Encapsulator e) {
             element = e;
         }
+    }
+
+    public List<Encapsulator> getAllRoots(){
+        return roots;
     }
 
 }
