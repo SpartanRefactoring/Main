@@ -75,6 +75,7 @@ check.dependsOn jacocoTestReport
 
 repositories { jcenter() }
 dependencies {
+    compile "com.fifesoft:rsyntaxtextarea:2.6.1"
     testCompile "org.mockito:mockito-core:2.+"
     compile "org.reflections:reflections:0.9.10"
     compile "commons-io:commons-io:2.5"
