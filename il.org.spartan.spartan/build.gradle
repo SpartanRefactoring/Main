@@ -25,6 +25,19 @@ dependencies {
 	compile 'org.hamcrest:hamcrest-all:1.3'
 }
 
+task(makeRawTokenizer) {
+	doLast {
+		javaexec {
+			main = "-jar";
+			args = [
+					project.getProjectDir().getPath() + "/lib/jflex-1.6.1.jar",
+					"-v",
+					project.getProjectDir().getPath() + "/src/il/org/spartan/java/Tokenizer.flex"
+			]
+		}
+	}
+}
+
 eclipse {
 	classpath {
 		defaultOutputDir = file('target/classes')
