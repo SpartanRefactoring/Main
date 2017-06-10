@@ -2,8 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
@@ -14,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author amirsagiv83, michalcohen
@@ -23,8 +20,8 @@ import java.util.stream.IntStream;
 public class Class extends NamedElement{
 
     private static final String TEMPLATE = "Class";
-    private List<Matcher> fieldsMatchers, methodsMatchers, innerClassesMatchers;
     List<Encapsulator> fields, methods, innerClasses;
+    private List<Matcher> fieldsMatchers, methodsMatchers, innerClassesMatchers;
 
     public Class(Encapsulator e) {
         super(e, TEMPLATE);
@@ -57,16 +54,6 @@ public class Class extends NamedElement{
         c.methodsMatchers = c.methods.stream().map(m -> new Matcher(Utils.wrapWithList(m), map)).collect(Collectors.toList());
         c.innerClassesMatchers = c.innerClasses.stream().map(ic -> new Matcher(Utils.wrapWithList(ic), map)).collect(Collectors.toList());
         return c;
-    }
-
-    private void getAllPermutation(List<Integer[]> l, int location, List<Integer> remains, Integer[] prefix) {
-        if (location < 0) l.add(prefix.clone());
-        for (Integer remain : remains) {
-            List<Integer> newRemains = new LinkedList<>(remains);
-            prefix[location] = remain;
-            newRemains.remove(remain);
-            getAllPermutation(l, location - 1, newRemains, prefix);
-        }
     }
 
     @Override

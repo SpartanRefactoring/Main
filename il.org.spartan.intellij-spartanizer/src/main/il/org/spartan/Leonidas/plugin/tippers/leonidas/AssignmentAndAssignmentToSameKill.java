@@ -23,10 +23,10 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
     @Override
     public void matcher() {
         new Template(() -> {
-            /** start */
+            /* start */
             identifier0 = expression(1);
             identifier0 = expression(2);
-            /** end */
+            /* end */
         });
     }
 
@@ -34,9 +34,9 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
     public void replacer() {
         new Template(() ->
         {
-            /** start */
+            /* start */
             identifier0 = expression(2);
-            /** end */
+            /* end */
         });
     }
 
