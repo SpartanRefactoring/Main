@@ -19,6 +19,7 @@ import java.util.Map;
 public abstract class GenericEncapsulator extends Encapsulator {
     protected String template;
     private List<Constraint> constraints = new ArrayList<>();
+    private List<ReplacingRule> replacingRules = new ArrayList<>();
 
     public GenericEncapsulator(PsiElement e, String template) {
         super(e);
@@ -96,7 +97,12 @@ public abstract class GenericEncapsulator extends Encapsulator {
                 .allMatch(c -> c.accept(e)));
     }
 
+    protected void applyReplacingRules(List<PsiElement> elements, Map<Integer, List<PsiElement>> map){
+        elements.forEach(e -> replacingRules.forEach(rr -> rr.replace(e, map)));
+    }
+
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        applyReplacingRules(elements, m);
         if (parent == null) return elements;
         List<PsiElement> l = Lists.reverse(elements);
         l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
@@ -127,7 +133,15 @@ public abstract class GenericEncapsulator extends Encapsulator {
         constraints.add(c);
     }
 
+    protected void addReplacingRule(ReplacingRule rr){
+        replacingRules.add(rr);
+    }
+
     protected interface Constraint {
         boolean accept(Encapsulator encapsulator);
+    }
+
+    protected interface ReplacingRule {
+        void replace(PsiElement encapsulator, Map<Integer, List<PsiElement>> m);
     }
 }
