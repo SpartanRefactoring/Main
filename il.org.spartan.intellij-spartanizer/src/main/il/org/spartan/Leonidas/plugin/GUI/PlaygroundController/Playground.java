@@ -8,14 +8,17 @@ import com.intellij.psi.PsiFileFactory;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import com.intellij.util.ui.UIUtil;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Spartanizer;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.Theme;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -52,6 +55,18 @@ public class Playground extends JFrame {
         super("Spartanizer Playground");
         inputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         outputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        if (UIUtil.isUnderDarcula()) {
+            try {
+                Theme theme = Theme.load(getClass().getResourceAsStream(
+                        "/ui/dark.xml"));
+                theme.apply(inputArea);
+                theme.apply(outputArea);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // TODO @RoeiRaz do something that makes sense here
+            }
+        }
+
         LeonidasIcon.apply(this);
         setContentPane(mainPanel);
         setPreferredSize(new Dimension(600, 600));

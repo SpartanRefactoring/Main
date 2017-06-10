@@ -25,9 +25,10 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="e00" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="inputArea">
+              <component id="842bb" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="inputArea">
                 <constraints/>
                 <properties>
+                  <doubleBuffered value="false"/>
                   <text value=""/>
                 </properties>
               </component>
