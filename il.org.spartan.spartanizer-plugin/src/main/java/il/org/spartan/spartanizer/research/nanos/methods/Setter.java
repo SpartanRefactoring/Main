@@ -12,7 +12,6 @@ public class Setter extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -0x42D4E3E454F7CFBDL;
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
-    ___.nothing();
     return notConstructor(¢)//
         && notEmpty(¢) //
         && setter(¢);
