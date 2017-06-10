@@ -18,20 +18,20 @@ public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefiniti
     @Override
     public void matcher() {
         new Template(() -> {
-            /** start */
+            /* start */
             if (booleanExpression(0))
                 throw throwable(1);
             throw throwable(2);
-            /** end */
+            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
+            /* start */
             throw booleanExpression(0) ? throwable(1) : throwable(2);
-            /** end */
+            /* end */
         });
     }
 

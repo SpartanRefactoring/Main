@@ -1,6 +1,8 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
+import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
@@ -48,4 +50,17 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
 
+    /**
+     * Will accepts only if not contains identifier
+     */
+    public void mustNotRefer(String s) {
+        addConstraint(e -> {
+            Wrapper<Boolean> wb = new Wrapper<>(true);
+            e.accept(n -> {
+                if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(s))
+                    wb.set(false);
+            });
+            return wb.get();
+        });
+    }
 }

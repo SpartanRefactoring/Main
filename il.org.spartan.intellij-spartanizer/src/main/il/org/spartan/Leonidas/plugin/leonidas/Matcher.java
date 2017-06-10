@@ -117,7 +117,7 @@ public class Matcher {
             return m.setMatches();
         }
         for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
-            MatchingResult ic = iz.conforms(needle.value(), cursor.value());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value());
             if (ic.notMatches() || (needle.hasNext() ^ cursor.hasNext())) {
                 return m.setNotMatches();
             }
