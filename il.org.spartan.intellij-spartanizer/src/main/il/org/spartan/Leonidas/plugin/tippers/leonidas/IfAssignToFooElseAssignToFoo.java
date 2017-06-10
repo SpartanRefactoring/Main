@@ -1,13 +1,11 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_REPLACER;
 
 /**
  * Switch to Ternary (? :)
@@ -15,7 +13,6 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Oren Afek
  * @since 30-05-2017
  */
-@TipperUnderConstruction(BROKEN_REPLACER)
 public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
 
     Object identifier0;

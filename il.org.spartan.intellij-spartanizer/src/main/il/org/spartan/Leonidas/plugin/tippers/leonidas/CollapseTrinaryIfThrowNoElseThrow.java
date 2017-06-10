@@ -11,9 +11,8 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * Collapse if(b)throw $; throw % => throw b ? $ : %
  *
  * @author Oren Afek
- * @since 30/5/2017
+ * @since 30-5-2017
  */
-
 public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefinition {
 
     @Override

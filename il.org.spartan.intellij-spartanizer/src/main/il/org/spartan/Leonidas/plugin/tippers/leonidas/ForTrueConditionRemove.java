@@ -1,12 +1,11 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 
 /**
  * for(?;true;?) => for(?;;?)
@@ -14,23 +13,21 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Oren Afek
  * @since 31/05/2017
  */
-@TipperUnderConstruction(BROKEN_MATCHER)
 public class ForTrueConditionRemove implements LeonidasTipperDefinition {
 
     int identifier0;
-    int identifier1;
 
     @Override
     public void constraints() {
-
     }
 
     @Override
     public void matcher() {
         new Template(() -> {
             /** start */
-            for (int identifier0 = expression(1); true; identifier1++)
+            for (statement(0); true; statement(1)) {
                 anyNumberOf(statement(2));
+            }
             /** end */
         });
     }
@@ -39,8 +36,9 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /** start */
-            for (int identifier0 = expression(1); ; identifier1++)
+            for (statement(0); ; statement(1)) {
                 anyNumberOf(statement(2));
+            }
             /** end */
         });
     }

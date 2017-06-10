@@ -90,7 +90,12 @@ public class Matcher {
                 return m.setNotMatches();
             m.combineWith(ic);
             if (needle.value().isGeneric()) {
-                m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+                if (m.getMap().containsKey(az.generic(needle.value()).getId())) {
+                    if (m.getMap().get(az.generic(needle.value()).getId()).stream().noneMatch(e -> e.getText().equals(cursor.value().getText()))) {
+                        return m.setNotMatches();
+                    }
+                } else
+                    m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
                 cursor.matchedWithGeneric();
             }
         }
@@ -122,6 +127,7 @@ public class Matcher {
                 cursor.matchedWithGeneric();
             }
         }
+        needle.next();
         return m;
     }
 
