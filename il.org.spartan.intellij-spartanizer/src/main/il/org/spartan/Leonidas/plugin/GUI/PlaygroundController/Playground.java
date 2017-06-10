@@ -12,6 +12,7 @@ import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Spartanizer;
 import il.org.spartan.Leonidas.plugin.Toolbox;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,8 +28,8 @@ public class Playground extends JFrame {
     private JPanel mainPanel;
     private JButton clearButton;
     private JButton spartanizeButton;
-    private JTextArea inputArea;
-    private JTextArea outputArea;
+    private org.fife.ui.rsyntaxtextarea.RSyntaxTextArea inputArea;
+    private org.fife.ui.rsyntaxtextarea.RSyntaxTextArea outputArea;
     private JLabel input;
     private JLabel output;
     private JPanel textPanel;
@@ -49,6 +50,8 @@ public class Playground extends JFrame {
 
     public Playground() {
         super("Spartanizer Playground");
+        inputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        outputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         LeonidasIcon.apply(this);
         setContentPane(mainPanel);
         setPreferredSize(new Dimension(600, 600));
@@ -142,12 +145,12 @@ public class Playground extends JFrame {
         mainPanel.add(textPanel, new GridConstraints(0, 0, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(371, 24), null, 0, false));
         inputScroll = new JScrollPane();
         textPanel.add(inputScroll, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        inputArea = new JTextArea();
+        inputArea = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
         inputArea.setText("");
         inputScroll.setViewportView(inputArea);
         outputScroll = new JScrollPane();
         textPanel.add(outputScroll, new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        outputArea = new JTextArea();
+        outputArea = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea();
         outputScroll.setViewportView(outputArea);
         final Spacer spacer1 = new Spacer();
         textPanel.add(spacer1, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
