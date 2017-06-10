@@ -28,7 +28,6 @@ public class ToolboxTest extends PsiTypeHelper {
         assertTrue(names.contains("Delegator"));
         assertTrue(names.contains("RemoveCurlyBracesFromIfStatement"));
         assertTrue(names.contains("IfEmptyThen"));
-        assertTrue(names.contains("RenameParameterToCent"));
         assertTrue(names.contains("LispLastElement"));
         assertTrue(names.contains("DefaultsTo"));
         assertTrue(names.contains("RemoveCurlyBracesFromWhileStatement"));
@@ -48,7 +47,6 @@ public class ToolboxTest extends PsiTypeHelper {
         assertTrue(currNames.contains("Delegator"));
         assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
         assertTrue(currNames.contains("IfEmptyThen"));
-        assertTrue(currNames.contains("RenameParameterToCent"));
         assertTrue(currNames.contains("LispLastElement"));
         assertTrue(currNames.contains("DefaultsTo"));
         assertTrue(currNames.contains("RemoveCurlyBracesFromWhileStatement"));
