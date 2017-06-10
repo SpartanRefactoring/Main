@@ -26,27 +26,27 @@ public class FluentSetter implements LeonidasTipperDefinition {
     @Override
     public void matcher() {
         new Template(() -> {
-            /** start */
+            /* start */
             class Class0 {
                 void method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                 }
             }
-            /** end */
+            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
+            /* start */
             class Class0 {
                 Class0 method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                     return this;
                 }
             }
-            /** end */
+            /* end */
         });
     }
 

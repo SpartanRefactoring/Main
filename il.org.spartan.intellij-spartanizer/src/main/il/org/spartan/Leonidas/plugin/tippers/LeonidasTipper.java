@@ -89,8 +89,20 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      */
     private List<Encapsulator> getForestFromMethod(PsiMethod method) {
         PsiNewExpression ne = az.newExpression(az.expressionStatement(method.getBody().getStatements()[0]).getExpression());
-        PsiElement current;
-        if (iz.codeBlock(((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody())) {
+        PsiElement current = ne;
+        Wrapper<PsiElement> we = new Wrapper<>(ne);
+        ne.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitComment(PsiComment comment) {
+                super.visitComment(comment);
+                if (comment.getText().contains("start")) {
+                    we.set(comment);
+                }
+            }
+        });
+        current = we.get();
+        current = Utils.getNextActualSibling(current);
+        /*if (iz.codeBlock(((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody())) {
             current = Utils.getFirstElementInsideBody((PsiCodeBlock) (((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody()));
         } else {
             current = ne.getArgumentList().getExpressions()[0].getFirstChild();
@@ -101,11 +113,12 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             current = current.getNextSibling();
         }
         current = Utils.getNextActualSibling(current);
+        */
         List<Encapsulator> roots = new ArrayList<>();
         if (iz.declarationStatement(current) && iz.classDeclaration(current.getFirstChild()))
             current = current.getFirstChild();
         rootType = current.getClass();
-        while (current != null && (!iz.javadoc(current) || !az.javadoc(current).getText().contains("end"))) {
+        while (current != null && (!iz.comment(current) || !az.comment(current).getText().contains("end"))) {
             roots.add(Pruning.prune(Encapsulator.buildTreeFromPsi(current), map));
             current = Utils.getNextActualSibling(current);
         }

@@ -24,22 +24,22 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
     @Override
     public void matcher() {
         new Template(() -> {
-            /** start */
+            /* start */
             for (statement(0); true; statement(1)) {
                 anyNumberOf(statement(2));
             }
-            /** end */
+            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
+            /* start */
             for (statement(0); ; statement(1)) {
                 anyNumberOf(statement(2));
             }
-            /** end */
+            /* end */
         });
     }
 

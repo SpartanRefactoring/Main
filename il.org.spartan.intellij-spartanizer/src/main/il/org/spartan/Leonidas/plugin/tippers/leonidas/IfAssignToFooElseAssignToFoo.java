@@ -24,21 +24,21 @@ public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
     @Override
     public void matcher() {
         new Template(() -> {
-            /** start */
+            /* start */
             if (booleanExpression(1))
                 identifier0 = expression(2);
             else
                 identifier0 = expression(3);
-            /** end */
+            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
+            /* start */
             identifier0 = booleanExpression(1) ? expression(2) : expression(3);
-            /** end */
+            /* end */
         });
     }
 

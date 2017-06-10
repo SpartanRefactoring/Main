@@ -23,7 +23,7 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     @Override
     public void matcher() {
         new Template(() -> {
-            /** start */
+            /* start */
             for (int i = 0; i < 1 ; i++){
                 if(booleanExpression(1)){
                     x++;
@@ -31,20 +31,20 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
                     x++;
                 }
             }
-            /** end */
+            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
+            /* start */
             if(booleanExpression(1)){
                 x++;
                 x--;
                 x++;
             }
-            /** end */
+            /* end */
         });
     }
 }

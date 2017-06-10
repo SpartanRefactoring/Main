@@ -22,11 +22,11 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     @Override
     public void matcher() {
         new Template(() -> {
-            /** start */
+            /* start */
             if (booleanExpression(0)) {
                 statement(1);
             }
-            /** end */
+            /* end */
         });
     }
 

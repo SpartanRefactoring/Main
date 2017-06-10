@@ -13,9 +13,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.lang.Class;
 
-import static com.intellij.psi.JavaTokenType.DOUBLE_LITERAL;
-import static com.intellij.psi.JavaTokenType.FLOAT_LITERAL;
-import static com.intellij.psi.JavaTokenType.INTEGER_LITERAL;
+import static com.intellij.psi.JavaTokenType.*;
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
 
@@ -484,5 +482,9 @@ public enum iz {
 
         PsiBinaryExpression be = az.binaryExpression(e);
         return arithmetic(be.getLOperand()) && arithmetic(be.getROperand());
+    }
+
+    public static boolean comment(PsiElement e) {
+        return typeCheck(PsiComment.class, e);
     }
 }
