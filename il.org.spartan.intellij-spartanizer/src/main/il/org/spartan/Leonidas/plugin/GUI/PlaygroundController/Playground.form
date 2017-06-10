@@ -64,6 +64,8 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <editable value="false"/>
+                      <enabled value="false"/>
                       <text value="Input:"/>
                     </properties>
                   </component>
@@ -99,6 +101,8 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <editable value="false"/>
+                      <enabled value="false"/>
                       <text value="Output:"/>
                     </properties>
                   </component>
