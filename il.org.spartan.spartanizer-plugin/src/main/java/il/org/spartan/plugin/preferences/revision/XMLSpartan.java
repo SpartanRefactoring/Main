@@ -130,7 +130,7 @@ public class XMLSpartan {
         m.put(¢.name(), ¢);
       return m;
     });
-    for (final Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : TipperCategory.hierarchy.entrySet()) {
+    for (final Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : TipperCategory.children.entrySet()) {
       SpartanCategory parent;
       if (existingCategories.containsKey(e.getKey().getSimpleName()))
         parent = existingCategories.get(e.getKey().getSimpleName());
