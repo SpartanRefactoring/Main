@@ -1,31 +1,23 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
 
 /**
  * Remove Unnecessary Assignment.
  *
  * @author Oren Afek
- * @since 02/06/2017
+ * @since 02-06-2017
  */
-@TipperUnderConstruction(BROKEN_MATCHER)
 public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefinition {
 
     Object identifier0;
 
-    Class3 identifier4() {
-        return null;
-    }
-
     @Override
     public void constraints() {
-        //the(expression(1)).isNot(() -> identifier4());
     }
 
     @Override
@@ -41,10 +33,11 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
     @Override
     public void replacer() {
         new Template(() ->
-                /** start */
-                identifier0 = expression(2)
-                /** end */
-        );
+        {
+            /** start */
+            identifier0 = expression(2);
+            /** end */
+        });
     }
 
     @Override

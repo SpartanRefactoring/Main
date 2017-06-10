@@ -1,11 +1,8 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import java.util.Map;
-
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.INCOMPLETE;
 
 /**
  * s.toString() => "" + x
@@ -13,7 +10,6 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Oren Afek
  * @since 31-05-2017
  */
-@TipperUnderConstruction(INCOMPLETE)
 public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTipperDefinition {
 
     Object identifier0;

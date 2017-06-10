@@ -32,6 +32,7 @@ public final class SingleFlater {
   private OperationsProvider operationsProvider;
   private boolean usesDisabling = true;
   private WindowInformation windowInformation;
+  private ITextSelection textSelection;
 
   /** Suppresses default constructor, ensuring non-instantiability */
   private SingleFlater() {}
@@ -55,6 +56,13 @@ public final class SingleFlater {
    * @return {@code this} flater */
   public SingleFlater limit(final WindowInformation ¢) {
     windowInformation = ¢;
+    return this;
+  }
+  /** Sets text selection limits to this flater.
+   * @param ¢ JD
+   * @return {@code this} flater */
+  public SingleFlater limit(final ITextSelection ¢) {
+    textSelection = ¢;
     return this;
   }
   /** Set disabling for this flater.
@@ -85,7 +93,7 @@ public final class SingleFlater {
     root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         setNode(n);
-        if (!inWindow(n) || usesDisabling && disabling.on(n))
+        if (!inSelection(n) || usesDisabling && disabling.on(n))
           return true;
         final Tipper<N> w = getTipper(n);
         if (w == null)
@@ -177,9 +185,12 @@ public final class SingleFlater {
       v.setTopIndex(i.startLine);
     return false;
   }
-  private boolean inWindow(final ASTNode ¢) {
-    return windowInformation == null || windowInformation.invalid()
+  private boolean inSelection(final ASTNode ¢) {
+    final boolean inWindow = windowInformation == null || windowInformation.invalid()
         || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
+    final boolean inSelection = textSelection == null || ¢ != null && ¢.getStartPosition() >= textSelection.getOffset()
+        && ¢.getLength() + ¢.getStartPosition() <= textSelection.getOffset() + textSelection.getLength();
+    return inWindow && inSelection;
   }
 
   /** describes a single change operation, containing both an {@link ASTNode}
