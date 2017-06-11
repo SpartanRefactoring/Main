@@ -131,4 +131,8 @@ public enum az {
     public static PsiTypeElement type(PsiElement e) {
         return e != null && !iz.type(e) ? null : (PsiTypeElement) e;
     }
+
+    public static PsiComment comment(PsiElement e) {
+        return e != null && !iz.comment(e) ? null : (PsiComment) e;
+    }
 }

@@ -76,7 +76,6 @@ public class Toolbox implements ApplicationComponent {
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
                 .add(new DefaultsTo())
-                .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new Delegator());
         initBasicBlocks();
         createLeonidasTippers();

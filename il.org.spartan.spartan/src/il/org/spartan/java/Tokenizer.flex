@@ -2,7 +2,7 @@
  * A general purpose Java tokenizer,
  *  @author Yossi Gil
  *  @since 2007/04/02
- *  on 2012/10/10 bug fix to deal with the /**/ construct
+ *  on 2012/10/10 bug fix to deal with the multiline - comment construct
  */
 package il.org.spartan.java;
 import static il.org.spartan.java.Token.*;

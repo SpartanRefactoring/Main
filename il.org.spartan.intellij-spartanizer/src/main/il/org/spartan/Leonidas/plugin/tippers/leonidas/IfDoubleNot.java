@@ -1,7 +1,5 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.BooleanExpression;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,12 +25,12 @@ public class IfDoubleNot implements LeonidasTipperDefinition {
 
     @Override
     public void matcher() {
-        new Template(() -> /** start */ !(!(booleanExpression(0))) /** end */);
+        new Template(() -> /* start */ !(!(booleanExpression(0))) /* end */);
     }
 
     @Override
     public void replacer() {
-        new Template(() -> /** start */ booleanExpression(0) /** end */);
+        new Template(() -> /* start */ booleanExpression(0) /* end */);
     }
 
     @Override
