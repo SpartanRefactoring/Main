@@ -54,6 +54,10 @@ public class Identifier extends NamedElement {
         addConstraint(e -> az.identifier(e.inner).getText().contains(s));
     }
 
+    public void notContains(String s) {
+        addConstraint(e -> !(az.identifier(e.inner).getText().contains(s)));
+    }
+
     public void endWith(String s) {
         addConstraint(e -> az.identifier(e.inner).getText().endsWith(s));
     }

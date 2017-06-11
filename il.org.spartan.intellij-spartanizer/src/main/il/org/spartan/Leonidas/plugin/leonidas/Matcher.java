@@ -117,7 +117,7 @@ public class Matcher {
             return m.setMatches();
         }
         for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
-            MatchingResult ic = iz.conforms(needle.value(), cursor.value());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value());
             if (ic.notMatches() || (needle.hasNext() ^ cursor.hasNext())) {
                 return m.setNotMatches();
             }
@@ -201,7 +201,8 @@ public class Matcher {
         if (mr.notMatches()) return mr;
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
-                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)))
+                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)) &&
+                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e)))))
                 ? mr : mr.setNotMatches();
     }
 
@@ -221,6 +222,7 @@ public class Matcher {
         roots.forEach(root -> root.accept(e -> {
             if (e.isGeneric()) {
                 tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
+                tmp.putAll(az.generic(e).getGenericElements());
             }
         }));
         return tmp;
@@ -283,6 +285,10 @@ public class Matcher {
         public void setElement(Encapsulator e) {
             element = e;
         }
+    }
+
+    public List<Encapsulator> getAllRoots(){
+        return roots;
     }
 
 }

@@ -8,8 +8,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.leonidas.Replacer;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -76,5 +75,27 @@ public class Method extends ModifiableElement {
         replacerParameters.replaceSingleRoot(e.getParameterList(), m, r);
         replacerCodeBlock.replaceSingleRoot(e.getBody(), m, r);
         return Utils.wrapWithList(inner);
+    }
+
+    @Override
+    public Map<Integer, GenericEncapsulator> getGenericElements(){
+        PsiMethod m = (PsiMethod) this.inner;
+        Map<Integer,GenericEncapsulator> map = new HashMap<>();
+
+        Set<Encapsulator> set = new HashSet<>();
+        set.addAll(matcherReturnType.getAllRoots());
+        set.addAll(matcherCodeBlock.getAllRoots());
+        set.addAll(matcherParameters.getAllRoots());
+
+        List<Encapsulator> l = new ArrayList<>(set);
+
+        l.forEach(root -> root.accept(e -> {
+            if (e.isGeneric()) {
+                map.put(az.generic(e).getId(), (GenericEncapsulator) e);
+            }
+        }));
+
+        return map;
+
     }
 }
