@@ -1,12 +1,13 @@
 package il.org.spartan.plugin.preferences.revision;
 
 
+import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
 import java.util.function.*;
 
-import org.eclipse.jface.dialogs.*;
+
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
@@ -370,27 +371,28 @@ public class OperationListEditor extends ListEditor {
     int count = 0;
     for(Entry<String, Object> e : elements_list)
       res[count++] = e.getKey();
+    //when you want to initialize all preferences - uncomment the next line:
     //return res;
     return stringList == null || stringList.isEmpty() ? res : stringList.split(DELIMETER);
   }
+  
+  
+  public ListEditor resLE; //not a good coding methodology 
+  
   @Override protected String getNewInputObject() {
-    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Add", "Will be available in later releases");
-    return null;
-    //TODO: Raviv Rachmiel, add configurations and uncomment: -rr
-    /*
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
-    final String res = $.getResult() == null ? null : $.getResult().description();
+    final String res = $.getResult() == null ? null : $.getName();
     if (res == null)
       return res;
     final long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
-    final WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, null, res);
+    final WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, new HashMap<>(), res);
     elements_list.add(0, new AbstractMap.SimpleEntry<>(res, woe));
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.add(woe);
     WidgetPreferences.storeEntries(l);
+    resLE.loadDefault();
     return res;
-    */
   }
   @Override protected String createList(final String[] items) {
     return separate.these(items).by(DELIMETER);
