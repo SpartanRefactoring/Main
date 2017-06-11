@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Test case is {@link Issue1012} Issue #1012 Convert: {@code
@@ -26,7 +27,7 @@ import il.org.spartan.utils.*;
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-13 */
 public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclarationStatement>//
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x591B454B69ADD31L;
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {

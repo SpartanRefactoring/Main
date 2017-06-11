@@ -11,13 +11,14 @@ import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** {@link Issue1018}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
 public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x62C675CD2B1FCA22L;
 
   @Override public ASTNode replacement(final IfStatement ¢) {

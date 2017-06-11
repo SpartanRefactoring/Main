@@ -16,13 +16,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code 0+X}, {@code X+0}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.NOP.onNumbers {
+    implements Category.NOP.onNumbers {
   private static final long serialVersionUID = 0x4FC12AA812633EA3L;
 
   private static ASTNode replacement(final List<Expression> ¢) {

@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** converts {@code (a?b:c;)} to {@code (if(a) b; else c;)} relevant for
@@ -22,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @since 23-12-16 */
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = -0x7D806FC1C854EF52L;
 
   @Override public Examples examples() {

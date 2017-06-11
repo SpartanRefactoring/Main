@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.tables.*;
 
@@ -23,7 +24,7 @@ public class Table_Tippers {
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])
-            if (¢ != null && !(¢ instanceof TipperCategory.Bloater))
+            if (¢ != null && !(¢ instanceof Category.Bloater))
               t //
                   .col("Category", ¢.tipperGroup())//
                   .col("Tipper", Tippers.name(¢))//

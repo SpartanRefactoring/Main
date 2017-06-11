@@ -9,12 +9,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** like (@link ForRedundantContinue) but for enhanced for.
  * @author Kfir Marx
  * @since 2016-11-26 */
 public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForStatement>//
-    implements TipperCategory.Shortcircuit {
+    implements Category.Shortcircuit {
   private static final long serialVersionUID = -0x4DA66AFD24883D75L;
 
   @Override public String description(final EnhancedForStatement ¢) {

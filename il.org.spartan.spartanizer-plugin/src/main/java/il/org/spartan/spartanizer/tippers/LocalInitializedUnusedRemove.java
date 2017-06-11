@@ -9,13 +9,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Remove unused local
  * @author Yossi Gil
  * @since 2017-01-23 */
-public final class LocalInitializedUnusedRemove extends LocalInitialized implements TipperCategory.Deadcode {
+public final class LocalInitializedUnusedRemove extends LocalInitialized implements Category.Deadcode {
   private static final long serialVersionUID = -0xBDF3E9975A1F125L;
 
   public LocalInitializedUnusedRemove() {

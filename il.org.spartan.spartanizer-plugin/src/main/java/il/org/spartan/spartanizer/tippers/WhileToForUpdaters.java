@@ -8,12 +8,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Convert a while to a traditional for(;;)
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = -0x550143DCF3BD3B9L;
 
   private static ForStatement buildForWithoutLastStatement(final WhileStatement ¢) {

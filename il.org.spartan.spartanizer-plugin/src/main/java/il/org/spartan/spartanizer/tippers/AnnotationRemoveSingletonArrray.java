@@ -8,13 +8,14 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Use {@link #examples()} for documentation
  * @author Yossi Gil
  * @since 2017-02-10 */
 public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<SingleMemberAnnotation>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x73DFB5B8FFF2B25EL;
 
   @Override public String description(final SingleMemberAnnotation ¢) {

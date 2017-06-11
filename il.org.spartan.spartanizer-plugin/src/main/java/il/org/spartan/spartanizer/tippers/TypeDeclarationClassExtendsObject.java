@@ -5,12 +5,13 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Converts {@code class C extends Object {...}} to {@code class C {...}} to
  * @author Yossi Gil
  * @since 2017-01-15 */
 public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<TypeDeclaration>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = -0x5CD20EAB91E0B816L;
 
   @Override public ASTNode replacement(final TypeDeclaration ¢) {

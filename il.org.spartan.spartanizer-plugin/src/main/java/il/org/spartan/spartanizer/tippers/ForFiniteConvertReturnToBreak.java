@@ -8,7 +8,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Convert Finite loops with return sideEffects to shorter ones : toList
@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
 public final class ForFiniteConvertReturnToBreak extends ForStatementPattern//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = -0x307C6039058B998DL;
 
   public ForFiniteConvertReturnToBreak() {

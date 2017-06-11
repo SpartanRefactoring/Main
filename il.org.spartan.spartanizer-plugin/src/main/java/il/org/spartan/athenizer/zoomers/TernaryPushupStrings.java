@@ -8,6 +8,7 @@ import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Converts addition of string literal and ternary string literal to ternary
@@ -20,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-08 */
 public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = -0x4DC0060CE8FDAAC0L;
 
   @Override public Examples examples() {

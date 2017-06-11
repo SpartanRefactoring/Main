@@ -6,13 +6,14 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Removes {@code super()} calls which take no arguments, as typically created
  * by Eclipse's template for constructors.
  * @author Daniel Mittelman
  * @since 2015-08-26 */
 public final class SuperConstructorInvocationRemover extends CarefulTipper<SuperConstructorInvocation>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = -0x22E9BC9648E5BBCEL;
 
   @Override public String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {

@@ -15,12 +15,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Extract method suffix into new method according to predefined heuristic.
  * @author Ori Roth
  * @since 2016 */
 public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaration>//
-    implements TipperCategory.Modular {
+    implements Category.Modular {
   private static final long serialVersionUID = 0xEF90D420377464DL;
   // TODO Ori Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;

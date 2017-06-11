@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** A {@link Tipper} to eliminate degenerate if sideEffects such as {@code
  * if (x)
@@ -19,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
-    implements TipperCategory.NOP {
+    implements Category.NOP {
   private static final long serialVersionUID = 0x5956B839ADCAD9C5L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

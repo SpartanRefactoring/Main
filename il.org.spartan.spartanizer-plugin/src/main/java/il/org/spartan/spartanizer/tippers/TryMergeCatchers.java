@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Consolidate identical catch blocks : <br>
  * <br>
@@ -15,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
 public class TryMergeCatchers extends ReplaceCurrentNode<TryStatement>//
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x75F125528ECF8007L;
 
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final TryStatement s) {

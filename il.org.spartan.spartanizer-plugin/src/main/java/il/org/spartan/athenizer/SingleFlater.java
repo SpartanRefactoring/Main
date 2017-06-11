@@ -189,7 +189,7 @@ public final class SingleFlater {
     final boolean inWindow = windowInformation == null || windowInformation.invalid()
         || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
     final boolean inSelection = textSelection == null || ¢ != null && ¢.getStartPosition() >= textSelection.getOffset()
-        && ¢.getLength() + ¢.getStartPosition() <= textSelection.getOffset() + textSelection.getLength();
+        && ¢.getLength() + ¢.getStartPosition() <= textSelection.getLength() + textSelection.getOffset();
     return inWindow && inSelection;
   }
 

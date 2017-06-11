@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Replaces name of variables named "_" into "__"

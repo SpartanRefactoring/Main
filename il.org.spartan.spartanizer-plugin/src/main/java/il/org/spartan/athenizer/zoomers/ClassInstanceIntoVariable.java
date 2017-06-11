@@ -12,12 +12,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** new Z(); >> Z z1 = new Z(); {@link Issue0978}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-24 */
 public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x1445C0CE75E59B1BL;
 
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {

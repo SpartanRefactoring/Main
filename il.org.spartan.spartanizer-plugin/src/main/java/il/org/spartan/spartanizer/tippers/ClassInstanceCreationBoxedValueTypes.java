@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Replaces, e.g., {@code Integer x=new Integer(2);} with
@@ -18,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class ClassInstanceCreationBoxedValueTypes extends ReplaceCurrentNode<ClassInstanceCreation>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Idiomatic {
   private static final long serialVersionUID = 0x578B2D093DF1DBD5L;
 
   @Override public String description(final ClassInstanceCreation ¢) {

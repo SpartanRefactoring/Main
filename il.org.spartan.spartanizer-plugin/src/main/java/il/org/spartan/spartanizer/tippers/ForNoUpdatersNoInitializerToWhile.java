@@ -5,12 +5,13 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()} for documentation
  * @since 2017-03-24 */
 public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = -0x796EA5B6F743E568L;
   Expression condition;
 

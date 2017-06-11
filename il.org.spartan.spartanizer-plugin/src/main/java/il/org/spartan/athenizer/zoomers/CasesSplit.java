@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Expand cases in a {@link SwitchStatement}: {@code switch (x) { case 1: f(1);
  * case 2: f(2); throw new Exception(); default: f(3); } } turns into
@@ -25,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x47C7172BFCDFA467L;
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {

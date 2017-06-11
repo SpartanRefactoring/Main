@@ -8,13 +8,14 @@ import org.eclipse.jdt.core.dom.PostfixExpression.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** converts, whenever possible, postfix increment/decrement to prefix
  * increment/decrement
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Idiomatic {
   private static final long serialVersionUID = 0x67F449172A4847BCL;
 
   private static String description(final Operator ¢) {

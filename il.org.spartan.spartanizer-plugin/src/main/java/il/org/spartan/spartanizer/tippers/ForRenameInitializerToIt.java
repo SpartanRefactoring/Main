@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil

@@ -11,13 +11,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code (long)X} by {@code 1L*X}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpression>//
-    implements TipperCategory.Theory.Arithmetics.Symbolic {
+    implements Category.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = -0x6ACC6AD3D77236F4L;
 
   private static NumberLiteral literal(final Expression ¢) {
