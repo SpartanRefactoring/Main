@@ -1,11 +1,12 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import java.io.*;
+
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
 import java.util.function.*;
 
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
@@ -373,6 +374,10 @@ public class OperationListEditor extends ListEditor {
     return stringList == null || stringList.isEmpty() ? res : stringList.split(DELIMETER);
   }
   @Override protected String getNewInputObject() {
+    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Add", "Will be available in later releases");
+    return null;
+    //TODO: Raviv Rachmiel, add configurations and uncomment: -rr
+    /*
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
     final String res = $.getResult() == null ? null : $.getResult().description();
@@ -385,6 +390,7 @@ public class OperationListEditor extends ListEditor {
     l.add(woe);
     WidgetPreferences.storeEntries(l);
     return res;
+    */
   }
   @Override protected String createList(final String[] items) {
     return separate.these(items).by(DELIMETER);
