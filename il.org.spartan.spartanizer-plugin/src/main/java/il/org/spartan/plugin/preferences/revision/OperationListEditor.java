@@ -369,10 +369,12 @@ public class OperationListEditor extends ListEditor {
   @Override protected String[] parseString(final String stringList) {
     String[] res = new String[7];
     int count = 0;
-    for(Entry<String, Object> e : elements_list)
+    for(Entry<String, Object> e : elements_list) {
+      if(count==7)
+        break;
       res[count++] = e.getKey();
+    }
     //when you want to initialize all preferences - uncomment the next line:
-    //return res;
     return stringList == null || stringList.isEmpty() ? res : stringList.split(DELIMETER);
   }
   
