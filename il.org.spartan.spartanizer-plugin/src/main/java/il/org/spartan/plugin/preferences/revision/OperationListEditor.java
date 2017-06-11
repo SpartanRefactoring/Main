@@ -367,9 +367,8 @@ public class OperationListEditor extends ListEditor {
   @Override protected String[] parseString(final String stringList) {
     String[] res = new String[7];
     int count = 0;
-    for(Entry<String, Object> e : elements_list) {
+    for(Entry<String, Object> e : elements_list)
       res[count++] = e.getKey();
-    }
     //return res;
     return stringList == null || stringList.isEmpty() ? res : stringList.split(DELIMETER);
   }
