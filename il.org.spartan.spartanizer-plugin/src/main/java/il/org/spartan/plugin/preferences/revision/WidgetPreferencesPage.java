@@ -40,6 +40,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   public static void onConfigure(@SuppressWarnings("unused") final WidgetOperationEntry ¢) {
     MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Configuration", "Will be available in later releases");
+    //TODO: Raviv Rachmiel, uncomment this when #1415 is done
     // if (¢.getWidgetOp() != null)
     // new
     // ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
