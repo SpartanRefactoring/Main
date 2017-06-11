@@ -17,13 +17,13 @@
     ]]>
     </change-notes>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="141.0"/>
+    <idea-version since-build="141.0" />
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
-    <!-- uncomment to email.org.spartan.Leonidas.plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <!--<depends>
+        com.intellij.modules.lang
+    </depends>-->
 
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>

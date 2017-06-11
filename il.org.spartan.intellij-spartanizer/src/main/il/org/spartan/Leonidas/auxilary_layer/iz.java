@@ -484,7 +484,9 @@ public enum iz {
         return arithmetic(be.getLOperand()) && arithmetic(be.getROperand());
     }
 
-    public static boolean comment(PsiElement e) {
-        return typeCheck(PsiComment.class, e);
+    public static boolean comment(PsiElement e){
+        return typeCheck(PsiComment.class,e);
     }
+
+    public static boolean psiFile(PsiElement e){return typeCheck(PsiFile.class,e);}
 }

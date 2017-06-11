@@ -135,4 +135,8 @@ public enum az {
     public static PsiComment comment(PsiElement e) {
         return e != null && !iz.comment(e) ? null : (PsiComment) e;
     }
+
+    public static PsiFile psiFile(PsiElement e) {
+        return e != null ? (PsiFile)e : null;
+    }
 }

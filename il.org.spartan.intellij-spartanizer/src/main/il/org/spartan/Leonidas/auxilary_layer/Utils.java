@@ -14,10 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * General utils class
@@ -187,5 +184,13 @@ public enum Utils {
             return c.getDeclaredMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {}
         return getDeclaredMethod(c.getSuperclass(), name, parameterTypes);
+    }
+
+    public static Optional<Method> getPublicMethod(Class<?> c, String name, Class<?>... parameterTypes){
+        try {
+             return Optional.of(c.getMethod(name,parameterTypes));
+        } catch (NoSuchMethodException e) {
+            return Optional.empty();
+        }
     }
 }

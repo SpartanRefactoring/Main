@@ -144,7 +144,12 @@ public class Matcher {
                     else {
                         NonStructuralConstraint nsc = (NonStructuralConstraint) j;
                         try {
-                            Utils.getDeclaredMethod(e.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(e, nsc.objects);
+                            Utils.getPublicMethod(e.getClass(), nsc.methodName,
+                                    Arrays.stream(nsc.objects)
+                                            .map(Object::getClass)
+                                            .collect(Collectors.toList())
+                                            .toArray(new Class<?>[]{})).orElseThrow(NoSuchMethodException::new)
+                                    .invoke(e, nsc.objects);
                         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                             e1.printStackTrace();
                         }
@@ -182,16 +187,16 @@ public class Matcher {
 
     public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
         MatchingResult mr = new MatchingResult(false);
-        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++){
+        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++) {
             List<Encapsulator> potentialRoots = new ArrayList<>();
             PsiElement c = treeToMatch;
             MatchingResult m = new MatchingResult(true);
-            for (int j = 0; j < i; j++){
+            for (int j = 0; j < i; j++) {
                 potentialRoots.add(Encapsulator.buildTreeFromPsi(c));
                 c = c.getNextSibling();
             }
             m.combineWith(matchingRecursion(new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots)));
-            if (m.matches()){
+            if (m.matches()) {
                 mr.combineWith(m);
                 mr.setMatches();
                 numberOfNeighbors.set(i);
@@ -202,7 +207,7 @@ public class Matcher {
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
                 .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)) &&
-                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e)))))
+                        getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e)))))
                 ? mr : mr.setNotMatches();
     }
 
@@ -287,7 +292,7 @@ public class Matcher {
         }
     }
 
-    public List<Encapsulator> getAllRoots(){
+    public List<Encapsulator> getAllRoots() {
         return roots;
     }
 

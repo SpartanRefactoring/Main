@@ -53,7 +53,7 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
         o.inner = upperElement.inner;
         if (o.isGeneric())
             upperElement.putId(o.extractId(e.getInner()));
-        return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
+        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
     @PreservesIterator
