@@ -12,7 +12,7 @@ import fluent.ly.*;
 import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** converts foreach statement to foreach {statement} Test case
@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @since 10-01-17 */
 public class ForEachBlockBloater extends ForEachStatementPattern//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x38C70470EE42ECEBL;
 
   @Override public Examples examples() {

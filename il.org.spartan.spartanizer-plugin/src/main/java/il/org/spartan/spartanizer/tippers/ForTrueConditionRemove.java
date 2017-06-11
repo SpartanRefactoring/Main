@@ -6,12 +6,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** converts 'for(?;true;?)' to 'for(?;;?)'";
  * @author Alex Kopzon
  * @since 2016 */
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = 0x6788CE2890CE2390L;
   public static final String DESCRIPTION = "Remove implicit 'true' in 'for(?;true;?)' converting it to 'for(?;;?)'";
 

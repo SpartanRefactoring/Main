@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Test case is {@link Issue0968} Issue #968 convert {@code
  * int a = f(), b = g();
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Tomer Dragucki
  * @since 19-12-2016 */
 public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x257BFB652923B5C5L;
 
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {

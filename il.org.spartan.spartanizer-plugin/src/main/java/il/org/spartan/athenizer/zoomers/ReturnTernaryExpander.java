@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** converts (a?b:c;) to (if(a) b; else c;) relevant to return <em>ternary</em>
  * also relevant for return (ternary>) Issue #883 {@link Issue0883}
@@ -19,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 03-12-16 */
 public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = -0x3A172046EB702ADAL;
 
   @Override public Tip tip(final ReturnStatement x) {

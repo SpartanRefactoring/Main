@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Remove curly braces from a lambda expression if and only if toList its body
@@ -18,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Oren Afek
  * @since 2016-11-17 */
 public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = -0x7F8F90EF9ECDB09L;
 
   @Override public Tip tip(final LambdaExpression x) {

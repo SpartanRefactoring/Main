@@ -7,12 +7,12 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since Jan 24, 2017 */
-public final class FieldInitializedDefaultValue extends FieldPattern implements TipperCategory.SyntacticBaggage {
+public final class FieldInitializedDefaultValue extends FieldPattern implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x5641BB9EAF40D88BL;
 
   public FieldInitializedDefaultValue() {

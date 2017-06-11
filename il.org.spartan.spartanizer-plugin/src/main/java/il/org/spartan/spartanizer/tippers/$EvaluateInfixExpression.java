@@ -9,18 +9,18 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Common strategy of all evaluators$EvaluateExpression
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Theory.Arithmetics.Numeric {
+    implements Category.Theory.Arithmetics.Numeric {
   private static final long serialVersionUID = 0x11707396245C068EL;
 
   private static int indexForLeftEvaluation(final InfixExpression x) {
@@ -88,7 +88,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     }
     return null;
   }
-  @Override public final TipperGroup tipperGroup() {
+  @Override public final Taxon tipperGroup() {
     return super.tipperGroup();
   }
   abstract double evaluateDouble(List<Expression> xs) throws IllegalArgumentException;

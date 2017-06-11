@@ -9,13 +9,14 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code (double)X} by {@code 1.*X}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpression>//
-    implements TipperCategory.Theory.Arithmetics.Symbolic {
+    implements Category.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = -0x159736130C9F5D80L;
 
   private static NumberLiteral literal(final Expression ¢) {

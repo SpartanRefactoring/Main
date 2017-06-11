@@ -17,13 +17,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code x = x # a } by {@code x #= a } where # can be any operator.
  * Tested in {@link Issue103}
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = -0x5517BB99E5F22453L;
 
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {

@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Convert a multiplication of expression\statement by zero to zero where there
  * is no any side effect
@@ -15,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-25
  * @see {@link sideEffects} */
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.NOP.onNumbers {
+    implements Category.NOP.onNumbers {
   private static final long serialVersionUID = 0x5511953EBF0A7FD5L;
 
   private static boolean containsZero(final InfixExpression x) {

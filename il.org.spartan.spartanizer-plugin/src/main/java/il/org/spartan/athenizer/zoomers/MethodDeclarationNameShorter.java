@@ -15,13 +15,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** Sort names for Joystick
  * @author Dor Ma'ayan
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 public class MethodDeclarationNameShorter extends EagerTipper<MethodDeclaration>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = -0x3523CE8186A3EAECL;
 
   @Override public String description(final MethodDeclaration ¢) {

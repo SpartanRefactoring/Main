@@ -11,13 +11,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code x += 1 } by {@code x++ } and also {@code x -= 1 } by
  * {@code x-- } . Test case is {@link Issue107}
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assignment>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = -0x1B42C77125AB41DAL;
 
   private static boolean isIncrement(final Assignment ¢) {

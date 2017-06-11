@@ -4,8 +4,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.tables.*;
 
@@ -18,7 +17,7 @@ public class Table_Tipper_Groups {
     new Table_Tipper_Groups().go();
   }
   public void go() {
-    final Map<TipperGroup, Integer> groups = new TreeMap<>();
+    final Map<Taxon, Integer> groups = new TreeMap<>();
     Stream.of(Configurations.all().implementation)//
         .filter(λ -> λ != null && !λ.isEmpty())//
         .forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
@@ -33,10 +32,10 @@ public class Table_Tipper_Groups {
     }
     system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
   }
-  private static void inc(final Map<TipperGroup, Integer> categories, final TipperCategory λ) {
-    final TipperGroup key = λ.tipperGroup();
-    categories.putIfAbsent(key, box.it(0));
-    categories.put(key, box.it(categories.get(key).intValue() + 1));
+  private static void inc(final Map<Taxon, Integer> m, final Category λ) {
+    final Taxon key = λ.tipperGroup();
+    m.putIfAbsent(key, box.it(0));
+    m.put(key, box.it(m.get(key).intValue() + 1));
   }
   private static <T> Stream<T> flow(final Collection<T> ¢) {
     return ¢.stream().filter(Objects::nonNull);

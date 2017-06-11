@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** converttoList {@code polite?"Eat your meal.":"Eat your meal, please"},
@@ -25,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Niv Shalmon
  * @since 2016-09-1 */
 public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression>//
-    implements TipperCategory.Theory.Strings {
+    implements Category.Theory.Strings {
   private static final long serialVersionUID = 0x3CB7B1F8BB26D539L;
 
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {

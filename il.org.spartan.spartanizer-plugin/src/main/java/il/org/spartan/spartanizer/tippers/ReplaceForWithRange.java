@@ -10,13 +10,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** replaces for loops with ranges
  * @author Dan Abramovich
  * @since 2016 */
 public final class ReplaceForWithRange extends Tipper<ForStatement>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Idiomatic {
   private static final long serialVersionUID = -0x7AFE12D1A8CD3E90L;
   private static final String DESCRIPTION_NON_INCLUSIVE = "replace inclusive for loop with the matching range";
   private static final String DESCRIPTION_INCLUSIVE = "replace non-inclusive for loop with the matching range";

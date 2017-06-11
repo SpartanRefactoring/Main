@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** converts {@code
  * ¢ ? Boolean.TRUE : Boolean.FALSE;
@@ -18,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Abramovich
  * @since 27-11-2016 */
 public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<ConditionalExpression>//
-    implements TipperCategory.Theory.Logical {
+    implements Category.Theory.Logical {
   private static final long serialVersionUID = -0x7FD835D63A83948AL;
 
   @Override public ASTNode replacement(final ConditionalExpression ¢) {

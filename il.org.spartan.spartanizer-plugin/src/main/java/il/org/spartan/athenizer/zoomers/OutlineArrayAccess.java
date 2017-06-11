@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** converts {@code
  * arr[i++] = y; arr[++i] = z;
@@ -26,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x3480EA693440B5ABL;
 
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {

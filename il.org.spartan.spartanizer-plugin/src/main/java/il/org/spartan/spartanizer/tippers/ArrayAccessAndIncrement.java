@@ -14,13 +14,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Use {@link #examples()} for documentation
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
 public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
-    implements TipperCategory.Inlining {
+    implements Category.Inlining {
   private static final long serialVersionUID = -0x45FEEB5174E9151DL;
 
   @Override public String description(final ArrayAccess ¢) {

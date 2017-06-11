@@ -22,6 +22,8 @@ import org.xml.sax.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.tipping.categories.Category.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 
@@ -39,7 +41,7 @@ public class XMLSpartan {
   public static final String ENABLED = "enabled";
   public static final String KIND = "kind";
   public static final String VALUE = "value";
-  private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = //
+  private static final Collection<Class<? extends Tipper<?>>> NON_CORE = //
       new HashSet<>(as.list(//
           CatchClauseRenameParameterToIt.class, //
           EnhancedForParameterRenameToIt.class, //
@@ -96,8 +98,8 @@ public class XMLSpartan {
     final NodeList ns = d.getElementsByTagName(TIPPER);
     if (ns == null)
       return $;
-    final Map<Class<? extends TipperCategory>, SpartanCategory> tcs = new HashMap<>();
-    final Map<Class<? extends TipperCategory>, List<SpartanTipper>> tgs = new HashMap<>();
+    final Map<Class<? extends Category>, SpartanCategory> tcs = new HashMap<>();
+    final Map<Class<? extends Category>, List<SpartanTipper>> tgs = new HashMap<>();
     for (int i = 0; i < ns.getLength(); ++i) {
       final Element e = (Element) ns.item(i);
       final Class<?> tc = Tippers.cache.serivalVersionUIDToTipper.get(e.getAttribute(TIPPER_ID));
@@ -105,7 +107,7 @@ public class XMLSpartan {
         continue;
       final String description = Tippers.cache.tipperToDescription.get(tc);
       final Examples preview = Tippers.cache.tipperToExamples.get(tc);
-      final Class<? extends TipperCategory> g = Tippers.cache.tipperClassToTipperInstance.get(tc).lowestCategory();
+      final Class<? extends Category> g = Tippers.cache.tipperClassToTipperInstance.get(tc).lowestCategory();
       if (!tgs.containsKey(g)) {
         tgs.put(g, an.empty.list());
         tcs.put(g, new SpartanCategory(g));
@@ -130,20 +132,21 @@ public class XMLSpartan {
         m.put(¢.name(), ¢);
       return m;
     });
-    for (final Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : TipperCategory.children.entrySet()) {
+    for (final Entry<Taxon, Set<Taxon>> e : Taxa.hierarchy.children.entrySet()) {
       SpartanCategory parent;
-      if (existingCategories.containsKey(e.getKey().getSimpleName()))
-        parent = existingCategories.get(e.getKey().getSimpleName());
+      if (existingCategories.containsKey(e.getKey().get().getSimpleName()))
+        parent = existingCategories.get(e.getKey().get().getSimpleName());
       else {
-        parent = new SpartanCategory(e.getKey());
+        parent = new SpartanCategory(e.getKey().get());
         existingCategories.put(parent.name(), parent);
       }
-      final List<SpartanCategory> children = e.getValue().stream().map(cc -> {
-        if (existingCategories.containsKey(cc.getSimpleName()))
-          return existingCategories.get(cc.getSimpleName());
-        final SpartanCategory c = new SpartanCategory(cc);
-        existingCategories.put(c.name(), c);
-        return c;
+      Stream<Taxon> stream = e.getValue().stream();
+      final List<SpartanCategory> children = stream.map(t -> {
+        if (existingCategories.containsKey(t.get().getSimpleName()))
+          return existingCategories.get(t.get().getSimpleName());
+        final SpartanCategory $$ = new SpartanCategory(t.get());
+        existingCategories.put($$.name(), $$);
+        return $$;
       }).collect(Collectors.toList());
       children.forEach(λ -> parent.addChild(λ));
       $.put(parent, children.toArray(new SpartanElement[children.size()]));
@@ -364,10 +367,10 @@ public class XMLSpartan {
    * @since 2017-02-25 */
   public static class SpartanCategory extends SpartanElement {
     private final List<SpartanElement> children;
-    private final Class<? extends TipperCategory> categoryClass;
+    private final Class<? extends Category> categoryClass;
 
-    public SpartanCategory(final Class<? extends TipperCategory> categoryClass) {
-      super(categoryClass.getSimpleName(), true, defaults.to(TipperCategory.descriptions.get(categoryClass), categoryClass.getSimpleName()));
+    public SpartanCategory(final Class<? extends Category> categoryClass) {
+      super(categoryClass.getSimpleName(), true, Taxon.of(categoryClass).description());
       children = an.empty.list();
       this.categoryClass = categoryClass;
     }
@@ -385,7 +388,7 @@ public class XMLSpartan {
     @Override public boolean hasChildren() {
       return !children.isEmpty();
     }
-    public Class<? extends TipperCategory> categoryClass() {
+    public Class<? extends Category> categoryClass() {
       return categoryClass;
     }
   }

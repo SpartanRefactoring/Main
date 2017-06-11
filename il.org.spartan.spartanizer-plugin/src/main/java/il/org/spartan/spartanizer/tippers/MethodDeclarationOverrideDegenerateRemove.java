@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
  * class, e.g., {@code @Override void foo(){super.foo();}}
@@ -15,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTipper<MethodDeclaration>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = -0x15F499B4EDEF2039L;
 
   private static boolean shouldRemove(final MethodDeclaration $, final SuperMethodInvocation i) {

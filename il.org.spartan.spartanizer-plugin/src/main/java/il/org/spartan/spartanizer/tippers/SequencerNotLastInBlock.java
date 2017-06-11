@@ -8,13 +8,14 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Convert {@code throw X;statement;} to {@code throw X;}.
  * @author Yossi Gil
  * @since 2016 */
 public final class SequencerNotLastInBlock<S extends Statement> extends GoToNextStatement<S>//
-    implements TipperCategory.Deadcode {
+    implements Category.Deadcode {
   private static final long serialVersionUID = -0x681FCB903C826414L;
 
   @Override public String description(final S ¢) {

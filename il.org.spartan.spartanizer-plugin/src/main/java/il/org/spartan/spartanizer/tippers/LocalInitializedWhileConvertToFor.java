@@ -11,13 +11,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code int a = 3; while(Panic) { ++OS.is.in.danger; } } to
  * {@code for(int a = 3; Panic;) { ++OS.is.in.danger; } }
  * @author Alex Kopzon
  * @since 2016 */
 public final class LocalInitializedWhileConvertToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = 0x7B0F45FEAE8DEEA5L;
 
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {

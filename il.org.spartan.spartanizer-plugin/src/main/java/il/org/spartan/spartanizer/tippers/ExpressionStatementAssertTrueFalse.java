@@ -12,12 +12,13 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code assertTrue(X)} by {@code assert X;}
  * @author Yossi Gil
  * @since 2016/12/11 */
 public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode<ExpressionStatement>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Idiomatic {
   private static final long serialVersionUID = 0x30875C25D7D8CE7AL;
 
   @Override public String description(final ExpressionStatement ¢) {

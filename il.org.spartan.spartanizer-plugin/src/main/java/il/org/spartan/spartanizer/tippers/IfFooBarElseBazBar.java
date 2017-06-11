@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code if (X) { bar(); foo(); } else { baz(); foo(); } } into {@code
  * if (X)
@@ -27,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x333F3DD43690324EL;
 
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {

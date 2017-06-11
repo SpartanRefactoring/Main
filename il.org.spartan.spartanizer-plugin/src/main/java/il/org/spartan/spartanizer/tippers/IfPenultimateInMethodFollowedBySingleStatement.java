@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
  * f(); } provided that this {@code if} statement is the last statement in a
@@ -18,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNextStatement<IfStatement>//
-    implements TipperCategory.EarlyReturn {
+    implements Category.EarlyReturn {
   private static final long serialVersionUID = -0x7FE2E1D00BCC8C44L;
 
   @Override public String description(final IfStatement ¢) {

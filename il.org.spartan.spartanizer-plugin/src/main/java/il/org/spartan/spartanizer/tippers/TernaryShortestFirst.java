@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -18,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-14 */
 public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression>//
-    implements TipperCategory.Sorting {
+    implements Category.Sorting {
   private static final long serialVersionUID = -0x6BB1DE73712953FEL;
 
   private static double align(final Expression e1, final Expression e2) {

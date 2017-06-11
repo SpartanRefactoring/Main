@@ -8,7 +8,7 @@ import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.Prefix;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @author Dor Ma'ayan
  * @since 2016-12-24 */
-public class PrefixToInfix extends Prefix implements TipperCategory.Bloater {
+public class PrefixToInfix extends Prefix implements Category.Bloater {
   private static final long serialVersionUID = -0x5414F7B0C6AE739BL;
 
   public PrefixToInfix() {

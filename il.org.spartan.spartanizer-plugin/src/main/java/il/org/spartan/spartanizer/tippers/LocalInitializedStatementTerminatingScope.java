@@ -17,13 +17,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalInitializedStatementTerminatingScope extends $FragmentAndStatement //
-    implements TipperCategory.Inlining {
+    implements Category.Inlining {
   private static final long serialVersionUID = -0x313DC98AF0199E9L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {

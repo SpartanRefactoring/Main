@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code
  * a = 3;
@@ -22,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
-    implements TipperCategory.Collapse {
+    implements Category.Collapse {
   private static final long serialVersionUID = -0x1188F30AF050947AL;
 
   @Override public String description(final Assignment ¢) {

@@ -10,13 +10,13 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
-    implements TipperCategory.Ternarization {
+    implements Category.Ternarization {
   private static final long serialVersionUID = 0xEF03C895DA707C1L;
   private Assignment thenAssignment;
   private Assignment elzeAssignment;
