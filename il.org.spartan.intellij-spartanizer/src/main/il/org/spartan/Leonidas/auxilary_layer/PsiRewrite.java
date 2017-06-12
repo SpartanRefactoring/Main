@@ -87,4 +87,14 @@ public class PsiRewrite {
 
         }.execute();
     }
+
+    public void delete(PsiElement e){
+        new WriteCommandAction.Simple(project, psiFile) {
+            @Override
+            protected void run() throws Throwable {
+                e.delete();
+            }
+
+        }.execute();
+    }
 }
