@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()} for documentation
@@ -22,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2017-03-04 */
 public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assignment>//
-    implements TipperCategory.Collapse {
+    implements Category.Collapse {
   private static final long serialVersionUID = 0x3B6B528C232B5CC8L;
 
   @Override public Examples examples() {

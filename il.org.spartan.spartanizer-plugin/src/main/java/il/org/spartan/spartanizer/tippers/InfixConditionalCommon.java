@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code
  * b && true
@@ -27,18 +28,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x756F9C11630A8B48L;
 
   private static Expression chopHead(final InfixExpression ¢) {
     final List<Expression> $ = allOperands(¢);
     $.remove(0);
     return $.size() < 2 ? copy.of(the.firstOf($)) : subject.operands($).to(¢.getOperator());
-  }
-  private static Operator conjugate(final Operator ¢) {
-    return ¢ == CONDITIONAL_AND ? CONDITIONAL_OR //
-        : ¢ == CONDITIONAL_OR ? CONDITIONAL_AND //
-            : null;
   }
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
@@ -47,7 +43,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     final Operator $ = x.getOperator();
     if (!in($, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
-    final Operator conjugate = conjugate($);
+    final Operator conjugate = op.conjugate($);
     final InfixExpression left = az.infixExpression(core(left(x)));
     if (left == null || left.getOperator() != conjugate)
       return null;

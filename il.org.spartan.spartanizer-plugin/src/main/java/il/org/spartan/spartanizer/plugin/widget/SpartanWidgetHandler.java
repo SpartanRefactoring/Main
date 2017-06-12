@@ -43,7 +43,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
     /* if the widget doesn't work due to a class not found exception uncomment
      * the next command, run the widget, disable an operation from the widget
      * preferences page and then close the runtime eclipse and remove this line.
-     * That should override the old preferences and solve the issue */
+     * That should override the old preferences and solve the issue
+     * also, go to OperationListEditor line 375 */
      //WidgetPreferences.storeDefaultEntries();
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)

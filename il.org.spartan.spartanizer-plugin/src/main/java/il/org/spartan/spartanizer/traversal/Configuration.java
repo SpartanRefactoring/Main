@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Singleton containing all {@link Tipper}s which are active. This class does
@@ -49,7 +50,7 @@ public class Configuration {
     });
     return $;
   }
-  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {
+  private static void disable(final Class<? extends Category> c, final List<Tipper<? extends ASTNode>> ts) {
     ts.removeIf(λ -> c.isAssignableFrom(λ.getClass()));
   }
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
@@ -92,7 +93,7 @@ public class Configuration {
       $.addAll(get(¢));
     return $;
   }
-  public void disable(final Class<? extends TipperCategory> c) {
+  public void disable(final Class<? extends Category> c) {
     Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> disable(c, λ));
   }
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}

@@ -6,10 +6,7 @@ import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -137,11 +134,19 @@ public abstract class GenericEncapsulator extends Encapsulator {
         replacingRules.add(rr);
     }
 
-    protected interface Constraint {
+    public interface Constraint {
         boolean accept(Encapsulator encapsulator);
     }
 
     protected interface ReplacingRule {
         void replace(PsiElement encapsulator, Map<Integer, List<PsiElement>> m);
+    }
+
+    public Map<Integer, GenericEncapsulator> getGenericElements(){
+        return new HashMap<>();
+    }
+
+    public List<Constraint> getConstraints(){
+        return constraints;
     }
 }

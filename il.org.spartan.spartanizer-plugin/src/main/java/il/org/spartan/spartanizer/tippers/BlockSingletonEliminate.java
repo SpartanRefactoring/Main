@@ -11,13 +11,13 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code if (a){g();}} into {@code if(a)g();}
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class BlockSingletonEliminate extends NodePattern<Block> implements TipperCategory.SyntacticBaggage {
+public final class BlockSingletonEliminate extends NodePattern<Block> implements Category.SyntacticBaggage {
   private Statement onlyStatement;
   private Statement container;
 

@@ -10,7 +10,7 @@ import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Convert : {@code
@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * } to : {@code if(condition){block1}else{block2} } Tested in {@link Issue0971}
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-27 */
-public class IfElseBlockBloater extends IfAbstractPattern implements TipperCategory.Bloater {
+public class IfElseBlockBloater extends IfAbstractPattern implements Category.Bloater {
   private static final long serialVersionUID = 0x31C1FFA8E3CBA70DL;
 
   public IfElseBlockBloater() {

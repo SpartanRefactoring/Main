@@ -13,13 +13,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Converts {@code ""+"foo"} to {@code "foo"} when x is of __ String
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-08-29 */
 public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.NOP.onStrings {
+    implements Category.Theory.Strings {
   private static final long serialVersionUID = -0x17CCB52A168511EBL;
 
   @Override public String description() {

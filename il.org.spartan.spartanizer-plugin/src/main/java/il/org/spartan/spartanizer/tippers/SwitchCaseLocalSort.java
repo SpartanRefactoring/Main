@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** sorts cases of a local branch {@code switch(x) { case 2: case 1: break; }}
  * to {@code switch(x) { case 1: case 2: break; } } Tests are in
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-09 */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
-    implements TipperCategory.Sorting {
+    implements Category.Sorting {
   private static final long serialVersionUID = 0x3FBC0D3028B5DF0L;
 
   @Override public Tip tip(final SwitchCase n) {

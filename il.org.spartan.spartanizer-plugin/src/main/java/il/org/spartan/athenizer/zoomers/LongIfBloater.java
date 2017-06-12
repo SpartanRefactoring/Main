@@ -10,13 +10,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Test case is {@link Issue0976} Issue #976 Convert: {@code if (a == b && c ==
  * d) { a = 5; } } to: {@code if (a == b) { if (c == d) { a = 5; } } }
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-09 */
 public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = -0x1470E408344718CBL;
 
   @Override public ASTNode replacement(final IfStatement ¢) {

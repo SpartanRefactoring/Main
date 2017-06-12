@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a block to more common or intuitive names (s.e i for an integer variable
@@ -29,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO Raviv Rachmiel take care of single var decleration, tests
 public class VariableDeclarationStatementExpand extends EagerTipper<VariableDeclarationStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x6416089F84E63B0EL;
 
   @Override public String description(final VariableDeclarationStatement ¢) {

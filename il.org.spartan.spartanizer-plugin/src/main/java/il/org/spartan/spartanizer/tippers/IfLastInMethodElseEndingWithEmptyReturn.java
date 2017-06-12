@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code if(a)f();else{g();return;} } into
  * {@code if(a)f();else{g();;}} provided that this {@code if} statement is the
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman {@code <mittelmania [at] gmail.com>}
  * @since 2015-09-09 */
 public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<IfStatement>//
-    implements TipperCategory.EarlyReturn {
+    implements Category.EarlyReturn {
   private static final long serialVersionUID = -0x46C7F6C79A377A64L;
 
   @Override @SuppressWarnings("unused") public String description(final IfStatement __) {

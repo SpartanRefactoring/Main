@@ -11,12 +11,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** TODO: Doron Class has serious problems; do not not release
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-26 */
-public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Loops {
+public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements Category.Loops {
   private static final long serialVersionUID = -0x495BE7BBC2F6B88EL;
 
   @Override public ASTNode replacement(final ForStatement s) {

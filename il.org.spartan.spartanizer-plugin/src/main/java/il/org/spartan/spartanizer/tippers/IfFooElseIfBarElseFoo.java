@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Merges if and else blocks when they are the same and there is an else if
@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
 public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
-    implements TipperCategory.Inlining {
+    implements Category.Inlining {
   private static final long serialVersionUID = -0x7B7B219B59AB5C5DL;
 
   public IfFooElseIfBarElseFoo() {

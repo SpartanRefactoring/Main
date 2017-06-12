@@ -6,12 +6,12 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 2015-09-05 */
-public final class IfFooElseFoo extends IfAbstractPattern implements TipperCategory.CommonFactorOut {
+public final class IfFooElseFoo extends IfAbstractPattern implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x104869FF3436EC68L;
 
   public IfFooElseFoo() {
@@ -28,8 +28,6 @@ public final class IfFooElseFoo extends IfAbstractPattern implements TipperCateg
     return "Eliminate 'if' with two identical branches";
   }
   @Override public Examples examples() {
-    return //
-    convert("if(f()==g())h();else h();")//
-        .to("f();g();h();");
+    return convert("if(f()==g())h();else h();").to("f();g();h();");
   }
 }

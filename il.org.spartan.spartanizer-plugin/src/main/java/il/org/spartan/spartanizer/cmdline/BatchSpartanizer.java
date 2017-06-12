@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Scans files named by outputFolder, forget test files, and collect
@@ -25,7 +25,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class)
-      .disable(TipperCategory.Nanos.class);
+      .disable(Category.Nanos.class);
   private static String outputDir;
   private static String inputDir;
   private static boolean defaultDir;

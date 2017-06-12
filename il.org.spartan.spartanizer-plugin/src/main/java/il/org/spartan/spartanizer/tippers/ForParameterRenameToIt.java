@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
  * {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}
@@ -27,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDeclaration>
     //
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = 0x477D0D92045512DL;
 
   @Override public String description(final SingleVariableDeclaration ¢) {

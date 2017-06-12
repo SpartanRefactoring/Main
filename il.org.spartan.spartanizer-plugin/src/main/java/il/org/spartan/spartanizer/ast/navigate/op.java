@@ -69,9 +69,31 @@ public enum op {
   };
   public static InfixExpression.Operator[] infixOperators = { TIMES, DIVIDE, REMAINDER, op.PLUS2, op.MINUS2, LEFT_SHIFT, RIGHT_SHIFT_SIGNED,
       RIGHT_SHIFT_UNSIGNED, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, NOT_EQUALS, XOR, AND, OR, CONDITIONAL_AND, CONDITIONAL_OR, };
+  public static Assignment.Operator[] assignment = { ASSIGN, PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
+      BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN };
+  static Map<InfixExpression.Operator, InfixExpression.Operator> conjugate = new HashMap<InfixExpression.Operator, InfixExpression.Operator>() {
+    static final long serialVersionUID = 0x2025E6F34F4C06EL;
+    {
+      put(GREATER, LESS);
+      put(LESS, GREATER);
+      put(GREATER_EQUALS, LESS_EQUALS);
+      put(LESS_EQUALS, GREATER_EQUALS);
+      put(CONDITIONAL_AND, CONDITIONAL_OR);
+      put(CONDITIONAL_OR, CONDITIONAL_AND);
+    }
+  };
 
   public static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {
     return assign2infix.get(¢);
+  }
+  /** Makes an opposite operator from a given one, which keeps its logical
+   * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
+   * change needed. "<" isn't commutative, but it has its opposite: ">=".
+   * @param ¢ The operator to flip
+   * @return correspond operator - ¢.¢. "<=" will become ">", "+" will stay
+   *         "+". */
+  public static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
+    return conjugate.getOrDefault(¢, ¢);
   }
   public static Assignment.Operator infix2assign(final InfixExpression.Operator ¢) {
     assert ¢ != null;
@@ -85,6 +107,22 @@ public enum op {
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
   public static boolean isBitwise(final InfixExpression.Operator ¢) {
     return is.in(¢, XOR, OR, AND);
+  }
+  /** Determine whether an InfixExpression.Operator is a comparison operator or
+   * not
+   * @param o JD
+   * @return whether one of {@link #InfixExpression.Operator.LESS},
+   *         {@link #InfixExpression.Operator.GREATER},
+   *         {@link #InfixExpression.Operator.LESS_EQUALS},
+   *         {@link #InfixExpression.Operator.GREATER_EQUALS},
+   *         {@link #InfixExpression.Operator.EQUALS},
+   *         {@link #InfixExpression.Operator.NOT_EQUALS},
+   *         {@link #InfixExpression.Operator.CONDITIONAL_OR},
+   *         {@link #InfixExpression.Operator.CONDITIONAL_AND} and false
+   *         otherwise */
+  public static boolean isComparison(final InfixExpression.Operator ¢) {
+    return is.in(¢, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
+        NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
   /** Determine whether an InfixExpression.Operator is a shift operator or not
    * @param o JD
@@ -134,15 +172,6 @@ public enum op {
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
     return infix2assign.get(o2) == o1;
   }
-  /** Makes an opposite operator from a given one, which keeps its logical
-   * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
-   * change needed. "<" isn't commutative, but it has its opposite: ">=".
-   * @param ¢ The operator to flip
-   * @return correspond operator - ¢.¢. "<=" will become ">", "+" will stay
-   *         "+". */
-  public static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
-    return conjugate.getOrDefault(¢, ¢);
-  }
   static InfixExpression.Operator convertToInfix(final Assignment.Operator ¢) {
     return ¢ == Assignment.Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
         : ¢ == Assignment.Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
@@ -182,38 +211,10 @@ public enum op {
   static boolean incompatible(final Assignment a1, final Assignment a2) {
     return has.nil(a1, a2) || !lisp.areEqual(a1.getOperator(), a2.getOperator()) || !wizard.eq(step.to(a1), step.to(a2));
   }
-  /** Determine whether an InfixExpression.Operator is a comparison operator or
-   * not
-   * @param o JD
-   * @return whether one of {@link #InfixExpression.Operator.LESS},
-   *         {@link #InfixExpression.Operator.GREATER},
-   *         {@link #InfixExpression.Operator.LESS_EQUALS},
-   *         {@link #InfixExpression.Operator.GREATER_EQUALS},
-   *         {@link #InfixExpression.Operator.EQUALS},
-   *         {@link #InfixExpression.Operator.NOT_EQUALS},
-   *         {@link #InfixExpression.Operator.CONDITIONAL_OR},
-   *         {@link #InfixExpression.Operator.CONDITIONAL_AND} and false
-   *         otherwise */
-  public static boolean isComparison(final InfixExpression.Operator ¢) {
-    return is.in(¢, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
-        NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
-  }
   static boolean nonAssociative(final InfixExpression ¢) {
     return ¢ != null && (notAssociative(¢.getOperator()) || iz.infixPlus(¢) && !type.isNotString(¢));
   }
   static boolean notAssociative(final Operator ¢) {
     return is.in(¢, MINUS2, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
-
-  public static Assignment.Operator[] assignment = { ASSIGN, PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
-      BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN };
-  static Map<InfixExpression.Operator, InfixExpression.Operator> conjugate = new HashMap<InfixExpression.Operator, InfixExpression.Operator>() {
-    static final long serialVersionUID = 0x2025E6F34F4C06EL;
-    {
-      put(GREATER, LESS);
-      put(LESS, GREATER);
-      put(GREATER_EQUALS, LESS_EQUALS);
-      put(LESS_EQUALS, GREATER_EQUALS);
-    }
-  };
 }

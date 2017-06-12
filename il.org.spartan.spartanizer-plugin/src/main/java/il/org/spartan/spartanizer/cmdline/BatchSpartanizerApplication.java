@@ -14,7 +14,7 @@ import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Scans files named by outputFolder, forget test files, and collect
@@ -26,7 +26,7 @@ final class BatchSpartanizerApplication implements IApplication {
   private static final String folder = "/tmp";
   private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class)
-      .disable(TipperCategory.Nanos.class);
+      .disable(Category.Nanos.class);
   private static String outputDir;
   private IPackageFragmentRoot srcRoot;
   private IPackageFragment pack;

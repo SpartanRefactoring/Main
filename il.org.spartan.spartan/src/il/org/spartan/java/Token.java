@@ -84,7 +84,7 @@ public enum Token {
   NL(NONCODE), //
   SPACE(NONCODE),;
   public static void main(final String argv[]) throws IOException {
-    main(new RawTokenizer(System.in));
+    main(new RawTokenizer(new InputStreamReader(System.in)));
   }
   private static void main(final RawTokenizer tokenizer) throws IOException {
     for (;;) {

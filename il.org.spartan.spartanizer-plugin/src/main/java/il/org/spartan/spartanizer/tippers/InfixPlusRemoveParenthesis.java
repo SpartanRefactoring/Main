@@ -17,13 +17,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
  * concating {@code x+\"\"+(4) } goes to {@code x+\"\"+4 }
  * @author Niv Shalmon
  * @since 2016-09-11 */
 public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = -0x39885F41A3686A5BL;
 
   /** Determines whether the parenthesis around an InfixExpression can be

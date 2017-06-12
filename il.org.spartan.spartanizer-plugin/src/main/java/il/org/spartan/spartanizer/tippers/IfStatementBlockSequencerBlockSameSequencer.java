@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Tested by {@link Issue1105}
  * @author Yossi Gil
  * @since 2017-01-22 */
 public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPattern //
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   @Property Statement sequencer;
   @Property List<Statement> thenStatements;
   @Property Block block;

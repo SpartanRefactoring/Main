@@ -15,6 +15,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code X-0} by {@code X} and {@code 0-X} by {@code -X}
  * @author Alex Kopzon
@@ -22,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.NOP.onNumbers {
+    implements Category.NOP.onNumbers {
   private static final long serialVersionUID = -0x1DD7EC059CC8417AL;
 
   private static List<Expression> minusFirst(final List<Expression> prune) {

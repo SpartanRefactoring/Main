@@ -8,13 +8,13 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Remove empty constructor
  * @author Yossi Gil
  * @since 2017-04-22 */
-public class ConstructorEmptyRemove extends ConstructorPattern implements TipperCategory.SyntacticBaggage {
+public class ConstructorEmptyRemove extends ConstructorPattern implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x89C6E0CA1CEC52BL;
   private TypeDeclaration typeDelcaration;
 

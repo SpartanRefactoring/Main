@@ -142,7 +142,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     name(t.tipperName());
     return this;
   }
-  @SuppressWarnings("unchecked") public <N extends ASTNode> NewGUIApplicator restrictTo(final Class<N> c, final Tipper<N>... ts) {
+  public <N extends ASTNode> NewGUIApplicator restrictTo(final Class<N> c, final Tipper<N>... ts) {
     inner.setSelection(selection());
     /** TODO Dor set name */
     // inner.setName(t.description());

@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** A tipper to rename a method's return value to {@link notation#return$}
  * @author Artium Nihamkin (original)

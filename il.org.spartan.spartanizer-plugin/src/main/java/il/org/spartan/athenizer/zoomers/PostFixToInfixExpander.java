@@ -8,7 +8,7 @@ import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Chage prfix expression to infix expression when possible toList Expand :
@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @since 2017-01-09 */
 public class PostFixToInfixExpander extends Postfix//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x2039A31D98B2AA4CL;
 
   public PostFixToInfixExpander() {

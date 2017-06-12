@@ -8,12 +8,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Add as much redundant modifiers as possible The opposite bloater to the
  * ModifierRedundant Tipper
  * @author Dor Ma'ayan
  * @since 2017-05-23 */
-public class AddModifiersToMethodDeclaration extends CarefulTipper<MethodDeclaration> implements TipperCategory.Bloater {
+public class AddModifiersToMethodDeclaration extends CarefulTipper<MethodDeclaration> implements Category.Bloater {
   static final long serialVersionUID = 1;
 
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {

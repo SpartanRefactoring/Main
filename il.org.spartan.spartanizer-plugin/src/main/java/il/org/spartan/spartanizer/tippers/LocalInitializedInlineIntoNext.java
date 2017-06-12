@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -25,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since 2016-11-27 */
 public final class LocalInitializedInlineIntoNext extends GoToNextStatement<VariableDeclarationFragment>//
-    implements TipperCategory.Inlining {
+    implements Category.Inlining {
   private static final long serialVersionUID = -0x32A5C56237F0DE7L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {

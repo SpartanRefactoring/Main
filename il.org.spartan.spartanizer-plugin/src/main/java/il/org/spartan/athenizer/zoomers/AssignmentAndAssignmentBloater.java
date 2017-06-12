@@ -11,13 +11,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Convert (a=b=??;) to (a=3;b=??;) Tested in {@link Issue0999}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-24 */
 public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x1AF05236BEDFD45L;
 
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {

@@ -11,14 +11,14 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Use {@link #examples()} for documentation
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends NodePattern<ParenthesizedExpression>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x3B30C2A8E5E15900L;
   private Expression inner;
 

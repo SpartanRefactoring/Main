@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Expands {@code a += 3} to {@code a = a + 3}. Capable of dealing with
  * inclusion and all operator types: {@code a |= b &= c} ->
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-28 */
 public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x4501859892D5B1C9L;
 
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {

@@ -12,13 +12,14 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** eliminates redundant comparison with {@code true</b> </code> and
  * {@code false} .
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.NOP.onBooleans {
+    implements Category.NOP.onBooleans {
   private static final long serialVersionUID = 0xB818D6DBD293A8CL;
 
   private static BooleanLiteral literal(final InfixExpression ¢) {

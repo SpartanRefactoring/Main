@@ -6,12 +6,13 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<Modifier>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x3057B6D28D0CEC1L;
 
   @Override public String description() {

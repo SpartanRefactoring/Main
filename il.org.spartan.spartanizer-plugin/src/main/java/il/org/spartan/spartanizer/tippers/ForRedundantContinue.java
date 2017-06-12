@@ -9,7 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** removes continue in for loop if it's last statement in the loop, Issue
@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @author Doron Meshulam
  * @since 2016-11-26 */
 public class ForRedundantContinue extends NonEmptyForLoop//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = 0x1DA2D2D1173F3165L;
 
   @Override public Examples examples() {

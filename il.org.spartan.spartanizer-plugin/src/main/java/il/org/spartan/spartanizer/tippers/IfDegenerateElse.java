@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code if (x) return b; else {} } into {@code
@@ -17,7 +18,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x6A05F681B3F27CB0L;
 
   @Override public Examples examples() {

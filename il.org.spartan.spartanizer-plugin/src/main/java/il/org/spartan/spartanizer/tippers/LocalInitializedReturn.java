@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalInitializedReturn extends $FragmentAndStatement//
-    implements TipperCategory.Shortcircuit {
+    implements Category.Shortcircuit {
   private static final long serialVersionUID = 0x5D2F5CEC2756BC9DL;
 
   @Override public String description(final VariableDeclarationFragment ¢) {

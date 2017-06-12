@@ -17,13 +17,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code abstract</b> <b>interface</b>a{}</code> to
  * {@code interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class ModifierRedundant extends CarefulTipper<Modifier>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x131323DBCDA3200DL;
   public static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
   public static final Predicate<Modifier> isFinal = Modifier::isFinal;
