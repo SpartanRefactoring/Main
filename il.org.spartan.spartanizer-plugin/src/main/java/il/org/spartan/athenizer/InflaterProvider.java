@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.traversal.*;
  * @since 20-12-16 */
 public class InflaterProvider extends OperationsProvider {
   final Configuration configuration;
-
+  Function<List<Operation<?>>, List<Operation<?>>> function = λ -> Collections.singletonList(the.firstOf(λ));
+  
   public InflaterProvider() {
     configuration = InflaterProvider.freshCopyOfAllExpanders();
   }
@@ -71,6 +72,7 @@ public class InflaterProvider extends OperationsProvider {
         // // new MethodDeclarationNameExpander(),
         // // new AddModifiersToMethodDeclaration(), //
         // null) //
+        
         // .add(EnumDeclaration.class, //
         // new AddModifiersToEnums(), //
         // null) //
@@ -105,7 +107,11 @@ public class InflaterProvider extends OperationsProvider {
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return configuration.firstTipper(¢);
   }
+  public InflaterProvider provideAll(){
+    function = λ -> λ;
+    return this;
+  }
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-    return λ -> Collections.singletonList(the.firstOf(λ));
+    return function;
   }
 }
