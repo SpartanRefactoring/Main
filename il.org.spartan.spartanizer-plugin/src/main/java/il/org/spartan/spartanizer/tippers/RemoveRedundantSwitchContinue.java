@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** remove redundant continue in switch in loops. for example converts
  * {@code while(b) { switch(x) { case 1: x=2; break; default: continue; } } } to
@@ -19,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStatement>//
-    implements TipperCategory.Shortcircuit {
+    implements Category.Shortcircuit {
   private static final long serialVersionUID = -0x2B193D518362C674L;
 
   @Override public ASTNode replacement(final SwitchStatement s) {

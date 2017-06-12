@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** inline inc/decrement into variable initialization tests in {@link Issue1146}
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
 public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
-    implements TipperCategory.Inlining {
+    implements Category.Inlining {
   private static final long serialVersionUID = -0x4EB708E6DF95CDCDL;
 
   public LocalInitializedIncrementDecrementInline() {

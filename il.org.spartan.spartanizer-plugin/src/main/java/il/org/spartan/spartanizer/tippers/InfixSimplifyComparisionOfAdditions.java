@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert {@code
@@ -19,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 18-11-2016 */
 public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Arithmetics.Symbolic {
+    implements Category.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = 0x6943E66FD8769182L;
 
   @Override public ASTNode replacement(final InfixExpression x) {

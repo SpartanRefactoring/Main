@@ -17,13 +17,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** pushes down "{@code !}", the negation operator as much as possible, using
  * the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Theory.Logical {
   private static final long serialVersionUID = -0x7E23B23DBCE1545DL;
 
   /** A utility function, which tries to simplify a boolean expression, whose

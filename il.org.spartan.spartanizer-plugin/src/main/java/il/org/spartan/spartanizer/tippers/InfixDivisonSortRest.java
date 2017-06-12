@@ -10,12 +10,13 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** sorts the arguments of a {@link Operator#DIVIDE} expression.
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixDivisonSortRest extends InfixExpressionSortingRest//
-    implements TipperCategory.Sorting {
+    implements Category.Sorting {
   private static final long serialVersionUID = -0xA1918BAA5497A0FL;
 
   @Override protected boolean sort(final List<Expression> ¢) {

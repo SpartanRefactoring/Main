@@ -17,15 +17,30 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   private final List<WidgetOperation> widgetOps = WidgetOperationPoint.allOperations;
   Button[] radioButtons;
   private WidgetOperation result;
+  private String retName;
+  private Text retNameText;
 
   protected AddNewWidgetPreferencesDialog(final Shell parentShell) {
     super(parentShell);
   }
+  
+  private static Text createString(final Composite container, final String name, final String defaultValue) {
+    new Label(container, SWT.NONE).setText(name);
+    final GridData dataRes = new GridData();
+    dataRes.grabExcessHorizontalSpace = true;
+    dataRes.horizontalAlignment = GridData.FILL;
+    final Text $ = new Text(container, SWT.BORDER);
+    $.setText(defaultValue);
+    $.setLayoutData(dataRes);
+    return $;
+  }
+  
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
+    retNameText = createString($, "Widget Name", "");
     radioButtons = new Button[widgetOps.size()];
     int count = 0;
     for (final WidgetOperation ¢ : widgetOps) {
@@ -49,7 +64,13 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   public WidgetOperation getResult() {
     return result;
   }
+  
+  public String getName() {
+    return retName;
+  }
+  
   @Override protected void okPressed() {
+    retName  = retNameText.getText();
     for (final Button ¢ : radioButtons)
       if (¢.getSelection()) {
         for (final WidgetOperation w : widgetOps)

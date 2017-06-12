@@ -12,12 +12,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** See {@link #description()}
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = -0x50B5217BA3948A3EL;
 
   private static ForStatement buildForWithoutLastStatement(final ForStatement $) {

@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** TODO kobybs please add a description
@@ -22,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Dan Abramovich
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNode<N>//
-    implements TipperCategory.Sorting {
+    implements Category.Sorting {
   private static final long serialVersionUID = -0x2EF9DD2AE7C9C548L;
   private static final HashSet<String>[] rankTable = as.array(//
       new HashSet<>(as.list("Deprecated")), //

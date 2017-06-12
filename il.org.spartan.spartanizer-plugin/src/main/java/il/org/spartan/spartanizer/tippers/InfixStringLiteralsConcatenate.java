@@ -11,13 +11,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Concatenate same line string literal
  * @author Doron Mehsulam {@code doronmmm@hotmail.com}
  * @author Niv Shalmon {@code shalmon.niv@gmail.com}
  * @since 2017-03-22 */
 public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpression> //
-    implements TipperCategory.NOP {
+    implements Category.Theory.Strings {
   private static final long serialVersionUID = -0x3B6F5A31A382408AL;
 
   @Override public ASTNode replacement(final InfixExpression x) {

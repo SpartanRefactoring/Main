@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code
  * int a;
@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalInitializedUpdateAssignment extends $FragmentAndStatement//
-    implements TipperCategory.Collapse {
+    implements Category.Collapse {
   private static final long serialVersionUID = -0x601DD969FC862E65L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {

@@ -6,13 +6,14 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code if (a){g();}} into {@code if(a)g();}
  * @author Yossi Gil
  * @since 2016-12-14 */
 public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x46D49EDB4E92226AL;
 
   @Override public String description(final Javadoc ¢) {

@@ -8,13 +8,14 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace this pattern {@code try {} catch(..) {a;} ... finally {x;}} with
  * {@code {x;}}, or nothing, if there is nothing in {@code x;}
  * @author Sapir Bismot
  * @since 2016-11-21 */
 public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TryStatement>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x4B682E357EA0DBEL;
 
   @Override public boolean prerequisite(final TryStatement ¢) {

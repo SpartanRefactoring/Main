@@ -6,6 +6,7 @@ import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Test case is {@link Issue1045} Issue #1045 Convert: {@code if (a > 1 || b >
  * 2 || c + e > 3) { return 1; } } to: {@code if (((a > 1) || (b > 2)) || ((c +
@@ -15,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-11 */
 public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x3B51DC170DB9CF0DL;
 
   @Override public ASTNode replacement(final InfixExpression ¢) {

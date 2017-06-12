@@ -11,12 +11,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** A {@link Tipper} which represents a NanoPattern.
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
-    implements TipperCategory.Nanos {
+    implements Category.Nanos {
   private static final long serialVersionUID = 0x6FF9DBFD3D10CF83L;
   public final N nodeTypeHolder = null;
 

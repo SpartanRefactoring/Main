@@ -15,12 +15,12 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** A {@link Tipper} to convert an expression such as {@code
  * 0 + X = X
@@ -34,7 +34,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
-    implements TipperCategory.NOP.onNumbers {
+    implements Category.NOP.onNumbers {
   private static final long serialVersionUID = 0x3A8FC386BA92697AL;
 
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
@@ -83,8 +83,5 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
           r.replace(first, make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
-  }
-  @Override public TipperGroup tipperGroup() {
-    return TipperGroup.Abbreviation;
   }
 }

@@ -32,7 +32,7 @@ public enum prune {
    * @param <T> JD
    * @param <C> JD
    * @param ts JD */
-  public static <T, C extends Collection<T>> C nulls(final C $) {
+  public static <T, C extends Collection<T>> C nils(final C $) {
     for (final Iterator<T> ¢ = $.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
@@ -45,7 +45,7 @@ public enum prune {
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
-  public static <T> List<T> nulls(final Iterable<T> ts) {
+  public static <T> List<T> nils(final Iterable<T> ts) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final T ¢ : ts)
       if (¢ != null)
@@ -108,17 +108,17 @@ public enum prune {
       assertEquals(3, nulls(alternatingArray).length);
     }
     @Test public void nullsPruneSparseCollectionContents() {
-      final String[] a = nulls(sparseCollection.get()).toArray(new String[3]);
+      final String[] a = nils(sparseCollection.get()).toArray(new String[3]);
       assertEquals("A", a[0]);
       assertEquals("B", a[1]);
       assertEquals("C", a[2]);
       assertEquals(3, a.length);
     }
     @Test public void nullsPruneSparseCollectionLength() {
-      assertEquals(3, nulls(sparseCollection.get()).size());
+      assertEquals(3, nils(sparseCollection.get()).size());
     }
     @Test public void nullsPrunNonNull() {
-      assert nulls(sparseCollection.get()) != null;
+      assert nils(sparseCollection.get()) != null;
     }
     @Test public void shrinkArray() {
       assertEquals(0, shrink(new Object[10]).length);
@@ -179,17 +179,17 @@ public enum prune {
       azzert.that(nulls(alternatingArray).length, is(3));
     }
     @Test public void testPruneSparseCollectionContents() {
-      final String[] a = nulls(sparseCollection).toArray(new String[3]);
+      final String[] a = nils(sparseCollection).toArray(new String[3]);
       azzert.that(a[0], is("A"));
       azzert.that(a[1], is("B"));
       azzert.that(a[2], is("C"));
       azzert.that(a.length, is(3));
     }
     @Test public void testPruneSparseCollectionLength() {
-      azzert.that(nulls(sparseCollection).size(), is(3));
+      azzert.that(nils(sparseCollection).size(), is(3));
     }
     @Test public void testPrunNonNull() {
-      assert nulls(sparseCollection) != null;
+      assert nils(sparseCollection) != null;
     }
     @Test public void testShrink() {
       azzert.that(shrink(new Object[10]).length, is(0));

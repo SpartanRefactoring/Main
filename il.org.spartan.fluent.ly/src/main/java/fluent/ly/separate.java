@@ -465,7 +465,7 @@ public enum separate {
       azzert.that(count.of(separate.these(as.list("Hello", "World")).os), is(2));
     }
     @Test public final void theseFromZeroItems() {
-      azzert.that(count.of(separate.these(as.list((Double) null)).os), is(0));
+      azzert.that(count.of(separate.these(prune.nils(as.list((Double) null))).os), is(0));
     }
     @Test public final void theseOfNoItemsl() {
       azzert.aye(is.empty(separate.these(new String[] {}).os));

@@ -11,13 +11,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** As per {@link Issue1008}
  * @author Yossi Gil
  * @since 2017-01-21 */
 public class MethodDeclarationConstructorMoveToInitializers extends CarefulTipper<MethodDeclaration>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Idiomatic {
   private static final long serialVersionUID = -0x57FBD74AB91AB9ECL;
 
   @Override protected boolean prerequisite(final MethodDeclaration ¢) {

@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** remove redundant return from switch in void method. convert {@code void a()
  * { switch(x) { case 1: y=2; break; default: return; } } } to {@code void a() {
@@ -18,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement>//
-    implements TipperCategory.Shortcircuit {
+    implements Category.Shortcircuit {
   private static final long serialVersionUID = -0x345B570B87D036B1L;
 
   @Override public ASTNode replacement(final SwitchStatement s) {

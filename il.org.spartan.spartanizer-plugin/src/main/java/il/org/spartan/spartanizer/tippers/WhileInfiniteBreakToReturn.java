@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Convert Infinite loops with return sideEffects to shorter ones : toList
  * Convert {@code while (true) { doSomething(); if(done()) break; } return XX; }
@@ -18,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class WhileInfiniteBreakToReturn extends CarefulTipper<WhileStatement>//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = -0x565FA66D15A7881BL;
 
   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {

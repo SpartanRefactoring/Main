@@ -78,7 +78,7 @@ public enum Parenthesize {
     return make("[", prune(¢), "]");
   }
   private static <T> Collection<T> prune(final Collection<T> ¢) {
-    return prune.nulls(¢);
+    return prune.nils(¢);
   }
   private static <T> T[] prune(final T[] ¢) {
     return prune.nulls(¢);

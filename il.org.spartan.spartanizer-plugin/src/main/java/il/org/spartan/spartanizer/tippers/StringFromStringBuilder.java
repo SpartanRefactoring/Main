@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** A {@link Tipper} to replace String appending using StringBuilder or
@@ -25,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11 */
 public final class StringFromStringBuilder extends ClassInstanceCreationPattern //
-    implements TipperCategory.Strings {
+    implements Category.Theory.Strings {
   private static final long serialVersionUID = -0x27A02FA5B2C416E2L;
   private Expression simplification;
   private List<MethodInvocation> invocations;

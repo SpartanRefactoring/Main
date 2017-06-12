@@ -5,13 +5,13 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalUninitializedDead extends LocalUninitialized implements TipperCategory.Deadcode {
+public final class LocalUninitializedDead extends LocalUninitialized implements Category.Deadcode {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
   public LocalUninitializedDead() {

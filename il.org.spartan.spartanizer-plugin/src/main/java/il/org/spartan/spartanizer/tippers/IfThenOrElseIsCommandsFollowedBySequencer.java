@@ -15,13 +15,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code f() { x++; y++; if (a) { i++; j++; k++; } } } into {@code if
  * (x) { f(); return a; } g(); }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement>//
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   private static final long serialVersionUID = 0x5E1F4E074777B1C3L;
 
   static boolean endsWithSequencer(final Statement ¢) {

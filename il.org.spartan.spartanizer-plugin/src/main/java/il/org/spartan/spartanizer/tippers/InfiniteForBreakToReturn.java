@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Convert Infinite loops with return sideEffects to shorter ones : toList
  * Convert {@code for(;true;) { doSomething(); if(done()) break; } return XX; }
@@ -17,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>//
-    implements TipperCategory.Shortcircuit {
+    implements Category.Shortcircuit {
   private static final long serialVersionUID = -0x7074B13F7F9E2909L;
 
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {

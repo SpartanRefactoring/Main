@@ -12,12 +12,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Converts {@code a?b?x:z:z}into {@code a&&b?x:z}
  * @author Yossi Gil
  * @since 2015-9-19 */
 public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression>//
-    implements TipperCategory.CommonFactorOut {
+    implements Category.Theory.Logical {
   private static final long serialVersionUID = -0x76A72FCF26B6A18L;
 
   private static Expression collapse(final ConditionalExpression ¢) {

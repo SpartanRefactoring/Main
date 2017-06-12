@@ -8,12 +8,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Same as ReturnTernaryExpander just for "throw" @link {Issue0998}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
 public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x6F38EBD99BF2A49EL;
 
   private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {

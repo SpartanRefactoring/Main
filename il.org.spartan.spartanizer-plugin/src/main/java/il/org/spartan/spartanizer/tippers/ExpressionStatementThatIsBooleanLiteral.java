@@ -10,12 +10,13 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code ?.that(M?, X, is(boolean)); } by {@code assert x == M?; }
  * @author Yossi Gil
  * @since 2016/12/11 */
 public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurrentNode<ExpressionStatement>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Idiomatic {
   private static final long serialVersionUID = -0x4A4A1D6E8BE84A06L;
   private List<Expression> arguments;
   private MethodInvocation methodInvocation;

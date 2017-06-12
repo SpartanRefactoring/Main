@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code
  * if (x)
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends GoToNextStatement<IfStatement>//
-    implements TipperCategory.Ternarization {
+    implements Category.Ternarization {
   private static final long serialVersionUID = 0x7B2F65029551C18BL;
 
   static Expression getThrowExpression(final Statement ¢) {

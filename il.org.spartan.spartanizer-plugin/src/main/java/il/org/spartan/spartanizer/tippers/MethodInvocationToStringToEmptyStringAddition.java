@@ -7,13 +7,14 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Transforms x.toString() to "" + x
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-8-31 */
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation>//
-    implements TipperCategory.Strings {
+    implements Category.Theory.Strings {
   private static final long serialVersionUID = 0x5DE07AE5A0DF8047L;
 
   @Override public String description(final MethodInvocation ¢) {

@@ -186,11 +186,10 @@ public final class SingleFlater {
     return false;
   }
   private boolean inSelection(final ASTNode ¢) {
-    final boolean inWindow = windowInformation == null || windowInformation.invalid()
-        || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
-    final boolean inSelection = textSelection == null || ¢ != null && ¢.getStartPosition() >= textSelection.getOffset()
-        && ¢.getLength() + ¢.getStartPosition() <= textSelection.getOffset() + textSelection.getLength();
-    return inWindow && inSelection;
+    return (windowInformation == null || windowInformation.invalid()
+        || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar)
+        && (textSelection == null || ¢ != null && ¢.getStartPosition() >= textSelection.getOffset()
+            && ¢.getLength() + ¢.getStartPosition() <= textSelection.getLength() + textSelection.getOffset());
   }
 
   /** describes a single change operation, containing both an {@link ASTNode}

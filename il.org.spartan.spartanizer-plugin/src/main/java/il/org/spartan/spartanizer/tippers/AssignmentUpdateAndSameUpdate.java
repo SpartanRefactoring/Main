@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code
  * a += 3;
@@ -29,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2017-03-04 */
 public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assignment>//
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x10117DE08048A979L;
 
   @Override public String description(final Assignment ¢) {

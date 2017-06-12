@@ -28,4 +28,7 @@ public enum empty {
       }
     };
   }
+  public static <T> Set<T> set() {
+    return new LinkedHashSet<>();
+  }
 }

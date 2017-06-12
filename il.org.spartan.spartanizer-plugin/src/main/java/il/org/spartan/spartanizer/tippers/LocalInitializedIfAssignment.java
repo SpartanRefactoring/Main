@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalInitializedIfAssignment extends $FragmentAndStatement//
-    implements TipperCategory.Inlining {
+    implements Category.Inlining {
   private static final long serialVersionUID = 0xA6354D94D79638FL;
 
   @Override public String description(final VariableDeclarationFragment ¢) {

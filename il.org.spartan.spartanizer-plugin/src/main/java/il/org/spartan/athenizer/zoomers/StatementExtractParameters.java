@@ -24,6 +24,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** An expander to extract complex arguments from {@link Statement}: {@code
  * f(1 + a[b ? 1 : 2]);
@@ -38,7 +39,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x1A06EDFC5CBC0D5EL;
   private static final String KNOWN_TYPES_NAMES = "KNOWN_TYPES_NAMES";
 

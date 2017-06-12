@@ -6,13 +6,13 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** examples in {@link #examples} test case is {@link Issue1159}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-31 */
-public class SwitchMissingDefaultAdd extends Switch implements TipperCategory.Bloater {
+public class SwitchMissingDefaultAdd extends Switch implements Category.Bloater {
   private static final long serialVersionUID = 0x358FADDE74C85B4BL;
 
   @Override public Examples examples() {

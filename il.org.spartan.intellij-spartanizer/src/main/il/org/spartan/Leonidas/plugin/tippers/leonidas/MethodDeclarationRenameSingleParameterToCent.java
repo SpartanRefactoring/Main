@@ -16,7 +16,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author melanyc
  * @since 10-06-2017
  */
-@TipperUnderConstruction(INCOMPLETE)
+//@TipperUnderConstruction(INCOMPLETE)
 public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTipperDefinition {
 
     Class2 identifier3;
@@ -30,7 +30,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
      */
     @Override
     public void constraints() {
-        element(4).asStatement.mustNotRefer("¢");
+        element(4).asStatement.mustNotRefer("cent");
+        element(3).asIdentifier.notContains("cent");
     }
 
     // The enter under /* start */ is crucial.
@@ -54,6 +55,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
         new Template(() -> {
             class wrapping {
                 /* start */
+
                 Class0 method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                     return null; // ignore
@@ -65,7 +67,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
 
     @Override
     public void replacingRules() {
-        element(5).asStatement.replaceIdentifiers(5, "¢");
+        element(4).asStatement.replaceIdentifiers(3, "¢");
     }
 
     /**

@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code
  * if (x)
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends ReplaceCurrentNode<IfStatement> //
-    implements TipperCategory.Ternarization {
+    implements Category.Ternarization {
   private static final long serialVersionUID = 0x5FEBB8952E19E3B1L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

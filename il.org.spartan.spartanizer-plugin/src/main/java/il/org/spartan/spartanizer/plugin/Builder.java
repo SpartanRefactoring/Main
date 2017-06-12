@@ -7,9 +7,9 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.spartanizer.traversal.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -78,8 +78,8 @@ public final class Builder extends IncrementalProjectBuilder {
       if (¢ != null)
         ¢.intoMarker(f.createMarker(groupName(Configurations.groupOf(¢))));
   }
-  private static String groupName(final TipperGroup ¢) {
-    return ¢ == null || ¢.id == null ? MARKER_TYPE : MARKER_TYPE + "." + ¢.name();
+  private static String groupName(final Taxon ¢) {
+    return ¢ == null || ¢.id == null ? MARKER_TYPE : MARKER_TYPE + "." + ¢.label();
   }
   public static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
