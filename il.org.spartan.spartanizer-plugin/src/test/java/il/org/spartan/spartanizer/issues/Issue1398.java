@@ -13,6 +13,7 @@ public class Issue1398 {
   @Test public void t1() {
     trimmingOf("final double vs[]={5,20,40,80,100}; Assert.assertEquals(40.0625,correctedSd(vs),1E-4);")
         .gives("Assert.assertEquals(40.0625,correctedSd((new double[]{5,20,40,80,100})),1E-4);");
+    //check
   }
   @Test public void t2() {
     trimmingOf("final double vs[][] = {{3,4},{5,6}}; Assert.assertEquals(40.0625,correctedSd(vs),1E-4);")
