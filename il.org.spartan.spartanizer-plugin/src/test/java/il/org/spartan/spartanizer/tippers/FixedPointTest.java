@@ -128,12 +128,6 @@ public final class FixedPointTest {
     assertConvertsTo("if (bob.father.age> 42 && bob.mother.father.age> bob.age ) return true; else return false;",
         "return bob.father.age>42&&bob.mother.father.age>bob.age;");
   }
-  @Test(timeout = 2000) public void shortestOperand26() {
-    assertConvertsTo("return f(a,b,c,d) | f() | 0;} ", "return f()|f(a,b,c,d)|0;}");
-  }
-  @Test(timeout = 2000) public void shortestOperand35() {
-    assertConvertsTo("return f(a,b,c,d) * moshe; ", " return moshe * f(a,b,c,d);");
-  }
   @Test(timeout = 2000) public void sortAddition5() {
     assertSimplifiesTo("1 + 2 + 3 + a <3 -4", "a <-7");
   }
