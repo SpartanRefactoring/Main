@@ -1,6 +1,9 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
@@ -60,5 +63,9 @@ public class Identifier extends NamedElement {
 
     public void endWith(String s) {
         addConstraint(e -> az.identifier(e.inner).getText().endsWith(s));
+    }
+
+    public void changeName(String name){
+        addReplacingRule((e, m) -> new PsiRewrite().replace(e, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(name)));
     }
 }

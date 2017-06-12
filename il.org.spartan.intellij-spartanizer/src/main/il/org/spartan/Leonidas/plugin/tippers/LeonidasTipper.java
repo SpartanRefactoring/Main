@@ -10,6 +10,7 @@ import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher.Constraint;
@@ -18,6 +19,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.Replacer;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -72,7 +74,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 if (canTip(node)) {
                     Wrapper<Integer> i = new Wrapper<>(0);
                     Map<Integer, List<PsiElement>> map = matcher.extractInfo(node, i);
-                    (new Replacer(getReplacerRootsCopy())).replace(node, map, i.get(), r);
+                    (new Replacer(getReplacerRootsCopy(getReplacingRules()))).replace(node, map, i.get(), r);
                 }
             }
         };
@@ -89,7 +91,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      */
     private List<Encapsulator> getForestFromMethod(PsiMethod method) {
         PsiNewExpression ne = az.newExpression(az.expressionStatement(method.getBody().getStatements()[0]).getExpression());
-        PsiElement current = ne;
+        PsiElement current;
         Wrapper<PsiElement> we = new Wrapper<>(ne);
         ne.accept(new JavaRecursiveElementVisitor() {
             @Override
@@ -102,18 +104,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         });
         current = we.get();
         current = Utils.getNextActualSibling(current);
-        /*if (iz.codeBlock(((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody())) {
-            current = Utils.getFirstElementInsideBody((PsiCodeBlock) (((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody()));
-        } else {
-            current = ne.getArgumentList().getExpressions()[0].getFirstChild();
-            current = Utils.getNextActualSibling(current);
-            current = Utils.getNextActualSibling(current);
-        }
-        while (current != null && (!iz.javadoc(current) || !az.javadoc(current).getText().contains("start"))) {
-            current = current.getNextSibling();
-        }
-        current = Utils.getNextActualSibling(current);
-        */
         List<Encapsulator> roots = new ArrayList<>();
         if (iz.declarationStatement(current) && iz.classDeclaration(current.getFirstChild()))
             current = current.getFirstChild();
@@ -154,10 +144,25 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     /**
      * @return the generic tree representing the "from" template
      */
-    private List<Encapsulator> getReplacerRootsCopy() {
+    private List<Encapsulator> getReplacerRootsCopy(Map<Integer, List<PsiMethodCallExpression>> m) {
         PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
         giveIdToStubElements(replacer);
-        return getForestFromMethod(replacer);
+        List<Encapsulator> l = getForestFromMethod(replacer);
+        l.forEach(root -> root.accept(n -> {
+            if (!iz.generic(n)) return;
+            GenericEncapsulator ge = az.generic(n);
+            m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
+                List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
+                Encapsulator ie = iz.quantifier(ge) ? az.quantifier(ge).getInternal() : ge;
+                try {
+                    Utils.getDeclaredMethod(ie.getClass(), mce.getMethodExpression().getReferenceName(), Arrays.stream(arguments.toArray()).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, arguments.toArray());
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
+                    e1.printStackTrace();
+                }
+
+            });
+        }));
+        return l;
     }
 
     /**
@@ -269,6 +274,35 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         });
         return map;
     }
+
+    /**
+     * Searches for all the structural constraints found in the "constraints" method and returns a mapping between
+     * element ids and their structural constraints. For example, if the following is present in the constraints method:
+     * <p>
+     * <code>element(1).is(() -> return null;);</code>
+     * <p>
+     * It will search for the element with id 1, and put a structural constraint on it, requiring it look like:
+     * <p>
+     * <code>return null;</code>.
+     *
+     * @return a mapping between the ID of generic elements to a list of all the constraint that apply on them.
+     */
+    private Map<Integer, List<PsiMethodCallExpression>> getReplacingRules() {
+        Map<Integer, List<PsiMethodCallExpression>> map = new HashMap<>();
+        PsiMethod constrainsMethod = getInterfaceMethod("replacingRules");
+        if (!haz.body(constrainsMethod)) {
+            return map;
+        }
+        Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
+            Integer elementId = extractIdFromConstraint(s);
+            PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
+            map.putIfAbsent(elementId, new LinkedList<>());
+            map.get(elementId).add(method);
+
+        });
+        return map;
+    }
+
 
     /**
      * @param s a string representing Psi element class. For example "PsiIfStatement".

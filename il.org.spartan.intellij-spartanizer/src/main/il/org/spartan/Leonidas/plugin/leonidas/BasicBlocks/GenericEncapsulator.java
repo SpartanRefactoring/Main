@@ -77,7 +77,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * Creates another one like me, with concrete PsiElement within
      *
      * @param e element within.
-     * @param map
+     * @param map a mapping between an id of generic element to it's list of constraints.
      * @return new <B>Specific</B> GenericEncapsulator
      */
     public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
