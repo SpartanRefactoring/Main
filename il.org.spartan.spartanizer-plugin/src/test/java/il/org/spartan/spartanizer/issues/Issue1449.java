@@ -24,9 +24,12 @@ public class Issue1449 extends TipperTest<InfixExpression> {
     trimmingOf("f(i++)*j").stays();
   }
   @Test public void test02() {
-    trimmingOf("f(i)*j").gives("j*f(i)").stays();
+    trimmingOf("f(i)*j").stays();
   }
   @Test public void test03() {
     trimmingOf("(5-(x++))*j").stays();
+  }
+  @Test public void test04(){
+    trimmingOf("f()*5").gives("5*f()").stays();
   }
 }
