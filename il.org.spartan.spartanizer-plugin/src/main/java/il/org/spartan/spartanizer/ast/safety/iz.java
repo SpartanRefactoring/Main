@@ -105,39 +105,6 @@ public interface iz {
   static boolean atomic(final ASTNode ¢) {
     return iz.name(¢) || iz.literal(¢);
   }
-  /** @param $ JD
-   * @return {@code true} iff the expressions have no increment or decrement in
-   *         them */
-  static boolean incrementDecrementFree(final List<Expression> $) {
-    return $.stream().allMatch(λ -> incrementDecrementFree(λ));
-  }
-  /** @param ¢ JD
-   * @return {@code true} iff the expression have no increment or decrement in
-   *         them */
-  static boolean incrementDecrementFree(final Expression ¢) {
-    switch (¢.getNodeType()) {
-      case PREFIX_EXPRESSION:
-        return !is.in(az.prefixExpression(¢).getOperator(), op.DECREMENT_PRE, op.INCREMENT_PRE);
-      case POSTFIX_EXPRESSION:
-        return !is.in(az.postfixExpression(¢).getOperator(), op.DECREMENT_POST, op.INCREMENT_POST);
-      case INFIX_EXPRESSION:
-        return incrementDecrementFree(extract.allOperands(az.infixExpression(¢)));
-      case METHOD_INVOCATION:
-        return incrementDecrementFree(step.arguments(az.methodInvocation(¢)));
-      case CLASS_INSTANCE_CREATION:
-        return incrementDecrementFree(step.arguments(az.classInstanceCreation(¢)));
-      case ARRAY_ACCESS:
-        return incrementDecrementFree(((ArrayAccess) ¢).getIndex());
-      case CAST_EXPRESSION:
-        return incrementDecrementFree(az.castExpression(¢).getExpression());
-      case CONDITIONAL_EXPRESSION:
-        final ConditionalExpression $ = az.conditionalExpression(¢);
-        return incrementDecrementFree(as.list(step.then($), step.elze($)));
-      case PARENTHESIZED_EXPRESSION:
-        return incrementDecrementFree(extract.core(az.parenthesizedExpression(¢)));
-    }
-    return true;
-  }
   /** Determine whether a node is a {@link Block}
    * @param pattern JD
    * @return whether the parameter is a block statement */

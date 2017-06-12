@@ -27,13 +27,11 @@ final class ArithmeticTest {
               .gives("return 31 * ((31 * 1 + ((blockScope == null) ? 0 : blockScope.hashCode())) * 31"
                   + "+ ((hiding == null) ? 0 : hiding.hashCode())) + ((self == null) ? 0 : self.hashCode());")
               .gives(
-                  "return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + (31 * 1 + ((blockScope == null) ? 0 : blockScope.hashCode())) * 31) + ((self == null) ? 0 : self.hashCode());")
+                  "return 31*(31*(31*1+((blockScope==null)?0:blockScope.hashCode()))+((hiding==null)?0:hiding.hashCode()))+((self==null)?0:self.hashCode());") //
               .gives(
-                  "return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + 31 * (31 * 1 + ((blockScope == null) ? 0 : blockScope.hashCode()))) + ((self == null) ? 0 : self.hashCode());")
+                  "return 31*(31*(31+((blockScope==null)?0:blockScope.hashCode()))+((hiding==null)?0:hiding.hashCode()))+((self==null)?0:self.hashCode());") //
               .gives(
-                  "return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + 31 * (31 + ((blockScope == null) ? 0 : blockScope.hashCode()))) + ((self == null) ? 0 : self.hashCode());")
-              .gives(
-                  "return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + 31 * (((blockScope == null) ? 0 : blockScope.hashCode()) + 31)) + ((self == null) ? 0 : self.hashCode());")
+                  "return 31*(31*(((blockScope==null)?0:blockScope.hashCode())+31)+((hiding==null)?0:hiding.hashCode()))+((self==null)?0:self.hashCode());") //
               .stays();
     }
     @Test public void issue158_1() {
