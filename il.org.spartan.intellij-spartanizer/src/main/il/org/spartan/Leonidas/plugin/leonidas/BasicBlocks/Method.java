@@ -75,6 +75,7 @@ public class Method extends ModifiableElement {
         iam.getReturnTypeElement().replace(replacerReturnType.replaceSingleRoot(e.getReturnTypeElement(), m, r));
         iam.getParameterList().replace(replacerParameters.replaceSingleRoot(e.getParameterList(), m, r));
         iam.getBody().replace(replacerCodeBlock.replaceSingleRoot(e.getBody(), m, r));
+        iam.getModifierList().replace(e.getModifierList());
         return Utils.wrapWithList(inner);
     }
 

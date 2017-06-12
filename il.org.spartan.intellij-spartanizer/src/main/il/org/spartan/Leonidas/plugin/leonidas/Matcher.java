@@ -143,8 +143,9 @@ public class Matcher {
                         matcher.addConstraint(i, (StructuralConstraint) j);
                     else {
                         NonStructuralConstraint nsc = (NonStructuralConstraint) j;
+                        Encapsulator ie = iz.quantifier(e) ? az.quantifier(e).getInternal() : e;
                         try {
-                            Utils.getDeclaredMethod(e.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(e, nsc.objects);
+                            Utils.getDeclaredMethod(ie.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, nsc.objects);
                         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                             e1.printStackTrace();
                         }
