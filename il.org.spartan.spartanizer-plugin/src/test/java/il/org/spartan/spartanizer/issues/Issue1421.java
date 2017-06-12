@@ -32,14 +32,12 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
             , "from0")//
         .staysWithBinding();
   }
-  @Ignore("issue 1453")
-  @Test public void test01() {
-    bloatingOf(new testUtils())//
+  @Ignore("issue 1453") @Test public void test01() {
+    bloatingOf(new testUtils())// from1
         .staysWithBinding();
   }
-  @Ignore("issue 1453")
-  @Test public void test02() {
-    bloatingOf(new testUtils())//
+  @Ignore("issue 1453") @Test public void test02() {
+    bloatingOf(new testUtils())// from2
         .staysWithBinding();
   }
   @Test public void test03() {
@@ -54,6 +52,9 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
   }
 
   @SuppressWarnings("unused")
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   class testUtils extends MetaFixture {
     List<Integer> ys = as.ilist(1, 2, 3, 4, 5);
     ArrayList<Integer> zs = new ArrayList<>();
@@ -63,24 +64,24 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
       //
     }
     public void from0() {
-      new ArrayList<>(ys);
+      List<Integer> x = new ArrayList<>(ys);
     }
     public void from1() {
-      new testUtils(ys);
+      testUtils t = new testUtils(ys);
     }
     public void from2() {
-      new HashSet<Integer>(zs);
+      Object x = new HashSet<Integer>(zs);
     }
     public void from3() {
-      new HashSet<>(zs);
+      HashSet<Integer> x = new HashSet<>(zs);
     }
-    public void f(Integer x){
+    public void f(Integer x) {
       //
     }
-    public void f(String x){
+    public void f(String x) {
       //
     }
-    public void f(testUtils x){
+    public void f(testUtils x) {
       //
     }
   }
