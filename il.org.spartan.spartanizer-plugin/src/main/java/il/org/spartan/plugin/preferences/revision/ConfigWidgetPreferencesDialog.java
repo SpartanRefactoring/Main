@@ -31,7 +31,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     super(parentShell);
     widgetName = woe.getName();
     this.store = store;
-    this.widgetSerialID = woe.widgetSUID;
+    widgetSerialID = woe.widgetSUID;
     this.woe = woe;
     configurations = woe.getWidgetOp().configurationComponents();
     confMap = new HashMap<>();

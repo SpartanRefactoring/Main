@@ -29,7 +29,7 @@ public class Issue1449 extends TipperTest<InfixExpression> {
   @Test public void test03() {
     trimmingOf("(5-(x++))*j").stays();
   }
-  @Test public void test04(){
+  @Test public void test04() {
     trimmingOf("f()*5").gives("5*f()").stays();
   }
 }

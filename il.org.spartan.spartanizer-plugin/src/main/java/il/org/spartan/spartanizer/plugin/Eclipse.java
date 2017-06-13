@@ -174,8 +174,8 @@ public class Eclipse {
     return Arrays.stream(ResourcesPlugin.getWorkspace().getRoot().getProjects()).filter(p -> {
       try {
         return p.isOpen() && p.getNature(Nature.NATURE_ID) != null;
-      } catch (CoreException ¢) {
-        note.bug(¢);
+      } catch (final CoreException $) {
+        note.bug($);
         return false;
       }
     }).collect(Collectors.toList());

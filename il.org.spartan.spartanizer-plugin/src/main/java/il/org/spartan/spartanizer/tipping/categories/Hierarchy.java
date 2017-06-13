@@ -9,31 +9,30 @@ import java.util.function.*;
 public class Hierarchy<T> {
   public final Map<T, Set<T>> children = new HashMap<>();
   private final Function<T, Set<T>> parents;
-  
-  public boolean contains (T ¢) {
+
+  public boolean contains(final T ¢) {
     return children.containsKey(¢);
   }
-  public void add(T t) {
+  public void add(final T t) {
     if (contains(t))
       return;
     children.put(t, an.empty.set());
-    for (T parent: parents(t)) {
+    for (final T parent : parents(t)) {
       if (!children.containsKey(parent))
         children.put(parent, an.empty.set());
       children.get(parent).add(t);
     }
-  } 
-
-  public Hierarchy(Function<T, Set<T>> parents) {
+  }
+  public Hierarchy(final Function<T, Set<T>> parents) {
     this.parents = parents;
   }
-  public final Set<T> children(T ¢) {
+  public final Set<T> children(final T ¢) {
     return children.get(¢);
   }
   public Set<T> nodes() {
     return children.keySet();
   }
-  public final Set<T> parents(T ¢) {
+  public final Set<T> parents(final T ¢) {
     return parents.apply(¢);
   }
 }

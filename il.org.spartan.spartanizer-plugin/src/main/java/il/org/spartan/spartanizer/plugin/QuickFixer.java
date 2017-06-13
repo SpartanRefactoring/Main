@@ -68,7 +68,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     return new GUITraversal().setMarker($);
   }
 
-  @SuppressWarnings("deprecation") interface fixers {
+  @SuppressWarnings("deprecation")
+  interface fixers {
     String APPLY_TO_FILE = "Apply to compilation unit";
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";

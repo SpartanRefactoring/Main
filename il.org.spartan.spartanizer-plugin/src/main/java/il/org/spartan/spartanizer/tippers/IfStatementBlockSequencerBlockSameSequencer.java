@@ -78,17 +78,16 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
       listRewrite3.remove(x, g);
     return r;
   }
-  private static boolean declaredVarAppearsInSequencer(List<Statement> subsequentStatements) {
-    Statement ret = az.returnStatement(the.lastOf(subsequentStatements));
+  private static boolean declaredVarAppearsInSequencer(final List<Statement> subsequentStatements) {
+    final Statement ret = az.returnStatement(the.lastOf(subsequentStatements));
     if (ret == null)
       return false;
-    for(Statement s : subsequentStatements) {
-      VariableDeclarationStatement v = az.variableDeclarationStatement(s);
-      if (v == null)
-        continue;
-      for (VariableDeclarationFragment f : step.fragments(v))
-        if (iz.containsName(f.getName(), ret))
-          return true;
+    for (final Statement s : subsequentStatements) {
+      final VariableDeclarationStatement v = az.variableDeclarationStatement(s);
+      if (v != null)
+        for (final VariableDeclarationFragment ¢ : step.fragments(v))
+          if (iz.containsName(¢.getName(), ret))
+            return true;
     }
     return false;
   }

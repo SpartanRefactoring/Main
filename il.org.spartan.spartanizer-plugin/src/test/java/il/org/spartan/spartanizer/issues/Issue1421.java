@@ -52,36 +52,34 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
   }
 
   @SuppressWarnings("unused")
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   class testUtils extends MetaFixture {
     List<Integer> ys = as.ilist(1, 2, 3, 4, 5);
     ArrayList<Integer> zs = new ArrayList<>();
 
     public testUtils() {}
-    public testUtils(Collection<?> __) {
+    public testUtils(final Collection<?> __) {
       //
     }
     public void from0() {
-      List<Integer> x = new ArrayList<>(ys);
+      new ArrayList<>(ys);
     }
     public void from1() {
-      testUtils t = new testUtils(ys);
+      new testUtils(ys);
     }
     public void from2() {
-      Object x = new HashSet<Integer>(zs);
+      new HashSet<>(zs);
     }
     public void from3() {
-      HashSet<Integer> x = new HashSet<>(zs);
+      new HashSet<>(zs);
     }
-    public void f(Integer x) {
+    public void f(final Integer x) {
       //
     }
-    public void f(String x) {
+    public void f(final String x) {
       //
     }
-    public void f(testUtils x) {
+    public void f(final testUtils x) {
       //
     }
   }

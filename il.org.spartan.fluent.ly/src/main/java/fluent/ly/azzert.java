@@ -242,8 +242,7 @@ public class azzert extends org.junit.Assert {
     return StringEndsWith.endsWith(suffix);
   }
   public static <T> void equals(final String prefix, final Collection<T> set, final Collection<T> ts) {
-    Set<T> temp = new HashSet<>();
-    temp.addAll(set);
+    Set<T> temp = new HashSet<>(set);
     temp.removeAll(ts);
     assert temp.isEmpty() : temp;
     temp = new HashSet<>();

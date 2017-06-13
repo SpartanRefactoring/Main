@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -10,7 +8,6 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

@@ -23,7 +23,6 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   protected AddNewWidgetPreferencesDialog(final Shell parentShell) {
     super(parentShell);
   }
-  
   private static Text createString(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
@@ -34,7 +33,6 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     $.setLayoutData(dataRes);
     return $;
   }
-  
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);
     final GridData dataRes = new GridData();
@@ -64,13 +62,11 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   public WidgetOperation getResult() {
     return result;
   }
-  
   public String getName() {
     return retName;
   }
-  
   @Override protected void okPressed() {
-    retName  = retNameText.getText();
+    retName = retNameText.getText();
     for (final Button ¢ : radioButtons)
       if (¢.getSelection()) {
         for (final WidgetOperation w : widgetOps)

@@ -50,18 +50,18 @@ public class LocalInitializedCollection extends LocalInitialized {
         .isPresent();
   }
   private static boolean hasAddAll(final ITypeBinding tb) {
-    return tb != null && (as.list(tb.getDeclaredMethods()).stream().filter(λ -> "addAll".equals(λ.getName())).filter(λ -> λ.getParameterTypes().length == 1)
-        .filter(λ -> isCollection(λ.getParameterTypes()[0])).findAny().isPresent()
+    return tb != null && (as.list(tb.getDeclaredMethods()).stream().filter(λ -> "addAll".equals(λ.getName()))
+        .filter(λ -> λ.getParameterTypes().length == 1).filter(λ -> isCollection(λ.getParameterTypes()[0])).findAny().isPresent()
         || as.list(tb.getSuperclass()).stream().filter(LocalInitializedCollection::hasAddAll).findAny().isPresent()
         || as.list(tb.getInterfaces()).stream().filter(LocalInitializedCollection::hasAddAll).findAny().isPresent());
   }
   @Override public Examples examples() {
-    //bloater requires binding which causes test to fail
-    //return convert("List<Integer> x = new List<>(ys);").to("List<Integer>x = new List<>(); x.addAll(ys);");
+    // bloater requires binding which causes test to fail
+    // return convert("List<Integer> x = new List<>(ys);").to("List<Integer>x =
+    // new List<>(); x.addAll(ys);");
     return null;
   }
-
-  @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     if (!iz.block(declaration.getParent()))
       return $;
     final ClassInstanceCreation e = copy.of(newExpression);

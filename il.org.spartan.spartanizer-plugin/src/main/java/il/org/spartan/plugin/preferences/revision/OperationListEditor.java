@@ -1,12 +1,10 @@
 package il.org.spartan.plugin.preferences.revision;
 
-
 import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
 import java.util.function.*;
-
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
@@ -51,94 +49,10 @@ public class OperationListEditor extends ListEditor {
     configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
     configureButton.setText("Configure operation");
     configureButton.setEnabled(false);
-//    addDefaultButtonsConfig();
+    // addDefaultButtonsConfig();
   }
-  
-  
-  @SuppressWarnings("unused")
-  private void addDefaultButtonsConfig() {
-    this.getDownButton().addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(final SelectionEvent __) {
-        onSelection();
-      }
-      @Override public void widgetDefaultSelected(final SelectionEvent __) {
-        onSelection();
-      }
-      @SuppressWarnings("synthetic-access") void onSelection() {
-        final int i = getList().getSelectionIndex();
-        if (i < 0)
-          return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        WidgetOperationEntry chosen = l.get(0);
-        for(WidgetOperationEntry woe : l) 
-          if(woe.getName().equals(getList().getItem(i)))
-            chosen = woe;
-        int realIndex = l.indexOf(chosen);
-        if(l.size()-realIndex<=1)
-          return;
-        //else
-        Collections.swap(l, realIndex, realIndex+1);
-        WidgetPreferences.storeEntries(l);
-        //resLE.loadDefault();
-       
-      }
-    });
-    this.getUpButton().addSelectionListener(new SelectionListener() {
-       @Override
-      public void widgetSelected(final SelectionEvent __) {
-        onSelection();
-      }
-       @Override
-      public void widgetDefaultSelected(final SelectionEvent __) {
-        onSelection();
-      }
-      @SuppressWarnings("synthetic-access") void onSelection() {
-        final int i = getList().getSelectionIndex();
-        if (i < 0)
-          return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        //else
-        WidgetOperationEntry chosen = l.get(0);
-        for(WidgetOperationEntry woe : l) 
-          if(woe.getName().equals(getList().getItem(i)))
-            chosen = woe;
-        int realIndex = l.indexOf(chosen);
-        if(realIndex == 0)
-          return; 
-        Collections.swap(l, realIndex-1, realIndex);
-        WidgetPreferences.storeEntries(l);
-        //resLE.loadDefault();
-       
-      }
-    });
-    this.getRemoveButton().addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(final SelectionEvent __) {
-        onSelection();
-      }
-      @Override public void widgetDefaultSelected(final SelectionEvent __) {
-        onSelection();
-      }
-      @SuppressWarnings("synthetic-access") void onSelection() {
-        final int i = getList().getSelectionIndex();
-        if (i < 0)
-          return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        WidgetOperationEntry chosen = l.get(0);
-        for(WidgetOperationEntry woe : l) 
-          if(woe.getName().equals(getList().getItem(i)))
-            chosen = woe;
-        int realIndex = l.indexOf(chosen);
-        l.get(realIndex).disable();
-        l.remove(realIndex);
-        WidgetPreferences.storeEntries(l);
-        //resLE.loadDefault();
-       
-      }
-    });
-  }
-  
-  public void addDefaultButtonsConfigWithLE(ListEditor le) {
-    this.getDownButton().addSelectionListener(new SelectionListener() {
+  public void addDefaultButtonsConfigWithLE(final ListEditor e) {
+    getDownButton().addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
@@ -149,50 +63,21 @@ public class OperationListEditor extends ListEditor {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
         WidgetOperationEntry chosen = l.get(0);
-        for(WidgetOperationEntry woe : l) 
-          if(woe.getName().equals(getList().getItem(i)))
-            chosen = woe;
-        int realIndex = l.indexOf(chosen);
-        if(l.size()-realIndex<=1)
+        for (final WidgetOperationEntry ¢ : l)
+          if (¢.getName().equals(getList().getItem(i)))
+            chosen = ¢;
+        final int realIndex = l.indexOf(chosen);
+        if (l.size() - realIndex <= 1)
           return;
-        //else
-        Collections.swap(l, realIndex, realIndex+1);
+        // else
+        Collections.swap(l, realIndex, realIndex + 1);
         WidgetPreferences.storeEntries(l);
-        le.loadDefault();
-       
+        e.loadDefault();
       }
     });
-    this.getUpButton().addSelectionListener(new SelectionListener() {
-       @Override
-      public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        onSelection();
-      }
-       @Override
-      public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        onSelection();
-      }
-      @SuppressWarnings("synthetic-access") void onSelection() {
-        final int i = getList().getSelectionIndex();
-        if (i < 0)
-          return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        //else
-        WidgetOperationEntry chosen = l.get(0);
-        for(WidgetOperationEntry woe : l) 
-          if(woe.getName().equals(getList().getItem(i)))
-            chosen = woe;
-        int realIndex = l.indexOf(chosen);
-        if(realIndex == 0)
-          return; 
-        Collections.swap(l, realIndex-1, realIndex);
-        WidgetPreferences.storeEntries(l);
-        le.loadDefault();
-       
-      }
-    });
-    this.getRemoveButton().addSelectionListener(new SelectionListener() {
+    getUpButton().addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
@@ -203,21 +88,44 @@ public class OperationListEditor extends ListEditor {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        // else
         WidgetOperationEntry chosen = l.get(0);
-        for(WidgetOperationEntry woe : l) 
-          if(woe.getName().equals(getList().getItem(i)))
-            chosen = woe;
-        int realIndex = l.indexOf(chosen);
+        for (final WidgetOperationEntry ¢ : l)
+          if (¢.getName().equals(getList().getItem(i)))
+            chosen = ¢;
+        final int realIndex = l.indexOf(chosen);
+        if (realIndex == 0)
+          return;
+        Collections.swap(l, realIndex - 1, realIndex);
+        WidgetPreferences.storeEntries(l);
+        e.loadDefault();
+      }
+    });
+    getRemoveButton().addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        onSelection();
+      }
+      @SuppressWarnings("synthetic-access") void onSelection() {
+        final int i = getList().getSelectionIndex();
+        if (i < 0)
+          return;
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        WidgetOperationEntry chosen = l.get(0);
+        for (final WidgetOperationEntry ¢ : l)
+          if (¢.getName().equals(getList().getItem(i)))
+            chosen = ¢;
+        final int realIndex = l.indexOf(chosen);
         l.get(realIndex).disable();
         l.remove(realIndex);
         WidgetPreferences.storeEntries(l);
-        le.loadDefault();
-       
+        e.loadDefault();
       }
     });
   }
-  
   OperationListEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
       final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
     super(name, labelText, parent);
@@ -320,7 +228,6 @@ public class OperationListEditor extends ListEditor {
           ableButton.setText("Enable operation");
           configureButton.setEnabled(false);
         }
-       
       }
     });
     configureButton.setVisible(true);
@@ -363,24 +270,23 @@ public class OperationListEditor extends ListEditor {
   }
   @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
     super.doFillIntoGrid(parent, numColumns);
-    //getButtonBoxControl(parent).dispose(); // removing this will add the
-                                           // ADD,REMOVE,DOWN,UP buttons
+    // getButtonBoxControl(parent).dispose(); // removing this will add the
+    // ADD,REMOVE,DOWN,UP buttons
   }
   @Override protected String[] parseString(final String stringList) {
-    String[] res = new String[7];
+    final String[] $ = new String[7];
     int count = 0;
-    for(Entry<String, Object> e : elements_list) {
-      if(count==7)
+    for (final Entry<String, Object> ¢ : elements_list) {
+      if (count == 7)
         break;
-      res[count++] = e.getKey();
+      $[count++] = ¢.getKey();
     }
-    //when you want to initialize all preferences - uncomment the next line:
-    return stringList == null || stringList.isEmpty() ? res : stringList.split(DELIMETER);
+    // when you want to initialize all preferences - uncomment the next line:
+    return stringList == null || stringList.isEmpty() ? $ : stringList.split(DELIMETER);
   }
-  
-  
-  public ListEditor resLE; //not a good coding methodology 
-  
+
+  public ListEditor resLE; // not a good coding methodology
+
   @Override protected String getNewInputObject() {
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
@@ -402,13 +308,9 @@ public class OperationListEditor extends ListEditor {
   @Override protected void selectionChanged() {
     if (getList() != null && getList().getSelectionIndex() >= 0 && ableButton != null)
       ableButton.setEnabled(true);
-    int index = getList().getSelectionIndex();
-    int size = getList().getItemCount();
-
+    final int index = getList().getSelectionIndex(), size = getList().getItemCount();
     getRemoveButton().setEnabled(index >= 0);
     getUpButton().setEnabled(size > 1 && index > 0);
     getDownButton().setEnabled(size > 1 && index >= 0 && index < size - 1);
   }
-  
-  
 }

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @author tomerdragucki
  * @since 2017-01-13 */
-//@Ignore
+// @Ignore
 public class Issue0980 extends BloaterTest<InfixExpression> {
   @Override public Tipper<InfixExpression> bloater() {
     return new BooleanExpressionBloater();

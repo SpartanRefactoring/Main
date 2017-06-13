@@ -23,7 +23,6 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.spartanizer.tipping.categories.Category.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 
@@ -140,7 +139,7 @@ public class XMLSpartan {
         parent = new SpartanCategory(e.getKey().get());
         existingCategories.put(parent.name(), parent);
       }
-      Stream<Taxon> stream = e.getValue().stream();
+      final Stream<Taxon> stream = e.getValue().stream();
       final List<SpartanCategory> children = stream.map(t -> {
         if (existingCategories.containsKey(t.get().getSimpleName()))
           return existingCategories.get(t.get().getSimpleName());

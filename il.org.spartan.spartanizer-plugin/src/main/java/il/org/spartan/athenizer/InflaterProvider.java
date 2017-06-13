@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.traversal.*;
 public class InflaterProvider extends OperationsProvider {
   final Configuration configuration;
   Function<List<Operation<?>>, List<Operation<?>>> function = λ -> Collections.singletonList(the.firstOf(λ));
-  
+
   public InflaterProvider() {
     configuration = InflaterProvider.freshCopyOfAllExpanders();
   }
@@ -44,13 +44,13 @@ public class InflaterProvider extends OperationsProvider {
             new ToStringExpander(), //
             new TernaryPushupStrings(), //
             new MultiplicationToCast(), //
-            //new BooleanExpressionBloater(), //
+            // new BooleanExpressionBloater(), //
             null) //
         .add(PrefixExpression.class, //
             new PrefixToInfix(), //
             null) //
         .add(SwitchStatement.class, //
-            new CasesSplit(),//
+            new CasesSplit(), //
             new SwitchMissingDefaultAdd(), //
             null)//
         .add(Assignment.class, //
@@ -72,7 +72,6 @@ public class InflaterProvider extends OperationsProvider {
         // // new MethodDeclarationNameExpander(),
         // // new AddModifiersToMethodDeclaration(), //
         // null) //
-        
         // .add(EnumDeclaration.class, //
         // new AddModifiersToEnums(), //
         // null) //
@@ -96,18 +95,18 @@ public class InflaterProvider extends OperationsProvider {
             new LongIfBloater(), //
             null) //
         .add(InfixExpression.class, //
-            new ParenthesesBloater(),//
+            new ParenthesesBloater(), //
             new TernaryPushup(), //
             null) //
         .add(VariableDeclarationFragment.class, //
-            new LocalInitializedCollection(),//
+            new LocalInitializedCollection(), //
             null)//
     ;//
   }
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return configuration.firstTipper(¢);
   }
-  public InflaterProvider provideAll(){
+  public InflaterProvider provideAll() {
     function = λ -> λ;
     return this;
   }

@@ -4,8 +4,6 @@ import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
 import java.util.*;
-import java.util.function.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -14,7 +12,6 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.athenizer.*;
-import il.org.spartan.athenizer.SingleFlater.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -87,7 +84,7 @@ public class OperandBloating extends TestOperand {
       azzert.that(Trivia.essence(peeled1), is(Trivia.essence($1)));
       return new OperandBloating($1);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      note.bug(this,¢);
+      note.bug(this, ¢);
     }
     return null;
   }
