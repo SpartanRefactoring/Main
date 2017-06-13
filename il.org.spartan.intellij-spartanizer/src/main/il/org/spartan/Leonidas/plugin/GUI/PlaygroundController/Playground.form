@@ -118,7 +118,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Clear"/>
+          <text value="Clear output"/>
         </properties>
       </component>
       <grid id="d6238" binding="buttonPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -151,7 +151,8 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Spartanize"/>
+          <horizontalTextPosition value="11"/>
+          <text value="Spartanize Input code"/>
         </properties>
       </component>
     </children>
