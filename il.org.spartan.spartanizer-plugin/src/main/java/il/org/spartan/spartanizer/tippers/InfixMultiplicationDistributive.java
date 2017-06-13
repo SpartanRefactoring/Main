@@ -74,7 +74,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     }
     assert $ != null;
     if (!$.isEmpty())
-      different.remove($);
+      different.removeAll($);
     assert the.firstOf($) != null;
     assert the.firstOf(different) != null;
     assert the.secondOf(different) != null;
