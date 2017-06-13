@@ -25,18 +25,24 @@ public enum Spartanizer {
         if ("SpartanizerUtils.java".equals(f.getName()))
             return;
         Toolbox toolbox = Toolbox.getInstance();
+        f.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                toolbox.executeAllTippers(e);
+            }
+        });
+    }
+
+    public static void spartanizeFileRecursively(PsiFile f) {
+        Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
         while (toolbox.replaced) {
             toolbox.replaced = false;
-            f.accept(new JavaRecursiveElementVisitor() {
-                @Override
-                public void visitElement(PsiElement e) {
-                    super.visitElement(e);
-                    toolbox.executeAllTippers(e);
-                }
-            });
+            spartanizeFileOnePass(f);
         }
     }
+
 
     public static void spartanizeElementWithTipper(PsiElement e, String tipperName){
         Toolbox toolbox = Toolbox.getInstance();
