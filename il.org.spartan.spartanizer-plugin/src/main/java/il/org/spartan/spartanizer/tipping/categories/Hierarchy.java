@@ -7,11 +7,14 @@ import java.util.function.*;
  * @author Yossi Gil
  * @since 2017-06-10 */
 public class Hierarchy<T> {
-  public final Map<T, Set<T>> children = new HashMap<>();
+  private final Map<T, Set<T>> children = new HashMap<>();
   private final Function<T, Set<T>> parents;
 
   public boolean contains(final T ¢) {
     return children.containsKey(¢);
+  }
+  public boolean isRoot(final T ¢) {
+    return parents.apply(¢).isEmpty();
   }
   public void add(final T t) {
     if (contains(t))
