@@ -41,6 +41,7 @@ public class Playground extends JFrame {
     private JTextPane textPaneOutput;
     private JScrollPane inputScroll;
     private JScrollPane outputScroll;
+    private JButton spartanizeInputRecursivelyButton;
     private JTextPane inputTextPane;
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
