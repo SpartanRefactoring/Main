@@ -277,6 +277,8 @@ public class OperationListEditor extends ListEditor {
     final String[] $ = new String[7];
     int count = 0;
     for (final Entry<String, Object> ¢ : elements_list) {
+      if(¢==null)
+        continue;
       if (count == 7)
         break;
       $[count++] = ¢.getKey();
