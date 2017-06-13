@@ -282,6 +282,7 @@ public class OperationListEditor extends ListEditor {
       $[count++] = ¢.getKey();
     }
     // when you want to initialize all preferences - uncomment the next line:
+    //return res;
     return stringList == null || stringList.isEmpty() ? $ : stringList.split(DELIMETER);
   }
 
