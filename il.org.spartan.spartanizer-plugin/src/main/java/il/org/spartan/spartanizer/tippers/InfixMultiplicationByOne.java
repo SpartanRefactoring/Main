@@ -13,12 +13,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code 1*X} by {@code X}
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.NOP.onNumbers {
+    implements Category.NOP.onNumbers {
   private static final long serialVersionUID = 0x7AAE85AAEB6D72C8L;
 
   private static ASTNode replacement(final List<Expression> ¢) {

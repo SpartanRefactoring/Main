@@ -10,12 +10,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** link {@Issue1000}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2017-01-07 */
 public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = -0x619C6820E2C43DE4L;
 
   @Override public String description(final ReturnStatement ¢) {

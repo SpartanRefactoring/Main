@@ -1,10 +1,11 @@
-package il.org.spartan.spartanizer.tipping;
+package il.org.spartan.spartanizer.tipping.categories;
 
-/** The {@link TipperCategory} of renaming, and renaming related
- * {@link Tipper}s.
+import il.org.spartan.spartanizer.tipping.*;
+
+/** The {@link Category} of renaming, and renaming related {@link Tipper}s.
  * @author Yossi Gil
  * @since Sep 28, 2016 */
-public interface Nominal extends TipperCategory {
+public interface Nominal extends Category {
   /** TODO Yossi Gil: document class
    * @author Yossi Gil
    * @since 2017-05-29 */

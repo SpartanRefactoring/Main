@@ -9,8 +9,8 @@ import il.org.spartan.utils.*;
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public class MethodInfo extends ExecutableEntity {
-  private static String class2name(final Class<?> param) {
-    return !(param + "").startsWith("class ") ? param + "" : (param + "").substring((param + "").indexOf(' ') + 1);
+  private static String class2name(final Class<?> ¢) {
+    return !(¢ + "").startsWith("class ") ? ¢ + "" : (¢ + "").substring((¢ + "").indexOf(' ') + 1);
   }
   private static String[] class2name(final Class<?>[] params) {
     final String[] $ = new String[params.length];

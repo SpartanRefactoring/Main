@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code
  * b + -3
@@ -15,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 05-12-2016 */
 public class InfixPlusToMinus extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x2637AF187963DB3FL;
 
   @Override public ASTNode replacement(final InfixExpression ¢) {

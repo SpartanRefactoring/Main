@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Apply the distributive rule to multiplication: {@code
 * a*b + a*c
@@ -23,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression>
     //
-    implements TipperCategory.Arithmetics.Symbolic, TipperCategory.CommonFactorOut {
+    implements Category.Theory.Arithmetics.Symbolic, Category.CommonFactorOut {
   private static final long serialVersionUID = -0x381154E4E51D0081L;
 
   private static boolean IsSimpleMultiplication(final Expression $) {
@@ -73,7 +74,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     }
     assert $ != null;
     if (!$.isEmpty())
-      different.remove($);
+      different.removeAll($);
     assert the.firstOf($) != null;
     assert the.firstOf(different) != null;
     assert the.secondOf(different) != null;

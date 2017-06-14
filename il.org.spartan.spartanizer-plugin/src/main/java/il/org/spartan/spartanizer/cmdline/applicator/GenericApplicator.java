@@ -3,13 +3,12 @@ package il.org.spartan.spartanizer.cmdline.applicator;
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.spartanizer.traversal.*;
 
 /** Generic applicator
@@ -47,10 +46,10 @@ public class GenericApplicator {
   }
   public GenericApplicator(final String[] classes, final String... tipperGroups) {
     this(classes);
-    selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
+    selectedTipperGroups = tipperGroups == null ? allLabels() : as.list(tipperGroups);
   }
-  protected static List<String> setAllTipperGroups() {
-    return Stream.of(TipperGroup.values()).map(Enum::name).collect(toList());
+  protected static List<String> allLabels() {
+    return Taxa.hierarchy.nodes().stream().map(λ -> λ.label).collect(toList());
   }
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {
     return as.list(MethodDeclaration.class, InfixExpression.class, //
@@ -96,10 +95,6 @@ public class GenericApplicator {
   }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = configuration.firstTipper(¢);
-    final TipperGroup g = $.tipperGroup();
-    if (!selectedTipperGroups.contains(g.name()))
-      return null;
-    System.out.println("selected tipper: " + g.name());
-    return $;
+    return selectedTipperGroups.contains($.tipperGroup().label()) ? $ : null;
   }
 }

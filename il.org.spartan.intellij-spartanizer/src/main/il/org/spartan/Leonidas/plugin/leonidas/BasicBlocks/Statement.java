@@ -37,7 +37,7 @@ public class Statement extends GenericMethodCallBasedBlock {
 
     @Override
     public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(iz.statement(e.getInner()) && !iz.blockStatement(e.getInner()));
+        return super.generalizes(e).combineWith(new MatchingResult( iz.statement(e.getInner()) && !iz.blockStatement(e.getInner())));
     }
 
     @Override

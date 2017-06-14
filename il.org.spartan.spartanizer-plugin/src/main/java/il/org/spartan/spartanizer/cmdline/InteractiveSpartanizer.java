@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil
@@ -33,7 +34,7 @@ public class InteractiveSpartanizer {
     }
     return $;
   }
-  public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
+  public InteractiveSpartanizer disable(final Class<? extends Category> ¢) {
     traversals.traversal.configuration.disable(¢);
     return this;
   }

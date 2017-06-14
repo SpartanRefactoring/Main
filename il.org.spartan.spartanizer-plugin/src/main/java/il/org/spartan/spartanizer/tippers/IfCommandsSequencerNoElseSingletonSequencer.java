@@ -14,13 +14,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code if (x) { f(); return a; } else { g(); {} } } into {@code if
  * (x) { f(); return a; } g(); }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextStatement<IfStatement>//
-    implements TipperCategory.EarlyReturn {
+    implements Category.EarlyReturn {
   private static final long serialVersionUID = -0x4B44CE3E76095713L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

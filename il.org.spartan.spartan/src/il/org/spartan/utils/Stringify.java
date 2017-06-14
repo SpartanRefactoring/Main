@@ -174,7 +174,7 @@ public enum Stringify {
     return ss.length == 0 ? "" : o.begin() + Separate.by(ss, o.separator()) + o.end();
   }
   private static <T> Iterable<T> prune(final Iterable<T> ts, final Option o) {
-    return o.notOmittingNulls() ? ts : prune.nulls(ts);
+    return o.notOmittingNulls() ? ts : prune.nils(ts);
   }
   private static <T> T[] prune(final T[] ts, final Option o) {
     return o.notOmittingNulls() ? ts : prune.nulls(ts);

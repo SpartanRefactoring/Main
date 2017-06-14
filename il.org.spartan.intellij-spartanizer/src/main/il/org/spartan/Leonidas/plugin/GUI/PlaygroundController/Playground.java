@@ -41,6 +41,7 @@ public class Playground extends JFrame {
     private JTextPane textPaneOutput;
     private JScrollPane inputScroll;
     private JScrollPane outputScroll;
+    private JButton spartanizeInputRecursivelyButton;
     private JTextPane inputTextPane;
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
@@ -68,12 +69,17 @@ public class Playground extends JFrame {
         pack();
         setVisible(true);
         outputArea.setEditable(false);
-        spartanizeButton.addActionListener(e -> spartanizeButtonClicked());
+        spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
+        spartanizeInputRecursivelyButton.addActionListener(e -> spartanizeRecursivelyButtonClicked());
         clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
     }
 
-    private void spartanizeButtonClicked() {
+    private void spartanizeRecursivelyButtonClicked(){
+        spartanizeButtonClicked(true);
+    }
+
+    private void spartanizeButtonClicked(boolean recursive) {
         if (inputArea.getText().trim().isEmpty()) {
             return;
         }
@@ -96,7 +102,10 @@ public class Playground extends JFrame {
             }
         }
         if (i < before.length && file != null) {
-            Spartanizer.spartanizeFileOnePass(file);
+            if(!recursive)
+                Spartanizer.spartanizeFileOnePass(file);
+            else
+                Spartanizer.spartanizeFileRecursively(file);
             outputArea.setText(fixString(file.getText(), i));
         } else {
             outputArea.setText(inputArea.getText());

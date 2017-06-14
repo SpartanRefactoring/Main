@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Removes redundant assignment- an assignment with same variable subsequent
@@ -18,7 +19,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-20
  * @see issue #1110 */
 public class AssignmentAndAssignmentToSameKill extends GoToNextStatement<Assignment> //
-    implements TipperCategory.CommonFactorOut {
+    implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x1E2F6B6CADD65C0DL;
 
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {

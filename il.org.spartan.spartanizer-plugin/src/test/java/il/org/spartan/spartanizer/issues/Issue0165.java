@@ -26,7 +26,6 @@ public final class Issue0165 {
   }
   @Test public void a06() {
     trimmingOf("boolean a(V $) { return (F & $.g()) != 0;}")//
-        .gives("boolean a(V $){return($.g()&F)!=0;}") //
         .stays();
   }
   @Test public void a07() {

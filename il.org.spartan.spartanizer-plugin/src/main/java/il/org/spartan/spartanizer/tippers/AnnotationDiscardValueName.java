@@ -8,7 +8,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Removes the "value" member from annotations that only have a single member,
@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotation>//
-    implements TipperCategory.SyntacticBaggage {
+    implements Category.SyntacticBaggage {
   private static final long serialVersionUID = 0x77F6509E0062C2EDL;
   private MemberValuePair member;
   private SimpleName name;

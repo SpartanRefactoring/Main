@@ -9,7 +9,9 @@ public interface Selfie<Self extends Selfie<Self>> {
   default <U> void change(final U ¢) {
     forget.it(¢);
   }
-  Self self();
+  @SuppressWarnings("unchecked") default Self self() {
+    return (Self) this;
+  }
   default <F> Self self(final Supplier<F> t) {
     change(t.get());
     return self();

@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** convert {@code
  * if (x)
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement>//
-    implements TipperCategory.Ternarization {
+    implements Category.Ternarization {
   private static final long serialVersionUID = -0x629F5E257C7498C9L;
 
   @Override public String description(final IfStatement ¢) {

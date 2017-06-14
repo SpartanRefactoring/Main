@@ -28,8 +28,24 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
+  /* @param l - list of all woe
+   *
+   * @param maxOps - max num of enabled woe allowed */
+  public static boolean handleIsNumEnabledFine(final List<WidgetOperationEntry> es, final int maxOps) {
+    int count = 0;
+    for (final WidgetOperationEntry ¢ : es)
+      if (¢.isEnabled())
+        ++count;
+    if (count <= maxOps)
+      return true;
+    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
+        "Cannot enable more than " + WIDGET_MAX_OPS + " widget operations. \n Taking the " + WIDGET_MAX_OPS + " first enabled widget operations ");
+    return false;
+  }
   public static void onAble(final WidgetOperationEntry e, final boolean valueNow, final ListEditor resLE) {
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+    if (!handleIsNumEnabledFine(l, WIDGET_MAX_OPS))
+      return;
     l.get(l.indexOf(e)).setEnabled(!valueNow);
     e.setEnabled(!valueNow);
     WidgetPreferences.storeEntries(l);
@@ -38,12 +54,10 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperationEntry ¢) {
     return ¢.isEnabled();
   }
-  public static void onConfigure(@SuppressWarnings("unused") final WidgetOperationEntry ¢) {
-    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Configuration", "Will be available in later releases");
-    // if (¢.getWidgetOp() != null)
-    // new
-    // ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-    // ¢, ¢.widgetSUID, store()).open();
+  public static void onConfigure(final WidgetOperationEntry ¢, final ListEditor resLE) {
+    if (¢.getWidgetOp() != null)
+      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢, store()).open();
+    resLE.loadDefault();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ",
@@ -77,7 +91,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getButtonBoxControl(parent).dispose();
       }
     };
-    addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperationEntry) λ),
+    ole.addDefaultButtonsConfigWithLE(resLE);
+    ole.resLE = resLE; // TODO: Raviv Rachmiel, find a better way to do this -rr
+    addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperationEntry) λ, resLE),
         λ -> isEnabled((WidgetOperationEntry) λ), λ -> onAble((WidgetOperationEntry) λ, isEnabled((WidgetOperationEntry) λ), resLE)));
     resLE.getButtonBoxControl(getFieldEditorParent());
     addField(resLE);

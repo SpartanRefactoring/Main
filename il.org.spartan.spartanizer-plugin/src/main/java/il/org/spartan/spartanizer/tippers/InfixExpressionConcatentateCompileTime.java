@@ -8,6 +8,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Concat some strings to one string {@code
  * "abcde"
@@ -18,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Nov Shalmon
  * @since 2016-09-04 */
 public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Collapse {
+    implements Category.Collapse {
   private static final long serialVersionUID = -0x349BFB6422E9DC98L;
 
   @Override public String description() {

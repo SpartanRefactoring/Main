@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @author Alex Kopzon
  * @since 2016 */
 @Ignore
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({ "static-method", "unlikely-arg-type" })
 public class EnvironmentTestUse {
   @Test public void useTestMethodDefinition() {
     Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));

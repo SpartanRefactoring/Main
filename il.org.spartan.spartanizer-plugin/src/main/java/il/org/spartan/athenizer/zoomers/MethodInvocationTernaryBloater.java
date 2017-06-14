@@ -9,13 +9,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Test case is {@link Issue0984} Issue #984 convert {@code o.f(x ? a : b); }
  * to {@code if (x) o.f(a); else o.f(b); }
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = -0x52FB02854C2113AL;
 
   @Override public ASTNode replacement(final ExpressionStatement s) {
@@ -23,9 +24,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     if (i == null)
       return null;
     final ConditionalExpression $ = findFirst.conditionalArgument(i);
-    if ($ == null)
-      return null;
-    if (iz.nullLiteral(then($)) && !iz.nullLiteral(elze($)) || iz.nullLiteral(elze($)) && !iz.nullLiteral(then($)))
+    if ($ == null || iz.nullLiteral(then($)) && !iz.nullLiteral(elze($)) || iz.nullLiteral(elze($)) && !iz.nullLiteral(then($)))
       return null;
     final MethodInvocation mThen = copy.of(i);
     final int ci = mThen.arguments().indexOf(findFirst.conditionalArgument(mThen));

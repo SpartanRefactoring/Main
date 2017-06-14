@@ -43,7 +43,7 @@ public enum STOP {
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
   public static StopHandler stopExit() {
-    return stopHandler = new StopHandler() {
+    return new StopHandler() {
       @Override public void stop(final int exitCode) {
         throw new AssertionError("Stop " + exitCode);
       }
@@ -57,7 +57,7 @@ public enum STOP {
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
   public static StopHandler stopFail() {
-    return stopHandler = new StopHandler() {
+    return new StopHandler() {
       @Override public void stop(final int exitCode) {
         fail("Design by contract failue, code = " + exitCode);
       }
@@ -70,7 +70,7 @@ public enum STOP {
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
   public static StopHandler stopRuntimeException() {
-    return stopHandler = new StopHandler() {
+    return new StopHandler() {
       @Override public void stop(final int exitCode) {
         throw new RuntimeException("Stop called, exit code=" + exitCode);
       }

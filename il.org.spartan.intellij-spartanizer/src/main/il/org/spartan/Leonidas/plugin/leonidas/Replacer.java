@@ -61,9 +61,9 @@ public class Replacer {
         r.deleteByRange(parent, treeToReplace, last);
     }
 
-    public void replaceSingleRoot(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+    public PsiElement replaceSingleRoot(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         PsiElement element = getReplacingForest(roots, m, r).get(0);
-        r.replace(treeToReplace, element);
+        return r.replace(treeToReplace, element);
     }
 
     /**

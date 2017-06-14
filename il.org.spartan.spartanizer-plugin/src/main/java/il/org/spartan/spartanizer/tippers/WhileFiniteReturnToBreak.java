@@ -7,7 +7,7 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Convert Finite loops with return sideEffects to shorter ones : toList
@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
 public final class WhileFiniteReturnToBreak extends NodePattern<WhileStatement>//
-    implements TipperCategory.Loops {
+    implements Category.Loops {
   private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
 
   public WhileFiniteReturnToBreak() {

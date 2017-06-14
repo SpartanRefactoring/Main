@@ -261,3 +261,5 @@ build/
 target.p2/.classpath
 target.p2/.project
 target.p2/.settings/
+il.org.spartan.spartanizer-plugin/src/main/java/il/org/spartan/spartanizer/research/metatester
+

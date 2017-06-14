@@ -67,7 +67,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
 
     @Override
     public void replacingRules() {
-        element(4).asStatement.replaceIdentifiers(3, "¢");
+        element(4).asStatement.replaceIdentifiers(3, "cent");
+        element(3).asIdentifier.changeName("cent");
     }
 
     /**

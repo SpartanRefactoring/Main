@@ -12,14 +12,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalInitializedReturnExpression extends LocalInitializedStatement //
-    implements TipperCategory.Inlining {
+    implements Category.Inlining {
   private static final long serialVersionUID = 0x5CC8F62FB4ED7DCBL;
   private ReturnStatement returnStatement;
   private Expression returnValue;

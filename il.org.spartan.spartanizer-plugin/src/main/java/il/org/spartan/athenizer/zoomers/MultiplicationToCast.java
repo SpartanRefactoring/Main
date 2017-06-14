@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Covers Issues #1006 & #1007 toList Convert : {@code
  * x * 1. / x * 1.0
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-01-11 */
 public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x57EAC7C1A6BFDD34L;
 
   @Override public ASTNode replacement(final InfixExpression x) {

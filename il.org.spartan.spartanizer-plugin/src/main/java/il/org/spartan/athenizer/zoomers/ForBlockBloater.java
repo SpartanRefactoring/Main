@@ -12,7 +12,7 @@ import fluent.ly.*;
 import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** converts for(condition)statement to for(condition){statement} Issue #975
@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 22-12-16 */
-public class ForBlockBloater extends ForStatementPattern implements TipperCategory.Bloater {
+public class ForBlockBloater extends ForStatementPattern implements Category.Bloater {
   private static final long serialVersionUID = 0x1228AEDBE97C1F8DL;
 
   @Override public Examples examples() {

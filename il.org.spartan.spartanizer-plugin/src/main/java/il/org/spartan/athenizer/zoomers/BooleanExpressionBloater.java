@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Expand Boolean Expressions : toList Expand : {@code
  * x && y()
@@ -26,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author tomerdragucki
  * @since 2017-01-13 */
 public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
-    implements TipperCategory.Bloater {
+    implements Category.Bloater {
   private static final long serialVersionUID = 0x6593D58F0DEFC96AL;
 
   @Override protected boolean prerequisite(final InfixExpression ¢) {

@@ -13,18 +13,16 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** Example in {@link #examples} Test case is {@link Issue1049}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
-public final class TernaryPushup extends Multiciary implements TipperCategory.Bloater {
+public final class TernaryPushup extends Multiciary implements Category.Bloater {
   private static final long serialVersionUID = 0x711512B65712ADF4L;
   Expression operandCondition, operandThen, operandElze;
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   private ConditionalExpression leftConditional;
   private ConditionalExpression operandConditional;
 

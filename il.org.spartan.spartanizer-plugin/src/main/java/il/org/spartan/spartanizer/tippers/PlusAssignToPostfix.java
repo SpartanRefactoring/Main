@@ -7,13 +7,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Expend : {@code a+=1;} To: {@code a++;} Important : Works only in cases
  * where binding exists, otherwise doesnothing Tested in {@link Issue096}
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-3-23 */
 public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
-    implements TipperCategory.Arithmetics.Symbolic {
+    implements Category.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
   @Override public ASTNode replacement(final Assignment $) {

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.List;
 import java.util.stream.*;
 
@@ -29,7 +27,8 @@ public class SpartanMovie2 extends AbstractHandler {
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
-    final List<ICompilationUnit> compilationUnits = Selection.Util.getAllCompilationUnits().inner.stream().map(x -> x.descriptor).collect(Collectors.toList());
+    final List<ICompilationUnit> compilationUnits = Selection.Util.getAllCompilationUnits().inner.stream().map(λ -> λ.descriptor)
+        .collect(Collectors.toList());
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
     final IWorkbenchPage page = window == null ? null : window.getActivePage();
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();

@@ -13,13 +13,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-22 */
-public final class ReturnDeadAssignment extends ReturnValue implements TipperCategory.Deadcode {
+public final class ReturnDeadAssignment extends ReturnValue implements Category.Deadcode {
   private static final long serialVersionUID = 0x240D679126B42ECDL;
   private Assignment assignment;
   private SimpleName to;
@@ -33,7 +33,7 @@ public final class ReturnDeadAssignment extends ReturnValue implements TipperCat
     ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
     ).andAlso("Variable is a local variable, didn't declared up", //
-        () -> !Environment.declaresUp(methodDeclaration).contains(to + "")//
+        () -> Environment.declaresUp(methodDeclaration).stream().noneMatch(x -> x.getKey().equals(to + ""))//
     ).notNil("Extract from", //
         () -> from = from(assignment) //
     ).notNil("Extract operator", //

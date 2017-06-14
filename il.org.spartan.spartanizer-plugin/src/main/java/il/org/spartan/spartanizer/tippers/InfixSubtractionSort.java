@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
  * taken to leave intact the use of {@link Operator#PLUS} for the concatenation
@@ -16,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixSubtractionSort extends InfixExpressionSortingRest//
-    implements TipperCategory.Sorting {
+    implements Category.Sorting {
   private static final long serialVersionUID = 0x1CF2CD663E8433EDL;
 
   @Override protected boolean sort(final List<Expression> ¢) {

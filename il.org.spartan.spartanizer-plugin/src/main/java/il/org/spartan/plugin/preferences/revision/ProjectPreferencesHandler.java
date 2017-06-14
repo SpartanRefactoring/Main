@@ -29,7 +29,7 @@ import org.eclipse.ui.dialogs.*;
 import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Example.*;
 
@@ -111,7 +111,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   private static SpartanPreferencesDialog getDialog(final Map<SpartanCategory, SpartanElement[]> m) {
     if (Display.getCurrent().getActiveShell() == null || m == null)
       return null;
-    final List<SpartanElement> _es = m.keySet().stream().filter(λ -> !TipperCategory.reversedHierarchy.containsKey(λ.categoryClass()))
+    final List<SpartanElement> _es = m.keySet().stream().filter(λ -> Taxa.hierarchy.isRoot(Taxon.of(λ.categoryClass())))
         .collect(Collectors.toList());
     final SpartanElement[] es = _es.toArray(new SpartanElement[_es.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {

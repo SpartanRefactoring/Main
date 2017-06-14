@@ -167,7 +167,7 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-  String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
+  String tmp = System.getProperty("file.separator", "/") + System.getProperty("java.io.tmpdir", "/tmp");
   String UTF_8 = "utf-8";
 
   interface Extension {

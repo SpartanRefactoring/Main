@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Examples.*;
 
@@ -24,7 +25,7 @@ import il.org.spartan.utils.Examples.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
-    implements TipperCategory, Serializable {
+    implements Category, Serializable {
   protected static Converter convert(final String from) {
     return new Examples()/** 12 */
         .convert(from);

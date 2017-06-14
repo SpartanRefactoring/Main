@@ -14,13 +14,13 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocaUninitializedAssignment extends LocalUninitialized implements TipperCategory.Collapse {
+public final class LocaUninitializedAssignment extends LocalUninitialized implements Category.Collapse {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
   private Assignment assignment;
   private Expression from;
@@ -35,7 +35,7 @@ public final class LocaUninitializedAssignment extends LocalUninitialized implem
     andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
     andAlso("New value does not use values of later siblings", () -> {
       final List<String> usedNames = compute.usedIdentifiers(from).collect(toList());
-      return laterSiblings().noneMatch(λ -> usedNames.contains(λ.getName()));
+      return laterSiblings().noneMatch(λ -> usedNames.contains(λ.getName().getIdentifier()));
     });
   }
   @Override public String description() {

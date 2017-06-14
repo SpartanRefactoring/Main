@@ -60,16 +60,15 @@ public class $MatchBloatersAndTippers {
 
   /** Prints non matched tippers (only of tippers in Configurations(toolbox)) */
   public static void printNonMatchedTippers() {
-    final List<Class<?>> $ = new ArrayList<>();
-    $.addAll(Configurations.all.get().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
+    final List<Class<?>> $ = new ArrayList<>(Configurations.all.get().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
     $.removeAll(matching.values());
     $.forEach(λ -> System.out.println(λ.getName()));
   }
   /** Prints bloaters that are not in "matching" map (only of bloaters in
    * InflaterProvider) */
   public static void printBloatersNotInMatching() {
-    final List<Class<?>> $ = new ArrayList<>();
-    $.addAll(InflaterProvider.freshCopyOfAllExpanders().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
+    final List<Class<?>> $ = new ArrayList<>(
+        InflaterProvider.freshCopyOfAllExpanders().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
     $.removeAll(matching.keySet());
     $.forEach(λ -> System.out.println(λ.getName()));
   }

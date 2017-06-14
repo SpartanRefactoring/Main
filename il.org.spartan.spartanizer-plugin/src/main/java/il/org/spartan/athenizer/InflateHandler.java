@@ -37,8 +37,8 @@ public class InflateHandler extends AbstractHandler {
   public static final Bool active = new Bool();
   private static final IPartListener pageListener = pageListener();
 
-  @Override public Object execute(final ExecutionEvent e) throws ExecutionException {
-    HandlerUtil.toggleCommandState(e.getCommand());
+  @Override public Object execute(final ExecutionEvent ¢) throws ExecutionException {
+    HandlerUtil.toggleCommandState(¢.getCommand());
     final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }

@@ -9,12 +9,13 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code s.equals("s")} by {@code "s".equals(s)}
  * @author Ori Roth
  * @since 2016/05/08 */
 public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurrentNode<MethodInvocation>//
-    implements TipperCategory.Idiomatic {
+    implements Category.Idiomatic {
   private static final long serialVersionUID = -0x46D384810D67A65L;
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
