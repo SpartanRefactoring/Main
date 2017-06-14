@@ -48,7 +48,7 @@ public abstract class GitOperation extends WidgetOperation {
     if (builder != null)
       try (Repository repo = builder.build()) {
         if (repo != null)
-//          repo.getConfig().load();
+          repo.getConfig().load();
         try (Git git = new Git(repo)) {
           gitOperation(git);
         }
