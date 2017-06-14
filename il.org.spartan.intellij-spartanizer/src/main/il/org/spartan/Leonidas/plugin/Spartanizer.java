@@ -3,7 +3,12 @@ package il.org.spartan.Leonidas.plugin;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import il.org.spartan.Leonidas.auxilary_layer.az;
+import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.SpartaDefeat;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+
+import static il.org.spartan.Leonidas.auxilary_layer.Utils.isAnnotationPresent;
 
 /**
  * @author Oren Afek, Roey Maor
@@ -16,13 +21,18 @@ public enum Spartanizer {
         return Toolbox.getInstance().canTip(e);
     }
 
+    static boolean shouldSpartanize(PsiElement e) {
+        PsiFile f = iz.psiFile(e) ? az.psiFile(e) : e.getContainingFile();
+        return !"SpartanizerUtils.java".equals(f.getName()) && !isAnnotationPresent(f, SpartaDefeat.class);
+    }
+
     static void spartanizeElement(PsiElement e) {
-        if (!"SpartanizerUtils.java".equals(e.getContainingFile().getName()))
+        if (shouldSpartanize(e))
             Toolbox.getInstance().executeAllTippers(e);
     }
 
     public static void spartanizeFileOnePass(PsiFile f) {
-        if ("SpartanizerUtils.java".equals(f.getName()))
+        if (!shouldSpartanize(f))
             return;
         Toolbox toolbox = Toolbox.getInstance();
         f.accept(new JavaRecursiveElementVisitor() {
@@ -44,9 +54,9 @@ public enum Spartanizer {
     }
 
 
-    public static void spartanizeElementWithTipper(PsiElement e, String tipperName){
+    public static void spartanizeElementWithTipper(PsiElement e, String tipperName) {
         Toolbox toolbox = Toolbox.getInstance();
-        for(Tipper t : toolbox.getAllTippers()){
+        for (Tipper t : toolbox.getAllTippers()) {
             System.out.println(t.name());
         }
     }

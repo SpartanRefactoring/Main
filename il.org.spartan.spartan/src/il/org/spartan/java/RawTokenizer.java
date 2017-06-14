@@ -461,8 +461,7 @@ public class RawTokenizer {
     }
 
     /* user code: */
-    public String text() {
-        return $.length() > 0 ? $.toString() : yytext();
+    public String text() { return $.length() > 0 ? $.toString() : yytext();
     }
 
     public void error(String s) {
@@ -545,20 +544,20 @@ public class RawTokenizer {
      *
      * @return      <code>false</code>, iff there was new input.
      *
-     * @exception java.io.IOException  if any I/O-Error occurs
+     * @exception   java.io.IOException  if any I/O-Error occurs
    */
   private boolean zzRefill() throws java.io.IOException {
 
     /* first: make room (if you can) */
-    if (zzStartRead > 0) {
-        zzEndRead += zzFinalHighSurrogate;
-        zzFinalHighSurrogate = 0;
-        System.arraycopy(zzBuffer, zzStartRead,
-                zzBuffer, 0,
-                zzEndRead-zzStartRead);
+      if (zzStartRead > 0) {
+          zzEndRead += zzFinalHighSurrogate;
+          zzFinalHighSurrogate = 0;
+          System.arraycopy(zzBuffer, zzStartRead,
+                  zzBuffer, 0,
+                       zzEndRead-zzStartRead);
 
       /* translate stored positions */
-        zzEndRead -= zzStartRead;
+      zzEndRead-= zzStartRead;
       zzCurrentPos-= zzStartRead;
       zzMarkedPos-= zzStartRead;
       zzStartRead = 0;
@@ -569,8 +568,8 @@ public class RawTokenizer {
       /* if not: blow it up */
         char newBuffer[] = new char[zzBuffer.length*2];
       System.arraycopy(zzBuffer, 0, newBuffer, 0, zzBuffer.length);
-      zzBuffer = newBuffer;
-        zzEndRead += zzFinalHighSurrogate;
+        zzBuffer = newBuffer;
+      zzEndRead += zzFinalHighSurrogate;
       zzFinalHighSurrogate = 0;
     }
 
@@ -582,20 +581,20 @@ public class RawTokenizer {
     if (numRead == 0) {
       throw new java.io.IOException("Reader returned 0 characters. See JFlex examples for workaround.");
     }
-      if (numRead > 0) {
+    if (numRead > 0) {
       zzEndRead += numRead;
       /* If numRead == requested, we might have requested to few chars to
          encode a full Unicode character. We assume that a Reader would
          otherwise never return half characters. */
-          if (numRead == requested) {
-              if (Character.isHighSurrogate(zzBuffer[zzEndRead - 1])) {
-                  --zzEndRead;
-                  zzFinalHighSurrogate = 1;
+        if (numRead == requested) {
+            if (Character.isHighSurrogate(zzBuffer[zzEndRead - 1])) {
+                --zzEndRead;
+          zzFinalHighSurrogate = 1;
         }
       }
       /* potentially more input available */
       return false;
-      }
+    }
 
     /* numRead < 0 ==> end of stream */
     return true;
@@ -632,11 +631,11 @@ public class RawTokenizer {
         zzAtEOF = false;
         zzEOFDone = false;
         zzEndRead = zzStartRead = 0;
-        zzCurrentPos = zzMarkedPos = 0;
-    zzFinalHighSurrogate = 0;
-    yyline = yychar = yycolumn = 0;
-        zzLexicalState = YYINITIAL;
-        if (zzBuffer.length > ZZ_BUFFERSIZE)
+    zzCurrentPos = zzMarkedPos = 0;
+        zzFinalHighSurrogate = 0;
+        yyline = yychar = yycolumn = 0;
+    zzLexicalState = YYINITIAL;
+    if (zzBuffer.length > ZZ_BUFFERSIZE)
       zzBuffer = new char[ZZ_BUFFERSIZE];
   }
 
@@ -645,17 +644,17 @@ public class RawTokenizer {
    * Returns the current lexical state.
    */
   public final int yystate() {
-      return zzLexicalState;
+    return zzLexicalState;
   }
 
 
-    /**
-     * Enters a new lexical state
+  /**
+   * Enters a new lexical state
    *
    * @param newState the new lexical state
-     */
-    public final void yybegin(int newState) {
-    zzLexicalState = newState;
+   */
+  public final void yybegin(int newState) {
+      zzLexicalState = newState;
   }
 
 
@@ -670,14 +669,15 @@ public class RawTokenizer {
     /**
      * Returns the character at position <tt>pos</tt> from the
      * matched text.
-     * <p>
+     *
      * It is equivalent to yytext().charAt(pos), but faster
      *
      * @param pos the position of the character to fetch.
      *            A value from 0 to yylength()-1.
+     *
      * @return the character at position pos
-     */
-    public final char yycharat(int pos) {
+   */
+  public final char yycharat(int pos) {
     return zzBuffer[zzStartRead+pos];
   }
 
@@ -700,17 +700,17 @@ public class RawTokenizer {
      * (e.g. a JFlex bug producing a faulty scanner etc.).
      *
      * Usual syntax/scanner level error handling should be done
-     * in error fallback rules.
-   *
-   * @param   errorCode  the code of the errormessage to display
+   * in error fallback rules.
+     *
+     * @param   errorCode  the code of the errormessage to display
      */
     private void zzScanError(int errorCode) {
-    String message;
-    try {
-        message = ZZ_ERROR_MSG[errorCode];
-    } catch (ArrayIndexOutOfBoundsException e) {
-        message = ZZ_ERROR_MSG[ZZ_UNKNOWN_ERROR];
-    }
+        String message;
+        try {
+            message = ZZ_ERROR_MSG[errorCode];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            message = ZZ_ERROR_MSG[ZZ_UNKNOWN_ERROR];
+        }
 
         throw new Error(message);
     }
@@ -720,12 +720,12 @@ public class RawTokenizer {
      * Pushes the specified amount of characters back into the input stream.
      *
      * They will be read again by then next call of the scanning method
-     *
-     * @param number  the number of characters to be read again.
-   *                This number must not be greater than yylength()!
+   *
+   * @param number  the number of characters to be read again.
+     *                This number must not be greater than yylength()!
      */
     public void yypushback(int number) {
-        if ( number > yylength())
+        if (number > yylength())
             zzScanError(ZZ_PUSHBACK_2BIG);
 
         zzMarkedPos -= number;
@@ -735,8 +735,8 @@ public class RawTokenizer {
     /**
      * Resumes scanning until the next regular expression is matched,
      * the end of input is encountered or an I/O-Error occurs.
-   *
-   * @return the next token
+     *
+     * @return the next token
      * @exception java.io.IOException  if any I/O-Error occurs
      */
     public Token next() throws java.io.IOException {
@@ -748,73 +748,73 @@ public class RawTokenizer {
         int zzMarkedPosL;
         int zzEndReadL = zzEndRead;
         char[] zzBufferL = zzBuffer;
-        char[] zzCMapL = ZZ_CMAP;
+    char [] zzCMapL = ZZ_CMAP;
 
         int[] zzTransL = ZZ_TRANS;
-    int [] zzRowMapL = ZZ_ROWMAP;
+        int[] zzRowMapL = ZZ_ROWMAP;
         int[] zzAttrL = ZZ_ATTRIBUTE;
 
         while (true) {
             zzMarkedPosL = zzMarkedPos;
 
-            yychar += zzMarkedPosL - zzStartRead;
+            yychar += zzMarkedPosL-zzStartRead;
 
-            boolean zzR = false;
-            int zzCh;
-            int zzCharCount;
-      for (zzCurrentPosL = zzStartRead  ;
-           zzCurrentPosL < zzMarkedPosL ;
-           zzCurrentPosL += zzCharCount) {
-          zzCh = Character.codePointAt(zzBufferL, zzCurrentPosL, zzMarkedPosL);
-          zzCharCount = Character.charCount(zzCh);
-          switch (zzCh) {
-              case '\u000B':
-              case '\u000C':
-              case '\u0085':
-              case '\u2028':
-              case '\u2029':
-                  yyline++;
-                  yycolumn = 0;
-                  zzR = false;
-                  break;
-              case '\r':
-                  yyline++;
-                  yycolumn = 0;
-                  zzR = true;
-                  break;
-              case '\n':
-                  if (zzR)
-                      zzR = false;
-                  else {
-                      yyline++;
-                      yycolumn = 0;
-                  }
-                  break;
-              default:
-                  zzR = false;
-                  yycolumn += zzCharCount;
-          }
+      boolean zzR = false;
+      int zzCh;
+      int zzCharCount;
+            for (zzCurrentPosL = zzStartRead;
+                 zzCurrentPosL < zzMarkedPosL;
+                 zzCurrentPosL += zzCharCount) {
+                zzCh = Character.codePointAt(zzBufferL, zzCurrentPosL, zzMarkedPosL);
+                zzCharCount = Character.charCount(zzCh);
+                switch (zzCh) {
+                    case '\u000B':
+                    case '\u000C':
+                    case '\u0085':
+                    case '\u2028':
+                    case '\u2029':
+                        yyline++;
+                        yycolumn = 0;
+                        zzR = false;
+                        break;
+                    case '\r':
+                        yyline++;
+                        yycolumn = 0;
+                        zzR = true;
+                        break;
+                    case '\n':
+                        if (zzR)
+                            zzR = false;
+                        else {
+                            yyline++;
+                            yycolumn = 0;
+                        }
+                        break;
+                    default:
+                        zzR = false;
+          yycolumn += zzCharCount;
+        }
       }
 
-            if (zzR) {
+      if (zzR) {
         // peek one character ahead if it is \n (if we have counted one line too much)
         boolean zzPeek;
         if (zzMarkedPosL < zzEndReadL)
           zzPeek = zzBufferL[zzMarkedPosL] == '\n';
         else if (zzAtEOF)
-          zzPeek = false;
+            zzPeek = false;
         else {
             boolean eof = zzRefill();
             zzEndReadL = zzEndRead;
             zzMarkedPosL = zzMarkedPos;
-            zzBufferL = zzBuffer;
-            if (eof)
-                zzPeek = false;
-          else 
-            zzPeek = zzBufferL[zzMarkedPosL] == '\n';
+          zzBufferL = zzBuffer;
+          if (eof) 
+            zzPeek = false;
+          else
+              zzPeek = zzBufferL[zzMarkedPosL] == '\n';
         }
-        if (zzPeek) yyline--;
-            }
+          if (zzPeek) yyline--;
+      }
             zzAction = -1;
 
             zzCurrentPosL = zzCurrentPos = zzStartRead = zzMarkedPosL;
@@ -864,7 +864,7 @@ public class RawTokenizer {
                     if ((zzAttributes & 1) == 1) {
                         zzAction = zzState;
                         zzMarkedPosL = zzCurrentPosL;
-            if ( (zzAttributes & 8) == 8) break zzForAction;
+                        if ((zzAttributes & 8) == 8) break zzForAction;
                     }
 
                 }
@@ -1315,11 +1315,10 @@ public class RawTokenizer {
                     case 73: {
                         return URSHIFTEQ;
                     }
-                    case 147:
-                        break;
-                    case 74: {
-                        return AT_INTERFACE;
-                    }
+                    case 147: break;
+          case 74: 
+            { return AT_INTERFACE;
+            }
           case 148: break;
           default:
             zzScanError(ZZ_NO_MATCH);
