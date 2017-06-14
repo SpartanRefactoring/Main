@@ -39,7 +39,8 @@ public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
             /* start */
             identifier0 = booleanExpression(1) ? expression(2) : expression(3);
             /* end */
-        });
+        }
+        );
     }
 
 
