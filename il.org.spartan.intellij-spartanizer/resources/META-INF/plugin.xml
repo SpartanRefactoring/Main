@@ -55,7 +55,7 @@
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerAction" id="myPlugin3"
-                text="Spartanize"
+                text="Spartanize current file"
                 icon="Icons.LeonidasSmall">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
