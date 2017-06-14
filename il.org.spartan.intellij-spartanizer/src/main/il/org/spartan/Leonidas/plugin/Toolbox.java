@@ -45,7 +45,6 @@ public class Toolbox implements ApplicationComponent {
     public boolean playground = false;
     public boolean testing = false;
     public boolean replaced = false;
-    boolean nanoEnabled = true;
     private Map<Class<? extends PsiElement>, List<Tipper>> allTipperMap = new ConcurrentHashMap<>();
     private List<GenericEncapsulator> blocks = new ArrayList<>();
     private List<LeonidasTipperDefinition> tipperInstances = new ArrayList<>();
@@ -172,7 +171,13 @@ public class Toolbox implements ApplicationComponent {
     }
 
     void includeNanoPatterns() {
-
+        this
+                .add(new SafeReference())
+                .add(new Unless())
+                .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
+                .add(new LispLastElement())
+                .add(new DefaultsTo())
+                .add(new Delegator());
     }
 
     void excludeNanoPatterns() {
@@ -183,7 +188,6 @@ public class Toolbox implements ApplicationComponent {
                 element.remove(tipper);
             }
         }));
-        nanoEnabled = false;
     }
 
     private Toolbox add(Tipper<? extends PsiElement> t) {

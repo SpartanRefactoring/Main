@@ -19,16 +19,17 @@ public class NanoPatternsEnableAction extends AnAction {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
         assert psiFile != null;
         Project p = psiFile.getProject();
-        Toolbox tb = Toolbox.getInstance();
-        if (tb.nanoEnabled) {
-            tb.excludeNanoPatterns();
+        String buttonText = e.getPresentation().getText();
+        assert buttonText != null;
+        if (buttonText.startsWith("Disable")) {
+            Toolbox.getInstance().excludeNanoPatterns();
         } else {
-            tb.includeNanoPatterns();
+            Toolbox.getInstance().includeNanoPatterns();
         }
         Presentation presentation = e.getPresentation();
-        presentation.setText((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? "Enable" : "Disable")
+        presentation.setText((buttonText.startsWith("Disable") ? "Enable" : "Disable")
                 + " Nano Patterns");
-        presentation.setIcon((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? Icons.Enable : Icons.Disable));
+        presentation.setIcon((buttonText.startsWith("Disable") ? Icons.Enable : Icons.Disable));
         DaemonCodeAnalyzer.getInstance(p).restart();
     }
 }
