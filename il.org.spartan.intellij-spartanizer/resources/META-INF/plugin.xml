@@ -17,7 +17,7 @@
     ]]>
     </change-notes>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="141.0" />
+    <idea-version since-build="141.0"/>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
@@ -51,6 +51,11 @@
         </group>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
                 text="Disable Spartanization In Current File"
+                icon="Icons.Disable">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.NanoPatternsEnableAction" id="myPlugin4"
+                text="Disable Nano Patterns"
                 icon="Icons.Disable">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
