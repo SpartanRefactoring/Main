@@ -2,6 +2,8 @@ package il.org.spartan.java.cfg.builders;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
@@ -28,15 +30,36 @@ public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
         process(az.continueStatement(curr));
         break;
       case DO_STATEMENT:
-        process(az.doStatement(curr), next);
+        processStandardLoop(curr, az.doStatement(curr).getBody(), next);
+        break;
+      case ENHANCED_FOR_STATEMENT:
+        processStandardLoop(curr, az.enhancedFor(curr).getBody(), next);
+        break;
+      case FOR_STATEMENT:
+        processStandardLoop(curr, az.forStatement(curr).getBody(), next);
+        break;
+      case IF_STATEMENT:
+        process(az.ifStatement(curr), next);
+        break;
+      case RETURN_STATEMENT:
+        process(az.returnStatement(curr));
+        break;
+      case SWITCH_CASE:
+        process(az.switchStatement(curr), next);
+        break;
+      case THROW_STATEMENT:
+        process(az.throwStatement(curr));
+        break;
+      case TRY_STATEMENT:
+        // TODO Roth: complete
         break;
       default:
+        assert !iz.switchCase(curr);
         out(curr).add(next);
     }
   }
-  private void process(Block curr, ASTNode next) {
-    @SuppressWarnings("unchecked") final Statement[] ss = (Statement[]) az.block(curr).statements()
-        .toArray(new Statement[az.block(curr).statements().size()]);
+  @SuppressWarnings("unchecked") private void process(Block curr, ASTNode next) {
+    final Statement[] ss = (Statement[]) curr.statements().toArray(new Statement[curr.statements().size()]);
     if (ss.length == 0) {
       out(curr).add(next);
       return;
@@ -51,13 +74,65 @@ public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
   }
   private void process(ContinueStatement curr) {
     processSequencer(curr, curr.getLabel() == null ? null : curr.getLabel().getIdentifier(), //
-        FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT, SWITCH_STATEMENT);
+        FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
   }
-  private void process(DoStatement curr, ASTNode next) {
-    in(curr).add(curr.getBody());
-    out(curr).add(curr.getBody());
+  private void processStandardLoop(Statement curr, Statement body, ASTNode next) {
+    in(curr).add(body);
+    out(curr).add(body);
     out(curr).add(next);
-    process(curr.getBody(), curr, curr);
+    process(body, curr, curr);
+  }
+  private void process(IfStatement curr, ASTNode next) {
+    final Statement t = curr.getThenStatement(), e = curr.getElseStatement();
+    out(curr).add(t);
+    process(t, curr, next);
+    if (e == null)
+      return;
+    out(curr).add(e);
+    process(e, curr, next);
+  }
+  private void process(ReturnStatement curr) {
+    out(curr).add(root);
+  }
+  @SuppressWarnings("unchecked") private void process(SwitchStatement curr, ASTNode next) {
+    final Statement[] ss = (Statement[]) curr.statements().toArray(new Statement[az.block(curr).statements().size()]);
+    if (ss.length == 0) {
+      out(curr).add(next);
+      return;
+    }
+    out(curr).add(ss[0]);
+    final List<SwitchCase> cs = an.empty.list();
+    SwitchCase d = null;
+    for (int i = 0; i < ss.length; ++i)
+      if (iz.switchCase(ss[i])) {
+        final SwitchCase c = az.switchCase(ss[i]);
+        if (c.getExpression() != null)
+          cs.add(c);
+        else
+          d = c;
+      }
+    for (int i = 0; i < cs.size(); ++i)
+      out(cs.get(i)).add(i == cs.size() - 1 ? d != null ? d : next : cs.get(i + 1));
+    Statement prev = curr;
+    for (int i = 0; i < ss.length; ++i) {
+      final Statement s = ss[i];
+      ASTNode nekst = next;
+      for (int j = i + 1; j < ss.length; ++j)
+        if (!iz.switchCase(ss[j]))
+          nekst = ss[j];
+      process(s, prev, nekst);
+      if (!iz.switchCase(s))
+        prev = s;
+    }
+  }
+  private void process(ThrowStatement curr) {
+    ASTNode next = root;
+    for (ASTNode p = curr.getParent(), prev = null; p != null && p != root; prev = p, p = p.getParent())
+      if (iz.tryStatement(p) && !iz.catchClause(prev)) {
+        next = p;
+        break;
+      }
+    out(curr).add(next);
   }
   private void processSequencer(Statement curr, String label, int... closers) {
     for (ASTNode p = curr.getParent(); p instanceof Statement; p = p.getParent())
