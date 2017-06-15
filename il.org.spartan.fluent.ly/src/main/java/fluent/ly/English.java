@@ -184,7 +184,7 @@ public interface English {
    * @param l JD
    * @param x replacement suffix string
    * @return cut string */
-  static String trimAbsolute(final String s, final int l, final String x) {
+  public static String trimAbsolute(final String s, final int l, final String x) {
     assert l - x.length() >= 0;
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
