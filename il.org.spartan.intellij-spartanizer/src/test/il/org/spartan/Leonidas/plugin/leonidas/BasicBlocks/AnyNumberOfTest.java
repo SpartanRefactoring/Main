@@ -3,6 +3,8 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.google.common.io.Resources;
 import com.intellij.psi.PsiWhileStatement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
+import il.org.spartan.Leonidas.auxilary_layer.az;
+import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
 import org.apache.commons.io.IOUtils;
 
@@ -20,7 +22,7 @@ public class AnyNumberOfTest extends PsiTypeHelper {
 
     public void testGetNumberOfOccurrences() throws Exception {
         Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("anyNumberOf(statement(1));"));
-        AnyNumberOf ano = new AnyNumberOf().create(n.getChildren().get(0), new HashMap<>());
+        AnyNumberOf ano = az.anyNumberOf(Pruning.prune(n.getChildren().get(0), new HashMap<>()));
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}"));
         EncapsulatorIterator it = e.iterator();
         assertEquals(ano.getNumberOfOccurrences(it), 1);

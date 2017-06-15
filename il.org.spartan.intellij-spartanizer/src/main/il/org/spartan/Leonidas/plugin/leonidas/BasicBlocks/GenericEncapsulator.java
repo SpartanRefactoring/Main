@@ -3,10 +3,13 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.google.common.collect.Lists;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
+import il.org.spartan.Leonidas.plugin.leonidas.Replacer;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -94,17 +97,27 @@ public abstract class GenericEncapsulator extends Encapsulator {
                 .allMatch(c -> c.accept(e)));
     }
 
-    protected void applyReplacingRules(List<PsiElement> elements, Map<Integer, List<PsiElement>> map){
-        elements.forEach(e -> replacingRules.forEach(rr -> rr.replace(e, map)));
+    protected List<PsiElement> applyReplacingRules(List<PsiElement> elements, Map<Integer, List<PsiElement>> map){
+        return elements.stream().map(e -> {
+            PsiElement temp = e;
+            for (ReplacingRule rr : replacingRules) {
+                temp = rr.replace(temp, map);
+            }
+            return temp;
+        }).collect(Collectors.toList());
     }
 
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        applyReplacingRules(elements, m);
+        elements = applyReplacingRules(elements, m);
         if (parent == null) return elements;
-        List<PsiElement> l = Lists.reverse(elements);
-        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
-        r.deleteByRange(inner.getParent(), inner, inner);
-        return elements;
+        if (elements.size() > 1){
+            List<PsiElement> l = Lists.reverse(elements);
+            l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+            r.deleteByRange(inner.getParent(), inner, inner);
+            return elements;
+        }
+        return Utils.wrapWithList(r.replace(inner, elements.get(0)));
+
     }
 
     /**
@@ -139,7 +152,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     protected interface ReplacingRule {
-        void replace(PsiElement encapsulator, Map<Integer, List<PsiElement>> m);
+        PsiElement replace(PsiElement encapsulator, Map<Integer, List<PsiElement>> m);
     }
 
     public Map<Integer, GenericEncapsulator> getGenericElements(){

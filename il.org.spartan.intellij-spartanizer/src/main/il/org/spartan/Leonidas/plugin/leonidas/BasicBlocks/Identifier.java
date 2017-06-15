@@ -66,6 +66,6 @@ public class Identifier extends NamedElement {
     }
 
     public void changeName(String name){
-        addReplacingRule((e, m) -> new PsiRewrite().replace(e, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(name)));
+        addReplacingRule((e, m) -> JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(name));
     }
 }

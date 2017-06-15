@@ -19,6 +19,8 @@ import org.fife.ui.rsyntaxtextarea.Theme;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +45,7 @@ public class Playground extends JFrame {
     private JScrollPane outputScroll;
     private JButton spartanizeInputRecursivelyButton;
     private JButton stepButton;
+    private JButton RecuresiveJavaButton;
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
     private String[] after = {"\n}", "\n}}", ");\n}}"};
@@ -77,10 +80,16 @@ public class Playground extends JFrame {
         setVisible(true);
         outputArea.setEditable(false);
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
-        spartanizeInputRecursivelyButton.addActionListener(e -> spartanizeRecursivelyButtonClicked());
         stepButton.addActionListener(e -> spartanizationStep());
         clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
+        RecuresiveJavaButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                spartanizeRecursivelyButtonClicked();
+            }
+        });
     }
 
     private void spartanizeRecursivelyButtonClicked() {
@@ -239,6 +248,7 @@ public class Playground extends JFrame {
         closeButton.setText("Close");
         buttonPanel.add(closeButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         spartanizeButton = new JButton();
+        spartanizeInputRecursivelyButton = new JButton();
         spartanizeButton.setText("Spartanize");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;

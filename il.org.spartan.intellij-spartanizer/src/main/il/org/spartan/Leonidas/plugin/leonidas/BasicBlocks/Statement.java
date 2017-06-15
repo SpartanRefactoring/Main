@@ -65,16 +65,19 @@ public class Statement extends GenericMethodCallBasedBlock {
         });
     }
 
-    public void replaceIdentifiers(int id, String to){
-        addReplacingRule((e, map) -> e.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitIdentifier(PsiIdentifier identifier) {
-                super.visitIdentifier(identifier);
-                if (identifier.getText().equals(map.get(id))) {
-                    PsiRewrite prr = new PsiRewrite();
-                    prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(to));
+    public void replaceIdentifiers(Integer id, String to){
+        addReplacingRule((e, map) -> {
+            e.accept(new JavaRecursiveElementVisitor() {
+                @Override
+                public void visitIdentifier(PsiIdentifier identifier) {
+                    super.visitIdentifier(identifier);
+                    if (identifier.getText().equals(map.get(id).get(0).getText())) {
+                        PsiRewrite prr = new PsiRewrite();
+                        prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(to));
+                    }
                 }
-            }
-        }));
+            });
+            return e;
+        });
     }
 }

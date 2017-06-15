@@ -141,6 +141,16 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return getForestFromMethod(method);
     }
 
+    private static List<GenericEncapsulator> getGenericElements(Encapsulator e){
+        List<GenericEncapsulator> lge = new LinkedList<>();
+        e.accept(n -> {
+            if (!iz.generic(n)) return;
+            lge.add(az.generic(n));
+            lge.addAll(az.generic(n).getGenericElements().values());
+        });
+        return lge;
+    }
+
     /**
      * @return the generic tree representing the "from" template
      */
@@ -148,20 +158,16 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
         giveIdToStubElements(replacer);
         List<Encapsulator> l = getForestFromMethod(replacer);
-        l.forEach(root -> root.accept(n -> {
-            if (!iz.generic(n)) return;
-            GenericEncapsulator ge = az.generic(n);
-            m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
-                List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
-                Encapsulator ie = iz.quantifier(ge) ? az.quantifier(ge).getInternal() : ge;
-                try {
-                    Utils.getDeclaredMethod(ie.getClass(), mce.getMethodExpression().getReferenceName(), Arrays.stream(arguments.toArray()).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, arguments.toArray());
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
-                    e1.printStackTrace();
-                }
+        l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
+            List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
+            Encapsulator ie = iz.quantifier(n) ? az.quantifier(n).getInternal() : n;
+            try {
+                Utils.getDeclaredMethod(ie.getClass(), mce.getMethodExpression().getReferenceName(), Arrays.stream(arguments.toArray()).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, arguments.toArray());
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
+                e1.printStackTrace();
+            }
 
-            });
-        }));
+        })));
         return l;
     }
 
