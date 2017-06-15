@@ -5,7 +5,10 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.
 import java.util.HashMap;
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.INCOMPLETE;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.UNTESTED;
 
 /**
  * <Tipper description>
@@ -14,7 +17,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Anna Belozovsky
  * @since 15/06/2017
  */
-@TipperUnderConstruction(INCOMPLETE)
+@TipperUnderConstruction(UNTESTED)
 public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
 
     /**
@@ -24,19 +27,36 @@ public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
      */
     @Override
     public void constraints() {
+        element(4).asStatement.mustNotRefer(element(3).asIdentifier.getText());
     }
 
     @Override
     public void matcher() {
         new Template(() -> {
+            class wrapping {
+                /* start */
 
+                Class0 method1(Class2 identifier3) {
+                    anyNumberOf(statement(4));
+                    return null; // ignore
+                }
+                /* end */
+            }
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
+            class wrapping {
+                /* start */
 
+                Class0 method1(Class2 __) {
+                    anyNumberOf(statement(4));
+                    return null; // ignore
+                }
+                /* end */
+            }
         });
     }
 
@@ -47,7 +67,11 @@ public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
         return examples;
     }
 
-    class Class0 {
+    private class Class0 {
+
+    }
+
+    private class Class2 {
 
     }
 
