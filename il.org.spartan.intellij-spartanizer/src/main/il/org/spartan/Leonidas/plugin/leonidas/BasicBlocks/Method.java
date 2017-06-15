@@ -37,8 +37,8 @@ public class Method extends ModifiableElement {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        if (super.generalizes(e).notMatches() || !iz.method(e.getInner())) return new MatchingResult(false);
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> map) {
+        if (super.generalizes(e, map).notMatches() || !iz.method(e.getInner())) return new MatchingResult(false);
         PsiMethod m = az.method(e.getInner());
         Wrapper<Integer> dummy = new Wrapper<>(0);
         return matcherReturnType.getMatchingResult(m.getReturnTypeElement(), dummy).combineWith(

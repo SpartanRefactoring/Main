@@ -47,8 +47,8 @@ public class Expression extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(super.generalizes(e).matches() && iz.expression(e.getInner()));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return new MatchingResult(super.generalizes(e, m).matches() && iz.expression(e.getInner()));
     }
 
     @Override
@@ -68,6 +68,6 @@ public class Expression extends GenericMethodCallBasedBlock {
     /* Constraints */
 
     public void mustBeArithmetic() {
-        addConstraint(e -> iz.expression(e.inner) && iz.arithmetic(az.expression(e.inner)));
+        addConstraint((e, m) -> iz.expression(e.inner) && iz.arithmetic(az.expression(e.inner)));
     }
 }

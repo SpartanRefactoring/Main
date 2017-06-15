@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
@@ -28,8 +29,8 @@ public class BooleanLiteral extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(iz.booleanLiteral(e.getInner()));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return super.generalizes(e, m).combineWith(new MatchingResult(iz.booleanLiteral(e.getInner())));
     }
 
     @Override

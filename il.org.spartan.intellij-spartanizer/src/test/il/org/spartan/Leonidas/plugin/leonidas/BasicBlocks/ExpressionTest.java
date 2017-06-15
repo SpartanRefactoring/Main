@@ -4,6 +4,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
+import java.util.HashMap;
+
 /**
  * @author Anna Belozovsky
  * @since 01/05/2017
@@ -27,7 +29,7 @@ public class ExpressionTest extends PsiTypeHelper {
     }
 
     public void testGeneralizes() throws Exception {
-        assert expression.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 1"))).matches();
-        assert !expression.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;"))).matches();
+        assert expression.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 1")), new HashMap<>()).matches();
+        assert !expression.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;")), new HashMap<>()).matches();
     }
 }
