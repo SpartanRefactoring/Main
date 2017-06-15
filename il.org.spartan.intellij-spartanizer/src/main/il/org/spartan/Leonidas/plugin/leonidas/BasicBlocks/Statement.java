@@ -65,6 +65,20 @@ public class Statement extends GenericMethodCallBasedBlock {
         });
     }
 
+    /**
+     * Will accepts only if not contains identifier
+     */
+    public void mustNotRefer(Integer id) {
+        addConstraint((e, m) -> {
+            Wrapper<Boolean> wb = new Wrapper<>(true);
+            e.accept(n -> {
+                if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(m.get(id).get(0).getText()))
+                    wb.set(false);
+            });
+            return wb.get();
+        });
+    }
+
     public void replaceIdentifiers(Integer id, String to){
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
