@@ -444,7 +444,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
          class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"
          commandId="il.org.spartan.ZoomOut">
    </handler>
-   <handler commandId="il.org.spartan.Linguistic" class="il.org.spartan.spartanizer.research.linguistic.LinguisticHandler" />
+   <handler commandId="il.org.spartan.Linguistic" class="il.org.spartan.java.cfg.CFGHandler" />
 </extension>
 
 <!-- Menus -->
