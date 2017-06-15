@@ -2,6 +2,9 @@ package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.INCOMPLETE;
 
 /**
@@ -21,33 +24,48 @@ public class MatchCtorParamNamesToFieldsIfAssigned implements LeonidasTipperDefi
      */
     @Override
     public void constraints() {
+//        element(4).asStatement.
     }
 
     @Override
-    /* If clarification of the type of the tipper
-     * is needed, use the annotation @Leonidas(<Psi Class>)
-     * when psi class is the class of the element on which the tipper applied
-     */
     public void matcher() {
         new Template(() -> {
             /* start */
+            class Class0 {
+                Class1 field2;
 
-
+                Class0(Class1 identifier3) {
+                    anyNumberOf(statement(4));
+                }
+            }
             /* end */
         });
     }
 
     @Override
-    /* If clarification of the type of the tipper
-     * is needed, use the annotation @Leonidas(<Psi Class>)
-     * when psi class is the class of the element on which the tipper applied
-     */
     public void replacer() {
         new Template(() -> {
-            /* start */
+           /* start */
+            class Class0 {
+                Class1 field2;
 
-
+                Class0(Class1 identifier3) {
+                    anyNumberOf(statement(4));
+                }
+            }
             /* end */
         });
     }
+
+    @Override
+    public void replacingRules() {
+        String newIdentifier = element(2).asIdentifier.getText();
+        element(4).asStatement.replaceIdentifiers(3, newIdentifier);
+        element(3).asIdentifier.changeName(newIdentifier);
+    }
+
+    class Class1 {
+
+    }
+
 }
