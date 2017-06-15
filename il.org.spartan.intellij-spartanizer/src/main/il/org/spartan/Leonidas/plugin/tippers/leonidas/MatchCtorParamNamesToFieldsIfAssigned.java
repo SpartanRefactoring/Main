@@ -24,6 +24,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned implements LeonidasTipperDefi
      */
     @Override
     public void constraints() {
+        element(3).asIdentifier.notContains(element(2).asIdentifier.getText());
 //        element(4).asStatement.
     }
 
