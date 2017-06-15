@@ -42,6 +42,7 @@ public class Playground extends JFrame {
     private JScrollPane inputScroll;
     private JScrollPane outputScroll;
     private JButton spartanizeInputRecursivelyButton;
+    private JButton stepButton;
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
     private String[] after = {"\n}", "\n}}", ");\n}}"};
@@ -77,12 +78,19 @@ public class Playground extends JFrame {
         outputArea.setEditable(false);
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
         spartanizeInputRecursivelyButton.addActionListener(e -> spartanizeRecursivelyButtonClicked());
+        stepButton.addActionListener(e -> spartanizationStep());
         clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
     }
 
     private void spartanizeRecursivelyButtonClicked() {
         spartanizeButtonClicked(true);
+    }
+
+    private void spartanizationStep() {
+        spartanizeButtonClicked(false);
+        inputArea.setText(outputArea.getText());
+        outputArea.setText("");
     }
 
     private void spartanizeButtonClicked(boolean recursive) {
@@ -244,5 +252,9 @@ public class Playground extends JFrame {
      */
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
