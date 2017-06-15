@@ -155,15 +155,6 @@
           <text value="Spartanize input once"/>
         </properties>
       </component>
-      <component id="f78e9" class="javax.swing.JButton" binding="spartanizeInputRecursivelyButton" default-binding="true">
-        <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <text value="Spartanize input recursively"/>
-        </properties>
-      </component>
       <component id="e98e1" class="javax.swing.JButton" binding="stepButton">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -171,6 +162,15 @@
         </constraints>
         <properties>
           <text value="Step"/>
+        </properties>
+      </component>
+      <component id="2846b" class="javax.swing.JButton" binding="RecuresiveJavaButton">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Recursive Spartanization"/>
         </properties>
       </component>
     </children>

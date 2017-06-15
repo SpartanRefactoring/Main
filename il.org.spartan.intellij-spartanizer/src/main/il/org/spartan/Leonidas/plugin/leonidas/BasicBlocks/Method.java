@@ -66,7 +66,6 @@ public class Method extends ModifiableElement {
         return m;
     }
 
-
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         PsiMethod e = az.method(elements.get(0));
