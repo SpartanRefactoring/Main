@@ -514,8 +514,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     <menu label="Athenize..." mnemonic="A">
       <!--<command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="C" label="Current Selection"/>-->
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="A" label="Active Window"/>
-    </menu>
-    <menu label="Zoomer" mnemonic="Z">
 	  <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="Z" label="Zoom On/Off"/>
 	  <command commandId="il.org.spartan.ZoomIn" style="push" mnemonic="I" label="Zoom In Once"/>
 	  <command commandId="il.org.spartan.ZoomOut" style="push" mnemonic="O" label="Zoom Out Once"/>
