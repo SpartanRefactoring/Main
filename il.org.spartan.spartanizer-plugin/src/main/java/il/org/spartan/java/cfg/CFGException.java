@@ -13,5 +13,5 @@ public class CFGException extends RuntimeException {
     return m;
   }
 
-  private static final long serialVersionUID = -1240162009558239881L;
+  private static final long serialVersionUID = -0x1135F0C6EBA74A89L;
 }

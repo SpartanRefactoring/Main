@@ -47,12 +47,12 @@ public class VolatileCFG extends CFG<VolatileCFG> {
     $.append("* Out *\n");
     for (ASTNode n : souts.keySet())
       $.append(shorten(n) + " ->\n\t" + shorten(souts.get(n)) + "\n");
-    return $.toString();
+    return $ + "";
   }
   private static String shorten(ASTNode n) {
-    return n == null ? String.valueOf(null) : English.trimAbsolute(n.toString().replaceAll("\\s+", " "), PRINT_THRESHOLD, "...");
+    return n == null ? String.valueOf(null) : English.trimAbsolute((n + "").replaceAll("\\s+", " "), PRINT_THRESHOLD, "...");
   }
   private static String shorten(Collection<ASTNode> list) {
-    return list == null ? String.valueOf(null) : list.stream().map(x -> shorten(x)).collect(Collectors.toList()).toString();
+    return list == null ? String.valueOf(null) : list.stream().map(x -> shorten(x)).collect(Collectors.toList()) + "";
   }
 }

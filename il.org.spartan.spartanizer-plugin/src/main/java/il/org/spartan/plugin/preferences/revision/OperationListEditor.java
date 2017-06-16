@@ -282,7 +282,7 @@ public class OperationListEditor extends ListEditor {
     }
     // when you want to initialize all preferences - uncomment the next line:
     //return $.toArray(new String[$.size()]);
-    return stringList == null || stringList.isEmpty() ? $.toArray(new String[$.size()]) : stringList.split(DELIMETER);
+    return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : $.toArray(new String[$.size()]);
   }
 
   public ListEditor resLE; // not a good coding methodology

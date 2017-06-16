@@ -18,16 +18,17 @@ public abstract class CFG<T extends CFG<T>> implements Selfie<T> {
   }
   public void compute(final ASTNode root) {
     if (root == null)
-      return;
-    root.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(ASTNode n) {
-        if (!builders.isRoot(n))
-          return true;
-        acknowledgeRoot(n);
-        builders.build(n);
-        return false;
-      }
-    });
+      ;
+    else
+      root.accept(new ASTVisitor() {
+        @Override public boolean preVisit2(ASTNode n) {
+          if (!builders.isRoot(n))
+            return true;
+          acknowledgeRoot(n);
+          builders.build(n);
+          return false;
+        }
+      });
   }
   public abstract List<ASTNode> in(final ASTNode n);
   public abstract List<ASTNode> out(final ASTNode n);
