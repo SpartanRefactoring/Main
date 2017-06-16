@@ -274,18 +274,15 @@ public class OperationListEditor extends ListEditor {
     // ADD,REMOVE,DOWN,UP buttons
   }
   @Override protected String[] parseString(final String stringList) {
-    final String[] $ = new String[7];
-    int count = 0;
+    List<String> $ = new ArrayList<>();
     for (final Entry<String, Object> ¢ : elements_list) {
       if(¢==null)
         continue;
-      if (count == 7)
-        break;
-      $[count++] = ¢.getKey();
+      $.add(¢.getKey());
     }
     // when you want to initialize all preferences - uncomment the next line:
-    //return res;
-    return stringList == null || stringList.isEmpty() ? $ : stringList.split(DELIMETER);
+    //return $.toArray(new String[$.size()]);
+    return stringList == null || stringList.isEmpty() ? $.toArray(new String[$.size()]) : stringList.split(DELIMETER);
   }
 
   public ListEditor resLE; // not a good coding methodology
