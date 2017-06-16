@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotation>//
-    implements Category.SyntacticBaggage {
+    implements Category.Transformation.Prune {
   private static final long serialVersionUID = 0x77F6509E0062C2EDL;
   private MemberValuePair member;
   private SimpleName name;

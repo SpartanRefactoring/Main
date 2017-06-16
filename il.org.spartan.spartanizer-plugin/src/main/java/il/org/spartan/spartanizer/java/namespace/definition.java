@@ -172,7 +172,8 @@ public interface definition {
       case ASTNode.VARIABLE_DECLARATION_FRAGMENT:
         return kind((VariableDeclarationFragment) $);
       case ASTNode.METHOD_DECLARATION:
-        return !parameters((MethodDeclaration) $).stream().anyMatch(x -> ¢.getIdentifier().equals(x.getName().getIdentifier())) ? Kind.method : Kind.parameter;
+        return !parameters((MethodDeclaration) $).stream().anyMatch(λ -> ¢.getIdentifier().equals(λ.getName().getIdentifier())) ? Kind.method
+            : Kind.parameter;
       case ASTNode.TYPE_DECLARATION:
         return !((TypeDeclaration) $).isInterface() ? Kind.class¢ : Kind.interface¢;
       default:

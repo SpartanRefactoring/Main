@@ -88,9 +88,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     }
     return null;
   }
-  @Override public final Taxon tipperGroup() {
-    return super.tipperGroup();
-  }
+
   abstract double evaluateDouble(List<Expression> xs) throws IllegalArgumentException;
   abstract int evaluateInt(List<Expression> xs) throws IllegalArgumentException;
   abstract long evaluateLong(List<Expression> xs) throws IllegalArgumentException;

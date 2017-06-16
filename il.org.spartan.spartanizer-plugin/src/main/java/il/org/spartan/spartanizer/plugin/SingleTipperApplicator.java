@@ -94,7 +94,7 @@ public final class SingleTipperApplicator {
       pm.done();
       return;
     }
-    for (final Integer i : range.from(0).to(NewGUIApplicator.PASSES_MANY)) {
+    for (final Integer i : range.from(0).to(GUIApplicator.PASSES_MANY)) {
       final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
       final Int pn = new Int(i + 1);
       final Bool canelled = new Bool();

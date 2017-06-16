@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** A Spartanizer without heavy or buggy tippers
+/** A spartanizer without heavy or buggy tippers
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public class NoBrainDamagedTippersSpartanizer extends InteractiveSpartanizer {

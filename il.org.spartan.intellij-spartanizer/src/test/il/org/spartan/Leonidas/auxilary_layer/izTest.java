@@ -11,6 +11,8 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Expression;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Statement;
 
+import java.util.HashMap;
+
 /**
  * @author michal cohen, Amir Sagiv
  * @since 22-12-2016.
@@ -602,8 +604,8 @@ public class izTest extends PsiTypeHelper {
                 e3 = Encapsulator.buildTreeFromPsi(_e3),
                 e4 = Encapsulator.buildTreeFromPsi(_e4);
 
-        assert iz.conforms(e1, e2).matches();
-        assert iz.conforms(e3, e4).matches();
+        assert iz.conforms(e1, e2, new HashMap<>()).matches();
+        assert iz.conforms(e3, e4, new HashMap<>()).matches();
     }
 
     public void testArithmetic() {

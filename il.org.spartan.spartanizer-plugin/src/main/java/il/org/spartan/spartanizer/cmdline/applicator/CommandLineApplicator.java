@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
-  private static final int PASSES_MANY = 20;
+  private static final int PASSES_MANY = 30;
 
   public static CommandLineApplicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();

@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = -0x4616D89C9896E36AL;
 
   @Override protected boolean sort(final List<Expression> ¢) {

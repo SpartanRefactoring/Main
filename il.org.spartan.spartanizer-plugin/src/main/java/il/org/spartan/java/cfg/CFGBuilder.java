@@ -7,26 +7,25 @@ import org.eclipse.jdt.core.dom.*;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-06-15 */
-@SuppressWarnings("hiding")
 public abstract class CFGBuilder<N extends ASTNode> {
   private CFG<?> cfg;
   protected ASTNode root;
 
   public abstract void build(N n);
-  @SuppressWarnings("unchecked") public boolean accept(final ASTNode n) {
-    if (n == null)
+  @SuppressWarnings("unchecked") public boolean accept(final ASTNode ¢) {
+    if (¢ == null)
       return false;
-    root = n;
-    build((N) n);
+    root = ¢;
+    build((N) ¢);
     return true;
   }
-  public void register(final CFG<?> cfg) {
-    this.cfg = cfg;
+  public void register(final CFG<?> ¢) {
+    this.cfg = ¢;
   }
-  protected List<ASTNode> in(final ASTNode n) {
-    return cfg.in(n);
+  protected List<ASTNode> in(final ASTNode ¢) {
+    return cfg.in(¢);
   }
-  protected List<ASTNode> out(final ASTNode n) {
-    return cfg.out(n);
+  protected List<ASTNode> out(final ASTNode ¢) {
+    return cfg.out(¢);
   }
 }

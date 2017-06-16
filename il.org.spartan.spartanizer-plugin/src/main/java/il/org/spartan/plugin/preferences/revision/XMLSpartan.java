@@ -121,8 +121,14 @@ public class XMLSpartan {
     tgs.forEach((key, value) -> $.put(tcs.get(key), value.toArray(new SpartanTipper[value.size()])));
     return $;
   }
-  /** TODO Roth: document. */
+  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategoriesWithHead(final IProject p) {
+    return getElementsByCategories(p, true);
+  }
   public static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p) {
+    return getElementsByCategories(p, false);
+  }
+  /** TODO Roth: document. */
+  private static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p, final boolean includeHead) {
     final Map<SpartanCategory, SpartanElement[]> $ = getTippersByCategories(p);
     final Map<String, SpartanCategory> existingCategories = anonymous.ly(() -> {
       final Map<String, SpartanCategory> m = new HashMap<>();
@@ -131,11 +137,14 @@ public class XMLSpartan {
       return m;
     });
     for (final Taxon x : Taxa.hierarchy.nodes()) {
+      final Class<? extends Category> cx = x.get();
+      if (!includeHead && cx == Category.class)
+        continue;
       SpartanCategory parent;
-      if (existingCategories.containsKey(x.get().getSimpleName()))
-        parent = existingCategories.get(x.get().getSimpleName());
+      if (existingCategories.containsKey(cx.getSimpleName()))
+        parent = existingCategories.get(cx.getSimpleName());
       else {
-        parent = new SpartanCategory(x.get());
+        parent = new SpartanCategory(cx);
         existingCategories.put(parent.name(), parent);
       }
       final Stream<Taxon> stream = Taxa.hierarchy.children(x).stream();
@@ -148,6 +157,7 @@ public class XMLSpartan {
       }).collect(Collectors.toList());
       children.forEach(λ -> parent.addChild(λ));
       $.put(parent, children.toArray(new SpartanElement[children.size()]));
+      System.out.println(parent.parent());
     }
     return trimEmptyCategories($);
   }
@@ -325,7 +335,7 @@ public class XMLSpartan {
   }
   /** Initialize XML document. Enables all tippers, except declared non core
    * tippers, also, add to the document the default values for naming\notations
-   * prefrences.
+   * preferences.
    * @param d JD
    * @return given document */
   private static Document initialize(final Document $) {

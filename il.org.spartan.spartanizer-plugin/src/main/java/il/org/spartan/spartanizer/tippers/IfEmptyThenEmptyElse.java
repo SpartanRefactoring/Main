@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
-    implements Category.NOP {
+    implements Category.Transformation.Remorph {
   private static final long serialVersionUID = 0x5956B839ADCAD9C5L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

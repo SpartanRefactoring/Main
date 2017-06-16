@@ -77,8 +77,8 @@ public class InflateHandler extends AbstractHandler {
     final Control $ = ¢.getAdapter(Control.class);
     return !($ instanceof StyledText) ? null : (StyledText) $;
   }
-  public static NewGUIApplicator applicator() {
-    return (NewGUIApplicator) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
+  public static GUIApplicator applicator() {
+    return (GUIApplicator) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
         ¢ -> Integer.valueOf(as.bit(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return λ -> λ;

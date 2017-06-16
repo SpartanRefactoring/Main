@@ -57,11 +57,11 @@ public class Class extends NamedElement{
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         if (!iz.classDeclaration(e.inner)) return new MatchingResult(false);
         PsiClass c = az.classDeclaration(e.inner);
         MatchingResult mr = new MatchingResult(true);
-        if (!super.generalizes(e).matches())
+        if (!super.generalizes(e, m).matches())
             return new MatchingResult(false);
         mr.combineWith(matchInnerElements(c.getFields(), fieldsMatchers));
         mr.combineWith(matchInnerElements(c.getMethods(), methodsMatchers));

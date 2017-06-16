@@ -36,8 +36,8 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return super.generalizes(e).combineWith(new MatchingResult( iz.statement(e.getInner()) && !iz.blockStatement(e.getInner())));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return super.generalizes(e, m).combineWith(new MatchingResult( iz.statement(e.getInner()) && !iz.blockStatement(e.getInner())));
     }
 
     @Override
@@ -55,10 +55,24 @@ public class Statement extends GenericMethodCallBasedBlock {
      * Will accepts only if not contains identifier
      */
     public void mustNotRefer(String s) {
-        addConstraint(e -> {
+        addConstraint((e, m) -> {
             Wrapper<Boolean> wb = new Wrapper<>(true);
             e.accept(n -> {
                 if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(s))
+                    wb.set(false);
+            });
+            return wb.get();
+        });
+    }
+
+    /**
+     * Will accepts only if not contains identifier
+     */
+    public void mustNotRefer(Integer id) {
+        addConstraint((e, m) -> {
+            Wrapper<Boolean> wb = new Wrapper<>(true);
+            e.accept(n -> {
+                if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(m.get(id).get(0).getText()))
                     wb.set(false);
             });
             return wb.get();

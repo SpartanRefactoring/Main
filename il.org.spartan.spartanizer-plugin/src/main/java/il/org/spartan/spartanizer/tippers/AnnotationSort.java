@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Dan Abramovich
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNode<N>//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = -0x2EF9DD2AE7C9C548L;
   private static final HashSet<String>[] rankTable = as.array(//
       new HashSet<>(as.list("Deprecated")), //

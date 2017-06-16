@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.NOP.onBooleans {
+    implements Category.Transformation.Prune, Category.Theory.Logical {
   private static final long serialVersionUID = -0x5E623D693022FD8DL;
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {

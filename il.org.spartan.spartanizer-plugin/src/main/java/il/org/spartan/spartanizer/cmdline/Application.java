@@ -94,7 +94,7 @@ public final class Application implements IApplication {
   private boolean optVerbose;
   private boolean optStatsLines;
   private boolean optStatsChanges;
-  private int optRounds = 20;
+  private int optRounds = 30;
   private String optPath;
 
   @Override public Object start(final IApplicationContext arg0) {

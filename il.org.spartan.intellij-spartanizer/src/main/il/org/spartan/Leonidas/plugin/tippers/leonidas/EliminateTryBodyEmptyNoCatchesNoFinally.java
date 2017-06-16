@@ -12,7 +12,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 29/5/2017.
  */
-/*@TipperUnderConstruction(BROKEN_REPLACER)*/
 public class EliminateTryBodyEmptyNoCatchesNoFinally implements LeonidasTipperDefinition {
 
     @Override
