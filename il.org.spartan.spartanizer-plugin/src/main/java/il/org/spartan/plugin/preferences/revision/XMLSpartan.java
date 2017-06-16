@@ -121,11 +121,11 @@ public class XMLSpartan {
     tgs.forEach((key, value) -> $.put(tcs.get(key), value.toArray(new SpartanTipper[value.size()])));
     return $;
   }
-  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategoriesWithHead(final IProject p) {
-    return getElementsByCategories(p, true);
+  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategoriesWithHead(final IProject ¢) {
+    return getElementsByCategories(¢, true);
   }
-  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p) {
-    return getElementsByCategories(p, false);
+  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject ¢) {
+    return getElementsByCategories(¢, false);
   }
   /** TODO Roth: document. */
   private static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p, final boolean includeHead) {
