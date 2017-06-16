@@ -22,9 +22,7 @@ import il.org.spartan.utils.*;
 public final class TernaryPushup extends Multiciary implements Category.Bloater {
   private static final long serialVersionUID = 0x711512B65712ADF4L;
   Expression operandCondition, operandThen, operandElze;
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   private ConditionalExpression leftConditional;
   private ConditionalExpression operandConditional;
 

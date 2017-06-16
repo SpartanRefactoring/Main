@@ -49,7 +49,7 @@ public class OperationListEditor extends ListEditor {
     configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
     configureButton.setText("Configure operation");
     configureButton.setEnabled(false);
-    this.getDownButton().addSelectionListener(new SelectionListener() {
+    getDownButton().addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
@@ -57,24 +57,23 @@ public class OperationListEditor extends ListEditor {
         onSelection();
       }
       @SuppressWarnings("synthetic-access") void onSelection() {
-        final int i = getList().getSelectionIndex() +1;
+        final int i = getList().getSelectionIndex() + 1;
         if (i < 0)
           return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        if(l.size()-i<=1)
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        if (l.size() - i <= 1)
           return;
-        //else
+        // else
         System.out.println("we are on - " + l.get(i).getName());
         System.out.println(l);
         System.out.println("TODO BOM - Down");
-        Collections.swap(l, i, i+1);
+        Collections.swap(l, i, i + 1);
         WidgetPreferences.storeEntries(l);
         System.out.println(l);
-        //resLE.loadDefault();
-       
+        // resLE.loadDefault();
       }
     });
-    this.getUpButton().addSelectionListener(new SelectionListener() {
+    getUpButton().addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
@@ -85,7 +84,7 @@ public class OperationListEditor extends ListEditor {
         final int i = getList().getSelectionIndex() - 1;
         if (i < 0 || i == 0)
           return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
         System.out.println("we are on - " + l.get(i).getName());
         System.out.println(l);
         System.out.println("TODO BOM - UP");
@@ -94,7 +93,7 @@ public class OperationListEditor extends ListEditor {
         System.out.println(l);
       }
     });
-    this.getRemoveButton().addSelectionListener(new SelectionListener() {
+    getRemoveButton().addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
@@ -105,14 +104,13 @@ public class OperationListEditor extends ListEditor {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
-        List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        if(l.get(i).isEnabled())
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        if (l.get(i).isEnabled())
           l.get(i).disable();
-        //else
+        // else
         l.remove(i);
         WidgetPreferences.storeEntries(l);
-        //resLE.loadDefault();
-       
+        // resLE.loadDefault();
       }
     });
   }
@@ -218,7 +216,6 @@ public class OperationListEditor extends ListEditor {
           ableButton.setText("Enable operation");
           configureButton.setEnabled(false);
         }
-       
       }
     });
     configureButton.setVisible(true);
@@ -289,6 +286,4 @@ public class OperationListEditor extends ListEditor {
     if (getList() != null && getList().getSelectionIndex() >= 0 && ableButton != null)
       ableButton.setEnabled(true);
   }
-  
-  
 }

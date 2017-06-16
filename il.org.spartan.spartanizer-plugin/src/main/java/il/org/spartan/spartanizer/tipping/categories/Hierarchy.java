@@ -19,7 +19,8 @@ public class Hierarchy<T> {
   public void add(final T t) {
     if (contains(t))
       return;
-    children.put(t, new LinkedHashSet<>()); // TODO yossi gil: problem with an.empty.set() here
+    children.put(t, new LinkedHashSet<>()); // TODO yossi gil: problem with
+                                            // an.empty.set() here
     for (final T parent : parents(t)) {
       if (!children.containsKey(parent))
         children.put(parent, an.empty.set());

@@ -14,10 +14,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Ori Roth
  * @since 2017-06-15 */
 public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
-  @Override public void build(final MethodDeclaration m) {
-    process(m.getBody(), root, root);
+  @Override public void build(final MethodDeclaration ¢) {
+    process(¢.getBody(), root, root);
   }
-  private void process(Statement curr, ASTNode prev, ASTNode next) {
+  private void process(final Statement curr, final ASTNode prev, final ASTNode next) {
     in(curr).add(prev);
     switch (curr.getNodeType()) {
       case BLOCK:
@@ -58,31 +58,31 @@ public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
         out(curr).add(next);
     }
   }
-  @SuppressWarnings("unchecked") private void process(Block curr, ASTNode next) {
+  @SuppressWarnings("unchecked") private void process(final Block curr, final ASTNode next) {
     final Statement[] ss = (Statement[]) curr.statements().toArray(new Statement[curr.statements().size()]);
     if (ss.length == 0) {
       out(curr).add(next);
       return;
     }
     out(curr).add(ss[0]);
-    for (int i = 0; i < ss.length; ++i)
-      process(ss[i], i == 0 ? curr : ss[i - 1], i == ss.length - 1 ? next : ss[i + 1]);
+    for (int ¢ = 0; ¢ < ss.length; ++¢)
+      process(ss[¢], ¢ == 0 ? curr : ss[¢ - 1], ¢ == ss.length - 1 ? next : ss[¢ + 1]);
   }
-  private void process(BreakStatement curr) {
+  private void process(final BreakStatement curr) {
     processSequencer(curr, curr.getLabel() == null ? null : curr.getLabel().getIdentifier(), //
         FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT, SWITCH_STATEMENT);
   }
-  private void process(ContinueStatement curr) {
+  private void process(final ContinueStatement curr) {
     processSequencer(curr, curr.getLabel() == null ? null : curr.getLabel().getIdentifier(), //
         FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
   }
-  private void processStandardLoop(Statement curr, Statement body, ASTNode next) {
+  private void processStandardLoop(final Statement curr, final Statement body, final ASTNode next) {
     in(curr).add(body);
     out(curr).add(body);
     out(curr).add(next);
     process(body, curr, curr);
   }
-  private void process(IfStatement curr, ASTNode next) {
+  private void process(final IfStatement curr, final ASTNode next) {
     final Statement t = curr.getThenStatement(), e = curr.getElseStatement();
     out(curr).add(t);
     process(t, curr, next);
@@ -91,10 +91,10 @@ public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
     out(curr).add(e);
     process(e, curr, next);
   }
-  private void process(ReturnStatement curr) {
+  private void process(final ReturnStatement curr) {
     out(curr).add(root);
   }
-  @SuppressWarnings("unchecked") private void process(SwitchStatement curr, ASTNode next) {
+  @SuppressWarnings("unchecked") private void process(final SwitchStatement curr, final ASTNode next) {
     final Statement[] ss = (Statement[]) curr.statements().toArray(new Statement[az.block(curr).statements().size()]);
     if (ss.length == 0) {
       out(curr).add(next);
@@ -103,16 +103,16 @@ public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
     out(curr).add(ss[0]);
     final List<SwitchCase> cs = an.empty.list();
     SwitchCase d = null;
-    for (int i = 0; i < ss.length; ++i)
-      if (iz.switchCase(ss[i])) {
-        final SwitchCase c = az.switchCase(ss[i]);
-        if (c.getExpression() != null)
-          cs.add(c);
-        else
+    for (final Statement element : ss)
+      if (iz.switchCase(element)) {
+        final SwitchCase c = az.switchCase(element);
+        if (c.getExpression() == null)
           d = c;
+        else
+          cs.add(c);
       }
-    for (int i = 0; i < cs.size(); ++i)
-      out(cs.get(i)).add(i == cs.size() - 1 ? d != null ? d : next : cs.get(i + 1));
+    for (int ¢ = 0; ¢ < cs.size(); ++¢)
+      out(cs.get(¢)).add(¢ != cs.size() - 1 ? cs.get(¢ + 1) : d == null ? next : d);
     Statement prev = curr;
     for (int i = 0; i < ss.length; ++i) {
       final Statement s = ss[i];
@@ -125,7 +125,7 @@ public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
         prev = s;
     }
   }
-  private void process(ThrowStatement curr) {
+  private void process(final ThrowStatement curr) {
     ASTNode next = root;
     for (ASTNode p = curr.getParent(), prev = null; p != null && p != root; prev = p, p = p.getParent())
       if (iz.tryStatement(p) && !iz.catchClause(prev)) {
@@ -134,7 +134,7 @@ public class MethodBuilder extends CFGBuilder<MethodDeclaration> {
       }
     out(curr).add(next);
   }
-  private void processSequencer(Statement curr, String label, int... closers) {
+  private void processSequencer(final Statement curr, final String label, final int... closers) {
     for (ASTNode p = curr.getParent(); p instanceof Statement; p = p.getParent())
       if (is.intIsIn(p.getNodeType(), closers)
           && (label == null || iz.labeledStatement(p.getParent()) && label.equals(((LabeledStatement) p.getParent()).getLabel().getIdentifier()))) {

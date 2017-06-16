@@ -4,11 +4,9 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
 
-/**
- * TODO dormaayn: All tests regrading renaming (in the spartnizer)
- * @author  Dor Ma'ayan
- * @since  2017-05-14 
- */
+/** TODO dormaayn: All tests regrading renaming (in the spartnizer)
+ * @author Dor Ma'ayan
+ * @since 2017-05-14 */
 @Ignore
 @SuppressWarnings("static-method")
 public class RenamingTests {

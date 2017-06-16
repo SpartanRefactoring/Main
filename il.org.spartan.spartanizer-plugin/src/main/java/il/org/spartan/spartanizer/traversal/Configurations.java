@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.tipping.categories.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-12 */
-
 public interface Configurations {
   /** The default instance of this class; tippers not found here, do not exist!
    * if you need to disable tippers, or update this, make a copy using

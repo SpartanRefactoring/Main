@@ -21,7 +21,7 @@ public interface Category {
    * {@link Taxon}
    * @return preference group this tipper belongs to */
   default Taxon tipperGroup() {
-    return Taxon.of(this.lowestCategory());
+    return Taxon.of(lowestCategory());
   }
 
   interface Bloater extends Category {

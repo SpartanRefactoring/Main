@@ -16,43 +16,39 @@ public class VolatileCFG extends CFG<VolatileCFG> {
   public final Map<ASTNode, List<ASTNode>> outs = new HashMap<>();
   public final Collection<ASTNode> roots = new LinkedList<>();
 
-  @Override public List<ASTNode> in(ASTNode n) {
-    if (!ins.containsKey(n))
-      ins.put(n, new LinkedList<>());
-    return ins.get(n);
+  @Override public List<ASTNode> in(final ASTNode ¢) {
+    if (!ins.containsKey(¢))
+      ins.put(¢, new LinkedList<>());
+    return ins.get(¢);
   }
-  @Override public List<ASTNode> out(ASTNode n) {
-    if (!outs.containsKey(n))
-      outs.put(n, new LinkedList<>());
-    return outs.get(n);
+  @Override public List<ASTNode> out(final ASTNode ¢) {
+    if (!outs.containsKey(¢))
+      outs.put(¢, new LinkedList<>());
+    return outs.get(¢);
   }
-  @Override public void acknowledgeRoot(ASTNode n) {
-    roots.add(n);
+  @Override public void acknowledgeRoot(final ASTNode ¢) {
+    roots.add(¢);
   }
   @Override public String toString() {
     final StringBuilder $ = new StringBuilder();
-    final Comparator<ASTNode> c = new Comparator<ASTNode>() {
-      @Override public int compare(ASTNode o1, ASTNode o2) {
-        return o1.getStartPosition() - o2.getStartPosition();
-      }
-    };
+    final Comparator<ASTNode> c = (o1, o2) -> o1.getStartPosition() - o2.getStartPosition();
     final SortedMap<ASTNode, List<ASTNode>> sins = new TreeMap<>(c), souts = new TreeMap<>(c);
     sins.putAll(ins);
     souts.putAll(outs);
     $.append("* Roots *\n");
     $.append(shorten(roots) + "\n");
     $.append("* In *\n");
-    for (ASTNode n : sins.keySet())
+    for (final ASTNode n : sins.keySet())
       $.append(shorten(n) + " <-\n\t" + shorten(sins.get(n)) + "\n");
     $.append("* Out *\n");
-    for (ASTNode n : souts.keySet())
+    for (final ASTNode n : souts.keySet())
       $.append(shorten(n) + " ->\n\t" + shorten(souts.get(n)) + "\n");
     return $ + "";
   }
-  private static String shorten(ASTNode n) {
-    return n == null ? String.valueOf(null) : English.trimAbsolute((n + "").replaceAll("\\s+", " "), PRINT_THRESHOLD, "...");
+  private static String shorten(final ASTNode ¢) {
+    return ¢ == null ? String.valueOf(null) : English.trimAbsolute((¢ + "").replaceAll("\\s+", " "), PRINT_THRESHOLD, "...");
   }
-  private static String shorten(Collection<ASTNode> list) {
-    return list == null ? String.valueOf(null) : list.stream().map(x -> shorten(x)).collect(Collectors.toList()) + "";
+  private static String shorten(final Collection<ASTNode> list) {
+    return list == null ? String.valueOf(null) : list.stream().map(λ -> shorten(λ)).collect(Collectors.toList()) + "";
   }
 }

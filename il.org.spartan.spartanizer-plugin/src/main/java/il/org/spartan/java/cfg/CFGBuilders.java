@@ -15,25 +15,25 @@ public class CFGBuilders {
   @SuppressWarnings("unchecked") private final List<CFGBuilder<? extends ASTNode>>[] implementation = (List<CFGBuilder<? extends ASTNode>>[]) new List<?>[2
       * ASTNode.TYPE_METHOD_REFERENCE];
 
-  public void initialize(CFG<?> cfg) {
-    add(cfg, METHOD_DECLARATION, new MethodBuilder());
+  public void initialize(final CFG<?> ¢) {
+    add(¢, METHOD_DECLARATION, new MethodBuilder());
   }
-  public static CFGBuilders all(final CFG<?> cfg) {
+  public static CFGBuilders all(final CFG<?> ¢) {
     final CFGBuilders $ = new CFGBuilders();
-    $.initialize(cfg);
+    $.initialize(¢);
     return $;
   }
   public boolean build(final ASTNode n) {
-    return implementation[n.getNodeType()].stream().anyMatch(b -> b.accept(n));
+    return implementation[n.getNodeType()].stream().anyMatch(λ -> λ.accept(n));
   }
   public final boolean isRoot(final ASTNode n) {
     final List<CFGBuilder<? extends ASTNode>> bs = implementation[n.getNodeType()];
     return bs != null && !bs.isEmpty();
   }
-  @SafeVarargs private final void add(CFG<?> cfg, int type, CFGBuilder<? extends ASTNode>... builders) {
-    Arrays.stream(builders).forEach(b -> b.register(cfg));
+  @SafeVarargs private final void add(final CFG<?> g, final int type, final CFGBuilder<? extends ASTNode>... ns) {
+    Arrays.stream(ns).forEach(λ -> λ.register(g));
     if (implementation[type] == null)
       implementation[type] = an.empty.list();
-    Collections.addAll(implementation[type], builders);
+    Collections.addAll(implementation[type], ns);
   }
 }

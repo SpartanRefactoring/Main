@@ -67,7 +67,8 @@ public class $MatchBloatersAndTippers {
   /** Prints bloaters that are not in "matching" map (only of bloaters in
    * InflaterProvider) */
   public static void printBloatersNotInMatching() {
-    final List<Class<?>> $ = new ArrayList<>(InflaterProvider.freshCopyOfAllExpanders().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
+    final List<Class<?>> $ = new ArrayList<>(
+        InflaterProvider.freshCopyOfAllExpanders().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
     $.removeAll(matching.keySet());
     $.forEach(λ -> System.out.println(λ.getName()));
   }

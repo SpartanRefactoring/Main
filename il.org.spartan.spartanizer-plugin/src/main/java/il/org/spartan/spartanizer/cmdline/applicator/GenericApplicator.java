@@ -41,8 +41,7 @@ public class GenericApplicator {
       selectedNodeTypes.forEach(System.out::println);
     } else {
       selectedNodeTypes = setSelectedNodeTypes(classes);
-      String s1 = "selected: " + selectedNodeTypes.size();
-      System.out.println(s1);
+      System.out.println("selected: " + selectedNodeTypes.size());
     }
   }
   public GenericApplicator(final String[] classes, final String... tipperGroups) {
@@ -96,6 +95,6 @@ public class GenericApplicator {
   }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = configuration.firstTipper(¢);
-    return !selectedTipperGroups.contains($.tipperGroup().label()) ? null : $;
+    return selectedTipperGroups.contains($.tipperGroup().label()) ? $ : null;
   }
 }

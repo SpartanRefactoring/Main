@@ -6,7 +6,7 @@ package il.org.spartan.java.cfg;
 public class CFGException extends RuntimeException {
   private final String m;
 
-  public CFGException(String message) {
+  public CFGException(final String message) {
     m = message;
   }
   @Override public String getMessage() {
