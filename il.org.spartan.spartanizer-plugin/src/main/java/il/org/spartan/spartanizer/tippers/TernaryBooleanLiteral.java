@@ -24,32 +24,28 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * (a && b) || (!a && true) == (a && b) || (!a) == !a || b
  * } keywords <code>
  * <b>this</b>
- * </code> or <code>
- * <b>null</b>
- * </code> .
+ * </code> or <code> <b>null</b> Consider an expression {@code a ? b : c}. It is
+ * logically equivalent to {@code (a && b) || (!a && c)}
+ * <ol>
+ * <li>if b is false then: {@code
+  (a && false) || (!a && c) == !a && c
+  }
+ * <li>if b is true then: {@code
+  (a && true) || (!a && c) == a || (!a && c) == a || c
+  }
+ * <li>if c is false then: {@code
+  (a && b) || (!a && false) == a && b
+  }
+ * <li>if c is true then {@code
+  (a && b) || (!a && true) == !a || b
+  }
+ * </ol>
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
-    implements Category.NOP.onBooleans {
+    implements Category.Transformation.Reshape {
   private static final long serialVersionUID = 0x16FBB28C0081E600L;
 
-  /** Consider an expression {@code a ? b : c}. It is logically equivalent to
-   * {@code (a && b) || (!a && c)}
-   * <ol>
-   * <li>if b is false then: {@code
-    (a && false) || (!a && c) == !a && c
-    }
-   * <li>if b is true then: {@code
-    (a && true) || (!a && c) == a || (!a && c) == a || c
-    }
-   * <li>if c is false then: {@code
-    (a && b) || (!a && false) == a && b
-    }
-   * <li>if c is true then {@code
-    (a && b) || (!a && true) == !a || b
-    }
-   * </ol>
-  */
   private static Expression simplifyTernary(final ConditionalExpression ¢) {
     return simplifyTernary(¢.getThenExpression(), ¢.getElseExpression(), copy.of(¢.getExpression()));
   }

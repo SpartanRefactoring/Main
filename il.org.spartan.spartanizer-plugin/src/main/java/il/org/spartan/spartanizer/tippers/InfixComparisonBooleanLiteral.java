@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.NOP.onBooleans {
+    implements Category.Transformation.Prune, Category.Theory.Logical{
   private static final long serialVersionUID = 0xB818D6DBD293A8CL;
 
   private static BooleanLiteral literal(final InfixExpression ¢) {

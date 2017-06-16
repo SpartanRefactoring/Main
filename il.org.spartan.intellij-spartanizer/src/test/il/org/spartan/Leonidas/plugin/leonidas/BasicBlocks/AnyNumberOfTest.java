@@ -25,9 +25,9 @@ public class AnyNumberOfTest extends PsiTypeHelper {
         AnyNumberOf ano = az.anyNumberOf(Pruning.prune(n.getChildren().get(0), new HashMap<>()));
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}"));
         EncapsulatorIterator it = e.iterator();
-        assertEquals(ano.getNumberOfOccurrences(it), 1);
+        assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 1);
         for (int i = 0; i < 13; i++) it.next();
-        assertEquals(ano.getNumberOfOccurrences(it), 4);
+        assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 4);
     }
 
     public void testTipper() throws Exception {

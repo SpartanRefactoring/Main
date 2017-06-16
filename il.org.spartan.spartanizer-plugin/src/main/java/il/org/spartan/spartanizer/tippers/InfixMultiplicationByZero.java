@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @since 2016-09-25
  * @see {@link sideEffects} */
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.NOP.onNumbers {
+    implements Category.Transformation.Prune, Category.Theory.Arithmetics.Symbolic {
   private static final long serialVersionUID = 0x5511953EBF0A7FD5L;
 
   private static boolean containsZero(final InfixExpression x) {

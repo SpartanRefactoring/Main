@@ -57,32 +57,32 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
     ArrayList<Integer> zs = new ArrayList<>();
 
     public testUtils() {}
-    public testUtils(Collection<?> __) {
+    public testUtils(final Collection<?> __) {
       //
     }
     /** [[SuppressWarningsSpartan]] */
     public void from0() {
-      List<Integer> x = new ArrayList<>(ys);
+      new ArrayList<>(ys);
     }
     /** [[SuppressWarningsSpartan]] */
     public void from1() {
-      testUtils t = new testUtils(ys);
+      new testUtils(ys);
     }
     /** [[SuppressWarningsSpartan]] */
     public void from2() {
-      Object x = new HashSet<Integer>(zs);
+      new HashSet<>(zs);
     }
     /** [[SuppressWarningsSpartan]] */
     public void from3() {
-      HashSet<Integer> x = new HashSet<>(zs);
+      new HashSet<>(zs);
     }
-    public void f(Integer x) {
+    public void f(final Integer x) {
       //
     }
-    public void f(String x) {
+    public void f(final String x) {
       //
     }
-    public void f(testUtils x) {
+    public void f(final testUtils x) {
       //
     }
   }

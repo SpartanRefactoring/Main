@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @since 2016 */
 public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N>//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = 0x1E2EC405AA0EA6F0L;
   private static final Comparator<IExtendedModifier> comp = Comparator.comparingInt(IExtendedModifiersRank::rank);
 

@@ -47,7 +47,7 @@ public enum Dialogs {
   public static Image image(final String url, final String $, final Function<ImageData, ImageData> scale) {
     if (!images.containsKey($))
       try {
-        @SuppressWarnings("deprecation") final ImageData d = ImageDescriptor.createFromURL(getURL(url)).getImageData();
+        final ImageData d = ImageDescriptor.createFromURL(getURL(url)).getImageData();
         images.put($, d == null ? null : new Image(null, scale.apply(d)));
       } catch (final MalformedURLException ¢) {
         note.bug(¢);

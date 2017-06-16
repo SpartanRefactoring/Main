@@ -33,8 +33,8 @@ public class Block extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(iz.blockStatement(e.getInner()) || iz.block(e.getInner()) || iz.statement(e.getInner()));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return super.generalizes(e, m).combineWith(new MatchingResult(iz.blockStatement(e.getInner()) || iz.block(e.getInner()) || iz.statement(e.getInner())));
     }
 
     @Override

@@ -32,8 +32,8 @@ public class Optional extends Quantifier {
     }
 
     @Override
-    public int getNumberOfOccurrences(EncapsulatorIterator it) {
-        return iz.conforms(it.value(), internal).matches() ? 1 : 0;
+    public int getNumberOfOccurrences(EncapsulatorIterator it, Map<Integer, List<PsiElement>> m) {
+        return iz.conforms(it.value(), internal, m).matches() ? 1 : 0;
     }
 
 }

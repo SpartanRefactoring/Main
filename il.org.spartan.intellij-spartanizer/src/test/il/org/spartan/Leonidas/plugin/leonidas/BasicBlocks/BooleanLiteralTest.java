@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 /**
  * @author Sharon
@@ -25,24 +26,24 @@ public class BooleanLiteralTest extends PsiTypeHelper {
     }
 
     public void testGeneralizesBooleanLiterals() {
-        assert booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true"))).matches();
-        assert booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("false"))).matches();
+        assert booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true")), new HashMap<>()).matches();
+        assert booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("false")), new HashMap<>()).matches();
     }
 
     public void testDoesNotGeneralizeStatements() {
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x++;"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x = y + z;"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("m();"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("return 's';"))).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x++;")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x = y + z;")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("m();")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("return 's';")), new HashMap<>()).matches();
     }
 
     public void testDoesNotGeneralizeOtherExpressions() {
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x + y"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x++"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("'a'"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("2"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("null"))).matches();
-        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("a()"))).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x + y")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x++")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("'a'")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("2")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("null")), new HashMap<>()).matches();
+        assert !booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("a()")), new HashMap<>()).matches();
     }
 
     public void testTipper() throws Exception {

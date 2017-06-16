@@ -12,24 +12,23 @@ import fluent.ly.*;
 public abstract class CFG<T extends CFG<T>> implements Selfie<T> {
   CFGBuilders builders;
 
-  public T register(final CFGBuilders bs) {
-    builders = bs;
+  public T register(final CFGBuilders ¢) {
+    builders = ¢;
     return self();
   }
   public void compute(final ASTNode root) {
-    if (root == null)
-      return;
-    root.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(ASTNode n) {
-        if (!builders.isRoot(n))
-          return true;
-        acknowledgeRoot(n);
-        builders.build(n);
-        return false;
-      }
-    });
+    if (root != null)
+      root.accept(new ASTVisitor() {
+        @Override public boolean preVisit2(final ASTNode ¢) {
+          if (!builders.isRoot(¢))
+            return true;
+          acknowledgeRoot(¢);
+          builders.build(¢);
+          return false;
+        }
+      });
   }
-  public abstract List<ASTNode> in(final ASTNode n);
-  public abstract List<ASTNode> out(final ASTNode n);
-  public abstract void acknowledgeRoot(final ASTNode n);
+  public abstract List<ASTNode> in(ASTNode n);
+  public abstract List<ASTNode> out(ASTNode n);
+  public abstract void acknowledgeRoot(ASTNode n);
 }

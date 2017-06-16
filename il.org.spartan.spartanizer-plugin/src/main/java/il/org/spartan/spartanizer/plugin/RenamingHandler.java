@@ -14,7 +14,7 @@ public class RenamingHandler extends AbstractHandler {
     applicator().go();
     return null;
   }
-  public static NewGUIApplicator applicator() {
+  public static GUIApplicator applicator() {
     System.out.println("hi im here !!!!");
     return null;
   }

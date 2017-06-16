@@ -60,7 +60,7 @@ public class Matcher {
         if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return m.setMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (iz.quantifier(bgNeedle.value())) {
-            int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor);
+            int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
             for (int i = 0; i <= n; i++) {
                 varNeedle = bgNeedle.clone();
                 varCursor = bgCursor.clone();
@@ -85,7 +85,7 @@ public class Matcher {
     private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
         MatchingResult m = new MatchingResult(true);
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
             if (ic.notMatches() || (needle.hasNext() != cursor.hasNext()))
                 return m.setNotMatches();
             m.combineWith(ic);
@@ -117,7 +117,7 @@ public class Matcher {
             return m.setMatches();
         }
         for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
             if (ic.notMatches() || (needle.hasNext() ^ cursor.hasNext())) {
                 return m.setNotMatches();
             }
@@ -203,7 +203,7 @@ public class Matcher {
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
                 .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)) &&
-                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e)))))
+                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e), mr.getMap()))))
                 ? mr : mr.setNotMatches();
     }
 

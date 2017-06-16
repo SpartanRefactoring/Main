@@ -26,12 +26,12 @@ public class AnyNumberOf extends Quantifier {
     }
 
     @Override
-    public int getNumberOfOccurrences(EncapsulatorIterator i) {
+    public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
         if (i.value().getParent() == null) return 1;
         Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
         i.value().getParent().accept(n -> {
-            if (generalizes(n).matches()) count.set(count.get() + 1);
+            if (generalizes(n, m).matches()) count.set(count.get() + 1);
         });
         return count.get();
     }

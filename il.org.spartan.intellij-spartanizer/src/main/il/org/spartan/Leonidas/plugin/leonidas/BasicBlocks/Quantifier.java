@@ -37,8 +37,8 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(internal != null && iz.generic(internal) && az.generic(internal).generalizes(e).matches());
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return new MatchingResult(internal != null && iz.generic(internal) && az.generic(internal).generalizes(e, m).matches());
 
     }
 
@@ -61,7 +61,7 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     }
 
     @PreservesIterator
-    public abstract int getNumberOfOccurrences(EncapsulatorIterator i);
+    public abstract int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m);
 
     public abstract Quantifier create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
 

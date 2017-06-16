@@ -92,9 +92,9 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @return true iff I can generalize with e
      */
     @SuppressWarnings("InfiniteRecursion")
-    public MatchingResult generalizes(Encapsulator e) {
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         return new MatchingResult(constraints.stream()
-                .allMatch(c -> c.accept(e)));
+                .allMatch(c -> c.accept(e, m)));
     }
 
     protected List<PsiElement> applyReplacingRules(List<PsiElement> elements, Map<Integer, List<PsiElement>> map){
@@ -148,7 +148,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     public interface Constraint {
-        boolean accept(Encapsulator encapsulator);
+        boolean accept(Encapsulator encapsulator, Map<Integer, List<PsiElement>> m);
     }
 
     protected interface ReplacingRule {

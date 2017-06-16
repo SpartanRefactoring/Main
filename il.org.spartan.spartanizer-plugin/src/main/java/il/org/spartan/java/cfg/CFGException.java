@@ -6,12 +6,12 @@ package il.org.spartan.java.cfg;
 public class CFGException extends RuntimeException {
   private final String m;
 
-  public CFGException(String message) {
+  public CFGException(final String message) {
     m = message;
   }
   @Override public String getMessage() {
     return m;
   }
 
-  private static final long serialVersionUID = -1240162009558239881L;
+  private static final long serialVersionUID = -0x1135F0C6EBA74A89L;
 }
