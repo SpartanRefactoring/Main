@@ -1,6 +1,8 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.google.common.collect.Lists;
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
@@ -35,8 +37,9 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(internal != null && iz.generic(internal) && az.generic(internal).generalizes(e).matches());
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return new MatchingResult(internal != null && iz.generic(internal) && az.generic(internal).generalizes(e, m).matches());
+
     }
 
     @Override
@@ -52,13 +55,29 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
         if (o.isGeneric())
-            upperElement.putId(o.extractId(e.getInner()));
-        return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
+            /*upperElement.putId(o.extractId(e.getInner()));*/
+            o.putId(o.extractId(e.getInner()));
+        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
     @PreservesIterator
-    public abstract int getNumberOfOccurrences(EncapsulatorIterator i);
+    public abstract int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m);
 
     public abstract Quantifier create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
 
+    public Encapsulator getInternal(){
+        return internal;
+    }
+
+    @Override
+    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.generic(internal)) return super.replaceByRange(elements, m ,r);
+        GenericEncapsulator ge = az.generic(internal);
+        elements = ge.applyReplacingRules(elements, m);
+        if (parent == null) return elements;
+        List<PsiElement> l = Lists.reverse(elements);
+        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+        r.deleteByRange(inner.getParent(), inner, inner);
+        return elements;
+    }
 }

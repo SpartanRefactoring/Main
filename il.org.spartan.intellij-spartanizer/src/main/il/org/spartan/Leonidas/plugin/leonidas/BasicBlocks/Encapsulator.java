@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +35,9 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
 
     public Encapsulator(PsiElement e) {
         inner = e;
-        Arrays.stream(e.getChildren()).filter(child -> !(iz.comment(child.getLastChild()) && az.comment(child.getLastChild()).getText().contains("ignore"))).forEach(child -> children.add(new Encapsulator(child, this)));
+        PsiRewrite r = new PsiRewrite();
+        Arrays.stream(e.getChildren()).filter(child -> iz.comment(child.getLastChild()) && az.comment(child.getLastChild()).getText().contains("ignore")).forEach(child -> r.delete(child));
+        Arrays.stream(e.getChildren()).forEach(child -> children.add(new Encapsulator(child, this)));
     }
 
     private Encapsulator(PsiElement e, Encapsulator parent) {

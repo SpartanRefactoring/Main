@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiModifierListOwner;
 import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
@@ -7,6 +8,8 @@ import il.org.spartan.Leonidas.auxilary_layer.haz;
 import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static il.org.spartan.Leonidas.auxilary_layer.Existence.*;
@@ -49,8 +52,8 @@ public abstract class ModifiableElement extends NamedElement {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        if (super.generalizes(e).notMatches()) return new MatchingResult(false);
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        if (super.generalizes(e, m).notMatches()) return new MatchingResult(false);
         PsiModifierListOwner mlo = az.modifierListOwner(inner);
         return new MatchingResult(checkConstraint(isPublic, mlo, haz::publicModifier) &&
                 checkConstraint(isPrivate, mlo, haz::privateModifier) &&

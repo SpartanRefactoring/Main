@@ -261,3 +261,7 @@ build/
 target.p2/.classpath
 target.p2/.project
 target.p2/.settings/
+il.org.spartan.spartanizer-plugin/src/main/java/il/org/spartan/spartanizer/research/metatester
+il.org.spartan.spartan/src/il/org/spartan/java/RawTokenizer.java
+il.org.spartan.intellij-spartanizer/resources/il/
+

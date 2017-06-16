@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
@@ -31,17 +32,12 @@ public class BooleanExpression extends Expression {
         return new BooleanExpression(e);
     }
 
-    @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return super.generalizes(e);
-    }
-
-    /* Constraints */
+      /* Constraints */
 
     /**
      * Will accept only literal expressions.
      */
     public void mustBeLiteral() {
-        addConstraint(e -> iz.literal(e.inner));
+        addConstraint((e, m) -> iz.literal(e.inner));
     }
 }

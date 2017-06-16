@@ -194,7 +194,7 @@ public enum StringUtils {
       case 0:
         return "no " + plural;
       case 1:
-        return singular + "";
+        return singular;
       case 2:
         return "two " + plural;
       case 3:

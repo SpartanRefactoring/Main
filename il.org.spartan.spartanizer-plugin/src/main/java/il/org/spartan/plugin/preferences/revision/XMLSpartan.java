@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.Map.*;
 import java.util.stream.*;
 
 import javax.xml.parsers.*;
@@ -23,7 +22,6 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.spartanizer.tipping.categories.Category.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 
@@ -132,15 +130,15 @@ public class XMLSpartan {
         m.put(¢.name(), ¢);
       return m;
     });
-    for (final Entry<Taxon, Set<Taxon>> e : Taxa.hierarchy.children.entrySet()) {
+    for (final Taxon x : Taxa.hierarchy.nodes()) {
       SpartanCategory parent;
-      if (existingCategories.containsKey(e.getKey().get().getSimpleName()))
-        parent = existingCategories.get(e.getKey().get().getSimpleName());
+      if (existingCategories.containsKey(x.get().getSimpleName()))
+        parent = existingCategories.get(x.get().getSimpleName());
       else {
-        parent = new SpartanCategory(e.getKey().get());
+        parent = new SpartanCategory(x.get());
         existingCategories.put(parent.name(), parent);
       }
-      Stream<Taxon> stream = e.getValue().stream();
+      final Stream<Taxon> stream = Taxa.hierarchy.children(x).stream();
       final List<SpartanCategory> children = stream.map(t -> {
         if (existingCategories.containsKey(t.get().getSimpleName()))
           return existingCategories.get(t.get().getSimpleName());

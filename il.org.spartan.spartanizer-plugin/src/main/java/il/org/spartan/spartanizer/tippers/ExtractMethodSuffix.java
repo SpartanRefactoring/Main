@@ -127,10 +127,10 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         noParameterTags = false;
         if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
-        if (!ns.contains(the.firstOf(fragments(¢))))
+        if (!ns.contains(the.firstOf(fragments(¢)) + ""))
           xs.add(¢);
         else
-          ns.remove(the.firstOf(fragments(¢)));
+          ns.remove(the.firstOf(fragments(¢)) + "");
       }
     if (noParameterTags)
       return;

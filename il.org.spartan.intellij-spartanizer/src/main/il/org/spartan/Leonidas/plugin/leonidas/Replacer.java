@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
@@ -50,20 +49,21 @@ public class Replacer {
         } else {
             for (PsiElement element : elements) {
                 r.addAfter(parent, prev, element);
+                prev = treeToReplace.getPrevSibling();
             }
         }
         if (iz.methodCallExpression(parent.getParent())) {
             treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
         }
-        if (parent.getChildren().length <= 1){
+        if (parent.getChildren().length <= 1) {
             return;
         }
         r.deleteByRange(parent, treeToReplace, last);
     }
 
-    public void replaceSingleRoot(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+    public PsiElement replaceSingleRoot(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         PsiElement element = getReplacingForest(roots, m, r).get(0);
-        r.replace(treeToReplace, element);
+        return r.replace(treeToReplace, element);
     }
 
     /**

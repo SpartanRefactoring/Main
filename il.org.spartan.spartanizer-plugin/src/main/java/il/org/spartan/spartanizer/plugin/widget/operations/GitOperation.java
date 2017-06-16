@@ -48,9 +48,10 @@ public abstract class GitOperation extends WidgetOperation {
     if (builder != null)
       try (Repository repo = builder.build()) {
         if (repo != null)
-          try (Git git = new Git(repo)) {
-            gitOperation(git);
-          }
+          repo.getConfig().load();
+        try (Git git = new Git(repo)) {
+          gitOperation(git);
+        }
       } catch (final Throwable e) {
         Dialogs.message("Git Error: No git directory was found").open();
         return;

@@ -1,6 +1,9 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
@@ -33,8 +36,8 @@ public class Identifier extends NamedElement {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(super.generalizes(e).matches() && iz.identifier(e.getInner()));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return new MatchingResult(super.generalizes(e, m).matches() && iz.identifier(e.getInner()));
     }
 
     @Override
@@ -51,14 +54,18 @@ public class Identifier extends NamedElement {
 
 
     public void contains(String s) {
-        addConstraint(e -> az.identifier(e.inner).getText().contains(s));
+        addConstraint((e, m) -> az.identifier(e.inner).getText().contains(s));
     }
 
     public void notContains(String s) {
-        addConstraint(e -> !(az.identifier(e.inner).getText().contains(s)));
+        addConstraint((e, m) -> !(az.identifier(e.inner).getText().contains(s)));
     }
 
     public void endWith(String s) {
-        addConstraint(e -> az.identifier(e.inner).getText().endsWith(s));
+        addConstraint((e, m) -> az.identifier(e.inner).getText().endsWith(s));
+    }
+
+    public void changeName(String name){
+        addReplacingRule((e, m) -> JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(name));
     }
 }

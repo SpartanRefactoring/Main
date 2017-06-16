@@ -43,8 +43,9 @@ public class SpartanWidgetHandler extends AbstractHandler {
     /* if the widget doesn't work due to a class not found exception uncomment
      * the next command, run the widget, disable an operation from the widget
      * preferences page and then close the runtime eclipse and remove this line.
-     * That should override the old preferences and solve the issue */
-     //WidgetPreferences.storeDefaultEntries();
+     * That should override the old preferences and solve the issue also, go to
+     * OperationListEditor line 375 */
+    // WidgetPreferences.storeDefaultEntries();
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return;
@@ -58,7 +59,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
-    closeButton.setLocation(r + R / 2, r + (2 * R - closeButton.getSize().y / 2));
+    closeButton.setLocation(r + R / 2, r + 2 * R - closeButton.getSize().y / 2);
     closeButton.addListener(SWT.Selection, __ -> {
       shell.close();
       active.set(false);

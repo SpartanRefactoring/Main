@@ -126,5 +126,4 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   private Class<N> myOperandsClass;
-
 }

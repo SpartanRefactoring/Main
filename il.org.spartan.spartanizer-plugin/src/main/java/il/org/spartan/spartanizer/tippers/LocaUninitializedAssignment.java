@@ -35,7 +35,7 @@ public final class LocaUninitializedAssignment extends LocalUninitialized implem
     andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
     andAlso("New value does not use values of later siblings", () -> {
       final List<String> usedNames = compute.usedIdentifiers(from).collect(toList());
-      return laterSiblings().noneMatch(λ -> usedNames.contains(λ.getName()));
+      return laterSiblings().noneMatch(λ -> usedNames.contains(λ.getName().getIdentifier()));
     });
   }
   @Override public String description() {

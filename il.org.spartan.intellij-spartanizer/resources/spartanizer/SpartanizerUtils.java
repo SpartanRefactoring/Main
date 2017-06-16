@@ -40,4 +40,6 @@ public class SpartanizerUtils {
     public static <T> Defaults<T> defaults(T then){
         return new Defaults<T>(then);
     }
+
+    public @interface SpartaDefeat {}
 }

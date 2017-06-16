@@ -60,7 +60,7 @@ public class Matcher {
         if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return m.setMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (iz.quantifier(bgNeedle.value())) {
-            int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor);
+            int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
             for (int i = 0; i <= n; i++) {
                 varNeedle = bgNeedle.clone();
                 varCursor = bgCursor.clone();
@@ -85,7 +85,7 @@ public class Matcher {
     private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
         MatchingResult m = new MatchingResult(true);
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
             if (ic.notMatches() || (needle.hasNext() != cursor.hasNext()))
                 return m.setNotMatches();
             m.combineWith(ic);
@@ -117,7 +117,7 @@ public class Matcher {
             return m.setMatches();
         }
         for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
             if (ic.notMatches() || (needle.hasNext() ^ cursor.hasNext())) {
                 return m.setNotMatches();
             }
@@ -143,8 +143,9 @@ public class Matcher {
                         matcher.addConstraint(i, (StructuralConstraint) j);
                     else {
                         NonStructuralConstraint nsc = (NonStructuralConstraint) j;
+                        Encapsulator ie = iz.quantifier(e) ? az.quantifier(e).getInternal() : e;
                         try {
-                            Utils.getDeclaredMethod(e.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(e, nsc.objects);
+                            Utils.getDeclaredMethod(ie.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, nsc.objects);
                         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                             e1.printStackTrace();
                         }
@@ -202,7 +203,7 @@ public class Matcher {
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
                 .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)) &&
-                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e)))))
+                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e), mr.getMap()))))
                 ? mr : mr.setNotMatches();
     }
 

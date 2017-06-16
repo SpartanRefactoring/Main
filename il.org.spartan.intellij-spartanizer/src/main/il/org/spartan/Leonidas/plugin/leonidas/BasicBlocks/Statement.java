@@ -36,8 +36,8 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(iz.statement(e.getInner()) && !iz.blockStatement(e.getInner()));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return super.generalizes(e, m).combineWith(new MatchingResult( iz.statement(e.getInner()) && !iz.blockStatement(e.getInner())));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Statement extends GenericMethodCallBasedBlock {
      * Will accepts only if not contains identifier
      */
     public void mustNotRefer(String s) {
-        addConstraint(e -> {
+        addConstraint((e, m) -> {
             Wrapper<Boolean> wb = new Wrapper<>(true);
             e.accept(n -> {
                 if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(s))
@@ -65,16 +65,33 @@ public class Statement extends GenericMethodCallBasedBlock {
         });
     }
 
-    public void replaceIdentifiers(int id, String to){
-        addReplacingRule((e, map) -> e.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitIdentifier(PsiIdentifier identifier) {
-                super.visitIdentifier(identifier);
-                if (identifier.getText().equals(map.get(id))) {
-                    PsiRewrite prr = new PsiRewrite();
-                    prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(to));
+    /**
+     * Will accepts only if not contains identifier
+     */
+    public void mustNotRefer(Integer id) {
+        addConstraint((e, m) -> {
+            Wrapper<Boolean> wb = new Wrapper<>(true);
+            e.accept(n -> {
+                if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(m.get(id).get(0).getText()))
+                    wb.set(false);
+            });
+            return wb.get();
+        });
+    }
+
+    public void replaceIdentifiers(Integer id, String to){
+        addReplacingRule((e, map) -> {
+            e.accept(new JavaRecursiveElementVisitor() {
+                @Override
+                public void visitIdentifier(PsiIdentifier identifier) {
+                    super.visitIdentifier(identifier);
+                    if (identifier.getText().equals(map.get(id).get(0).getText())) {
+                        PsiRewrite prr = new PsiRewrite();
+                        prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(to));
+                    }
                 }
-            }
-        }));
+            });
+            return e;
+        });
     }
 }

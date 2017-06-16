@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
@@ -14,10 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * General utils class
@@ -150,31 +146,31 @@ public enum Utils {
         return c;
     }
 
-    public static List<Encapsulator> wrapWithList(Encapsulator e){
+    public static List<Encapsulator> wrapWithList(Encapsulator e) {
         List<Encapsulator> l = new LinkedList<>();
         l.add(e);
         return l;
     }
 
-    public static List<PsiElement> wrapWithList(PsiElement e){
+    public static List<PsiElement> wrapWithList(PsiElement e) {
         List<PsiElement> l = new LinkedList<>();
         l.add(e);
         return l;
     }
 
-    public static PsiElement getNextActualSibling(PsiElement e){
+    public static PsiElement getNextActualSibling(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
-        while (current != null && iz.whiteSpace(current)){
+        while (current != null && iz.whiteSpace(current)) {
             current = current.getNextSibling();
         }
         return current;
     }
 
-    public static int getNumberOfRootsPossible(PsiElement e){
+    public static int getNumberOfRootsPossible(PsiElement e) {
         int i = 0;
         PsiElement current = e;
-        while (current != null){
+        while (current != null) {
             i++;
             current = getNextActualSibling(current);
         }
@@ -185,7 +181,28 @@ public enum Utils {
         if (c.equals(Object.class)) throw new NoSuchMethodException();
         try {
             return c.getDeclaredMethod(name, parameterTypes);
-        } catch (NoSuchMethodException e) {}
+        } catch (NoSuchMethodException e) {
+        }
         return getDeclaredMethod(c.getSuperclass(), name, parameterTypes);
+    }
+
+    public static Optional<Method> getPublicMethod(Class<?> c, String name, Class<?>... parameterTypes) {
+        try {
+            return Optional.of(c.getMethod(name, parameterTypes));
+        } catch (NoSuchMethodException e) {
+            return Optional.empty();
+        }
+    }
+
+    public static boolean isAnnotationPresent(PsiFile f, Class<?> spartaDefeatClass) {
+        Wrapper<Boolean> present = new Wrapper<>(false);
+        step.clazz(f).ifPresent(c -> c.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitAnnotation(PsiAnnotation ¢) {
+                present.set(Objects.equals(¢.getNameReferenceElement().getText(), spartaDefeatClass.getSimpleName()));
+            }
+        }));
+
+        return present.get();
     }
 }

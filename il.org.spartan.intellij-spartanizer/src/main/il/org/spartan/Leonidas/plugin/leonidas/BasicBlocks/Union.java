@@ -51,8 +51,8 @@ public class Union extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return encapsulators.stream().map(encapsulator -> encapsulator.generalizes(e)).filter(MatchingResult::matches).findFirst().orElse(new MatchingResult(false));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return encapsulators.stream().map(encapsulator -> encapsulator.generalizes(e, m)).filter(MatchingResult::matches).findFirst().orElse(new MatchingResult(false));
     }
 
     /**

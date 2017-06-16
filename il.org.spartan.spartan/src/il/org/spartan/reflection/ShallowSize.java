@@ -54,39 +54,39 @@ public class ShallowSize {
   public static int arraySize(final int length) {
     return arraySize(length, referenceSize());
   }
-  public static int of(final boolean it[]) {
-    return arraySize(it.length, 1);
+  public static int of(final boolean ¢[]) {
+    return arraySize(¢.length, 1);
   }
-  public static int of(final byte it[]) {
-    return arraySize(it.length, 1);
+  public static int of(final byte ¢[]) {
+    return arraySize(¢.length, 1);
   }
-  public static int of(final char it[]) {
-    return arraySize(it.length, 2);
+  public static int of(final char ¢[]) {
+    return arraySize(¢.length, 2);
   }
   public static int of(final Class<?> ¢) {
     final Class<?> $ = ¢.getSuperclass();
     return align(intrinsic(¢) + ($ != null ? of($) : headerSize()));
   }
-  public static int of(final double it[]) {
-    return arraySize(it.length, 8);
+  public static int of(final double ¢[]) {
+    return arraySize(¢.length, 8);
   }
-  public static int of(final float it[]) {
-    return arraySize(it.length, 4);
+  public static int of(final float ¢[]) {
+    return arraySize(¢.length, 4);
   }
-  public static int of(final int it[]) {
-    return arraySize(it.length, 4);
+  public static int of(final int ¢[]) {
+    return arraySize(¢.length, 4);
   }
-  public static int of(final long it[]) {
-    return arraySize(it.length, 8);
+  public static int of(final long ¢[]) {
+    return arraySize(¢.length, 8);
   }
-  public static int of(final Object it[]) {
-    return arraySize(it.length);
+  public static int of(final Object ¢[]) {
+    return arraySize(¢.length);
   }
   public static int of(final Object ¢) {
     return ¢ == null ? 0 : of(¢.getClass());
   }
-  public static int of(final short it[]) {
-    return arraySize(it.length, 2);
+  public static int of(final short ¢[]) {
+    return arraySize(¢.length, 2);
   }
   public static int referenceSize() {
     return 4;

@@ -20,8 +20,7 @@ public enum CLASSFILES {
    * @return the list of directories and ZIP archives in the current search
    *         path. */
   public static Iterable<File> asFiles() {
-    final ArrayList<File> $ = new ArrayList<>();
-    $.addAll(JRE.asList());
+    final ArrayList<File> $ = new ArrayList<>(JRE.asList());
     add($, EXTENSIONPATH.asArray(), CLASSPATH.asArray());
     return $;
   }

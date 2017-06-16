@@ -37,8 +37,8 @@ public class Method extends ModifiableElement {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        if (super.generalizes(e).notMatches() || !iz.method(e.getInner())) return new MatchingResult(false);
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> map) {
+        if (super.generalizes(e, map).notMatches() || !iz.method(e.getInner())) return new MatchingResult(false);
         PsiMethod m = az.method(e.getInner());
         Wrapper<Integer> dummy = new Wrapper<>(0);
         return matcherReturnType.getMatchingResult(m.getReturnTypeElement(), dummy).combineWith(
@@ -66,14 +66,15 @@ public class Method extends ModifiableElement {
         return m;
     }
 
-
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         PsiMethod e = az.method(elements.get(0));
-        az.method(inner).setName(e.getName());
-        replacerReturnType.replaceSingleRoot(e.getReturnTypeElement(), m, r);
-        replacerParameters.replaceSingleRoot(e.getParameterList(), m, r);
-        replacerCodeBlock.replaceSingleRoot(e.getBody(), m, r);
+        PsiMethod iam = az.method(inner);
+        iam.setName(e.getName());
+        iam.getReturnTypeElement().replace(replacerReturnType.replaceSingleRoot(e.getReturnTypeElement(), m, r));
+        iam.getParameterList().replace(replacerParameters.replaceSingleRoot(e.getParameterList(), m, r));
+        iam.getBody().replace(replacerCodeBlock.replaceSingleRoot(e.getBody(), m, r));
+        iam.getModifierList().replace(e.getModifierList());
         return Utils.wrapWithList(inner);
     }
 

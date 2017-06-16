@@ -12,6 +12,8 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.lang.Class;
+import java.util.List;
+import java.util.Map;
 
 import static com.intellij.psi.JavaTokenType.*;
 import static com.intellij.psi.PsiModifier.PUBLIC;
@@ -188,9 +190,9 @@ public enum iz {
         return (iz.javaToken(e1) && iz.javaToken(e2) && az.javaToken(e1).getText().equals(az.javaToken(e2).getText()));
     }
 
-    private static MatchingResult genericConforms(Encapsulator e1, Encapsulator e2) {
+    private static MatchingResult genericConforms(Encapsulator e1, Encapsulator e2, Map<Integer, List<PsiElement>> m) {
         if (!iz.generic(e2)) return new MatchingResult(false);
-        return az.generic(e2).generalizes(e1);
+        return az.generic(e2).generalizes(e1, m);
     }
 
     private static boolean elseConforms(PsiElement e1, PsiElement e2) {
@@ -200,11 +202,11 @@ public enum iz {
     /**
      * e2 is the generic tree
      */
-    public static MatchingResult conforms(Encapsulator e1, Encapsulator e2) {
+    public static MatchingResult conforms(Encapsulator e1, Encapsulator e2, Map<Integer, List<PsiElement>> m) {
         if (literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner()))
             return new MatchingResult(true);
         if (iz.generic(e2)){
-            return genericConforms(e1, e2);
+            return genericConforms(e1, e2, m);
         }
         return new MatchingResult(elseConforms(e1.getInner(), e2.getInner()));
     }
@@ -484,7 +486,9 @@ public enum iz {
         return arithmetic(be.getLOperand()) && arithmetic(be.getROperand());
     }
 
-    public static boolean comment(PsiElement e) {
-        return typeCheck(PsiComment.class, e);
+    public static boolean comment(PsiElement e){
+        return typeCheck(PsiComment.class,e);
     }
+
+    public static boolean psiFile(PsiElement e){return typeCheck(PsiFile.class,e);}
 }

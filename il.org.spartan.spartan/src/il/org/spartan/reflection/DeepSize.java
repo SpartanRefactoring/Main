@@ -5,32 +5,32 @@ import java.util.*;
 
 /** This class computes the deep size of any object. */
 public class DeepSize {
-  public static int of(final boolean it[]) {
-    return ShallowSize.of(it);
+  public static int of(final boolean ¢[]) {
+    return ShallowSize.of(¢);
   }
-  public static int of(final byte it[]) {
-    return ShallowSize.of(it);
+  public static int of(final byte ¢[]) {
+    return ShallowSize.of(¢);
   }
-  public static int of(final char it[]) {
-    return ShallowSize.of(it);
+  public static int of(final char ¢[]) {
+    return ShallowSize.of(¢);
   }
-  public static int of(final double it[]) {
-    return ShallowSize.of(it);
+  public static int of(final double ¢[]) {
+    return ShallowSize.of(¢);
   }
-  public static int of(final float it[]) {
-    return ShallowSize.of(it);
+  public static int of(final float ¢[]) {
+    return ShallowSize.of(¢);
   }
-  public static int of(final int it[]) {
-    return ShallowSize.of(it);
+  public static int of(final int ¢[]) {
+    return ShallowSize.of(¢);
   }
-  public static int of(final long it[]) {
-    return ShallowSize.of(it);
+  public static int of(final long ¢[]) {
+    return ShallowSize.of(¢);
   }
   public static int of(final Object ¢) {
     return new Visitor().size(¢);
   }
-  public static int of(final short it[]) {
-    return ShallowSize.of(it);
+  public static int of(final short ¢[]) {
+    return ShallowSize.of(¢);
   }
 
   static class Visitor {

@@ -12,7 +12,7 @@ public interface Category {
   default Class<? extends Category> lowestCategory() {
     Class<? extends Category> $ = Category.class;
     for (final Taxon ¢ : Taxa.hierarchy.nodes())
-      if (¢.get().isInstance(this) && $.isAssignableFrom(¢.get()))
+      if (¢.get().isInstance(this) && ¢.get() != getClass() && $.isAssignableFrom(¢.get()))
         $ = ¢.get();
     return $;
   }
@@ -21,7 +21,7 @@ public interface Category {
    * {@link Taxon}
    * @return preference group this tipper belongs to */
   default Taxon tipperGroup() {
-    return Taxon.of(this);
+    return Taxon.of(this.lowestCategory());
   }
 
   interface Bloater extends Category {

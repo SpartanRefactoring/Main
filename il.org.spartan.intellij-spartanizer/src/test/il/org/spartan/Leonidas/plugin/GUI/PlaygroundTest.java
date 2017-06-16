@@ -9,7 +9,7 @@ import il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.Playground;
  */
 public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
 
-    Playground playground;
+    private Playground playground;
 
     @Override
     protected void setUp() throws Exception {
@@ -58,6 +58,7 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
         assert playground.getOutput().equals("x");
         playground.doClear();
         assert playground.getOutput().equals("");
+        assert playground.getInput().equals("");
     }
 
     public void testClose() {
