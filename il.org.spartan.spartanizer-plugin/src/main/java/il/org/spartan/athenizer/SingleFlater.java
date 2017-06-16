@@ -187,9 +187,9 @@ public final class SingleFlater {
   }
   private boolean inSelection(final ASTNode ¢) {
     final boolean inWindow = windowInformation == null || windowInformation.invalid()
-        || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
-    final boolean inSelection = textSelection == null || ¢ != null && ¢.getStartPosition() >= textSelection.getOffset()
-        && ¢.getLength() + ¢.getStartPosition() <= textSelection.getLength() + textSelection.getOffset();
+        || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar,
+        inSelection = textSelection == null || ¢ != null && ¢.getStartPosition() >= textSelection.getOffset()
+            && ¢.getLength() + ¢.getStartPosition() <= textSelection.getLength() + textSelection.getOffset();
     return inWindow && inSelection;
   }
 

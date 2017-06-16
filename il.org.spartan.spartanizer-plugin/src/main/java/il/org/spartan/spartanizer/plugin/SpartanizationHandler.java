@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
   private static final English.Inflection OPERATION_ACTIVITY = English.Inflection.stem("Spartaniz");
-  public static final int PASSES = 20;
+  public static final int PASSES = 30;
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {

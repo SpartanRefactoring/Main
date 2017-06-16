@@ -34,7 +34,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
-  public static final int PASSES_MANY = 20;
+  public static final int PASSES_MANY = 30;
   /** Minimum number of files in selection initiating disabling of auto build */
   private static final int DISABLE_AUTO_BUILD_THRESHOLD = 100;
 

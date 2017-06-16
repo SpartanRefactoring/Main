@@ -83,20 +83,15 @@ public class OperationListEditor extends ListEditor {
       }
       @SuppressWarnings("synthetic-access") void onSelection() {
         final int i = getList().getSelectionIndex() - 1;
-        if (i < 0)
-          return;
-        if(i==0)
+        if (i < 0 || i == 0)
           return;
         List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        //else
         System.out.println("we are on - " + l.get(i).getName());
         System.out.println(l);
         System.out.println("TODO BOM - UP");
-        Collections.swap(l, i-1, i);
+        Collections.swap(l, i - 1, i);
         WidgetPreferences.storeEntries(l);
         System.out.println(l);
-        //resLE.loadDefault();
-       
       }
     });
     this.getRemoveButton().addSelectionListener(new SelectionListener() {
