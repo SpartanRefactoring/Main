@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Niv Shalmon
  * @since 2016 */
 public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.Theory.Strings {
+    implements Category.Theory.Strings, Category.Transformation.Sort {
   private static final long serialVersionUID = -0xABED385B90F4612L;
 
   private static InfixExpression replace(final InfixExpression ¢) {

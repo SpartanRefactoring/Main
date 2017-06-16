@@ -34,7 +34,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
-    implements Category.NOP.onNumbers {
+    implements Category.Transformation.Prune, Category.Theory.Arithmetics.Numeric {
   private static final long serialVersionUID = 0x3A8FC386BA92697AL;
 
   private static List<Expression> gather(final Expression x, final List<Expression> $) {

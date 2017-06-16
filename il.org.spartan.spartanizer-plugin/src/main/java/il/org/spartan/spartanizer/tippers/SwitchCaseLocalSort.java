@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-09 */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = 0x3FBC0D3028B5DF0L;
 
   @Override public Tip tip(final SwitchCase n) {

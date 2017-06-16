@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.NOP.onNumbers {
+    implements Category.Transformation.Prune, Category.Theory.Arithmetics {
   private static final long serialVersionUID = 0x7AAE85AAEB6D72C8L;
 
   private static ASTNode replacement(final List<Expression> ¢) {

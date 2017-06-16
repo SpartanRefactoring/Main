@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Yossi Gil
  * @since 2015-08-15 */
 public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = 0x2C75A73E71D3D17L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

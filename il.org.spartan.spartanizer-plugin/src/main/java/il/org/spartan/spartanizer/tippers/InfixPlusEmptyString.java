@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Niv Shalmon
  * @since 2016-08-29 */
 public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.Theory.Strings {
+    implements Category.Theory.Strings, Category.Transformation.Prune {
   private static final long serialVersionUID = -0x17CCB52A168511EBL;
 
   @Override public String description() {

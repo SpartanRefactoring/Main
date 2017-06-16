@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.NOP.onNumbers {
+    implements Category.Transformation.Prune, Category.Theory.Arithmetics.Numeric {
   private static final long serialVersionUID = -0x1DD7EC059CC8417AL;
 
   private static List<Expression> minusFirst(final List<Expression> prune) {

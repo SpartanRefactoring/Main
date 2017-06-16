@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<NormalAnnotation>//
-    implements Category.SyntacticBaggage {
+    implements Category.Transformation.Prune {
   private static final long serialVersionUID = -0x2BB9B06C96DB60B8L;
 
   @Override public String description(final NormalAnnotation ¢) {
