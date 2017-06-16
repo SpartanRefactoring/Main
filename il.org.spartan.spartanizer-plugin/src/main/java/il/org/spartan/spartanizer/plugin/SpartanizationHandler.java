@@ -16,7 +16,7 @@ import fluent.ly.*;
 import il.org.spartan.utils.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
- * that uses {@link NewGUIApplicator} as its applicator.
+ * that uses {@link GUIApplicator} as its applicator.
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
@@ -25,7 +25,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final NewGUIApplicator a = applicator().defaultSelection();
+    final GUIApplicator a = applicator().defaultSelection();
     a.setPasses(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -36,13 +36,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   @Override public void run(final IMarker ¢) {
     applicator().setPasses(1).selection(Selection.Util.by(¢)).go();
   }
-  public static NewGUIApplicator applicator() {
+  public static GUIApplicator applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static NewGUIApplicator applicator(final English.Inflection activityNamer) {
-    final NewGUIApplicator $ = new NewGUIApplicator();
+  public static GUIApplicator applicator(final English.Inflection activityNamer) {
+    final GUIApplicator $ = new GUIApplicator();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.setContext(r -> {
       try {
@@ -111,8 +111,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  @Deprecated @SuppressWarnings("deprecation") public static NewGUIApplicator applicatorMapper() {
-    final NewGUIApplicator $ = new NewGUIApplicator();
+  @Deprecated @SuppressWarnings("deprecation") public static GUIApplicator applicatorMapper() {
+    final GUIApplicator $ = new GUIApplicator();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Bool openDialog = new Bool();
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {

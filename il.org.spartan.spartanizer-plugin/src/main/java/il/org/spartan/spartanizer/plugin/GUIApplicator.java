@@ -27,8 +27,8 @@ enum event {
 /** An {@link Applicator} suitable for eclipse GUI.
  * @author Ori Roth
  * @since 2.6 */
-public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplicator> {
-  protected NewGUIApplicator() {}
+public class GUIApplicator extends Applicator implements Selfie<GUIApplicator> {
+  protected GUIApplicator() {}
 
   private static final String DEFAULT_STEM = "Operat";
   /** Few passes for the applicator to conduct. */
@@ -88,31 +88,31 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
   }
   /** Default listener configuration of . Simple printing to console.
    * @return {@code this} applicator */
-  @Override public NewGUIApplicator defaultListenerNoisy() {
+  @Override public GUIApplicator defaultListenerNoisy() {
     listener(λ -> as.list(λ).forEach(System.out::print));
     return this;
   }
   /** Default listener configuration of . Silent listener.
    * @return {@code this} applicator */
-  public NewGUIApplicator defaultListenerSilent() {
+  public GUIApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
   /** Default selection configuration of . Normal eclipse user selection.
    * @return {@code this} applicator */
-  public NewGUIApplicator defaultSelection() {
+  public GUIApplicator defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
   /** Default passes configuration of , with few passes.
    * @return {@code this} applicator */
-  public NewGUIApplicator fewPasses() {
+  public GUIApplicator fewPasses() {
     setPasses(PASSES_FEW);
     return this;
   }
   /** Default passes configuration of , with many passes.
    * @return {@code this} applicator */
-  public NewGUIApplicator manyPasses() {
+  public GUIApplicator manyPasses() {
     setPasses(PASSES_MANY);
     return this;
   }
@@ -123,7 +123,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
    * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return {@code this} applicator */
-  public NewGUIApplicator defaultRunAction() {
+  public GUIApplicator defaultRunAction() {
     inner.traversal.useProjectPreferences();
     name(inner.getName());
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
@@ -133,7 +133,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
    * {@link ICompilationUnit} using received {@link GUITraversal}.
    * @param t JD
    * @return {@code this} applicator */
-  public NewGUIApplicator restrictTo(final Tipper<?> t) {
+  public GUIApplicator restrictTo(final Tipper<?> t) {
     inner.setSelection(selection());
     inner.setName(t.description());
     inner.traversal.notUseProjectPreferences();
@@ -142,7 +142,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     name(t.tipperName());
     return this;
   }
-  public <N extends ASTNode> NewGUIApplicator restrictTo(final Class<N> c, @SuppressWarnings("unchecked") final Tipper<N>... ts) {
+  public <N extends ASTNode> GUIApplicator restrictTo(final Class<N> c, @SuppressWarnings("unchecked") final Tipper<N>... ts) {
     inner.setSelection(selection());
     /** TODO Dor set name */
     // inner.setName(t.description());
@@ -158,12 +158,12 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
   }
   /** Default operation name.
    * @return {@code this} applicator */
-  public NewGUIApplicator defaultOperationName() {
+  public GUIApplicator defaultOperationName() {
     operationName(English.Inflection.stem(DEFAULT_STEM));
     return this;
   }
-  public static NewGUIApplicator plain() {
-    return new NewGUIApplicator()//
+  public static GUIApplicator plain() {
+    return new GUIApplicator()//
         .defaultRunAction()//
         .defaultListenerSilent()//
         .fewPasses()//
@@ -172,8 +172,8 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
   }
   /** Factory method.
    * @return default event applicator */
-  public static NewGUIApplicator defaultApplicator() {
-    return NewGUIApplicator.plain();
+  public static GUIApplicator defaultApplicator() {
+    return GUIApplicator.plain();
   }
 
   /** Printing definition of events that occur during spartanization.
@@ -237,7 +237,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
       note.bug(¢);
     }
   }
-  @Override public NewGUIApplicator self() {
+  @Override public GUIApplicator self() {
     return null;
   }
 }
