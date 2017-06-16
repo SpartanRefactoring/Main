@@ -24,7 +24,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned implements LeonidasTipperDefi
      */
     @Override
     public void constraints() {
-//        element(4).asStatement.
+        element(3).asIdentifier.notContains(element(2).asIdentifier.getText());
     }
 
     @Override
@@ -36,6 +36,8 @@ public class MatchCtorParamNamesToFieldsIfAssigned implements LeonidasTipperDefi
 
                 Class0(Class1 identifier3) {
                     anyNumberOf(statement(4));
+                    field2 = identifier3;
+                    anyNumberOf(statement(5));
                 }
             }
             /* end */
@@ -51,6 +53,8 @@ public class MatchCtorParamNamesToFieldsIfAssigned implements LeonidasTipperDefi
 
                 Class0(Class1 identifier3) {
                     anyNumberOf(statement(4));
+                    this.field2 = identifier3;
+                    anyNumberOf(statement(5));
                 }
             }
             /* end */
@@ -61,6 +65,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned implements LeonidasTipperDefi
     public void replacingRules() {
         String newIdentifier = element(2).asIdentifier.getText();
         element(4).asStatement.replaceIdentifiers(3, newIdentifier);
+        element(5).asStatement.replaceIdentifiers(3, newIdentifier);
         element(3).asIdentifier.changeName(newIdentifier);
     }
 
