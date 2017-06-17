@@ -48,7 +48,7 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
   }
   /** @return the default configuration of the operation, or null if there is
    *         none */
-  protected ConfigurationsMap defaultConfiguration() {
+  public ConfigurationsMap defaultConfiguration() {
     return new ConfigurationsMap();
   }
   /** Configure this operation, if needed.
