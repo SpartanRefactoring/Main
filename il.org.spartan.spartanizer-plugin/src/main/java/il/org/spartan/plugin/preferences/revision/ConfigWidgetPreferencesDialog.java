@@ -1,17 +1,18 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import java.io.*;
+
 import java.util.*;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** A dialog to descrive a configuration of an operation widget
@@ -107,11 +108,9 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     return $;
   }
   @Override protected void okPressed() {
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    try {
-      new ObjectOutputStream(out).writeObject(configurations);
-    } catch (@SuppressWarnings("unused") final IOException x) {
-      note.bug();
+    if("".equals(resName.getText())) {
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
+      return;
     }
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.get(l.indexOf(woe)).setConfMap(confMap);
