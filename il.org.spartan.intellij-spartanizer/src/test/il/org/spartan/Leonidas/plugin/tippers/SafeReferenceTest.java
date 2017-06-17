@@ -5,7 +5,7 @@ import org.junit.Test;
 
 /**
  * @author @roey maor
- * @since 27-05-2017.
+ * @since 27-06-2017.
  */
 public class SafeReferenceTest extends PsiTypeHelper {
 

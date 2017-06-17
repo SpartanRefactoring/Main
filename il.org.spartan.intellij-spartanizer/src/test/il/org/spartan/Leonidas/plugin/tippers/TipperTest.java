@@ -110,11 +110,10 @@ public class TipperTest{
                 assert(false);
             }
             log("before: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
-            log(filewkey.getCodeType()+"");
             Boolean tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
             if(!tipperAffected){
                 if(value != null) {
-                    log("Tipper "+getTipperName()+" should have affected the example\n: "+filewkey.extractCanonicalSubtreeString()+"\n but it didn't. aborting test.");
+                    log("Tipper "+getTipperName()+" should have affected the example:\n "+filewkey.extractCanonicalSubtreeString()+"\n but it didn't. aborting test.");
                     assert(false);
                 }
             }
