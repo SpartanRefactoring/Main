@@ -164,10 +164,11 @@ public class OperationListEditor extends ListEditor {
       }
       @SuppressWarnings("synthetic-access") void onSelection() {
         final int i = getList().getSelectionIndex();
-        if (i >= 0)
+        if (i >= 0) 
           onConfigure.accept(elements_list.get(i).getValue()); // perform the on
                                                                // configure on
                                                                // widget op
+
       }
     });
     parent.addDisposeListener(λ -> {
@@ -217,12 +218,14 @@ public class OperationListEditor extends ListEditor {
       return res;
     final long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
     final WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, new HashMap<>(), res);
-    elements_list.add(0, new AbstractMap.SimpleEntry<>(res, woe));
+    woe.disable();
+    elements_list.add(new AbstractMap.SimpleEntry<>(res, woe));
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.add(woe);
     WidgetPreferences.storeEntries(l);
     resLE.loadDefault();
-    return res;
+    this.loadDefault();
+    return null;
   }
   @Override protected String createList(final String[] items) {
     return separate.these(items).by(DELIMETER);
