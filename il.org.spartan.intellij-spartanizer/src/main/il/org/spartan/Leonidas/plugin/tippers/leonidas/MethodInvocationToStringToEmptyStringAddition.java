@@ -14,9 +14,6 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
 
     Object identifier0;
 
-    void identifier1(String s) {
-    }
-
     @Override
     public void constraints() {
     }
@@ -25,7 +22,7 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
     public void matcher() {
         new Template(() ->
                 /* start */
-                identifier1(identifier0.toString())
+                identifier0.toString()
                 /* end */
         );
     }
@@ -34,7 +31,7 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
     public void replacer() {
         new Template(() ->
                 /* start */
-                identifier1("" + identifier0)
+                "" + identifier0
                 /* end */
         );
     }
