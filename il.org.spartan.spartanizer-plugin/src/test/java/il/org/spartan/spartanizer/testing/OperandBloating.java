@@ -19,6 +19,9 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
+/** Part of the test utils for bloaters\zoomers
+ * @author Dor Ma'ayan
+ * @since 2017-06-17 */
 public class OperandBloating extends TestOperand {
   ASTNode ast;
   String xclassText;
@@ -178,13 +181,29 @@ public class OperandBloating extends TestOperand {
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String unpeeled = doc.get();
-      if (wrap.equals(unpeeled) || Trivia.essence(get()).equals(Trivia.essence(unpeeled)))
-        return;
-      if (!unpeeled.equals(get()) && unpeeled.equals(get()))
-        assertSimilar(get(), unpeeled);
+      checkDiff(wrap, doc.get());
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(this, ¢);
     }
+  }
+  public void stayWithBinding(final String $, final String f) {
+    assert $ != null;
+    final CompilationUnit u = az.compilationUnit(ast);
+    final String wrap = get();
+    final ASTRewrite r = ASTRewrite.create(u.getAST());
+    MethodDeclaration m = getMethod(u, f);
+    SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider(traversal.configuration)).go(r, TestUtilsBloating.textEditGroup);
+    try {
+      final IDocument doc = new Document(wrap);
+      r.rewriteAST(doc, null).apply(doc);
+      checkDiff(wrap, doc.get());
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      note.bug(this, ¢);
+    }
+  }
+  public void checkDiff(String wrap, String unpeeled) {
+    if (!wrap.equals(unpeeled) && !Trivia.essence(get()).equals(Trivia.essence(unpeeled)))
+      if (!unpeeled.equals(get()) && unpeeled.equals(get()))
+        assertSimilar(get(), unpeeled);
   }
 }
