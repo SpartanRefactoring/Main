@@ -23,6 +23,12 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   protected AddNewWidgetPreferencesDialog(final Shell parentShell) {
     super(parentShell);
   }
+  
+  @Override
+  protected boolean isResizable() {
+      return true;
+  }
+  
   private static Text createString(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
