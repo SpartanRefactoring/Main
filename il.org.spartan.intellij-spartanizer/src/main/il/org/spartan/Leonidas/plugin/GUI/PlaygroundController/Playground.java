@@ -46,6 +46,7 @@ public class Playground extends JFrame {
     private JButton spartanizeInputRecursivelyButton;
     private JButton stepButton;
     private JButton RecuresiveJavaButton;
+    private JButton step;
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
     private String[] after = {"\n}", "\n}}", ");\n}}"};
@@ -80,14 +81,19 @@ public class Playground extends JFrame {
         setVisible(true);
         outputArea.setEditable(false);
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
-        stepButton.addActionListener(e -> spartanizationStep());
-        clearButton.addActionListener(e -> clearButtonClicked());
+       clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
         RecuresiveJavaButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 spartanizeRecursivelyButtonClicked();
+            }
+        });
+        step.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                spartanizationStep();
             }
         });
     }
