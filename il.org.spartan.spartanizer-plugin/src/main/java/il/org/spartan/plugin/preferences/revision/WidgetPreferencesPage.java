@@ -91,8 +91,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getButtonBoxControl(parent).dispose();
       }
     };
-    ole.addDefaultButtonsConfigWithLE(resLE);
-    ole.resLE = resLE; // TODO: Raviv Rachmiel, find a better way to do this -rr
+    
     addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperationEntry) λ, resLE),
         λ -> isEnabled((WidgetOperationEntry) λ), λ -> onAble((WidgetOperationEntry) λ, isEnabled((WidgetOperationEntry) λ), resLE)));
     resLE.getButtonBoxControl(getFieldEditorParent());
