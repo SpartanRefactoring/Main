@@ -52,10 +52,10 @@ public class PsiFileCenter {
 
         public String extractCanonicalSubtreeString(){
             String raw =  extractRelevantSubtreeString();
+            raw = raw.replaceAll("\t"," ");
             raw = raw.trim().replaceAll(" +", " ");
             raw = raw.replaceAll(" ,", ",");
             raw = raw.replaceAll(", ", ",");
-            raw = raw.replaceAll("\t"," ");
             raw = raw.replaceAll("\n+","\n");
             return raw;
         }
