@@ -88,9 +88,9 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
           }
         break;
       }
-    if (result == null) {
-      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid selection", "No operation selected");
-    } else
+    if (result != null)
       super.okPressed();
+    else
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid selection", "No operation selected");
   }
 }
