@@ -31,7 +31,7 @@ public class GitCommitOperation extends GitOperation {
       message = DEFAULT_MESSAGE;
     return true;
   }
-  @Override protected ConfigurationsMap defaultConfiguration() {
+  @Override public ConfigurationsMap defaultConfiguration() {
     return super.defaultConfiguration().put(MESSAGE, DEFAULT_MESSAGE);
   }
   @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {

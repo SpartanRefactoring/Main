@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
+
+
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -219,6 +221,8 @@ public class OperationListEditor extends ListEditor {
     final long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
     final WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, new HashMap<>(), res);
     woe.disable();
+    if($.getResult().defaultConfiguration()==null)
+      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), woe,PreferencesResources.store()).open();
     elements_list.add(new AbstractMap.SimpleEntry<>(res, woe));
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.add(woe);

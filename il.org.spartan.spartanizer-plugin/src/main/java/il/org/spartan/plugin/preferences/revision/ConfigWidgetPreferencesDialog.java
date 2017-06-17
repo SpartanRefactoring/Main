@@ -112,6 +112,11 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
       MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
       return;
     }
+    if(woe.getWidgetOp().defaultConfiguration()==null && confMap.isEmpty()) {
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid configuration", "no configuration selected for a widget without a default configuration");
+      return;
+    }
+      
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.get(l.indexOf(woe)).setConfMap(confMap);
     l.get(l.indexOf(woe)).setName(resName.getText());

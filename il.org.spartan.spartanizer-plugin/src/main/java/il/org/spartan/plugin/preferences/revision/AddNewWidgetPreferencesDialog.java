@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
+
+
 import java.util.List;
 
 import org.eclipse.jface.dialogs.*;
@@ -92,5 +94,7 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
       super.okPressed();
     else
       MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid selection", "No operation selected");
+      
+      
   }
 }
