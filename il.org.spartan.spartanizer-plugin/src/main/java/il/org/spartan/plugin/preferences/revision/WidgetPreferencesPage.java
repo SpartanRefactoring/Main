@@ -91,9 +91,8 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getButtonBoxControl(parent).dispose();
       }
     };
-    
     addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperationEntry) λ, resLE),
-        λ -> isEnabled((WidgetOperationEntry) λ), λ -> onAble((WidgetOperationEntry) λ, isEnabled((WidgetOperationEntry) λ), resLE)));
+        λ -> isEnabled((WidgetOperationEntry) λ), λ -> onAble((WidgetOperationEntry) λ, isEnabled((WidgetOperationEntry) λ), resLE),resLE));
     resLE.getButtonBoxControl(getFieldEditorParent());
     addField(resLE);
   }
