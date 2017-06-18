@@ -1,18 +1,16 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.UNTESTED;
 
 /**
- * <Tipper description>
- * UnusedParameterToUnderscore
+ * change unused parameter to __
  *
  * @author Anna Belozovsky
  * @since 15/06/2017
@@ -27,7 +25,8 @@ public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
      */
     @Override
     public void constraints() {
-        element(4).asStatement.mustNotRefer(element(3).asIdentifier.getText());
+        element(4).asStatement.mustNotRefer(3);
+        element(3).asIdentifier.notContains("__");
     }
 
     @Override
@@ -63,7 +62,7 @@ public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         Map<String, String> examples = new HashMap<>();
-
+        examples.put("int foo(int x){\n\treturn 2;\n}", "int foo(int __){\n\treturn 2;\n}");
         return examples;
     }
 
