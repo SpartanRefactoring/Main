@@ -43,13 +43,10 @@ public class InflateHandler extends AbstractHandler {
       return goWheelAction();
     }
     final Selection $ = Selection.Util.current().setUseBinding();
-    return $.isTextSelection ? noAction() : goAggressiveAction($);
+    return $.isTextSelection ? null : goAggressiveAction($);
   }
 
-  public static Void noAction() {
-    return null;
-  }
-  
+
   public static Void goWheelAction() {
     final IPartService s = getPartService();
     if (s == null)
