@@ -5,6 +5,8 @@ import java.util.function.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
@@ -39,11 +41,10 @@ public class TopMenuHandlers extends AbstractHandler {
               InflateHandler.goWheelAction();
           });
           put("il.org.spartan.ZoomSelection", e -> {
-            final Selection s = Selection.Util.current().setUseBinding();
-            if (s.isTextSelection)
-              InflateHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
-            else if (InflateHandler.active.get() || showZoomToolMessage())
-              InflateHandler.goWheelAction();
+            final WrappedCompilationUnit wcu = the.firstOf(Selection.Util.current().inner).build();
+            SingleFlater.commitChanges(
+                SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(Selection.Util.current().textSelection),
+                ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, null, null, null, false);
           });
           put("il.org.spartan.ZoomIn", λ -> {/***/
           });

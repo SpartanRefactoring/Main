@@ -25,7 +25,7 @@ public abstract class GitOperation extends WidgetOperation {
   @Override public boolean register(final ConfigurationsMap ¢) {
     return (popup = ¢.getBoolean(POPUP)) != null;
   }
-  @Override protected ConfigurationsMap defaultConfiguration() {
+  @Override public ConfigurationsMap defaultConfiguration() {
     return new ConfigurationsMap().put(POPUP, true);
   }
   protected abstract void gitOperation(Git g) throws Throwable;

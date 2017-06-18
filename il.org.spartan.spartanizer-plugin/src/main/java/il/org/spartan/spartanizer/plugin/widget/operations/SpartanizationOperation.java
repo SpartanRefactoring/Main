@@ -22,7 +22,7 @@ public class SpartanizationOperation extends WidgetOperation {
   @Override public boolean register(final ConfigurationsMap ¢) {
     return (type = ¢.getString(TYPE)) != null;
   }
-  @Override protected ConfigurationsMap defaultConfiguration() {
+  @Override public ConfigurationsMap defaultConfiguration() {
     return new ConfigurationsMap().put(TYPE, "Current file");
   }
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext ¢) throws Throwable {

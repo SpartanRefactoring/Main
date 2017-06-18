@@ -31,12 +31,12 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   /* @param l - list of all woe
    *
    * @param maxOps - max num of enabled woe allowed */
-  public static boolean handleIsNumEnabledFine(final List<WidgetOperationEntry> es, final int maxOps) {
+  public static boolean canAddMoreOps(final List<WidgetOperationEntry> es, final int maxOps) {
     int count = 0;
     for (final WidgetOperationEntry ¢ : es)
       if (¢.isEnabled())
         ++count;
-    if (count <= maxOps)
+    if (count < maxOps)
       return true;
     MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
         "Cannot enable more than " + WIDGET_MAX_OPS + " widget operations. \n Taking the " + WIDGET_MAX_OPS + " first enabled widget operations ");
@@ -44,7 +44,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   public static void onAble(final WidgetOperationEntry e, final boolean valueNow, final ListEditor resLE) {
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-    if (!handleIsNumEnabledFine(l, WIDGET_MAX_OPS))
+    if (!canAddMoreOps(l, WIDGET_MAX_OPS))
       return;
     l.get(l.indexOf(e)).setEnabled(!valueNow);
     e.setEnabled(!valueNow);
@@ -91,9 +91,8 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getButtonBoxControl(parent).dispose();
       }
     };
-    
     addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperationEntry) λ, resLE),
-        λ -> isEnabled((WidgetOperationEntry) λ), λ -> onAble((WidgetOperationEntry) λ, isEnabled((WidgetOperationEntry) λ), resLE)));
+        λ -> isEnabled((WidgetOperationEntry) λ), λ -> onAble((WidgetOperationEntry) λ, isEnabled((WidgetOperationEntry) λ), resLE),resLE));
     resLE.getButtonBoxControl(getFieldEditorParent());
     addField(resLE);
   }
