@@ -1,15 +1,9 @@
 package il.org.spartan.Leonidas.plugin.GUI.PlaygroundController;
 
-import com.intellij.lang.java.JavaLanguage;
-import com.intellij.psi.JavaRecursiveElementVisitor;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.intellij.util.ui.UIUtil;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.PsiFileCenter;
 import il.org.spartan.Leonidas.plugin.Spartanizer;
@@ -44,10 +38,8 @@ public class Playground extends JFrame {
     private JTextPane textPaneOutput;
     private JScrollPane inputScroll;
     private JScrollPane outputScroll;
-    private JButton spartanizeInputRecursivelyButton;
-    private JButton stepButton;
-    private JButton RecuresiveJavaButton;
-    private JButton step;
+    private JButton RecursiveJavaButton = new JButton();
+    private JButton step = new JButton();
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
     private String[] after = {"\n}", "\n}}", ");\n}}"};
@@ -84,7 +76,7 @@ public class Playground extends JFrame {
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
        clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
-        RecuresiveJavaButton.addMouseListener(new MouseAdapter() {
+        RecursiveJavaButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -247,7 +239,6 @@ public class Playground extends JFrame {
         closeButton.setText("Close");
         buttonPanel.add(closeButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         spartanizeButton = new JButton();
-        spartanizeInputRecursivelyButton = new JButton();
         spartanizeButton.setText("Spartanize");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
