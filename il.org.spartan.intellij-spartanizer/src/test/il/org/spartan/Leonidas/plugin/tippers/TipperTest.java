@@ -26,6 +26,7 @@ examples can be in one of two forms:
                       that conforms to the latter
 2) String -> null : The tipper should not affect the former.
 
+This class relies on PsiFileCenter
  */
 
 public class TipperTest{
@@ -113,19 +114,19 @@ public class TipperTest{
             Boolean tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
             if(!tipperAffected){
                 if(value != null) {
-                    log("Tipper "+getTipperName()+" should have affected the example:\n "+filewkey.extractCanonicalSubtreeString()+"\n but it didn't. aborting test.");
-                    assert(false);
+                    log("Tipper "+getTipperName()+" should have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it didn't. aborting test.");
+                    //assert(false);
                 }
             }
             else{
                 if(value == null){
-                    log("Tipper "+getTipperName()+" should not have affected the example:\n "+key+"\n but it did. aborting test.");
+                    log("Tipper "+getTipperName()+" should not have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it did. aborting test.");
                     assert(false);
                 }
                 else{
                     String keyAfterChange = filewkey.extractCanonicalSubtreeString();
                     if(!keyAfterChange.equals(filewvalue.extractCanonicalSubtreeString())){
-                        log("Tipper "+getTipperName()+" didn't affect the example:\n "+key+" \nas expected. expected:\n"+filewvalue.extractCanonicalSubtreeString()+"\n but got: \n"+keyAfterChange);
+                        log("Tipper "+getTipperName()+" didn't affect the example:\n"+key+"\nas expected. expected:\n"+filewvalue.extractCanonicalSubtreeString()+"\nbut got: \n"+keyAfterChange);
                         assert(false);
                     }
                 }
@@ -137,31 +138,4 @@ public class TipperTest{
 
         toolbox.testing = false;
     }
-    private boolean byExample(String input, String output){
-        if(!setup) {
-            try {
-                this.setUp();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if(leonidasMode){
-            return leonidasTipperByExample(input,output);
-        }
-        else{
-            return regularTipperByExample(input,output);
-        }
-    }
-
-    private boolean leonidasTipperByExample(String input,String output){
-        return false;
-    }
-
-    private boolean regularTipperByExample(String input, String output){
-        return false;
-    }
-
-    //wrap in class
-    //wrap in method
-    //inside a method call - expression
 }

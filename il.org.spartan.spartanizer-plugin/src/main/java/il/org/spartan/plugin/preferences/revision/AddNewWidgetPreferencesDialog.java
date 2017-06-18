@@ -1,12 +1,16 @@
 package il.org.spartan.plugin.preferences.revision;
 
+
+
 import java.util.List;
 
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
 
@@ -73,6 +77,10 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   }
   @Override protected void okPressed() {
     retName = retNameText.getText();
+    if("".equals(retName)) {
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
+      return;
+    }
     for (final Button ¢ : radioButtons)
       if (¢.getSelection()) {
         for (final WidgetOperation w : widgetOps)
@@ -82,6 +90,11 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
           }
         break;
       }
-    super.okPressed();
+    if (result != null)
+      super.okPressed();
+    else
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid selection", "No operation selected");
+      
+      
   }
 }

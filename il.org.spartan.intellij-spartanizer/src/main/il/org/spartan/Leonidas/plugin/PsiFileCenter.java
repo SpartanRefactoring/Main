@@ -30,6 +30,22 @@ public class PsiFileCenter {
     private HashMap<CodeType,String> wrappingPrefixes;
     private HashMap<CodeType,String> wrappingPostfixes;
 
+    public PsiFileCenter(){
+        wrappingPrefixes = new HashMap<>();
+        wrappingPrefixes.put(CodeType.CLASS_BOUND,"public class XCLASS{\n");
+        wrappingPrefixes.put(CodeType.METHOD_BOUND,wrappingPrefixes.get(CodeType.CLASS_BOUND)+"public void XMETHOD(){\n");
+        wrappingPrefixes.put(CodeType.EXPRESSION,wrappingPrefixes.get(CodeType.METHOD_BOUND)+"XMETHOD(");
+        wrappingPrefixes.put(CodeType.ENUM_BOUND,wrappingPrefixes.get(CodeType.CLASS_BOUND)+"public enum XENUM{\n");
+        wrappingPrefixes.put(CodeType.FILE_BOUND,"");
+
+        wrappingPostfixes = new HashMap<>();
+        wrappingPostfixes.put(CodeType.CLASS_BOUND,"\n}");
+        wrappingPostfixes.put(CodeType.METHOD_BOUND,"\n}"+wrappingPostfixes.get(CodeType.CLASS_BOUND));
+        wrappingPostfixes.put(CodeType.EXPRESSION,");"+wrappingPostfixes.get(CodeType.METHOD_BOUND));
+        wrappingPostfixes.put(CodeType.ENUM_BOUND,"\n}"+wrappingPostfixes.get(CodeType.CLASS_BOUND));
+        wrappingPostfixes.put(CodeType.FILE_BOUND,"");
+    }
+
     /*
      * This is a PsiFile, that it's sole purpose is to hold within it some
      * sub-tree that was given by the user.
@@ -63,28 +79,6 @@ public class PsiFileCenter {
         private String extractRelevantSubtreeString(){
             return (file.getText().split(PsiFileCenter.markerRegex))[1];
         }
-
-        private PsiElement extractRelevantSubtree(){
-            //currently unused, to be considered if approach changes.
-            return null;
-        }
-
-    }
-
-    public PsiFileCenter(){
-        wrappingPrefixes = new HashMap<>();
-        wrappingPrefixes.put(CodeType.CLASS_BOUND,"public class XCLASS{\n");
-        wrappingPrefixes.put(CodeType.METHOD_BOUND,wrappingPrefixes.get(CodeType.CLASS_BOUND)+"public void XMETHOD(){\n");
-        wrappingPrefixes.put(CodeType.EXPRESSION,wrappingPrefixes.get(CodeType.METHOD_BOUND)+"XMETHOD(");
-        wrappingPrefixes.put(CodeType.ENUM_BOUND,wrappingPrefixes.get(CodeType.CLASS_BOUND)+"public enum XENUM{\n");
-        wrappingPrefixes.put(CodeType.FILE_BOUND,"");
-
-        wrappingPostfixes = new HashMap<>();
-        wrappingPostfixes.put(CodeType.CLASS_BOUND,"\n}");
-        wrappingPostfixes.put(CodeType.METHOD_BOUND,"\n}"+wrappingPostfixes.get(CodeType.CLASS_BOUND));
-        wrappingPostfixes.put(CodeType.EXPRESSION,");"+wrappingPostfixes.get(CodeType.METHOD_BOUND));
-        wrappingPostfixes.put(CodeType.ENUM_BOUND,"\n}"+wrappingPostfixes.get(CodeType.CLASS_BOUND));
-        wrappingPostfixes.put(CodeType.FILE_BOUND,"");
     }
 
     public PsiFileWrapper createFileFromString(String s){
