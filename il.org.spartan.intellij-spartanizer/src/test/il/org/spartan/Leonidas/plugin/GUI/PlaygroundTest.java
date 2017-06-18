@@ -18,6 +18,7 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
     }
 
     private void preparePlayground(String input) {
+        playground.doClose();
         playground.setInput(input);
         playground.doSpartanization();
     }
