@@ -45,20 +45,28 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     return $;
   }
   @Override protected Control createDialogArea(final Composite parent) {
-    final ScrolledComposite $ = (ScrolledComposite) super.createDialogArea(parent);
+    final Composite $ = (Composite) super.createDialogArea(parent);
+    
+
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     retNameText = createString($, "Widget Name", "");
+    ScrolledComposite sc = new ScrolledComposite($, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+    Composite composite = new Composite(sc, SWT.NONE);
+    composite.setLayout(new FillLayout(SWT.VERTICAL));
     radioButtons = new Button[widgetOps.size()];
     int count = 0;
     for (final WidgetOperation ¢ : widgetOps) {
-      radioButtons[count] = new Button($, SWT.RADIO);
+      radioButtons[count] = new Button(composite, SWT.RADIO);
       radioButtons[count].setSelection(false);
       radioButtons[count].setText(¢.description());
       radioButtons[count].setBounds(10, 25 * count + 5, 75, 30);
       ++count;
     }
+    sc.setContent(composite);
+    sc.setExpandHorizontal(true);
+    sc.setExpandVertical(true);
     return $;
   }
   // overriding this methods allows you to set the
