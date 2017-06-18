@@ -7,6 +7,7 @@ import java.util.List;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.*;
+import org.eclipse.swt.custom.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
@@ -44,7 +45,7 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     return $;
   }
   @Override protected Control createDialogArea(final Composite parent) {
-    final Composite $ = (Composite) super.createDialogArea(parent);
+    final ScrolledComposite $ = (ScrolledComposite) super.createDialogArea(parent);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
