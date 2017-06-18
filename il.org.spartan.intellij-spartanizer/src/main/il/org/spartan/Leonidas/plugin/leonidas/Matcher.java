@@ -189,7 +189,7 @@ public class Matcher {
             MatchingResult m = new MatchingResult(true);
             for (int j = 0; j < i; j++){
                 potentialRoots.add(Encapsulator.buildTreeFromPsi(c));
-                c = c.getNextSibling();
+                c = Utils.getNextActualSibling(c);
             }
             m.combineWith(matchingRecursion(new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots)));
             if (m.matches()){

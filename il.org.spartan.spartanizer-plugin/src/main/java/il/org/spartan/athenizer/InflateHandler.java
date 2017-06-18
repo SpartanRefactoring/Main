@@ -33,15 +33,20 @@ import il.org.spartan.utils.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
-  private static final English.Inflection OPERATION_ACTIVITY = English.Inflection.stem("Zoom");
+  private static final String TOGGLE_ACTIVITY = "il.org.spartan.AthensToggle";
+  private static final English.Inflection OPERATION_ACTIVITY = English.Inflection.stem("Athenize");
   public static final Bool active = new Bool();
   private static final IPartListener pageListener = pageListener();
 
   @Override public Object execute(final ExecutionEvent ¢) throws ExecutionException {
-    HandlerUtil.toggleCommandState(¢.getCommand());
+    if(TOGGLE_ACTIVITY.equals(¢.getCommand().getId())) {
+      HandlerUtil.toggleCommandState(¢.getCommand());
+      return goWheelAction();
+    }
     final Selection $ = Selection.Util.current().setUseBinding();
-    return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
+    return $.isTextSelection ? null : goAggressiveAction($);
   }
+
   public static Void goWheelAction() {
     final IPartService s = getPartService();
     if (s == null)
