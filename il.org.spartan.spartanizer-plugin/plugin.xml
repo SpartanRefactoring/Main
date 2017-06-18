@@ -396,11 +396,12 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
      <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
-     <command id="il.org.spartan.AthensInflate" name="Athenize">
+     <command id="il.org.spartan.AthensToggle" name="Athenize Toggle">
           <state
                class="org.eclipse.ui.handlers.RegistryToggleState:false"
                id="org.eclipse.ui.commands.toggleState" />
      </command>
+     <command id="il.org.spartan.AthensInflate" name="Athenize" />
      <command id="il.org.spartan.PreferencesChooser" name="Preferences..." />
      <command id="il.org.spartan.ItShortcut" name="ItShortcut" />    
      <command id="il.org.spartan.LambdaShortcut" name="LambdaShortcut" /> 
@@ -431,6 +432,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.spartanizer.plugin.SpartanMovie2"/>
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.spartanizer.plugin.SpartanizationHandler"/>
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.athenizer.InflateHandler" />
+   <handler commandId="il.org.spartan.AthensToggle" class="il.org.spartan.athenizer.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
    <handler commandId="il.org.spartan.ItShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
    <handler commandId="il.org.spartan.LambdaShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
@@ -453,6 +455,13 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <!-- Toolbar buttons -->
   <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
     <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
+     <command
+       tooltip="Athenizer on/off"
+         commandId="il.org.spartan.AthensToggle" 
+         icon="file:/plugin/pictures/athenizer.png"
+         id="il.org.spartan.plugin.toolbars.InflateButton"
+         style="toggle">
+         </command>
        <command 
        tooltip="Spartanize"
          commandId="il.org.spartan.SpartanGlobal" 
@@ -469,8 +478,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        tooltip="Athenize"
          commandId="il.org.spartan.AthensInflate" 
          icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png"
-         id="il.org.spartan.plugin.toolbars.InflateButton"
-         style="toggle">
+         id="il.org.spartan.plugin.toolbars.InflateButton" >
        </command>
        <command
        tooltip="Widget"
@@ -515,6 +523,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="C" label="Current Selection"/>
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="A" label="Active Window"/>
 	  <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="Z" label="Zoom On/Off"/>
+	  <command commandId="il.org.spartan.AthensToggle" style="push" mnemonic="D" label="Zoom On/Off"/>
 	  <command commandId="il.org.spartan.ZoomIn" style="push" mnemonic="I" label="Zoom In Once"/>
 	  <command commandId="il.org.spartan.ZoomOut" style="push" mnemonic="O" label="Zoom Out Once"/>
     </menu>
@@ -608,6 +617,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		commandId="il.org.spartan.AthensCollateral"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
 	<key sequence="Ctrl+Alt+D"
+		commandId="il.org.spartan.AthensToggle"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+A"
 		commandId="il.org.spartan.AthensInflate"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+C"
