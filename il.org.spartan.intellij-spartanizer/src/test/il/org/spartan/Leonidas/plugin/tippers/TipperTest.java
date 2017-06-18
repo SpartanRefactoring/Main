@@ -138,31 +138,4 @@ public class TipperTest{
 
         toolbox.testing = false;
     }
-    private boolean byExample(String input, String output){
-        if(!setup) {
-            try {
-                this.setUp();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if(leonidasMode){
-            return leonidasTipperByExample(input,output);
-        }
-        else{
-            return regularTipperByExample(input,output);
-        }
-    }
-
-    private boolean leonidasTipperByExample(String input,String output){
-        return false;
-    }
-
-    private boolean regularTipperByExample(String input, String output){
-        return false;
-    }
-
-    //wrap in class
-    //wrap in method
-    //inside a method call - expression
 }

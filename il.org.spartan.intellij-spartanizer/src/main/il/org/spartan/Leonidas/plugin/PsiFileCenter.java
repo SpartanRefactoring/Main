@@ -79,12 +79,6 @@ public class PsiFileCenter {
         private String extractRelevantSubtreeString(){
             return (file.getText().split(PsiFileCenter.markerRegex))[1];
         }
-
-        private PsiElement extractRelevantSubtree(){
-            //currently unused, to be considered if approach changes.
-            return null;
-        }
-
     }
 
     public PsiFileWrapper createFileFromString(String s){
