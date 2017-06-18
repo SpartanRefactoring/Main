@@ -6,7 +6,7 @@ import java.util.function.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
+
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
