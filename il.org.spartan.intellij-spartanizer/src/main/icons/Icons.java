@@ -5,12 +5,13 @@ import com.intellij.openapi.util.IconLoader;
 
 import javax.swing.*;
 
-public interface Icons {
-    Icon Tool_Box_Controller = IconLoader.getIcon("/toolbox.png");
-    Icon Playground = IconLoader.getIcon("/playground.png");
-    Icon Info = IconLoader.getIcon("/info.png");
-    Icon LeonidasSmall = IconLoader.getIcon("/leonidasSmall.png");
-    Icon Leonidas = IconLoader.getIcon("/leonidas.png");
-    Icon Enable = IconLoader.getIcon("/enable.png");
-    Icon Disable = IconLoader.getIcon("/disable.png");
+public enum Icons {
+    ;
+    public static Icon Tool_Box_Controller = IconLoader.getIcon("/toolbox.png");
+    public static Icon Playground = IconLoader.getIcon("/playground.png");
+    public static Icon Info = IconLoader.getIcon("/info.png");
+    public static Icon LeonidasSmall = IconLoader.getIcon("/leonidasSmall.png");
+    public static Icon Leonidas = IconLoader.getIcon("/leonidas.png");
+    public static Icon Enable = IconLoader.getIcon("/enable.png");
+    public static Icon Disable = IconLoader.getIcon("/disable.png");
 }
