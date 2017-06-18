@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  * @since 22/04/2017
  */
 public class Playground extends JFrame {
+    private static boolean active = false;
     private JPanel mainPanel;
     private JButton clearButton;
     private JButton spartanizeButton;
@@ -55,6 +56,8 @@ public class Playground extends JFrame {
 
     public Playground() {
         super("Spartanizer Playground");
+        if(active){return;}
+        active = true;
         inputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         outputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         if (UIUtil.isUnderDarcula()) {
@@ -78,6 +81,13 @@ public class Playground extends JFrame {
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
        clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
+        this.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                active = false;
+            }
+        });
         RecursiveJavaButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -139,7 +149,7 @@ public class Playground extends JFrame {
     }
 
     private void closeButtonClicked() {
-        dispose();
+        dispose(); active = false;
     }
 
     public String getOutput() {
@@ -163,7 +173,9 @@ public class Playground extends JFrame {
     }
 
     public void doClose() {
-        closeButton.doClick();
+        if(active) {
+            closeButton.doClick();
+        }
     }
 
     /**
