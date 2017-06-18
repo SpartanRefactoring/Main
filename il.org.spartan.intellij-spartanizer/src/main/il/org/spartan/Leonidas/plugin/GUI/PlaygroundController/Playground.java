@@ -11,6 +11,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import com.intellij.util.ui.UIUtil;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
+import il.org.spartan.Leonidas.plugin.PsiFileCenter;
 import il.org.spartan.Leonidas.plugin.Spartanizer;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -113,31 +114,23 @@ public class Playground extends JFrame {
             return;
         }
         Toolbox.getInstance().playground = true;
-        PsiFile file = null;
-        final boolean[] worked = {true};
-        int i;
-        for (i = 0; worked[0] && i < before.length; i++, worked[0] = true) {
-            file = PsiFileFactory.getInstance(Utils.getProject())
-                    .createFileFromText(JavaLanguage.INSTANCE, before[i] + inputArea.getText() + after[i]);
-            file.accept(new JavaRecursiveElementVisitor() {
-                @Override
-                public void visitErrorElement(PsiErrorElement element) {
-                    worked[0] = false;
-                    super.visitErrorElement(element);
-                }
-            });
-            if (worked[0]) {
-                break;
-            }
+        PsiFileCenter pfc = new PsiFileCenter();
+        PsiFileCenter.PsiFileWrapper pfw = pfc.createFileFromString(inputArea.getText());
+        if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL){
+            outputArea.setText("Input didn't contain legal java code!");
         }
-        if (i < before.length && file != null) {
-            if (!recursive)
-                Spartanizer.spartanizeFileOnePass(file);
-            else
-                Spartanizer.spartanizeFileRecursively(file);
-            outputArea.setText(fixString(file.getText(), i));
-        } else {
-            outputArea.setText(inputArea.getText());
+        else{
+            if (!recursive) {
+                //System.out.println(pfw.extractCanonicalSubtreeString());
+                //System.out.println(pfw.getFile().getText());
+                Spartanizer.spartanizeFileOnePass(pfw.getFile());
+            }
+            else {
+                //System.out.println(pfw.extractCanonicalSubtreeString());
+                //System.out.println(pfw.getFile().getText());
+                Spartanizer.spartanizeFileRecursively(pfw.getFile());
+            }
+            outputArea.setText(pfw.extractCanonicalSubtreeString());
         }
         Toolbox.getInstance().playground = false;
         inputArea.setCaretPosition(0);
