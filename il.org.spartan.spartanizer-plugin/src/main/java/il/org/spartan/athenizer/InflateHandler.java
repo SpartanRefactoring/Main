@@ -47,7 +47,6 @@ public class InflateHandler extends AbstractHandler {
     return $.isTextSelection ? null : goAggressiveAction($);
   }
 
-
   public static Void goWheelAction() {
     final IPartService s = getPartService();
     if (s == null)
