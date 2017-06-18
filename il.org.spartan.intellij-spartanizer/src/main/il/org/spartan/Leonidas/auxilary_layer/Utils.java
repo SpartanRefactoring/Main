@@ -161,6 +161,15 @@ public enum Utils {
     public static PsiElement getNextActualSibling(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current))) {
+            current = current.getNextSibling();
+        }
+        return current;
+    }
+
+    public static PsiElement getNextActualSiblingWithComments(PsiElement e) {
+        if (e == null) return null;
+        PsiElement current = e.getNextSibling();
         while (current != null && iz.whiteSpace(current)) {
             current = current.getNextSibling();
         }
@@ -170,6 +179,7 @@ public enum Utils {
     public static int getNumberOfRootsPossible(PsiElement e) {
         int i = 0;
         PsiElement current = e;
+        if (e == null || iz.whiteSpace(current) || iz.comment(current)) return 0;
         while (current != null) {
             i++;
             current = getNextActualSibling(current);
