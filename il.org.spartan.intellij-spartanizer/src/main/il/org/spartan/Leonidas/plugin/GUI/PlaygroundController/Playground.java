@@ -22,6 +22,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
  * @since 22/04/2017
  */
 public class Playground extends JFrame {
+    private static boolean active = false;
     private JPanel mainPanel;
     private JButton clearButton;
     private JButton spartanizeButton;
@@ -61,6 +64,7 @@ public class Playground extends JFrame {
 
     public Playground() {
         super("Spartanizer Playground");
+        if(active){return;}
         inputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         outputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         if (UIUtil.isUnderDarcula()) {
@@ -84,6 +88,13 @@ public class Playground extends JFrame {
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
        clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
+        this.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                active = false;
+            }
+        });
         RecuresiveJavaButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -97,6 +108,7 @@ public class Playground extends JFrame {
                 spartanizationStep();
             }
         });
+        active = true;
     }
 
     private void spartanizeRecursivelyButtonClicked() {
@@ -149,7 +161,7 @@ public class Playground extends JFrame {
     }
 
     private void closeButtonClicked() {
-        dispose();
+        dispose(); active = false;
     }
 
     public String getOutput() {
