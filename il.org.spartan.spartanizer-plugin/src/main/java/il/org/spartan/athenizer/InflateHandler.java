@@ -61,7 +61,7 @@ public class InflateHandler extends AbstractHandler {
     }
     return null;
   }
-  private static Void goAggressiveAction(final Selection ¢) {
+  public static Void goAggressiveAction(final Selection ¢) {
     applicator().selection(¢).setPasses(SpartanizationHandler.PASSES).go();
     return null;
   }
