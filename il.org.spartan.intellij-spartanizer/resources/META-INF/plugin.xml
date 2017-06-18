@@ -82,6 +82,12 @@
                 icon="Icons.Info">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
+        <action class="il.org.spartan.Leonidas.plugin.SpartanizeProjectAction"
+                id="myPlugin8"
+                text="Spartanize Project"
+                icon="Icons.LeonidasSmall">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>

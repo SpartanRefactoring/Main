@@ -26,6 +26,19 @@ public enum Spartanizer {
         return !"SpartanizerUtils.java".equals(f.getName()) && !isAnnotationPresent(f, SpartaDefeat.class);
     }
 
+    static void spartanizeRecursively(PsiElement e) {
+        if (!shouldSpartanize(e))
+            return;
+        Toolbox toolbox = Toolbox.getInstance();
+        e.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                toolbox.executeAllTippers(e);
+            }
+        });
+    }
+
     static void spartanizeElement(PsiElement e) {
         if (shouldSpartanize(e))
             Toolbox.getInstance().executeAllTippers(e);
@@ -44,6 +57,7 @@ public enum Spartanizer {
         });
     }
 
+    // TODO this is a bad name. its not recursive.
     public static void spartanizeFileRecursively(PsiFile f) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
