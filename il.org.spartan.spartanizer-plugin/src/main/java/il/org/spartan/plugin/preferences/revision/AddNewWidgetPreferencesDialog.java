@@ -31,7 +31,7 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   
   @Override
   protected boolean isResizable() {
-      return true;
+      return false;
   }
   
   private static Text createString(final Composite container, final String name, final String defaultValue) {
@@ -78,7 +78,7 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     newShell.setText("Add a new Widget Operation");
   }
   @Override protected Point getInitialSize() {
-    return new Point(450, 300);
+    return new Point(450, 360);
   }
   public WidgetOperation getResult() {
     return result;
