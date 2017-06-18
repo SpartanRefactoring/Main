@@ -458,7 +458,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command
        tooltip="Athenizer on/off"
          commandId="il.org.spartan.AthensToggle" 
-         icon="file:/plugin/pictures/athenizer.png"
+         icon="plugin/pictures/athenizer.png"
          id="il.org.spartan.plugin.toolbars.InflateButton"
          style="toggle">
          </command>

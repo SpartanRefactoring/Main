@@ -40,12 +40,12 @@ public class InflateHandler extends AbstractHandler {
   @Override public Object execute(final ExecutionEvent ¢) throws ExecutionException {
     if("il.org.spartan.AthensToggle".equals(¢.getCommand().getId())) {
       HandlerUtil.toggleCommandState(¢.getCommand());
-      return noAction();
+      return goWheelAction();
     }
     final Selection $ = Selection.Util.current().setUseBinding();
-    return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
+    return $.isTextSelection ? noAction() : goAggressiveAction($);
   }
-  
+
   public static Void noAction() {
     return null;
   }
