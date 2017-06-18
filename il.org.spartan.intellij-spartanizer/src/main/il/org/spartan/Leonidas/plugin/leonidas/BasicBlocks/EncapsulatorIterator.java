@@ -26,7 +26,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     }
 
     private void initializeElements(Encapsulator e, List<Encapsulator> l) {
-        if (!iz.whiteSpace(e.getInner())) l.add(e);
+        if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) l.add(e);
         e.getActualChildren().forEach(c -> initializeElements(c, l));
     }
 

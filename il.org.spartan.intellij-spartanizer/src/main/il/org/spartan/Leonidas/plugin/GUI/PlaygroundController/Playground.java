@@ -16,6 +16,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,13 +115,9 @@ public class Playground extends JFrame {
         }
         else{
             if (!recursive) {
-                //System.out.println(pfw.extractCanonicalSubtreeString());
-                //System.out.println(pfw.getFile().getText());
                 Spartanizer.spartanizeFileOnePass(pfw.getFile());
             }
             else {
-                //System.out.println(pfw.extractCanonicalSubtreeString());
-                //System.out.println(pfw.getFile().getText());
                 Spartanizer.spartanizeFileRecursively(pfw.getFile());
             }
             outputArea.setText(pfw.extractCanonicalSubtreeString());
