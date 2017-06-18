@@ -27,7 +27,7 @@ public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
      */
     @Override
     public void constraints() {
-        element(4).asStatement.mustNotRefer(element(3).asIdentifier.getText());
+        element(4).asStatement.mustNotRefer(3);
     }
 
     @Override
