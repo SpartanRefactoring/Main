@@ -7,6 +7,8 @@ import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 /**
@@ -14,12 +16,15 @@ import java.awt.*;
  * @since 28/04/2017
  */
 class AboutLeonidas extends JFrame {
+    private static boolean active = false;
     private JPanel panel1;
     private JTextPane textPane1;
     private JButton closeButton;
 
     public AboutLeonidas() {
         super("About Leonidas Plugin");
+        if(active){return;}
+        active = true;
         LeonidasIcon.apply(this);
         setContentPane(panel1);
         setPreferredSize(new Dimension(1000, 600));
@@ -27,6 +32,13 @@ class AboutLeonidas extends JFrame {
         pack();
         setVisible(true);
         closeButton.addActionListener(e -> closeButtonListener());
+        this.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                active = false;
+            }
+        });
         textPane1.setFont(textPane1.getFont().deriveFont(16f));
         textPane1.setText("Welcome to IntelliJ Leonidas Plugin.\n\n" +
                 "This Plugin was originally developed by 7 students from the Israeli institute of technology - The Technion.\n" +
@@ -49,7 +61,7 @@ class AboutLeonidas extends JFrame {
     }
 
     private void closeButtonListener() {
-        this.dispose();
+        this.dispose(); active = false;
     }
 
     {
