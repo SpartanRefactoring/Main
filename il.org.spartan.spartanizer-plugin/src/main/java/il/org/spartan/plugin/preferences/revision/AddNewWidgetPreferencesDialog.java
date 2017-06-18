@@ -52,9 +52,10 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     retNameText = createString($, "Widget Name", "");
-    ScrolledComposite sc = new ScrolledComposite($, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+    ScrolledComposite sc = new ScrolledComposite($, SWT.H_SCROLL | SWT.V_SCROLL);
     Composite composite = new Composite(sc, SWT.NONE);
     composite.setLayout(new FillLayout(SWT.VERTICAL));
+    
     radioButtons = new Button[widgetOps.size()];
     int count = 0;
     for (final WidgetOperation ¢ : widgetOps) {
@@ -67,6 +68,7 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     sc.setContent(composite);
     sc.setExpandHorizontal(true);
     sc.setExpandVertical(true);
+    sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
     return $;
   }
   // overriding this methods allows you to set the
