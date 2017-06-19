@@ -5,8 +5,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 
@@ -58,8 +58,12 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert ?: into Boolean expression";
   }
+  private static boolean canApply(Expression e1, Expression e2) {
+    return iz.booleanLiteral(e1) && type.of(e2) != type.Odd.Types.NULL;
+  }
   @Override public boolean prerequisite(final ConditionalExpression ¢) {
-    return have.booleanLiteral(¢.getThenExpression(), ¢.getElseExpression());
+    final Expression then = ¢.getThenExpression(), elze = ¢.getElseExpression();
+    return canApply(then, elze) || canApply(elze, then);
   }
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return simplifyTernary(¢);
