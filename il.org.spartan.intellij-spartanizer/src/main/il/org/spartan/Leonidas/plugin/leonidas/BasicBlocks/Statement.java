@@ -86,7 +86,7 @@ public class Statement extends GenericMethodCallBasedBlock {
      * Will accept only if this statement is not a declaration statement.
      */
     public void isNotDeclarationStatement() {
-        addConstraint((e, m) -> !iz.declarationStatement(e.inner));
+        addConstraint(e -> !iz.declarationStatement(e.inner));
     }
 
     public void replaceIdentifiers(Integer id, String to) {
