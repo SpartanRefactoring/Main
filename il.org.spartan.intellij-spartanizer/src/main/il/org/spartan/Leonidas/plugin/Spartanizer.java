@@ -44,6 +44,11 @@ public enum Spartanizer {
             Toolbox.getInstance().executeAllTippers(e);
     }
 
+    static void spartanizeElement(PsiElement e, Tipper tipper) {
+        if (shouldSpartanize(e))
+            Toolbox.getInstance().executeTipper(e, tipper);
+    }
+
     public static void spartanizeFileOnePass(PsiFile f) {
         if (!shouldSpartanize(f))
             return;
