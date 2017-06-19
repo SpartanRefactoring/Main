@@ -78,7 +78,12 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
     @Override
     public Map<String, String> getExamples() {
         Map<String, String> examples = new HashMap<>();
-        // <enter examples>
+        examples.put("void foo(int x){}","void foo(int cent){}");
+        examples.put("void foo(int x){\n\tSystem.out.println(x)\n}","void foo(int cent){\n\tSystem.out.println(cent)\n}");
+        examples.put("private static void foo(int x){\n\tSystem.out.println(x)\n}","private static void foo(int cent){\n\tSystem.out.println(cent)\n}");
+        examples.put("private static void foo(int cent){\n\tSystem.out.println(\"\")\n}",null);
+        examples.put("private static void foo(int x){\n\tint cent = 0;\n\tSystem.out.println(cent)\n}",null);
+        examples.put("private static void foo(int x,int y){\n\tSystem.out.println(x)\n}",null);
         return examples;
     }
 
