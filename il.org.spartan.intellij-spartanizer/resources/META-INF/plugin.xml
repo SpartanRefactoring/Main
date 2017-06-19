@@ -94,6 +94,12 @@
                 icon="Icons.LeonidasSmall">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.AddTipper.AddTipperAction"
+                id="myPlugin10"
+                text="Add New Tipper"
+                icon="Icons.Add">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>
