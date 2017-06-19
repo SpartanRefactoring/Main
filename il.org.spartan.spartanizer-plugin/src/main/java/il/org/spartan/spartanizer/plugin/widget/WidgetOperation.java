@@ -62,7 +62,7 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
     final ConfigurationsMap m = defaultConfiguration();
     return m != null && register(m);
   }
-  /** @return URL of image of this operation. */
+  /** @return URL of image of this operation. {@link #imageKey()} has priority if implemented */
   public abstract String imageURL();
   /** @return ISharedImages constant of the icon to show */
   public String imageKey() {

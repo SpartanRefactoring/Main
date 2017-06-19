@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
+import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
 
@@ -17,8 +18,11 @@ public class GitCommitOperation extends GitOperation {
   @Override public String description() {
     return "Git commit";
   }
-  @Override public String imageURL() {
+  @Deprecated @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.egit.ui/icons/obj16/commit.png";
+  }
+  @Override public String imageKey() {
+    return ISharedImages.IMG_TOOL_PASTE;
   }
   @Override public String[][] configurationComponents() {
     return new String[][] { //

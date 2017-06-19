@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
+import org.eclipse.ui.*;
 
 /** Git push command.
  * @author Ori Roth
@@ -12,8 +13,11 @@ public class GitPushOperation extends GitOperation {
   @Override public String description() {
     return "Git push";
   }
-  @Override public String imageURL() {
+  @Deprecated @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.egit.ui/icons/obj16/push.png";
+  }
+  @Override public String imageKey() {
+    return ISharedImages.IMG_OBJ_ADD;
   }
   @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {
     try {
