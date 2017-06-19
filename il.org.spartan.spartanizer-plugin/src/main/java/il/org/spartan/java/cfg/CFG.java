@@ -10,9 +10,9 @@ import fluent.ly.*;
  * @author Ori Roth
  * @since 2017-06-14 */
 public abstract class CFG<T extends CFG<T>> implements Selfie<T> {
-  CFGBuilders builders;
+  CFGToolbox builders;
 
-  public T register(final CFGBuilders ¢) {
+  public T register(final CFGToolbox ¢) {
     builders = ¢;
     return self();
   }

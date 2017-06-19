@@ -13,7 +13,7 @@ public class CFGHandler extends AbstractHandler {
     if (s == null || s.inner.isEmpty())
       return null;
     final CFG<?> cfg = new VolatileCFG();
-    cfg.register(CFGBuilders.all(cfg));
+    cfg.register(CFGToolbox.all(cfg));
     cfg.compute(s.inner.get(0).build().compilationUnit);
     System.out.println(cfg);
     return null;
