@@ -5,6 +5,7 @@ import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
  * RemoveCurlyBracesFromIfStatement
@@ -17,6 +18,7 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
 
     @Override
     public void constraints() {
+        element(1).asStatement.isNotDeclarationStatement();
     }
 
     @Override

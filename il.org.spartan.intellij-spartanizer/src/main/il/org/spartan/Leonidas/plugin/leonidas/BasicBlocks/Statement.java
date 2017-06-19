@@ -65,6 +65,13 @@ public class Statement extends GenericMethodCallBasedBlock {
         });
     }
 
+    /**
+     * Will accept only if this statement is not a declaration statement.
+     */
+    public void isNotDeclarationStatement() {
+        addConstraint(e -> !iz.declarationStatement(e.inner));
+    }
+
     public void replaceIdentifiers(int id, String to){
         addReplacingRule((e, map) -> e.accept(new JavaRecursiveElementVisitor() {
             @Override
