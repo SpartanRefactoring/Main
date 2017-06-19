@@ -9,6 +9,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 public class AddTipperAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
-        System.out.println("lol");
+        new AddTipperUI().setVisible(true);
     }
 }
