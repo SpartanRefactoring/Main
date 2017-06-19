@@ -203,6 +203,11 @@ public class Toolbox implements ApplicationComponent {
         return operableTypes.stream().anyMatch(t -> t.isAssignableFrom(e.getClass()));
     }
 
+    /**
+     * Apply all possible tippers on the given element.
+     *
+     * @param e element to spartanize
+     */
     @SuppressWarnings("unchecked")
     public void executeAllTippers(PsiElement e) {
         if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
@@ -212,7 +217,19 @@ public class Toolbox implements ApplicationComponent {
                 .stream()
                 .filter(tipper -> tipper.canTip(e))
                 .findFirst()
-                .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
+                .ifPresent(t -> executeTipper(e, t));
+    }
+
+    /**
+     * Apply the tipper on the given element if possible.
+     *
+     * @param e      element to spartanize
+     * @param tipper tipper to be used
+     */
+    public void executeTipper(PsiElement e, Tipper tipper) {
+        if (e != null && tipper != null && tipper.canTip(e)) {
+            tipper.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
+        }
     }
 
     /**
