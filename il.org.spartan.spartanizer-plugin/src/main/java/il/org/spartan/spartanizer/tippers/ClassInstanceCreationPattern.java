@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 /** {@link ClassInstanceCreation} pattern.
  * @author Ori Roth
  * @since 2017-04-20 */
-public abstract class ClassInstanceCreationPattern extends NodePattern<ClassInstanceCreation> {
+public abstract class ClassInstanceCreationPattern extends NodeMatcher<ClassInstanceCreation> {
   private static final long serialVersionUID = 0x319433183A0507AEL;
   @Property protected Expression expression;
   @Property protected List<Expression> arguments;

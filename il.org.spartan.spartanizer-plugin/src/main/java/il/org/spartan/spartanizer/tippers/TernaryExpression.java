@@ -8,7 +8,7 @@ import il.org.spartan.utils.*;
 /** A pattern for ConditionalExpression (i.e ternary)
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
-public abstract class TernaryExpression extends NodePattern<ConditionalExpression> {
+public abstract class TernaryExpression extends NodeMatcher<ConditionalExpression> {
   private static final long serialVersionUID = 0xBD3AADEC1A65EFFL;
   protected Expression condition, then, elze;
 

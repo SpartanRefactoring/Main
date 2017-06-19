@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.java.*;
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class FragmentPattern extends NodePattern<VariableDeclarationFragment> {
+public abstract class FragmentMatcher extends NodeMatcher<VariableDeclarationFragment> {
   private static final long serialVersionUID = -0x5D2F121B3027EFA6L;
   @Property protected Expression initializer;
   @Property protected SimpleName name;
@@ -16,7 +16,7 @@ public abstract class FragmentPattern extends NodePattern<VariableDeclarationFra
   @Override protected ASTNode highlight() {
     return name;
   }
-  protected FragmentPattern() {
+  protected FragmentMatcher() {
     property("Name", () -> name = current().getName());
     property("Identifier", () -> identifier = name.getIdentifier());
     property("Initializer", () -> initializer = current().getInitializer());

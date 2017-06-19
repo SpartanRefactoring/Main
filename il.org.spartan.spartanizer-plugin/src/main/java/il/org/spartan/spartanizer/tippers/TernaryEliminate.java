@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class TernaryEliminate extends NodePattern<ConditionalExpression>//
+public final class TernaryEliminate extends NodeMatcher<ConditionalExpression>//
     implements Category.EmptyCycles {
   private static final long serialVersionUID = -0x5E134C6C247F2774L;
 

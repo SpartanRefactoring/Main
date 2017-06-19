@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 /** Tested by {@link Issue1115}
  * @author Yossi Gil
  * @since 2016-09 */
-public final class LambdaRenameSingleParameterToLambda extends NodePattern<LambdaExpression>//
+public final class LambdaRenameSingleParameterToLambda extends NodeMatcher<LambdaExpression>//
     implements Nominal.Trivialization {
   private static final long serialVersionUID = -0x2CF705A7699A0E07L;
   private VariableDeclarationFragment fragment;

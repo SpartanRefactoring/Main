@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 /** Either constructor or {@link MethodDeclaration}
  * @author Yossi Gil
  * @since 2017-04-22 */
-public abstract class CallablePattern extends NodePattern<MethodDeclaration> {
+public abstract class CallablePattern extends NodeMatcher<MethodDeclaration> {
   private static final long serialVersionUID = 1;
   protected List<SingleVariableDeclaration> parameters;
   protected SimpleName name;
