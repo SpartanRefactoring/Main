@@ -37,7 +37,6 @@ public class SpartanizerAnnotator implements Annotator {
 
             tippers.forEach(tipper -> {
                 Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
-                System.out.println();
                 annotation.registerFix(new IntentionAction() {
                     @Nls
                     @NotNull
