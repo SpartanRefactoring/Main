@@ -9,7 +9,7 @@ import il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.Playground;
  */
 public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
 
-    Playground playground;
+    private Playground playground;
 
     @Override
     protected void setUp() throws Exception {
@@ -18,18 +18,20 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
     }
 
     private void preparePlayground(String input) {
+        playground.doClose();
         playground.setInput(input);
         playground.doSpartanization();
     }
 
     public void testLeonidasTipper1() {
         preparePlayground("if(x==0){\n\tx=1;\n}");
-        assert playground.getOutput().equals("if (x == 0)\n    x = 1;");
+        assert playground.getOutput().replaceAll("\\s+","").equals("if(x==0)x=1;");
     }
 
     public void testLeonidasTipper2() {
         preparePlayground("while(x==0){x=1;}");
-        assert playground.getOutput().equals("while (x == 0)\n    x = 1;");
+        assert playground.getOutput().replaceAll("\\s+","").equals("while(x==0)x=1;");
+
     }
 
     public void testLeonidasTipper3() {
@@ -58,6 +60,7 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
         assert playground.getOutput().equals("x");
         playground.doClear();
         assert playground.getOutput().equals("");
+        assert playground.getInput().equals("");
     }
 
     public void testClose() {

@@ -2,6 +2,8 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
+import java.util.HashMap;
+
 /**
  * @author Sharon LK
  */
@@ -24,10 +26,10 @@ public class IdentifierTest extends PsiTypeHelper {
     }
 
     public void testGeneralizes() {
-        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("x"))).matches());
-        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("y"))).matches());
-        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x++;"))).matches());
-        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("true && false"))).matches());
-        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 2"))).matches());
+        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("x")), new HashMap<>()).matches());
+        assertTrue(id.generalizes(Encapsulator.buildTreeFromPsi(createTestIdentifierFromString("y")), new HashMap<>()).matches());
+        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x++;")), new HashMap<>()).matches());
+        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("true && false")), new HashMap<>()).matches());
+        assertFalse(id.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 2")), new HashMap<>()).matches());
     }
 }

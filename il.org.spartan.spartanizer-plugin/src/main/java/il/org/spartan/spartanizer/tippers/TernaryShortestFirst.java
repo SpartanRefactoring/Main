@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-14 */
 public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression>//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = -0x6BB1DE73712953FEL;
 
   private static double align(final Expression e1, final Expression e2) {

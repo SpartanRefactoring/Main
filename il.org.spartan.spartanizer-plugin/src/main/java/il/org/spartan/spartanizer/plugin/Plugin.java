@@ -130,7 +130,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
       ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
       ZOOMER_AUTO_ACTIVISION_VALUE.set(store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
-      Eclipse.commandSetToggle("il.org.spartan.AthensInflate", store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
+      Eclipse.commandSetToggle("il.org.spartan.AthensToggle", store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
       final Document doc = XMLSpartan.getXML(Eclipse.getAllSpartanizerProjects().get(0));
       doc.getDocumentElement().normalize();
       notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"

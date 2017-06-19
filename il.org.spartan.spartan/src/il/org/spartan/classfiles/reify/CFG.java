@@ -126,7 +126,7 @@ public class CFG {
         case TABLESWITCH:
           jumps2targets.put(offset, unsigned2signed_w(offset + i.defaultOffset));
           for (final int o : i.offsets)
-            jumps2targets.put(offset, unsigned2signed_w(offset + o));
+            jumps2targets.put(offset, unsigned2signed_w(o + offset));
           break;
         default:
           break;
@@ -180,7 +180,7 @@ public class CFG {
           && endOffset == ((BasicBlock) ¢).endOffset && startOffset == ((BasicBlock) ¢).startOffset;
     }
     @Override public int hashCode() {
-      return (int) (31 * (endOffset + 31 * (getOuterType().hashCode() + 31)) + startOffset);
+      return (int) (startOffset + 31 * (endOffset + 31 * (getOuterType().hashCode() + 31)));
     }
     private CFG getOuterType() {
       return CFG.this;

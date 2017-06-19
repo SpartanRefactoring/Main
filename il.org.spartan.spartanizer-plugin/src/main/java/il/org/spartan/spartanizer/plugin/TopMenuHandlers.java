@@ -5,6 +5,7 @@ import java.util.function.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
@@ -34,16 +35,12 @@ public class TopMenuHandlers extends AbstractHandler {
               λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getCurrentCompilationUnit()).go());
           put("il.org.spartan.SpartanizeAll",
               λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
-          put("il.org.spartan.ZoomTool", λ -> {
-            if (InflateHandler.active.get() || showZoomToolMessage())
-              InflateHandler.goWheelAction();
-          });
+          put("il.org.spartan.ZoomTool", λ -> InflateHandler.goAggressiveAction(Selection.Util.current().setUseBinding()));
           put("il.org.spartan.ZoomSelection", e -> {
-            final Selection s = Selection.Util.current().setUseBinding();
-            if (s.isTextSelection)
-              InflateHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
-            else if (InflateHandler.active.get() || showZoomToolMessage())
-              InflateHandler.goWheelAction();
+            final WrappedCompilationUnit wcu = the.firstOf(Selection.Util.current().inner).build();
+            SingleFlater.commitChanges(
+                SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(Selection.Util.current().textSelection),
+                ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, null, null, null, false);
           });
           put("il.org.spartan.ZoomIn", λ -> {/***/
           });

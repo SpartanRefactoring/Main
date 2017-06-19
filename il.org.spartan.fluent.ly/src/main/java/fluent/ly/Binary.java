@@ -8,8 +8,8 @@ public class Binary {
   public static final Binary T = new Binary();
   public static final Binary F = null;
 
-  public static <T> Binary of(final T t) {
-    return t != null ? T : F;
+  public static <T> Binary of(final T ¢) {
+    return ¢ != null ? T : F;
   }
   public static Binary and(final Binary b1, final Binary b2) {
     return Binary.of(b1 != F || b2 != F);

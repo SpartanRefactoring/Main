@@ -36,8 +36,8 @@ public class Identifier extends NamedElement {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(super.generalizes(e).matches() && iz.identifier(e.getInner()));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return new MatchingResult(super.generalizes(e, m).matches() && iz.identifier(e.getInner()));
     }
 
     @Override
@@ -54,18 +54,18 @@ public class Identifier extends NamedElement {
 
 
     public void contains(String s) {
-        addConstraint(e -> az.identifier(e.inner).getText().contains(s));
+        addConstraint((e, m) -> az.identifier(e.inner).getText().contains(s));
     }
 
     public void notContains(String s) {
-        addConstraint(e -> !(az.identifier(e.inner).getText().contains(s)));
+        addConstraint((e, m) -> !(az.identifier(e.inner).getText().contains(s)));
     }
 
     public void endWith(String s) {
-        addConstraint(e -> az.identifier(e.inner).getText().endsWith(s));
+        addConstraint((e, m) -> az.identifier(e.inner).getText().endsWith(s));
     }
 
     public void changeName(String name){
-        addReplacingRule((e, m) -> new PsiRewrite().replace(e, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(name)));
+        addReplacingRule((e, m) -> JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(name));
     }
 }

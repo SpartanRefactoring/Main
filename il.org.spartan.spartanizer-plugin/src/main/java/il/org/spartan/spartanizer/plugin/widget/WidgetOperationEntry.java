@@ -77,9 +77,7 @@ public class WidgetOperationEntry implements Serializable {
       return false;
     return widgetSUID == other.widgetSUID;
   }
-  
   @Override public String toString() {
     return getName();
   }
-  
 }

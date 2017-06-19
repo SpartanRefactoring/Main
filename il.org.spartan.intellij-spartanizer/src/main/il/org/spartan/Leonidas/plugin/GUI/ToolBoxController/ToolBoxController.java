@@ -17,6 +17,8 @@ import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.Map;
  * @since 24/04/2017
  */
 class ToolBoxController extends JFrame {
+    private static boolean active = false;
     private JPanel mainPanel;
     private JButton applyButton;
     private JButton clearAllButton;
@@ -43,6 +46,8 @@ class ToolBoxController extends JFrame {
 
     public ToolBoxController() {
         super("Spartanizer ToolBox Controller");
+        if(active){return;}
+        active = true;
         LeonidasIcon.apply(this);
         list = new CheckBoxList();
         List<Tipper> tipsList = Toolbox.getInstance().getCurrentTippers();
@@ -97,6 +102,14 @@ class ToolBoxController extends JFrame {
         selectAllButton.addActionListener(e -> selectAllListener());
         clearAllButton.addActionListener(e -> clearAllListener());
         applyButton.addActionListener(e -> applyListener());
+
+        this.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                active = false;
+            }
+        });
 
         setContentPane(mainPanel);
         setPreferredSize(new Dimension(1200, 600));

@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.auxilary_layer.az;
 
 /**
  * @author amirsagiv, michalcohen
@@ -28,6 +27,6 @@ public abstract class NamedElement extends GenericEncapsulator{
     protected abstract String getName(PsiElement e);
 
     public void startsWith(String s) {
-        addConstraint(e -> getName(e.getInner()).startsWith(s));
+        addConstraint((e, m) -> getName(e.getInner()).startsWith(s));
     }
 }

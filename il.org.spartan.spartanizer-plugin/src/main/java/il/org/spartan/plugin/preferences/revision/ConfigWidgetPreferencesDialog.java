@@ -1,17 +1,18 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import java.io.*;
+
 import java.util.*;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** A dialog to descrive a configuration of an operation widget
@@ -25,24 +26,23 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   String[][] configurations;
   Map<String, String> confMap;
   WidgetOperationEntry woe;
-  String resName;
+  Text resName;
 
   public ConfigWidgetPreferencesDialog(final Shell parentShell, final WidgetOperationEntry woe, final IPreferenceStore store) {
     super(parentShell);
     widgetName = woe.getName();
     this.store = store;
-    this.widgetSerialID = woe.widgetSUID;
+    widgetSerialID = woe.widgetSUID;
     this.woe = woe;
     configurations = woe.getWidgetOp().configurationComponents();
     confMap = new HashMap<>();
-    resName = woe.getName();
   }
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);
-    resName = createString($, "Widget Name", resName);
+    resName = createString($, "Widget Name", widgetName);
     for (final String[] comp : configurations) {
       if ("String".equals(comp[1]))
-        confMap.put(comp[0], createString($, comp[2], woe.getConfiguration().get(comp[0])));
+        confMap.put(comp[0], createString($, comp[2], woe.getConfiguration().get(comp[0])).getText());
       if ("Boolean".equals(comp[1]))
         confMap.put(comp[0], createBoolean($, comp[2], woe.getConfiguration().get(comp[0])));
       else { // if("List".equals(comp[1]))
@@ -68,15 +68,16 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   @Override protected Point getInitialSize() {
     return new Point(450, 300);
   }
-  private static String createString(final Composite container, final String name, final String defaultValue) {
+  private static Text createString(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     final Text $ = new Text(container, SWT.BORDER);
-    $.setText(defaultValue);
+    if(defaultValue!=null)
+      $.setText(defaultValue);
     $.setLayoutData(dataRes);
-    return $.getText();
+    return $;
   }
   private static String createBoolean(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
@@ -84,9 +85,9 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     final Button $ = new Button(container, SWT.CHECK);
-    $.setText(name);
     $.setLayoutData(dataRes);
-    $.setSelection("true".equals(defaultValue.toLowerCase()));
+    if(defaultValue!=null)
+      $.setSelection("true".equals(defaultValue.toLowerCase()));
     return $.getSelection() ? "true" : "false";
   }
   private static Button[] createList(final Composite container, final String[] options, final String defaultValue) {
@@ -98,7 +99,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     for (final String ¢ : options) {
       $[count] = new Button(container, SWT.RADIO);
       $[count].setSelection(false);
-      if (¢.equals(defaultValue))
+      if (defaultValue!=null && ¢.equals(defaultValue))
         $[count].setSelection(true);
       $[count].setText(¢);
       $[count].setBounds(10, 25 * count + 5, 75, 30);
@@ -107,17 +108,20 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     return $;
   }
   @Override protected void okPressed() {
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    try {
-      new ObjectOutputStream(out).writeObject(configurations);
-    } catch (@SuppressWarnings("unused") final IOException x) {
-      note.bug();
+    if("".equals(resName.getText())) {
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
+      return;
     }
+    if(woe.getWidgetOp().defaultConfiguration()==null && confMap.isEmpty()) {
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid configuration", "no configuration selected for a widget without a default configuration");
+      return;
+    }
+      
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.get(l.indexOf(woe)).setConfMap(confMap);
-    l.get(l.indexOf(woe)).setName(resName);
+    l.get(l.indexOf(woe)).setName(resName.getText());
     woe.setConfMap(confMap);
-    woe.setName(resName);
+    woe.setName(resName.getText());
     WidgetPreferences.storeEntries(l);
     super.okPressed();
   }

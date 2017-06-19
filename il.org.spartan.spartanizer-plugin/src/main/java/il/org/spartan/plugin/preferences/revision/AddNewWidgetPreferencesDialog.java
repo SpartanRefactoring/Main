@@ -1,12 +1,17 @@
 package il.org.spartan.plugin.preferences.revision;
 
+
+
 import java.util.List;
 
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.*;
+import org.eclipse.swt.custom.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
 
@@ -24,6 +29,11 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     super(parentShell);
   }
   
+  @Override
+  protected boolean isResizable() {
+      return false;
+  }
+  
   private static Text createString(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
@@ -34,22 +44,31 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     $.setLayoutData(dataRes);
     return $;
   }
-  
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);
+    
+
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     retNameText = createString($, "Widget Name", "");
+    ScrolledComposite sc = new ScrolledComposite($, SWT.H_SCROLL | SWT.V_SCROLL);
+    Composite composite = new Composite(sc, SWT.NONE);
+    composite.setLayout(new FillLayout(SWT.VERTICAL));
+    
     radioButtons = new Button[widgetOps.size()];
     int count = 0;
     for (final WidgetOperation ¢ : widgetOps) {
-      radioButtons[count] = new Button($, SWT.RADIO);
+      radioButtons[count] = new Button(composite, SWT.RADIO);
       radioButtons[count].setSelection(false);
       radioButtons[count].setText(¢.description());
       radioButtons[count].setBounds(10, 25 * count + 5, 75, 30);
       ++count;
     }
+    sc.setContent(composite);
+    sc.setExpandHorizontal(true);
+    sc.setExpandVertical(true);
+    sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
     return $;
   }
   // overriding this methods allows you to set the
@@ -59,18 +78,20 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     newShell.setText("Add a new Widget Operation");
   }
   @Override protected Point getInitialSize() {
-    return new Point(450, 300);
+    return new Point(450, 360);
   }
   public WidgetOperation getResult() {
     return result;
   }
-  
   public String getName() {
     return retName;
   }
-  
   @Override protected void okPressed() {
-    retName  = retNameText.getText();
+    retName = retNameText.getText();
+    if("".equals(retName)) {
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
+      return;
+    }
     for (final Button ¢ : radioButtons)
       if (¢.getSelection()) {
         for (final WidgetOperation w : widgetOps)
@@ -80,6 +101,11 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
           }
         break;
       }
-    super.okPressed();
+    if (result != null)
+      super.okPressed();
+    else
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid selection", "No operation selected");
+      
+      
   }
 }

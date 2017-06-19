@@ -5,7 +5,6 @@ import java.util.*;
 
 import fluent.ly.*;
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Runtime reification of sub-interfaces of {@link Category}, it is a rewrite
  * of the defunct {@link TipperGroup}.
@@ -20,9 +19,6 @@ public final class Taxon extends Wrapper<Class<? extends Category>> implements S
     Taxon.instances.put(¢, $);
     Taxa.hierarchy.add($);
     return $;
-  }
-  public static Taxon of(final Tipper<?> ¢) {
-    return new Taxon(¢.lowestCategory());
   }
 
   public final String id;
@@ -54,16 +50,14 @@ public final class Taxon extends Wrapper<Class<? extends Category>> implements S
   public Taxa parents() {
     return parents(get());
   }
-  @SuppressWarnings("unchecked") public static Taxa parents(Class<? extends Category> c) {
+  @SuppressWarnings("unchecked") public static Taxa parents(final Class<? extends Category> c) {
     final Taxa $ = new Taxa();
     for (final Class<?> x : c.getInterfaces())
       if (Taxa.isTaxon(x))
         $.add(Taxon.of((Class<? extends Category>) x));
     return $;
   }
-  public static Taxon of(Category ¢) {
-    if (Taxa.isTaxon(¢.getClass()))
-      return Taxon.of(¢.getClass());
-    return Taxon.of(¢.lowestCategory());
+  public static Taxon of(final Category ¢) {
+    return Taxon.of(Taxa.isTaxon(¢.getClass()) ? ¢.getClass() : ¢.lowestCategory());
   }
 }

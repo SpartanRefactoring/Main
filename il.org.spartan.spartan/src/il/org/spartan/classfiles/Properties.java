@@ -10,9 +10,7 @@ import java.util.*;
 public enum Properties {
   ;
   public static void main(final String[] args) {
-    final TreeSet<String> t = new TreeSet<>();
-    t.addAll(System.getProperties().stringPropertyNames());
-    for (final String key : t)
+    for (final String key : new TreeSet<>(System.getProperties().stringPropertyNames()))
       System.out.println(key + ": " + esc(System.getProperty(key)));
   }
 }

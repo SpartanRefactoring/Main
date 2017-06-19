@@ -55,7 +55,7 @@ public class FieldDeclaration extends ModifiableElement {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e) {
-        return new MatchingResult(iz.fieldDeclaration(e.getInner()));
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        return super.generalizes(e, m).combineWith(new MatchingResult(iz.fieldDeclaration(e.getInner())));
     }
 }

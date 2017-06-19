@@ -570,9 +570,7 @@ public abstract class LogBook implements Serializable {
       put(key, value);
     }
     @Override public final Values values() {
-      final Values $ = new Values();
-      $.addAll(super.values());
-      return $;
+      return new Values();
     }
   }
 

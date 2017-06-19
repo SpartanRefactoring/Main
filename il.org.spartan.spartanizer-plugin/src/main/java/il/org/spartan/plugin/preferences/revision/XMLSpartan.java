@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.Map.*;
 import java.util.stream.*;
 
 import javax.xml.parsers.*;
@@ -23,7 +22,6 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.spartanizer.tipping.categories.Category.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 
@@ -123,8 +121,14 @@ public class XMLSpartan {
     tgs.forEach((key, value) -> $.put(tcs.get(key), value.toArray(new SpartanTipper[value.size()])));
     return $;
   }
+  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategoriesWithHead(final IProject ¢) {
+    return getElementsByCategories(¢, true);
+  }
+  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject ¢) {
+    return getElementsByCategories(¢, false);
+  }
   /** TODO Roth: document. */
-  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p) {
+  private static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p, final boolean includeHead) {
     final Map<SpartanCategory, SpartanElement[]> $ = getTippersByCategories(p);
     final Map<String, SpartanCategory> existingCategories = anonymous.ly(() -> {
       final Map<String, SpartanCategory> m = new HashMap<>();
@@ -132,15 +136,18 @@ public class XMLSpartan {
         m.put(¢.name(), ¢);
       return m;
     });
-    for (final Entry<Taxon, Set<Taxon>> e : Taxa.hierarchy.children.entrySet()) {
+    for (final Taxon x : Taxa.hierarchy.nodes()) {
+      final Class<? extends Category> cx = x.get();
+      if (!includeHead && cx == Category.class)
+        continue;
       SpartanCategory parent;
-      if (existingCategories.containsKey(e.getKey().get().getSimpleName()))
-        parent = existingCategories.get(e.getKey().get().getSimpleName());
+      if (existingCategories.containsKey(cx.getSimpleName()))
+        parent = existingCategories.get(cx.getSimpleName());
       else {
-        parent = new SpartanCategory(e.getKey().get());
+        parent = new SpartanCategory(cx);
         existingCategories.put(parent.name(), parent);
       }
-      Stream<Taxon> stream = e.getValue().stream();
+      final Stream<Taxon> stream = Taxa.hierarchy.children(x).stream();
       final List<SpartanCategory> children = stream.map(t -> {
         if (existingCategories.containsKey(t.get().getSimpleName()))
           return existingCategories.get(t.get().getSimpleName());
@@ -150,6 +157,7 @@ public class XMLSpartan {
       }).collect(Collectors.toList());
       children.forEach(λ -> parent.addChild(λ));
       $.put(parent, children.toArray(new SpartanElement[children.size()]));
+      System.out.println(parent.parent());
     }
     return trimEmptyCategories($);
   }
@@ -327,7 +335,7 @@ public class XMLSpartan {
   }
   /** Initialize XML document. Enables all tippers, except declared non core
    * tippers, also, add to the document the default values for naming\notations
-   * prefrences.
+   * preferences.
    * @param d JD
    * @return given document */
   private static Document initialize(final Document $) {

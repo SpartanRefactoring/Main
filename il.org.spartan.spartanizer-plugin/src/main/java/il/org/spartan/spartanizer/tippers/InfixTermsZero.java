@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
-    implements Category.NOP.onNumbers {
+    implements Category.Theory.Arithmetics.Numeric {
   private static final long serialVersionUID = 0x4FC12AA812633EA3L;
 
   private static ASTNode replacement(final List<Expression> ¢) {

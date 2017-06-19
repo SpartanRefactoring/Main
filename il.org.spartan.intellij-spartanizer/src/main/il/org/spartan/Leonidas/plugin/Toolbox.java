@@ -87,7 +87,7 @@ public class Toolbox implements ApplicationComponent {
 //        }
 
         String savedTippers = PropertiesComponent.getInstance().getValue("savedTippers");
-        if(savedTippers != null && savedTippers!= "") {
+        if (savedTippers != null && savedTippers != "") {
             List<String> tipperNames = new Gson().fromJson(savedTippers, List.class);
             updateTipperList(tipperNames);
         }
@@ -152,9 +152,7 @@ public class Toolbox implements ApplicationComponent {
             activeTippersNames.add(tipper.name());
         }));
         String jsonTips = new Gson().toJson(activeTippersNames);
-        PropertiesComponent.getInstance().setValue("savedTippers",jsonTips,"");
-
-
+        PropertiesComponent.getInstance().setValue("savedTippers", jsonTips, "");
 
 
         //TODO: @Amir Sagiv this should be uncommented
@@ -170,6 +168,26 @@ public class Toolbox implements ApplicationComponent {
                     if (!source.equals(""))
                         add(new LeonidasTipper(c.getSimpleName(), source));
                 });
+    }
+
+    void includeNanoPatterns() {
+        this
+                .add(new SafeReference())
+                .add(new Unless())
+                .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
+                .add(new LispLastElement())
+                .add(new DefaultsTo())
+                .add(new Delegator());
+    }
+
+    void excludeNanoPatterns() {
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(new String[]{"SafeReference", "Unless",
+                "LambdaExpressionRemoveRedundantCurlyBraces", "LispLastElement", "DefaultsTo", "Delegator",}));
+        this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
+            if (list.contains(tipper.name())) {
+                element.remove(tipper);
+            }
+        }));
     }
 
     private Toolbox add(Tipper<? extends PsiElement> t) {
@@ -198,10 +216,10 @@ public class Toolbox implements ApplicationComponent {
     }
 
     /**
-     * @param e Psi tree
+     * @param e          Psi tree
      * @param tipperName The name of the tipper to execure on e.
      * @return True if the tipper changed anything, false otherwise.
-     * */
+     */
     public boolean executeSingleTipper(PsiElement e, String tipperName) {
         Tipper tipper = getTipperByName(tipperName);
         if (tipper == null) {
@@ -263,9 +281,10 @@ public class Toolbox implements ApplicationComponent {
         }
         return null;
     }
+
     public LeonidasTipperDefinition getTipperInstanceByName(String name) {
-        for(LeonidasTipperDefinition t : tipperInstances){
-            if(t.getClass().getName().substring(t.getClass().getName().lastIndexOf(".")+1).equals(name)){
+        for (LeonidasTipperDefinition t : tipperInstances) {
+            if (t.getClass().getName().substring(t.getClass().getName().lastIndexOf(".") + 1).equals(name)) {
                 return t;
             }
         }

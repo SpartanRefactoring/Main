@@ -34,7 +34,7 @@ public class CleanOperation extends WidgetOperation {
   @Override public Function<ImageData, ImageData> scale() {
     return λ -> λ.scaledTo(25, 25);
   }
-  @Override protected ConfigurationsMap defaultConfiguration() {
+  @Override public ConfigurationsMap defaultConfiguration() {
     return new ConfigurationsMap().put(MODE, current);
   }
   @Override public boolean register(final ConfigurationsMap ¢) {

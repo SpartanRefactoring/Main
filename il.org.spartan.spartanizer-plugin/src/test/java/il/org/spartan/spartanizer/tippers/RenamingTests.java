@@ -7,31 +7,27 @@ import org.junit.*;
 /** TODO dormaayn: All tests regrading renaming (in the spartnizer)
  * @author Dor Ma'ayan
  * @since 2017-05-14 */
+@Ignore
 @SuppressWarnings("static-method")
 public class RenamingTests {
   @Test public void bug1() {
-    trimmingOf("class Classes{private final Map<IProject, Boolean> enabled; private Checker t;}")//
+    trimmingOf("class Classes{private final Map<IProject, Boolean> enabled; private Checker t;}")
         .gives("class Classes{private final Map<IProject, Boolean> map; private Checker checker;}").stays();
   }
   @Test public void test0() {
-    trimmingOf("class Classes{private Namer a;private Checker t;}")//
-        .gives("class Classes{private Namer namer;private Checker checker;}")//
-        .stays();
+    trimmingOf("class Classes{private Namer a;private Checker t;}").gives("class Classes{private Namer namer;private Checker checker;}").stays();
   }
   @Test public void test1() {
-    trimmingOf("class Classes{private Namer a;private Checker t;public Classes(Namer n){a=n;}}")//
-        .gives("class Classes{private Namer namer;private Checker checker;public Classes(Namer n){namer=n;}}")//
-        .stays();
+    trimmingOf("class Classes{private Namer a;private Checker t;public Classes(Namer n){a=n;}}")
+        .gives("class Classes{private Namer namer;private Checker checker;public Classes(Namer n){namer=n;}}").stays();
   }
   @Test public void test2() {
-    trimmingOf("class Classes{private Namer a; Checker t;public Classes(Namer n){a=n;}}")//
-        .gives("class Classes{private Namer namer;Checker t;public Classes(Namer n){namer=n;}}")//
-        .stays();
+    trimmingOf("class Classes{private Namer a; Checker t;public Classes(Namer n){a=n;}}")
+        .gives("class Classes{private Namer namer;Checker t;public Classes(Namer n){namer=n;}}").stays();
   }
   @Test public void test3() {
-    trimmingOf("private class Classes{private Namer a; CheckerTest t;public Classes(Namer n){a=n;}}")//
-        .gives("private class Classes{private Namer namer;CheckerTest checkerTest;public Classes(Namer n){namer=n;}}")//
-        .stays();
+    trimmingOf("private class Classes{private Namer a; CheckerTest t;public Classes(Namer n){a=n;}}")
+        .gives("private class Classes{private Namer namer;CheckerTest checkerTest;public Classes(Namer n){namer=n;}}").stays();
   }
   @Ignore @Test public void test4() {
     trimmingOf("void f(int a,int b, int c) {}").gives("void f(int _1, int _2, int _3) {}").stays();

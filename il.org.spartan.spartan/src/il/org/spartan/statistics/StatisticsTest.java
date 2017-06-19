@@ -14,12 +14,10 @@ public class StatisticsTest {
   }
   // http://ncalculators.com/math-worksheets/how-to-find-skewness.htm
   @Test public void testCorrectedSd() {
-    final double vs[] = { 5, 20, 40, 80, 100 };
-    Assert.assertEquals(40.0625, correctedSd(vs), 1E-4);
+    Assert.assertEquals(40.0625, correctedSd(new double[] { 5, 20, 40, 80, 100 }), 1E-4);
   }
   @Test public void testCorrectionValue() {
-    final double vs[] = { 5, 20, 40, 80, 100 };
-    Assert.assertEquals(1.490711985, skewenessCorrection(vs), 1E-4);
+    Assert.assertEquals(1.490711985, skewenessCorrection(new double[] { 5, 20, 40, 80, 100 }), 1E-4);
   }
   // http://ncalculators.com/math-worksheets/how-to-find-skewness.htm
   @Test public void testSd() {
@@ -27,8 +25,7 @@ public class StatisticsTest {
     Assert.assertEquals(Math.sqrt(1605) / sdCorrection(vs), sd(vs), 1E-8);
   }
   @Test public void testSkewenessCorrection() {
-    final double vs[] = { 5, 20, 40, 80, 100 };
-    Assert.assertEquals(skewenessCorrection(5), skewenessCorrection(vs), 1E-10);
+    Assert.assertEquals(skewenessCorrection(5), skewenessCorrection(new double[] { 5, 20, 40, 80, 100 }), 1E-10);
   }
   // http://ncalculators.com/math-worksheets/how-to-find-skewness.htm
   @Test public void testSkewness1() {

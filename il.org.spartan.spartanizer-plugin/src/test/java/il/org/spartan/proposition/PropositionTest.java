@@ -1,27 +1,21 @@
 package il.org.spartan.proposition;
 
-import fluent.ly.azzert;
-import il.org.spartan.spartanizer.research.metatester.MetaTester;
-import il.org.spartan.utils.Proposition;
-import il.org.spartan.utils.PropositionReducer;
-import il.org.spartan.utils.ReduceStringConcatenate;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
-import java.util.function.BooleanSupplier;
-
-import static fluent.ly.azzert.instanceOf;
-import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
+import static il.org.spartan.utils.Proposition.not;
+import static il.org.spartan.utils.Proposition.that;
+
+import java.util.*;
+import java.util.function.*;
+
+import org.junit.*;
+
+import fluent.ly.*;
+import il.org.spartan.utils.*;
 
 /** Tests class {@link Proposition}
  * @author Yossi Gil {@code     Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
-@RunWith(MetaTester.class)
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private final PropositionJavaNotation javaReducer = new PropositionJavaNotation();

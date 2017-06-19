@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * TODO @orenafek comment this class
@@ -151,5 +152,17 @@ public enum step {
      */
     public static PsiReferenceExpression methodExpression(PsiMethodCallExpression e) {
         return e == null ? null : e.getMethodExpression();
+    }
+
+    public static Optional<PsiClass> clazz(PsiFile f) {
+        Wrapper<PsiClass> result = new Wrapper<>(null);
+        f.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitClass(PsiClass aClass) {
+                result.set(aClass);
+            }
+        });
+
+        return result.get() != null ? Optional.of(result.get()) : Optional.empty();
     }
 }

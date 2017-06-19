@@ -24,9 +24,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     if (i == null)
       return null;
     final ConditionalExpression $ = findFirst.conditionalArgument(i);
-    if ($ == null)
-      return null;
-    if (iz.nullLiteral(then($)) && !iz.nullLiteral(elze($)) || iz.nullLiteral(elze($)) && !iz.nullLiteral(then($)))
+    if ($ == null || iz.nullLiteral(then($)) && !iz.nullLiteral(elze($)) || iz.nullLiteral(elze($)) && !iz.nullLiteral(then($)))
       return null;
     final MethodInvocation mThen = copy.of(i);
     final int ci = mThen.arguments().indexOf(findFirst.conditionalArgument(mThen));

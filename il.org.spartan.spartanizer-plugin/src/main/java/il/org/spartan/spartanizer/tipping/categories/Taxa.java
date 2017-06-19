@@ -13,16 +13,16 @@ import il.org.spartan.spartanizer.traversal.*;
  * @since 2017-06-10 */
 public class Taxa extends LinkedHashSet<Taxon> {
   private static final long serialVersionUID = -0x21F078992FCB9A1DL;
-  public static Hierarchy<Taxon> hierarchy =  new Hierarchy<>(Taxon::parents);
+  public static Hierarchy<Taxon> hierarchy = new Hierarchy<>(Taxon::parents);
   static {
-    Configurations.allTippers().map(λ -> Taxa.categories(λ));
+    Configurations.allTippers().forEach(λ -> Taxa.categories(λ));
   }
 
-  @SuppressWarnings("unchecked") private static Taxa categories(Tipper<? extends ASTNode> t) {
-    Taxa $ = new Taxa();
-    for (Class<?> c : t.getClass().getInterfaces())
-      if (isTaxon(c))
-        $.add(Taxon.of((Class<? extends Category>) c));
+  @SuppressWarnings("unchecked") private static Taxa categories(final Tipper<? extends ASTNode> t) {
+    final Taxa $ = new Taxa();
+    for (final Class<?> ¢ : t.getClass().getInterfaces())
+      if (isTaxon(¢))
+        $.add(Taxon.of((Class<? extends Category>) ¢));
     return $;
   }
   static Taxa categories(final Taxa $, final Taxon t) {

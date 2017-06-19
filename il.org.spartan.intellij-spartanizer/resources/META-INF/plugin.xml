@@ -21,9 +21,9 @@
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
-    <!-- uncomment to email.org.spartan.Leonidas.plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <!--<depends>
+        com.intellij.modules.lang
+    </depends>-->
 
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
@@ -54,8 +54,13 @@
                 icon="Icons.Disable">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
+        <action class="il.org.spartan.Leonidas.plugin.NanoPatternsEnableAction" id="myPlugin4"
+                text="Disable Nano Patterns"
+                icon="Icons.Disable">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerAction" id="myPlugin3"
-                text="Spartanize"
+                text="Spartanize current file"
                 icon="Icons.LeonidasSmall">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
@@ -75,6 +80,12 @@
                 id="myPlugin7"
                 text="About"
                 icon="Icons.Info">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.SpartanizeProjectAction"
+                id="myPlugin8"
+                text="Spartanize Project"
+                icon="Icons.LeonidasSmall">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
     </actions>

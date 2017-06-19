@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = -0x114771EA9E5872CAL;
 
   private static List<Expression> gather(final Expression x, final List<Expression> $) {

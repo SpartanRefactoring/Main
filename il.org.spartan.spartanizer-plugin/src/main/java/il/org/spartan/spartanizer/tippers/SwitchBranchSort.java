@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-11 */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
-    implements Category.Sorting {
+    implements Category.Transformation.Sort {
   private static final long serialVersionUID = -0x311B60D4CCA079DFL;
 
   @Override public ASTNode replacement(final SwitchStatement s) {

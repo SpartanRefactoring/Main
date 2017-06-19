@@ -441,7 +441,7 @@ public enum separate {
       azzert.that(bySpaces("A", "B"), is("A B"));
     }
     @Test public final void spaceIsSpace() {
-      azzert.that(SPACE + "", is(" "));
+      azzert.that(SPACE, is(" "));
     }
     @Test public final void theseArraySize0() {
       azzert.that(count.of(separate.these(as.array()).os), is(0));

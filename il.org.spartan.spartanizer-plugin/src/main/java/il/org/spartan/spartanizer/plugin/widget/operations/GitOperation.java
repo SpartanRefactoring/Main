@@ -25,7 +25,7 @@ public abstract class GitOperation extends WidgetOperation {
   @Override public boolean register(final ConfigurationsMap ¢) {
     return (popup = ¢.getBoolean(POPUP)) != null;
   }
-  @Override protected ConfigurationsMap defaultConfiguration() {
+  @Override public ConfigurationsMap defaultConfiguration() {
     return new ConfigurationsMap().put(POPUP, true);
   }
   protected abstract void gitOperation(Git g) throws Throwable;
@@ -48,9 +48,10 @@ public abstract class GitOperation extends WidgetOperation {
     if (builder != null)
       try (Repository repo = builder.build()) {
         if (repo != null)
-          try (Git git = new Git(repo)) {
-            gitOperation(git);
-          }
+          repo.getConfig().load();
+        try (Git git = new Git(repo)) {
+          gitOperation(git);
+        }
       } catch (final Throwable e) {
         Dialogs.message("Git Error: No git directory was found").open();
         return;

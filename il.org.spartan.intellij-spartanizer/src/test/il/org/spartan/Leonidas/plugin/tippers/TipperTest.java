@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.PsiTypeHelper;;
+import il.org.spartan.Leonidas.plugin.PsiFileCenter;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
@@ -25,6 +26,7 @@ examples can be in one of two forms:
                       that conforms to the latter
 2) String -> null : The tipper should not affect the former.
 
+This class relies on PsiFileCenter
  */
 
 public class TipperTest{
@@ -92,62 +94,48 @@ public class TipperTest{
         //System.out.println(toolbox.getAllTippers().stream().map(t -> t.name()).collect(Collectors.toList()));
         for (Map.Entry<String,String> entry : examples.entrySet()) {
             String key = entry.getKey();
+            if(key == null){
+                log("An example with a null key was inserted in tipper "+getTipperName()+". aborting test.");
+                assert(false);
+            }
             String value = entry.getValue();
-            String beforeFileString = before+key+after;
-            PsiFile file = junitTest.createTestFileFromString(beforeFileString);
-            Project p = file.getProject();
-            log("before: \n"+file.getText()+"\n");
-            Boolean tipperAffected = toolbox.executeSingleTipper(file,getTipperName());
+            PsiFileCenter pfc = new PsiFileCenter();
+            PsiFileCenter.PsiFileWrapper filewkey = pfc.createFileFromString(key);
+            if(filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
+                log("The following key in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+key);
+                assert(false);
+            }
+            PsiFileCenter.PsiFileWrapper filewvalue = pfc.createFileFromString(value);
+            if( value != null && filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
+                log("The following value in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+value);
+                assert(false);
+            }
+            log("before: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
+            Boolean tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
             if(!tipperAffected){
                 if(value != null) {
-                    ; //error - tipper should have affected
-                    assert(false);
-                }
-                else{
-                    ; //ok
+                    log("Tipper "+getTipperName()+" should have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it didn't. aborting test.");
+                    //assert(false);
                 }
             }
             else{
                 if(value == null){
-                    ;  //error - tipper should not have affected
+                    log("Tipper "+getTipperName()+" should not have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it did. aborting test.");
                     assert(false);
                 }
                 else{
-                    ; //ok
+                    String keyAfterChange = filewkey.extractCanonicalSubtreeString();
+                    if(!keyAfterChange.equals(filewvalue.extractCanonicalSubtreeString())){
+                        log("Tipper "+getTipperName()+" didn't affect the example:\n"+key+"\nas expected. expected:\n"+filewvalue.extractCanonicalSubtreeString()+"\nbut got: \n"+keyAfterChange);
+                        assert(false);
+                    }
                 }
             }
 
-            log("after: \n"+file.getText()+"\n");
+            log("after: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
 
         }
 
         toolbox.testing = false;
     }
-    private boolean byExample(String input, String output){
-        if(!setup) {
-            try {
-                this.setUp();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if(leonidasMode){
-            return leonidasTipperByExample(input,output);
-        }
-        else{
-            return regularTipperByExample(input,output);
-        }
-    }
-
-    private boolean leonidasTipperByExample(String input,String output){
-        return false;
-    }
-
-    private boolean regularTipperByExample(String input, String output){
-        return false;
-    }
-
-    //wrap in class
-    //wrap in method
-    //inside a method call - expression
 }

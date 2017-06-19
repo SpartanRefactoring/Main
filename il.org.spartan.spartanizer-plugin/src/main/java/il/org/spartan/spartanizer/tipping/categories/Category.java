@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tipping.categories;
 
-import il.org.spartan.spartanizer.tipping.categories.Category.Theory.*;
-
 /** Classification of tippers
  * @author Yossi Gil
  * @since Sep 28, 2016 */
@@ -12,7 +10,7 @@ public interface Category {
   default Class<? extends Category> lowestCategory() {
     Class<? extends Category> $ = Category.class;
     for (final Taxon ¢ : Taxa.hierarchy.nodes())
-      if (¢.get().isInstance(this) && $.isAssignableFrom(¢.get()))
+      if (¢.get().isInstance(this) && ¢.get() != getClass() && $.isAssignableFrom(¢.get()))
         $ = ¢.get();
     return $;
   }
@@ -21,7 +19,7 @@ public interface Category {
    * {@link Taxon}
    * @return preference group this tipper belongs to */
   default Taxon tipperGroup() {
-    return Taxon.of(this);
+    return Taxon.of(lowestCategory());
   }
 
   interface Bloater extends Category {
@@ -62,8 +60,8 @@ public interface Category {
     String ___ = "Spartan use of Java loop syntax";
   }
 
-  interface Transofrmation extends Category {
-    interface Collapse extends Transofrmation {
+  interface Transformation extends Category {
+    interface Collapse extends Transformation {
       String ___ = "Collapse two syntactical structures, such as declaration and subsequent initialization, into one";
 
       interface FactorOut extends Collapse {
@@ -71,11 +69,11 @@ public interface Category {
       }
     }
 
-    interface Reshape extends Transofrmation {
+    interface Reshape extends Transformation {
       String ___ = "Reshape a syntactical element, such as a for loop, to a simpler or smaller element of the same syntactical kind";
     }
 
-    interface Prune extends Transofrmation {
+    interface Prune extends Transformation {
       interface Eliminate extends Prune {
         @SuppressWarnings("hiding") String ___ = "Eliminate a single distinguished syntatical element which does nothing, such as call to super() with no arguments";
       }
@@ -83,12 +81,13 @@ public interface Category {
       String ___ = "Prune an operation which does nothing, e.g., adding zero or multiplying by one";
     }
 
-    interface Remorph extends Transofrmation {
-      String ___ = "Replace a syntactical elemnt such as while and if, with another, such as for loop and ternarry";
+    interface Remorph extends Transformation {
+      String ___ = "Replace a syntactical elemnt such as 'while' and 'if', with another, such as for loop and ternarry";
     }
 
-    interface Sort extends Transofrmation {
-      String ___ = "Place components in a syntatical elements in a specified order";
+    /** Use alphabetical, or some other ordering, when order does not matter */
+    interface Sort extends Transformation {
+      String ___ = "Sorting of annotations, modifiers, commutative elements, etc";
     }
   }
 
@@ -100,17 +99,6 @@ public interface Category {
     String ___ = "Nanos";
   }
 
-  interface NOP extends Category {
-    String ___ = "Eliminate an operation whose computation does nothing";
-
-    interface onBooleans extends Logical {
-      @SuppressWarnings("hiding") String ___ = "Eliminate an operation whose computation does nothing on booleans";
-    }
-
-    interface onNumbers extends Arithmetics.Symbolic {
-      @SuppressWarnings("hiding") String ___ = "Eliminate an operation whose computation does nothing on numbers";
-    }
-  }
 
   interface ScopeReduction extends Java {
     String ___ = "Reduction of scope to the smallest possible";
@@ -118,11 +106,6 @@ public interface Category {
 
   interface Shortcircuit extends Java {
     String ___ = "Shortcut of control flow by combining unconditional sequencers, e.g., converting break into return";
-  }
-
-  /** Use alphabetical, or some other ordering, when order does not matter */
-  interface Sorting extends Idiomatic {
-    String ___ = "Sorting of Annotations and Modifiers";
   }
 
   interface SyntacticBaggage extends Java {

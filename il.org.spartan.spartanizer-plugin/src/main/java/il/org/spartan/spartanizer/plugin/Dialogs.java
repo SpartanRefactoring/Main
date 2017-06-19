@@ -55,6 +55,13 @@ public enum Dialogs {
       }
     return images.get($);
   }
+  public static Image image(final ImageDescriptor id, final String $, final Function<ImageData, ImageData> scale) {
+    if (images.containsKey($))
+      return images.get($);
+    final ImageData d = id.getImageData();
+    images.put($, d == null ? null : new Image(null, scale.apply(d)));
+    return images.get($);
+  }
   private static URL getURL(final String url) throws MalformedURLException {
     final URL $ = new URL(url);
     switch ($.getProtocol()) {

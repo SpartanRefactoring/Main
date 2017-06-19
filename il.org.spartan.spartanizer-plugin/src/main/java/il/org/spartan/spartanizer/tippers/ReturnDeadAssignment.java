@@ -33,7 +33,7 @@ public final class ReturnDeadAssignment extends ReturnValue implements Category.
     ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
     ).andAlso("Variable is a local variable, didn't declared up", //
-        () -> !Environment.declaresUp(methodDeclaration).contains(to + "")//
+        () -> Environment.declaresUp(methodDeclaration).stream().noneMatch(λ -> λ.getKey().equals(to + ""))//
     ).notNil("Extract from", //
         () -> from = from(assignment) //
     ).notNil("Extract operator", //

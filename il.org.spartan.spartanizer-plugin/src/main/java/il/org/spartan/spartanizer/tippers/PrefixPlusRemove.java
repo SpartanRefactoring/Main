@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * @author Matteo Orru'
  * @since 2016 */
 public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>//
-    implements Category.NOP.onNumbers {
+    implements Category.Theory.Arithmetics.Symbolic, Category.Transformation.Prune {
   private static final long serialVersionUID = -0x6A8336BC75EFCFE3L;
 
   @Override public String description(final PrefixExpression ¢) {

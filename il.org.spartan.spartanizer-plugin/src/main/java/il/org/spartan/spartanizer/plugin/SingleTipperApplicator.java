@@ -94,7 +94,7 @@ public final class SingleTipperApplicator {
       pm.done();
       return;
     }
-    for (final Integer i : range.from(0).to(NewGUIApplicator.PASSES_MANY)) {
+    for (final Integer i : range.from(0).to(GUIApplicator.PASSES_MANY)) {
       final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
       final Int pn = new Int(i + 1);
       final Bool canelled = new Bool();
@@ -102,7 +102,7 @@ public final class SingleTipperApplicator {
         ps.run(true, true, px -> {
           px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), todo.size());
           int n = 0;
-          final Collection<ICompilationUnit> exhausted = an.empty.list();
+          final Collection<WrappedCompilationUnit> exhausted = an.empty.list();
           for (final WrappedCompilationUnit wu : todo) {
             final ICompilationUnit u = wu.descriptor;
             if (px.isCanceled()) {
@@ -115,10 +115,10 @@ public final class SingleTipperApplicator {
               textChange.setEdit(createRewrite(Eclipse.newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
             } catch (JavaModelException | IllegalArgumentException ¢) {
               note.bug(this, ¢);
-              exhausted.add(u);
+              exhausted.add(wu);
             }
             if (textChange.getEdit().getLength() == 0)
-              exhausted.add(u);
+              exhausted.add(wu);
             else
               try {
                 textChange.perform(pm);

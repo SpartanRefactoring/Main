@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.plugin.NewGUIApplicator.*;
+import static il.org.spartan.spartanizer.plugin.GUIApplicator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
   private final IMarkerResolution[] solutions = new IMarkerResolution[] { //
-      quickFix("Apply Ctrl+5", λ -> NewGUIApplicator.plain().restrictTo(Tipper.materialize(λ)).selection(Selection.Util.by(λ)).go()), //
+      quickFix("Apply Ctrl+5", λ -> GUIApplicator.plain().restrictTo(Tipper.materialize(λ)).selection(Selection.Util.by(λ)).go()), //
       // applyPreview, //
       // laconizeFile, //
       quickFix("Spartanize function", λ -> applicator(λ).selection(Selection.Util.expand(λ, MethodDeclaration.class)).go()), //
@@ -46,7 +46,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker __) {
     return Arrays.copyOf(solutions, solutions.length);
   }
-  private static NewGUIApplicator applicator(final IMarker λ) {
+  private static GUIApplicator applicator(final IMarker λ) {
     return defaultApplicator()//
         .manyPasses();
   }
@@ -68,7 +68,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     return new GUITraversal().setMarker($);
   }
 
-  @SuppressWarnings("deprecation") interface fixers {
+  @SuppressWarnings("deprecation")
+  interface fixers {
     String APPLY_TO_FILE = "Apply to compilation unit";
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";
