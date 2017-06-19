@@ -11,6 +11,7 @@ import an.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -206,6 +207,10 @@ public enum step {
         return expression((ThrowStatement) ¢);
       case ASTNode.WHILE_STATEMENT:
         return expression((WhileStatement) ¢);
+      case ASTNode.PREFIX_EXPRESSION:
+        return operand((PrefixExpression) ¢);
+      case ASTNode.POSTFIX_EXPRESSION:
+        return operand((PostfixExpression) ¢);
       default:
         return null;
     }
