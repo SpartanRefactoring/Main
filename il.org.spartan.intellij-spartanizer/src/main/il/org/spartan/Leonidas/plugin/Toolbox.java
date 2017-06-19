@@ -226,7 +226,7 @@ public class Toolbox implements ApplicationComponent {
      * @param e      element to spartanize
      * @param tipper tipper to be used
      */
-    public void executeTipper(PsiElement e, Tipper tipper) {
+    public void executeTipper(PsiElement e, Tipper<PsiElement> tipper) {
         if (e != null && tipper != null && tipper.canTip(e)) {
             tipper.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
         }
@@ -280,15 +280,47 @@ public class Toolbox implements ApplicationComponent {
         return (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) && tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)));
     }
 
+    /**
+     * Returns some tipper that can be applied on the given element.
+     *
+     * @param e element to check for tippers availability on
+     * @return a tipper that can be applied on the element if one was found, <code>null</code> otherwise
+     */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Tipper getTipper(PsiElement e) {
         try {
             if (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) &&
                     tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)))
-                return tipperMap.get(e.getClass()).stream().filter(tip -> tip.canTip(e)).findFirst().get();
+
+                return tipperMap.get(e.getClass())
+                        .stream()
+                        .filter(tip -> tip.canTip(e))
+                        .findFirst()
+                        .get();
         } catch (Exception ignore) {
         }
         return new NoTip<>();
+    }
+
+    /**
+     * Returns a list of all tippers that can be applied on the given element.
+     *
+     * @param e element to check for tippers availability on
+     * @return list of tippers
+     */
+    public List<Tipper> getTippers(PsiElement e) {
+        try {
+            if (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) &&
+                    tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)))
+
+                return tipperMap.get(e.getClass())
+                        .stream()
+                        .filter(tip -> tip.canTip(e))
+                        .collect(Collectors.toList());
+        } catch (Exception ignore) {
+        }
+
+        return new ArrayList<>();
     }
 
     public Tipper getTipperByName(String name) {
