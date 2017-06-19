@@ -5,6 +5,7 @@ import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
  * if while statement contains only one statement, its curly braces can be removed
@@ -21,6 +22,7 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
      * the(<generic element>(<id>)).{is/isNot}(() - > <template>)[.ofType(Psi class)];
      */    @Override
     public void constraints() {
+        element(1).asStatement.isNotDeclarationStatement();
     }
 
     @Override
