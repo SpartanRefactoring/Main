@@ -8,7 +8,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
-import il.org.spartan.Leonidas.plugin.GUI.ActionMonitor.ActionMonitorBatchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +31,6 @@ public class SpartanizeProjectAction extends AnAction {
             }
         });
 
-        new SpartanizerBatch(e.getProject(), psiFiles, new ActionMonitorBatchListener()).invoke();
+        // TODO @RoeiRaz
     }
 }

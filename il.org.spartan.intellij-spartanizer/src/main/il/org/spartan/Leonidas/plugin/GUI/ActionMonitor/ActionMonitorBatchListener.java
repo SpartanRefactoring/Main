@@ -1,7 +1,7 @@
 package il.org.spartan.Leonidas.plugin.GUI.ActionMonitor;
 
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.plugin.SpartanizerBatch;
+import il.org.spartan.Leonidas.plugin.SpartanizationBatch;
 import il.org.spartan.Leonidas.plugin.SpartanizerBatchListener;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
@@ -20,7 +20,7 @@ public class ActionMonitorBatchListener implements SpartanizerBatchListener {
     }
 
     @Override
-    public void onInvoke(SpartanizerBatch batch) {
+    public void onInvoke(SpartanizationBatch batch) {
         monitor.pack();
         monitor.setVisible(true);
         // TODO this is code smell and bad design. it will be changed @RoeiRaz
@@ -31,7 +31,7 @@ public class ActionMonitorBatchListener implements SpartanizerBatchListener {
     }
 
     @Override
-    public void onTip(SpartanizerBatch batch, PsiElement element, Tipper t) {
+    public void onTip(SpartanizationBatch batch, PsiElement element, Tipper t) {
         numCompleted++;
         monitor.progressBar.setValue((numCompleted * 100) / numElements);
         consolePrintln("Processing " + element.getClass().getSimpleName() + " in " + element.getContainingFile().getName());

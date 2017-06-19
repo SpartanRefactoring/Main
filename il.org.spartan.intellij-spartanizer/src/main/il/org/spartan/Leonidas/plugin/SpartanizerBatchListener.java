@@ -8,7 +8,7 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
  * @since 18/06/17
  */
 public interface SpartanizerBatchListener {
-    void onInvoke(SpartanizerBatch batch);
+    void onInvoke(SpartanizationBatch batch);
 
-    void onTip(SpartanizerBatch batch, PsiElement element, Tipper t);
+    void onTip(SpartanizationBatch batch, PsiElement element, Tipper t);
 }
