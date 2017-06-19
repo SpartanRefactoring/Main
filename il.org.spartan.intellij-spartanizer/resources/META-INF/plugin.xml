@@ -88,6 +88,12 @@
                 icon="Icons.LeonidasSmall">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
+        <action class="il.org.spartan.Leonidas.plugin.AddSpartanizerUtilsAction"
+                id="myPlugin9"
+                text="Add SpartanizerUtils"
+                icon="Icons.LeonidasSmall">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>
