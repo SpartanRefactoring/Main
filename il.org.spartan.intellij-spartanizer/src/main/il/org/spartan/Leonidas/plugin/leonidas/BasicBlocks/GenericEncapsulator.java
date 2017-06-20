@@ -6,7 +6,6 @@ import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
-import il.org.spartan.Leonidas.plugin.leonidas.Replacer;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public abstract class GenericEncapsulator extends Encapsulator {
     protected String template;
-    private List<Constraint> constraints = new ArrayList<>();
+    private List<BiConstraint> constraints = new ArrayList<>();
     private List<ReplacingRule> replacingRules = new ArrayList<>();
 
     public GenericEncapsulator(PsiElement e, String template) {
@@ -140,6 +139,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     protected void addConstraint(Constraint c) {
+        constraints.add((e, m) -> c.accept(e));
+    }
+
+    protected void addConstraint(BiConstraint c) {
         constraints.add(c);
     }
 
@@ -148,6 +151,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     public interface Constraint {
+        boolean accept(Encapsulator encapsulator);
+    }
+
+    public interface BiConstraint {
         boolean accept(Encapsulator encapsulator, Map<Integer, List<PsiElement>> m);
     }
 
@@ -159,7 +166,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
         return new HashMap<>();
     }
 
-    public List<Constraint> getConstraints(){
+    public List<BiConstraint> getConstraints() {
         return constraints;
     }
 }

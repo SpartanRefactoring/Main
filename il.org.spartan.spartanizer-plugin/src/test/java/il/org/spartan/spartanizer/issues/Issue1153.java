@@ -14,10 +14,10 @@ import il.org.spartan.spartanizer.traversal.*;
 @SuppressWarnings("static-method")
 public class Issue1153 {
   @Test public void a() {
-    Configurations.all();
+    Toolboxes.all();
   }
   @Test public void b() {
-    Configurations.allClone();
+    Toolboxes.allClone();
   }
   @Test public void b1() {
     new FieldInitializedSerialVersionUIDToHexadecimal().hashCode();
@@ -27,7 +27,7 @@ public class Issue1153 {
     assert c != null;
     final FieldInitializedSerialVersionUIDToHexadecimal x = new FieldInitializedSerialVersionUIDToHexadecimal();
     assert x != null;
-    final Configuration configuration = Configurations.allClone();
+    final Toolbox configuration = Toolboxes.allClone();
     assert configuration != null;
     configuration.add(c, x);
   }

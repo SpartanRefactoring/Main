@@ -14,4 +14,5 @@ public enum Icons {
     public static Icon Leonidas = IconLoader.getIcon("/leonidas.png");
     public static Icon Enable = IconLoader.getIcon("/enable.png");
     public static Icon Disable = IconLoader.getIcon("/disable.png");
+    public static Icon Add = IconLoader.getIcon("/add.png");
 }

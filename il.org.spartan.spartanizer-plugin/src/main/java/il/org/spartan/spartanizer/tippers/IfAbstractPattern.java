@@ -12,7 +12,7 @@ import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 2015-08-01 */
-public abstract class IfAbstractPattern extends NodePattern<IfStatement> {
+public abstract class IfAbstractPattern extends NodeMatcher<IfStatement> {
   private static final long serialVersionUID = 1;
   @Property protected Statement then, elze;
   @Property protected Expression condition;

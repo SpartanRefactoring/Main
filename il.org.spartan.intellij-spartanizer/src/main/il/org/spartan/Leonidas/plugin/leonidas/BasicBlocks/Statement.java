@@ -8,6 +8,7 @@ import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ import java.util.Map;
 public class Statement extends GenericMethodCallBasedBlock {
 
     private static final String TEMPLATE = "statement";
+
+    private Map<Integer, String> replacingIdentifier = new HashMap<>();
 
     public Statement(PsiElement e) {
         super(e, TEMPLATE);
@@ -37,7 +40,7 @@ public class Statement extends GenericMethodCallBasedBlock {
 
     @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
-        return super.generalizes(e, m).combineWith(new MatchingResult( iz.statement(e.getInner()) && !iz.blockStatement(e.getInner())));
+        return super.generalizes(e, m).combineWith(new MatchingResult(iz.statement(e.getInner()) && !iz.blockStatement(e.getInner())));
     }
 
     @Override
@@ -79,7 +82,15 @@ public class Statement extends GenericMethodCallBasedBlock {
         });
     }
 
-    public void replaceIdentifiers(Integer id, String to){
+    /**
+     * Will accept only if this statement is not a declaration statement.
+     */
+    public void isNotDeclarationStatement() {
+        addConstraint(e -> !iz.declarationStatement(e.inner));
+    }
+
+    public void replaceIdentifiers(Integer id, String to) {
+        replacingIdentifier.put(id, to);
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
                 @Override
@@ -87,7 +98,7 @@ public class Statement extends GenericMethodCallBasedBlock {
                     super.visitIdentifier(identifier);
                     if (identifier.getText().equals(map.get(id).get(0).getText())) {
                         PsiRewrite prr = new PsiRewrite();
-                        prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(to));
+                        prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(replacingIdentifier.get(id)));
                     }
                 }
             });

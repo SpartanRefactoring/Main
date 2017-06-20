@@ -250,6 +250,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
             case SWT.MouseUp:
               t.cancel();
               t.purge();
+              t = new Timer(true);
               o.onMouseUp(c);
               break;
             case SWT.MouseDown:
@@ -257,12 +258,12 @@ public class SpartanWidgetHandler extends AbstractHandler {
                 @Override public void run() {
                   try {
                     o.onMouseHold(c);
+                    System.out.println("held");
                   } catch (final Throwable ¢) {
                     note.bug(¢);
                   }
                 }
-              }, OPERATION_HOLD_INTERVAL, OPERATION_HOLD_INTERVAL);
-              o.onMouseDown(c);
+              }, 0, OPERATION_HOLD_INTERVAL);
               break;
             case SWT.MouseDoubleClick:
               o.onDoubleClick(c);

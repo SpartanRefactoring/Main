@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
  * {@code for (..) { does(something); break; } return XX; }
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public final class WhileFiniteReturnToBreak extends NodePattern<WhileStatement>//
+public final class WhileFiniteReturnToBreak extends NodeMatcher<WhileStatement>//
     implements Category.Loops {
   private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
 

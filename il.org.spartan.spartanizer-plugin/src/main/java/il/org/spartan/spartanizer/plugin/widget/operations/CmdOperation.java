@@ -7,6 +7,7 @@ import java.io.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
 
@@ -16,8 +17,11 @@ import il.org.spartan.spartanizer.plugin.widget.*;
 public class CmdOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x541BB50C344FDBF4L;
 
-  @Override public String imageURL() {
+  @Deprecated @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.wb.rcp/icons/info/Action/action.gif";
+  }
+  @Override public String imageKey() {
+    return ISharedImages.IMG_DEF_VIEW;
   }
   @Override public String description() {
     return "Execute a CMD command";

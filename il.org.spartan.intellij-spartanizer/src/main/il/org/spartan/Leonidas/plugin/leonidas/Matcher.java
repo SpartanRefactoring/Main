@@ -8,6 +8,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
+import il.org.spartan.utils.Bool;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -200,20 +201,26 @@ public class Matcher {
             }
         }
         if (mr.notMatches()) return mr;
+        List<Boolean> llllll = new ArrayList<>();
+
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
-                .allMatch(id ->
-                        constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
-                                info.get(id).stream().allMatch(
-                                        c::match
-                                )
-                        ) &&
-                                getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
-                                info.get(id).stream().allMatch(e ->
-                                        c.accept(new Encapsulator(e), mr.getMap())
-                                )
-                        )
-                )
+                .allMatch(id -> {
+                    Boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
+                            info.get(id).stream()
+                                    .peek(x->{}) // Do not remove, magic happen here :(
+                                    .allMatch(
+                                    c::match
+                            )
+                    );
+
+                   Boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
+                            info.get(id).stream().allMatch(e ->
+                                    c.accept(new Encapsulator(e), mr.getMap())
+                            )
+                    );
+                   return b1 && b2;
+                })
                 ? mr : mr.setNotMatches();
     }
 

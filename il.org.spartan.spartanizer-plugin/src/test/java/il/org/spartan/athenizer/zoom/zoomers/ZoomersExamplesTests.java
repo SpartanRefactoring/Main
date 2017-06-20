@@ -38,7 +38,7 @@ public class ZoomersExamplesTests extends ExamplesTests {
   public static Collection<Object[]> data() {
     return allTippers().stream().map(λ -> new Object[] { λ, English.name(λ) }).collect(toList());
   }
-  /** Get all tippers from {@link Configuration}. Removes duplicate tippers
+  /** Get all tippers from {@link Toolbox}. Removes duplicate tippers
    * (same class, different templates).
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {

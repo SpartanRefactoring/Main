@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
@@ -53,9 +54,17 @@ public class FluentSetter implements LeonidasTipperDefinition {
 
     @Override
     public Map<String, String> getExamples() {
-        Map<String, String> examples = new HashMap<>();
-        // <enter examples>
-        return examples;
+        return new ExampleMapFactory()
+                .put("public class A{\n\tint x;\n\n\tvoid setX(int x){\n\t\tthis.x = x;\n\t}\n}",
+                        "public class A{\n\tint x;\n\n\tA setX(int x){\n\t\tthis.x = x;\n\t\treturn this;\n\t}\n}")
+                .put("public class A{\n\tint x;\n\tdouble y;\n\n\tdouble getY(){\n\t\treturn y;\n\t}\n\n\tvoid setX(int x){\n\t\tthis.x = x;\n\t}\n}",
+                        "public class A{\n\tint x;\n\tdouble y;\n\n\tdouble getY(){\n\t\treturn y;\n\t}\n\n\tA setX(int x){\n\t\tthis.x = x;\n\t\treturn this;\n\t}\n}")
+                .put("public class A{\n\tint x;\n\n\tvoid foo(int x){\n\t\tthis.x = x;\n\t}\n}",
+                        null)
+                .put("public class A{\n\tvoid setX(){\n\t\t;\n\t}\n}",
+                        "public class A{\n\tA setX(){\n\t\t;\n\t\treturn this;\n\t}\n}")
+                .map();
+
     }
 
     class Class2 {

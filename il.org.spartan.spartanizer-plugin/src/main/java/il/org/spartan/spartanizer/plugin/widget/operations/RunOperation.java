@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.debug.core.*;
+import org.eclipse.ui.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
@@ -39,8 +40,11 @@ public class RunOperation extends WidgetOperation {
   @Override public void onMouseUp(@SuppressWarnings("unused") final WidgetContext __) throws CoreException {
     configuration.launch(!debug.booleanValue() ? ILaunchManager.RUN_MODE : ILaunchManager.DEBUG_MODE, null);
   }
-  @Override public String imageURL() {
+  @Deprecated @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.jdt.debug.ui/icons/full/etool16/run_exc.gif";
+  }
+  @Override public String imageKey() {
+    return ISharedImages.IMG_TOOL_FORWARD;
   }
   private boolean load() {
     final DebugPlugin plugin = DebugPlugin.getDefault();

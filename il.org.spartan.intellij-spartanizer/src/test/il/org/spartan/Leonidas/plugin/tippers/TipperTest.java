@@ -31,27 +31,29 @@ This class relies on PsiFileCenter
 
 public class TipperTest{
 
-    private static final String before = "package test;\n public class Foo\n{\n public void Bar(){\n";
-    private static final String after = "\n }\n}";
+
     Tipper tipper = null;
     LeonidasTipperDefinition leonidasTipper = null;
     Boolean leonidasMode; //whether we are testing a leonidas or non-leonidas tipper
     PsiTypeHelper junitTest; //The junit class instance that is being tested (the one that creates a TipperTest object)
     private Boolean setup = false;
     private Boolean printsToScreen;
+    public Boolean quietCrash;
 
-    TipperTest(Tipper t, PsiTypeHelper test, Boolean prints){
+    TipperTest(Tipper t, PsiTypeHelper test, Boolean prints, Boolean quietCrash){
         this.tipper = t;
         this.leonidasMode = false;
         this.junitTest = test;
         this.printsToScreen = prints;
+        this.quietCrash = quietCrash;
     }
 
-    TipperTest(LeonidasTipperDefinition l,PsiTypeHelper test,Boolean prints){
+    TipperTest(LeonidasTipperDefinition l,PsiTypeHelper test,Boolean prints,Boolean quietCrash){
         this.leonidasTipper = l;
         this.leonidasMode = true;
         this.junitTest = test;
         this.printsToScreen = prints;
+        this.quietCrash = quietCrash;
     }
 
 
@@ -80,6 +82,12 @@ public class TipperTest{
         System.out.println(s);
     }
 
+    private void crashTest(){
+        if(!quietCrash){
+            assert(false);
+        }
+    }
+
     public void check(){
         if(!setup) {
             try {
@@ -96,38 +104,38 @@ public class TipperTest{
             String key = entry.getKey();
             if(key == null){
                 log("An example with a null key was inserted in tipper "+getTipperName()+". aborting test.");
-                assert(false);
+                crashTest();
             }
             String value = entry.getValue();
             PsiFileCenter pfc = new PsiFileCenter();
             PsiFileCenter.PsiFileWrapper filewkey = pfc.createFileFromString(key);
             if(filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
                 log("The following key in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+key);
-                assert(false);
+                crashTest();
             }
             PsiFileCenter.PsiFileWrapper filewvalue = pfc.createFileFromString(value);
             if( value != null && filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
                 log("The following value in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+value);
-                assert(false);
+                crashTest();
             }
             log("before: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
             Boolean tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
             if(!tipperAffected){
                 if(value != null) {
                     log("Tipper "+getTipperName()+" should have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it didn't. aborting test.");
-                    //assert(false);
+                    crashTest();
                 }
             }
             else{
                 if(value == null){
                     log("Tipper "+getTipperName()+" should not have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it did. aborting test.");
-                    assert(false);
+                    crashTest();
                 }
                 else{
                     String keyAfterChange = filewkey.extractCanonicalSubtreeString();
                     if(!keyAfterChange.equals(filewvalue.extractCanonicalSubtreeString())){
                         log("Tipper "+getTipperName()+" didn't affect the example:\n"+key+"\nas expected. expected:\n"+filewvalue.extractCanonicalSubtreeString()+"\nbut got: \n"+keyAfterChange);
-                        assert(false);
+                        crashTest();
                     }
                 }
             }

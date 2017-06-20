@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** Apply a {@link Configuration} to a tree. Issues are
+/** Apply a {@link Toolbox} to a tree. Issues are
  * <ol>
  * <li>Top down or bottom up traversal
  * <li>Overlapping in the domain of distinct tippers

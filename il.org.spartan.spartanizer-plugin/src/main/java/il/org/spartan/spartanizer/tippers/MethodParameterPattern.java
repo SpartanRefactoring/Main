@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** Method parameter
  * @author Yossi Gil
  * @since 2017-04-22 */
-public abstract class MethodParameterPattern extends FragmentPattern {
+public abstract class MethodParameterPattern extends FragmentMatcher {
   private static final long serialVersionUID = 1;
   protected MethodDeclaration methodDeclaration;
 

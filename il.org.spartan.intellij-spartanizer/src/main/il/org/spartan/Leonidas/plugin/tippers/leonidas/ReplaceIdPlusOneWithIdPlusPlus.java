@@ -1,5 +1,9 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
+import java.util.Map;
+
 /**
  * Change x+=1 to postfix incremental operator x++
  *
@@ -24,5 +28,16 @@ public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition 
             identifier0++;
             /* end */
         });
+    }
+
+    @Override
+    public Map<String, String> getExamples() {
+        return new ExampleMapFactory()
+                .put("x+=1", "x++")
+                .put("well += 1;", "well++;")
+                .put("+=i", null)
+                .put("x+=2", null)
+                .put("/*incrementing*/\nx+=1", "/*incrementing*/\nx++")
+                .map();
     }
 }

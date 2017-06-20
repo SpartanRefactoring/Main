@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-15 */
-public abstract class FragmentAmongFragments extends FragmentPattern {
+public abstract class FragmentAmongFragments extends FragmentMatcher {
   private static final long serialVersionUID = 1;
 
   public boolean usedInLaterSiblings() {

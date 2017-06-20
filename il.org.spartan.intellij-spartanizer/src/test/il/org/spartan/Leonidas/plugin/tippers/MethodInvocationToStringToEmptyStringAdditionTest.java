@@ -10,7 +10,7 @@ public class MethodInvocationToStringToEmptyStringAdditionTest extends PsiTypeHe
 
     public void testTipperTest(){
         MethodInvocationToStringToEmptyStringAddition idn = new MethodInvocationToStringToEmptyStringAddition();
-        TipperTest ts = new TipperTest(idn,this,true);
+        TipperTest ts = new TipperTest(idn,this,true,false);
         ts.check();
     }
 }

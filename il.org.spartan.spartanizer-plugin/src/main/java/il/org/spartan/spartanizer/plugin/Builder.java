@@ -76,7 +76,7 @@ public final class Builder extends IncrementalProjectBuilder {
     s.useProjectPreferences();
     for (final Tip ¢ : s.collectTips(u)) // NANO
       if (¢ != null)
-        ¢.intoMarker(f.createMarker(groupName(Configurations.groupOf(¢))));
+        ¢.intoMarker(f.createMarker(groupName(Toolboxes.groupOf(¢))));
   }
   private static String groupName(final Taxon ¢) {
     return ¢ == null || ¢.id == null ? MARKER_TYPE : MARKER_TYPE + "." + ¢.label();

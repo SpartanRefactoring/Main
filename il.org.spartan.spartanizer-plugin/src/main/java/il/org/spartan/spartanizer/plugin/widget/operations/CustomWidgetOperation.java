@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import java.util.*;
 
+import org.eclipse.ui.*;
+
 import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** Execute a pre-defined (in preferences page) cmd command
@@ -11,8 +13,11 @@ public class CustomWidgetOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x7755264CD55A845FL;
   private static final List<String> commands = new ArrayList<>();
 
-  @Override public String imageURL() {
+  @Deprecated @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.wb.doc.user/html/userinterface/images/wizard.gif";
+  }
+  @Override public String imageKey() {
+    return ISharedImages.IMG_DEF_VIEW;
   }
   @Override public String description() {
     return "Execute a pre-configured cmd command";

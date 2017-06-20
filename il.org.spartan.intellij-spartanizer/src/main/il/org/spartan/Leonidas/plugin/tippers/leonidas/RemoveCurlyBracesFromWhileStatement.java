@@ -1,10 +1,12 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
  * if while statement contains only one statement, its curly braces can be removed
@@ -19,8 +21,10 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
      * Write here additional constraints on the matcher tree.
      * The constraint are of the form:
      * the(<generic element>(<id>)).{is/isNot}(() - > <template>)[.ofType(Psi class)];
-     */    @Override
+     */
+    @Override
     public void constraints() {
+        element(1).asStatement.isNotDeclarationStatement();
     }
 
     @Override
@@ -46,8 +50,8 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
 
     @Override
     public Map<String, String> getExamples() {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("int x=5;\nObject a,b;\nwhile(a.hashCode()!=x){\n\tx = b.hashCode();\n}","int x=5;\nObject a,b;\nwhile(a.hashCode()!=x)\n\tx = b.hashCode();");
-        return examples;
+        return new ExampleMapFactory()
+                .put("int x=5;\nObject a,b;\nwhile(a.hashCode()!=x){\n\tx = b.hashCode();\n}", "int x=5;\nObject a,b;\nwhile(a.hashCode()!=x)\n\tx = b.hashCode();")
+                .map();
     }
 }

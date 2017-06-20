@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.traversal.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class GenericApplicator {
-  public Configuration configuration;
+  public Toolbox configuration;
   public int tippersAppliedOnCurrentObject;
   protected int done;
   private static List<String> selectedTipperGroups;

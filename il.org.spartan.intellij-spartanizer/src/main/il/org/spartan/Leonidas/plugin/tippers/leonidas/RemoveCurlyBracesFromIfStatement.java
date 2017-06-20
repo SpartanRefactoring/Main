@@ -1,14 +1,16 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
  * RemoveCurlyBracesFromIfStatement
- *
+ * <p>
  * author Oren Afek, Sharon Kuninin, michalcohen
  * since 06/01/17
  */
@@ -17,6 +19,7 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
 
     @Override
     public void constraints() {
+        element(1).asStatement.isNotDeclarationStatement();
     }
 
     @Override
@@ -41,9 +44,10 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     }
 
     @Override
-    public Map<String,String> getExamples(){
-        Map<String,String> examples = new HashMap<>();
-        examples.put("int x=5;\nObject a,b;\nif(a.hashCode()!=x){\n\tx = b.hashCode();\n}","int x=5;\nObject a,b;\nif(a.hashCode()!=x)\n\tx = b.hashCode();");
-        return examples;
+    public Map<String, String> getExamples() {
+        return new ExampleMapFactory()
+                .put("int x=5;\nObject a,b;\nif(a.hashCode()!=x){\n\tx = b.hashCode();\n}", "int x=5;\nObject a,b;\nif(a.hashCode()!=x)\n\tx = b.hashCode();")
+                .map();
+
     }
 }

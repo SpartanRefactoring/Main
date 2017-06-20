@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
+import org.eclipse.ui.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
@@ -61,15 +62,25 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
     final ConfigurationsMap m = defaultConfiguration();
     return m != null && register(m);
   }
-  /** @return URL of image of this operation. */
+  /** @return URL of image of this operation. {@link #imageKey()} has priority if implemented */
   public abstract String imageURL();
+  /** @return ISharedImages constant of the icon to show */
+  public String imageKey() {
+    return null;
+  }
   /** @return short human readable description of this operation. */
   public abstract String description();
   /** @return scaled SWT image of this operation.
    * @see #scale() */
   public Image image() {
-    final String s = imageURL();
-    final Image $ = Dialogs.image(s, s, scale());
+    String s;
+    Image $;
+    if((s = imageKey()) != null)
+      $ = Dialogs.image(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(s), s, scale()); 
+    else {
+      s = imageURL();
+      $ = Dialogs.image(s, s, scale());
+    }
     return $ != null ? $ : Dialogs.image("file:/plugin/pictures/athenizer.png", "defualt widget", λ -> λ);
   }
   /** Scaling the image of the operation, does nothing by default.

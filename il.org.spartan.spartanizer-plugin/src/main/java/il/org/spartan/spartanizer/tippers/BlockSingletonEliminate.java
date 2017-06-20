@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 /** convert {@code if (a){g();}} into {@code if(a)g();}
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class BlockSingletonEliminate extends NodePattern<Block> implements Category.SyntacticBaggage {
+public final class BlockSingletonEliminate extends NodeMatcher<Block> implements Category.SyntacticBaggage {
   private Statement onlyStatement;
   private Statement container;
 

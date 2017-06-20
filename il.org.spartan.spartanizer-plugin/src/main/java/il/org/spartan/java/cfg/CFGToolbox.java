@@ -11,15 +11,15 @@ import il.org.spartan.java.cfg.builders.*;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-06-15 */
-public class CFGBuilders {
+public class CFGToolbox {
   @SuppressWarnings("unchecked") private final List<CFGBuilder<? extends ASTNode>>[] implementation = (List<CFGBuilder<? extends ASTNode>>[]) new List<?>[2
       * ASTNode.TYPE_METHOD_REFERENCE];
 
   public void initialize(final CFG<?> ¢) {
     add(¢, METHOD_DECLARATION, new MethodBuilder());
   }
-  public static CFGBuilders all(final CFG<?> ¢) {
-    final CFGBuilders $ = new CFGBuilders();
+  public static CFGToolbox all(final CFG<?> ¢) {
+    final CFGToolbox $ = new CFGToolbox();
     $.initialize(¢);
     return $;
   }
