@@ -68,7 +68,7 @@ public class XMLSpartan {
    * @return enabled tippers for project */
   public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = //
-        Configurations.allTippers()//
+        Toolboxes.allTippers()//
             .map(λ -> λ.getClass())//
             .map(XMLSpartan::unchecked)//
             .collect(toSet());
@@ -239,7 +239,7 @@ public class XMLSpartan {
    * @param d JD
    * @param p JD
    * @param seen seen tippers by name. Tippers can appear multiple times in the
-   *        {@link Configuration}, so we should avoid duplications
+   *        {@link Toolbox}, so we should avoid duplications
    * @param e base element */
   private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Collection<String> seen, final Node e) {
     if (d == null || t == null || seen == null || e == null)
@@ -260,7 +260,7 @@ public class XMLSpartan {
    * @param kind JD
    * @param value JD
    * @param seen seen tippers by name. Tippers can appear multiple times in the
-   *        {@link Configuration}, so we should avoid duplications
+   *        {@link Toolbox}, so we should avoid duplications
    * @param n base element */
   private static void createNotationChild(final Document d, final String kind, final String value, final Collection<String> seen, final Node n) {
     if (d == null || kind == null || seen == null || value == null || seen.contains(kind) || n == null)
@@ -346,7 +346,7 @@ public class XMLSpartan {
     final Element e = $.createElement("spartan"), t = $.createElement("tippers"), n = $.createElement("notations");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
-    Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
+    Toolboxes.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
     createNotationChild($, "Cent", "cent", seen, n);
     e.appendChild(n);
     createNotationChild($, "Dollar", "$", seen, n);

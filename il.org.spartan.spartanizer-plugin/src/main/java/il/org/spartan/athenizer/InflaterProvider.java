@@ -15,17 +15,17 @@ import il.org.spartan.spartanizer.traversal.*;
  * @author Raviv Rachmiel
  * @since 20-12-16 */
 public class InflaterProvider extends OperationsProvider {
-  final Configuration configuration;
+  final Toolbox configuration;
   Function<List<Operation<?>>, List<Operation<?>>> function = λ -> Collections.singletonList(the.firstOf(λ));
 
   public InflaterProvider() {
     configuration = InflaterProvider.freshCopyOfAllExpanders();
   }
-  public InflaterProvider(final Configuration tb) {
+  public InflaterProvider(final Toolbox tb) {
     configuration = tb;
   }
-  public static Configuration freshCopyOfAllExpanders() {
-    return new Configuration()//
+  public static Toolbox freshCopyOfAllExpanders() {
+    return new Toolbox()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
             new ExtractExpressionFromReturn(), //

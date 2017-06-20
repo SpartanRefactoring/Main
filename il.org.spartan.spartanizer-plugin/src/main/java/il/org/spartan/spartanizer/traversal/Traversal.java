@@ -30,7 +30,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Traversal implements Selfie<Traversal> {
-  public Configuration configuration = Configurations.allClone();
+  public Toolbox configuration = Toolboxes.allClone();
   /** A list of all listeners to actions carried out by this instance. */
   public final TraversalTappers notify = new TraversalTappers()//
       .push(new TraversalTapper() {
@@ -45,7 +45,7 @@ public abstract class Traversal implements Selfie<Traversal> {
         @Override public void begin() {
           if (!useProjectPreferences)
             return;
-          final Configuration $ = getPreferredConfiguration(compilationUnit());
+          final Toolbox $ = getPreferredConfiguration(compilationUnit());
           configuration = $ != null ? $ : configuration;
         }
       });
@@ -55,7 +55,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   private TextEditGroup editGroup;
   private Range range;
   protected final Tips tips = Tips.empty();
-  protected final Map<IProject, Configuration> configurations = new HashMap<>();
+  protected final Map<IProject, Toolbox> configurations = new HashMap<>();
   protected String fileName;
   protected boolean firstAddition = true;
   protected ASTNode node;
@@ -122,8 +122,8 @@ public abstract class Traversal implements Selfie<Traversal> {
     return node;
   }
   /** @param u JD
-   * @return {@link Configuration} by project's preferences */
-  protected Configuration getPreferredConfiguration(final CompilationUnit u) {
+   * @return {@link Toolbox} by project's preferences */
+  protected Toolbox getPreferredConfiguration(final CompilationUnit u) {
     if (u == null)
       return null;
     final ITypeRoot r = u.getTypeRoot();
@@ -137,7 +137,7 @@ public abstract class Traversal implements Selfie<Traversal> {
       return null;
     if (configurations.containsKey(p))
       return configurations.get(p);
-    final Configuration $ = Configurations.allClone();
+    final Toolbox $ = Toolboxes.allClone();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
     for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)

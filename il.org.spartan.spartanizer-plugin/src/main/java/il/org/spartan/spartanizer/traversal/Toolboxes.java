@@ -16,11 +16,11 @@ import il.org.spartan.spartanizer.tipping.categories.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-12 */
-public interface Configurations {
+public interface Toolboxes {
   /** The default instance of this class; tippers not found here, do not exist!
    * if you need to disable tippers, or update this, make a copy using
    * {@link #allClone()} */
-  lazy<Configuration> all = lazy.get(() -> new Configuration()//
+  lazy<Toolbox> all = lazy.get(() -> new Toolbox()//
       .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
       .add(Initializer.class, new InitializerEmptyRemove()) //
       .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
@@ -266,7 +266,7 @@ public interface Configurations {
           null) //
   );
 
-  static Configuration all() {
+  static Toolbox all() {
     return all.get();
   }
   static Stream<Tipper<? extends ASTNode>> allTippers() {
@@ -275,17 +275,17 @@ public interface Configurations {
         .flatMap(Collection::stream) //
     ;
   }
-  static Configuration empty() {
-    return new Configuration();
+  static Toolbox empty() {
+    return new Toolbox();
   }
-  static Configuration allClone() {
+  static Toolbox allClone() {
     return all().clone();
   }
   static List<String> get(final Taxon ¢) {
     final List<String> $ = an.empty.list();
     if (¢ == null)
       return $;
-    final Configuration t = allClone();
+    final Toolbox t = allClone();
     assert t.implementation != null;
     Stream.of(t.implementation).filter(Objects::nonNull)
         .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::technicalName).collect(toList())));
@@ -298,7 +298,7 @@ public interface Configurations {
     return allTippers().count();
   }
   static void main(final String[] args) {
-    final Configuration t = all();
+    final Toolbox t = all();
     System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
   }
   /** Make a for a specific kind of tippers
@@ -306,7 +306,7 @@ public interface Configurations {
    * @param w JS
    * @return a new configuration containing only the tippers passed as
    *         parameter */
-  @SafeVarargs static <N extends ASTNode> Configuration make(final Class<N> clazz, final Tipper<N>... ts) {
+  @SafeVarargs static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ts) {
     return empty().add(clazz, ts);
   }
   static String name(final Class<? extends Tipper<?>> ¢) {
