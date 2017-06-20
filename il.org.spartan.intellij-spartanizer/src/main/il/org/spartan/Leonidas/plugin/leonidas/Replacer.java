@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
@@ -36,7 +37,7 @@ public class Replacer {
         PsiElement prev = treeToReplace.getPrevSibling();
         PsiElement last = treeToReplace;
         for (int i = 1; i < numberOfRoots; i++) {
-            last = last.getNextSibling();
+            last = Utils.getNextActualSibling(last);
         }
         PsiElement parent = treeToReplace.getParent();
         if (iz.declarationStatement(parent))
@@ -52,12 +53,12 @@ public class Replacer {
                 prev = treeToReplace.getPrevSibling();
             }
         }
-        if (iz.methodCallExpression(parent.getParent())) {
+        if (iz.methodCallExpression(parent.getParent()))
             treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
-        }
-        if (parent.getChildren().length <= 1) {
+        if (parent.getChildren().length <= 1)
             return;
-        }
+        if (iz.whiteSpace(last.getNextSibling()))
+            last = last.getNextSibling();
         r.deleteByRange(parent, treeToReplace, last);
     }
 

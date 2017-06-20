@@ -1,12 +1,10 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_REPLACER;
 
 /**
  * Remove unnecessary variable
@@ -14,7 +12,6 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Oren Afek
  * @since 20/06/17
  */
-@TipperUnderConstruction(BROKEN_REPLACER)
 public class LocalInitializedReturn implements LeonidasTipperDefinition {
 
     /**
