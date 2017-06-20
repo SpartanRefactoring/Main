@@ -63,6 +63,10 @@ public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
     public Map<String, String> getExamples() {
         Map<String, String> examples = new HashMap<>();
         examples.put("int foo(int x){\n\treturn 2;\n}", "int foo(int __){\n\treturn 2;\n}");
+        examples.put("int foo(int x){\n\tint y = x+1; return y;\n}", null);
+        examples.put("int foo(int x){\n\treturn x+4;\n}", null);
+        examples.put("int foo(Object a){\n\tint b = a.hashCode(); return 3;\n}", null);
+        examples.put("int foo(Object a){\n\treturn a.hashCode();\n}", null);
         return examples;
     }
 
