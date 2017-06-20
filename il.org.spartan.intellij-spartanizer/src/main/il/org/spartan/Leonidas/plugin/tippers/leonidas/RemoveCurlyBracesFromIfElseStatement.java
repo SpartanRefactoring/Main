@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
@@ -47,9 +48,9 @@ public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefin
 
     @Override
     public Map<String, String> getExamples() {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("int x=5;\nObject a,b;\nif(a.hashCode()!=x){\n\tx = b.hashCode();\n} else {\nx=b.hashCode()+4;}",
-                "int x=5;\nObject a,b;\nif(a.hashCode()!=x)\n\tx = b.hashCode();\nelse\nx=b.hashCode()+4;");
-        return examples;
+        return new ExampleMapFactory()
+                .put("int x=5;\nObject a,b;\nif(a.hashCode()!=x){\n\tx = b.hashCode();\n} else {\nx=b.hashCode()+4;}",
+                        "int x=5;\nObject a,b;\nif(a.hashCode()!=x)\n\tx = b.hashCode();\nelse\nx=b.hashCode()+4;")
+                .map();
     }
 }

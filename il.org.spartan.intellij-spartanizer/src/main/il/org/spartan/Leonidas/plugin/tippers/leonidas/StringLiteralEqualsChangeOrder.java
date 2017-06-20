@@ -1,12 +1,14 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.stringLiteral;
 
 /**
  * Change Order in Equals (Prevents NullPointerException)
+ *
  * @author Oren Afek
  * @since 5/29/2017.
  */
@@ -40,8 +42,8 @@ public class StringLiteralEqualsChangeOrder implements LeonidasTipperDefinition 
 
     @Override
     public Map<String, String> getExamples() {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("String s = \"Hello!\";\nSystem.out.println(s.equals(\"Bye\"));", "String s = \"Hello!\"; System.out.println(\"Bye\".equals(s));");
-        return examples;
+        return new ExampleMapFactory()
+                .put("String s = \"Hello!\";\nSystem.out.println(s.equals(\"Bye\"));", "String s = \"Hello!\"; System.out.println(\"Bye\".equals(s));")
+                .map();
     }
 }

@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
@@ -61,13 +62,13 @@ public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
 
     @Override
     public Map<String, String> getExamples() {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("int foo(int x){\n\treturn 2;\n}", "int foo(int __){\n\treturn 2;\n}");
-        examples.put("int foo(int x){\n\tint y = x+1; return y;\n}", null);
-        examples.put("int foo(int x){\n\treturn x+4;\n}", null);
-        examples.put("int foo(Object a){\n\tint b = a.hashCode(); return 3;\n}", null);
-        examples.put("int foo(Object a){\n\treturn a.hashCode();\n}", null);
-        return examples;
+        return new ExampleMapFactory()
+                .put("int foo(int x){\n\treturn 2;\n}", "int foo(int __){\n\treturn 2;\n}")
+                .put("int foo(int x){\n\tint y = x+1; return y;\n}", null)
+                .put("int foo(int x){\n\treturn x+4;\n}", null)
+                .put("int foo(Object a){\n\tint b = a.hashCode(); return 3;\n}", null)
+                .put("int foo(Object a){\n\treturn a.hashCode();\n}", null)
+                .map();
     }
 
     private class Class0 {

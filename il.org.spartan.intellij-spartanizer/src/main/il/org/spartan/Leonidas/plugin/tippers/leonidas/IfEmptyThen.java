@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
@@ -47,9 +48,10 @@ public class IfEmptyThen implements LeonidasTipperDefinition {
     }
 
     @Override
-    public Map<String,String> getExamples(){
-        Map<String,String> examples = new HashMap<>();
-        examples.put("int x=5;\nObject a,b;\nif(a!=b)\n\t;\nelse{\n\tx = 8;\n}","int x=5;\nObject a,b;\n if(!(a!=b)){\n\tx = 8;\n}");
-        return examples;
+    public Map<String, String> getExamples() {
+        return new ExampleMapFactory()
+                .put("int x=5;\nObject a,b;\nif(a!=b)\n\t;\nelse{\n\tx = 8;\n}", "int x=5;\nObject a,b;\n if(!(a!=b)){\n\tx = 8;\n}")
+                .map();
+
     }
 }

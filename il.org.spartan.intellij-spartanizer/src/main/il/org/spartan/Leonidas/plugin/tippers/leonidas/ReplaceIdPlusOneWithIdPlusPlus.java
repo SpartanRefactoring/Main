@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 /**
@@ -31,12 +32,12 @@ public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition 
 
     @Override
     public Map<String, String> getExamples() {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("x+=1","x++");
-        examples.put("well += 1;","well++;");
-        examples.put("+=i",null);
-        examples.put("x+=2",null);
-        examples.put("/*incrementing*/\nx+=1","/*incrementing*/\nx++");
-        return examples;
+        return new ExampleMapFactory()
+                .put("x+=1", "x++")
+                .put("well += 1;", "well++;")
+                .put("+=i", null)
+                .put("x+=2", null)
+                .put("/*incrementing*/\nx+=1", "/*incrementing*/\nx++")
+                .map();
     }
 }

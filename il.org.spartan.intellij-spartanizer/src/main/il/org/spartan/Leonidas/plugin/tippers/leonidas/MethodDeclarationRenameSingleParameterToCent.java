@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import java.util.HashMap;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
@@ -77,14 +78,15 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
      */
     @Override
     public Map<String, String> getExamples() {
-        Map<String, String> examples = new HashMap<>();
-        examples.put("void foo(int x){}","void foo(int cent){}");
-        examples.put("void foo(int x){\n\tSystem.out.println(x)\n}","void foo(int cent){\n\tSystem.out.println(cent)\n}");
-        examples.put("private static void foo(int x){\n\tSystem.out.println(x)\n}","private static void foo(int cent){\n\tSystem.out.println(cent)\n}");
-        examples.put("private static void foo(int cent){\n\tSystem.out.println(\"\")\n}",null);
-        examples.put("private static void foo(int x){\n\tint cent = 0;\n\tSystem.out.println(cent)\n}",null);
-        examples.put("private static void foo(int x,int y){\n\tSystem.out.println(x)\n}",null);
-        return examples;
+        return new ExampleMapFactory()
+                .put("void foo(int x){}", "void foo(int cent){}")
+                .put("void foo(int x){\n\tSystem.out.println(x)\n}", "void foo(int cent){\n\tSystem.out.println(cent)\n}")
+                .put("private static void foo(int x){\n\tSystem.out.println(x)\n}", "private static void foo(int cent){\n\tSystem.out.println(cent)\n}")
+                .put("private static void foo(int cent){\n\tSystem.out.println(\"\")\n}", null)
+                .put("private static void foo(int x){\n\tint cent = 0;\n\tSystem.out.println(cent)\n}", null)
+                .put("private static void foo(int x,int y){\n\tSystem.out.println(x)\n}", null)
+                .map();
+        
     }
 
     class Class0 {
