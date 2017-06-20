@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
@@ -25,9 +26,11 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
     implements Category.Collapse {
   private static final long serialVersionUID = 0xCE4CF4E3910F992L;
 
-  private VariableDeclarationFragment makeVariableDeclarationFragement() {
-    final VariableDeclarationFragment $ = copy.of(current);
-    $.setInitializer(copy.of(from));
+  private VariableDeclarationStatement makeVariableDeclarationFragement() {
+    final VariableDeclarationFragment f = copy.of(current);
+    f.setInitializer(copy.of(from));
+    final VariableDeclarationStatement $ = current.getAST().newVariableDeclarationStatement(f);
+    $.setType(copy.of(declaration.getType()));
     return $;
   }
 
@@ -42,19 +45,17 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
     andAlso("It is a non-update assignment ", () -> assignment.getOperator() == ASSIGN);
     andAlso("Assignment is to present local", () -> wizard.eq(name, to));
     andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
-    andAlso("New value does not use values of later siblings",
-        () -> compute//
-            .usedIdentifiers(from)//
-            .allMatch(usedName -> laterSiblings()//
-                .allMatch(λ -> !usedName.equals(λ.getName() + ""))));
-  }
+    }
   @Override public String description() {
     return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    $.replace(current, makeVariableDeclarationFragement(), g);
-    $.remove(nextStatement, g);
+    eliminateFragment($, g);
+    $.replace(nextStatement, makeVariableDeclarationFragement(), g);
     return $;
+  }
+  @Override protected ASTNode[] span() {
+    return new ASTNode[]{declaration,nextStatement};
   }
   @Override public Examples examples() {
     return convert("int a; a = b;")//
