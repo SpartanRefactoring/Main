@@ -52,7 +52,7 @@ public class Type extends NamedElement {
         if (iz.classDeclaration(elements.get(0))) {
             PsiClass c = az.classDeclaration(elements.get(0));
             PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c);
-            r.replace(inner, pte);
+            inner = pte;// r.replace(inner, pte);
             return Utils.wrapWithList(pte);
 
         }

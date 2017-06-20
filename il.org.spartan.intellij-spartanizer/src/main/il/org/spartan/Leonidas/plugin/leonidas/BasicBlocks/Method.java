@@ -71,10 +71,10 @@ public class Method extends ModifiableElement {
         PsiMethod e = az.method(elements.get(0));
         PsiMethod iam = az.method(inner);
         iam.setName(e.getName());
-        iam.getReturnTypeElement().replace(replacerReturnType.replaceSingleRoot(e.getReturnTypeElement(), m, r));
-        iam.getParameterList().replace(replacerParameters.replaceSingleRoot(e.getParameterList(), m, r));
-        iam.getBody().replace(replacerCodeBlock.replaceSingleRoot(e.getBody(), m, r));
-        iam.getModifierList().replace(e.getModifierList());
+        /*r.replace(iam.getReturnTypeElement(),*/ replacerReturnType.replaceSingleRoot(e.getReturnTypeElement(), m, r);
+        r.replace(iam.getParameterList(), replacerParameters.replaceSingleRoot(e.getParameterList(), m, r));
+        r.replace(iam.getBody(), replacerCodeBlock.replaceSingleRoot(e.getBody(), m, r));
+        r.replace(iam.getModifierList(), e.getModifierList());
         return Utils.wrapWithList(inner);
     }
 

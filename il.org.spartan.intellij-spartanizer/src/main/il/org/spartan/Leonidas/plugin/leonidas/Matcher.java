@@ -202,8 +202,18 @@ public class Matcher {
         if (mr.notMatches()) return mr;
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
-                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)) &&
-                            getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id).stream().allMatch(e -> c.accept(new Encapsulator(e), mr.getMap()))))
+                .allMatch(id ->
+                        constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
+                                info.get(id).stream().allMatch(
+                                        c::match
+                                )
+                        ) &&
+                                getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
+                                info.get(id).stream().allMatch(e ->
+                                        c.accept(new Encapsulator(e), mr.getMap())
+                                )
+                        )
+                )
                 ? mr : mr.setNotMatches();
     }
 
