@@ -62,7 +62,7 @@ public class Issue1297 {
   }
   @Test public void t3() {
     trimmingOf("int a, b = 2; a = b;") //
-        .gives("int a; a =2;") //
+        .gives("int b=2; int a = b;") //
         .gives("int a = 2;") //
         .gives("") //
     ;

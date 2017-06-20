@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -35,7 +36,7 @@ public abstract class Local extends FragmentAmongFragments {
     else {
       final VariableDeclarationStatement newParent = copy.of(declaration);
       fragments(newParent).clear();
-      fragments(newParent).addAll(live);
+      fragments(newParent).addAll(live.stream().map(λ -> copy.of(λ)).collect(Collectors.toList()));
       $.replace(declaration, newParent, g);
     }
     return $;
