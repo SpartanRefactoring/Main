@@ -44,9 +44,19 @@ public final class EnvironmentTestSpawningAndManualAddition {
     azzert.that(e0.name(), is(""));
   }
   // TODO Yossi Gil
-  @Ignore @Test public void defaultSize() {
+  @Ignore("Yossi Gil")
+  @Test public void defaultSize0() {
     azzert.that(e0.size(), is(0));
     azzert.that(e0.fullSize(), is(0));
+  }
+  // TODO Yossi Gil
+  @Ignore("Yossi Gil")
+  @Test public void fullSize0() {
+    azzert.that(e0.fullSize(), is(0));
+  }
+  // TODO Yossi Gil
+  @Test public void size() {
+    azzert.that(e0.size(), is(0));
   }
   @Test public void DoesntHaveFalseResult() {
     assert !e1.nest().doesntHave("Yossi");
