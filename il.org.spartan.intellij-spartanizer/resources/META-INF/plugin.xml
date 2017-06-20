@@ -25,6 +25,11 @@
         com.intellij.modules.lang
     </depends>-->
 
+    <depends optional="true">
+        com.intellij.modules.java
+    </depends>
+
+
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
         <!--TODO: @Amir Sagiv this should be uncommented-->

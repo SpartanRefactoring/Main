@@ -60,6 +60,11 @@ intellij {
     //noinspection GroovyAssignabilityCheck
     version 'IC-2017.1'
     pluginName 'IntelliJ-Spartanizer'
+
+}
+
+patchPluginXml {
+    sinceBuild '141.0'
 }
 
 // Used to generate data regarding test coverage, used by CodeCov
