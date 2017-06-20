@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.traversal.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class GenericApplicator {
-  public Toolbox configuration;
+  public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;
   protected int done;
   private static List<String> selectedTipperGroups;
@@ -94,7 +94,7 @@ public class GenericApplicator {
     return $;
   }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    final Tipper<N> $ = configuration.firstTipper(¢);
+    final Tipper<N> $ = toolbox.firstTipper(¢);
     return selectedTipperGroups.contains($.tipperGroup().label()) ? $ : null;
   }
 }

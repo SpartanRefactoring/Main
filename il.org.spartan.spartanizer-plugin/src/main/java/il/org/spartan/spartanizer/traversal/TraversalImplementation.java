@@ -72,7 +72,7 @@ public class TraversalImplementation extends Traversal {
     return getRewrite();
   }
   @SafeVarargs public final <N extends ASTNode> Traversal restrictTo(final Tipper<N>... ¢) {
-    configuration.restrictTo(¢);
+    toolbox.restrictTo(¢);
     return this;
   }
   public final <N extends ASTNode> Traversal fixBloater(final Tipper<N> ¢) {
@@ -111,7 +111,7 @@ public class TraversalImplementation extends Traversal {
   }
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
     return robust.lyNull(() -> {
-      final Tipper<N> $ = configuration.firstTipper(¢);
+      final Tipper<N> $ = toolbox.firstTipper(¢);
       setTipper($);
       return $;
     }, (Consumer<Exception>) note::bug);

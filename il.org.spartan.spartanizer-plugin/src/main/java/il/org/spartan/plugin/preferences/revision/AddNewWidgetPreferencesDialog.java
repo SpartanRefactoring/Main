@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-
-
 import java.util.List;
 
 import org.eclipse.jface.dialogs.*;
@@ -28,12 +26,9 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   protected AddNewWidgetPreferencesDialog(final Shell parentShell) {
     super(parentShell);
   }
-  
-  @Override
-  protected boolean isResizable() {
-      return false;
+  @Override protected boolean isResizable() {
+    return false;
   }
-  
   private static Text createString(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
@@ -46,16 +41,13 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   }
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);
-    
-
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     retNameText = createString($, "Widget Name", "");
-    ScrolledComposite sc = new ScrolledComposite($, SWT.H_SCROLL | SWT.V_SCROLL);
-    Composite composite = new Composite(sc, SWT.NONE);
+    final ScrolledComposite sc = new ScrolledComposite($, SWT.H_SCROLL | SWT.V_SCROLL);
+    final Composite composite = new Composite(sc, SWT.NONE);
     composite.setLayout(new FillLayout(SWT.VERTICAL));
-    
     radioButtons = new Button[widgetOps.size()];
     int count = 0;
     for (final WidgetOperation ¢ : widgetOps) {
@@ -88,7 +80,7 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   }
   @Override protected void okPressed() {
     retName = retNameText.getText();
-    if("".equals(retName)) {
+    if ("".equals(retName)) {
       MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
       return;
     }
@@ -105,7 +97,5 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
       super.okPressed();
     else
       MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid selection", "No operation selected");
-      
-      
   }
 }

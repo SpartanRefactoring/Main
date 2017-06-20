@@ -45,7 +45,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
      * preferences page and then close the runtime eclipse and remove this line.
      * That should override the old preferences and solve the issue also, go to
      * OperationListEditor line 375 */
-//     WidgetPreferences.storeDefaultEntries();
+    // WidgetPreferences.storeDefaultEntries();
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return;

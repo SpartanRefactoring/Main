@@ -72,11 +72,11 @@ public final class Issue0223 {
   }
   @Test public void b050ConfigCanFindTipper() {
     a$040_init();
-    assert Toolboxes.all().firstTipper(focus) != null;
+    assert Toolbox.all().firstTipper(focus) != null;
   }
   @Test public void b060ConfigCanFindFindCorrectTipper() {
     a$040_init();
-    azzert.that(Toolboxes.all().firstTipper(focus), instanceOf(tipper.getClass()));
+    azzert.that(Toolbox.all().firstTipper(focus), instanceOf(tipper.getClass()));
   }
   @Test public void b070callSuggest() {
     a$040_init();
@@ -100,23 +100,23 @@ public final class Issue0223 {
   }
   @Test public void b120findTipperNotEmpty() {
     a$040_init();
-    assert Toolboxes.all().firstTipper(focus) != null;
+    assert Toolbox.all().firstTipper(focus) != null;
   }
   @Test public void b130findTipperOfCorretType() {
     a$040_init();
-    azzert.that(Toolboxes.all().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
+    azzert.that(Toolbox.all().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
   }
   @Test public void b140findTipperDemands() {
     a$040_init();
-    assert Toolboxes.all().firstTipper(focus).check(focus);
+    assert Toolbox.all().firstTipper(focus).check(focus);
   }
   @Test public void b150findTipperCanSuggest() {
     a$040_init();
-    assert Toolboxes.all().firstTipper(focus).check(focus);
+    assert Toolbox.all().firstTipper(focus).check(focus);
   }
   @Test public void b160findTipperReplacmenentNonNull() {
     a$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolboxes.all().firstTipper(focus)).replacement(focus) != null;
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.all().firstTipper(focus)).replacement(focus) != null;
   }
   private ClassInstanceCreation findMe(final Statement c) {
     return findFirst.instanceOf(SUBJECT_CLASS).in(c);

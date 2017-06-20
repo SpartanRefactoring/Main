@@ -29,10 +29,10 @@ public class Spartanizer$Applicator extends GenericApplicator {
 
   /** Instantiates this class */
   public Spartanizer$Applicator() {
-    this(il.org.spartan.spartanizer.traversal.Toolboxes.all());
+    this(il.org.spartan.spartanizer.traversal.Toolbox.all());
   }
-  public Spartanizer$Applicator(final Toolbox configuration) {
-    this.configuration = configuration;
+  public Spartanizer$Applicator(final Toolbox toolbox) {
+    this.toolbox = toolbox;
   }
   /** Apply the spartanization to a selection of CompilationUnits
    * @param u
@@ -118,7 +118,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    configuration = il.org.spartan.spartanizer.traversal.Toolboxes.all();
+    toolbox = il.org.spartan.spartanizer.traversal.Toolbox.all();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TraversalMonitor.visitation(n);
@@ -146,7 +146,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
         return true;
       }
       <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-        return configuration.firstTipper(¢);
+        return toolbox.firstTipper(¢);
       }
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);

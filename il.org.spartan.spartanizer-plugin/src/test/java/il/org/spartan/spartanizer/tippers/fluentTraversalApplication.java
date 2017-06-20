@@ -92,7 +92,7 @@ public class fluentTraversalApplication extends TraversalImplementation {
   protected final void fillRewrite(final ASTRewrite r) {
     compilationUnit.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        final Tipper<N> w = configuration.firstTipper(n);
+        final Tipper<N> w = toolbox.firstTipper(n);
         if (w == null)
           return true;
         final Tip make = w.tip(n);

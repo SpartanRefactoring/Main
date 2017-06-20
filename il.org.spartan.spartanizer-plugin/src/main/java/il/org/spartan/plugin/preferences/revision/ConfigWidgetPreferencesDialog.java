@@ -1,6 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-
 import java.util.*;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
 
-/** A dialog to descrive a configuration of an operation widget
+/** A dialog to describe a configuration of an operation widget
  * @author Raviv Rachmiel
  * @since 2017-05-10 */
 // TODO: Raviv Rachmiel, make use of the required column in configurations
@@ -74,7 +73,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
     final Text $ = new Text(container, SWT.BORDER);
-    if(defaultValue!=null)
+    if (defaultValue != null)
       $.setText(defaultValue);
     $.setLayoutData(dataRes);
     return $;
@@ -86,7 +85,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     dataRes.horizontalAlignment = GridData.FILL;
     final Button $ = new Button(container, SWT.CHECK);
     $.setLayoutData(dataRes);
-    if(defaultValue!=null)
+    if (defaultValue != null)
       $.setSelection("true".equals(defaultValue.toLowerCase()));
     return $.getSelection() ? "true" : "false";
   }
@@ -99,7 +98,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     for (final String ¢ : options) {
       $[count] = new Button(container, SWT.RADIO);
       $[count].setSelection(false);
-      if (defaultValue!=null && ¢.equals(defaultValue))
+      if (defaultValue != null && ¢.equals(defaultValue))
         $[count].setSelection(true);
       $[count].setText(¢);
       $[count].setBounds(10, 25 * count + 5, 75, 30);
@@ -108,15 +107,15 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     return $;
   }
   @Override protected void okPressed() {
-    if("".equals(resName.getText())) {
+    if ("".equals(resName.getText())) {
       MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
       return;
     }
-    if(woe.getWidgetOp().defaultConfiguration()==null && confMap.isEmpty()) {
-      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid configuration", "no configuration selected for a widget without a default configuration");
+    if (woe.getWidgetOp().defaultConfiguration() == null && confMap.isEmpty()) {
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid configuration",
+          "no configuration selected for a widget without a default configuration");
       return;
     }
-      
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.get(l.indexOf(woe)).setConfMap(confMap);
     l.get(l.indexOf(woe)).setName(resName.getText());

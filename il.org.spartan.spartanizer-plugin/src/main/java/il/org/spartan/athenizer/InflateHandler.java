@@ -39,14 +39,13 @@ public class InflateHandler extends AbstractHandler {
   private static final IPartListener pageListener = pageListener();
 
   @Override public Object execute(final ExecutionEvent ¢) throws ExecutionException {
-    if(TOGGLE_ACTIVITY.equals(¢.getCommand().getId())) {
+    if (TOGGLE_ACTIVITY.equals(¢.getCommand().getId())) {
       HandlerUtil.toggleCommandState(¢.getCommand());
       return goWheelAction();
     }
     final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? null : goAggressiveAction($);
   }
-
   public static Void goWheelAction() {
     final IPartService s = getPartService();
     if (s == null)

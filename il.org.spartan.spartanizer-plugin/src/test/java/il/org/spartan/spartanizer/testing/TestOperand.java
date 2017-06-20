@@ -106,7 +106,7 @@ public class TestOperand extends Wrapper<String> {
     copyPasteReformat("  .stays()//\n  ;\n");
     copyPasteReformat("trimming.of(" + get() + ")//\n" + //
         "  .stays()//\n  ;\n");
-    for (final Tipper<? extends ASTNode> ¢ : traversal.configuration.getAllTippers())
+    for (final Tipper<? extends ASTNode> ¢ : traversal.toolbox.getAllTippers())
       note.logger.severe(dump.of(¢, ¢.description()));
     azzert.fail("Nothing done on " + get());
   }
@@ -141,15 +141,15 @@ public class TestOperand extends Wrapper<String> {
     TraversalMonitor.logger.setLevel(Level.OFF);
   }
   public <N extends ASTNode> TestOperand using(final Tipper<N> ¢, final Class<N> c) {
-    traversal.configuration.setTo(c, ¢);
+    traversal.toolbox.setTo(c, ¢);
     return this;
   }
   @SafeVarargs public final <N extends ASTNode> TestOperand using(final Class<N> c, final Tipper<N>... ts) {
-    traversal.configuration.setTo(c, ts);
+    traversal.toolbox.setTo(c, ts);
     return this;
   }
   @SafeVarargs public final TestOperand using(final Tipper<?>... ¢1) {
-    traversal.configuration.restrictTo(¢1);
+    traversal.toolbox.restrictTo(¢1);
     return this;
   }
 }

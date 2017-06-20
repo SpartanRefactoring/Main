@@ -58,7 +58,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert ?: into Boolean expression";
   }
-  private static boolean canApply(Expression e1, Expression e2) {
+  private static boolean canApply(final Expression e1, final Expression e2) {
     return iz.booleanLiteral(e1) && type.of(e2) != type.Odd.Types.NULL;
   }
   @Override public boolean prerequisite(final ConditionalExpression ¢) {

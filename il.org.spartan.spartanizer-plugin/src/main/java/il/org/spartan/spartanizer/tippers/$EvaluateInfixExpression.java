@@ -88,7 +88,6 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     }
     return null;
   }
-
   abstract double evaluateDouble(List<Expression> xs) throws IllegalArgumentException;
   abstract int evaluateInt(List<Expression> xs) throws IllegalArgumentException;
   abstract long evaluateLong(List<Expression> xs) throws IllegalArgumentException;

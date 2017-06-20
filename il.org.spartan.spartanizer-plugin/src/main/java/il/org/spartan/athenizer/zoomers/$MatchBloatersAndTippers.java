@@ -60,7 +60,7 @@ public class $MatchBloatersAndTippers {
 
   /** Prints non matched tippers (only of tippers in Configurations(toolbox)) */
   public static void printNonMatchedTippers() {
-    final List<Class<?>> $ = new ArrayList<>(Toolboxes.all.get().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
+    final List<Class<?>> $ = new ArrayList<>(Toolbox.all.get().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
     $.removeAll(matching.values());
     $.forEach(λ -> System.out.println(λ.getName()));
   }

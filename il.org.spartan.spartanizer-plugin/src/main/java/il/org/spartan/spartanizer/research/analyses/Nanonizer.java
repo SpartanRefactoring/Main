@@ -165,12 +165,12 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
   }
   public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = an.empty.list();
-    traversals.traversal.configuration.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance)
+    traversals.traversal.toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance)
         .forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }
   public Nanonizer removeSpartanizerTippers() {
-    traversals.traversal.configuration.clear();
+    traversals.traversal.toolbox.clear();
     addNanoPatterns();
     return this;
   }

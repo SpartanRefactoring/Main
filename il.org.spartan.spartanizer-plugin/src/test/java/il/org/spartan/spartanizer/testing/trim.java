@@ -50,10 +50,10 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                                                                                                                                                       * .repeatedly //  See {@link trim.repeatedely} 
-                                                                                                                                                       * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                                                                                                                                                       * .of("a+(b-c)") //  See {@link #of(String)} 
-                                                                                                                                                       * .gives("a+b-c")</code> */
+                                                                                                                                                        * .repeatedly //  See {@link trim.repeatedely} 
+                                                                                                                                                        * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                                                                                                                                                        * .of("a+(b-c)") //  See {@link #of(String)} 
+                                                                                                                                                        * .gives("a+b-c")</code> */
   interface repeatedly {
     static fluentTraversalApplication of(final String codeFragment) {
       return new fluentTraversalApplication(codeFragment) {
@@ -108,7 +108,7 @@ public interface trim {
 
   class fluentTraversal extends TraversalImplementation {
     @SafeVarargs public <N extends ASTNode> fluentTraversal(final Class<N> clazz, final Tipper<N>... ts) {
-      configuration.setTo(clazz, ts);
+      toolbox.setTo(clazz, ts);
     }
     @SuppressWarnings("static-method") public fluentTraversalApplication of(final String codeFragment) {
       return new fluentTraversalApplication(codeFragment);

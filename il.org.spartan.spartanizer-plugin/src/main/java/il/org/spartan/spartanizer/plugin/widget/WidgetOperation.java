@@ -62,7 +62,8 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
     final ConfigurationsMap m = defaultConfiguration();
     return m != null && register(m);
   }
-  /** @return URL of image of this operation. {@link #imageKey()} has priority if implemented */
+  /** @return URL of image of this operation. {@link #imageKey()} has priority
+   *         if implemented */
   public abstract String imageURL();
   /** @return ISharedImages constant of the icon to show */
   public String imageKey() {
@@ -75,8 +76,8 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
   public Image image() {
     String s;
     Image $;
-    if((s = imageKey()) != null)
-      $ = Dialogs.image(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(s), s, scale()); 
+    if ((s = imageKey()) != null)
+      $ = Dialogs.image(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(s), s, scale());
     else {
       s = imageURL();
       $ = Dialogs.image(s, s, scale());

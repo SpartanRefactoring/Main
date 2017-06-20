@@ -32,7 +32,7 @@ public interface Category {
 
   /** A specialized {@link Collapse} carried out, by factoring out some common
    * element */
-  interface CommonFactorOut extends Java { // S2
+  interface CommonFactorOut extends Theory.Java { // S2
     String ___ = "Factor out a common syntactical element";
   }
 
@@ -40,7 +40,7 @@ public interface Category {
     String ___ = "Eliminate code that is never executed";
   }
 
-  interface EarlyReturn extends Java {
+  interface EarlyReturn extends Theory.Java {
     String ___ = "Early return";
   }
 
@@ -52,11 +52,11 @@ public interface Category {
     String ___ = "Change expression to a more familiar structure (often shorter)";
   }
 
-  interface Inlining extends Java {
+  interface Inlining extends Theory.Java {
     String ___ = "Structural";
   }
 
-  interface Loops extends Java {
+  interface Loops extends Theory.Java {
     String ___ = "Spartan use of Java loop syntax";
   }
 
@@ -99,16 +99,15 @@ public interface Category {
     String ___ = "Nanos";
   }
 
-
-  interface ScopeReduction extends Java {
+  interface ScopeReduction extends Theory.Java {
     String ___ = "Reduction of scope to the smallest possible";
   }
 
-  interface Shortcircuit extends Java {
+  interface Shortcircuit extends Theory.Java {
     String ___ = "Shortcut of control flow by combining unconditional sequencers, e.g., converting break into return";
   }
 
-  interface SyntacticBaggage extends Java {
+  interface SyntacticBaggage extends Theory.Java {
     String ___ = "Remove syntactical element that contributes nothing to semantics";
   }
 
@@ -116,28 +115,31 @@ public interface Category {
     String ___ = "Convert conditional statement to the conditional, ?:, operator";
   }
 
-  @SuppressWarnings("hiding")
   interface Theory extends Category {
+    interface Java {
+      @SuppressWarnings("hiding") String ___ = "General Java simplifcations";
+    }
+
     String ___ = "Simplifcation using a theory of some kind";
 
     interface Arithmetics extends Category.Theory {
-      String ___ = "Rewrite an arithmetical expressions in a more canonical form";
+      @SuppressWarnings("hiding") String ___ = "Rewrite an arithmetical expressions in a more canonical form";
 
       interface Numeric extends Arithmetics {
-        String ___ = "Numeric simplfication of an arithmetical expression";
+        @SuppressWarnings("hiding") String ___ = "Numeric simplfication of an arithmetical expression";
       }
 
       interface Symbolic extends Arithmetics {
-        String ___ = "Symbolic simplfication of an arithmetical expression";
+        @SuppressWarnings("hiding") String ___ = "Symbolic simplfication of an arithmetical expression";
       }
     }
 
     interface Logical extends Category.Theory {
-      String ___ = "Rewrite a boolean expression in a more canonical form";
+      @SuppressWarnings("hiding") String ___ = "Rewrite a boolean expression in a more canonical form";
     }
 
     interface Strings extends Category.Theory {
-      String ___ = "Rewrite a string expression in a more canonical form";
+      @SuppressWarnings("hiding") String ___ = "Rewrite a string expression in a more canonical form";
     }
   }
 }

@@ -11,18 +11,18 @@ import il.org.spartan.athenizer.zoomers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 
-/** holds the new configuration for the expanders and returns them
+/** holds the new toolbox for the expanders and returns them
  * @author Raviv Rachmiel
  * @since 20-12-16 */
 public class InflaterProvider extends OperationsProvider {
-  final Toolbox configuration;
+  final Toolbox toolbox;
   Function<List<Operation<?>>, List<Operation<?>>> function = λ -> Collections.singletonList(the.firstOf(λ));
 
   public InflaterProvider() {
-    configuration = InflaterProvider.freshCopyOfAllExpanders();
+    toolbox = InflaterProvider.freshCopyOfAllExpanders();
   }
   public InflaterProvider(final Toolbox tb) {
-    configuration = tb;
+    toolbox = tb;
   }
   public static Toolbox freshCopyOfAllExpanders() {
     return new Toolbox()//
@@ -104,7 +104,7 @@ public class InflaterProvider extends OperationsProvider {
     ;//
   }
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return configuration.firstTipper(¢);
+    return toolbox.firstTipper(¢);
   }
   public InflaterProvider provideAll() {
     function = λ -> λ;
