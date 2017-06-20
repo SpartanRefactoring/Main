@@ -6,6 +6,7 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
 
@@ -32,7 +33,7 @@ public class ForRedundantContinue implements LeonidasTipperDefinition {
     public void matcher() {
         new Template(() -> {
             /* start */
-            for (int identifier0 = expression(1); identifier0 < expression(2); identifier0++) {
+            for (statement(0); booleanExpression(1); statement(2)) {
                 anyNumberOf(statement(3));
                 continue;
             }
@@ -44,7 +45,7 @@ public class ForRedundantContinue implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /* start */
-            for (int identifier0 = expression(1); identifier0 < expression(2); identifier0++) {
+            for (statement(0); booleanExpression(1); statement(2)) {
                 anyNumberOf(statement(3));
             }
             /* end */
