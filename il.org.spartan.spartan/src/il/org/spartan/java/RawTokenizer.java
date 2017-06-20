@@ -307,7 +307,7 @@ public class RawTokenizer {
     "\2\1\1\11\2\1\1\11\1\1\1\11\2\1\2\0"+
     "\1\1\1\0\6\11\1\1\2\11\2\1\2\11\1\1"+
     "\1\11\1\1\13\11\2\1\1\0\2\1\1\11\1\1"+
-    "\2\11\1\1\1\11\6\1";
+            "\2\11\1\1\1\11\6\1";
     /**
      * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
      */
@@ -463,18 +463,27 @@ public class RawTokenizer {
   /* user code: */
   public String text() { return $.length() >  0 ? $.toString() : yytext(); }
 
-  public void error(String s) { System.err.println(notify(s)); reset(); }
+    public void error(String s) {
+        System.err.println(notify(s));
+        reset();
+    }
 
-  public String notify(String s) { return location() + s + " " + token();
-  }
+    public String notify(String s) {
+        return location() + s + " " + token();
+    }
 
     public String token() {
         return "<" + text() + ">";
     }
 
-    public String location() { return "[" + line() + "," + column() + "]: " ; }
+    public String location() {
+        return "[" + line() + "," + column() + "]: ";
+    }
 
-  public void reset() { truncate(); yybegin(SCAN_CODE); }
+    public void reset() {
+        truncate();
+        yybegin(SCAN_CODE);
+    }
 
     public int line()   { return yyline + 1; }
 
