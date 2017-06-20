@@ -105,6 +105,12 @@
                 icon="Icons.Add">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.ViewAvailableTippersInFile.TippersViewAction"
+                id="myPlugin11"
+                text="Analyze File"
+                icon="Icons.LeonidasSmall">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>
