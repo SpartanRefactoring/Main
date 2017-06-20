@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 
 /** simple no-gimmicks singleton service that does the simple job of applying a
- * {@link Configuration} {@link #once(String)}, {@link #twice(String)},
+ * {@link Toolbox} {@link #once(String)}, {@link #twice(String)},
  * {@link #thrice(String)}, and {@link #repetitively(String)}.
  * @author Yossi Gil
  * @since 2017-03-08 */

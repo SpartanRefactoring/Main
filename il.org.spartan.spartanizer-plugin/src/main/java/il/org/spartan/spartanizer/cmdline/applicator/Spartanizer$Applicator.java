@@ -29,9 +29,9 @@ public class Spartanizer$Applicator extends GenericApplicator {
 
   /** Instantiates this class */
   public Spartanizer$Applicator() {
-    this(il.org.spartan.spartanizer.traversal.Configurations.all());
+    this(il.org.spartan.spartanizer.traversal.Toolboxes.all());
   }
-  public Spartanizer$Applicator(final Configuration configuration) {
+  public Spartanizer$Applicator(final Toolbox configuration) {
     this.configuration = configuration;
   }
   /** Apply the spartanization to a selection of CompilationUnits
@@ -118,7 +118,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    configuration = il.org.spartan.spartanizer.traversal.Configurations.all();
+    configuration = il.org.spartan.spartanizer.traversal.Toolboxes.all();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TraversalMonitor.visitation(n);

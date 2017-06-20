@@ -18,9 +18,9 @@ import il.org.spartan.utils.*;
  * level is done in class {@link TraversalImplementation}
  * @author Yossi Gil
  * @since 2015-08-22 */
-public class Configuration {
-  @Override public Configuration clone() {
-    final Configuration $ = new Configuration();
+public class Toolbox {
+  @Override public Toolbox clone() {
+    final Toolbox $ = new Toolbox();
     int i = 0;
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
       $.implementation[i++] = ¢ == null ? null : new ArrayList<>(¢);
@@ -70,10 +70,10 @@ public class Configuration {
    * @param c JD
    * @param ts JD
    * @return {@code this}, for easy chaining. */
-  @SafeVarargs public final <N extends ASTNode> Configuration add(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
     return add(wizard.nodeType(c), ts);
   }
-  @SafeVarargs public final <N extends ASTNode> Configuration add(final int nodeType, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final int nodeType, final Tipper<N>... ts) {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
@@ -81,7 +81,7 @@ public class Configuration {
     }
     return this;
   }
-  @SafeVarargs public final <N extends ASTNode> Configuration remove(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, final Tipper<N>... ts) {
     final int nodeType = wizard.nodeType(c);
     for (final Tipper<N> ¢ : ts)
       get(nodeType).remove(¢);
@@ -116,15 +116,15 @@ public class Configuration {
     return get(¢.getNodeType());
   }
   /** Clears the toolbox except of the given tippers */
-  @SafeVarargs public final Configuration restrictTo(final Tipper<?>... ts) {
+  @SafeVarargs public final Toolbox restrictTo(final Tipper<?>... ts) {
     Stream.of(implementation).filter(Objects::nonNull).forEach(x -> x.removeIf(λ -> !is.in(λ, ts)));
     return this;
   }
-  @SafeVarargs public final <N extends ASTNode> Configuration setTo(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox setTo(final Class<N> c, final Tipper<N>... ts) {
     clear().get(wizard.nodeType(c)).addAll(as.list(ts));
     return this;
   }
-  public Configuration clear() {
+  public Toolbox clear() {
     Stream.of(implementation).filter(Objects::nonNull).forEach(List::clear);
     return this;
   }
