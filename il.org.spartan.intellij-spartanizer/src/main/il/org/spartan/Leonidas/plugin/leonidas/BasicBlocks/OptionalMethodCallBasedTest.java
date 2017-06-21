@@ -42,5 +42,4 @@ public class OptionalMethodCallBasedTest extends PsiTypeHelper {
         PsiWhileStatement pws5 = createTestWhileStatementFromString("while (x > 2) {\nx++; x++; x--;  \n}");
         assertTrue(lt.canTip(pws5));
     }
-
 }

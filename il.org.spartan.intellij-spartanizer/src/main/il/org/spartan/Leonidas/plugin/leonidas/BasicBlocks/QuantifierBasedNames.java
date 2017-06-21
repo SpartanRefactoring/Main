@@ -17,7 +17,6 @@ import java.util.Map;
  * @since 20-06-2017.
  */
 public abstract class QuantifierBasedNames extends NamedElement{
-
     protected Encapsulator internal;
 
     public QuantifierBasedNames(Encapsulator e, String template, Encapsulator i) {

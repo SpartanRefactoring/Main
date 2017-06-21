@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by melanyc on 6/20/2017.
+ * @author michalcohen
+ * @since 20-06-2017.
  */
 public class BaseType extends NamedElement {
 

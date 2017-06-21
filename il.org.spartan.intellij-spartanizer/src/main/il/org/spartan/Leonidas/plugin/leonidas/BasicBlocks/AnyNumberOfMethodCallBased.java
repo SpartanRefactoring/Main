@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @author Oren Afek
- * @since 14/05/2017
+ * @since 14-05-2017
  */
 public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
 

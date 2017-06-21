@@ -1,7 +1,8 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 /**
- * Created by melanyc on 6/20/2017.
+ * @author michalcohen
+ * @since 20-06-2017.
  */
 public abstract class AnyNumberOfBasedNames extends QuantifierBasedNames {
 
