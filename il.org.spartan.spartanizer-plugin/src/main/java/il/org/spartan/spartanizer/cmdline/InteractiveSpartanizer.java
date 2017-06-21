@@ -35,7 +35,7 @@ public class InteractiveSpartanizer {
     return $;
   }
   public InteractiveSpartanizer disable(final Class<? extends Category> ¢) {
-    traversals.traversal.configuration.disable(¢);
+    traversals.traversal.toolbox.disable(¢);
     return this;
   }
   /** Apply trimming repeatedly, until no more changes
@@ -54,11 +54,11 @@ public class InteractiveSpartanizer {
   public final TextualTraversals traversals = new TextualTraversals();
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
-    traversals.traversal.configuration.add(c, ts);
+    traversals.traversal.toolbox.add(c, ts);
     return this;
   }
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
-    traversals.traversal.configuration.remove(c, ts);
+    traversals.traversal.toolbox.remove(c, ts);
     return this;
   }
 }

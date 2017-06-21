@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-
-
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -30,7 +28,7 @@ public class OperationListEditor extends ListEditor {
   List<Map.Entry<String, Object>> elements_list;
   Button configureButton;
   Button ableButton;
-  public ListEditor resLE; 
+  public ListEditor resLE;
 
   public OperationListEditor(final String name, final String labelText, final Composite parent) {
     super(name, labelText, parent);
@@ -52,7 +50,6 @@ public class OperationListEditor extends ListEditor {
     configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
     configureButton.setText("Configure operation");
     configureButton.setEnabled(false);
-    
   }
   public void addDefaultButtonsConfig() {
     getDownButton().addSelectionListener(new SelectionListener() {
@@ -129,11 +126,10 @@ public class OperationListEditor extends ListEditor {
       }
     });
   }
- 
   public OperationListEditor lazyConstruct(final Composite parent, final List<Map.Entry<String, Object>> elements, final Consumer<Object> onConfigure,
-      final Function<Object, Boolean> isAble, final Consumer<Object> onAble,ListEditor e) {
+      final Function<Object, Boolean> isAble, final Consumer<Object> onAble, final ListEditor e) {
     elements_list = as.list(elements);
-    this.resLE = e;
+    resLE = e;
     addDefaultButtonsConfig();
     ableButton.addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
@@ -166,11 +162,10 @@ public class OperationListEditor extends ListEditor {
       }
       @SuppressWarnings("synthetic-access") void onSelection() {
         final int i = getList().getSelectionIndex();
-        if (i >= 0) 
+        if (i >= 0)
           onConfigure.accept(elements_list.get(i).getValue()); // perform the on
                                                                // configure on
                                                                // widget op
-
       }
     });
     parent.addDisposeListener(λ -> {
@@ -201,17 +196,14 @@ public class OperationListEditor extends ListEditor {
     // ADD,REMOVE,DOWN,UP buttons
   }
   @Override protected String[] parseString(final String stringList) {
-    List<String> $ = new ArrayList<>();
-    for (final Entry<String, Object> ¢ : elements_list) {
+    final List<String> $ = new ArrayList<>();
+    for (final Entry<String, Object> ¢ : elements_list)
       if (¢ != null)
         $.add(¢.getKey());
-    }
     // when you want to initialize all preferences - uncomment the next line:
-    //return $.toArray(new String[$.size()]);
+    // return $.toArray(new String[$.size()]);
     return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : $.toArray(new String[$.size()]);
   }
-
-
   @Override protected String getNewInputObject() {
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
@@ -221,14 +213,14 @@ public class OperationListEditor extends ListEditor {
     final long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
     final WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, new HashMap<>(), res);
     woe.disable();
-    if($.getResult().defaultConfiguration()==null)
-      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), woe,PreferencesResources.store()).open();
+    if ($.getResult().defaultConfiguration() == null)
+      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), woe, PreferencesResources.store()).open();
     elements_list.add(new AbstractMap.SimpleEntry<>(res, woe));
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.add(woe);
     WidgetPreferences.storeEntries(l);
     resLE.loadDefault();
-    this.loadDefault();
+    loadDefault();
     return null;
   }
   @Override protected String createList(final String[] items) {
@@ -242,5 +234,4 @@ public class OperationListEditor extends ListEditor {
     getUpButton().setEnabled(size > 1 && index > 0);
     getDownButton().setEnabled(size > 1 && index >= 0 && index < size - 1);
   }
-
 }

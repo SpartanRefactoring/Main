@@ -1,9 +1,8 @@
 package il.org.spartan.Leonidas.plugin;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.google.gson.Gson;
+import com.intellij.ide.util.PropertiesComponent;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileType;
@@ -38,7 +37,7 @@ public class AddSpartanizerUtilsAction extends AnAction {
 
     }
 
-    private void createEnvironment(AnActionEvent e) {
+    public void createEnvironment(AnActionEvent e) {
         PsiFile pf;
         try {
             pf = getPsiClassFromContext(e).getContainingFile();

@@ -154,7 +154,7 @@ public class CommandLine$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   private void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    configuration = il.org.spartan.spartanizer.traversal.Toolboxes.all();
+    toolbox = Toolbox.all();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
         TraversalMonitor.visitation(n);

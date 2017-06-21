@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 

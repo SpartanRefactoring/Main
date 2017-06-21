@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
@@ -382,5 +384,26 @@ public class Toolbox implements ApplicationComponent {
 
     public Optional<GenericEncapsulator> getGeneric(PsiElement e) {
         return getGenericsBasicBlocks().stream().filter(g -> g.conforms(e)).findFirst();
+    }
+
+    public void executeAllTippersNoNanos(PsiElement e) {
+        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
+            return;
+
+        tipperMap.get(e.getClass())
+                .stream()
+                .filter(tipper -> tipper.canTip(e) && !(tipper instanceof NanoPatternTipper))
+                .findFirst()
+                .ifPresent(t -> executeTipper(e, t));
+    }
+
+    public Set<String> getAvailableTipsInfo(PsiElement e) {
+        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
+            return new HashSet<>();
+
+        int line = FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor().offsetToLogicalPosition(e.getTextOffset()).line +1;
+        return tipperMap.get(e.getClass())
+                .stream()
+                .filter(tipper -> tipper.canTip(e)).map(tipper -> tipper.name()+" - Line "+ line).collect(Collectors.toSet());
     }
 }

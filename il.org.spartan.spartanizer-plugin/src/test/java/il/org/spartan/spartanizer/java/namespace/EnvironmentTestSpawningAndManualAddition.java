@@ -43,10 +43,9 @@ public final class EnvironmentTestSpawningAndManualAddition {
   @Test public void defaultName() {
     azzert.that(e0.name(), is(""));
   }
-  // TODO Yossi Gil
-  @Ignore @Test public void defaultSize() {
-    azzert.that(e0.size(), is(0));
-    azzert.that(e0.fullSize(), is(0));
+  @Test public void defaultSize0() {
+    azzert.that(e0.size(), is(3));
+    azzert.that(e0.fullSize(), is(3));
   }
   @Test public void DoesntHaveFalseResult() {
     assert !e1.nest().doesntHave("Yossi");
@@ -74,9 +73,11 @@ public final class EnvironmentTestSpawningAndManualAddition {
     ee1.put("Dan", new Binding());
     assert !ee1.empty();
   }
-  // TODO Yossi Gil
-  @Ignore @Test public void fullSize() {
-    azzert.that(e0.fullSize(), is(0));
+  @Test public void fullSize() {
+    azzert.that(e0.fullSize(), is(3));
+  }
+  @Test public void fullSize0() {
+    azzert.that(e0.fullSize(), is(3));
   }
   @Test public void get() {
     e0.put("Alex", new Binding());
@@ -93,8 +94,8 @@ public final class EnvironmentTestSpawningAndManualAddition {
     assert e0.has("Alex");
   }
   @Test public void hasInBoth() {
-    e1.put("Yossi", new Binding());
-    assert e1.has("Yossi");
+    e1.put("Yo", new Binding());
+    assert e1.has("Yo");
   }
   @Test public void hasInParent() {
     assert e1.has("Dan");
@@ -145,5 +146,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
   @Test(expected = IllegalArgumentException.class) public void putTest() {
     e0.nest().put("Dan", new Binding());
   }
-  // ==================================declaresDown Tests================
+  @Test public void size() {
+    azzert.that(e0.size(), is(3));
+  }
 }

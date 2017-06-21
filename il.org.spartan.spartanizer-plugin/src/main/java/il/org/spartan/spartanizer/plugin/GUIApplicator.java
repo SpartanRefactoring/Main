@@ -137,7 +137,7 @@ public class GUIApplicator extends Applicator implements Selfie<GUIApplicator> {
     inner.setSelection(selection());
     inner.setName(t.description());
     inner.traversal.notUseProjectPreferences();
-    inner.traversal.configuration.restrictTo(t);
+    inner.traversal.toolbox.restrictTo(t);
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
     name(t.tipperName());
     return this;
@@ -147,7 +147,7 @@ public class GUIApplicator extends Applicator implements Selfie<GUIApplicator> {
     /** TODO Dor set name */
     // inner.setName(t.description());
     inner.traversal.notUseProjectPreferences();
-    inner.traversal.configuration.setTo(c, ts);
+    inner.traversal.toolbox.setTo(c, ts);
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
     /** TODO Dor set name */
     // name(t.tipperName());

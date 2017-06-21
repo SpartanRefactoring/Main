@@ -30,7 +30,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Traversal implements Selfie<Traversal> {
-  public Toolbox configuration = Toolboxes.allClone();
+  public Toolbox toolbox = Toolboxes.allClone();
   /** A list of all listeners to actions carried out by this instance. */
   public final TraversalTappers notify = new TraversalTappers()//
       .push(new TraversalTapper() {
@@ -46,7 +46,7 @@ public abstract class Traversal implements Selfie<Traversal> {
           if (!useProjectPreferences)
             return;
           final Toolbox $ = getPreferredConfiguration(compilationUnit());
-          configuration = $ != null ? $ : configuration;
+          toolbox = $ != null ? $ : toolbox;
         }
       });
   protected final Int rewriteCount = new Int();

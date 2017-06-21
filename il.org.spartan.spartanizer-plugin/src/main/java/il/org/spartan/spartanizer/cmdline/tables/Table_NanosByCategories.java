@@ -20,7 +20,7 @@ public class Table_NanosByCategories {
     new Table_NanosByCategories().go();
   }
   public void go() {
-    final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().traversals.traversal.configuration.implementation;
+    final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().traversals.traversal.toolbox.implementation;
     final Map<String, Set<String>> categories = new TreeMap<>();
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)

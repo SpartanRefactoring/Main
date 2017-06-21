@@ -18,7 +18,7 @@ public class Table_Tipper_Groups {
   }
   public void go() {
     final Map<Taxon, Integer> groups = new TreeMap<>();
-    Stream.of(Toolboxes.all().implementation)//
+    Stream.of(Toolbox.all().implementation)//
         .filter(λ -> λ != null && !λ.isEmpty())//
         .forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
     final int total = groups.values().stream().mapToInt(Integer::intValue).reduce((x, y) -> (x + y)).getAsInt();

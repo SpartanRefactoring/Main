@@ -15,18 +15,18 @@ import il.org.spartan.spartanizer.traversal.*;
  * @since 20-12-16 will hold an configuration for the expanders and return
  *        them */
 public class DeflaterProvider extends OperationsProvider {
-  private Toolbox configuration;
+  private Toolbox toolbox;
 
   public DeflaterProvider() {
-    configuration = Toolboxes.all();
-    if (configuration == null)
-      configuration = Toolboxes.allClone();
+    toolbox = Toolbox.all();
+    if (toolbox == null)
+      toolbox = Toolboxes.allClone();
   }
   public DeflaterProvider(final Toolbox tb) {
-    configuration = tb;
+    toolbox = tb;
   }
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return configuration.firstTipper(¢);
+    return toolbox.firstTipper(¢);
   }
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(the.lastOf(λ));

@@ -29,7 +29,7 @@ public class OperandBloating extends TestOperand {
 
   public OperandBloating(final String inner) {
     super(inner);
-    traversal.configuration = InflaterProvider.freshCopyOfAllExpanders();
+    traversal.toolbox = InflaterProvider.freshCopyOfAllExpanders();
   }
   public OperandBloating(final ASTNode inner, final String classText) {
     this(classText);
@@ -64,7 +64,7 @@ public class OperandBloating extends TestOperand {
     final String wrap = w.on(get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).from(new InflaterProvider(traversal.configuration).provideAll()).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(u).from(new InflaterProvider(traversal.toolbox).provideAll()).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
@@ -96,7 +96,7 @@ public class OperandBloating extends TestOperand {
     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider(traversal.configuration)).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider(traversal.toolbox)).go(r, TestUtilsBloating.textEditGroup);
     try {
       final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       final IDocument doc = new Document(wrap);
@@ -122,7 +122,7 @@ public class OperandBloating extends TestOperand {
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     MethodDeclaration m = getMethod(u, f);
-    SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider(traversal.configuration)).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider(traversal.toolbox)).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
@@ -177,7 +177,7 @@ public class OperandBloating extends TestOperand {
     final String wrap = get();
     final CompilationUnit u = az.compilationUnit(ast);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).from(new InflaterProvider(traversal.configuration)).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(u).from(new InflaterProvider(traversal.toolbox)).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
@@ -191,8 +191,8 @@ public class OperandBloating extends TestOperand {
     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    MethodDeclaration m = getMethod(u, f);
-    SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider(traversal.configuration)).go(r, TestUtilsBloating.textEditGroup);
+    final MethodDeclaration m = getMethod(u, f);
+    SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider(traversal.toolbox)).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
@@ -201,7 +201,7 @@ public class OperandBloating extends TestOperand {
       note.bug(this, ¢);
     }
   }
-  public void checkDiff(String wrap, String unpeeled) {
+  public void checkDiff(final String wrap, final String unpeeled) {
     if (!wrap.equals(unpeeled) && !Trivia.essence(get()).equals(Trivia.essence(unpeeled)))
       if (!unpeeled.equals(get()) && unpeeled.equals(get()))
         assertSimilar(get(), unpeeled);

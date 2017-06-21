@@ -25,7 +25,7 @@ public interface theSpartanizer {
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
-          return searching && go(traversal.configuration.firstTipper(¢));
+          return searching && go(traversal.toolbox.firstTipper(¢));
         }
         <N extends ASTNode> boolean go(final Tipper<N> ¢) {
           if (¢ == null)
@@ -88,7 +88,7 @@ public interface theSpartanizer {
 
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
-      return traversal.configuration.firstTipper($);
+      return traversal.toolbox.firstTipper($);
     } catch (final Exception ¢) {
       return note.bug(¢);
     }

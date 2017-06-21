@@ -203,7 +203,7 @@ public final class SingleTipperApplicator {
         return false;
       if (Ranger.disjoint(n, marker))
         return true;
-      final Tipper<N> t = Toolboxes.all().firstTipper(n);
+      final Tipper<N> t = Toolbox.all().firstTipper(n);
       if (t != null)
         apply(t, n);
       doneTraversing = true;
