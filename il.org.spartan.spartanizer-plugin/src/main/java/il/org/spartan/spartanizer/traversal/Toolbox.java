@@ -288,7 +288,8 @@ public class Toolbox {
           new BodyDeclarationModifiersSort<>(), //
           new AnnotationSort<>(), //
           null)
-      .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort<>(), //
+      .add(AnnotationTypeMemberDeclaration.class, //
+          new BodyDeclarationModifiersSort<>(), //
           new AnnotationSort<>(), //
           null)
       .add(VariableDeclarationFragment.class, //
@@ -296,7 +297,8 @@ public class Toolbox {
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
           new LocalUninitializedAssignment(), //
           new LocalUninitializedDead(), //
-          new LocalInitializedAssignment(), new LocalInitializedUpdateAssignment(), //
+          new LocalInitializedAssignment(), //
+          new LocalInitializedUpdateAssignment(), //
           new LocalInitializedReturnExpression(), //
           new LocalInitializedIfAssignment(), //
           new LocalInitializedIfAssignmentUpdating(), //
