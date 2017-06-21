@@ -34,4 +34,4 @@ public class Issue1398 {
         + "char[] output = new char[hiCount + loCount];").using(new LocalInitializedInlineIntoNext()).gives(
             "int hiCount = hiChars != null ? hiChars.length : 1;char[] output = new char[hiCount + (loChars == null ? 1 : loChars.length)];");
   }
-}
+} 
