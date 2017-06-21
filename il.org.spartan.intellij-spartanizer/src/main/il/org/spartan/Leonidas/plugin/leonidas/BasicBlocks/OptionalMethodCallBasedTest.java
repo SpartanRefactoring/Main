@@ -16,11 +16,11 @@ import java.util.HashMap;
  * @author michalcohen
  * @since 13-05-2017.
  */
-public class OptionalTest extends PsiTypeHelper {
+public class OptionalMethodCallBasedTest extends PsiTypeHelper {
     
     public void getNumberOfOccurrences() throws Exception {
         Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("optional(statement(1));"));
-        Optional ano = new Optional().create(n.getChildren().get(0), new HashMap<>());
+        OptionalMethodCallBased ano = new OptionalMethodCallBased().create(n.getChildren().get(0), new HashMap<>());
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x--;}"));
         EncapsulatorIterator it = e.iterator();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 1);

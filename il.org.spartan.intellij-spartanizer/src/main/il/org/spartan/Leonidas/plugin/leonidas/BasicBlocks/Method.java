@@ -37,6 +37,11 @@ public class Method extends ModifiableElement {
     }
 
     @Override
+    public boolean conforms(PsiElement e) {
+        return iz.method(e) && super.conforms(e);
+    }
+
+    @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> map) {
         if (super.generalizes(e, map).notMatches() || !iz.method(e.getInner())) return new MatchingResult(false);
         PsiMethod m = az.method(e.getInner());

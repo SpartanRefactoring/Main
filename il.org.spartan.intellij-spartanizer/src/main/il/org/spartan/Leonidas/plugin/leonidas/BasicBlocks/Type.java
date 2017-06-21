@@ -38,6 +38,11 @@ public class Type extends NamedElement {
     }
 
     @Override
+    public boolean conforms(PsiElement e) {
+        return iz.type(e) && super.conforms(e);
+    }
+
+    @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
         return iz.type(next.getInner());
     }

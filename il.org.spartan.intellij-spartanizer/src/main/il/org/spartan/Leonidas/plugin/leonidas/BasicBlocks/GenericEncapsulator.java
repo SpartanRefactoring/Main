@@ -133,6 +133,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
         return prev;
     }
 
+    public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {
+        return getConcreteParent(n);
+    }
+
     @Override
     public boolean isGeneric() {
         return true;

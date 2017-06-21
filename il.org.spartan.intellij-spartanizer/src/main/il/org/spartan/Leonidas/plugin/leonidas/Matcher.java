@@ -9,6 +9,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.utils.Bool;
+import org.hamcrest.junit.internal.Matching;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -53,22 +54,24 @@ public class Matcher {
      * of generic elements to its instances if the trees match.
      */
     @UpdatesIterator
-    private MatchingResult matchingRecursion(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
-        MatchingResult m = new MatchingResult(true);
+    private MatchingResult matchingRecursion(EncapsulatorIterator needle, EncapsulatorIterator cursor,
+                                             MatchingResult m) {
         EncapsulatorIterator bgNeedle = needle.clone(), bgCursor = cursor.clone(); // base ground iterators
-        m.combineWith(matchBead(bgNeedle, bgCursor));
+        m.combineWith(matchBead(bgNeedle, bgCursor, m));
         if (m.notMatches()) return m;
         if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return m.setMatches();
+        if (bgNeedle.hasNext() != bgCursor.hasNext()) return  m.setNotMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (iz.quantifier(bgNeedle.value())) {
             int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
             for (int i = 0; i <= n; i++) {
+                m.setMatches();
                 varNeedle = bgNeedle.clone();
                 varCursor = bgCursor.clone();
                 varNeedle.setNumberOfOccurrences(i);
-                MatchingResult mq = matchQuantifier(varNeedle, varCursor);
+                MatchingResult mq = matchQuantifier(varNeedle, varCursor, m);
                 if (mq.notMatches()) continue;
-                MatchingResult sr = matchingRecursion(varNeedle, varCursor);
+                MatchingResult sr = matchingRecursion(varNeedle, varCursor, m);
                 if (sr.notMatches()) continue;
                 return m.combineWith(mq).combineWith(sr);
             }
@@ -83,8 +86,7 @@ public class Matcher {
      * of generic elements in this section to its instances if the sections match.
      */
     @UpdatesIterator
-    private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
-        MatchingResult m = new MatchingResult(true);
+    private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor, MatchingResult m) {
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
             MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
             if (ic.notMatches() || (needle.hasNext() != cursor.hasNext()))
@@ -110,8 +112,9 @@ public class Matcher {
      * of generic elements in this section to its instances if the sections match.
      */
     @UpdatesIterator
-    private MatchingResult matchQuantifier(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
-        MatchingResult m = new MatchingResult(true);
+    private MatchingResult matchQuantifier(EncapsulatorIterator needle, EncapsulatorIterator cursor
+    ,MatchingResult m) {
+       // MatchingResult m = new MatchingResult(true);
         int n = needle.getNumberOfOccurrences();
         if (n == 0) {
             needle.next();
@@ -184,15 +187,14 @@ public class Matcher {
 
     public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
         MatchingResult mr = new MatchingResult(false);
+        List<Encapsulator> potentialRoots = new ArrayList<>();
+        PsiElement ce = treeToMatch;
         for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++){
-            List<Encapsulator> potentialRoots = new ArrayList<>();
-            PsiElement c = treeToMatch;
             MatchingResult m = new MatchingResult(true);
-            for (int j = 0; j < i; j++){
-                potentialRoots.add(Encapsulator.buildTreeFromPsi(c));
-                c = Utils.getNextActualSibling(c);
-            }
-            m.combineWith(matchingRecursion(new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots)));
+            potentialRoots.add(Encapsulator.buildTreeFromPsi(ce));
+            ce = Utils.getNextActualSibling(ce);
+            m.combineWith(matchingRecursion(
+                    new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots),m));
             if (m.matches()){
                 mr.combineWith(m);
                 mr.setMatches();
@@ -201,7 +203,6 @@ public class Matcher {
             }
         }
         if (mr.notMatches()) return mr;
-        List<Boolean> llllll = new ArrayList<>();
 
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()

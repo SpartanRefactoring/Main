@@ -63,6 +63,16 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return new Encapsulator(e);
     }
 
+    /**
+     * @param e PsiElement
+     * @return an encapsulating node that hides e.
+     */
+    public static Encapsulator buildTreeFromPsi(PsiElement e, PsiElement parent) {
+        return new Encapsulator(e, new Encapsulator(parent));
+    }
+
+
+
     public List<Encapsulator> getChildren() {
         return children;
     }

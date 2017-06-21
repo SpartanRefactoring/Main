@@ -1,14 +1,10 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
 
 /**
  * Remove redundant continue
@@ -17,7 +13,6 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @since 20-06-2017
  */
 
-@TipperUnderConstruction(BROKEN_MATCHER)
 public class ForRedundantContinue implements LeonidasTipperDefinition {
 
 

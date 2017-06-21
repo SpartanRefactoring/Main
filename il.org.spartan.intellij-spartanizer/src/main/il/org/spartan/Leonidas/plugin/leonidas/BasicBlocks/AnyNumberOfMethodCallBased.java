@@ -13,15 +13,15 @@ import java.util.Map;
  * @author Oren Afek
  * @since 14/05/2017
  */
-public class AnyNumberOf extends Quantifier {
+public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
 
     private static final String TEMPLATE = "anyNumberOf";
 
-    public AnyNumberOf(PsiElement e, Encapsulator i) {
+    public AnyNumberOfMethodCallBased(PsiElement e, Encapsulator i) {
         super(e, TEMPLATE, i);
     }
 
-    public AnyNumberOf() {
+    public AnyNumberOfMethodCallBased() {
         super(TEMPLATE);
     }
 
@@ -37,11 +37,10 @@ public class AnyNumberOf extends Quantifier {
     }
 
     @Override
-    public AnyNumberOf create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
+    public AnyNumberOfMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+       PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
        Encapsulator e2 = internalEncapsulator(e);
-       //return new AnyNumberOf(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p), map));
-        return new AnyNumberOf(e.getInner(), e2);
+       return new AnyNumberOfMethodCallBased(e.getInner(), e2);
     }
 
     private Encapsulator internalEncapsulator(Encapsulator e) {

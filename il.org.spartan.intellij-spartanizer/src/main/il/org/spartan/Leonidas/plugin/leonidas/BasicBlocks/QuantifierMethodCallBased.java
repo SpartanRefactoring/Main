@@ -18,16 +18,16 @@ import java.util.Map;
  * @author Oren Afek
  * @since 14-05-2017.
  */
-public abstract class Quantifier extends GenericMethodCallBasedBlock {
+public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBlock {
 
     protected Encapsulator internal;
 
-    public Quantifier(PsiElement e, String template, Encapsulator i) {
+    public QuantifierMethodCallBased(PsiElement e, String template, Encapsulator i) {
         super(e, template);
         internal = i;
     }
 
-    public Quantifier(String template) {
+    public QuantifierMethodCallBased(String template) {
         super(template);
     }
 
@@ -51,7 +51,7 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     @Override
     public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         assert conforms(e.getInner());
-        Quantifier o = create(e, map);
+        QuantifierMethodCallBased o = create(e, map);
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
         if (o.isGeneric())
@@ -60,10 +60,15 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
         return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
+    public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {
+        QuantifierMethodCallBased q = create(n, map);
+        return q.getConcreteParent(n);
+    }
+
     @PreservesIterator
     public abstract int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m);
 
-    public abstract Quantifier create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
+    public abstract QuantifierMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
 
     public Encapsulator getInternal(){
         return internal;

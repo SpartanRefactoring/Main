@@ -95,10 +95,6 @@ public class EncapsulatorTest extends PsiTypeHelper {
         assertEquals("if (booleanExpression(0)) {statement(1);}", node.getText());
     }
 
-    public void testClone() {
-
-    }
-
     public void testPutAndGetId() {
         node.putId(3);
         assertTrue(node.getId().compareTo(3) == 0);

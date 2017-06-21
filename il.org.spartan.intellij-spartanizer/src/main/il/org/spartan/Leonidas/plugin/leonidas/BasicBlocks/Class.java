@@ -40,6 +40,11 @@ public class Class extends NamedElement{
     }
 
     @Override
+    public boolean conforms(PsiElement e) {
+        return iz.classDeclaration(e) && super.conforms(e);
+    }
+
+    @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
         return false;
     }

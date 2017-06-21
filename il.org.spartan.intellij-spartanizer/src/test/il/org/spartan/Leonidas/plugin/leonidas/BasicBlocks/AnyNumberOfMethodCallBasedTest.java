@@ -18,11 +18,11 @@ import java.util.HashMap;
  * @author michalcohen
  * @since 19-05-2017.
  */
-public class AnyNumberOfTest extends PsiTypeHelper {
+public class AnyNumberOfMethodCallBasedTest extends PsiTypeHelper {
 
     public void testGetNumberOfOccurrences() throws Exception {
         Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("anyNumberOf(statement(1));"));
-        AnyNumberOf ano = az.anyNumberOf(Pruning.prune(n.getChildren().get(0), new HashMap<>()));
+        AnyNumberOfMethodCallBased ano = az.anyNumberOf(Pruning.prune(n, new HashMap<>()));
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}"));
         EncapsulatorIterator it = e.iterator();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 1);

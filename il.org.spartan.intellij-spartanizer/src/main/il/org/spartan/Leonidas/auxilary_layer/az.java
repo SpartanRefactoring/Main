@@ -52,8 +52,12 @@ public enum az {
         return e == null || !iz.binaryExpression(e) ? null : (PsiBinaryExpression) e;
     }
 
-    public static PsiReferenceExpression referenceExpression(PsiExpression element) {
-        return element == null || !iz.referenceExpression(element) ? null : (PsiReferenceExpression) element;
+    public static PsiReferenceExpression referenceExpression(PsiElement e) {
+        return e == null || !iz.referenceExpression(e) ? null : (PsiReferenceExpression) e;
+    }
+
+    public static PsiJavaCodeReferenceElement javaCodeReference(PsiElement e) {
+        return e == null || !iz.javaCodeReference(e) ? null : (PsiJavaCodeReferenceElement) e;
     }
 
     public static PsiLiteral literal(PsiElement e) {
@@ -108,16 +112,16 @@ public enum az {
         return e == null || !iz.expression(e) ? null : (PsiExpression) e;
     }
 
-    public static Optional optional(Encapsulator e) {
-        return e != null ? (Optional) e : null;
+    public static OptionalMethodCallBased optional(Encapsulator e) {
+        return e != null ? (OptionalMethodCallBased) e : null;
     }
 
-    public static AnyNumberOf anyNumberOf(Encapsulator e) {
-        return e != null ? (AnyNumberOf) e : null;
+    public static AnyNumberOfMethodCallBased anyNumberOf(Encapsulator e) {
+        return e != null ? (AnyNumberOfMethodCallBased) e : null;
     }
 
-    public static Quantifier quantifier(Encapsulator e) {
-        return e != null ? (Quantifier) e : null;
+    public static QuantifierMethodCallBased quantifier(Encapsulator e) {
+        return e != null ? (QuantifierMethodCallBased) e : null;
     }
 
     public static PsiDocComment javadoc(PsiElement e){

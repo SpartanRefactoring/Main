@@ -42,6 +42,7 @@ public class MatchingResult {
     
     public MatchingResult put(Integer i, PsiElement e) {
         m.putIfAbsent(i, new LinkedList<>());
+        if (m.get(i).stream().anyMatch(me -> me == e)) return this;
         m.get(i).add(e);
         return this;
     }

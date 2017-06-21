@@ -31,7 +31,7 @@ public class FieldDeclaration extends ModifiableElement {
 
     @Override
     public boolean conforms(PsiElement other) {
-        return iz.fieldDeclaration(other) && az.fieldDeclaration(other).getName().startsWith(TEMPLATE);
+        return iz.fieldDeclaration(other) && super.conforms(other);
     }
 
     @Override

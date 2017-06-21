@@ -134,6 +134,10 @@ public enum iz {
         return typeCheck(PsiReferenceExpressionImpl.class, e);
     }
 
+    public static boolean javaCodeReference(PsiElement e) {
+        return typeCheck(PsiJavaCodeReferenceElement.class, e);
+    }
+
     public static boolean equalsOperator(IElementType operator) {
         return operator != null && operator.equals(JavaTokenType.EQEQ);
     }
@@ -445,15 +449,15 @@ public enum iz {
     }
 
     public static boolean anyNumberOf(Encapsulator e) {
-        return e instanceof AnyNumberOf;
+        return e instanceof AnyNumberOfMethodCallBased;
     }
 
     public static boolean quantifier(Encapsulator e) {
-        return e instanceof Quantifier;
+        return e instanceof QuantifierMethodCallBased;
     }
 
     public static boolean optional(Encapsulator e) {
-        return e instanceof Optional;
+        return e instanceof OptionalMethodCallBased;
     }
 
     public static boolean modifierListOwner(PsiElement e) {

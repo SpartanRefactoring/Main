@@ -36,6 +36,11 @@ public class Identifier extends NamedElement {
     }
 
     @Override
+    public boolean conforms(PsiElement e) {
+        return iz.identifier(e) && super.conforms(e);
+    }
+
+    @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         return new MatchingResult(super.generalizes(e, m).matches() && iz.identifier(e.getInner()));
     }
