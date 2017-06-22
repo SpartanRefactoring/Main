@@ -157,7 +157,6 @@ public class XMLSpartan {
       }).collect(Collectors.toList());
       children.forEach(λ -> parent.addChild(λ));
       $.put(parent, children.toArray(new SpartanElement[children.size()]));
-      System.out.println(parent.parent());
     }
     return trimEmptyCategories($);
   }
