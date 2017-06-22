@@ -116,7 +116,7 @@ public interface Category {
   }
 
   interface Theory extends Category {
-    interface Java {
+    interface Java extends Category.Theory {
       @SuppressWarnings("hiding") String ___ = "General Java simplifcations";
     }
 

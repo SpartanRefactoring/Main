@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
     implements Nominal.Trivialization {
-  private static final long serialVersionUID = -0x5C1F4985DCAC0D78L;
+  private static final long serialVersionUID = 4744478611502723331L;
 
   @Override public String description(final CatchClause ¢) {
     return "Rename exception " + English.name(¢.getException()) + " caught in catch clause here to ¢";
