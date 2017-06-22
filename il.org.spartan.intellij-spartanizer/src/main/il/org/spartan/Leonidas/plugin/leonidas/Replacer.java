@@ -6,6 +6,7 @@ import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 
 import java.util.HashMap;
@@ -18,13 +19,27 @@ import java.util.Map;
  * @since 31-05-2017.
  */
 public class Replacer {
-
-    private final Map<Integer, List<ReplacingRule>> rules = new HashMap<>();
     private List<Encapsulator> roots;
 
     public Replacer(List<Encapsulator> roots) {
         this.roots = roots;
     }
+
+    public Replacer(Replacer r, List<Encapsulator> roots){
+        this.roots = roots;
+        for (EncapsulatorIterator src = new EncapsulatorIterator(r.roots), dst = new EncapsulatorIterator(roots); src.hasNext() && dst.hasNext(); src.next(), dst.next()){
+            if (iz.generic(src.value()) && iz.generic(dst.value())){
+                putReplacingRulesRecursively(az.generic(src.value()), az.generic(dst.value()));
+            }
+        }
+    }
+
+    private static void putReplacingRulesRecursively(GenericEncapsulator src, GenericEncapsulator dst){
+        dst.getReplacingRules().addAll(src.getReplacingRules());
+        dst.getGenericElements().forEach((id, element) -> putReplacingRulesRecursively(src.getGenericElements().get(id), element));
+    }
+
+
 
     /**
      * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder

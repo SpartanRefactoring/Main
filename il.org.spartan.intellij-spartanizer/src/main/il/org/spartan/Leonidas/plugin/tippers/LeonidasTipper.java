@@ -35,6 +35,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private String description;
     private String name;
     private Matcher matcher;
+    private Replacer replacer;
     private Class<? extends PsiElement> rootType;
     private PsiJavaFile file;
     private Map<Integer, List<Constraint>> map;
@@ -49,6 +50,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         name = tipperName;
         map = getConstraints();
         matcher = new Matcher(getMatcherRootsTree(), map);
+        rootType = matcher.getAllRoots().get(0).getInner().getClass();
+        replacer = new Replacer(initializeReplacerRoots(getReplacingRules()));
     }
 
     @Override
@@ -74,7 +77,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 if (canTip(node)) {
                     Wrapper<Integer> i = new Wrapper<>(0);
                     Map<Integer, List<PsiElement>> map = matcher.extractInfo(node, i);
-                    (new Replacer(getReplacerRootsCopy(getReplacingRules()))).replace(node, map, i.get(), r);
+                    getReplacerCopy().replace(node, map, i.get(), r);
                 }
             }
         };
@@ -107,7 +110,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         List<Encapsulator> roots = new ArrayList<>();
         if (iz.declarationStatement(current) && iz.classDeclaration(current.getFirstChild()))
             current = current.getFirstChild();
-        rootType = current.getClass();
         while (current != null && (!iz.comment(current) || !az.comment(current).getText().contains("end"))) {
             roots.add(Pruning.prune(Encapsulator.buildTreeFromPsi(current), map));
             current = Utils.getNextActualSiblingWithComments(current);
@@ -154,10 +156,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     /**
      * @return the generic tree representing the "from" template
      */
-    private List<Encapsulator> getReplacerRootsCopy(Map<Integer, List<PsiMethodCallExpression>> m) {
-        PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
-        giveIdToStubElements(replacer);
-        List<Encapsulator> l = getForestFromMethod(replacer);
+    private List<Encapsulator> initializeReplacerRoots(Map<Integer, List<PsiMethodCallExpression>> m) {
+        PsiMethod replacerBody = (PsiMethod) getInterfaceMethod("replacer").copy();
+        giveIdToStubElements(replacerBody);
+        List<Encapsulator> l = getForestFromMethod(replacerBody);
         l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
             List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
             Encapsulator ie = iz.quantifier(n) ? az.quantifier(n).getInternal() : n;
@@ -169,6 +171,12 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
         })));
         return l;
+    }
+
+    private Replacer getReplacerCopy(){
+        PsiMethod replacerBody = (PsiMethod) getInterfaceMethod("replacer").copy();
+        giveIdToStubElements(replacerBody);
+        return new Replacer(replacer, getForestFromMethod(replacerBody));
     }
 
     /**

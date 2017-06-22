@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 public abstract class GenericEncapsulator extends Encapsulator {
     protected String template;
     private List<BiConstraint> constraints = new ArrayList<>();
+
+    public List<ReplacingRule> getReplacingRules() {
+        return replacingRules;
+    }
+
     private List<ReplacingRule> replacingRules = new ArrayList<>();
 
     public GenericEncapsulator(PsiElement e, String template) {
@@ -173,4 +178,6 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public List<BiConstraint> getConstraints() {
         return constraints;
     }
+
+
 }
