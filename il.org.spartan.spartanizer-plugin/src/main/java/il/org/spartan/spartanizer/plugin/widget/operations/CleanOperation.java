@@ -5,6 +5,7 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.ui.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
@@ -20,8 +21,11 @@ public class CleanOperation extends WidgetOperation {
   public static final String all = "all projects";
   private String mode = current;
 
-  @Override public String imageURL() {
+  @Deprecated @Override public String imageURL() {
     return "file:/plugin/pictures/cleanIconSmall.png";
+  }
+  @Override public String imageKey() {
+    return ISharedImages.IMG_ETOOL_CLEAR;
   }
   @Override public String description() {
     return "clean project";
