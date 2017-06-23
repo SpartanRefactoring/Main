@@ -1,7 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.plugin.UserControlled;
+import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 
 /**
  * A base class for all basic blocks represented by their name.
@@ -11,9 +11,9 @@ import il.org.spartan.Leonidas.plugin.UserControlled;
  */
 public abstract class NamedElement extends GenericEncapsulator{
 
-    @UserControlled
+    @UserControlledMatcher
     private String endsWithString = ""; // present the user a string he wishes the name will end with to modify.
-    @UserControlled
+    @UserControlledMatcher
     private String startsWithString = ""; // present the user a string he wishes the name will start with to modify.
 
 
