@@ -270,7 +270,8 @@ public final class Version250 {
   }
   @Test public void issue199() {
     trimmingOf("void f() { if (a == b) { f(); return; } g();} ").gives("void f(){if(a==b){f();}else g();}")//
-        .gives("void f(){if(a==b)f();else g();}")//
+    .gives("void f(){if(a!=b)g();else {f();}}")//
+    .gives("void f(){if(a!=b)g();else f();}")//
         .stays();
   }
   @Test public void issue199a() {

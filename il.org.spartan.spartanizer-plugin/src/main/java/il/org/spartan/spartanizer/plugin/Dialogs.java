@@ -24,10 +24,10 @@ public enum Dialogs {
   private static final String NAME = "The Spartanizer";
   /** Id for run in background button. */
   private static final int RIB_ID = 2;
-  public static final String ICON = "platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif";
-  public static final String DELTA = "platform:/plugin/org.eclipse.ui/icons/full/obj16/change_obj.png";
-  public static final String LOGO = "platform:/plugin/org.eclipse.wst.xsd.ui/org/eclipse/wst/xsd/ui/internal/editor/icons/regx_wiz.png";
-  public static final String CATEGORY = "platform:/plugin/org.eclipse.wst.common.snippets/icons/full/elcl16/new_category.gif";
+  public static final String ICON = ISharedImages.IMG_DEF_VIEW;
+  public static final String DELTA = ISharedImages.IMG_DEF_VIEW;
+  public static final String LOGO = ISharedImages.IMG_OBJ_FILE;
+  public static final String CATEGORY = ISharedImages.IMG_OBJ_FOLDER;
   /** {@link SWT} images, lazy loading. */
   public static final Map<String, Image> images;
   static {
@@ -38,9 +38,11 @@ public enum Dialogs {
   }
 
   /** Lazy, dynamic loading of an image.
-   * @return {@link SWT} image */
+   * @return {@link SWT} image
+   * [[SuppressWarningsSpartan]] */
   public static Image image(final String $) {
-    return image($, $, λ -> λ);
+    ImageDescriptor d = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor($);
+    return d != null ? image(d, $, λ -> λ) : image($, $, λ -> λ);
   }
   /** Lazy, dynamic loading of an image.
    * @return {@link SWT} image */
