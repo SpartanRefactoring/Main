@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import fluent.ly.note;
+import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
@@ -36,6 +37,7 @@ public class EditTipper extends JFrame {
 
     public EditTipper(String tipperName) {
         super("Edit Tipper");
+        LeonidasIcon.apply(this);
         nameLabel.setText(tipperName);
         currentTip = null;
         List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
@@ -47,14 +49,14 @@ public class EditTipper extends JFrame {
             }
         }
 
-        // if instance wasn't found//TODO:IS THIS POSSIBLE?
+        // if instance wasn't found
         if (currentTip == null || !(currentTip instanceof LeonidasTipper)) {
             JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.getClass().getSimpleName() + " Can't be edited. ");
             return;
         }
 
         table = new ComponentJTable();
-        ((DefaultTableModel) table.getModel()).setRowCount(20); //TODO: must be changed
+        ((DefaultTableModel) table.getModel()).setRowCount(100); //TODO: MAGIC NUMBER
         LeonidasTipper lt = (LeonidasTipper)currentTip;
         List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
 
@@ -65,9 +67,9 @@ public class EditTipper extends JFrame {
 
         int currRow = 0;
         currRow = buildTableFields(tipperMatcherRoots,currRow,true);
-
         List<GenericEncapsulator> tipperReplacerRoots = lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
-        buildTableFields(tipperReplacerRoots,currRow,false);
+        currRow = buildTableFields(tipperReplacerRoots,currRow,false);
+        ((DefaultTableModel) table.getModel()).setRowCount(currRow);
 
 
         applyButton.addActionListener(e -> applyListener());
@@ -132,9 +134,10 @@ public class EditTipper extends JFrame {
 
                     Object obj = type.newInstance();
                     if (obj instanceof String) {
-
-                        table.getModel().setValueAt(new JLabel(field.getName()+" of "+root.getDescription()), i, 0);
-                        table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
+                        if(!((String) field.get(root)).equals("")) {
+                            table.getModel().setValueAt(new JLabel(field.getName() + " of " + root.getDescription()), i, 0);
+                            table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
+                        }
                         continue;
                     }
 
