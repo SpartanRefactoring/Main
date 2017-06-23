@@ -27,6 +27,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
      */
     @Override
     public void constraints() {
+        element(1).asMethod.notContains("main");
         element(4).asStatement.mustNotRefer("cent");
         element(3).asIdentifier.notContains("cent");
         element(3).asIdentifier.notContains("__");
@@ -39,7 +40,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
             class wrapping {
                 /* start */
 
-                Class0 method1(Class2 identifier3$TheFromParamName) {
+                Class0 method1$main(Class2 identifier3$TheFromParamName) {
                     anyNumberOf(statement(4, "BodyOfMethod"));
                     return null; // ignore
                 }

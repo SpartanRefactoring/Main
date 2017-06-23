@@ -27,7 +27,7 @@ public class Statement extends GenericMethodCallBasedBlock {
 
     @UserControlledMatcher
     public List<String> mustNotReferList = new LinkedList<>(); // present the user a list of strings he does not want the statement to refer, to modify.
-    //@UserControlledReplacer
+    @UserControlledReplacer
     public Map<Integer, String> replacingIdentifier = new HashMap<>(); // present the user with a map between each ID of identifier, to a string it is replaced by to modify.
 
     public Statement(PsiElement e) {
