@@ -100,6 +100,14 @@ public class PsiFileCenter {
             raw = raw.replaceAll(" ,", ",");
             raw = raw.replaceAll(", ", ",");
             raw = raw.replaceAll("\n+", "\n");
+            raw = raw.replaceAll(" =", "=");
+            raw = raw.replaceAll("= ", "=");
+            raw = raw.replaceAll("! ", "!");
+            raw = raw.replaceAll(" !", "!"); //takes care of many versions
+            raw = raw.replaceAll(" >", ">");
+            raw = raw.replaceAll("> ", ">");
+            raw = raw.replaceAll(" <", "<");
+            raw = raw.replaceAll("< ", "<");
             return raw;
         }
 

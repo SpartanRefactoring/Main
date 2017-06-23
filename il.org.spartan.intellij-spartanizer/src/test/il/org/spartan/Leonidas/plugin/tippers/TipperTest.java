@@ -38,6 +38,7 @@ public class TipperTest{
     PsiTypeHelper junitTest; //The junit class instance that is being tested (the one that creates a TipperTest object)
     private Boolean setup = false;
     private Boolean printsToScreen;
+    private Boolean crashed;
     public Boolean quietCrash;
 
     TipperTest(Tipper t, PsiTypeHelper test, Boolean prints, Boolean quietCrash){
@@ -83,6 +84,7 @@ public class TipperTest{
     }
 
     private void crashTest(){
+        crashed = true;
         if(!quietCrash){
             assert(false);
         }
@@ -99,51 +101,63 @@ public class TipperTest{
         Map<String,String> examples = getExamples();
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.testing = true;
-        //System.out.println(toolbox.getAllTippers().stream().map(t -> t.name()).collect(Collectors.toList()));
+        log("\n*************************Now testing "+getTipperName()+":*************************\n");
         for (Map.Entry<String,String> entry : examples.entrySet()) {
+            crashed= false;
             String key = entry.getKey();
             if(key == null){
-                log("An example with a null key was inserted in tipper "+getTipperName()+". aborting test.");
+                log("\nError! An example with a null key was inserted in tipper "+getTipperName()+". aborting test.");
                 crashTest();
+                continue;
             }
             String value = entry.getValue();
             PsiFileCenter pfc = new PsiFileCenter();
             PsiFileCenter.PsiFileWrapper filewkey = pfc.createFileFromString(key);
+            log("Testing example:\n"+key+"\n");
             if(filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
-                log("The following key in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+key);
+                log("\nError! The following key in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+key);
                 crashTest();
+                continue;
             }
             PsiFileCenter.PsiFileWrapper filewvalue = pfc.createFileFromString(value);
             if( value != null && filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
-                log("The following value in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+value);
+                log("\nError! The following value in the examples of the tipper "+getTipperName()+" contains illegal java code:\n"+value);
                 crashTest();
+                continue;
             }
-            log("before: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
-            Boolean tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
-            if(!tipperAffected){
+            //log("before: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
+            int tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
+            //if(tipperAffected == -1){
+           //     log("Could not ")
+            //}
+            if(tipperAffected==1){
                 if(value != null) {
-                    log("Tipper "+getTipperName()+" should have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it didn't. aborting test.");
+                    log("\nError! Tipper "+getTipperName()+" should have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it didn't.");
                     crashTest();
+                    continue;
                 }
             }
             else{
                 if(value == null){
-                    log("Tipper "+getTipperName()+" should not have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it did. aborting test.");
+                    log("\nError! Tipper "+getTipperName()+" should not have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it did.");
                     crashTest();
+                    continue;
                 }
                 else{
                     String keyAfterChange = filewkey.extractCanonicalSubtreeString();
                     if(!keyAfterChange.equals(filewvalue.extractCanonicalSubtreeString())){
-                        log("Tipper "+getTipperName()+" didn't affect the example:\n"+key+"\nas expected. expected:\n"+filewvalue.extractCanonicalSubtreeString()+"\nbut got: \n"+keyAfterChange);
+                        log("\nError! Tipper "+getTipperName()+" didn't affect the example:\n"+key+"\nas expected. expected:\n"+filewvalue.extractCanonicalSubtreeString()+"\nbut got: \n"+keyAfterChange+"\n");
                         crashTest();
+                        continue;
                     }
                 }
             }
 
-            log("after: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
-
+            //log("after: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
+            if(!crashed){log(".............OK.............\n");}
         }
 
         toolbox.testing = false;
+
     }
 }

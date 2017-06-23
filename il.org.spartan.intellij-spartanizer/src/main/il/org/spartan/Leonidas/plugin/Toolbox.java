@@ -237,17 +237,16 @@ public class Toolbox implements ApplicationComponent {
     /**
      * @param e          Psi tree
      * @param tipperName The name of the tipper to execure on e.
-     * @return True if the tipper changed anything, false otherwise.
+     * @return 1 if the tipper changed anything, 0 otherwise.
+     *         if the tipper with the given name doesnt exist, returns -1
      */
-    public boolean executeSingleTipper(PsiElement e, String tipperName) {
+    public int executeSingleTipper(PsiElement e, String tipperName) {
         Tipper tipper = getTipperByName(tipperName);
         if (tipper == null) {
-            System.out.println("\nNull tipper!\n");
-            return false;
+            return -1;
         }
         if (e == null) {
-            System.out.println("\nNull element!\n");
-            return false;
+            return 0;
         }
 
         Wrapper<PsiElement> toReplace = new Wrapper<>(null);
@@ -266,10 +265,10 @@ public class Toolbox implements ApplicationComponent {
             }
         });
         if (!modified.get()) {
-            return false;
+            return 0;
         }
         tipper.tip(toReplace.get()).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
-        return true;
+        return 1;
     }
 
     /**
