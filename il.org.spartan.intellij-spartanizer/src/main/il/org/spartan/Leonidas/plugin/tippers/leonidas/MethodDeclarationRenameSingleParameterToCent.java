@@ -79,8 +79,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("void foo(int x){}", "void foo(int cent){}")
-                .put("void foo(int x){\n\tSystem.out.println(x)\n}", "void foo(int cent){\n\tSystem.out.println(cent);\n}")
-                .put("private static void foo(int x){\n\tSystem.out.println(x)\n}", "private static void foo(int cent){\n\tSystem.out.println(cent);\n}")
+                .put("void foo(int x){\n\tSystem.out.println(x);\n}", "void foo(int cent){\n\tSystem.out.println(cent);\n}")
+                .put("private static void foo(int x){\n\tSystem.out.println(x);\n}", "private static void foo(int cent){\n\tSystem.out.println(cent);\n}")
                 .put("private static void foo(int cent){\n\tSystem.out.println(\"\");\n}", null)
                 .put("private static void foo(int x){\n\tint cent = 0;\n\tSystem.out.println(cent);\n}", null)
                 .put("private static void foo(int x,int y){\n\tSystem.out.println(x);\n}", null)

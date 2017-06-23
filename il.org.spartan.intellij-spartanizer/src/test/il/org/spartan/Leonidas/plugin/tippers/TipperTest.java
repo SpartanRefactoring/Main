@@ -119,6 +119,7 @@ public class TipperTest{
                 crashTest();
                 continue;
             }
+
             PsiFileCenter.PsiFileWrapper filewvalue = pfc.createFileFromString(value);
             if( value != null && filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
                 log("\nError! The following value in the examples of the tipper "+getTipperName()+" contains illegal java code:\n"+value);
@@ -126,10 +127,18 @@ public class TipperTest{
                 continue;
             }
             //log("before: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
+            //reassigning with fixed strings:
+            filewkey = pfc.createFileFromString(filewkey.extractCanonicalSubtreeString());
+            if(value != null){
+                filewvalue = pfc.createFileFromString(filewvalue.extractCanonicalSubtreeString());
+            }
+
             int tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
-            //if(tipperAffected == -1){
-           //     log("Could not ")
-            //}
+            if(tipperAffected == -1){
+                log("Could not find tipper named "+getTipperName()+" in the toolbox.\n");
+                crashTest();
+                continue;
+            }
             if(tipperAffected==1){
                 if(value != null) {
                     log("\nError! Tipper "+getTipperName()+" should have affected the example:\n"+key+"\nbut it didn't.\n");
