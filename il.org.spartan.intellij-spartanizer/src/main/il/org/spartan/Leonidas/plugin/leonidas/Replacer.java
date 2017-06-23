@@ -9,12 +9,12 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * Replaces the templatr of the replacer by a concrete elements.
  * @author michalcohen
  * @since 31-05-2017.
  */
@@ -34,17 +34,23 @@ public class Replacer {
         }
     }
 
+    /**
+     * Puts the replacing rules of source in destination.
+     *
+     * @param src source replacer
+     * @param dst destination replacer
+     */
     private static void putReplacingRulesRecursively(GenericEncapsulator src, GenericEncapsulator dst){
         dst.getReplacingRules().addAll(src.getReplacingRules());
         dst.getGenericElements().forEach((id, element) -> putReplacingRulesRecursively(src.getGenericElements().get(id), element));
     }
 
-
-
     /**
      * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder
      *
      * @param treeToReplace - the given tree that matched the "from" tree.
+     * @param m - mapping between id of generic element to concrete elements of the user.
+     * @param numberOfRoots - the amount of roots in the forest of the replacer template.
      * @param r             - Rewrite object
      */
     public void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, Integer numberOfRoots, PsiRewrite r) {
@@ -77,6 +83,13 @@ public class Replacer {
         r.deleteByRange(parent, treeToReplace, last);
     }
 
+    /**
+     * Same as replace, but assuming we have only one root in the forest.
+     * @param treeToReplace the given tree that matched the "from" tree.
+     * @param m mapping between id of generic element to concrete elements of the user.
+     * @param r Rewrite object
+     * @return the element that replaced the template
+     */
     public PsiElement replaceSingleRoot(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         PsiElement element = getReplacingForest(roots, m, r).get(0);
         return r.replace(treeToReplace, element);
@@ -105,19 +118,4 @@ public class Replacer {
         return elements;
     }
 
-
-    public static class ReplacingRule {
-        Object[] objects;
-        Encapsulator element;
-        String methodName;
-
-        public ReplacingRule(String methodName, Object[] o) {
-            this.methodName = methodName;
-            objects = o;
-        }
-
-        public void setElement(Encapsulator e) {
-            element = e;
-        }
-    }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A basic class for all quantifiers that are represented by their names.
  * @author Oren Afek, michalcohen
  * @since 20-06-2017.
  */

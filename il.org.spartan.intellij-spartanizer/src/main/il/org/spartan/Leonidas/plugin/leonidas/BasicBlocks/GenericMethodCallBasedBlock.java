@@ -6,6 +6,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 
 /**
+ * A base class for all basic blocks represented by method call expression. For example "expression(4)".
  * @author Oren Afek & Michal Cohen
  * @since 5/4/2017.
  */

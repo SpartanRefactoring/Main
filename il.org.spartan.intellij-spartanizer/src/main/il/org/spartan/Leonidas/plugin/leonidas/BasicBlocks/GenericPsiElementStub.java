@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 /**
  * This class defines methods that will represent generic structures of code
- * such as: statements, conditions, blocks, variable declaration and more.
  *
  * @author Oren Afek
  * @since 06-01-2017

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A base class for all quantifiers that are represented by a method call expression.
  * @author Oren Afek
  * @since 14-05-2017.
  */

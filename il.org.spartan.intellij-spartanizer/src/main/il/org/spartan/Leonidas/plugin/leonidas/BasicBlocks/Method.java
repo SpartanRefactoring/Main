@@ -12,7 +12,8 @@ import java.util.*;
 
 
 /**
- * @author Sharon
+ * A basic block representing a method. For example "int method0 (int x){...}
+ * @author Sharon, michalcohen
  * @since 13.5.17
  */
 public class Method extends ModifiableElement {

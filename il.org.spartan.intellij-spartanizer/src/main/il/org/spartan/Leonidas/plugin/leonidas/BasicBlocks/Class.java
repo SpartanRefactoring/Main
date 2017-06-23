@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * A basic block representing a generic class.
+ * For example "class Class0 {...}
  * @author amirsagiv83, michalcohen
  * @since 29-05-2017.
  */
@@ -74,6 +76,11 @@ public class Class extends NamedElement{
         return mr;
     }
 
+    /**
+     * @param innerElements the element of the class of the user
+     * @param matchers      the matchers of the inner elements (methods, fields or inner classes) of the template.
+     * @return A matching result for matching the elements of the user with the templates, regardless of order.
+     */
     private MatchingResult matchInnerElements(PsiElement[] innerElements, List<Matcher> matchers){
         if (matchers.size() == 0) return new MatchingResult(true);
         List<List<MatchingResult>> l = matchers.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());

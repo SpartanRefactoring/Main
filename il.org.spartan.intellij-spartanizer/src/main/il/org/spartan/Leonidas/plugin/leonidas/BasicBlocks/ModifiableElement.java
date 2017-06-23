@@ -15,13 +15,14 @@ import java.util.function.Function;
 import static il.org.spartan.Leonidas.auxilary_layer.Existence.*;
 
 /**
+ * A base class for all basic blocks that can have modifiers such as fields, methods and classes.
  * @author michalcohen
  * @since 28-05-2017.
  */
 public abstract class ModifiableElement extends NamedElement {
 
     @UserControlled
-    Existence isPublic = DO_NOT_CARE;
+    Existence isPublic = DO_NOT_CARE; // present the user with multiply choice from Existence enum.
     @UserControlled
     Existence isProtected = DO_NOT_CARE;
     @UserControlled

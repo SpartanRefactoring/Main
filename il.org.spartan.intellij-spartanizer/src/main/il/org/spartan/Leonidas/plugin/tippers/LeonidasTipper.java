@@ -54,6 +54,23 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         replacer = new Replacer(initializeReplacerRoots(getReplacingRules()));
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Tipper methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * @param e an element inside a template body
+     * @return each and every generic element in the sub tree of e, including 'hidden' generic elements
+     * that are not part of the tree, rather part of the properties of other generic elements in the tree.
+     */
+    private static List<GenericEncapsulator> getGenericElements(Encapsulator e) {
+        List<GenericEncapsulator> lge = new LinkedList<>();
+        e.accept(n -> {
+            if (!iz.generic(n)) return;
+            lge.add(az.generic(n));
+            lge.addAll(az.generic(n).getGenericElements().values());
+        });
+        return lge;
+    }
+
     @Override
     public boolean canTip(PsiElement e) {
         return matcher.match(e);
@@ -83,6 +100,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         };
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Auxiliary methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Extracting template body ~~~~~~~~~~~~~~~~~~~~~~~~~
+
     @Override
     public Class<? extends PsiElement> getOperableType() {
         return rootType;
@@ -90,7 +111,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
     /**
      * @param method the template method
-     * @return the first PsiElement of the type rootElementType
+     * @return The list of template roots inside 'start - and' section
      */
     private List<Encapsulator> getForestFromMethod(PsiMethod method) {
         PsiNewExpression ne = az.newExpression(az.expressionStatement(method.getBody().getStatements()[0]).getExpression());
@@ -134,31 +155,67 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @return the generic tree representing the "from" template
+     * @param name the name of a method of the interface LeonidasTipperDefinition.
+     * @return the body of the method
+     */
+    private PsiMethod getInterfaceMethod(String name) {
+        Wrapper<PsiMethod> x = new Wrapper<>();
+        file.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethod(PsiMethod method) {
+                super.visitMethod(method);
+                if (method.getName().equals(name)) {
+                    x.set(method);
+                }
+            }
+        });
+        if (x.get() == null) return null;
+        giveIdToStubElements(x.get());
+        return x.get();
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Matcher ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * @param name    the name of the tipper
+     * @param content the content of the definition file of the tipper
+     * @return PsiFile representing the file of the tipper
+     */
+    private PsiJavaFile getPsiTreeFromString(String name, String content) {
+        Language language = JavaLanguage.INSTANCE;
+        LightVirtualFile virtualFile = new LightVirtualFile(name, language, content);
+        SingleRootFileViewProvider.doNotCheckFileSizeLimit(virtualFile);
+        final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage(language);
+        FileViewProvider viewProvider = factory != null ? factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true) : null;
+        if (viewProvider == null)
+            viewProvider = new SingleRootFileViewProvider(
+                    Utils.getPsiManager(ProjectManager.getInstance().getDefaultProject()),
+                    virtualFile,
+                    true
+            );
+        language = viewProvider.getBaseLanguage();
+        final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
+        if (parserDefinition != null) {
+            return (PsiJavaFile) viewProvider.getPsi(language);
+        }
+        return null;
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Replacer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * @return the generic forest representing the "matcher" template
      */
     private List<Encapsulator> getMatcherRootsTree() {
         PsiMethod method = getInterfaceMethod("matcher");
-        giveIdToStubElements(method);
-
         return getForestFromMethod(method);
     }
 
-    private static List<GenericEncapsulator> getGenericElements(Encapsulator e){
-        List<GenericEncapsulator> lge = new LinkedList<>();
-        e.accept(n -> {
-            if (!iz.generic(n)) return;
-            lge.add(az.generic(n));
-            lge.addAll(az.generic(n).getGenericElements().values());
-        });
-        return lge;
-    }
-
     /**
-     * @return the generic tree representing the "from" template
+     * @return the generic forest representing the replacer template
      */
     private List<Encapsulator> initializeReplacerRoots(Map<Integer, List<PsiMethodCallExpression>> m) {
         PsiMethod replacerBody = (PsiMethod) getInterfaceMethod("replacer").copy();
-        giveIdToStubElements(replacerBody);
         List<Encapsulator> l = getForestFromMethod(replacerBody);
         l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
             List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
@@ -173,17 +230,21 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return l;
     }
 
+    /**
+     * @return a copy of the replacer, since on each activation, the current replacer is corrupted.
+     */
     private Replacer getReplacerCopy(){
         PsiMethod replacerBody = (PsiMethod) getInterfaceMethod("replacer").copy();
-        giveIdToStubElements(replacerBody);
         return new Replacer(replacer, getForestFromMethod(replacerBody));
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Build additional rules ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     /**
-     * @param s the statement of the constraint. For example: the(3).isNot(!booleanExpression(4))
-     * @return the ID on which the constraint applies. The previous example will return 3.
+     * @param s the statement of the rule. For example: element(3).isNot(!booleanExpression(4))
+     * @return the ID on which the rule applies. The previous example will return 3.
      */
-    private Integer extractIdFromConstraint(PsiStatement s) {
+    private Integer extractIdFromRule(PsiStatement s) {
         Wrapper<PsiMethodCallExpression> x = new Wrapper<>();
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
@@ -199,8 +260,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @param s constraint statement.
-     * @return "is" if the(index).is(constraint) and "isNot" if the(index).isNot(constraint).
+     * @param s a rule statement.
+     * @return "is" if s is of the form 'element(index).is(constraint)', "isNot" if
+     * s is of the form 'element(index).isNot(constraint)' and "specific" if s is not structural rule.
      */
     private Constraint.ConstraintType extractConstraintType(PsiStatement s) {
         PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
@@ -212,115 +274,11 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return Constraint.ConstraintType.SPECIFIC;
     }
 
-    /**
-     * @param s the statement of the constraint. For example: the(booleanExpression(3)).isNot(!booleanExpression(4))
-     * @return the body of the lambda expression that defines the constraint. The previous example will return !booleanExpression(4).
-     */
-    private PsiElement getLambdaExpressionBody(PsiStatement s) {
-        Wrapper<PsiLambdaExpression> l = new Wrapper<>();
-        s.accept(new JavaRecursiveElementVisitor() {
-
-            @Override
-            public void visitLambdaExpression(PsiLambdaExpression expression) {
-                super.visitLambdaExpression(expression);
-                l.set(expression);
-            }
-        });
-        return l.get().getBody();
-    }
-
-    /**
-     * @param s the statement of the constraint. For example: the(booleanExpression(3)).isNot(!booleanExpression(4)).ofType(PsiExpression.class)
-     * @return the type inside "ofType" expression. The previous example will return Optional(PsiExpression.class).
-     * if no "ofType" expression is found, Optional.empty() is returned.
-     */
-    private Optional<Class<? extends PsiElement>> getTypeOf(PsiStatement s) {
-        Wrapper<Optional<Class<? extends PsiElement>>> wq = new Wrapper<>(Optional.empty());
-        s.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                super.visitMethodCallExpression(expression);
-                if (expression.getMethodExpression().getText().endsWith("ofType")) {
-                    wq.set(Optional.of(getPsiClass(expression.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
-                }
-            }
-        });
-        return wq.get();
-    }
-
-    /**
-     * Searches for all the structural constraints found in the "constraints" method and returns a mapping between
-     * element ids and their structural constraints. For example, if the following is present in the constraints method:
-     * <p>
-     * <code>element(1).is(() -> return null;);</code>
-     * <p>
-     * It will search for the element with id 1, and put a structural constraint on it, requiring it look like:
-     * <p>
-     * <code>return null;</code>.
-     *
-     * @return a mapping between the ID of generic elements to a list of all the constraint that apply on them.
-     */
-    private Map<Integer, List<Constraint>> getConstraints() {
-        Map<Integer, List<Constraint>> map = new HashMap<>();
-        PsiMethod constrainsMethod = getInterfaceMethod("constraints");
-        if (!haz.body(constrainsMethod)) {
-            return map;
-        }
-        Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
-            Integer elementId = extractIdFromConstraint(s);
-            Constraint.ConstraintType constraintType = extractConstraintType(s);
-
-            if (constraintType == Constraint.ConstraintType.IS || constraintType == Constraint.ConstraintType.ISNOT) {
-                PsiElement y = getLambdaExpressionBody(s);
-                Optional<Class<? extends PsiElement>> q = getTypeOf(s);
-                y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
-                giveIdToStubElements(y);
-                map.putIfAbsent(elementId, new LinkedList<>());
-                List<Encapsulator> l = new LinkedList<>();
-                l.add(Pruning.prune(Encapsulator.buildTreeFromPsi(y), map));
-                map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, l));
-            } else {
-                PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
-                List<Object> arguments = step.arguments(method).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
-                map.putIfAbsent(elementId, new LinkedList<>());
-                map.get(elementId).add(new Matcher.NonStructuralConstraint(method.getMethodExpression().getReferenceName(), arguments.toArray()));
-            }
-        });
-        return map;
-    }
-
-    /**
-     * Searches for all the structural constraints found in the "constraints" method and returns a mapping between
-     * element ids and their structural constraints. For example, if the following is present in the constraints method:
-     * <p>
-     * <code>element(1).is(() -> return null;);</code>
-     * <p>
-     * It will search for the element with id 1, and put a structural constraint on it, requiring it look like:
-     * <p>
-     * <code>return null;</code>.
-     *
-     * @return a mapping between the ID of generic elements to a list of all the constraint that apply on them.
-     */
-    private Map<Integer, List<PsiMethodCallExpression>> getReplacingRules() {
-        Map<Integer, List<PsiMethodCallExpression>> map = new HashMap<>();
-        PsiMethod constrainsMethod = getInterfaceMethod("replacingRules");
-        if (!haz.body(constrainsMethod)) {
-            return map;
-        }
-        Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
-            Integer elementId = extractIdFromConstraint(s);
-            PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
-            map.putIfAbsent(elementId, new LinkedList<>());
-            map.get(elementId).add(method);
-
-        });
-        return map;
-    }
-
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Build Structural rules ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
      * @param s a string representing Psi element class. For example "PsiIfStatement".
-     * @return a class object of the received class.
+     * @return a class object of the received class. For example "PsiIfStatement.class"
      */
     private Class<? extends PsiElement> getPsiClass(String s) {
         try {
@@ -353,45 +311,105 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @param name the name of the method of the interface LeonidasTipperDefinition.
-     * @return the body of the method
+     * @param s the statement of the constraint. For example: element(booleanExpression(3)).isNot(!booleanExpression(4))
+     * @return the body of the lambda expression that defines the constraint. The previous example will return !booleanExpression(4).
      */
-    private PsiMethod getInterfaceMethod(String name) {
-        Wrapper<PsiMethod> x = new Wrapper<>();
-        file.accept(new JavaRecursiveElementVisitor() {
+    private PsiElement getLambdaExpressionBody(PsiStatement s) {
+        Wrapper<PsiLambdaExpression> l = new Wrapper<>();
+        s.accept(new JavaRecursiveElementVisitor() {
+
             @Override
-            public void visitMethod(PsiMethod method) {
-                super.visitMethod(method);
-                if (method.getName().equals(name)) {
-                    x.set(method);
-                }
+            public void visitLambdaExpression(PsiLambdaExpression expression) {
+                super.visitLambdaExpression(expression);
+                l.set(expression);
             }
         });
-        return x.get();
+        return l.get().getBody();
     }
 
     /**
-     * @param name    the name of the tipper
-     * @param content the definition file of the tipper
-     * @return PsiFile representing the file of the tipper
+     * @param s the statement of the constraint. For example: element(booleanExpression(3)).isNot(!booleanExpression(4)).ofType(PsiExpression.class)
+     * @return the type inside "ofType" expression. The previous example will return Optional(PsiExpression.class).
+     * if no "ofType" expression is found, Optional.empty() is returned.
      */
-    private PsiJavaFile getPsiTreeFromString(String name, String content) {
-        Language language = JavaLanguage.INSTANCE;
-        LightVirtualFile virtualFile = new LightVirtualFile(name, language, content);
-        SingleRootFileViewProvider.doNotCheckFileSizeLimit(virtualFile);
-        final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage(language);
-        FileViewProvider viewProvider = factory != null ? factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true) : null;
-        if (viewProvider == null)
-            viewProvider = new SingleRootFileViewProvider(
-                    Utils.getPsiManager(ProjectManager.getInstance().getDefaultProject()),
-                    virtualFile,
-                    true
-            );
-        language = viewProvider.getBaseLanguage();
-        final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
-        if (parserDefinition != null) {
-            return (PsiJavaFile) viewProvider.getPsi(language);
+    private Optional<Class<? extends PsiElement>> getTypeOf(PsiStatement s) {
+        Wrapper<Optional<Class<? extends PsiElement>>> wq = new Wrapper<>(Optional.empty());
+        s.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+                super.visitMethodCallExpression(expression);
+                if (expression.getMethodExpression().getText().endsWith("ofType")) {
+                    wq.set(Optional.of(getPsiClass(expression.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
+                }
+            }
+        });
+        return wq.get();
+    }
+
+    // ~~~~~~~~~~~~~~~~~~ Build Constraints and Replacing rules ~~~~~~~~~~~~~~~~~~
+
+    /**
+     * Searches for all the structural constraints found in the "constraints" method and returns a mapping between
+     * element ids and their structural constraints. For example, if the following is present in the constraints method:
+     * <p>
+     * <code>element(1).is(() -> return null;);</code>
+     * <p>
+     * It will map id 1 to a structural constraint on it, requiring it look like:
+     * <p>
+     * <code>return null;</code>.
+     *
+     * @return a mapping between the ID of generic elements to a list of all the constraint that apply on them.
+     */
+    private Map<Integer, List<Constraint>> getConstraints() {
+        Map<Integer, List<Constraint>> map = new HashMap<>();
+        PsiMethod constrainsMethod = getInterfaceMethod("constraints");
+        if (constrainsMethod == null || !haz.body(constrainsMethod)) {
+            return map;
         }
-        return null;
+        Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
+            Integer elementId = extractIdFromRule(s);
+            Constraint.ConstraintType constraintType = extractConstraintType(s);
+
+            if (constraintType == Constraint.ConstraintType.IS || constraintType == Constraint.ConstraintType.ISNOT) {
+                PsiElement y = getLambdaExpressionBody(s);
+                Optional<Class<? extends PsiElement>> q = getTypeOf(s);
+                y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
+                map.putIfAbsent(elementId, new LinkedList<>());
+                List<Encapsulator> l = new LinkedList<>();
+                l.add(Pruning.prune(Encapsulator.buildTreeFromPsi(y), map));
+                map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, l));
+            } else {
+                PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
+                List<Object> arguments = step.arguments(method).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
+                map.putIfAbsent(elementId, new LinkedList<>());
+                map.get(elementId).add(new Matcher.NonStructuralConstraint(method.getMethodExpression().getReferenceName(), arguments.toArray()));
+            }
+        });
+        return map;
+    }
+
+    /**
+     * Searches for all the replacing rules found in the "replacing rules" method and returns a mapping between
+     * elements id and their replacing rules. For example, if the following is present in the replacing rules method:
+     * <p>
+     * <code>element(1).asStatement.replaceIdentifier(3, "cent");</code>
+     * <p>
+     * It will map id 1 to the replacing rule "replace identifiers"
+     * @return a mapping between the ID of generic elements to a list of all the replacing rules that apply on them.
+     */
+    private Map<Integer, List<PsiMethodCallExpression>> getReplacingRules() {
+        Map<Integer, List<PsiMethodCallExpression>> map = new HashMap<>();
+        PsiMethod replacingRulesMethod = getInterfaceMethod("replacingRules");
+        if (replacingRulesMethod == null || !haz.body(replacingRulesMethod)) {
+            return map;
+        }
+        Arrays.stream(replacingRulesMethod.getBody().getStatements()).forEach(s -> {
+            Integer elementId = extractIdFromRule(s);
+            PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
+            map.putIfAbsent(elementId, new LinkedList<>());
+            map.get(elementId).add(method);
+
+        });
+        return map;
     }
 }

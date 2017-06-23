@@ -1,20 +1,23 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
-import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
+import il.org.spartan.Leonidas.auxilary_layer.az;
+import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ * Represents a list of any number of interfaces a class declares it implements
+ * class Class0 implements AnyNumberOfInterfaces1 {...}
  * @author michalcohen
  * @since 20-06-2017
  */
 public class AnyNumberOfInterfaces extends AnyNumberOfBasedNames {
 
-    private static final String TEMPLATE = "interface";
+    private static final String TEMPLATE = "AnyNumberOfInterfaces";
 
     public AnyNumberOfInterfaces(){
         super(TEMPLATE);
