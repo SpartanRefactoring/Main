@@ -118,4 +118,7 @@ public class Replacer {
         return elements;
     }
 
+    public List<Encapsulator> getAllRoots() {
+        return roots;
+    }
 }

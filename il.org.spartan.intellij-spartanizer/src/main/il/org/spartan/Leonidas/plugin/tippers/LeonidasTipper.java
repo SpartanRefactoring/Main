@@ -61,7 +61,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return each and every generic element in the sub tree of e, including 'hidden' generic elements
      * that are not part of the tree, rather part of the properties of other generic elements in the tree.
      */
-    private static List<GenericEncapsulator> getGenericElements(Encapsulator e) {
+    public static List<GenericEncapsulator> getGenericElements(Encapsulator e) {
         List<GenericEncapsulator> lge = new LinkedList<>();
         e.accept(n -> {
             if (!iz.generic(n)) return;
@@ -411,5 +411,13 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
         });
         return map;
+    }
+
+    public Matcher getMatcher() {
+        return matcher;
+    }
+
+    public Replacer getReplacer() {
+        return replacer;
     }
 }

@@ -5,7 +5,8 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.UserControlled;
+import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
+import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
@@ -20,12 +21,12 @@ import java.util.Map;
  */
 public class Identifier extends NamedElement {
     public static final String TEMPLATE = "identifier";
-    @UserControlled
-    private List<String> containsList = new LinkedList<>(); // present the user a list of strings he wishes the identifier will contain to modify.
-    @UserControlled
-    private List<String> notContainsList = new LinkedList<>(); // present the user a list of strings he wishes the identifier will not contain to modify.
-    @UserControlled
-    private String nameToChange = ""; // present the user string he wishes the identifier will b replaced by to modify.
+    @UserControlledMatcher
+    public List<String> containsList = new LinkedList<>(); // present the user a list of strings he wishes the identifier will contain to modify.
+    @UserControlledMatcher
+    public List<String> notContainsList = new LinkedList<>(); // present the user a list of strings he wishes the identifier will not contain to modify.
+    @UserControlledReplacer
+    public String nameToChange = ""; // present the user string he wishes the identifier will b replaced by to modify.
 
 
     public Identifier(Encapsulator e) {

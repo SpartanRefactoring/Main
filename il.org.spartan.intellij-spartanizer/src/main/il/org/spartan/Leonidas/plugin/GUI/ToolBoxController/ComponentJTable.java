@@ -76,6 +76,15 @@ public class ComponentJTable extends JTable {
                 return text;
             }
 
+            if (value instanceof TextFieldList) {
+                TextFieldList list = (TextFieldList) value;
+                list.setBackground(getBackground());
+                list.setForeground(getForeground());
+                list.setEnabled(isEnabled());
+                list.setFont(getFont());
+                return list;
+            }
+
             if (value instanceof JLabel) {
                 JLabel text = (JLabel) value;
                 text.setBackground(getBackground());
@@ -108,6 +117,13 @@ public class ComponentJTable extends JTable {
                 JTextField tf = (JTextField) value;
                 c = tf;
                 return tf;
+            }
+
+            if (value instanceof TextFieldList) {
+
+                TextFieldList l = (TextFieldList) value;
+                c = l;
+                return l;
             }
             return null;
         }

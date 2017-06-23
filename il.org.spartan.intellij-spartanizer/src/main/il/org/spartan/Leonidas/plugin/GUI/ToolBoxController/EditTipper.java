@@ -4,8 +4,12 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import fluent.ly.note;
 import il.org.spartan.Leonidas.plugin.Toolbox;
+import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
+import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.LeonidasUtils;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
+import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
+import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +17,7 @@ import java.awt.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Amir Sagiv, Anna Belozovsky
@@ -33,45 +38,37 @@ public class EditTipper extends JFrame {
         super("Edit Tipper");
         nameLabel.setText(tipperName);
         currentTip = null;
-        List<LeonidasTipperDefinition> tipperInstances = Toolbox.getInstance().getAllTipperInstances();
-        for (LeonidasTipperDefinition tip : tipperInstances) {
+        List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
+        for (Tipper tip : tippers) {
             //           JOptionPane.showMessageDialog(this, tip.getClass().getSimpleName() + ", " + tipperName);
-            if (tip.getClass().getSimpleName().equals(tipperName)) {
+            if (tip.name().equals(tipperName)) {
                 currentTip = tip;
                 break;
             }
         }
 
-        // if instance wasn't found
-        if (currentTip == null) {
+        // if instance wasn't found//TODO:IS THIS POSSIBLE?
+        if (currentTip == null || !(currentTip instanceof LeonidasTipper)) {
+            JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.getClass().getSimpleName() + " Can't be edited. ");
             return;
         }
 
         table = new ComponentJTable();
-        Field[] fields = currentTip.getClass().getDeclaredFields();
-        ((DefaultTableModel) table.getModel()).setRowCount(fields.length);
-        int i = 0;
-        for (Field field : fields) {
-            if (!field.isAnnotationPresent(LeonidasUtils.class)) {
-                continue;
-            }
-            Class type = field.getType();
-            try {
-                if (type.isPrimitive() && type.getName().equals("boolean")) {
-                    table.getModel().setValueAt(new JLabel(field.getName()), i, 0);
-                    table.getModel().setValueAt(new JCheckBox("", (Boolean) field.get(currentTip)), i++, 1);
-                    continue;
-                }
-                Object obj = type.newInstance();
-                if (obj instanceof String) {
+        ((DefaultTableModel) table.getModel()).setRowCount(20); //TODO: must be changed
+        LeonidasTipper lt = (LeonidasTipper)currentTip;
+        List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
 
-                    table.getModel().setValueAt(new JLabel(field.getName()), i, 0);
-                    table.getModel().setValueAt(new JTextField((String) field.get(currentTip)), i++, 1);
-                }
-            } catch (Exception e) {
-                note.bug(e);
-            }
+        if(!canBeEditted(lt)){
+            JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.getClass().getSimpleName() + "Can't be editted. ");
+            return;
         }
+
+        int currRow = 0;
+        currRow = buildTableFields(tipperMatcherRoots,currRow,true);
+
+        List<GenericEncapsulator> tipperReplacerRoots = lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
+        buildTableFields(tipperReplacerRoots,currRow,false);
+
 
         applyButton.addActionListener(e -> applyListener(tipperAnnotation));
         closeButton.addActionListener(e -> {
@@ -83,6 +80,62 @@ public class EditTipper extends JFrame {
         setResizable(false);
         pack();
         setVisible(true);
+    }
+
+    private boolean canBeEditted(LeonidasTipper lt) {
+        List<GenericEncapsulator> tipperRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
+        int counter = 0;
+        for(GenericEncapsulator root : tipperRoots) {
+            Field[] fields = root.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(UserControlledMatcher.class)) {
+                    counter++;
+                }
+            }
+        }
+        return counter != 0;
+    }
+
+    private int buildTableFields(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
+        for(GenericEncapsulator root : tipperRoots){
+            Field[] fields = root.getClass().getDeclaredFields();
+
+
+            for (Field field : fields) {
+                if ((matcher && !field.isAnnotationPresent(UserControlledMatcher.class)) ||
+                        (!matcher && !field.isAnnotationPresent(UserControlledReplacer.class))) {
+                    continue;
+                }
+                Class type = field.getType();
+                try {
+                    if (type.isPrimitive() && type.getName().equals("boolean")) {
+                        table.getModel().setValueAt(new JLabel(field.getName()+" of "+root.getDescription()), i, 0);
+                        table.getModel().setValueAt(new JCheckBox("", (Boolean) field.get(root)), i++, 1);
+                        continue;
+                    }
+
+                    if (type == List.class) {
+                        for(Object  element: (List)field.get(root)) {
+                            table.getModel().setValueAt(new JLabel(field.getName() + " of " + root.getDescription()), i, 0);
+                            table.getModel().setValueAt(new JTextField((String) element), i++, 1);
+                        }
+                        continue;
+                    }
+
+                    Object obj = type.newInstance();
+                    if (obj instanceof String) {
+
+                        table.getModel().setValueAt(new JLabel(field.getName()+" of "+root.getDescription()), i, 0);
+                        table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
+                        continue;
+                    }
+
+                } catch (Exception e) {
+                    note.bug(e);
+                }
+            }
+        }
+        return i;
     }
 
     private void applyListener(Annotation annotation) {
