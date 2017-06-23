@@ -76,8 +76,8 @@ public class ComponentJTable extends JTable {
                 return text;
             }
 
-            if (value instanceof TextFieldList) {
-                TextFieldList list = (TextFieldList) value;
+            if (value instanceof JList) {
+                JList list = (JList) value;
                 list.setBackground(getBackground());
                 list.setForeground(getForeground());
                 list.setEnabled(isEnabled());
@@ -119,9 +119,9 @@ public class ComponentJTable extends JTable {
                 return tf;
             }
 
-            if (value instanceof TextFieldList) {
+            if (value instanceof JList) {
 
-                TextFieldList l = (TextFieldList) value;
+                JList l = (JList) value;
                 c = l;
                 return l;
             }
