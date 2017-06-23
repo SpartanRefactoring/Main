@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  */
 public abstract class GenericEncapsulator extends Encapsulator {
     protected String template;
+    protected String description = "";
     private List<BiConstraint> constraints = new ArrayList<>();
     private List<ReplacingRule> replacingRules = new ArrayList<>();
 
@@ -38,6 +39,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
      */
     @SuppressWarnings("unused")
     protected GenericEncapsulator() {
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public List<ReplacingRule> getReplacingRules() {
@@ -73,8 +78,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
         assert conforms(e.getInner());
         Encapsulator upperElement = getConcreteParent(e);
         GenericEncapsulator ge = create(upperElement, map);
-        if (isGeneric())
+        if (isGeneric()) {
             ge.putId(ge.extractId(e.getInner()));
+            ge.extractAndAssignDescription(e.getInner());
+        }
         return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
     }
 
@@ -84,6 +91,14 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @return true iff prev is not the highest element that needs to be pruned.
      */
     protected abstract boolean goUpwards(Encapsulator prev, Encapsulator next);
+
+    /**
+     * Adds a description to the element
+     *
+     * @param e a stub element
+     * @return this, for fluent API
+     */
+    public abstract GenericEncapsulator extractAndAssignDescription(PsiElement e);
 
     /**
      * Creates another one like me, with concrete PsiElement within, since in the toolbox, only stubs are created.

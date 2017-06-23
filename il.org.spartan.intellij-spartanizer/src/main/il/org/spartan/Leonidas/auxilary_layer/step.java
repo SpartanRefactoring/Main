@@ -31,12 +31,20 @@ public enum step {
         return parameters(l).isEmpty() ? null : l.getParameters()[0];
     }
 
+    public static PsiParameter secondParameter(PsiParameterList l) {
+        return parameters(l).size() > 1 ? null : l.getParameters()[1];
+    }
+
     public static PsiParameter firstParameter(PsiMethod m) {
         return m == null ? null : firstParameter(m.getParameterList());
     }
 
     public static PsiExpression firstParameterExpression(PsiMethodCallExpression x) {
         return x == null || x.getArgumentList().getExpressions().length < 1 ? null : x.getArgumentList().getExpressions()[0];
+    }
+
+    public static PsiExpression secondParameterExpression(PsiMethodCallExpression x) {
+        return x == null || x.getArgumentList().getExpressions().length < 2 ? null : x.getArgumentList().getExpressions()[1];
     }
 
     /**

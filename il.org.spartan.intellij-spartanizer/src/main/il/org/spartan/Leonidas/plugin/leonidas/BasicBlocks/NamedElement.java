@@ -30,7 +30,15 @@ public abstract class NamedElement extends GenericEncapsulator{
 
     @Override
     public Integer extractId(PsiElement e) {
-        return Integer.parseInt(getName(e).substring(template.length()));
+        return Integer.parseInt(getName(e).split("\\$")[0].substring(template.length()));
+    }
+
+    @Override
+    public GenericEncapsulator extractAndAssignDescription(PsiElement e) {
+        if (getName(e).contains("$")) {
+            description = getName(e).split("\\$")[1];
+        }
+        return this;
     }
 
     /**
