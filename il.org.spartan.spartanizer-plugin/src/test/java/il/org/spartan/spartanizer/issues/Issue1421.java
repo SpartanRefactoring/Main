@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * for more info
  * @author Niv Shalmon
  * @since 2017-05-30 */
+@Ignore
 public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
   @Override public Tipper<VariableDeclarationFragment> bloater() {
     return new LocalInitializedCollection();
