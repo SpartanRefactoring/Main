@@ -174,8 +174,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return x.get();
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Matcher ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     /**
      * @param name    the name of the tipper
      * @param content the content of the definition file of the tipper
@@ -201,7 +199,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return null;
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Replacer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Matcher ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
      * @return the generic forest representing the "matcher" template
@@ -210,6 +208,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         PsiMethod method = getInterfaceMethod("matcher");
         return getForestFromMethod(method);
     }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Replacer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
      * @return the generic forest representing the replacer template

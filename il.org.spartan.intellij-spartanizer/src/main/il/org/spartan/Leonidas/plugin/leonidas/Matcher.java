@@ -139,7 +139,7 @@ public class Matcher {
      */
     private void buildMatcherTree(Matcher matcher, Map<Integer, List<Constraint>> map) {
         if (map == null) return;
-        matcher.getGenericElements()
+        matcher.getGenericElementsWithNoFields()
                 .forEach((i, e) -> java.util.Optional.ofNullable(map.get(i)).ifPresent(z -> z.forEach(j -> {
                     if (j instanceof StructuralConstraint)
                         matcher.addConstraint(i, (StructuralConstraint) j);
@@ -245,6 +245,19 @@ public class Matcher {
             if (e.isGeneric()) {
                 tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
                 tmp.putAll(az.generic(e).getGenericElements());
+            }
+        }));
+        return tmp;
+    }
+
+    /**
+     * @return list of Ids of all the generic elements in the tipper.
+     */
+    private Map<Integer, GenericEncapsulator> getGenericElementsWithNoFields() {
+        final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
+        roots.forEach(root -> root.accept(e -> {
+            if (e.isGeneric()) {
+                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
             }
         }));
         return tmp;
