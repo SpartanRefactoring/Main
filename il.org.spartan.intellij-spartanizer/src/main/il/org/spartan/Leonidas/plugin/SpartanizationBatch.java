@@ -1,88 +1,93 @@
 package il.org.spartan.Leonidas.plugin;
 
-import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaRecursiveElementVisitor;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import org.apache.commons.lang.math.RandomUtils;
+import icons.Icons;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author RoeiRaz
  * @since 18/06/17
  * <p>
  * SpartanizationBatch is a collection of spartanization work instructions
- * that can be invoked in the future. Should LOCK the given PSI element.
+ * that can be invoked in the future.
  */
-public class SpartanizationBatch {
+public class SpartanizationBatch extends Task.Modal {
 
-    private static final String WRITE_COMMAND_NAME = SpartanizationBatch.class.getSimpleName()
-            + RandomUtils.nextInt();
-
+    private final static String title = "Spartanization in progress";
     private final Project project;
-    private final Set<PsiElement> elements;
     private final Set<PsiFile> files;
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private final Optional<SpartanizerBatchListener> listenerOptional;
-    private final WriteCommandAction commandAction;
+    private AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
-    SpartanizationBatch(Project project, Set<? extends PsiElement> elements) {
-        this(project, elements, null);
-    }
-
-    SpartanizationBatch(Project project, Set<? extends PsiElement> elements, SpartanizerBatchListener listener) {
+    SpartanizationBatch(Project project, Set<PsiFile> files) {
+        super(project, title, true);
         this.project = project;
-        this.elements = new HashSet<>(elements);
-        this.listenerOptional = Optional.ofNullable(listener);
-        this.files = elements.stream().map(PsiElement::getContainingFile).collect(Collectors.toSet());
-        this.commandAction = new RunCommand(project, WRITE_COMMAND_NAME, files.stream().toArray(PsiFile[]::new));
-
+        this.files = files;
     }
 
-    public void invoke() {
-        commandAction.execute();
-    }
+    @Override
+    public void run(@NotNull ProgressIndicator indicator) {
+        Wrapper<Integer> i = new Wrapper<>(0);
+        Wrapper<Throwable> fault = new Wrapper<>(null);
 
-    public Project getProject() {
-        return project;
-    }
-
-    public Set<PsiElement> getElements() {
-        return elements;
-    }
-
-    private class RunCommand extends WriteCommandAction.Simple {
-        RunCommand(Project project, String commandName, PsiFile... files) {
-            super(project, commandName, files);
-        }
-
-        @Override
-        protected void run() throws Throwable {
-            getElements().forEach(e -> {
-                if (Toolbox.getInstance().checkExcluded(e.getContainingFile()))
-                    return;
-                e.accept(new JavaRecursiveElementVisitor() {
-                    @Override
-                    public void visitElement(PsiElement ce) {
-                        super.visitElement(ce);
-                        if (!Toolbox.getInstance().canTip(ce))
-                            return;
-                        Toolbox.getInstance().getAllTippers().forEach(t -> {
-                            if (!t.canTip(ce))
-                                return;
-                            //noinspection unchecked
-                            t.tip(ce).go(new PsiRewrite().project(project).psiFile(e.getContainingFile()));
-                        });
-                    }
-                });
-
+        for (PsiFile f : files) {
+            // It's important to run this with Application::invokeLater and with
+            // the default modality - this way we have write access to the model
+            // through the EDT from which this task was generated.
+            ApplicationManager.getApplication().invokeLater(() -> {
+                try {
+                    Spartanizer.spartanizeFileRecursively(f);
+                } catch (Throwable throwable) {
+                    // we catch all throwables to prevent deadlock further ahead.
+                    fault.set(throwable);
+                } finally {
+                    atomicBoolean.set(true);
+                }
             });
+
+            // spinlock. im sorry
+            while (!atomicBoolean.get()) Thread.yield();
+            atomicBoolean.set(false);
+
+            // terminate in case of error (that is why we use foreach)
+            if (fault.get() != null) {
+                Notifications.Bus.notify(new Notification("il.org.spartan",
+                        Icons.LeonidasSmall,
+                        "Spartanizer",
+                        "Spartanization failed. faulty file: " + f.getName() + ". Exception: " + fault.get(),
+                        null,
+                        NotificationType.ERROR,
+                        null));
+                return;
+            }
+
+            // update progress bar
+            i.set(i.get() + 1);
+            indicator.setFraction((double) i.get() / files.size());
         }
+
+        // Send success notification
+        Notifications.Bus.notify(new Notification("il.org.spartan",
+                Icons.LeonidasSmall,
+                "Spartanizer",
+                "Finished spartanization of " + getFiles().size() + " files.",
+                null,
+                NotificationType.INFORMATION,
+                null));
+    }
+
+
+    public Set<PsiFile> getFiles() {
+        return files;
     }
 }
