@@ -106,7 +106,7 @@ public class TipperTest{
             crashed= false;
             String key = entry.getKey();
             if(key == null){
-                log("\nError! An example with a null key was inserted in tipper "+getTipperName()+". aborting test.");
+                log("\nError! An example with a null key was inserted in tipper "+getTipperName()+".\n");
                 crashTest();
                 continue;
             }
@@ -115,7 +115,7 @@ public class TipperTest{
             PsiFileCenter.PsiFileWrapper filewkey = pfc.createFileFromString(key);
             log("Testing example:\n"+key+"\n");
             if(filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL){
-                log("\nError! The following key in the examples of the tipper "+getTipperName()+" contains illegal java code. aborting test: \n"+key);
+                log("\nError! The following key in the examples of the tipper "+getTipperName()+" contains illegal java code: \n"+key+"\n");
                 crashTest();
                 continue;
             }
@@ -132,14 +132,14 @@ public class TipperTest{
             //}
             if(tipperAffected==1){
                 if(value != null) {
-                    log("\nError! Tipper "+getTipperName()+" should have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it didn't.");
+                    log("\nError! Tipper "+getTipperName()+" should have affected the example:\n"+key+"\nbut it didn't.\n");
                     crashTest();
                     continue;
                 }
             }
             else{
                 if(value == null){
-                    log("\nError! Tipper "+getTipperName()+" should not have affected the example:\n"+filewkey.extractCanonicalSubtreeString()+"\nbut it did.");
+                    log("\nError! Tipper "+getTipperName()+" should not have affected the example:\n"+key+"\nbut it did.\n");
                     crashTest();
                     continue;
                 }
