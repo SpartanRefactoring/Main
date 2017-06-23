@@ -56,7 +56,7 @@ public class XMLSpartan {
           LambdaRenameSingleParameterToLambda.class, //
           ConstructorEmptyRemove.class, //
           ReturnDeadAssignment.class, //
-          LocalInitializedNewAddAll.class //
+          LocalInitializedNewAddAll.class // see issue #1506
       ));
   public static final String TIPPER = "tipper";
   public static final String NOTATION = "notation";
