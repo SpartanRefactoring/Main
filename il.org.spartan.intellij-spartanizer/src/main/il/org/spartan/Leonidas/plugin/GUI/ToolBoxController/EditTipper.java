@@ -17,6 +17,7 @@ import java.awt.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,7 +31,6 @@ public class EditTipper extends JFrame {
     private JPanel tempPane;
     private JScrollPane TablePanel;
     private JLabel nameLabel;
-    private LeonidasUtils tipperAnnotation;
     private ComponentJTable table;
     private Object currentTip;
 
@@ -70,7 +70,7 @@ public class EditTipper extends JFrame {
         buildTableFields(tipperReplacerRoots,currRow,false);
 
 
-        applyButton.addActionListener(e -> applyListener(tipperAnnotation));
+        applyButton.addActionListener(e -> applyListener());
         closeButton.addActionListener(e -> {
             this.dispose();
         });
@@ -121,6 +121,14 @@ public class EditTipper extends JFrame {
                         }
                         continue;
                     }
+                    if (type == Map.class) {
+                        for (Map.Entry<Integer, String> entry : ((Map<Integer,String>)field.get(root)).entrySet())
+                        {
+                            table.getModel().setValueAt(new JLabel(field.getName() + " of " + root.getDescription()), i, 0);
+                            table.getModel().setValueAt(new JTextField((String) entry.getValue()), i++, 1);
+                        }
+                        continue;
+                    }
 
                     Object obj = type.newInstance();
                     if (obj instanceof String) {
@@ -138,32 +146,63 @@ public class EditTipper extends JFrame {
         return i;
     }
 
-    private void applyListener(Annotation annotation) {
-        Field[] fields = currentTip.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            for (int i = 0; i < this.table.getModel().getRowCount(); i++) {
-                if (!((JLabel) this.table.getModel().getValueAt(i, 0)).getText()
-                        .equals(field.getName())) {
+    private int updateFieldsFromTable(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
+        for(GenericEncapsulator root : tipperRoots){
+            Field[] fields = root.getClass().getDeclaredFields();
+
+
+            for (Field field : fields) {
+                if ((matcher && !field.isAnnotationPresent(UserControlledMatcher.class)) ||
+                        (!matcher && !field.isAnnotationPresent(UserControlledReplacer.class))) {
                     continue;
                 }
-                if (this.table.getModel().getValueAt(i, 1) instanceof JCheckBox) {
-                    try {
-                        field.set(currentTip, ((JCheckBox) this.table.getModel().getValueAt(i, 1)).isSelected());
-                    } catch (IllegalAccessException e) {
-                        note.bug(e);
+                Class type = field.getType();
+                try {
+                    if (type.isPrimitive() && type.getName().equals("boolean")) {
+                        field.set(root, ((JCheckBox)table.getValueAt(i++,1)).isSelected());
+                        continue;
                     }
-                }
-                if (this.table.getModel().getValueAt(i, 1) instanceof JTextField) {
-                    try {
-                        field.set(currentTip, ((JTextField) this.table.getModel().getValueAt(i, 1)).getText());
-                    } catch (IllegalAccessException e) {
-                        note.bug(e);
-                    }
-                }
 
+                    if (type == List.class) {
+                        int listSize = ((List)field.get(root)).size();
+                        ((List)field.get(root)).clear();
+                        for(int j = 0; j < listSize; j++){
+                            ((List)field.get(root)).add(((JTextField)table.getValueAt(i++,1)).getText());
+                        }
+                        continue;
+                    }
+                    if (type == Map.class) {
+                        for (Map.Entry<Integer, String> entry : ((Map<Integer,String>)field.get(root)).entrySet())
+                        {
+                            ((Map<Integer,String>)field.get(root)).put(entry.getKey(),((JTextField)table.getValueAt(i,1)).getText());
+                        }
+                        continue;
+                    }
+
+                    Object obj = type.newInstance();
+                    if (obj instanceof String) {
+                        field.set(root, ((JTextField)table.getValueAt(i++,1)).getText());
+                        continue;
+                    }
+
+                } catch (Exception e) {
+                    note.bug(e);
+                }
             }
         }
-        //List<Object> l = Toolbox.getInstance().getAllTipperInstances();
+        return i;
+    }
+
+    private void applyListener() {
+        LeonidasTipper lt = (LeonidasTipper)currentTip;
+        List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
+
+        int currRow = 0;
+        currRow = updateFieldsFromTable(tipperMatcherRoots,currRow,true);
+
+        List<GenericEncapsulator> tipperReplacerRoots = lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
+        updateFieldsFromTable(tipperReplacerRoots,currRow,false);
+
     }
 
     {

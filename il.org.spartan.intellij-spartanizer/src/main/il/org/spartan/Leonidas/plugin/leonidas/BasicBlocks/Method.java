@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
@@ -20,6 +21,10 @@ public class Method extends ModifiableElement {
     private static final String TEMPLATE = "method";
     private Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
     private Replacer replacerReturnType, replacerParameters, replacerCodeBlock;
+    @UserControlledMatcher
+    public List<String> containsList = new LinkedList<>();
+    @UserControlledMatcher
+    public List<String> notContainsList = new LinkedList<>();
 
     public Method(Encapsulator e) {
         super(e, TEMPLATE);
@@ -107,5 +112,15 @@ public class Method extends ModifiableElement {
 
         return map;
 
+    }
+
+    public void contains(String s) {
+        containsList.add(s);
+        addConstraint((e, m) -> containsList.stream().allMatch(cs -> az.method(e.inner).getName().contains(cs)));
+    }
+
+    public void notContains(String s) {
+        notContainsList.add(s);
+        addConstraint((e, m) -> notContainsList.stream().noneMatch(ncs ->az.method(e.inner).getName().contains(ncs)));
     }
 }
