@@ -1,8 +1,5 @@
 package il.org.spartan.Leonidas.plugin;
 
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.progress.ProgressManager;
@@ -12,7 +9,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
-import icons.Icons;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,12 +36,6 @@ public class SpartanizeProjectAction extends AnAction {
         });
 
         ProgressManager.getInstance().run(new SpartanizationBatch(e.getProject(), new HashSet<>(psiFiles)));
-        Notifications.Bus.notify(new Notification("il.org.spartan",
-                Icons.LeonidasSmall,
-                "Spartanizer",
-                "Finished spartanization of " + psiFiles.size() + " files.",
-                null,
-                NotificationType.INFORMATION,
-                null));
+
     }
 }
