@@ -1,0 +1,44 @@
+JFDML JFormDesigner: "6.0.1.0.112" Java: "1.8.0_112-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :::p, par l {comp scrollPane1::::541:x, comp scrollPane2::l::541:x, seq {par l {comp matcherLabel:::p::p, comp replacerLabel::l:p::p, seq l {comp saveButton:::p:150:p, space :::p, comp cancelButton:::p:150:p}}, space :0:235:x}}, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp matcherLabel:::p::p, space :::p, comp scrollPane1:::p:220:p, space :::p, comp replacerLabel:::p::p, space :::p, comp scrollPane2:::p:220:p, space ::34:x, par b {comp cancelButton::b:p::p, comp saveButton::b:p::p}, space :::p}}"
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "matcherLabel"
+				"text": "Matcher:"
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTextPane" ) {
+					name: "matcherTextPane"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "replacerLabel"
+				"text": "Replacer:"
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane2"
+				add( new FormComponent( "javax.swing.JTextPane" ) {
+					name: "replacerTextPane"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "saveButton"
+				"text": "Save"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "cancelButton"
+				"text": "Cancel"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 555, 600 )
+		} )
+	}
+}
