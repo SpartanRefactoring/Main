@@ -3,42 +3,98 @@ JFDML JFormDesigner: "6.0.1.0.112" Java: "1.8.0_112-release" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :::p, par l {comp scrollPane1::::541:x, comp scrollPane2::l::541:x, seq {par l {comp matcherLabel:::p::p, comp replacerLabel::l:p::p, seq l {comp saveButton:::p:150:p, space :::p, comp cancelButton:::p:150:p}}, space :0:235:x}}, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :::p, comp matcherLabel:::p::p, space :::p, comp scrollPane1:::p:220:p, space :::p, comp replacerLabel:::p::p, space :::p, comp scrollPane2:::p:220:p, space ::34:x, par b {comp cancelButton::b:p::p, comp saveButton::b:p::p}, space :::p}}"
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.GridBagLayout ) {
+			"$columnSpecs": "0:1.0, 0:1.0"
+			"$rowSpecs": "0:1.0, 0"
+			"$alignLeft": true
+			"$alignTop": true
 		} ) {
 			name: "this"
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "matcherLabel"
-				"text": "Matcher:"
-			} )
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane1"
-				add( new FormComponent( "javax.swing.JTextPane" ) {
-					name: "matcherTextPane"
+			"defaultCloseOperation": 3
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "0"
+				"$rowSpecs": "0, 0"
+				"$hGap": 5
+				"$vGap": 5
+				"$alignLeft": true
+				"$alignTop": true
+			} ) {
+				name: "panel1"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label1"
+					"text": "Matcher:"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane1"
+					add( new FormComponent( "javax.swing.JTextPane" ) {
+						name: "matcherTextPane"
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridy": 1
+					"weightx": 1.0
+					"weighty": 1.0
 				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"insets": new java.awt.Insets( 5, 5, 5, 5 )
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "replacerLabel"
-				"text": "Replacer:"
-			} )
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane2"
-				add( new FormComponent( "javax.swing.JTextPane" ) {
-					name: "replacerTextPane"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "0"
+				"$rowSpecs": "0, 0"
+				"$hGap": 5
+				"$vGap": 5
+				"$alignLeft": true
+				"$alignTop": true
+			} ) {
+				name: "panel2"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label2"
+					"text": "Replacer:"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane2"
+					add( new FormComponent( "javax.swing.JTextPane" ) {
+						name: "replacerTextPane"
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridy": 1
+					"weightx": 1.0
+					"weighty": 1.0
 				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 1
+				"insets": new java.awt.Insets( 5, 5, 5, 5 )
 			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "saveButton"
-				"text": "Save"
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "cancelButton"
-				"text": "Cancel"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "150, 150"
+				"$rowSpecs": "0"
+				"$hGap": 5
+				"$vGap": 5
+				"$alignLeft": true
+				"$alignTop": true
+			} ) {
+				name: "panel3"
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "buttonSave"
+					"text": "Save"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buttonSaveActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"insets": new java.awt.Insets( 2, 2, 2, 2 )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "buttonClose"
+					"text": "Close"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buttonCloseActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridx": 1
+					"insets": new java.awt.Insets( 2, 2, 2, 2 )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 1
+				"gridwidth": 2
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 555, 600 )
+			"size": new java.awt.Dimension( 555, 540 )
 		} )
 	}
 }

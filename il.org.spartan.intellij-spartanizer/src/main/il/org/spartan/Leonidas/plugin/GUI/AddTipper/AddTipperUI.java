@@ -4,9 +4,10 @@
 
 package il.org.spartan.Leonidas.plugin.GUI.AddTipper;
 
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.GroupLayout;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 
 /**
  * @author Sharon LK
@@ -16,80 +17,123 @@ public class AddTipperUI extends JFrame {
         initComponents();
     }
 
+    private void buttonSaveActionPerformed(ActionEvent e) {
+        LeonidasGenerator.generate(matcherTextPane.getText(), replacerTextPane.getText());
+    }
+
+    private void buttonCloseActionPerformed(ActionEvent e) {
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Sharon KL
-        matcherLabel = new JLabel();
+        panel1 = new JPanel();
+        label1 = new JLabel();
         scrollPane1 = new JScrollPane();
         matcherTextPane = new JTextPane();
-        replacerLabel = new JLabel();
+        panel2 = new JPanel();
+        label2 = new JLabel();
         scrollPane2 = new JScrollPane();
         replacerTextPane = new JTextPane();
-        saveButton = new JButton();
-        cancelButton = new JButton();
+        panel3 = new JPanel();
+        buttonSave = new JButton();
+        buttonClose = new JButton();
 
         //======== this ========
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Container contentPane = getContentPane();
+        contentPane.setLayout(new GridBagLayout());
+        ((GridBagLayout)contentPane.getLayout()).columnWidths = new int[] {0, 0, 0};
+        ((GridBagLayout)contentPane.getLayout()).rowHeights = new int[] {0, 0, 0};
+        ((GridBagLayout)contentPane.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0E-4};
+        ((GridBagLayout)contentPane.getLayout()).rowWeights = new double[] {1.0, 0.0, 1.0E-4};
 
-        //---- matcherLabel ----
-        matcherLabel.setText("Matcher:");
-
-        //======== scrollPane1 ========
+        //======== panel1 ========
         {
-            scrollPane1.setViewportView(matcherTextPane);
+
+            // JFormDesigner evaluation mark
+            panel1.setBorder(new javax.swing.border.CompoundBorder(
+                new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                    "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                    javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    java.awt.Color.red), panel1.getBorder())); panel1.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
+
+            panel1.setLayout(new GridBagLayout());
+            ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
+            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0, 0};
+            ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
+            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+
+            //---- label1 ----
+            label1.setText("Matcher:");
+            panel1.add(label1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
+
+            //======== scrollPane1 ========
+            {
+                scrollPane1.setViewportView(matcherTextPane);
+            }
+            panel1.add(scrollPane1, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
         }
+        contentPane.add(panel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 5), 0, 0));
 
-        //---- replacerLabel ----
-        replacerLabel.setText("Replacer:");
-
-        //======== scrollPane2 ========
+        //======== panel2 ========
         {
-            scrollPane2.setViewportView(replacerTextPane);
+            panel2.setLayout(new GridBagLayout());
+            ((GridBagLayout)panel2.getLayout()).columnWidths = new int[] {0, 0};
+            ((GridBagLayout)panel2.getLayout()).rowHeights = new int[] {0, 0, 0};
+            ((GridBagLayout)panel2.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
+            ((GridBagLayout)panel2.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+
+            //---- label2 ----
+            label2.setText("Replacer:");
+            panel2.add(label2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
+
+            //======== scrollPane2 ========
+            {
+                scrollPane2.setViewportView(replacerTextPane);
+            }
+            panel2.add(scrollPane2, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
         }
+        contentPane.add(panel2, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 5), 0, 0));
 
-        //---- saveButton ----
-        saveButton.setText("Save");
+        //======== panel3 ========
+        {
+            panel3.setLayout(new GridBagLayout());
+            ((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {155, 150, 0};
+            ((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 0};
+            ((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+            ((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
-        //---- cancelButton ----
-        cancelButton.setText("Cancel");
+            //---- buttonSave ----
+            buttonSave.setText("Save");
+            buttonSave.addActionListener(e -> buttonSaveActionPerformed(e));
+            panel3.add(buttonSave, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(2, 2, 2, 7), 0, 0));
 
-        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
-        contentPane.setLayout(contentPaneLayout);
-        contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
-                        .addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addComponent(matcherLabel)
-                                .addComponent(replacerLabel)
-                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                    .addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)))
-                            .addGap(0, 235, Short.MAX_VALUE)))
-                    .addContainerGap())
-        );
-        contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(matcherLabel)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(replacerLabel)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(cancelButton)
-                        .addComponent(saveButton))
-                    .addContainerGap())
-        );
+            //---- buttonClose ----
+            buttonClose.setText("Close");
+            buttonClose.addActionListener(e -> buttonCloseActionPerformed(e));
+            panel3.add(buttonClose, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(2, 2, 2, 2), 0, 0));
+        }
+        contentPane.add(panel3, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(0, 0, 0, 0), 0, 0));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -97,13 +141,16 @@ public class AddTipperUI extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Sharon KL
-    private JLabel matcherLabel;
+    private JPanel panel1;
+    private JLabel label1;
     private JScrollPane scrollPane1;
     private JTextPane matcherTextPane;
-    private JLabel replacerLabel;
+    private JPanel panel2;
+    private JLabel label2;
     private JScrollPane scrollPane2;
     private JTextPane replacerTextPane;
-    private JButton saveButton;
-    private JButton cancelButton;
+    private JPanel panel3;
+    private JButton buttonSave;
+    private JButton buttonClose;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
