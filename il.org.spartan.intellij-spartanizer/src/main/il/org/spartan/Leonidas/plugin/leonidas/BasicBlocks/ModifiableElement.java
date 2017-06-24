@@ -21,18 +21,18 @@ import static il.org.spartan.Leonidas.auxilary_layer.Existence.*;
  */
 public abstract class ModifiableElement extends NamedElement {
 
-    //@UserControlledMatcher
-    Existence isPublic = DO_NOT_CARE; // present the user with multiply choice from Existence enum.
-    //@UserControlledMatcher
-    Existence isProtected = DO_NOT_CARE;
-    //@UserControlledMatcher
-    Existence isPrivate = DO_NOT_CARE;
-    //@UserControlledMatcher
-    Existence isStatic = DO_NOT_CARE;
-    //@UserControlledMatcher
-    Existence isAbstract = DO_NOT_CARE;
-    //@UserControlledMatcher
-    Existence isFinal = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isPublic = DO_NOT_CARE; // present the user with multiply choice from Existence enum.
+    @UserControlledMatcher
+    public Existence isProtected = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isPrivate = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isStatic = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isAbstract = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isFinal = DO_NOT_CARE;
 
     String name = "";
 
@@ -55,7 +55,7 @@ public abstract class ModifiableElement extends NamedElement {
     @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         if (super.generalizes(e, m).notMatches()) return new MatchingResult(false);
-        PsiModifierListOwner mlo = az.modifierListOwner(inner);
+        PsiModifierListOwner mlo = az.modifierListOwner(e.inner);
         return new MatchingResult(checkConstraint(isPublic, mlo, haz::publicModifier) &&
                 checkConstraint(isPrivate, mlo, haz::privateModifier) &&
                 checkConstraint(isProtected, mlo, haz::protectedModifier) &&
