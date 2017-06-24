@@ -62,7 +62,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   // title of the custom dialog
   @Override protected void configureShell(final Shell newShell) {
     super.configureShell(newShell);
-    newShell.setText("Configure The" + widgetName + " Widget Operation");
+    newShell.setText("Configure The " + widgetName + " Widget Operation");
   }
   @Override protected Point getInitialSize() {
     return new Point(450, 300);
