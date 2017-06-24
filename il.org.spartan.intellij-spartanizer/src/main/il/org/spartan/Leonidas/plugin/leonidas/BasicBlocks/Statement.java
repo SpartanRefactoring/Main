@@ -104,13 +104,15 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     public void replaceIdentifiers(Integer id, String to) {
-        replacingIdentifier.put(id, to);
+        this.replacingIdentifier.put(id, to);
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
                 @Override
                 public void visitIdentifier(PsiIdentifier identifier) {
                     super.visitIdentifier(identifier);
-                    if (identifier.getText().equals(map.get(id).get(0).getText())) {
+                    if (identifier.getText().equals(map.get(id).get(0).getText()) &&
+                            !iz.thisExpression(identifier.getParent().getFirstChild()) &&
+                            !iz.methodCallExpression(identifier.getParent().getParent())) {
                         PsiRewrite prr = new PsiRewrite();
                         prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(replacingIdentifier.get(id)));
                     }

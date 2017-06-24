@@ -17,8 +17,4 @@ public class Issue1496 {
     trimmingOf("if(base == 0) {return true;}long a = f(b,c,d);if(a==1){}else {   while(a > 1) g();}return true;")
         .gives("if(base==0){}else{long a=f(b,c,d);if(a==1){}   else{while(a>1)g();}}return true;");
   }
-  
-  @Test public void t2() {
-    
-  }
 }
