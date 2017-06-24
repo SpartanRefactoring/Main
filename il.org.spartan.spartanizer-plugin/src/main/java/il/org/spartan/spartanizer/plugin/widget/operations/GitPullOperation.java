@@ -4,6 +4,8 @@ import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.ui.*;
 
+import fluent.ly.*;
+
 /** Git pull command.
  * @author Ori Roth
  * @since 2017-04-24 */
@@ -23,6 +25,22 @@ public class GitPullOperation extends GitOperation {
     PullResult pr = null;
     try {
       pr = g.pull().call();
+      switch (pr.getMergeResult().getMergeStatus()) {
+        case ALREADY_UP_TO_DATE:
+          displayMessage("Already up-to-date.");
+          return;
+        case ABORTED:
+          displayMessage("Merge aborted");
+          return;
+        case CHECKOUT_CONFLICT:
+          displayMessage("Merge checkout conflict");
+          return;
+        case CONFLICTING:
+          displayMessage("Merge failed due to conflicts");
+          return;
+        default:
+          break;
+      }
     } catch (final WrongRepositoryStateException x) {
       displayMessage("Git Error: Pull failed due to wrong repository state");
       return;
