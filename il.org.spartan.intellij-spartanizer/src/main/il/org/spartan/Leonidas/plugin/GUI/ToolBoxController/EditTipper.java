@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import fluent.ly.note;
+import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
@@ -100,7 +101,7 @@ public class EditTipper extends JFrame {
 
     private int buildTableFields(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
         for(GenericEncapsulator root : tipperRoots){
-            Field[] fields = root.getClass().getDeclaredFields();
+            Field[] fields = root.getClass().getFields();
 
 
             for (Field field : fields) {
@@ -132,6 +133,14 @@ public class EditTipper extends JFrame {
                         continue;
                     }
 
+                    if(type == Existence.class){
+                        JComboBox cb = new JComboBox(new Existence[]{Existence.DO_NOT_CARE,Existence.MUST_EXISTS,Existence.DOES_NOT_EXISTS});
+                        cb.setSelectedItem(field.get(root));
+                        table.getModel().setValueAt(new JLabel(field.getName()+" of "+root.getDescription()), i, 0);
+                        table.getModel().setValueAt(cb, i++, 1);
+                        continue;
+                    }
+
                     Object obj = type.newInstance();
                     if (obj instanceof String) {
                         if(!((String) field.get(root)).equals("")) {
@@ -151,7 +160,7 @@ public class EditTipper extends JFrame {
 
     private int updateFieldsFromTable(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
         for(GenericEncapsulator root : tipperRoots){
-            Field[] fields = root.getClass().getDeclaredFields();
+            Field[] fields = root.getClass().getFields();
 
 
             for (Field field : fields) {
@@ -181,6 +190,12 @@ public class EditTipper extends JFrame {
                         }
                         continue;
                     }
+
+                    if(type == Existence.class){
+                        field.set(root, ((JComboBox)table.getValueAt(i++,1)).getSelectedItem());
+                        continue;
+                    }
+
 
                     Object obj = type.newInstance();
                     if (obj instanceof String) {
