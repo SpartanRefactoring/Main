@@ -139,7 +139,11 @@ public class TipperTest{
             try {
                 tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(), getTipperName());
             } catch(Exception e){
-                log("An exception was thrown: \n"+e.getMessage());
+                log("An exception was thrown. \n");
+                if(printsToScreen){
+                    e.printStackTrace();
+                    log("\n");
+                }
                 crashTest();
                 continue;
             }
