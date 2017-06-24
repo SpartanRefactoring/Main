@@ -3,16 +3,19 @@ package il.org.spartan.Leonidas.plugin.GUI.AddTipper;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import il.org.spartan.Leonidas.plugin.Toolbox;
+import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
+import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Sharon LK
  */
 public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeonidasTippers> {
-    protected List<String> tippers = new ArrayList<>();
+    protected Map<String, Tipper> tippers = new HashMap<>();
 
     /**
      * @return instance of this class
@@ -35,8 +38,18 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
     /**
      * @return list of all currently loaded custom tippers
      */
-    public List<String> getTippers() {
+    public Map<String, Tipper> getTippers() {
         return tippers;
+    }
+
+    /**
+     * Returns the tipper that matches the given name.
+     *
+     * @param name tipper's name
+     * @return tipper with the given name, or <code>null</code> if such tipper is not present
+     */
+    public Tipper getTipper(String name) {
+        return tippers.get(name);
     }
 
     /**
@@ -47,7 +60,9 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
      * @param replacer replacer function source code
      */
     public void generate(String name, String matcher, String replacer) {
-        tippers.add(getTipperString(name, matcher, replacer));
+        tippers.put(name, new LeonidasTipper(name, getTipperString(name, matcher, replacer)));
+
+        Toolbox.getInstance().add(tippers.get(name));
     }
 
     private String getTipperString(String name, String matcher, String replacer) {

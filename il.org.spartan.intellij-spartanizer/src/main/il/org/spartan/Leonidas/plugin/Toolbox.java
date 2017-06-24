@@ -192,7 +192,7 @@ public class Toolbox implements ApplicationComponent {
         }));
     }
 
-    private Toolbox add(Tipper<? extends PsiElement> t) {
+    public Toolbox add(Tipper<? extends PsiElement> t) {
         tipperMap.putIfAbsent(t.getOperableType(), new CopyOnWriteArrayList<>());
         operableTypes.add(t.getOperableType());
         tipperMap.get(t.getOperableType()).add(t);
