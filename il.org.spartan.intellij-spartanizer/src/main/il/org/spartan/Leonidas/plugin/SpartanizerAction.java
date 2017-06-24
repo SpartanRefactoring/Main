@@ -28,6 +28,7 @@ public class SpartanizerAction extends AnAction {
 		else {
 			logger.info("Spartanization action on\nPSI class '" + psiClass.getQualifiedName() + "'");
 			Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());
+            Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());
 		}
     }
 
