@@ -102,6 +102,9 @@ public class TipperTest{
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.testing = true;
         log("\n*************************Now testing "+getTipperName()+":*************************\n");
+        if(examples.entrySet().size() == 0){
+            log("No examples exist for tipper "+getTipperName());
+        }
         for (Map.Entry<String,String> entry : examples.entrySet()) {
             crashed= false;
             String key = entry.getKey();
@@ -132,14 +135,20 @@ public class TipperTest{
             if(value != null){
                 filewvalue = pfc.createFileFromString(filewvalue.extractCanonicalSubtreeString());
             }
-
-            int tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(),getTipperName());
+            int tipperAffected;
+            try {
+                tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(), getTipperName());
+            } catch(Exception e){
+                log("An exception was thrown: \n"+e.getMessage());
+                crashTest();
+                continue;
+            }
             if(tipperAffected == -1){
                 log("Could not find tipper named "+getTipperName()+" in the toolbox.\n");
                 crashTest();
                 continue;
             }
-            if(tipperAffected==1){
+            if(tipperAffected==0){
                 if(value != null) {
                     log("\nError! Tipper "+getTipperName()+" should have affected the example:\n"+key+"\nbut it didn't.\n");
                     crashTest();

@@ -23,6 +23,10 @@ public class TestAllTippers extends PsiTypeHelper {
             TipperTest ts = new TipperTest(lt, this, true, true);
             ts.check();
         }
+        for( Tipper tipper : ot){
+            TipperTest ts = new TipperTest(tipper, this, true, true);
+            ts.check();
+        }
 
     }
 

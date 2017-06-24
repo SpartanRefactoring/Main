@@ -99,7 +99,15 @@ public class PsiFileCenter {
             raw = raw.trim().replaceAll(" +", " ");
             raw = raw.replaceAll(" ,", ",");
             raw = raw.replaceAll(", ", ",");
+            raw = raw.replaceAll(";;", "; ;");
             raw = raw.replaceAll("\n+", "\n");
+            raw = raw.replaceAll("\n ", "\n");
+            raw = raw.replaceAll(" \n", "\n");
+            raw = raw.replaceAll("if \\(", "if(");
+            raw = raw.replaceAll("for \\(", "for(");
+            raw = raw.replaceAll("while \\(", "while(");
+            raw = raw.replaceAll("switch \\(", "switch(");
+            raw = raw.replaceAll("\\) \\{", "){");
             raw = raw.replaceAll(" =", "=");
             raw = raw.replaceAll("= ", "=");
             raw = raw.replaceAll("! ", "!");
@@ -108,6 +116,14 @@ public class PsiFileCenter {
             raw = raw.replaceAll("> ", ">");
             raw = raw.replaceAll(" <", "<");
             raw = raw.replaceAll("< ", "<");
+            raw = raw.replaceAll("\\+ ", "+");
+            raw = raw.replaceAll(" \\+", "+");
+            raw = raw.replaceAll("- ", "-");
+            raw = raw.replaceAll(" -", "-");
+            raw = raw.replaceAll(" /", "/");
+            raw = raw.replaceAll("/ ", "/");
+            raw = raw.replaceAll(" \\*", "*");
+            raw = raw.replaceAll("\\* ", "*");
             return raw;
         }
 
