@@ -5,12 +5,37 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.GridBagLayout ) {
 			"$columnSpecs": "0:1.0, 0:1.0"
-			"$rowSpecs": "0:1.0, 0"
+			"$rowSpecs": "0, 0:1.0, 0"
 			"$alignLeft": true
 			"$alignTop": true
 		} ) {
 			name: "this"
 			"defaultCloseOperation": 3
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "0, 0"
+				"$rowSpecs": "0"
+				"$hGap": 5
+				"$vGap": 5
+				"$alignLeft": true
+				"$alignTop": true
+			} ) {
+				name: "panel4"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+					"text": "Name:"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"insets": new java.awt.Insets( 5, 5, 5, 5 )
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "nameTextField"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridx": 1
+					"insets": new java.awt.Insets( 5, 5, 5, 5 )
+					"weightx": 1.0
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridwidth": 2
+			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0"
 				"$rowSpecs": "0, 0"
@@ -36,6 +61,7 @@ new FormModel {
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"insets": new java.awt.Insets( 5, 5, 5, 5 )
+				"gridy": 1
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0"
@@ -63,6 +89,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"gridx": 1
 				"insets": new java.awt.Insets( 5, 5, 5, 5 )
+				"gridy": 1
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "150, 150"
@@ -89,7 +116,7 @@ new FormModel {
 					"insets": new java.awt.Insets( 2, 2, 2, 2 )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridy": 1
+				"gridy": 2
 				"gridwidth": 2
 			} )
 		}, new FormLayoutConstraints( null ) {
