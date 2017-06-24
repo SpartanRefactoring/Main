@@ -62,7 +62,6 @@ public enum Spartanizer {
         });
     }
 
-    // TODO this is a bad name. its not recursive.
     public static void spartanizeFileRecursively(PsiFile f) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
@@ -70,6 +69,7 @@ public enum Spartanizer {
             toolbox.replaced = false;
             spartanizeFileOnePass(f);
         }
+        spartanizeFileOnePass(f);
     }
 
 
