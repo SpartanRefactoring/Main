@@ -19,12 +19,12 @@ import java.util.*;
  */
 public class Method extends ModifiableElement {
     private static final String TEMPLATE = "method";
-    private Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
-    private Replacer replacerReturnType, replacerParameters, replacerCodeBlock;
     @UserControlledMatcher
     public List<String> containsList = new LinkedList<>();
     @UserControlledMatcher
     public List<String> notContainsList = new LinkedList<>();
+    private Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
+    private Replacer replacerReturnType, replacerParameters, replacerCodeBlock;
 
     public Method(Encapsulator e) {
         super(e, TEMPLATE);
@@ -49,7 +49,7 @@ public class Method extends ModifiableElement {
 
     @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> map) {
-        if (super.generalizes(e, map).notMatches() || !iz.method(e.getInner())) return new MatchingResult(false);
+        if (!iz.method(e.getInner()) || super.generalizes(e, map).notMatches()) return new MatchingResult(false);
         PsiMethod m = az.method(e.getInner());
         Wrapper<Integer> dummy = new Wrapper<>(0);
         return matcherReturnType.getMatchingResult(m.getReturnTypeElement(), dummy).combineWith(
