@@ -503,4 +503,12 @@ public enum iz {
     public static boolean thisExpression(PsiElement e) {
         return typeCheck(PsiThisExpression.class, e);
     }
+
+    public static boolean dot(PsiElement e) {
+        return iz.javaToken(e) && az.javaToken(e).getText().equals(".");
+    }
+
+    public static boolean referenceParameterList(PsiElement e) {
+        return typeCheck(PsiReferenceParameterList.class, e);
+    }
 }

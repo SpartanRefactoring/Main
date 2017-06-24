@@ -111,7 +111,7 @@ public class Statement extends GenericMethodCallBasedBlock {
                 public void visitIdentifier(PsiIdentifier identifier) {
                     super.visitIdentifier(identifier);
                     if (identifier.getText().equals(map.get(id).get(0).getText()) &&
-                            !iz.thisExpression(identifier.getParent().getFirstChild()) &&
+                            !iz.dot(Utils.getPrevActualSibling(Utils.getPrevActualSibling(identifier))) &&
                             !iz.methodCallExpression(identifier.getParent().getParent())) {
                         PsiRewrite prr = new PsiRewrite();
                         prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(replacingIdentifier.get(id)));

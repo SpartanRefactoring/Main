@@ -52,7 +52,7 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
 
     public void testNanoTipper3() {
         preparePlayground("i->{return i;}");
-        assert playground.getOutput().equals("i-> i");
+        assert playground.getOutput().equals("i->i");
     }
 
     public void testClear() {

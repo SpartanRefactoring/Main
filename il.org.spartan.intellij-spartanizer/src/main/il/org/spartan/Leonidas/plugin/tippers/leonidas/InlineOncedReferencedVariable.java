@@ -6,7 +6,6 @@ import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.UNTESTED;
 
 /**
  * Inline variable
@@ -14,7 +13,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Oren Afek, Michal Cohen
  * @since 20/06/17
  */
-@LeonidasTipperDefinition.TipperUnderConstruction(UNTESTED)
+//@LeonidasTipperDefinition.TipperUnderConstruction(UNTESTED)
 public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
 
     @Override
