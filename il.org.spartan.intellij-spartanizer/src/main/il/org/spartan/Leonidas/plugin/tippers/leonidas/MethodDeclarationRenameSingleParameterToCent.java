@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+import il.org.spartan.Leonidas.plugin.UserControlledTipper;
 
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author melanyc
  * @since 10-06-2017
  */
+@UserControlledTipper
 public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTipperDefinition {
 
     Class2 identifier3;

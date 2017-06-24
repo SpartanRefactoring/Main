@@ -7,15 +7,16 @@ import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
+import il.org.spartan.Leonidas.plugin.UserControlledTipper;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.LeonidasUtils;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.tools.Tool;
 import java.awt.*;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class EditTipper extends JFrame {
     private JScrollPane TablePanel;
     private JLabel nameLabel;
     private ComponentJTable table;
-    private Object currentTip;
+    private Tipper currentTip;
 
     public EditTipper(String tipperName) {
         super("Edit Tipper");
@@ -41,6 +42,7 @@ public class EditTipper extends JFrame {
         nameLabel.setText(tipperName);
         currentTip = null;
         List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
+        List<LeonidasTipperDefinition> tippersInstances=Toolbox.getInstance().getAllTipperInstances();
         for (Tipper tip : tippers) {
             //           JOptionPane.showMessageDialog(this, tip.getClass().getSimpleName() + ", " + tipperName);
             if (tip.name().equals(tipperName)) {
@@ -49,21 +51,15 @@ public class EditTipper extends JFrame {
             }
         }
 
-        // if instance wasn't found
-        if (currentTip == null || !(currentTip instanceof LeonidasTipper)) {
-            JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.getClass().getSimpleName() + " Can't be edited. ");
+        if(!canBeEdited(tippersInstances)){
             return;
         }
+
 
         table = new ComponentJTable();
         ((DefaultTableModel) table.getModel()).setRowCount(100); //TODO: MAGIC NUMBER
         LeonidasTipper lt = (LeonidasTipper)currentTip;
         List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
-
-        if(!canBeEditted(lt)){
-            JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.getClass().getSimpleName() + "Can't be editted. ");
-            return;
-        }
 
         int currRow = 0;
         currRow = buildTableFields(tipperMatcherRoots,currRow,true);
@@ -84,18 +80,22 @@ public class EditTipper extends JFrame {
         setVisible(true);
     }
 
-    private boolean canBeEditted(LeonidasTipper lt) {
-        List<GenericEncapsulator> tipperRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
-        int counter = 0;
-        for(GenericEncapsulator root : tipperRoots) {
-            Field[] fields = root.getClass().getDeclaredFields();
-            for (Field field : fields) {
-                if (field.isAnnotationPresent(UserControlledMatcher.class)) {
-                    counter++;
-                }
+    private boolean canBeEdited(List<LeonidasTipperDefinition> tippersInstances) {
+        if (currentTip == null || !(currentTip instanceof LeonidasTipper)) {
+            JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.name() + " Can't Be Edited. ");
+            return false;
+        }
+        LeonidasTipperDefinition ltd = null;
+        for(LeonidasTipperDefinition instance : tippersInstances){
+            if(instance.getClass().getSimpleName().equals( currentTip.name())){
+                ltd = instance;
             }
         }
-        return counter != 0;
+        if(ltd == null || !ltd.getClass().isAnnotationPresent(UserControlledTipper.class)){
+            JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.name() + " Can't Be Edited. ");
+            return false;
+        }
+        return true;
     }
 
     private int buildTableFields(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
