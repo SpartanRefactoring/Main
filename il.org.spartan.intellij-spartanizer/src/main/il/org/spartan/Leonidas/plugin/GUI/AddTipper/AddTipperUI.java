@@ -4,10 +4,16 @@
 
 package il.org.spartan.Leonidas.plugin.GUI.AddTipper;
 
+import com.intellij.util.ui.UIUtil;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.Theme;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 /**
  * @author Sharon LK
@@ -17,12 +23,24 @@ public class AddTipperUI extends JFrame {
         initComponents();
 
         setSize(600, 800);
+        matcherTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        replacerTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        if (UIUtil.isUnderDarcula()) {
+            try {
+                Theme theme = Theme.load(getClass().getResourceAsStream(
+                        "/ui/dark.xml"));
+                theme.apply(matcherTextArea);
+                theme.apply(replacerTextArea);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void buttonSaveActionPerformed(ActionEvent e) {
         CustomLeonidasTippers.getInstance().generate(nameTextField.getText(),
-                matcherTextPane.getText(),
-                replacerTextPane.getText());
+                matcherTextArea.getText(),
+                replacerTextArea.getText());
 
         // Close window after we add the tipper
         dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -41,11 +59,11 @@ public class AddTipperUI extends JFrame {
         panel1 = new JPanel();
         label1 = new JLabel();
         scrollPane1 = new JScrollPane();
-        matcherTextPane = new JTextPane();
+        matcherTextArea = new RSyntaxTextArea();
         panel2 = new JPanel();
         label2 = new JLabel();
         scrollPane2 = new JScrollPane();
-        replacerTextPane = new JTextPane();
+        replacerTextArea = new RSyntaxTextArea();
         panel3 = new JPanel();
         buttonSave = new JButton();
         buttonClose = new JButton();
@@ -104,7 +122,7 @@ public class AddTipperUI extends JFrame {
 
             //======== scrollPane1 ========
             {
-                scrollPane1.setViewportView(matcherTextPane);
+                scrollPane1.setViewportView(matcherTextArea);
             }
             panel1.add(scrollPane1, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -130,7 +148,7 @@ public class AddTipperUI extends JFrame {
 
             //======== scrollPane2 ========
             {
-                scrollPane2.setViewportView(replacerTextPane);
+                scrollPane2.setViewportView(replacerTextArea);
             }
             panel2.add(scrollPane2, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -178,11 +196,11 @@ public class AddTipperUI extends JFrame {
     private JPanel panel1;
     private JLabel label1;
     private JScrollPane scrollPane1;
-    private JTextPane matcherTextPane;
+    private RSyntaxTextArea matcherTextArea;
     private JPanel panel2;
     private JLabel label2;
     private JScrollPane scrollPane2;
-    private JTextPane replacerTextPane;
+    private RSyntaxTextArea replacerTextArea;
     private JPanel panel3;
     private JButton buttonSave;
     private JButton buttonClose;
