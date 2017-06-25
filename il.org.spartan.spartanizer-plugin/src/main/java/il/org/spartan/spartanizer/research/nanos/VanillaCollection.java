@@ -10,8 +10,8 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Nano matches fields
  * @author orimarco {@code marcovitch.ori@gmail.com}

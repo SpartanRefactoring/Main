@@ -4,8 +4,6 @@ import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.ui.*;
 
-import fluent.ly.*;
-
 /** Git pull command.
  * @author Ori Roth
  * @since 2017-04-24 */

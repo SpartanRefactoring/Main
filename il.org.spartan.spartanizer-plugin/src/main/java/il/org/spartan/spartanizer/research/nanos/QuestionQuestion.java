@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.research.nanos;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** X == null ? Y : Z
  * @author orimarco {@code marcovitch.ori@gmail.com}

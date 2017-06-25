@@ -10,7 +10,9 @@ import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Collects metrics at different level of granularity: File, Class, Method
  * @author Matteo Orru'

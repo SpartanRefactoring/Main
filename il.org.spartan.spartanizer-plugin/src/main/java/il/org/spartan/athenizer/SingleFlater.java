@@ -17,7 +17,6 @@ import org.eclipse.ui.texteditor.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;

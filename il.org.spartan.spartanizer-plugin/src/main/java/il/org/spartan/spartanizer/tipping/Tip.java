@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.tipping;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -9,7 +9,6 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** A function object representing a sequence of operations on an

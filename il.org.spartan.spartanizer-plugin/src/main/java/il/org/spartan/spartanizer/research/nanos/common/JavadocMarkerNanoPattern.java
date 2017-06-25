@@ -8,7 +8,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Base class for all nanos which match a full method, those patterns add a
  * Javadoc marker to the method rather than replacing it with some other syntax.

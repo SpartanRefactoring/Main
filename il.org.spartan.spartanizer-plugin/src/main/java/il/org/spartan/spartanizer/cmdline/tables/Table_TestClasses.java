@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.lang.reflect.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.tables.*;
 
 /** TODO Matteo Orru': document class {@link }

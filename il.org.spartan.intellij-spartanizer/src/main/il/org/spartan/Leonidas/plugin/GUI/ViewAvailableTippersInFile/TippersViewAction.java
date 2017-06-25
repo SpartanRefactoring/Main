@@ -9,7 +9,6 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
-import il.org.spartan.Leonidas.plugin.Spartanizer;
 import org.jetbrains.annotations.Nullable;
 
 /**

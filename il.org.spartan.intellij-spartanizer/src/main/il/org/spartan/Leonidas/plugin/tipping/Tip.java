@@ -3,7 +3,6 @@ package il.org.spartan.Leonidas.plugin.tipping;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
 
 /**
  * I took the idea of extending range from the original spartanizer,

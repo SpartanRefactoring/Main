@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.good;
 
 import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -19,6 +19,8 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.library.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 

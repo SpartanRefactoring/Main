@@ -12,7 +12,6 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;

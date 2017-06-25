@@ -12,8 +12,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import icons.Icons;
-import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nullable;
 

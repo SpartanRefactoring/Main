@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.good;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -8,12 +8,11 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 
-/** simple no-gimmicks singleton service that does the simple job of applying a
+/** Simple no-gimmicks singleton service that does the simple job of applying a
  * {@link Toolbox} {@link #once(String)}, {@link #twice(String)},
  * {@link #thrice(String)}, and {@link #repetitively(String)}.
  * @author Yossi Gil

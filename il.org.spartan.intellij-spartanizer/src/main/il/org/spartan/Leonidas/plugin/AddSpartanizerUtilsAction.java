@@ -1,7 +1,5 @@
 package il.org.spartan.Leonidas.plugin;
 
-import com.google.gson.Gson;
-import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;

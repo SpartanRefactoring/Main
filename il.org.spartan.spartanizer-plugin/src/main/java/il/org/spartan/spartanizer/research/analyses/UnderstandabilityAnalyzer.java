@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 
 /** Class to measure Understandability metrics in a method
  * @author Ori Marcovitch

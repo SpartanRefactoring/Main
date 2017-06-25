@@ -7,8 +7,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** @nano for(A a : B ) if(X) S;
  * @author orimarco {@code marcovitch.ori@gmail.com}

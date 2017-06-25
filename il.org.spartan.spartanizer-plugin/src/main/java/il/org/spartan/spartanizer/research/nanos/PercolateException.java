@@ -10,9 +10,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Catch exception, then throw it again
  * @author orimarco {@code marcovitch.ori@gmail.com}

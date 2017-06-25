@@ -14,7 +14,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;

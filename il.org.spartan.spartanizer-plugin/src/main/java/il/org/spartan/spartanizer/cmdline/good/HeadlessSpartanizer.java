@@ -1,12 +1,13 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.good;
 
 import java.io.*;
 import java.util.*;
 
 import fluent.ly.*;
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
-import il.org.spartan.spartanizer.cmdline.report.*;
+import il.org.spartan.spartanizer.cmdline.runnables.*;
 
 /** A configurable version of the HeadlessSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}

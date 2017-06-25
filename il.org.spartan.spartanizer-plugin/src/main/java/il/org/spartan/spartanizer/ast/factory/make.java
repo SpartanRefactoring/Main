@@ -23,7 +23,6 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;

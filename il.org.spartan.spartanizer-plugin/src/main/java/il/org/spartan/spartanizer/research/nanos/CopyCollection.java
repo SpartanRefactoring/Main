@@ -5,8 +5,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Create a collection out of a copy of another
  * @author orimarco {@code marcovitch.ori@gmail.com}

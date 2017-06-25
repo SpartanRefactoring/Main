@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.good;
 
 import static il.org.spartan.tide.*;
 
@@ -12,6 +12,8 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.library.Utils;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 

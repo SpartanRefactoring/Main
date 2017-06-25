@@ -6,7 +6,7 @@ import org.eclipse.text.edits.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;

@@ -4,7 +4,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;

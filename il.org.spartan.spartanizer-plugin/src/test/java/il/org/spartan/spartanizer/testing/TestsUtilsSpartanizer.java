@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.testing;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;

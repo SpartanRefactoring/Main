@@ -5,7 +5,6 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
 
 /** ASTNode trees utils

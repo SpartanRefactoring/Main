@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 
@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:

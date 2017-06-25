@@ -5,8 +5,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** List that can contain nano patterns
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.report;
+package il.org.spartan.spartanizer.cmdline.runnables;
 
 import static il.org.spartan.tide.*;
 
@@ -10,8 +10,8 @@ import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
+import il.org.spartan.spartanizer.cmdline.runnables.ConfigurableReport.Settings.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Collects a set of metrics A wrapper for {@link CSVStatistics}
  * @author Matteo Orru'

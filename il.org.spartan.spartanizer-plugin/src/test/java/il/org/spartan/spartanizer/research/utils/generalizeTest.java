@@ -5,7 +5,7 @@ import static fluent.ly.azzert.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

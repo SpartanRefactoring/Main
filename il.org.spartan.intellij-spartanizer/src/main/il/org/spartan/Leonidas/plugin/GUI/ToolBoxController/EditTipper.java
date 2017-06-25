@@ -16,7 +16,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.tools.Tool;
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.List;

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.tipping;
 
 import java.util.*;
 

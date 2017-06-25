@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** A spartanizer without heavy or buggy tippers
