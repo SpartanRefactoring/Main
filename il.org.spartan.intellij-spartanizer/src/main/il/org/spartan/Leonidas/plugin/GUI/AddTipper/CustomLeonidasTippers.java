@@ -63,19 +63,20 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
     /**
      * Generates a leonidas source file from the given matcher and replacer.
      *
-     * @param name     tipper's name
-     * @param matcher  matcher function source code
-     * @param replacer replacer function source code
+     * @param name        tipper's name
+     * @param description tipper's description
+     * @param matcher     matcher function source code
+     * @param replacer    replacer function source code
      */
-    public void generate(String name, String matcher, String replacer) {
-        tippers.put(name, new LeonidasTipper(name, getTipperString(name, matcher, replacer)));
+    public void generate(String name, String description, String matcher, String replacer) {
+        tippers.put(name, new LeonidasTipper(name, getTipperString(name, description, matcher, replacer)));
 
         Toolbox.getInstance().add(tippers.get(name));
     }
 
-    private String getTipperString(String name, String matcher, String replacer) {
+    private String getTipperString(String name, String description, String matcher, String replacer) {
         return String.format("/**\n" +
-                "* Hello world\n" +
+                "* %s\n" +
                 "*/\n" +
                 "public class %s implements LeonidasTipperDefinition {\n" +
                 "    @Override\n" +
@@ -95,6 +96,6 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
                 "           /* end */\n" +
                 "       });\n" +
                 "    }\n" +
-                "}\n", name, matcher, replacer);
+                "}\n", description, name, matcher, replacer);
     }
 }

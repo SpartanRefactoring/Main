@@ -27,8 +27,7 @@ public class AddTipperUI extends JFrame {
         replacerTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         if (UIUtil.isUnderDarcula()) {
             try {
-                Theme theme = Theme.load(getClass().getResourceAsStream(
-                        "/ui/dark.xml"));
+                Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
                 theme.apply(matcherTextArea);
                 theme.apply(replacerTextArea);
             } catch (IOException e) {
@@ -39,6 +38,7 @@ public class AddTipperUI extends JFrame {
 
     private void buttonSaveActionPerformed(ActionEvent e) {
         CustomLeonidasTippers.getInstance().generate(nameTextField.getText(),
+                descriptionTextField.getText(),
                 matcherTextArea.getText(),
                 replacerTextArea.getText());
 
@@ -56,6 +56,9 @@ public class AddTipperUI extends JFrame {
         panel4 = new JPanel();
         label3 = new JLabel();
         nameTextField = new JTextField();
+        label4 = new JLabel();
+        descriptionTextField = new JTextField();
+        separator1 = new JSeparator();
         panel1 = new JPanel();
         label1 = new JLabel();
         scrollPane1 = new JScrollPane();
@@ -73,9 +76,9 @@ public class AddTipperUI extends JFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new GridBagLayout());
         ((GridBagLayout)contentPane.getLayout()).columnWidths = new int[] {0, 0, 0};
-        ((GridBagLayout)contentPane.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+        ((GridBagLayout) contentPane.getLayout()).rowHeights = new int[]{0, 0, 0, 0, 0};
         ((GridBagLayout)contentPane.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0E-4};
-        ((GridBagLayout)contentPane.getLayout()).rowWeights = new double[] {0.0, 1.0, 0.0, 1.0E-4};
+        ((GridBagLayout) contentPane.getLayout()).rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0E-4};
 
         //======== panel4 ========
         {
@@ -89,22 +92,34 @@ public class AddTipperUI extends JFrame {
 
             panel4.setLayout(new GridBagLayout());
             ((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {0, 0, 0};
-            ((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0};
+            ((GridBagLayout) panel4.getLayout()).rowHeights = new int[]{0, 0, 0};
             ((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-            ((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+            ((GridBagLayout) panel4.getLayout()).rowWeights = new double[]{0.0, 0.0, 1.0E-4};
 
             //---- label3 ----
             label3.setText("Name:");
             panel4.add(label3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(5, 5, 5, 10), 0, 0));
+                    new Insets(5, 5, 10, 10), 0, 0));
             panel4.add(nameTextField, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(5, 5, 5, 5), 0, 0));
+                    new Insets(5, 5, 10, 5), 0, 0));
+
+            //---- label4 ----
+            label4.setText("Description:");
+            panel4.add(label4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(5, 5, 5, 10), 0, 0));
+            panel4.add(descriptionTextField, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(5, 5, 5, 5), 0, 0));
         }
         contentPane.add(panel4, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
+        contentPane.add(separator1, new GridBagConstraints(0, 1, 2, 1, 1.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
 
         //======== panel1 ========
         {
@@ -128,7 +143,7 @@ public class AddTipperUI extends JFrame {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
         }
-        contentPane.add(panel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+        contentPane.add(panel1, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 5), 0, 0));
 
@@ -154,7 +169,7 @@ public class AddTipperUI extends JFrame {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
         }
-        contentPane.add(panel2, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+        contentPane.add(panel2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 5), 0, 0));
 
@@ -180,7 +195,7 @@ public class AddTipperUI extends JFrame {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(2, 2, 2, 2), 0, 0));
         }
-        contentPane.add(panel3, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0,
+        contentPane.add(panel3, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
         pack();
@@ -193,6 +208,9 @@ public class AddTipperUI extends JFrame {
     private JPanel panel4;
     private JLabel label3;
     private JTextField nameTextField;
+    private JLabel label4;
+    private JTextField descriptionTextField;
+    private JSeparator separator1;
     private JPanel panel1;
     private JLabel label1;
     private JScrollPane scrollPane1;
