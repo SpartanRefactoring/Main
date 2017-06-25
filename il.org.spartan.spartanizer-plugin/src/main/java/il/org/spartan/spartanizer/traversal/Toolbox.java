@@ -257,7 +257,7 @@ public class Toolbox {
           new TernaryPushdownStrings(), //
           new TernarySameValueEliminate(), //
           new TernaryBranchesAreOppositeBooleans(), //
-          new TernarySameValueEliminate(), null) //
+          null) //
       .add(EnumConstantDeclaration.class, new BodyDeclarationModifiersSort<>()) //
       .add(TypeDeclaration.class, //
           new BodyDeclarationModifiersSort<>(), //

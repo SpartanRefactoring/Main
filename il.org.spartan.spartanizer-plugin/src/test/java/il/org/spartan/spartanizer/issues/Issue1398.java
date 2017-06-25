@@ -31,7 +31,7 @@ public class Issue1398 {
   }
   @Test public void t31() {
     trimmingOf("int hiCount = hiChars != null ? hiChars.length : 1;int loCount = loChars == null ? 1 : loChars.length;"
-        + "char[] output = new char[hiCount + loCount];").using(new LocalInitializedInlineIntoNext()).gives(
-            "int hiCount = hiChars != null ? hiChars.length : 1;char[] output = new char[hiCount + (loChars == null ? 1 : loChars.length)];");
+        + "char[] output = new char[hiCount + loCount];").using(new LocalInitializedInlineIntoNext())
+            .gives("int hiCount = hiChars != null ? hiChars.length : 1;char[] output = new char[hiCount + (loChars == null ? 1 : loChars.length)];");
   }
 }

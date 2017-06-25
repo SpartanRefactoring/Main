@@ -40,6 +40,6 @@ public class SpartanizationOperation extends WidgetOperation {
     }
   }
   @Override public String imageURL() {
-    return "file:/src/main/resources/il/org/spartan/spartanizer/plugin/widget/operations/spartanize.jpg";
+    return "file:/src/main/icons/spartan-warrior.gif";
   }
 }
