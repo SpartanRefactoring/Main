@@ -22,8 +22,11 @@ public class TryMergeCatchers extends ReplaceCurrentNode<TryStatement>//
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final TryStatement s) {
     final List<CatchClause> cs = step.catchClauses(s);
     for (int i = 0; i < cs.size(); ++i)
-      for (int j = i + 1; j < cs.size(); ++j)
-        if (wizard.eq(cs.get(i).getBody(), cs.get(j).getBody())) {
+      for (int j = i + 1; j < cs.size(); ++j) {
+        if (wizard.eq(cs.get(i).getBody(), cs.get(j).getBody()) && !((cs.get(i).getException().getType().toString().equals("Throwable")
+            && cs.get(j).getException().getType().toString().equals("RuntimeException"))
+            || (cs.get(j).getException().getType().toString().equals("Throwable")
+                && cs.get(i).getException().getType().toString().equals("RuntimeException")))) {
           final TryStatement $ = copy.of(s);
           final CatchClause mergedCatch = copy.of(cs.get(i));
           $.catchClauses().remove(i);
@@ -35,6 +38,7 @@ public class TryMergeCatchers extends ReplaceCurrentNode<TryStatement>//
           $.catchClauses().add(j - 1, mergedCatch);
           return $;
         }
+      }
     return null;
   }
   @Override public String description(@SuppressWarnings("unused") final TryStatement ¢) {
