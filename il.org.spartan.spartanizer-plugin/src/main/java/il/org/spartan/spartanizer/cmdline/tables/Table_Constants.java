@@ -7,7 +7,7 @@ import java.lang.reflect.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.tables.*;
 
 /** Generates a table, counting constants in repositories

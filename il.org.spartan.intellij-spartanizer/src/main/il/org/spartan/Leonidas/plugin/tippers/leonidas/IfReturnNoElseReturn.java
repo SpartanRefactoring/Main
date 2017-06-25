@@ -44,7 +44,7 @@ public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("if(l.size() > 0)\nreturn l.get(0);\nreturn null;", "return l.size() > 0 ? l.get(0) : null")
+                .put("if(l.size() > 0)\nreturn l.get(0);\nreturn null;", "return l.size() > 0 ? l.get(0) : null;")
                 .map();
     }
 }

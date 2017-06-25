@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A quantifier of type 'Optional' that is implemented by method call expression.
+ * For example: "optional(statement(4))"
  * @author Oren Afek, michalcohen
  * @since 11-05-2017.
  */

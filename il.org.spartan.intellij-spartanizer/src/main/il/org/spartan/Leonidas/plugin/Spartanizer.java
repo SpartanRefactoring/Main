@@ -62,13 +62,36 @@ public enum Spartanizer {
         });
     }
 
-    // TODO this is a bad name. its not recursive.
     public static void spartanizeFileRecursively(PsiFile f) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
         while (toolbox.replaced) {
             toolbox.replaced = false;
             spartanizeFileOnePass(f);
+        }
+        spartanizeFileOnePass(f);
+    }
+
+    public static void spartanizeFileOnePassNoNanos(PsiFile f) {
+        if (!shouldSpartanize(f))
+            return;
+        Toolbox toolbox = Toolbox.getInstance();
+        f.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                toolbox.executeAllTippersNoNanos(e);
+            }
+        });
+    }
+
+    // TODO this is a bad name. its not recursive.
+    public static void spartanizeFileRecursivelyNoNanos(PsiFile f) {
+        Toolbox toolbox = Toolbox.getInstance();
+        toolbox.replaced = true;
+        while (toolbox.replaced) {
+            toolbox.replaced = false;
+            spartanizeFileOnePassNoNanos(f);
         }
     }
 

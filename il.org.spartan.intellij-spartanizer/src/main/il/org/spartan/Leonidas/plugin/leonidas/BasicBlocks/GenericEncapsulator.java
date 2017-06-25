@@ -12,11 +12,13 @@ import java.util.stream.Collectors;
 
 
 /**
+ * A base class for all basic blocks.
  * @author Oren Afek && Michal Cohen
  * @since 03-05-2017
  */
 public abstract class GenericEncapsulator extends Encapsulator {
     protected String template;
+    protected String description = "";
     private List<BiConstraint> constraints = new ArrayList<>();
     private List<ReplacingRule> replacingRules = new ArrayList<>();
 
@@ -39,11 +41,19 @@ public abstract class GenericEncapsulator extends Encapsulator {
     protected GenericEncapsulator() {
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public List<ReplacingRule> getReplacingRules() {
+        return replacingRules;
+    }
+
     /**
      * Does the given PsiElement is a stub representing the general form?
      *
      * @param other PSI Element
-     * @return true iff other needs to be switched with this generic component.
+     * @return true iff other needs to be switched with the current generic component.
      */
     public abstract boolean conforms(PsiElement other);
 
@@ -68,15 +78,30 @@ public abstract class GenericEncapsulator extends Encapsulator {
         assert conforms(e.getInner());
         Encapsulator upperElement = getConcreteParent(e);
         GenericEncapsulator ge = create(upperElement, map);
-        if (isGeneric())
+        if (isGeneric()) {
             ge.putId(ge.extractId(e.getInner()));
+            ge.extractAndAssignDescription(e.getInner());
+        }
         return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
     }
 
+    /**
+     * @param prev an encapsulator
+     * @param next the parent of prev
+     * @return true iff prev is not the highest element that needs to be pruned.
+     */
     protected abstract boolean goUpwards(Encapsulator prev, Encapsulator next);
 
     /**
-     * Creates another one like me, with concrete PsiElement within
+     * Adds a description to the element
+     *
+     * @param e a stub element
+     * @return this, for fluent API
+     */
+    public abstract GenericEncapsulator extractAndAssignDescription(PsiElement e);
+
+    /**
+     * Creates another one like me, with concrete PsiElement within, since in the toolbox, only stubs are created.
      *
      * @param e element within.
      * @param map a mapping between an id of generic element to it's list of constraints.
@@ -85,10 +110,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
 
     /**
-     * Can I generalize with a concrete element
+     * Do I generalize a concrete element
      *
      * @param e concrete element
-     * @return true iff I can generalize with e
+     * @return true iff I generalize with e
      */
     @SuppressWarnings("InfiniteRecursion")
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
@@ -96,6 +121,11 @@ public abstract class GenericEncapsulator extends Encapsulator {
                 .allMatch(c -> c.accept(e, m)));
     }
 
+    /**
+     * @param elements the matching elements of this generic basic block of the user.
+     * @param map      the mapping between ids of generic elements and their concrete corresponding elements.
+     * @return the replaced elements.
+     */
     protected List<PsiElement> applyReplacingRules(List<PsiElement> elements, Map<Integer, List<PsiElement>> map){
         return elements.stream().map(e -> {
             PsiElement temp = e;
@@ -106,6 +136,12 @@ public abstract class GenericEncapsulator extends Encapsulator {
         }).collect(Collectors.toList());
     }
 
+    /**
+     * @param elements the matching elements of this generic basic block of the user.
+     * @param m the mapping between ids of generic elements and their concrete corresponding elements.
+     * @param r PsiRewrite
+     * @return the concrete replacer of this generic basic block.
+     */
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         elements = applyReplacingRules(elements, m);
         if (parent == null) return elements;
@@ -120,8 +156,8 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     /**
-     * @param n method call representing generic element.
-     * @return the highest generic parent.
+     * @param n stub representing generic element.
+     * @return the highest generic parent that should be pruned.
      */
     public Encapsulator getConcreteParent(Encapsulator n) {
         if (n.parent == null) return n;
@@ -133,7 +169,12 @@ public abstract class GenericEncapsulator extends Encapsulator {
         return prev;
     }
 
-    public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {
+    /**
+     * @param n stub representing generic element.
+     * @param map the mapping between ids of generic elements and their concrete corresponding elements.
+     * @return the highest generic parent that should be pruned.
+     */
+    public Encapsulator getConcreteParent(Encapsulator n, Map<Integer, List<Matcher.Constraint>> map) {
         return getConcreteParent(n);
     }
 
@@ -142,16 +183,39 @@ public abstract class GenericEncapsulator extends Encapsulator {
         return true;
     }
 
+    /**
+     * @param c constraint
+     * When building the matcher, adds a constraint to the list of constraints.
+     */
     protected void addConstraint(Constraint c) {
         constraints.add((e, m) -> c.accept(e));
     }
 
+    /**
+     * @param c constraint
+     * When building the matcher, adds a constraint that uses the map to the list of constraints.
+     */
     protected void addConstraint(BiConstraint c) {
         constraints.add(c);
     }
 
+    /**
+     * @param rr replacing rule.
+     * When building the replacer, adds a replacing rule to the basic block.
+     */
     protected void addReplacingRule(ReplacingRule rr){
         replacingRules.add(rr);
+    }
+
+    /**
+     * @return the hidden generic elements that are part of the properties of some basic blocks.
+     */
+    public Map<Integer, GenericEncapsulator> getGenericElements() {
+        return new HashMap<>();
+    }
+
+    public List<BiConstraint> getConstraints() {
+        return constraints;
     }
 
     public interface Constraint {
@@ -164,13 +228,5 @@ public abstract class GenericEncapsulator extends Encapsulator {
 
     protected interface ReplacingRule {
         PsiElement replace(PsiElement encapsulator, Map<Integer, List<PsiElement>> m);
-    }
-
-    public Map<Integer, GenericEncapsulator> getGenericElements(){
-        return new HashMap<>();
-    }
-
-    public List<BiConstraint> getConstraints() {
-        return constraints;
     }
 }

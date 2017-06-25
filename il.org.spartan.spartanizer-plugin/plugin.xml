@@ -465,25 +465,25 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        <command 
        tooltip="Spartanize"
          commandId="il.org.spartan.SpartanGlobal" 
-         icon="platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif" 
+         icon="src/main/resources/il/org/spartan/spartanizer/plugin/widget/operations/spartanize.jpg" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
        </command>
        <!--<command
        tooltip="Collateralize"
          commandId="il.org.spartan.AthensCollateral" 
-         icon="platform:/plugin/org.eclipse.debug.ui/icons/full/eview16/watchlist_view.png" 
+         icon="plugin/pictures/athenizeicon2.png" 
          id="il.org.spartan.plugin.toolbars.GlassesButton">
        </command>-->
        <command
        tooltip="Athenize"
          commandId="il.org.spartan.AthensInflate" 
-         icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png"
+         icon="plugin/pictures/athenizeicon.png"
          id="il.org.spartan.plugin.toolbars.InflateButton" >
        </command>
        <command
        tooltip="Widget"
          commandId="il.org.spartan.SpartanWidget" 
-         icon="platform:/plugin/org.eclipse.ui.intro.universal/icons/welcome16.gif" 
+         icon="plugin/pictures/widgeticon.png" 
          id="il.org.spartan.plugin.toolbars.WidgetButton">
        </command>
     </toolbar>

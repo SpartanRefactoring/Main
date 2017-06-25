@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A basic block representing a trowable element.
  * @author Oren Afek
  * @since 30/5/2017.
  */
@@ -46,6 +47,4 @@ public class Throwable extends GenericMethodCallBasedBlock {
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         return new Throwable(e);
     }
-
-
 }

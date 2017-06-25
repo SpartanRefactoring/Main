@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A basic block representing "true" or "false".
  * @author Sharon KL & Michal Cohen & Oren Afek
  * @since 5/3/2017.
  */

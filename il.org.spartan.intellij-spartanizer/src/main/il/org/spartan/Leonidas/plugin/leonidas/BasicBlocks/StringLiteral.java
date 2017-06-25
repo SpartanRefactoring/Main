@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A basic block representing a string literal.
  * @author Oren Afek
  * @since 29/5/2017.
  */

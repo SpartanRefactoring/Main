@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A basic block representing 'Or' notion between elements.
  * @author Sharon LK
- * @since 19.5.17
+ * @since 19-05-17
  */
 public class Union extends GenericMethodCallBasedBlock {
     public static final String TEMPLATE = "union";

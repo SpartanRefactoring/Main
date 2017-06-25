@@ -91,4 +91,12 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     }
     return false;
   }
+  @Override protected ASTNode[] span() {
+    ASTNode[] $ = new ASTNode[subsequentStatements.size() + 1];
+    $[0] = current;
+    int i = 1;
+    for (Statement s : subsequentStatements)
+      $[i++] = s;
+    return $;
+  }
 }

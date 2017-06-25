@@ -5,8 +5,6 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
-import il.org.spartan.Leonidas.plugin.GUI.ToolBoxController.EditTipper;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;

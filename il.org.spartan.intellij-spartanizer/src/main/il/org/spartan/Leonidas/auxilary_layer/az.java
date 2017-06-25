@@ -143,4 +143,8 @@ public enum az {
     public static PsiFile psiFile(PsiElement e) {
         return e != null ? (PsiFile)e : null;
     }
+
+    public static <T extends PsiElement> String string(T value) {
+        return String.valueOf(value.getText());
+    }
 }

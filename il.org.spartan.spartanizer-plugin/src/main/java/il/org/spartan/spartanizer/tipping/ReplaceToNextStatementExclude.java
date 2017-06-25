@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = -0x283289F678CF10B1L;

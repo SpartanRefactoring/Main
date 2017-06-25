@@ -5,8 +5,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** {@link HoldsForAny} Nano Pattern - holds P(c) for any c in C
  * @author orimarco {@code marcovitch.ori@gmail.com}

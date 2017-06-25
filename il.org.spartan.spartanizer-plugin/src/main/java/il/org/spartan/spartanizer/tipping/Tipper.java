@@ -11,7 +11,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;

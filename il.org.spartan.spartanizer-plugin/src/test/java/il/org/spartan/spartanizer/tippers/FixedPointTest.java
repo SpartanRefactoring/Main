@@ -8,7 +8,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note

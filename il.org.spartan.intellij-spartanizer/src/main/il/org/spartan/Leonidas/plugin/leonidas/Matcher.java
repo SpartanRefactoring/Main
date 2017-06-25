@@ -8,8 +8,6 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
-import il.org.spartan.utils.Bool;
-import org.hamcrest.junit.internal.Matching;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -141,7 +139,7 @@ public class Matcher {
      */
     private void buildMatcherTree(Matcher matcher, Map<Integer, List<Constraint>> map) {
         if (map == null) return;
-        matcher.getGenericElements()
+        matcher.getGenericElementsWithNoFields()
                 .forEach((i, e) -> java.util.Optional.ofNullable(map.get(i)).ifPresent(z -> z.forEach(j -> {
                     if (j instanceof StructuralConstraint)
                         matcher.addConstraint(i, (StructuralConstraint) j);
@@ -185,6 +183,11 @@ public class Matcher {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @param treeToMatch the tree of the user
+     * @return the matching result: true iff the trees match, and a mapping between ids of
+     * generic element to the element of the user.
+     */
     public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
         MatchingResult mr = new MatchingResult(false);
         List<Encapsulator> potentialRoots = new ArrayList<>();
@@ -211,16 +214,16 @@ public class Matcher {
                             info.get(id).stream()
                                     .peek(x->{}) // Do not remove, magic happen here :(
                                     .allMatch(
-                                    c::match
-                            )
+                                            c::match
+                                    )
                     );
 
-                   Boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
+                    Boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
                             info.get(id).stream().allMatch(e ->
                                     c.accept(new Encapsulator(e), mr.getMap())
                             )
                     );
-                   return b1 && b2;
+                    return b1 && b2;
                 })
                 ? mr : mr.setNotMatches();
     }
@@ -245,6 +248,23 @@ public class Matcher {
             }
         }));
         return tmp;
+    }
+
+    /**
+     * @return list of Ids of all the generic elements in the tipper.
+     */
+    private Map<Integer, GenericEncapsulator> getGenericElementsWithNoFields() {
+        final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
+        roots.forEach(root -> root.accept(e -> {
+            if (e.isGeneric()) {
+                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
+            }
+        }));
+        return tmp;
+    }
+
+    public List<Encapsulator> getAllRoots() {
+        return roots;
     }
 
     public static abstract class Constraint {
@@ -305,10 +325,5 @@ public class Matcher {
             element = e;
         }
     }
-
-    public List<Encapsulator> getAllRoots(){
-        return roots;
-    }
-
 }
 

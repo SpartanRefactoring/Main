@@ -43,7 +43,7 @@ public class StringLiteralEqualsChangeOrder implements LeonidasTipperDefinition 
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("String s = \"Hello!\";\nSystem.out.println(s.equals(\"Bye\"));", "String s = \"Hello!\"; System.out.println(\"Bye\".equals(s));")
+                .put("String s = \"Hello!\";\nSystem.out.println(s.equals(\"Bye\"));", "String s = \"Hello!\";\n System.out.println(\"Bye\".equals(s));")
                 .map();
     }
 }

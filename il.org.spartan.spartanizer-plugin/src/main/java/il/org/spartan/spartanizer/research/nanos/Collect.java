@@ -7,9 +7,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Actually contains {@link Select} and {@link CopyCollection}
  * @nano for(X x : Y) if(Z) w.add(x);

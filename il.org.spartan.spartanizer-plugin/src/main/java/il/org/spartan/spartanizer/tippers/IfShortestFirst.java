@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 
@@ -22,6 +23,6 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
   @Override public Statement replacement(final IfStatement ¢) {
-    return wizard.thenIsShorter(¢) ? null : make.invert(¢);
+    return wizard.thenIsShorter(¢) ? null : make.newSafeIf(az.statement(¢.getParent()), step.elze(¢), step.then(¢), make.notOf(¢.getExpression()));
   }
 }

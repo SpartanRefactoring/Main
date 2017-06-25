@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -13,6 +14,7 @@ import java.util.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -21,7 +23,6 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
@@ -241,8 +242,9 @@ public enum make {
       if (¢ >= xs.size())
         return $;
   }
+
   public static IfStatement invert(final IfStatement ¢) {
-    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
+    return az.ifStatement(newSafeIf(null, elze(¢), then(¢), make.notOf(¢.getExpression())));
   }
   public static List<Statement> listMe(final Expression ¢) {
     return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
@@ -443,5 +445,52 @@ public enum make {
   }
   public static SimpleName newLowerCamelCase(final SimpleName old, final String s) {
     return from(old).identifier(s.substring(0, 1).toLowerCase() + s.substring(1));
+  }
+  public static Statement newSafeIf(Statement parent,Statement then,Statement elze,Expression x) {
+    IfStatement $ = then.getAST().newIfStatement();
+    $.setExpression(copy.of(x));
+    $.setThenStatement(fixedThen(then,elze));
+    if(elze != null)
+      $.setElseStatement(copy.of(elze));
+    return !needsBlock(parent, elze) ? $ : subject.statements($).toBlock();
+  }
+  /**
+   * Puts then statement in block if needed. 
+   * For example when the then is an if statement need to enclose it in a block so that the else won't be related to it. 
+   */
+  private static Statement fixedThen(Statement then, Statement elze) {
+    return elze == null || !hasIfWithoutElse(then) ? copy.of(then) : subject.statements(copy.of(then)).toBlock();
+  }
+  /**
+   * Checks whether the if statement needs to be placed in block considering it's containing block.
+   * For example when the containing statement is another if statement that have else part and
+   *   the if statement that is builded does not have else part, then it should be placed in a block
+   *   so that it the next else won't be part of it. 
+   */
+  @SuppressWarnings("boxing")
+  private static boolean needsBlock(Statement parent, Statement elze) {
+    if(parent == null)
+      return false;
+    Statement s;
+    IfStatement lf;
+    for(s = parent; s != null && is.in(s.getNodeType(),FOR_STATEMENT,WHILE_STATEMENT,ENHANCED_FOR_STATEMENT,IF_STATEMENT); s = az.statement(s.getParent()))
+      if((lf = az.ifStatement(s)) != null  && step.elze(lf) != null)
+        return elze == null || hasIfWithoutElse(elze);
+    return false;
+  }
+  /**
+   * Checks if in <code> st; else {...} <code> the else would be part of an IfStatement in st.
+   * For example for st=<code> while(cond1) while(cond2) if(cond3) f(); <code> if we concatenate <code> else {...} <code>
+   *   it would be part of the if statement in st (and not part of the statement containing st) 
+   */
+  @SuppressWarnings("boxing")
+  private static boolean hasIfWithoutElse(Statement st) {
+    Statement s = st;
+    for (IfStatement lf; s != null && is.in(s.getNodeType(), FOR_STATEMENT, WHILE_STATEMENT, ENHANCED_FOR_STATEMENT, IF_STATEMENT);)
+      if ((lf = az.ifStatement(s)) == null)
+        s = step.body(s);
+      else if ((s = step.elze(lf)) == null)
+        return true;
+    return false;
   }
 }

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
-import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaRecursiveElementVisitor;
@@ -192,7 +191,7 @@ public class Toolbox implements ApplicationComponent {
         }));
     }
 
-    private Toolbox add(Tipper<? extends PsiElement> t) {
+    public Toolbox add(Tipper<? extends PsiElement> t) {
         tipperMap.putIfAbsent(t.getOperableType(), new CopyOnWriteArrayList<>());
         operableTypes.add(t.getOperableType());
         tipperMap.get(t.getOperableType()).add(t);
@@ -237,17 +236,16 @@ public class Toolbox implements ApplicationComponent {
     /**
      * @param e          Psi tree
      * @param tipperName The name of the tipper to execure on e.
-     * @return True if the tipper changed anything, false otherwise.
+     * @return 1 if the tipper changed anything, 0 otherwise.
+     *         if the tipper with the given name doesnt exist, returns -1
      */
-    public boolean executeSingleTipper(PsiElement e, String tipperName) {
+    public int executeSingleTipper(PsiElement e, String tipperName) {
         Tipper tipper = getTipperByName(tipperName);
         if (tipper == null) {
-            System.out.println("\nNull tipper!\n");
-            return false;
+            return -1;
         }
         if (e == null) {
-            System.out.println("\nNull element!\n");
-            return false;
+            return 0;
         }
 
         Wrapper<PsiElement> toReplace = new Wrapper<>(null);
@@ -266,10 +264,10 @@ public class Toolbox implements ApplicationComponent {
             }
         });
         if (!modified.get()) {
-            return false;
+            return 0;
         }
         tipper.tip(toReplace.get()).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
-        return true;
+        return 1;
     }
 
     /**

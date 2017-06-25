@@ -44,7 +44,7 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("x = 1;\nx = 2;", "x = 2;")
-                .put("x.y = 1;\nx.y = 2;", "x.y = 2")
+                .put("x.y = 1;\nx.y = 2;", "x.y = 2;")
                 .map();
     }
 

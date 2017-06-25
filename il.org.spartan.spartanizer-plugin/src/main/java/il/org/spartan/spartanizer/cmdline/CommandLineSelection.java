@@ -12,6 +12,7 @@ import fluent.ly.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.library.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 

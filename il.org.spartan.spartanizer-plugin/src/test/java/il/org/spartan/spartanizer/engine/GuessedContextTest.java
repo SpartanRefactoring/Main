@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
 import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.cmdline.GuessedContext.*;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,7 +9,7 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Unit tests for {@link GuessedContext}

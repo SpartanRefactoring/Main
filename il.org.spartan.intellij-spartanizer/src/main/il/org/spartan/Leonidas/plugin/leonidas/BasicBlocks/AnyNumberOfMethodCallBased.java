@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A base class for all quantifiers of type "AnyNumberOf" that are implemented using
+ * method call expression. For example "anyNumberOf(Statement(3))".
  * @author Oren Afek
  * @since 14-05-2017
  */
@@ -47,16 +49,6 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
         if (!e.getText().contains("anyNumberOf")) {
             return e;
         }
-
-        //here I assume the form of anyNumberOf(<statement(id)/expression(id)/....>):
-        /* MethodCallExpression
-           ----- PsiReferenceExpression
-                --- ....
-           ----- PsiExpressionList
-                --- LPARENTH (
-                --- <statement(id)/expression(id)/....>
-                --- RPARENTH )
-         */
         return e.getActualChildren().get(1).getActualChildren().get(1);
     }
 }

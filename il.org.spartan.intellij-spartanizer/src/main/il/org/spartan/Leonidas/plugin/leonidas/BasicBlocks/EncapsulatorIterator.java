@@ -19,19 +19,19 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     private int skipCounter;
     private int skipOverall;
     private boolean shouldSkip;
-    private List<Encapsulator> elements = new LinkedList<>();
+    private List<Encapsulator> elements = new LinkedList<>(); // preorder traversal on the forest
 
     public EncapsulatorIterator(Encapsulator e) {
         initializeElements(e, elements);
     }
 
+    public EncapsulatorIterator(List<Encapsulator> roots) {
+        roots.forEach(root -> initializeElements(root, elements));
+    }
+
     private void initializeElements(Encapsulator e, List<Encapsulator> l) {
         if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) l.add(e);
         e.getActualChildren().forEach(c -> initializeElements(c, l));
-    }
-
-    public EncapsulatorIterator(List<Encapsulator> roots){
-        roots.forEach(root -> initializeElements(root, elements));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     }
 
     /**
-     * Delete from the list of elements all the elements that were already matched by an higher level composite
+     * Deletes from the list of elements all the elements that were already matched by a higher level composite
      * component, matched to a generic encapsulator.
      */
     public void matchedWithGeneric() {

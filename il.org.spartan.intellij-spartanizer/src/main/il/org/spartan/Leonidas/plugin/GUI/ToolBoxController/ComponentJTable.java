@@ -76,6 +76,28 @@ public class ComponentJTable extends JTable {
                 return text;
             }
 
+            if (value instanceof JList) {
+                JList list = (JList) value;
+                list.setBackground(getBackground());
+                list.setForeground(getForeground());
+                list.setEnabled(isEnabled());
+                list.setFont(getFont());
+                return list;
+            }
+
+            if (value instanceof JComboBox) {
+                JComboBox box = (JComboBox) value;
+                box.setBackground(getBackground());
+                box.setForeground(getForeground());
+                box.setEnabled(isEnabled());
+                box.setFont(getFont());
+                box.setBorder(isSelected ?
+                        UIManager.getBorder(
+                                "List.focusCellHighlightBorder") : noFocusBorder);
+                return box;
+            }
+
+
             if (value instanceof JLabel) {
                 JLabel text = (JLabel) value;
                 text.setBackground(getBackground());
@@ -109,6 +131,21 @@ public class ComponentJTable extends JTable {
                 c = tf;
                 return tf;
             }
+
+            if (value instanceof JList) {
+
+                JList l = (JList) value;
+                c = l;
+                return l;
+            }
+
+            if (value instanceof JComboBox) {
+
+                JComboBox b = (JComboBox) value;
+                c = b;
+                return b;
+            }
+
             return null;
         }
 

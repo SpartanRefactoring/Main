@@ -47,7 +47,7 @@ public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("if (x > 0)\n\tsign = 1;\n else\n\tsign = -1;", "sign = x > 0 ? 1 : -1")
+                .put("if (x > 0)\n\tsign = 1;\n else\n\tsign = -1;", "sign = x > 0 ? 1 : -1;")
                 .map();
     }
 }

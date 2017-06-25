@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 /**
  * This class defines methods that will represent generic structures of code
- * such as: statements, conditions, blocks, variable declaration and more.
  *
  * @author Oren Afek
  * @since 06-01-2017
@@ -16,7 +15,7 @@ public class GenericPsiElementStub {
      * @param id the serial no to distinct between several boolean expressions in the same tipper
      * @return true
      */
-    public static boolean booleanExpression(int id, String name) {
+    public static boolean booleanExpression(int id, String description) {
         return true;
     }
 
@@ -30,7 +29,7 @@ public class GenericPsiElementStub {
      * @param id the serial no to distinct between several boolean expressions in the same tipper
      * @return true
      */
-    public static Object expression(int id, String name) {
+    public static Object expression(int id, String description) {
         return true;
     }
 
@@ -49,13 +48,17 @@ public class GenericPsiElementStub {
         return new Error();
     }
 
+    public static Error throwable(int id, String description) {
+        return new Error();
+    }
+
 
     /**
      * method stub representing a statement for leonidas tippers
      *
      * @param id the serial no to distinct between several statements in the same tipper
      */
-    public static Object statement(int id, String name) {
+    public static Object statement(int id, String description) {
         return new Object();
     }
 
@@ -93,6 +96,10 @@ public class GenericPsiElementStub {
         return booleanLiteral();
     }
 
+    public static Object booleanLiteral(int id, String description) {
+        return booleanLiteral();
+    }
+
     /**
      * Method stub representing a boolean literal, i.e. <code>true</code> or <code>false</code>
      *
@@ -121,6 +128,10 @@ public class GenericPsiElementStub {
      * @return stub object (no real use)
      */
     public static Object stringLiteral(int id) {
+        return stringLiteral();
+    }
+
+    public static Object stringLiteral(int id, String description) {
         return stringLiteral();
     }
 

@@ -5,7 +5,7 @@ import com.intellij.psi.PsiModifierListOwner;
 import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
-import il.org.spartan.Leonidas.plugin.UserControlled;
+import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
@@ -15,23 +15,24 @@ import java.util.function.Function;
 import static il.org.spartan.Leonidas.auxilary_layer.Existence.*;
 
 /**
+ * A base class for all basic blocks that can have modifiers such as fields, methods and classes.
  * @author michalcohen
  * @since 28-05-2017.
  */
 public abstract class ModifiableElement extends NamedElement {
 
-    @UserControlled
-    Existence isPublic = DO_NOT_CARE;
-    @UserControlled
-    Existence isProtected = DO_NOT_CARE;
-    @UserControlled
-    Existence isPrivate = DO_NOT_CARE;
-    @UserControlled
-    Existence isStatic = DO_NOT_CARE;
-    @UserControlled
-    Existence isAbstract = DO_NOT_CARE;
-    @UserControlled
-    Existence isFinal = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isPublic = DO_NOT_CARE; // present the user with multiply choice from Existence enum.
+    @UserControlledMatcher
+    public Existence isProtected = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isPrivate = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isStatic = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isAbstract = DO_NOT_CARE;
+    @UserControlledMatcher
+    public Existence isFinal = DO_NOT_CARE;
 
     String name = "";
 
@@ -54,7 +55,7 @@ public abstract class ModifiableElement extends NamedElement {
     @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         if (super.generalizes(e, m).notMatches()) return new MatchingResult(false);
-        PsiModifierListOwner mlo = az.modifierListOwner(inner);
+        PsiModifierListOwner mlo = az.modifierListOwner(e.inner);
         return new MatchingResult(checkConstraint(isPublic, mlo, haz::publicModifier) &&
                 checkConstraint(isPrivate, mlo, haz::privateModifier) &&
                 checkConstraint(isProtected, mlo, haz::protectedModifier) &&

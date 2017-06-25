@@ -13,8 +13,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.tipping.TipperCategory;
 import org.apache.commons.io.IOUtils;
-import org.eclipse.swt.internal.win32.TOOLINFO;
-
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;

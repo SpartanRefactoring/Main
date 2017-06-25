@@ -5,23 +5,30 @@ import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
+import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * A basic block representing a statement: statement(3).
  * @author Oren Afek
- * @since 5/3/2017.
+ * @since 03-05-2017.
  */
 @SuppressWarnings("Duplicates")
 public class Statement extends GenericMethodCallBasedBlock {
 
     private static final String TEMPLATE = "statement";
 
-    private Map<Integer, String> replacingIdentifier = new HashMap<>();
+    @UserControlledMatcher
+    public List<String> mustNotReferList = new LinkedList<>(); // present the user a list of strings he does not want the statement to refer, to modify.
+    @UserControlledReplacer
+    public Map<Integer, String> replacingIdentifier = new HashMap<>(); // present the user with a map between each ID of identifier, to a string it is replaced by to modify.
 
     public Statement(PsiElement e) {
         super(e, TEMPLATE);
@@ -54,12 +61,14 @@ public class Statement extends GenericMethodCallBasedBlock {
         return new Statement(e);
     }
 
+    // Constraints
 
     /**
      * Will accepts only if not contains identifier
      */
     public void mustNotRefer(String s) {
-        addConstraint(e -> countReferences(e, s) == 0);
+        mustNotReferList.add(s);
+        addConstraint(e -> mustNotReferList.stream().allMatch(mnrs -> countReferences(e, mnrs) == 0));
     }
 
     private int countReferences(Encapsulator e, Integer id, Map<Integer, List<PsiElement>> m) {
@@ -95,13 +104,15 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     public void replaceIdentifiers(Integer id, String to) {
-        replacingIdentifier.put(id, to);
+        this.replacingIdentifier.put(id, to);
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
                 @Override
                 public void visitIdentifier(PsiIdentifier identifier) {
                     super.visitIdentifier(identifier);
-                    if (identifier.getText().equals(map.get(id).get(0).getText())) {
+                    if (identifier.getText().equals(map.get(id).get(0).getText()) &&
+                            !iz.dot(Utils.getPrevActualSibling(Utils.getPrevActualSibling(identifier))) &&
+                            !iz.methodCallExpression(identifier.getParent().getParent())) {
                         PsiRewrite prr = new PsiRewrite();
                         prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(replacingIdentifier.get(id)));
                     }
@@ -110,9 +121,11 @@ public class Statement extends GenericMethodCallBasedBlock {
             return e;
         });
     }
-    /*Impl: replacing generic element with an another generic element
-      [for example: changing expression(0) with expression(1)
-       will make a call: replaceIdentifiers(0,1)
+
+    /**
+     * Impl: replacing generic element with an another generic element
+     * [for example: changing expression(0) with expression(1)
+     * will make a call: replaceIdentifiers(0,1)
     */
     public void replaceIdentifiers(Integer from, Integer to) {
         addReplacingRule((e, map) -> {
@@ -131,7 +144,7 @@ public class Statement extends GenericMethodCallBasedBlock {
         });
     }
 
-    public void refersOnce(Integer ¢) {
-        addConstraint((e, m) -> countReferences(e, ¢, m) == 1);
+    public void refersOnce(Integer id) {
+        addConstraint((e, m) -> countReferences(e, id, m) == 1);
     }
 }

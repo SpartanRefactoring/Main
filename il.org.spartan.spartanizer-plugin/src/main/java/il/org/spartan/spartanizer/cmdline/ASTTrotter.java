@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import an.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.utils.*;
 
 /** An almost fully compatible, but more sane version of {@link ASTVisitor}

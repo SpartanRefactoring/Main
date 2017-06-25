@@ -5,8 +5,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Factory to create tippers out of user strings! Much easier to implement
  * tippers with. <br>

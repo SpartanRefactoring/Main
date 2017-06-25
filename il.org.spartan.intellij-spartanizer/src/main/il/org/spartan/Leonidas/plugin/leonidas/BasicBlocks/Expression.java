@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A basic block representing an expression ("expression(2)").
  * @author Oren Afek
  * @since 5/3/2017.
  */

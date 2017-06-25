@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+import il.org.spartan.Leonidas.plugin.UserControlledTipper;
 
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author melanyc
  * @since 10-06-2017
  */
+@UserControlledTipper
 public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTipperDefinition {
 
     Class2 identifier3;
@@ -27,6 +29,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
      */
     @Override
     public void constraints() {
+        element(1).asMethod.notContains("main");
         element(4).asStatement.mustNotRefer("cent");
         element(3).asIdentifier.notContains("cent");
         element(3).asIdentifier.notContains("__");
@@ -39,8 +42,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
             class wrapping {
                 /* start */
 
-                Class0 method1(Class2 identifier3) {
-                    anyNumberOf(statement(4));
+                Class0 method1$RootMethod(Class2 identifier3$TheFromParamName) {
+                    anyNumberOf(statement(4, "BodyOfFromMethod"));
                     return null; // ignore
                 }
                 /* end */
@@ -54,8 +57,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
             class wrapping {
                 /* start */
 
-                Class0 method1(Class2 identifier3) {
-                    anyNumberOf(statement(4));
+                Class0 method1(Class2 identifier3$TheToParamName) {
+                    anyNumberOf(statement(4, "BodyOfToMethod"));
                     return null; // ignore
                 }
                 /* end */
@@ -79,11 +82,11 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("void foo(int x){}", "void foo(int cent){}")
-                .put("void foo(int x){\n\tSystem.out.println(x)\n}", "void foo(int cent){\n\tSystem.out.println(cent)\n}")
-                .put("private static void foo(int x){\n\tSystem.out.println(x)\n}", "private static void foo(int cent){\n\tSystem.out.println(cent)\n}")
-                .put("private static void foo(int cent){\n\tSystem.out.println(\"\")\n}", null)
-                .put("private static void foo(int x){\n\tint cent = 0;\n\tSystem.out.println(cent)\n}", null)
-                .put("private static void foo(int x,int y){\n\tSystem.out.println(x)\n}", null)
+                .put("void foo(int x){\n\tSystem.out.println(x);\n}", "void foo(int cent){\n\tSystem.out.println(cent);\n}")
+                .put("private static void foo(int x){\n\tSystem.out.println(x);\n}", "private static void foo(int cent){\n\tSystem.out.println(cent);\n}")
+                .put("private static void foo(int cent){\n\tSystem.out.println(\"\");\n}", null)
+                .put("private static void foo(int x){\n\tint cent = 0;\n\tSystem.out.println(cent);\n}", null)
+                .put("private static void foo(int x,int y){\n\tSystem.out.println(x);\n}", null)
                 .map();
         
     }

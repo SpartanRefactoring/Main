@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
@@ -12,11 +13,16 @@ import java.util.*;
 
 
 /**
- * @author Sharon
+ * A basic block representing a method. For example "int method0 (int x){...}
+ * @author Sharon, michalcohen
  * @since 13.5.17
  */
 public class Method extends ModifiableElement {
     private static final String TEMPLATE = "method";
+    @UserControlledMatcher
+    public List<String> containsList = new LinkedList<>();
+    @UserControlledMatcher
+    public List<String> notContainsList = new LinkedList<>();
     private Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
     private Replacer replacerReturnType, replacerParameters, replacerCodeBlock;
 
@@ -43,7 +49,7 @@ public class Method extends ModifiableElement {
 
     @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> map) {
-        if (super.generalizes(e, map).notMatches() || !iz.method(e.getInner())) return new MatchingResult(false);
+        if (!iz.method(e.getInner()) || super.generalizes(e, map).notMatches()) return new MatchingResult(false);
         PsiMethod m = az.method(e.getInner());
         Wrapper<Integer> dummy = new Wrapper<>(0);
         return matcherReturnType.getMatchingResult(m.getReturnTypeElement(), dummy).combineWith(
@@ -98,10 +104,23 @@ public class Method extends ModifiableElement {
         l.forEach(root -> root.accept(e -> {
             if (e.isGeneric()) {
                 map.put(az.generic(e).getId(), (GenericEncapsulator) e);
+                if (iz.quantifier(e)){
+                    map.put(az.quantifier(e).getId(), az.generic(az.quantifier(e).getInternal()));
+                }
             }
         }));
 
         return map;
 
+    }
+
+    public void contains(String s) {
+        containsList.add(s);
+        addConstraint((e, m) -> containsList.stream().allMatch(cs -> az.method(e.inner).getName().contains(cs)));
+    }
+
+    public void notContains(String s) {
+        notContainsList.add(s);
+        addConstraint((e, m) -> notContainsList.stream().noneMatch(ncs ->az.method(e.inner).getName().contains(ncs)));
     }
 }

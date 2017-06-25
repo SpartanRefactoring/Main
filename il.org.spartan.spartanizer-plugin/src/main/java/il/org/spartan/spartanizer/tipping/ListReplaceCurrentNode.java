@@ -6,8 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.engine.*;
-
 /** Used to replace a node with multiple replacements, taking its place in the
  * parent node children list. This class uses {@link ListRewrite} for the
  * replacement operations, so implementations may use

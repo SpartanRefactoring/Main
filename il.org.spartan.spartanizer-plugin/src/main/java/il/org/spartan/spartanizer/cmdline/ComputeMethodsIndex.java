@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 
 /** Compute reusabilty index for methods Meanwhile just computes the index of
  * tokens for methods...

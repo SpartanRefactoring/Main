@@ -50,7 +50,7 @@ public class IfEmptyThen implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("int x=5;\nObject a,b;\nif(a!=b)\n\t;\nelse{\n\tx = 8;\n}", "int x=5;\nObject a,b;\n if(!(a!=b)){\n\tx = 8;\n}")
+                .put("int x=5;\nObject a,b;\na=new Object();\nb=new Object(); \nif(a!=b)\n\t;\nelse{\n\tx = 8;\n}", "int x=5;\nObject a,b;\na=new Object();\nb=new Object();\n if(!(a!=b)){\n\tx = 8;\n}")
                 .map();
 
     }
