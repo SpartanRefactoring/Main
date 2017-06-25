@@ -2,6 +2,8 @@ package il.org.spartan.Leonidas.plugin.GUI.AddTipper;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
@@ -14,6 +16,12 @@ import java.util.Map;
 /**
  * @author Sharon LK
  */
+@State(
+        name = "CustomLeonidasTippers",
+        storages = {
+                @Storage("CustomLeonidasTippers.xml")
+        }
+)
 public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeonidasTippers> {
     protected Map<String, Tipper> tippers = new HashMap<>();
 
@@ -66,21 +74,27 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
     }
 
     private String getTipperString(String name, String matcher, String replacer) {
-        return String.format("public class %s implements LeonidasTipperDefinition {" +
-                "   @Override\n" +
+        return String.format("/**\n" +
+                "* Hello world\n" +
+                "*/\n" +
+                "public class %s implements LeonidasTipperDefinition {\n" +
+                "    @Override\n" +
                 "    public void matcher() {\n" +
-                "        new Template(() -> {" +
-                "           %s" +
+                "        new Template(() -> {\n" +
+                "           /* start */\n" +
+                "           %s\n" +
+                "           /* end */\n" +
                 "       });\n" +
-                "    }" +
-                "" +
-                "   @Override\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
                 "    public void replacer() {\n" +
-                "        new Template(() -> {" +
-                "           %s" +
+                "        new Template(() -> {\n" +
+                "           /* start */\n" +
+                "           %s\n" +
+                "           /* end */\n" +
                 "       });\n" +
-                "    }" +
-                "" +
-                "}", name, matcher, replacer);
+                "    }\n" +
+                "}\n", name, matcher, replacer);
     }
 }

@@ -36,6 +36,9 @@
         <!--<applicationService serviceInterface="il.org.spartan.Leonidas.plugin.ToolboxStateService"-->
         <!--serviceImplementation="il.org.spartan.Leonidas.plugin.ToolboxStateService"-->
         <!--overrides="true"/>-->
+
+        <applicationService serviceInterface="il.org.spartan.Leonidas.plugin.GUI.AddTipper.CustomLeonidasTippers"
+                            serviceImplementation="il.org.spartan.Leonidas.plugin.GUI.AddTipper.CustomLeonidasTippers"/>
     </extensions>
 
     <application-components>

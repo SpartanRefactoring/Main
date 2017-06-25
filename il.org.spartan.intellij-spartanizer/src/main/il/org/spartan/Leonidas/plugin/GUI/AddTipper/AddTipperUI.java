@@ -15,12 +15,17 @@ import java.awt.event.WindowEvent;
 public class AddTipperUI extends JFrame {
     public AddTipperUI() {
         initComponents();
+
+        setSize(600, 800);
     }
 
     private void buttonSaveActionPerformed(ActionEvent e) {
         CustomLeonidasTippers.getInstance().generate(nameTextField.getText(),
                 matcherTextPane.getText(),
                 replacerTextPane.getText());
+
+        // Close window after we add the tipper
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     private void buttonCloseActionPerformed(ActionEvent e) {
