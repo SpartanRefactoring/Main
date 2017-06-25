@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.utils;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 

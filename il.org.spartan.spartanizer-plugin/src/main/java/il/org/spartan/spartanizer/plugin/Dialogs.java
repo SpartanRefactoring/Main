@@ -38,10 +38,9 @@ public enum Dialogs {
   }
 
   /** Lazy, dynamic loading of an image.
-   * @return {@link SWT} image
-   * [[SuppressWarningsSpartan]] */
+   * @return {@link SWT} image [[SuppressWarningsSpartan]] */
   public static Image image(final String $) {
-    ImageDescriptor d = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor($);
+    final ImageDescriptor d = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor($);
     return d != null ? image(d, $, λ -> λ) : image($, $, λ -> λ);
   }
   /** Lazy, dynamic loading of an image.

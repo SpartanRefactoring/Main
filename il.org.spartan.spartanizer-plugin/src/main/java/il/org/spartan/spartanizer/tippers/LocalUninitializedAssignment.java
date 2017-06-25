@@ -44,7 +44,7 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
     andAlso("It is a non-update assignment ", () -> assignment.getOperator() == ASSIGN);
     andAlso("Assignment is to present local", () -> wizard.eq(name, to));
     andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
-    }
+  }
   @Override public String description() {
     return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
@@ -54,7 +54,7 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
     return $;
   }
   @Override protected ASTNode[] span() {
-    return new ASTNode[]{declaration,nextStatement};
+    return new ASTNode[] { declaration, nextStatement };
   }
   @Override public Examples examples() {
     return convert("int a; a = b;")//
