@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.metrics;
 
 import static il.org.spartan.tide.*;
 
