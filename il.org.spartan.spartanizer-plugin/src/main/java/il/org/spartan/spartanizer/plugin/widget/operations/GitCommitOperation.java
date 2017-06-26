@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
-import org.eclipse.jgit.revwalk.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
