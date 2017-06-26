@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.tables;
+package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
 import static java.util.stream.Collectors.*;
 
@@ -12,6 +12,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.good.*;
+import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;

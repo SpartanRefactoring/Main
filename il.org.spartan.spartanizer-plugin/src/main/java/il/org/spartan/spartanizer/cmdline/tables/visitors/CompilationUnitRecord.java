@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.tables;
+package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
 import java.io.*;
 

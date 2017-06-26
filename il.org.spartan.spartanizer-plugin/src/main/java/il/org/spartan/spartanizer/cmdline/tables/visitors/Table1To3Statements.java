@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.tables;
+package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -8,31 +8,36 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-/** Table representing coverage for methods up to 30 statements
+/** Table representing coverage for methods with 1 to 3 statements
+ * @deprecated
  * @author orimarco {@code marcovitch.ori@gmail.com}
- * @since 2016-12-25 */
+ * @since 2016-12-27 */
 @Deprecated
-public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
+public class Table1To3Statements extends DeprecatedFolderASTVisitor {
   static final Nanonizer nanonizer = new Nanonizer();
-  protected static final int MAX_STATEMENTS_REPORTED = 30;
+  protected static final int MIN_STATEMENTS_REPORTED = 1;
+  protected static final int MAX_STATEMENTS_REPORTED = 3;
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Table cWriter; // coverage
-  private static int totalStatements;
-  protected static int totalMethods;
-  private static int totalStatementsCovered;
+  private static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
+  private static int totalStatements;
+  private static int totalMethods;
+  private static int totalStatementsCovered;
   static {
-    clazz = TableNanosCoverage.class;
-    Logger.subscribe(TableNanosCoverage::logNanoContainingMethodInfo);
+    clazz = Table1To3Statements.class;
+    TraversalMonitor.off();
+    Logger.subscribe(Table1To3Statements::logNanoContainingMethodInfo);
   }
 
   public static void main(final String[] args)
@@ -48,7 +53,8 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + ""));
+      findFirst.instanceOf(MethodDeclaration.class)
+          .in(make.ast(WrapIntoComilationUnit.Method.off(nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
     } catch (final AssertionError __) {
       forget.em(__);
     }
@@ -76,18 +82,28 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       scope.peek().markNP(n, np);
   }
   private static void initializeWriter() {
-    cWriter = new Table(TableNanosCoverage.class);
+    writer = new Table(Table1To3Statements.class.getSimpleName());
   }
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
-    if (cWriter == null)
+    if (writer == null)
       initializeWriter();
     gatherGeneralStatistics();
-    cWriter.put("Project", path);
-    for (int ¢ = 1; ¢ <= MAX_STATEMENTS_REPORTED; ++¢)
-      cWriter.put(¢ + "",
-          !statementsCoverageStatistics.containsKey(¢) ? 0 : Double.valueOf(format.decimal(100 * avgCoverage(statementsCoverageStatistics.get(¢)))));
-    cWriter.put("total Statements coverage", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
-    cWriter.nl();
+    writer.put("Project", path);
+    for (int i = MIN_STATEMENTS_REPORTED; i <= MAX_STATEMENTS_REPORTED; ++i)
+      if (!statementsCoverageStatistics.containsKey(i))
+        writer.col(i + " Count", "-")//
+            .col(i + "perc. of methods", 0)//
+            .col(i + " perc. of statements", 0)//
+            .col(i + " perc. touched", 100);
+      else {
+        final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
+        writer.col(i + " Count", rs.size()).col(i + " Coverage", format.decimal(100 * avgCoverage(rs)))//
+            .col(i + "perc. of methods", format.decimal(100 * fractionOfMethods(totalMethods, rs)))//
+            .col(i + " perc. of statements", format.decimal(100 * fractionOfStatements(totalStatements, i, rs)))//
+            .col(i + " perc. touched", format.decimal(100 * fractionOfMethodsTouched(rs)));
+      }
+    writer.col("total Statements covergae ", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
+    writer.nl();
   }
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
     totalStatementsCovered = totalMethods = totalStatements = 0;
@@ -100,6 +116,15 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
   }
   @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
+  }
+  private static double fractionOfMethodsTouched(final Collection<MethodRecord> rs) {
+    return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
+  }
+  private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final Collection<MethodRecord> rs) {
+    return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
+  }
+  private static double fractionOfMethods(final int methodsTotal, final Collection<MethodRecord> rs) {
+    return safe.div(rs.size(), methodsTotal);
   }
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
     return rs.stream().map(MethodRecord::numNPStatements).reduce((x, y) -> x + y).get();
