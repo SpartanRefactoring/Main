@@ -45,6 +45,8 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
       final IfStatement canonicalIf = misc.invert(asVirtualIf);
       final List<Statement> ss = extract.statements(elze(canonicalIf));
       canonicalIf.setElseStatement(null);
+      if(iz.concludesMethod(ss.subList(0, ss.size()-1)))
+        ss.remove(ss.size() - 1);
       if (!iz.block(s.getParent())) {
         ss.add(0, canonicalIf);
         $.replace(s, subject.ss(ss).toBlock(), g);
