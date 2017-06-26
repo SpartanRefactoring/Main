@@ -95,6 +95,7 @@ public class Table extends Row<Table> implements Closeable {
     }
     return $;
   }
+
   @Override public Table col(final String key, final double value) {
     getRealStatistics(key).record(value);
     return super.col(key, value);

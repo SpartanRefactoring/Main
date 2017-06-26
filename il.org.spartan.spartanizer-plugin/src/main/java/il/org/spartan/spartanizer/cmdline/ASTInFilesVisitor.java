@@ -24,7 +24,6 @@ import il.org.spartan.utils.*;
 import junit.framework.*;
 
 /** Parse and AST visit all Java files under a given path.
- * <p>
  * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
@@ -33,7 +32,6 @@ public class ASTInFilesVisitor {
 
   /** Check whether given string containing Java code contains {@link Test}
    * annotations
-   * <p>
    * @param f
    * @return */
   public static boolean containsTestAnnotation(final String javaCode) {
@@ -91,9 +89,9 @@ public class ASTInFilesVisitor {
 
   protected String absolutePath;
 
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
+  @External(alias = "c", value = "corpus name") protected String corpus = "";
+  @External(alias = "i", value = "input folder")  protected String inputFolder = system.isWindows() ? "" : ".";
+  @External(alias = "o", value = "output folder")  protected String outputFolder = system.tmp;
   protected File currentFile;
   protected String presentSourceName;
   protected String presentSourcePath;
@@ -224,7 +222,7 @@ public class ASTInFilesVisitor {
       });
     }
   }
-
+  
   public static class PrintAllInterfaces {
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
