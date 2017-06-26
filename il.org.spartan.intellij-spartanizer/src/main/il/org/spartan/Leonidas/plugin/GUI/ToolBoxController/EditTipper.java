@@ -14,6 +14,12 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -31,6 +37,7 @@ public class EditTipper extends JFrame {
     private JPanel tempPane;
     private JScrollPane TablePanel;
     private JLabel nameLabel;
+    private JButton OKButton;
     private ComponentJTable table;
     private Tipper currentTip;
 
@@ -68,6 +75,16 @@ public class EditTipper extends JFrame {
 
         applyButton.addActionListener(e -> applyListener());
         closeButton.addActionListener(e -> {
+            this.dispose();
+        });
+        table.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                applyButton.setEnabled(true);
+            }
+        });
+        OKButton.addActionListener(e->{
+            applyListener();
             this.dispose();
         });
         TablePanel.setViewportView(table);
@@ -224,6 +241,9 @@ public class EditTipper extends JFrame {
     }
 
     private void applyListener() {
+        //applyButton.setPressedIcon(applyButton.getPressedIcon());
+        applyButton.setEnabled(false);
+       // applyButton.setDisabledSelectedIcon(applyButton.getDisabledIcon());
         LeonidasTipper lt = (LeonidasTipper)currentTip;
         List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
 
