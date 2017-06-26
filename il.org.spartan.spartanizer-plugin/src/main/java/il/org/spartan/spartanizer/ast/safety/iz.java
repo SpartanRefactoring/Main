@@ -1159,34 +1159,4 @@ public interface iz {
   static boolean hexaDecimal(final Expression ¢) {
     return iz.numberLiteral(¢) && az.numberLiteral(¢).getToken().startsWith("0x");
   }
-  static boolean methodTerminate(final ASTNode ¢) {
-    return iz.nodeTypeIn(¢, ASTNode.RETURN_STATEMENT, ASTNode.THROW_STATEMENT);
-  }
-  static boolean methodTerminateComplex(final ASTNode ¢) {
-    if (¢ == null)
-      return false;
-    switch (¢.getNodeType()) {
-      case BLOCK:
-        return statements((Block) ¢).stream().anyMatch(iz::methodTerminateComplex);
-      case IF_STATEMENT:
-        final IfStatement $ = (IfStatement) ¢;
-        return methodTerminateComplex($.getThenStatement()) && methodTerminateComplex($.getElseStatement());
-      case TRY_STATEMENT:
-        return methodTerminateComplex(az.tryStatement(¢).getFinally())
-            || methodTerminateComplex(az.tryStatement(¢).getBody()) && step.catchClauses(az.tryStatement(¢)).stream().allMatch(iz::methodTerminateComplex);
-      case CATCH_CLAUSE:
-        return methodTerminateComplex(az.catchClause(¢).getBody());
-      default:
-        return methodTerminate(¢);
-    }
-  }
-  /**
-   * Checks if the running the statements in the list always leads to a return or throw statement in this list
-   */
-  static boolean concludesMethod(List<Statement> l) {
-    for(Statement s : l)
-      if(methodTerminateComplex(s))
-        return true;
-    return false;
-  }
 }
