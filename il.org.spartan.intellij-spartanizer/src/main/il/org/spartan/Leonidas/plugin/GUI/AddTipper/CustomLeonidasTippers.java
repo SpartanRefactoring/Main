@@ -7,7 +7,6 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
-import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -23,7 +22,11 @@ import java.util.Map;
         }
 )
 public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeonidasTippers> {
-    protected Map<String, Tipper> tippers = new HashMap<>();
+    public Map<String, String> tippers;
+
+    public CustomLeonidasTippers() {
+        tippers = new HashMap<>();
+    }
 
     /**
      * @return instance of this class
@@ -46,36 +49,31 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
     /**
      * @return list of all currently loaded custom tippers
      */
-    public Map<String, Tipper> getTippers() {
+    public Map<String, String> getTippers() {
         return tippers;
     }
 
-    /**
-     * Returns the tipper that matches the given name.
-     *
-     * @param name tipper's name
-     * @return tipper with the given name, or <code>null</code> if such tipper is not present
-     */
-    public Tipper getTipper(String name) {
-        return tippers.get(name);
+    public void setTippers(Map<String, String> tippers) {
+        this.tippers = tippers;
     }
 
     /**
      * Generates a leonidas source file from the given matcher and replacer.
      *
-     * @param name     tipper's name
-     * @param matcher  matcher function source code
-     * @param replacer replacer function source code
+     * @param name        tipper's name
+     * @param description tipper's description
+     * @param matcher     matcher function source code
+     * @param replacer    replacer function source code
      */
-    public void generate(String name, String matcher, String replacer) {
-        tippers.put(name, new LeonidasTipper(name, getTipperString(name, matcher, replacer)));
+    public void generate(String name, String description, String matcher, String replacer) {
+        tippers.put(name, getTipperString(name, description, matcher, replacer));
 
-        Toolbox.getInstance().add(tippers.get(name));
+        Toolbox.getInstance().add(new LeonidasTipper(name, tippers.get(name)));
     }
 
-    private String getTipperString(String name, String matcher, String replacer) {
+    private String getTipperString(String name, String description, String matcher, String replacer) {
         return String.format("/**\n" +
-                "* Hello world\n" +
+                "* %s\n" +
                 "*/\n" +
                 "public class %s implements LeonidasTipperDefinition {\n" +
                 "    @Override\n" +
@@ -95,6 +93,21 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
                 "           /* end */\n" +
                 "       });\n" +
                 "    }\n" +
-                "}\n", name, matcher, replacer);
+                "}\n", description, name, matcher, replacer);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CustomLeonidasTippers that = (CustomLeonidasTippers) o;
+
+        return tippers != null ? tippers.equals(that.tippers) : that.tippers == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return tippers != null ? tippers.hashCode() : 0;
     }
 }

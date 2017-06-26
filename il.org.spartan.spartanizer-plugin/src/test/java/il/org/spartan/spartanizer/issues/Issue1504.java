@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1504 {
   @Test public void test0() {
-    trimmingOf("try {" + "runnable.run();" + "} catch (RuntimeException it) {" + "throw new UncheckedExecutionException(it);" + "} catch (Error it) {"
-        + "throw new ExecutionError(it);" + "} catch (Throwable it) {" + "throw new UncheckedExecutionException(it);" + "}").stays();
+    trimmingOf("try {runnable.run();} catch (RuntimeException it) {throw new UncheckedExecutionException(it);} catch (Error it) {"
+        + "throw new ExecutionError(it);} catch (Throwable it) {throw new UncheckedExecutionException(it);}").stays();
   }
 }

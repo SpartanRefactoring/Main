@@ -12,6 +12,7 @@ import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
+import il.org.spartan.Leonidas.plugin.GUI.AddTipper.CustomLeonidasTippers;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -88,8 +89,16 @@ public class Toolbox implements ApplicationComponent {
 //        }
 
         String savedTippers = PropertiesComponent.getInstance().getValue("savedTippers");
-        if (savedTippers != null && savedTippers != "") {
+        if (savedTippers != null && !"".equals(savedTippers)) {
             List<String> tipperNames = new Gson().fromJson(savedTippers, List.class);
+
+            CustomLeonidasTippers.getInstance()
+                    .getTippers()
+                    .forEach((key, value) -> {
+                        add(new LeonidasTipper(key, value));
+                        tipperNames.add(key);
+                    });
+
             updateTipperList(tipperNames);
         }
     }
@@ -237,7 +246,7 @@ public class Toolbox implements ApplicationComponent {
      * @param e          Psi tree
      * @param tipperName The name of the tipper to execure on e.
      * @return 1 if the tipper changed anything, 0 otherwise.
-     *         if the tipper with the given name doesnt exist, returns -1
+     * if the tipper with the given name doesnt exist, returns -1
      */
     public int executeSingleTipper(PsiElement e, String tipperName) {
         Tipper tipper = getTipperByName(tipperName);
@@ -399,9 +408,9 @@ public class Toolbox implements ApplicationComponent {
         if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
             return new HashSet<>();
 
-        int line = FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor().offsetToLogicalPosition(e.getTextOffset()).line +1;
+        int line = FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor().offsetToLogicalPosition(e.getTextOffset()).line + 1;
         return tipperMap.get(e.getClass())
                 .stream()
-                .filter(tipper -> tipper.canTip(e)).map(tipper -> tipper.name()+" - Line "+ line).collect(Collectors.toSet());
+                .filter(tipper -> tipper.canTip(e)).map(tipper -> tipper.name() + " - Line " + line).collect(Collectors.toSet());
     }
 }
