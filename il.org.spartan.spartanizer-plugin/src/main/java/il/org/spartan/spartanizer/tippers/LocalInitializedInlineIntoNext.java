@@ -64,7 +64,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
         || misc.leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
-    Expression e = !iz.castExpression(initializer) && !iz.conditionalExpression(initializer) ? initializer
+    Expression e = !iz.castExpression(initializer) && !iz.conditionalExpression(initializer) && !iz.castExpression(n.getParent()) ? initializer
         : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
