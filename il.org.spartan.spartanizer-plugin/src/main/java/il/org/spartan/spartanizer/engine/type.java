@@ -261,7 +261,10 @@ public interface type {
     }
     private static implementation lookDown(final SimpleName ¢) {
       final Namespace $ = Environment.of(¢);
-      return !$.has(¢.getIdentifier()) ? NOTHING : (implementation) $.get(¢.getIdentifier()).getType();
+      if(!$.has(¢.getIdentifier()))
+        return NOTHING;
+      implementation i = (implementation) $.get(¢.getIdentifier()).getType(); //TODO yg: getType probably returns null for some enum (gives exceptions on guava->CaseFormat)
+      return i != null ? i : NOTHING;
     }
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
