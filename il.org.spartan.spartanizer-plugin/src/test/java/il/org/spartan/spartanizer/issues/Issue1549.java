@@ -1,19 +1,17 @@
 package il.org.spartan.spartanizer.issues;
 
-import static org.junit.Assert.*;
-
 import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
-/** TODO Yuval Simon: document class 
- * 
+/** Test case for bug in {@link IfCommandsSequencerNoElseSingletonSequencer}
  * @author Yuval Simon
  * @since 2017-06-27 */
+@SuppressWarnings("static-method")
 public class Issue1549 {
-  @Test public void test() {
+  @Test public void t1() {
     trimmingOf("static boolean equalsImpl(Set<?> os, @Nullable Object object) {"
         + "if (os == object) {"
         + "return true;"
