@@ -6,7 +6,7 @@ import java.util.*;
 import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.applicator.*;
+import il.org.spartan.spartanizer.cmdline.applicators.*;
 import il.org.spartan.spartanizer.cmdline.runnables.*;
 
 /** A configurable version of the HeadlessSpartanizer that relies on

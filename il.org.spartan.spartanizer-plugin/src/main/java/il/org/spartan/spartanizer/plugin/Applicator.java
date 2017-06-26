@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.plugin;
 import java.util.function.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.applicator.*;
+import il.org.spartan.spartanizer.cmdline.applicators.*;
 
 /** Configurable applicator.
  * @author Ori Roth

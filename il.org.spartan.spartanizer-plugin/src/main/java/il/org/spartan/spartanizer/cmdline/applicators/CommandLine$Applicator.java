@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.applicator;
+package il.org.spartan.spartanizer.cmdline.applicators;
 
 import static java.util.stream.Collectors.*;
 

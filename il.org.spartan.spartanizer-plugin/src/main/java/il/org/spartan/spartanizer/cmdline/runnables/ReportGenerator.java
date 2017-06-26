@@ -20,7 +20,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.applicator.*;
+import il.org.spartan.spartanizer.cmdline.applicators.*;
 import il.org.spartan.spartanizer.cmdline.library.Utils;
 import il.org.spartan.spartanizer.cmdline.metrics.*;
 import il.org.spartan.spartanizer.java.*;
