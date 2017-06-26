@@ -1,4 +1,7 @@
-package il.org.spartan.spartanizer.cmdline.good;
+package il.org.spartan.spartanizer.cmdline;
+
+import fluent.ly.*;
+import il.org.spartan.external.*;
 
 /** This is a command line program, which can be thought of as a spartan
  * compiler. For each {@code .java} file it find, it encounters, it creates a
@@ -8,5 +11,12 @@ package il.org.spartan.spartanizer.cmdline.good;
  * @author Matteo Orru'
  * @since 2017-06-25 */
 public class spartanize {
-  public static void main(final String[] args) {}
+  
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
+  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
+  
+  public static void main(final String[] args) {
+    
+    
+  }
 }
