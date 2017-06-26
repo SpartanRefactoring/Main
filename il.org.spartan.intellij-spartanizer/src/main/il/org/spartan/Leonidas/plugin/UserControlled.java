@@ -8,6 +8,7 @@ import java.lang.annotation.RetentionPolicy;
  * @since 29-05-2017.
  */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UserControlledMatcher   {
+public @interface UserControlled {
     String name();
+    String templatePart();
 }
