@@ -27,24 +27,26 @@ public class spartanize extends ASTInFilesVisitor {
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   private static final InteractiveSpartanizer is = new InteractiveSpartanizer();
-  protected static String presentSourceName;
-  protected static String presentSourcePath;
-  private static String currentLocation;
-  private static File currentFile;
   
   public static void main(final String[] args) throws SecurityException, IllegalArgumentException {
     visit(args.length != 0 ? args : defaultArguments);
   }
   public static void visit(final String... args) {
     for (final String ¢ : External.Introspector.extract(args != null && 
-        args.length != 0 ? args : defaultArguments, spartanize.class)){
-      presentSourceName = system.folder2File(presentSourcePath = inputFolder + File.separator + getCurrentLocation());
-      new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> visitFile(currentFile = λ));
+                  args.length != 0 ? args : defaultArguments, spartanize.class)){
+      // TBD 
       matteo(¢);
     }
   }
   private static void matteo(String ¢) {
     forget.it(¢);
+  }
+  
+  protected void visitLocation(final String location) {
+    // notify.beginLocation();
+    presentSourceName = system.folder2File(presentSourcePath = location + File.separator + getCurrentLocation());
+    new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> visitFile(currentFile = λ));
+    // notify.endLocation();
   }
 
 
