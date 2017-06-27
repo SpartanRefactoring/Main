@@ -75,9 +75,8 @@ class ToolBoxController extends JFrame {
                     LeonidasTipperDefinition ltd = Toolbox.getInstance().getTipperInstanceByName(checkbox.getText());
                     if (ltd != null)
 						examples = ltd.getExamples();
-					else {
+					else
 						examples = Toolbox.getInstance().getTipperByName(checkbox.getText()).getExamples();
-					}
                     String before = "";
                     String after = "";
                     for (Map.Entry<String, String> entry : examples.entrySet()) {

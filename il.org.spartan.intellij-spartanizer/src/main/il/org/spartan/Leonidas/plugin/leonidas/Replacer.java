@@ -98,9 +98,9 @@ public class Replacer {
     private List<PsiElement> getReplacingForest(List<Encapsulator> rootsCopy, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         List<PsiElement> elements = new LinkedList<>();
         rootsCopy.forEach(rootCopy -> {
-            if (rootCopy.isGeneric()) {
-                elements.addAll(az.generic(rootCopy).replaceByRange(m.get(az.generic(rootCopy).getId()), m, r)); //TODO
-            } else {
+            if (rootCopy.isGeneric())
+				elements.addAll(az.generic(rootCopy).replaceByRange(m.get(az.generic(rootCopy).getId()), m, r));
+			else {
                 rootCopy.accept(e -> {
                     if (!e.isGeneric()) return;
                     GenericEncapsulator ge = az.generic(e);

@@ -26,9 +26,8 @@ public class ComponentJList extends JList {
                 int index = locationToIndex(e.getPoint());
                 Object component = getModel().getElementAt(index);
                 if (!(component instanceof JCheckBox)) {
-					if (index != -1) {
+					if (index != -1)
 						((TextFieldComponent) component).pressed();
-					}
 				} else if (index != -1) {
 					JCheckBox checkbox = (JCheckBox) component;
 					checkbox.setSelected(!checkbox.isSelected());

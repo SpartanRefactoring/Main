@@ -107,8 +107,8 @@ public class EditTipper extends JFrame {
     }
 
     private int buildTableFields(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
-        for(GenericEncapsulator root : tipperRoots){
-            for (Field field : root.getClass().getFields()) {
+        for(GenericEncapsulator root : tipperRoots)
+			for (Field field : root.getClass().getFields()) {
 				if ((matcher && !field.isAnnotationPresent(UserControlled.class))
 						|| (matcher && field.isAnnotationPresent(UserControlled.class)
 								&& !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart())))
@@ -161,13 +161,12 @@ public class EditTipper extends JFrame {
 					note.bug(e);
 				}
 			}
-        }
         return i;
     }
 
     private int updateFieldsFromTable(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
-        for(GenericEncapsulator root : tipperRoots){
-            for (Field field : root.getClass().getFields()) {
+        for(GenericEncapsulator root : tipperRoots)
+			for (Field field : root.getClass().getFields()) {
 				if ((matcher && !field.isAnnotationPresent(UserControlled.class))
 						|| (matcher && field.isAnnotationPresent(UserControlled.class)
 								&& !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart())))
@@ -207,7 +206,6 @@ public class EditTipper extends JFrame {
 					note.bug(e);
 				}
 			}
-        }
         return i;
     }
 

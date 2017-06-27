@@ -113,9 +113,9 @@ public class Statement extends GenericMethodCallBasedBlock {
                     super.visitIdentifier(identifier);
                     if (identifier.getText().equals(map.get(id).get(0).getText()) &&
                             !iz.dot(Utils.getPrevActualSibling(Utils.getPrevActualSibling(identifier))) &&
-                            !iz.methodCallExpression(identifier.getParent().getParent())) {
-                        new PsiRewrite().replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(replacingIdentifier.get(id)));
-                    }
+                            !iz.methodCallExpression(identifier.getParent().getParent()))
+						new PsiRewrite().replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject())
+								.createIdentifier(replacingIdentifier.get(id)));
                 }
             });
             return e;
@@ -133,10 +133,8 @@ public class Statement extends GenericMethodCallBasedBlock {
                 @Override
                 public void visitIdentifier(PsiIdentifier identifier) {
                     super.visitIdentifier(identifier);
-                    if (identifier.getText().equals(map.get(from).get(0).getText())) {
-                        //Impl: assuming that map.get(to) is a Singleton List
-                        new PsiRewrite().replace(identifier, map.get(to).get(0));
-                    }
+                    if (identifier.getText().equals(map.get(from).get(0).getText()))
+						new PsiRewrite().replace(identifier, map.get(to).get(0));
                 }
             });
             return e;
