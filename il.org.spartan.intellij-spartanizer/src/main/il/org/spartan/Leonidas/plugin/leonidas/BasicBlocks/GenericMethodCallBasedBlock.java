@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;

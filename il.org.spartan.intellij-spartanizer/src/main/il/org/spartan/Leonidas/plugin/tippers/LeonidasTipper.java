@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguageParserDefinitions;
-import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;

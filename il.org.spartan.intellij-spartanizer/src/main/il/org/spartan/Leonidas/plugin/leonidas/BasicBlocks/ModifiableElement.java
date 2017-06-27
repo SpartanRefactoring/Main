@@ -6,7 +6,6 @@ import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
 import il.org.spartan.Leonidas.plugin.UserControlled;
-import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;

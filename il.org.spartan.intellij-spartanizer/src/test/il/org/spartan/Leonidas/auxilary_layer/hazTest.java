@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.PsiBinaryExpression;
-import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**

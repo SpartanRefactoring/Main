@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.google.common.io.Resources;
-import com.intellij.psi.PsiWhileStatement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
 import org.apache.commons.io.IOUtils;
