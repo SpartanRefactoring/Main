@@ -49,6 +49,7 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
         PsiMethodCallExpression mce = az.methodCallExpression(e);
         if (mce.getArgumentList().getExpressions().length > 1) {
             description = az.string(step.secondParameterExpression(az.methodCallExpression(e)));
+            description = description.substring(1, description.length()-1);
         }
         return this;
     }

@@ -5,6 +5,7 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
@@ -21,11 +22,11 @@ import java.util.Map;
  */
 public class Identifier extends NamedElement {
     public static final String TEMPLATE = "identifier";
-    @UserControlledMatcher
+    @UserControlled(name="must contain: " , templatePart = "Matcher")
     public List<String> containsList = new LinkedList<>(); // present the user a list of strings he wishes the identifier will contain to modify.
-    @UserControlledMatcher
+    @UserControlled(name="must not contain: " , templatePart = "Matcher")
     public List<String> notContainsList = new LinkedList<>(); // present the user a list of strings he wishes the identifier will not contain to modify.
-    @UserControlledReplacer
+    @UserControlled(name="change name to: " , templatePart = "Replacer")
     public String nameToChange = ""; // present the user string he wishes the identifier will b replaced by to modify.
 
 

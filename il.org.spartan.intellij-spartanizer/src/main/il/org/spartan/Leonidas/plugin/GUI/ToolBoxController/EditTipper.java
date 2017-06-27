@@ -4,11 +4,8 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import fluent.ly.note;
 import il.org.spartan.Leonidas.auxilary_layer.Existence;
+import il.org.spartan.Leonidas.plugin.*;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
-import il.org.spartan.Leonidas.plugin.Toolbox;
-import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
-import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
-import il.org.spartan.Leonidas.plugin.UserControlledTipper;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -17,6 +14,13 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +37,7 @@ public class EditTipper extends JFrame {
     private JPanel tempPane;
     private JScrollPane TablePanel;
     private JLabel nameLabel;
+    private JButton OKButton;
     private ComponentJTable table;
     private Tipper currentTip;
 
@@ -72,6 +77,16 @@ public class EditTipper extends JFrame {
         closeButton.addActionListener(e -> {
             this.dispose();
         });
+        table.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                applyButton.setEnabled(true);
+            }
+        });
+        OKButton.addActionListener(e->{
+            applyListener();
+            this.dispose();
+        });
         TablePanel.setViewportView(table);
         setContentPane(mainPanel);
         setPreferredSize(new Dimension(800, 600));
@@ -104,21 +119,29 @@ public class EditTipper extends JFrame {
 
 
             for (Field field : fields) {
-                if ((matcher && !field.isAnnotationPresent(UserControlledMatcher.class)) ||
-                        (!matcher && !field.isAnnotationPresent(UserControlledReplacer.class))) {
+                if ((matcher && !field.isAnnotationPresent(UserControlled.class))||
+                        (matcher && field.isAnnotationPresent(UserControlled.class) &&
+                                !field.getAnnotation(UserControlled.class).templatePart().equals("Matcher"))) {
                     continue;
                 }
+                if ((!matcher && !field.isAnnotationPresent(UserControlled.class))||
+                        (!matcher && field.isAnnotationPresent(UserControlled.class) &&
+                                !field.getAnnotation(UserControlled.class).templatePart().equals("Replacer"))) {
+                    continue;
+                }
+
+                UserControlled annotation = field.getAnnotation(UserControlled.class);
                 Class type = field.getType();
                 try {
                     if (type.isPrimitive() && type.getName().equals("boolean")) {
-                        table.getModel().setValueAt(new JLabel(field.getName()+" of "+root.getDescription()), i, 0);
+                        table.getModel().setValueAt(new JLabel(root.getDescription()+ " "+ annotation.name()), i, 0);
                         table.getModel().setValueAt(new JCheckBox("", (Boolean) field.get(root)), i++, 1);
                         continue;
                     }
 
                     if (type == List.class) {
                         for(Object  element: (List)field.get(root)) {
-                            table.getModel().setValueAt(new JLabel(field.getName() + " of " + root.getDescription()), i, 0);
+                            table.getModel().setValueAt(new JLabel(root.getDescription()+ " "+ annotation.name()), i, 0);
                             table.getModel().setValueAt(new JTextField((String) element), i++, 1);
                         }
                         continue;
@@ -126,7 +149,7 @@ public class EditTipper extends JFrame {
                     if (type == Map.class) {
                         for (Map.Entry<Integer, String> entry : ((Map<Integer,String>)field.get(root)).entrySet())
                         {
-                            table.getModel().setValueAt(new JLabel(field.getName() + " of " + root.getDescription()), i, 0);
+                            table.getModel().setValueAt(new JLabel(root.getDescription()+ " "+ annotation.name()), i, 0);
                             table.getModel().setValueAt(new JTextField((String) entry.getValue()), i++, 1);
                         }
                         continue;
@@ -135,7 +158,7 @@ public class EditTipper extends JFrame {
                     if(type == Existence.class){
                         JComboBox cb = new JComboBox(new Existence[]{Existence.DO_NOT_CARE,Existence.MUST_EXISTS,Existence.DOES_NOT_EXISTS});
                         cb.setSelectedItem(field.get(root));
-                        table.getModel().setValueAt(new JLabel(field.getName()+" of "+root.getDescription()), i, 0);
+                        table.getModel().setValueAt(new JLabel(root.getDescription()+ " "+ annotation.name()), i, 0);
                         table.getModel().setValueAt(cb, i++, 1);
                         continue;
                     }
@@ -143,7 +166,7 @@ public class EditTipper extends JFrame {
                     Object obj = type.newInstance();
                     if (obj instanceof String) {
                         if(!((String) field.get(root)).equals("")) {
-                            table.getModel().setValueAt(new JLabel(field.getName() + " of " + root.getDescription()), i, 0);
+                            table.getModel().setValueAt(new JLabel(root.getDescription()+ " "+ annotation.name()), i, 0);
                             table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
                         }
                         continue;
@@ -163,10 +186,17 @@ public class EditTipper extends JFrame {
 
 
             for (Field field : fields) {
-                if ((matcher && !field.isAnnotationPresent(UserControlledMatcher.class)) ||
-                        (!matcher && !field.isAnnotationPresent(UserControlledReplacer.class))) {
+                if ((matcher && !field.isAnnotationPresent(UserControlled.class))||
+                        (matcher && field.isAnnotationPresent(UserControlled.class) &&
+                                !field.getAnnotation(UserControlled.class).templatePart().equals("Matcher"))) {
                     continue;
                 }
+                if ((!matcher && !field.isAnnotationPresent(UserControlled.class))||
+                        (!matcher && field.isAnnotationPresent(UserControlled.class) &&
+                                !field.getAnnotation(UserControlled.class).templatePart().equals("Replacer"))) {
+                    continue;
+                }
+
                 Class type = field.getType();
                 try {
                     if (type.isPrimitive() && type.getName().equals("boolean")) {
@@ -211,6 +241,9 @@ public class EditTipper extends JFrame {
     }
 
     private void applyListener() {
+        //applyButton.setPressedIcon(applyButton.getPressedIcon());
+        applyButton.setEnabled(false);
+       // applyButton.setDisabledSelectedIcon(applyButton.getDisabledIcon());
         LeonidasTipper lt = (LeonidasTipper)currentTip;
         List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
 

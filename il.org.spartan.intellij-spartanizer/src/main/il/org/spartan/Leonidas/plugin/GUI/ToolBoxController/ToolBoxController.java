@@ -14,10 +14,9 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +38,7 @@ class ToolBoxController extends JFrame {
     private JPanel buttonsPanel;
     private JScrollPane tippersPane;
     private JTextArea textArea1;
+    private JButton OKButton;
 
     private CheckBoxList list;
 
@@ -95,7 +95,17 @@ class ToolBoxController extends JFrame {
             }
         });
 
+        OKButton.addActionListener(e ->{
+            applyListener();
+            this.dispose();
+        });
         textArea1.setEditable(false);
+        list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                applyButton.setEnabled(true);
+            }
+        });
         tippersPane.setViewportView(list);
         selectAllButton.addActionListener(e -> selectAllListener());
         clearAllButton.addActionListener(e -> clearAllListener());
@@ -117,6 +127,7 @@ class ToolBoxController extends JFrame {
     }
 
     private void applyListener() {
+        applyButton.setEnabled(false);
         List<String> updateList = new ArrayList<>();
         for (int i = 0; i < list.getNumOfElements(); i++) {
             JCheckBox checkbox = (JCheckBox)

@@ -258,7 +258,6 @@ public class SpartanWidgetHandler extends AbstractHandler {
                 @Override public void run() {
                   try {
                     o.onMouseHold(c);
-                    System.out.println("held");
                   } catch (final Throwable ¢) {
                     note.bug(¢);
                   }

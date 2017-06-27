@@ -5,6 +5,7 @@ import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
@@ -25,9 +26,9 @@ public class Statement extends GenericMethodCallBasedBlock {
 
     private static final String TEMPLATE = "statement";
 
-    @UserControlledMatcher
+    @UserControlled(name = "must not refer: " , templatePart = "Matcher")
     public List<String> mustNotReferList = new LinkedList<>(); // present the user a list of strings he does not want the statement to refer, to modify.
-    @UserControlledReplacer
+    @UserControlled(name ="identifier - replace with: " , templatePart = "Replacer")
     public Map<Integer, String> replacingIdentifier = new HashMap<>(); // present the user with a map between each ID of identifier, to a string it is replaced by to modify.
 
     public Statement(PsiElement e) {

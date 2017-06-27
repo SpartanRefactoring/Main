@@ -40,6 +40,10 @@ public class GitCommitOperation extends GitOperation {
   }
   @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {
     try {
+      if (g.status().call().isClean()) {
+        displayMessage("Nothing to commit");
+        return;
+      }
       g.commit().setMessage(message).setAll(true).call();
     } catch (final NoHeadException x) {
       displayMessage("Git Error: Couldn't find the HEAD reference");

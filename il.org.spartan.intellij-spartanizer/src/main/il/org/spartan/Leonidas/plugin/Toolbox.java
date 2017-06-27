@@ -1,10 +1,18 @@
 package il.org.spartan.Leonidas.plugin;
 
 import com.google.gson.Gson;
+import com.intellij.codeInsight.actions.ReformatCodeAction;
 import com.intellij.ide.util.PropertiesComponent;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.Presentation;
+import com.intellij.openapi.actionSystem.impl.ActionManagerImpl;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.keymap.KeymapManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
@@ -20,6 +28,7 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
@@ -240,6 +249,24 @@ public class Toolbox implements ApplicationComponent {
         if (e != null && tipper != null && tipper.canTip(e)) {
             tipper.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
         }
+        AnActionEvent ana = AnActionEvent.createFromDataContext("banana",null ,new DataContext() {
+            @Nullable
+            @Override
+            public Object getData(String dataId) {
+                if (dataId.equals("project")) {
+                    return Utils.getProject();
+                }
+                if (dataId.equals("editor")) {
+                    return FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor();
+                }
+                if (dataId.equals("virtualFile")) {
+                    return e.getContainingFile().getVirtualFile();
+                }
+                return null;
+            }
+        });
+        ReformatCodeAction rca = new ReformatCodeAction();
+        rca.actionPerformed(ana);
     }
 
     /**

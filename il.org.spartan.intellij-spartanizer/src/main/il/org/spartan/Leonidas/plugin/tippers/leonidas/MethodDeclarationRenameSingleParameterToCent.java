@@ -42,8 +42,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
             class wrapping {
                 /* start */
 
-                Class0 method1$RootMethod(Class2 identifier3$TheFromParamName) {
-                    anyNumberOf(statement(4, "BodyOfFromMethod"));
+                Class0 method1$method_name(Class2 identifier3$single_parameter) {
+                    anyNumberOf(statement(4, "method body"));
                     return null; // ignore
                 }
                 /* end */
@@ -57,8 +57,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
             class wrapping {
                 /* start */
 
-                Class0 method1(Class2 identifier3$TheToParamName) {
-                    anyNumberOf(statement(4, "BodyOfToMethod"));
+                Class0 method1$method_name(Class2 identifier3$single_parameter) {
+                    anyNumberOf(statement(4, "method body"));
                     return null; // ignore
                 }
                 /* end */
