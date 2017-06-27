@@ -60,26 +60,25 @@ public class TipperTest{
 
 
     private Map<String,String> getExamples(){
-        if(leonidasMode)
-			return leonidasTipper.getExamples();
-        return tipper.getExamples();
+        if (!leonidasMode)
+			return tipper.getExamples();
+		return leonidasTipper.getExamples();
     }
 
     private String getTipperName(){
-        if(leonidasMode)
-			return leonidasTipper.getClass().getSimpleName();
-        return tipper.name();
+        if (!leonidasMode)
+			return tipper.name();
+		return leonidasTipper.getClass().getSimpleName();
     }
 
     private void setUp(){
-        if(setup) return;
-        setup = true;
+        if (!setup)
+			setup = true;
     }
 
     private void log(String s){
-        if(!printsToScreen)
-			return;
-        System.out.println(s);
+        if (printsToScreen)
+			System.out.println(s);
     }
 
     private void crashTest(){

@@ -36,13 +36,13 @@ public abstract class NamedElement extends GenericEncapsulator{
 
     @Override
     public GenericEncapsulator extractAndAssignDescription(PsiElement e) {
-        if (getName(e).contains("$")) {
-            description = "";
-            String [] words = getName(e).split("\\$")[1].split("_");
-            for(int i = 0; i<words.length; ++i)
-				description += (words[i] + " ");
-        }
-        return this;
+        if (!getName(e).contains("$"))
+			return this;
+		description = "";
+		String[] words = getName(e).split("\\$")[1].split("_");
+		for (int i = 0; i < words.length; ++i)
+			description += (words[i] + " ");
+		return this;
     }
 
     /**

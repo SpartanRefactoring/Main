@@ -30,23 +30,21 @@ class TippersList extends JList {
         addMouseListener(new MouseAdapter() {
                              public void mouseClicked(MouseEvent e) {
                                  int index = locationToIndex(e.getPoint());
-                                 if (e.getClickCount() == 2) {
-                                     // double click
-                                     JLabel label = (JLabel) getModel().getElementAt(index);
-                                     String tipperLine = label.getText().substring(label.getText().indexOf("Line")+5);
-                                     EditorImpl editor = ((EditorImpl) FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor());
-                                     editor.getCaretModel().
-                                             moveToOffset(editor.logicalPositionToOffset(new LogicalPosition(Integer.parseInt(tipperLine)-1,0)));
-
-                                     Point caretLocation = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
-                                     //int scrollOffset = caretLocation.y - myCaretUpdateVShift;
-                                     editor.getScrollingModel().disableAnimation();
-                                     editor.getScrollingModel().scrollVertically(
-                                             editor.logicalPositionToOffset(new LogicalPosition(Integer.parseInt(tipperLine)-1,0)));
-                                     editor.getScrollingModel().enableAnimation();
-                                            // .moveToLogicalPosition(new LogicalPosition(Integer.parseInt(tipperLine),0));
-                                     frame.setState(Frame.ICONIFIED);
-                                 }
+                                 if (e.getClickCount() != 2)
+									return;
+								JLabel label = (JLabel) getModel().getElementAt(index);
+								String tipperLine = label.getText().substring(label.getText().indexOf("Line") + 5);
+								EditorImpl editor = ((EditorImpl) FileEditorManager.getInstance(Utils.getProject())
+										.getSelectedTextEditor());
+								editor.getCaretModel().moveToOffset(editor.logicalPositionToOffset(
+										new LogicalPosition(Integer.parseInt(tipperLine) - 1, 0)));
+								Point caretLocation = editor
+										.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+								editor.getScrollingModel().disableAnimation();
+								editor.getScrollingModel().scrollVertically(editor.logicalPositionToOffset(
+										new LogicalPosition(Integer.parseInt(tipperLine) - 1, 0)));
+								editor.getScrollingModel().enableAnimation();
+								frame.setState(Frame.ICONIFIED);
                              }
                          }
         );

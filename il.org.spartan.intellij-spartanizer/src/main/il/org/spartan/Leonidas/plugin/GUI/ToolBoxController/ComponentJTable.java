@@ -93,15 +93,14 @@ public class ComponentJTable extends JTable {
             }
 
 
-            if (value instanceof JLabel) {
-                JLabel text = (JLabel) value;
-                text.setBackground(getBackground());
-                text.setForeground(getForeground());
-                text.setEnabled(isEnabled());
-                text.setFont(getFont());
-                return text;
-            }
-            return this;
+            if (!(value instanceof JLabel))
+				return this;
+			JLabel text = (JLabel) value;
+			text.setBackground(getBackground());
+			text.setForeground(getForeground());
+			text.setEnabled(isEnabled());
+			text.setFont(getFont());
+			return text;
         }
     }
 
@@ -134,14 +133,11 @@ public class ComponentJTable extends JTable {
                 return l;
             }
 
-            if (value instanceof JComboBox) {
-
-                JComboBox b = (JComboBox) value;
-                c = b;
-                return b;
-            }
-
-            return null;
+            if (!(value instanceof JComboBox))
+				return null;
+			JComboBox b = (JComboBox) value;
+			c = b;
+			return b;
         }
 
         public Object getCellEditorValue() {

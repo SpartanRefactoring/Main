@@ -68,26 +68,25 @@ class ToolBoxController extends JFrame {
             public void mouseMoved(MouseEvent e) {
                 int index = list.locationToIndex(e.getPoint());
 
-                if (index > -1 && index < list.getNumOfElements()) {
-                    JCheckBox checkbox = (JCheckBox)
-                            list.getModel().getElementAt(index);
-                    Map<String, String> examples = null;
-                    LeonidasTipperDefinition ltd = Toolbox.getInstance().getTipperInstanceByName(checkbox.getText());
-                    if (ltd != null)
-						examples = ltd.getExamples();
-					else
-						examples = Toolbox.getInstance().getTipperByName(checkbox.getText()).getExamples();
-                    String before = "";
-                    String after = "";
-                    for (Map.Entry<String, String> entry : examples.entrySet()) {
-                        before = entry.getKey();
-                        after = entry.getValue();
-                        if (before == null || after == null)
-							continue;
-                        break;
-                    }
-                    textArea1.setText("Before:\n" + before + "\n\n" + "After:\n" + after);
-                }
+                if (index <= -1 || index >= list.getNumOfElements())
+					return;
+				JCheckBox checkbox = (JCheckBox) list.getModel().getElementAt(index);
+				Map<String, String> examples = null;
+				LeonidasTipperDefinition ltd = Toolbox.getInstance().getTipperInstanceByName(checkbox.getText());
+				if (ltd != null)
+					examples = ltd.getExamples();
+				else
+					examples = Toolbox.getInstance().getTipperByName(checkbox.getText()).getExamples();
+				String before = "";
+				String after = "";
+				for (Map.Entry<String, String> entry : examples.entrySet()) {
+					before = entry.getKey();
+					after = entry.getValue();
+					if (before == null || after == null)
+						continue;
+					break;
+				}
+				textArea1.setText("Before:\n" + before + "\n\n" + "After:\n" + after);
             }
         });
 

@@ -55,11 +55,11 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
         QuantifierMethodCallBased o = create(e, map);
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
-        if (o.isGeneric()) {
-            o.putId(o.extractId(e.getInner()));
-            o.extractAndAssignDescription(e.getInner());
-        }
-        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+        if (!o.isGeneric())
+			return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+		o.putId(o.extractId(e.getInner()));
+		o.extractAndAssignDescription(e.getInner());
+		return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
     public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {

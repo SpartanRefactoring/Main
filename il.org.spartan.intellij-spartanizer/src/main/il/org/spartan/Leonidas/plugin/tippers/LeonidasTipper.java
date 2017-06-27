@@ -91,10 +91,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return new Tip(description(node), node, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
-                if (canTip(node)) {
-                    Wrapper<Integer> i = new Wrapper<>(0);
-                    getReplacerCopy().replace(node, matcher.extractInfo(node, i), i.get(), r);
-                }
+                if (!canTip(node))
+					return;
+				Wrapper<Integer> i = new Wrapper<>(0);
+				getReplacerCopy().replace(node, matcher.extractInfo(node, i), i.get(), r);
             }
         };
     }
@@ -190,9 +190,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                     true
             );
         language = viewProvider.getBaseLanguage();
-        if (LanguageParserDefinitions.INSTANCE.forLanguage(language) != null)
-			return (PsiJavaFile) viewProvider.getPsi(language);
-        return null;
+        if (LanguageParserDefinitions.INSTANCE.forLanguage(language) == null)
+			return null;
+		return (PsiJavaFile) viewProvider.getPsi(language);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Matcher ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -291,10 +291,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitElement(PsiElement element) {
                 super.visitElement(element);
-                if (!stop.get() && iz.ofType(element, rootElementType)) {
-                    result.set(element);
-                    stop.set(true);
-                }
+                if (stop.get() || !iz.ofType(element, rootElementType))
+					return;
+				result.set(element);
+				stop.set(true);
             }
         });
         return result.get();

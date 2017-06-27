@@ -78,11 +78,11 @@ public abstract class GenericEncapsulator extends Encapsulator {
         assert conforms(e.getInner());
         Encapsulator upperElement = getConcreteParent(e);
         GenericEncapsulator ge = create(upperElement, map);
-        if (isGeneric()) {
-            ge.putId(ge.extractId(e.getInner()));
-            ge.extractAndAssignDescription(e.getInner());
-        }
-        return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
+        if (!isGeneric())
+			return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
+		ge.putId(ge.extractId(e.getInner()));
+		ge.extractAndAssignDescription(e.getInner());
+		return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
     }
 
     /**
@@ -144,13 +144,12 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         elements = applyReplacingRules(elements, m);
         if (parent == null) return elements;
-        if (elements.size() > 1){
-            List<PsiElement> l = Lists.reverse(elements);
-            l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
-            r.deleteByRange(inner.getParent(), inner, inner);
-            return elements;
-        }
-        return Utils.wrapWithList(r.replace(inner, elements.get(0)));
+        if (elements.size() <= 1)
+			return Utils.wrapWithList(r.replace(inner, elements.get(0)));
+		List<PsiElement> l = Lists.reverse(elements);
+		l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+		r.deleteByRange(inner.getParent(), inner, inner);
+		return elements;
 
     }
 

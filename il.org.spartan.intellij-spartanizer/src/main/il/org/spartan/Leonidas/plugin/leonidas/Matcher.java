@@ -56,21 +56,23 @@ public class Matcher {
         if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return m.setMatches();
         if (bgNeedle.hasNext() != bgCursor.hasNext()) return  m.setNotMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
-        if (iz.quantifier(bgNeedle.value())) {
-            int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
-            for (int i = 0; i <= n; ++i) {
-                m.setMatches();
-                varNeedle = bgNeedle.clone();
-                varCursor = bgCursor.clone();
-                varNeedle.setNumberOfOccurrences(i);
-                MatchingResult mq = matchQuantifier(varNeedle, varCursor, m);
-                if (mq.notMatches()) continue;
-                MatchingResult sr = matchingRecursion(varNeedle, varCursor, m);
-                if (sr.notMatches()) continue;
-                return m.combineWith(mq).combineWith(sr);
-            }
-        }
-        return m.setNotMatches();
+        if (!iz.quantifier(bgNeedle.value()))
+			return m.setNotMatches();
+		int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
+		for (int i = 0; i <= n; ++i) {
+			m.setMatches();
+			varNeedle = bgNeedle.clone();
+			varCursor = bgCursor.clone();
+			varNeedle.setNumberOfOccurrences(i);
+			MatchingResult mq = matchQuantifier(varNeedle, varCursor, m);
+			if (mq.notMatches())
+				continue;
+			MatchingResult sr = matchingRecursion(varNeedle, varCursor, m);
+			if (!sr.notMatches())
+				return m.combineWith(mq).combineWith(sr);
+			continue;
+		}
+		return m.setNotMatches();
     }
 
     /**

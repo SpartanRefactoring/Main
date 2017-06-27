@@ -99,11 +99,10 @@ public class EditTipper extends JFrame {
         for(LeonidasTipperDefinition instance : tippersInstances)
 			if (instance.getClass().getSimpleName().equals(currentTip.name()))
 				ltd = instance;
-        if(ltd == null || !ltd.getClass().isAnnotationPresent(UserControlledTipper.class)){
-            JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.name() + " Can't Be Edited. ");
-            return false;
-        }
-        return true;
+        if (ltd != null && ltd.getClass().isAnnotationPresent(UserControlledTipper.class))
+			return true;
+		JOptionPane.showMessageDialog(this, "The tip: " + currentTip.name() + " Can't Be Edited. ");
+		return false;
     }
 
     private int buildTableFields(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
@@ -150,11 +149,10 @@ public class EditTipper extends JFrame {
 						continue;
 					}
 					if (type.newInstance() instanceof String) {
-						if (!"".equals((String) field.get(root))) {
-							table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i,
-									0);
-							table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
-						}
+						if ("".equals((String) field.get(root)))
+							continue;
+						table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i, 0);
+						table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
 						continue;
 					}
 				} catch (Exception e) {

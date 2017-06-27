@@ -98,18 +98,14 @@ public class Toolbox implements ApplicationComponent {
 //        }
 
         String savedTippers = PropertiesComponent.getInstance().getValue("savedTippers");
-        if (savedTippers != null && !"".equals(savedTippers)) {
-            List<String> tipperNames = new Gson().fromJson(savedTippers, List.class);
-
-            CustomLeonidasTippers.getInstance()
-                    .getTippers()
-                    .forEach((key, value) -> {
-                        add(new LeonidasTipper(key, value));
-                        tipperNames.add(key);
-                    });
-
-            updateTipperList(tipperNames);
-        }
+        if (savedTippers == null || "".equals(savedTippers))
+			return;
+		List<String> tipperNames = new Gson().fromJson(savedTippers, List.class);
+		CustomLeonidasTippers.getInstance().getTippers().forEach((key, value) -> {
+			add(new LeonidasTipper(key, value));
+			tipperNames.add(key);
+		});
+		updateTipperList(tipperNames);
     }
 
     private void initializeAllTipperClassesInstances() {
@@ -224,14 +220,9 @@ public class Toolbox implements ApplicationComponent {
      */
     @SuppressWarnings("unchecked")
     public void executeAllTippers(PsiElement e) {
-        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-            return;
-
-        tipperMap.get(e.getClass())
-                .stream()
-                .filter(tipper -> tipper.canTip(e))
-                .findFirst()
-                .ifPresent(t -> executeTipper(e, t));
+        if (!checkExcluded(e.getContainingFile()) && isElementOfOperableType(e))
+			tipperMap.get(e.getClass()).stream().filter(tipper -> tipper.canTip(e)).findFirst()
+					.ifPresent(t -> executeTipper(e, t));
     }
 
     /**
@@ -251,9 +242,9 @@ public class Toolbox implements ApplicationComponent {
 					return Utils.getProject();
 				if ("editor".equals(dataId))
 					return FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor();
-				if ("virtualFile".equals(dataId))
-					return e.getContainingFile().getVirtualFile();
-				return null;
+				if (!"virtualFile".equals(dataId))
+					return null;
+				return e.getContainingFile().getVirtualFile();
 			}
 		}));
     }
@@ -277,12 +268,11 @@ public class Toolbox implements ApplicationComponent {
             @Override
             public void visitElement(PsiElement el) {
                 super.visitElement(el);
-                if (modified.get())
-					return;
-                if (tipper.canTip(el)) {
-                    toReplace.set(el);
-                    modified.set(true);
-                }
+                if (!modified.get())
+					if (tipper.canTip(el)) {
+						toReplace.set(el);
+						modified.set(true);
+					}
             }
         });
         if (!modified.get())
@@ -346,9 +336,9 @@ public class Toolbox implements ApplicationComponent {
 
     public Tipper getTipperByName(String name) {
         Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
-        if (res.isPresent())
-			return res.get();
-        return null;
+        if (!res.isPresent())
+			return null;
+		return res.get();
     }
 
     public LeonidasTipperDefinition getTipperInstanceByName(String name) {
@@ -403,14 +393,10 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public void executeAllTippersNoNanos(PsiElement e) {
-        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-            return;
-
-        tipperMap.get(e.getClass())
-                .stream()
-                .filter(tipper -> tipper.canTip(e) && !(tipper instanceof NanoPatternTipper))
-                .findFirst()
-                .ifPresent(t -> executeTipper(e, t));
+        if (!checkExcluded(e.getContainingFile()) && isElementOfOperableType(e))
+			tipperMap.get(e.getClass()).stream()
+					.filter(tipper -> tipper.canTip(e) && !(tipper instanceof NanoPatternTipper)).findFirst()
+					.ifPresent(t -> executeTipper(e, t));
     }
 
     public Set<String> getAvailableTipsInfo(PsiElement e) {

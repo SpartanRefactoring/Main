@@ -72,11 +72,8 @@ public class Replacer {
 		}
         if (iz.methodCallExpression(parent.getParent()))
             treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
-        if (parent.getChildren().length <= 1)
-            return;
-        //if (iz.whiteSpace(last.getNextSibling()))
-        //    last = last.getNextSibling();
-        r.deleteByRange(parent, treeToReplace, last);
+        if (parent.getChildren().length > 1)
+			r.deleteByRange(parent, treeToReplace, last);
     }
 
     /**
