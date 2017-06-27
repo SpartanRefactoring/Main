@@ -167,8 +167,7 @@ public class Toolbox implements ApplicationComponent {
 
         List<String> activeTippersNames = new ArrayList<>();
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> activeTippersNames.add(tipper.name())));
-        String jsonTips = new Gson().toJson(activeTippersNames);
-        PropertiesComponent.getInstance().setValue("savedTippers", jsonTips, "");
+        PropertiesComponent.getInstance().setValue("savedTippers", new Gson().toJson(activeTippersNames), "");
 
 
         //TODO: @Amir Sagiv this should be uncommented
@@ -257,8 +256,7 @@ public class Toolbox implements ApplicationComponent {
 				return null;
 			}
         });
-        ReformatCodeAction rca = new ReformatCodeAction();
-        rca.actionPerformed(ana);
+        new ReformatCodeAction().actionPerformed(ana);
     }
 
     /**

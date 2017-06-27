@@ -30,12 +30,9 @@ public class UtilsTest extends PsiTypeHelper {
         assertEquals(Utils.getAllReferences(m, id).size(), 4);
         id = createTestIdentifierFromString("id");
         PsiIdentifier nonExistent = createTestIdentifierFromString("banana");
-        String m1String = "void foo(){ int k=5; }";
-        PsiMethod m1 = createTestMethodFromString(m1String);
-        String m2String = "int id() { int id=7; return 8;}";
-        PsiMethod m2 = createTestMethodFromString(m2String);
-        String m3String = "int id() { int id=7; return id;}";
-        PsiMethod m3 = createTestMethodFromString(m3String);
+        PsiMethod m1 = createTestMethodFromString("void foo(){ int k=5; }");
+        PsiMethod m2 = createTestMethodFromString("int id() { int id=7; return 8;}");
+        PsiMethod m3 = createTestMethodFromString("int id() { int id=7; return id;}");
         assert Utils.getAllReferences(null, null).isEmpty();
         assert Utils.getAllReferences(null, id).isEmpty();
         assert Utils.getAllReferences(m1, id).isEmpty();
@@ -45,8 +42,7 @@ public class UtilsTest extends PsiTypeHelper {
     }
 
     public void testGetDocumentFromPsiElement() throws Exception {
-        PsiIfStatement i = createTestIfStatement("x > 2", "x++;");
-        assertNull(getDocumentFromPsiElement(i));
+        assertNull(getDocumentFromPsiElement(createTestIfStatement("x > 2", "x++;")));
     }
 
     public void testGetProject() throws Exception {
@@ -54,8 +50,7 @@ public class UtilsTest extends PsiTypeHelper {
     }
 
     public void testGetChildrenOfType() throws Exception {
-        PsiMethod m = createTestMethodFromString("int foo() { int x,y,z; x++; y--; z+=2;");
-        assertEquals(Utils.getChildrenOfType(m, PsiIdentifier.class).size(), 7);
+        assertEquals(Utils.getChildrenOfType(createTestMethodFromString("int foo() { int x,y,z; x++; y--; z+=2;"), PsiIdentifier.class).size(), 7);
     }
 
     public void testFixSpacesProblemOnPath() throws Exception {
@@ -66,7 +61,6 @@ public class UtilsTest extends PsiTypeHelper {
     }
 
     public void testGetFirstElementInsideBody() throws Exception {
-        PsiCodeBlock cb = createTestCodeBlockFromString("{x++;}");
-        assertEquals(Utils.getFirstElementInsideBody(cb).getText(), "x++;");
+        assertEquals(Utils.getFirstElementInsideBody(createTestCodeBlockFromString("{x++;}")).getText(), "x++;");
     }
 }

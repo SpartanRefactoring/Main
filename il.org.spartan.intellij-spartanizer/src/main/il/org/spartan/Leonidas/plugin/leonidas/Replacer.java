@@ -100,8 +100,7 @@ public class Replacer {
         List<PsiElement> elements = new LinkedList<>();
         rootsCopy.forEach(rootCopy -> {
             if (rootCopy.isGeneric()) {
-                GenericEncapsulator ge = az.generic(rootCopy);
-                elements.addAll(ge.replaceByRange(m.get(az.generic(rootCopy).getId()), m, r)); //TODO
+                elements.addAll(az.generic(rootCopy).replaceByRange(m.get(az.generic(rootCopy).getId()), m, r)); //TODO
             } else {
                 rootCopy.accept(e -> {
                     if (!e.isGeneric()) return;

@@ -50,8 +50,7 @@ public class GridBagTable extends JPanel {
         JTable table = new JTable(3, 2);
         table.setName("table");
 
-        JPanel panel = new GridBagTable("Property", "Value", Arrays.asList(checkbox, textfield, table));
-        frame.add(panel);
+        frame.add(new GridBagTable("Property", "Value", Arrays.asList(checkbox, textfield, table)));
         frame.pack();
         frame.setVisible(true);
     }

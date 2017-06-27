@@ -65,8 +65,8 @@ public class EditTipper extends JFrame {
 
         int currRow = 0;
         currRow = buildTableFields(tipperMatcherRoots,currRow,true);
-        List<GenericEncapsulator> tipperReplacerRoots = lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
-        currRow = buildTableFields(tipperReplacerRoots,currRow,false);
+        currRow = buildTableFields(lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root))
+				.flatMap(list -> list.stream()).collect(Collectors.toList()),currRow,false);
         ((DefaultTableModel) table.getModel()).setRowCount(currRow);
 
 
@@ -213,8 +213,7 @@ public class EditTipper extends JFrame {
                     }
 
 
-                    Object obj = type.newInstance();
-                    if (obj instanceof String) {
+                    if (type.newInstance() instanceof String) {
                         field.set(root, ((JTextField)table.getValueAt(i++,1)).getText());
                         continue;
                     }
@@ -237,8 +236,8 @@ public class EditTipper extends JFrame {
         int currRow = 0;
         currRow = updateFieldsFromTable(tipperMatcherRoots,currRow,true);
 
-        List<GenericEncapsulator> tipperReplacerRoots = lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
-        updateFieldsFromTable(tipperReplacerRoots,currRow,false);
+        updateFieldsFromTable(lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root))
+				.flatMap(list -> list.stream()).collect(Collectors.toList()),currRow,false);
 
     }
 

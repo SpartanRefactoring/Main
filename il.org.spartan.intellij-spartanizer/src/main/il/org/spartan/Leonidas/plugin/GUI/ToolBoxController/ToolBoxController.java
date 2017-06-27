@@ -76,8 +76,7 @@ class ToolBoxController extends JFrame {
                     if (ltd != null)
 						examples = ltd.getExamples();
 					else {
-						Tipper tipper = Toolbox.getInstance().getTipperByName(checkbox.getText());
-						examples = tipper.getExamples();
+						examples = Toolbox.getInstance().getTipperByName(checkbox.getText()).getExamples();
 					}
                     String before = "";
                     String after = "";
@@ -88,9 +87,7 @@ class ToolBoxController extends JFrame {
 							continue;
                         break;
                     }
-                    String text = "Before:\n" + before + "\n\n" +
-                            "After:\n" + after;
-                    textArea1.setText(text);
+                    textArea1.setText("Before:\n" + before + "\n\n" + "After:\n" + after);
                 }
             }
         });
@@ -136,8 +133,7 @@ class ToolBoxController extends JFrame {
 				updateList.add(checkbox.getText());
         }
         Toolbox.getInstance().updateTipperList(updateList);
-        Project p = Utils.getProject();
-        DaemonCodeAnalyzer.getInstance(p).restart();
+        DaemonCodeAnalyzer.getInstance(Utils.getProject()).restart();
 
     }
 

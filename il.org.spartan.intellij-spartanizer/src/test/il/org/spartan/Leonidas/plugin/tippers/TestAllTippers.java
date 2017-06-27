@@ -20,12 +20,10 @@ public class TestAllTippers extends PsiTypeHelper {
         List<LeonidasTipperDefinition> leonidasTippers = t.getAllTipperInstances();
         List<Tipper> ot = t.getAllTippers();
         for( LeonidasTipperDefinition lt : leonidasTippers){
-            TipperTest ts = new TipperTest(lt, this, true, true);
-            ts.check();
+            new TipperTest(lt, this, true, true).check();
         }
         for( Tipper tipper : ot){
-            TipperTest ts = new TipperTest(tipper, this, true, true);
-            ts.check();
+            new TipperTest(tipper, this, true, true).check();
         }
 
     }

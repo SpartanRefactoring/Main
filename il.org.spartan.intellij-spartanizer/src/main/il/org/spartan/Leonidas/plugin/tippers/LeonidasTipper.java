@@ -93,8 +93,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             public void go(PsiRewrite r) {
                 if (canTip(node)) {
                     Wrapper<Integer> i = new Wrapper<>(0);
-                    Map<Integer, List<PsiElement>> map = matcher.extractInfo(node, i);
-                    getReplacerCopy().replace(node, map, i.get(), r);
+                    getReplacerCopy().replace(node, matcher.extractInfo(node, i), i.get(), r);
                 }
             }
         };
@@ -191,8 +190,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                     true
             );
         language = viewProvider.getBaseLanguage();
-        final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
-        if (parserDefinition != null)
+        if (LanguageParserDefinitions.INSTANCE.forLanguage(language) != null)
 			return (PsiJavaFile) viewProvider.getPsi(language);
         return null;
     }
@@ -213,8 +211,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the generic forest representing the replacer template
      */
     private List<Encapsulator> initializeReplacerRoots(Map<Integer, List<PsiMethodCallExpression>> m) {
-        PsiMethod replacerBody = (PsiMethod) getInterfaceMethod("replacer").copy();
-        List<Encapsulator> l = getForestFromMethod(replacerBody);
+        List<Encapsulator> l = getForestFromMethod(((PsiMethod) getInterfaceMethod("replacer").copy()));
         l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
             List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
             Encapsulator ie = !iz.quantifier(n) ? n : az.quantifier(n).getInternal();
@@ -262,8 +259,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * s is of the form 'element(index).isNot(constraint)' and "specific" if s is not structural rule.
      */
     private Constraint.ConstraintType extractConstraintType(PsiStatement s) {
-        PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
-        String constraintName = method.getMethodExpression().getReferenceName();
+        String constraintName = az.methodCallExpression(s.getFirstChild()).getMethodExpression().getReferenceName();
         try {
             return Constraint.ConstraintType.valueOf(constraintName.toUpperCase());
         } catch (Exception ignore) {

@@ -71,9 +71,7 @@ public enum Utils {
      */
     public static Document getDocumentFromPsiElement(PsiElement e) {
         PsiFile associatedFile = e.getContainingFile();
-        Project p = associatedFile.getProject();
-        PsiDocumentManager pdm = PsiDocumentManager.getInstance(p);
-        Document res = pdm.getDocument(associatedFile);
+        Document res = PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
         return res;
     }
 

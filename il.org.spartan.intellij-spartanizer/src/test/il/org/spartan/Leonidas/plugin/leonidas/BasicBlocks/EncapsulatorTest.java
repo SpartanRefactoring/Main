@@ -41,9 +41,7 @@ public class EncapsulatorTest extends PsiTypeHelper {
     }
 
     public void testRootEncapsulatingNodeIsOrphan() throws Exception {
-        String ifStatement1 = "if (booleanExpression(0)) {   statement(1);}";
-        Encapsulator node = Encapsulator.buildTreeFromPsi(createTestStatementFromString(ifStatement1));
-        Assert.assertNull(node.getParent());
+        Assert.assertNull(Encapsulator.buildTreeFromPsi(createTestStatementFromString("if (booleanExpression(0)) {   statement(1);}")).getParent());
     }
 
     public void testTreeBuiltFromPsiElementConformsToPsiElement() {
@@ -97,8 +95,7 @@ public class EncapsulatorTest extends PsiTypeHelper {
     }
 
     public void testGeneralizeWith() {
-        Encapsulator rep = Encapsulator.buildTreeFromPsi(createTestExpression("x++"));
-        node.getChildren().get(3).generalizeWith(rep);
+        node.getChildren().get(3).generalizeWith(Encapsulator.buildTreeFromPsi(createTestExpression("x++")));
         assertEquals(node.getChildren().get(3).getText(), "x++");
     }
 

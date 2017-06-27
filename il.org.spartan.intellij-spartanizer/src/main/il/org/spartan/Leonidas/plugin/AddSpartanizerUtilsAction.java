@@ -82,8 +82,8 @@ public class AddSpartanizerUtilsAction extends AnAction {
         File file = new File(is.getPath());
         FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
         file.setReadable(true, false);
-        String s = IOUtils.toString(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java"))));
-        PsiFile pf = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText("SpartanizerUtils.java", type, s);
+        PsiFile pf = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText("SpartanizerUtils.java", type, IOUtils.toString(new BufferedReader(
+				new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
         d.add(pf);
         Arrays.stream(d.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst().get().getVirtualFile().setWritable(false);
         Toolbox.getInstance().excludeFile(pf);

@@ -32,8 +32,7 @@ public class SpartanizerAnnotator implements Annotator {
             if (!Spartanizer.canTip(e) || !Spartanizer.shouldSpartanize(e) || e.getContainingFile().getName().contains("Spartanizer"))
                 return;
 
-            final Toolbox toolbox = Toolbox.getInstance();
-            final List<Tipper> tippers = toolbox.getTippers(e);
+            final List<Tipper> tippers = Toolbox.getInstance().getTippers(e);
 
             tippers.forEach(tipper -> {
                 Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
@@ -72,8 +71,7 @@ public class SpartanizerAnnotator implements Annotator {
                 annotation.setEnforcedTextAttributes(new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0));
             });
         } catch (Throwable t) {
-            Logger l = new Logger(this.getClass());
-            l.error("", t);
+            new Logger(this.getClass()).error("", t);
         }
     }
 }

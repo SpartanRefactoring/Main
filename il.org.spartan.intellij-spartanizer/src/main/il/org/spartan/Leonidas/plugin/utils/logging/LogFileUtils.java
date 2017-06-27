@@ -34,8 +34,7 @@ class LogFileUtils {
      * @return The path of the logfile to be used.
      */
     private static String getPath() {
-        PluginId ourPluginId = PluginId.getId(PluginDescriptorReader.getPluginId());
-        IdeaPluginDescriptor ourPlugin = PluginManager.getPlugin(ourPluginId);
+        IdeaPluginDescriptor ourPlugin = PluginManager.getPlugin(PluginId.getId(PluginDescriptorReader.getPluginId()));
         if (ourPlugin == null)
 			throw new RuntimeException("Cannot retrieve plugin descriptor");
         return ourPlugin.getPath().getPath() + SLASH + RELATIVE_LOG_PATH + BASE_LOG_NAME + DOT + LOG_EXT;

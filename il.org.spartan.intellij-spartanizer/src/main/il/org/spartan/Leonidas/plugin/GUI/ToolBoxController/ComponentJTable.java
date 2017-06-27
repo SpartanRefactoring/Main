@@ -33,8 +33,7 @@ public class ComponentJTable extends JTable {
         this.getTableHeader().setResizingAllowed(false);
         this.getTableHeader().setReorderingAllowed(false);
         model.setColumnCount(2);
-        Object[] headers = {"ID", "Value"};
-        model.setColumnIdentifiers(headers);
+        model.setColumnIdentifiers(new Object[] { "ID", "Value" });
         this.setRowHeight(30);
         for (int i = 0; i < 2; ++i) {
             this.getColumnModel().getColumn(i).setCellRenderer(new CellRenderer());

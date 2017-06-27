@@ -27,8 +27,7 @@ public class ComponentJList extends JList {
                 Object component = getModel().getElementAt(index);
                 if (!(component instanceof JCheckBox)) {
 					if (index != -1) {
-						TextFieldComponent field = (TextFieldComponent) component;
-						field.pressed();
+						((TextFieldComponent) component).pressed();
 					}
 				} else if (index != -1) {
 					JCheckBox checkbox = (JCheckBox) component;

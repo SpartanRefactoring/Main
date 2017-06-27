@@ -115,8 +115,7 @@ public class Playground extends JFrame {
         if (inputArea.getText().trim().isEmpty())
 			return;
         Toolbox.getInstance().playground = true;
-        PsiFileCenter pfc = new PsiFileCenter();
-        PsiFileCenter.PsiFileWrapper pfw = pfc.createFileFromString(inputArea.getText());
+        PsiFileCenter.PsiFileWrapper pfw = new PsiFileCenter().createFileFromString(inputArea.getText());
         if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL)
 			outputArea.setText("Input didn't contain legal java code!");
 		else{

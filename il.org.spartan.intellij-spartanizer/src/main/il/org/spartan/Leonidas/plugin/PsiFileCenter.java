@@ -47,9 +47,8 @@ public class PsiFileCenter {
         List<CodeType> codeTypesByGenerality = Arrays.asList(CodeType.FILE_BOUND, CodeType.CLASS_BOUND, CodeType.METHOD_BOUND, CodeType.EXPRESSION, CodeType.ENUM_BOUND);
         PsiFile file;
         for (CodeType type : codeTypesByGenerality) {
-            String currText = wrappingPrefixes.get(type) + marker + "\n\n" + s + "\n\n" + marker + wrappingPostfixes.get(type);
             file = PsiFileFactory.getInstance(Utils.getProject())
-                    .createFileFromText(JavaLanguage.INSTANCE, currText);
+                    .createFileFromText(JavaLanguage.INSTANCE, wrappingPrefixes.get(type) + marker + "\n\n" + s + "\n\n" + marker + wrappingPostfixes.get(type));
             Wrapper<Boolean> isValid = new Wrapper(true);
             file.accept(new JavaRecursiveElementVisitor() {
                 @Override
