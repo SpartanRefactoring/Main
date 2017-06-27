@@ -49,6 +49,6 @@ public class VolatileCFG extends CFG<VolatileCFG> {
     return ¢ == null ? String.valueOf(null) : English.trimAbsolute((¢ + "").replaceAll("\\s+", " "), PRINT_THRESHOLD, "...");
   }
   private static String shorten(final Collection<ASTNode> list) {
-    return list == null ? String.valueOf(null) : list.stream().map(λ -> shorten(λ)).collect(Collectors.toList()) + "";
+    return list == null ? String.valueOf(null) : list.stream().map(VolatileCFG::shorten).collect(Collectors.toList()) + "";
   }
 }

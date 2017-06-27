@@ -15,7 +15,7 @@ public class Taxa extends LinkedHashSet<Taxon> {
   private static final long serialVersionUID = -0x21F078992FCB9A1DL;
   public static Hierarchy<Taxon> hierarchy = new Hierarchy<>(Taxon::parents);
   static {
-    Toolbox.allTippers().forEach(λ -> Taxa.categories(λ));
+    Toolbox.allTippers().forEach(Taxa::categories);
   }
 
   @SuppressWarnings("unchecked") private static Taxa categories(final Tipper<? extends ASTNode> t) {

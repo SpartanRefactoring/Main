@@ -202,10 +202,10 @@ public class Selection extends AbstractSelection<Selection> {
       final Object $ = ((IStructuredSelection) s).getFirstElement();
       return ($ instanceof MarkerItem
           ? Optional.of((MarkerItem) $) //
-              .map(λ -> λ.getMarker()).map(λ -> λ.getResource()).map(λ -> λ.getProject())
+              .map(MarkerItem::getMarker).map(IMarker::getResource).map(IResource::getProject)
           : $ instanceof IJavaElement
               ? Optional.of((IJavaElement) $) //
-                  .map(λ -> λ.getJavaProject()).map(λ -> λ.getProject()) //
+                  .map(IJavaElement::getJavaProject).map(IJavaProject::getProject) //
               : Optional.<IProject> empty()).orElse(getProject());
     }
     /** @param ¢ JD

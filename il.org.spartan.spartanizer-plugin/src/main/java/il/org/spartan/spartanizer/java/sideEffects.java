@@ -100,7 +100,7 @@ public enum sideEffects {
     return free(expression(¢), then(¢), elze(¢));
   }
   public static boolean sink(final Expression x) {
-    return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> is.intIsIn(λ, STRICT_SIDE_EFFECT));
+    return descendants.of(x).stream().mapToInt(ASTNode::getNodeType).noneMatch(λ -> is.intIsIn(λ, STRICT_SIDE_EFFECT));
   }
 
   static final int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION,

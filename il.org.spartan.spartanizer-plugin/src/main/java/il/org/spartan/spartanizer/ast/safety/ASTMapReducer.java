@@ -200,8 +200,8 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   protected R map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
-  protected R map(final Javadoc j) {
-    return step.tags(j).stream().map(λ -> map(λ)).reduce(reduce(), (x1, x2) -> reduce(x1, x2));
+  protected R map(final Javadoc ¢) {
+    return step.tags(¢).stream().map(this::map).reduce(reduce(), this::reduce);
   }
   protected R map(final LabeledStatement ¢) {
     return reduce(map(¢.getLabel()), map(¢.getBody()));

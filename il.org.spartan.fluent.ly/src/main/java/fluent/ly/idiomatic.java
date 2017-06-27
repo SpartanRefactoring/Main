@@ -32,7 +32,7 @@ public interface idiomatic {
    * @param $ result
    * @return an identical supplier which is also a {@link Holder} */
   static <T> Holder<T> eval(final Supplier<T> $) {
-    return () -> $.get();
+    return $::get;
   }
   /** @param <T> JD
    * @param t the main value
@@ -174,20 +174,20 @@ public interface idiomatic {
       assert new Storer<>(this) != null;
     }
     @Test public void use08() {
-      azzert.isNull(unless(true).eval(() -> new Object()));
+      azzert.isNull(unless(true).eval(Object::new));
     }
     @Test public void use09() {
-      assert unless(false).eval(() -> new Object()) != null;
+      assert unless(false).eval(Object::new) != null;
     }
     @Test public void use1() {
       assert new Storer<>(this) != null;
       new Storer<>(this).when(true);
     }
     @Test public void use10() {
-      assert when(true).eval(() -> new Object()) != null;
+      assert when(true).eval(Object::new) != null;
     }
     @Test public void use11() {
-      azzert.isNull(when(false).eval(() -> new Object()));
+      azzert.isNull(when(false).eval(Object::new));
     }
     @Test public void use2() {
       assert take(this) != null;

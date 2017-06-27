@@ -577,8 +577,8 @@ public enum extract {
       $.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
     return $;
   }
-  public static List<String> identifiers(final Name n) {
-    return names(n).stream().map(λ -> λ.getIdentifier()).collect(toList());
+  public static List<String> identifiers(final Name ¢) {
+    return names(¢).stream().map(SimpleName::getIdentifier).collect(toList());
   }
   @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> methodArguments(final MethodDeclaration ¢) {
     return ¢.parameters();

@@ -131,13 +131,13 @@ public class ASTInFilesVisitor {
       MethodHandles.lookup();
       new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         {
-          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(λ -> System.out.println(λ.getName()));
-          final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
+          final Rule<TypeDeclaration, Object> r = Rule.on(TypeDeclaration::isInterface).go(λ -> System.out.println(λ.getName()));
+          final Predicate<TypeDeclaration> q = λ -> {
             System.out.println(λ);
             return λ.isInterface();
           };
-          final Consumer<TypeDeclaration> c = λ -> System.out.println(λ);
-          on(TypeDeclaration.class).hook(r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p));
+          on(TypeDeclaration.class).hook(r.beforeCheck(System.out::println).beforeCheck(q).afterCheck(System.out::println)
+              .beforeCheck(TypeDeclaration::isInterface).afterCheck(q).afterCheck(TypeDeclaration::isInterface));
         }
       });
     }

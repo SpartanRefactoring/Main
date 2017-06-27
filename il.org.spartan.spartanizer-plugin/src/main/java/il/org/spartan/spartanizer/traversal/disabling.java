@@ -75,7 +75,7 @@ public interface disabling {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
   @SuppressWarnings("unchecked") static boolean hasAnnotation(final BodyDeclaration d, final String... as) {
-    return Optional.ofNullable(d).map(λ -> λ.modifiers()) //
+    return Optional.ofNullable(d).map(BodyDeclaration::modifiers) //
         .map(ms -> Boolean.valueOf(ms.stream() //
             .filter(λ -> λ instanceof Annotation).map(λ -> (Annotation) λ).filter(λ -> contains(extract.name(((Annotation) λ).getTypeName()), as))
             .count() > 0)) //

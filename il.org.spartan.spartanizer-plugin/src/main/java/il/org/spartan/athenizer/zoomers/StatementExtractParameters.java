@@ -278,16 +278,16 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return $;
   }
   private static Collection<String> getSameFile(final Collection<String> createdImports, final IType[] ts) {
-    final List<String> $ = Arrays.stream(ts).map(λ -> λ.getFullyQualifiedName()).collect(Collectors.toList());
-    return createdImports.stream().filter(λ -> $.contains(λ)).collect(Collectors.toList());
+    return createdImports.stream().filter(Arrays.stream(ts).map(IType::getFullyQualifiedName).collect(Collectors.toList())::contains)
+        .collect(Collectors.toList());
   }
   private static Collection<String> getSamePackage(final Collection<String> createdImports, final IType rep) {
     final String $ = rep.getPackageFragment().getElementName();
     return createdImports.stream().filter(λ -> λ.startsWith($)).collect(Collectors.toList());
   }
   private static Collection<String> getTopLevel(final Collection<String> createdImports, final IType[] ts) {
-    final List<String> $ = Arrays.stream(ts).map(λ -> λ.getFullyQualifiedName()).collect(Collectors.toList());
-    return createdImports.stream().filter(λ -> $.contains(λ)).collect(Collectors.toList());
+    return createdImports.stream().filter(Arrays.stream(ts).map(IType::getFullyQualifiedName).collect(Collectors.toList())::contains)
+        .collect(Collectors.toList());
   }
   private static boolean ambiguousImports(final Collection<String> createdImports, final CompilationUnit u) {
     final List<String> usedNames = an.empty.list();
