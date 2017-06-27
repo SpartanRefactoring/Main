@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
 public class BucketMethods {
   public static void main(final String[] args) {
-    ASTInFilesVisitor.out = system.callingClassUniqueWriter();
-    new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+    GrandVisitor.out = system.callingClassUniqueWriter();
+    new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
       boolean interesting(final List<Statement> ¢) {
         return ¢ != null && ¢.size() >= 2 && !iz.letItBeIn(¢);
       }
@@ -33,7 +33,7 @@ public class BucketMethods {
       }
       @Override protected void record(final String summary) {
         try {
-          ASTInFilesVisitor.out.write(summary);
+          GrandVisitor.out.write(summary);
         } catch (final IOException ¢) {
           System.err.println("Error: " + ¢.getMessage());
         }

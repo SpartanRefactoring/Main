@@ -21,9 +21,9 @@ public class Table_Summary_Unspartanized extends Table_Summary {
   }
 
   public static void main(final String[] args) {
-    new ASTInFilesVisitor(args) {
+    new GrandVisitor(args) {
       {
-        listen(new Listener() {
+        listen(new Tapper() {
           @Override public void endLocation() {
             done(getCurrentLocation());
           }

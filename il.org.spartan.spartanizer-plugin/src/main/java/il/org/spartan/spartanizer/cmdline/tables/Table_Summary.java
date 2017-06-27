@@ -20,9 +20,9 @@ public class Table_Summary extends NanoTable {
   }
 
   public static void main(final String[] args) {
-    new ASTInFilesVisitor(args) {
+    new GrandVisitor(args) {
       {
-        listen(new Listener() {
+        listen(new Tapper() {
           @Override public void endLocation() {
             done(getCurrentLocation());
           }

@@ -1,14 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import java.io.*;
-import java.lang.invoke.*;
 import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -18,7 +11,6 @@ import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.library.*;
 import il.org.spartan.utils.*;
 import junit.framework.*;
@@ -27,11 +19,11 @@ import junit.framework.*;
  * <p>
  * @author Yossi Gil
  * @since 2017-03-09 */
-public class ASTInFilesVisitor {
+public class GrandVisitor {
   public static class ExpressionChain {
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
-      new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+      new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         {
           hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
             @Override public Void fire() {
@@ -57,40 +49,6 @@ public class ASTInFilesVisitor {
 
 
 
-  interface Tapper {
-    void beginBatch();
-    //@formatter:off
-    void beginFile();
-    void beginLocation();
-    void endBatch();
-    void endFile();
-    void endLocation();
-    //@formatter:on
-  }
-
-  /** @formatter:on */
-  static class Tappers implements Tapper {
-    /** @formatter:on */
-    private final List<Tapper> inner = new LinkedList<>();
-
-  /** @formatter:off */
-  @Override public void beginBatch() { inner.forEach(Tapper::beginBatch); }
-  @Override public void beginFile() { inner.forEach(Tapper::beginFile); }
-  @Override public void beginLocation() { inner.forEach(Tapper::beginLocation); }
-  @Override public void endBatch() { inner.forEach(Tapper::endBatch); }
-  @Override public void endFile() { inner.forEach(Tapper::endFile); }
-  @Override public void endLocation() { inner.forEach(Tapper::endLocation); }
-
-    public Tappers pop() {
-      inner.remove(inner.size() - 1);
-      return this;
-    }
-
-    public Tappers push(final Tapper ¢) {
-      inner.add(¢);
-      return this;
-    }
-  }
   protected static final String[] defaultArguments = as.array("..");
 
   protected static BufferedWriter out;
@@ -116,7 +74,7 @@ public class ASTInFilesVisitor {
   }
 
   public static void main(final String[] args) {
-    new ASTInFilesVisitor(args) {
+    new GrandVisitor(args) {
       /* Override here which ever method you like */
     }.visitAll(new ASTVisitor(true) {
       /* OVerride here which ever method you like */
@@ -143,7 +101,7 @@ public class ASTInFilesVisitor {
   private final List<String> locations;
 
   public final Tappers notify = new Tappers()//
-      .push(new Listener() {
+      .push(new Tapper() {
         /** @formatter:off */
         Dotter dotter = new Dotter();
         @Override public void beginBatch() { dotter.click(); }
@@ -165,11 +123,11 @@ public class ASTInFilesVisitor {
 
     @External(alias = "s", value = "silent") protected boolean silent;
 
-  public ASTInFilesVisitor() {
+  public GrandVisitor() {
     this(null);
   }
 
-  public ASTInFilesVisitor(final String[] args) {
+  public GrandVisitor(final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
@@ -186,7 +144,7 @@ public class ASTInFilesVisitor {
     return currentLocation;
   }
 
-  public ASTInFilesVisitor listen(final Listener ¢) {
+  public GrandVisitor listen(final Tapper ¢) {
     notify.push(¢);
     return this;
   }

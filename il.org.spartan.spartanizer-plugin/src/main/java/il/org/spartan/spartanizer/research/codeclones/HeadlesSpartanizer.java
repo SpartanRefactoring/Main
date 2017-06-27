@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
  * class and configure it to fit to your own needs.
  * @author oran1248
  * @since 2017-04-11 */
-public class HeadlesSpartanizer extends ASTInFilesVisitor {
+public class HeadlesSpartanizer extends GrandVisitor {
   public final TextualTraversals traversals = new TextualTraversals();
   File current;
 
@@ -44,7 +44,7 @@ public class HeadlesSpartanizer extends ASTInFilesVisitor {
   }
   public final void go(final String dirPath) {
     setUp();
-    new ASTInFilesVisitor(new String[] { dirPath }) {
+    new GrandVisitor(new String[] { dirPath }) {
       @Override public void visitFile(final File f) {
         current = f;
         if (!spartanize(f))

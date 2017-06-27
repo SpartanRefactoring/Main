@@ -22,9 +22,9 @@ public class Table_ReusabilityIndices {
   static final Collection<String> defined = new LinkedHashSet<>();
 
   public static void main(final String[] args) {
-    new ASTInFilesVisitor(args) {
+    new GrandVisitor(args) {
       {
-        listen(new Listener() {
+        listen(new Tapper() {
           @Override public void endLocation() {
             done(getCurrentLocation());
           }

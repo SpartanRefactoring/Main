@@ -4,7 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 public class FieldsOnly {
   public static void main(final String[] args) {
-    new ASTInFilesVisitor(args).visitAll(new ASTVisitor(true) {
+    new GrandVisitor(args).visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final FieldDeclaration ¢) {
         System.out.println(¢);
         return true;

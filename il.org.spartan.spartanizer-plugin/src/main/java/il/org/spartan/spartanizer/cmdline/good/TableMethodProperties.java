@@ -9,7 +9,7 @@ import il.org.spartan.tables.*;
 public class TableMethodProperties {
   public static void main(final String[] args) {
     try (Table t = new Table(TableMethodProperties.class)) {
-      new ASTInFilesVisitor(args).visitAll(new ASTVisitor(true) {
+      new GrandVisitor(args).visitAll(new ASTVisitor(true) {
         @Override public boolean visit(final MethodDeclaration ¢) {
           t//
               .col("Name", ¢.getName()) //

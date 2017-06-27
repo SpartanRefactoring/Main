@@ -25,9 +25,9 @@ public class Table_Nodes_Coverage {
   protected static Function<String, String> analyze = nanonizer::fixedPoint;
 
   public static void main(final String[] args) {
-    new ASTInFilesVisitor(args) {
+    new GrandVisitor(args) {
       {
-        listen(new Listener() {
+        listen(new Tapper() {
           @Override public void endLocation() {
             summarizeStatistics(getCurrentLocation());
             statistics.clear();

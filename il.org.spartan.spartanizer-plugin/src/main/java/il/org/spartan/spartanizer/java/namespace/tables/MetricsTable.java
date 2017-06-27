@@ -22,9 +22,9 @@ public class MetricsTable extends NominalTables {
     map.put("variables", 0);
     map.put("catch", 0);
     map.put("method_invocation", 0);
-    new ASTInFilesVisitor(args) {
+    new GrandVisitor(args) {
       {
-        listen(new Listener() {
+        listen(new Tapper() {
           @Override public void endLocation() {
             done(getCurrentLocation());
           }

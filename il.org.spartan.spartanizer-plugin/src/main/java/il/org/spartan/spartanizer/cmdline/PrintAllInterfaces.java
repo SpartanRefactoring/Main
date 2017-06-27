@@ -10,9 +10,9 @@ import il.org.spartan.utils.*;
 
 public class PrintAllInterfaces {
   public static void main(final String[] args) {
-    ASTInFilesVisitor.out = system.callingClassUniqueWriter();
+    GrandVisitor.out = system.callingClassUniqueWriter();
     MethodHandles.lookup();
-    new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+    new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
       {
         final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(λ -> System.out.println(λ.getName()));
         final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
