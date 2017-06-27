@@ -28,7 +28,22 @@ import junit.framework.*;
  * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
+  // fields
+  protected static final String[] defaultArguments = as.array("..");
+  protected static BufferedWriter out;
+  protected String absolutePath;
+  private ASTVisitor astVisitor;
+  protected File currentFile;
+  private String currentLocation;
+  private final List<String> locations;
+  protected String presentSourceName;
+  protected String presentSourcePath;
+  protected String relativePath;
   
+  @External(alias = "s", value = "silent") protected boolean silent;
+  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
+  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
   
   public static class BucketMethods {
     static boolean letItBeIn(final List<Statement> ¢) {
@@ -93,7 +108,6 @@ public class ASTInFilesVisitor {
       });
     }
   }
-
   public static class FieldsOnly {
     public static void main(final String[] args) {
       new ASTInFilesVisitor(args).visitAll(new ASTVisitor(true) {
@@ -131,6 +145,8 @@ public class ASTInFilesVisitor {
       });
     }
   }
+  
+  // classes 
   interface Tapper {
     void beginBatch();
     //@formatter:off
@@ -165,10 +181,6 @@ public class ASTInFilesVisitor {
       return this;
     }
   }
-  protected static final String[] defaultArguments = as.array("..");
-
-  protected static BufferedWriter out;
-
   /** Check whether given string containing Java code contains {@link Test}
    * annotations
    * <p>
@@ -188,7 +200,6 @@ public class ASTInFilesVisitor {
     });
     return $.get();
   }
-
   static boolean letItBeIn(final List<Statement> ¢) {
     return ¢.size() == 2 && the.firstOf(¢) instanceof VariableDeclarationStatement;
   }
@@ -211,14 +222,6 @@ public class ASTInFilesVisitor {
       return false;
     }
   }
-  protected String absolutePath;
-  private ASTVisitor astVisitor;
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
-  protected File currentFile;
-  private String currentLocation;
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
-  private final List<String> locations;
-
   public final Tappers notify = new Tappers()//
       .push(new Listener() {
         /** @formatter:off */
@@ -231,17 +234,7 @@ public class ASTInFilesVisitor {
         @Override public void endLocation() { dotter.clear(); }
         }
       );
-
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
-
-  protected String presentSourceName;
-
-  protected String presentSourcePath;
-
-  protected String relativePath;
-
-    @External(alias = "s", value = "silent") protected boolean silent;
-
+  // constructors
   public ASTInFilesVisitor() {
     this(null);
   }
@@ -249,7 +242,7 @@ public class ASTInFilesVisitor {
   public ASTInFilesVisitor(final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
-
+  // methods
   private void collect(final CompilationUnit ¢) {
     if (¢ != null)
       ¢.accept(astVisitor);
