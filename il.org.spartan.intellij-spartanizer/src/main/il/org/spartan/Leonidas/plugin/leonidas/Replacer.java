@@ -55,7 +55,7 @@ public class Replacer {
         List<PsiElement> elements = getReplacingForest(roots, m, r);
         PsiElement prev = treeToReplace.getPrevSibling();
         PsiElement last = treeToReplace;
-        for (int i = 1; i < numberOfRoots; ++i)
+        for (int ¢ = 1; ¢ < numberOfRoots; ++¢)
 			last = Utils.getNextActualSibling(last);
         PsiElement parent = treeToReplace.getParent();
         if (iz.declarationStatement(parent))

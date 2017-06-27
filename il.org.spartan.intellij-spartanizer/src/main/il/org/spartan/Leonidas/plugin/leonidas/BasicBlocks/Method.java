@@ -49,13 +49,13 @@ public class Method extends ModifiableElement {
     }
 
     @Override
-    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> map) {
-        if (!iz.method(e.getInner()) || super.generalizes(e, map).notMatches()) return new MatchingResult(false);
-        PsiMethod m = az.method(e.getInner());
+    public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
+        if (!iz.method(e.getInner()) || super.generalizes(e, m).notMatches()) return new MatchingResult(false);
+        PsiMethod $ = az.method(e.getInner());
         Wrapper<Integer> dummy = new Wrapper<>(0);
-        return matcherReturnType.getMatchingResult(m.getReturnTypeElement(), dummy).combineWith(
-                matcherParameters.getMatchingResult(m.getParameterList(), dummy)).combineWith(
-                matcherCodeBlock.getMatchingResult(m.getBody(), dummy));
+        return matcherReturnType.getMatchingResult($.getReturnTypeElement(), dummy).combineWith(
+                matcherParameters.getMatchingResult($.getParameterList(), dummy)).combineWith(
+                matcherCodeBlock.getMatchingResult($.getBody(), dummy));
     }
 
     @Override
@@ -64,23 +64,23 @@ public class Method extends ModifiableElement {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        Method m = new Method(e);
-        Encapsulator returnType = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getReturnTypeElement()), map);
-        Encapsulator parameters = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getParameterList()), map);
-        Encapsulator codeBlock = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getBody()), map);
-        m.matcherReturnType = new Matcher(Utils.wrapWithList(returnType), map);
-        m.matcherParameters = new Matcher(Utils.wrapWithList(parameters), map);
-        m.matcherCodeBlock = new Matcher(Utils.wrapWithList(codeBlock), map);
-        m.replacerReturnType = new Replacer(Utils.wrapWithList(returnType));
-        m.replacerParameters = new Replacer(Utils.wrapWithList(parameters));
-        m.replacerCodeBlock = new Replacer(Utils.wrapWithList(codeBlock));
-        return m;
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
+        Method $ = new Method(e);
+        Encapsulator returnType = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getReturnTypeElement()), m);
+        Encapsulator parameters = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getParameterList()), m);
+        Encapsulator codeBlock = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getBody()), m);
+        $.matcherReturnType = new Matcher(Utils.wrapWithList(returnType), m);
+        $.matcherParameters = new Matcher(Utils.wrapWithList(parameters), m);
+        $.matcherCodeBlock = new Matcher(Utils.wrapWithList(codeBlock), m);
+        $.replacerReturnType = new Replacer(Utils.wrapWithList(returnType));
+        $.replacerParameters = new Replacer(Utils.wrapWithList(parameters));
+        $.replacerCodeBlock = new Replacer(Utils.wrapWithList(codeBlock));
+        return $;
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        PsiMethod e = az.method(elements.get(0));
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        PsiMethod e = az.method(es.get(0));
         PsiMethod iam = az.method(inner);
         iam.setName(e.getName());
         iam.getReturnTypeElement().replace(replacerReturnType.replaceSingleRoot(e.getReturnTypeElement(), m, r));
@@ -93,7 +93,7 @@ public class Method extends ModifiableElement {
     @Override
     public Map<Integer, GenericEncapsulator> getGenericElements(){
         PsiMethod m = (PsiMethod) this.inner;
-        Map<Integer,GenericEncapsulator> map = new HashMap<>();
+        Map<Integer,GenericEncapsulator> $ = new HashMap<>();
 
         Set<Encapsulator> set = new HashSet<>();
         set.addAll(matcherReturnType.getAllRoots());
@@ -104,13 +104,13 @@ public class Method extends ModifiableElement {
 
         l.forEach(root -> root.accept(λ -> {
             if (λ.isGeneric()) {
-                map.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
+                $.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
                 if (iz.quantifier(λ))
-					map.put(az.quantifier(λ).getId(), az.generic(az.quantifier(λ).getInternal()));
+					$.put(az.quantifier(λ).getId(), az.generic(az.quantifier(λ).getInternal()));
             }
         }));
 
-        return map;
+        return $;
 
     }
 

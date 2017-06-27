@@ -47,12 +47,12 @@ public class MatchingResult {
         return this;
     }
 
-    public MatchingResult combineWith(MatchingResult mr) {
-        if (!mr.b) {
+    public MatchingResult combineWith(MatchingResult r) {
+        if (!r.b) {
             b = false;
             return this;
         }
-        mr.m.forEach((k, v) -> m.put(k, v));
+        r.m.forEach((k, v) -> m.put(k, v));
         return this;
     }
 

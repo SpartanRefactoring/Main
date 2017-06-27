@@ -29,9 +29,9 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
         roots.forEach(root -> initializeElements(root, elements));
     }
 
-    private void initializeElements(Encapsulator e, List<Encapsulator> l) {
-        if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) l.add(e);
-        e.getActualChildren().forEach(λ -> initializeElements(λ, l));
+    private void initializeElements(Encapsulator e, List<Encapsulator> es) {
+        if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) es.add(e);
+        e.getActualChildren().forEach(λ -> initializeElements(λ, es));
     }
 
     @Override
@@ -56,13 +56,13 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     @Override
     public EncapsulatorIterator clone() {
         try {
-            EncapsulatorIterator cloned = (EncapsulatorIterator) super.clone();
-            cloned.elements = new LinkedList<>(elements);
-            cloned.cursor = cursor;
-            cloned.shouldSkip = shouldSkip;
-            cloned.skipCounter = skipCounter;
-            cloned.skipOverall = skipOverall;
-            return cloned;
+            EncapsulatorIterator $ = (EncapsulatorIterator) super.clone();
+            $.elements = new LinkedList<>(elements);
+            $.cursor = cursor;
+            $.shouldSkip = shouldSkip;
+            $.skipCounter = skipCounter;
+            $.skipOverall = skipOverall;
+            return $;
         } catch (CloneNotSupportedException e) {
             return this;
         }

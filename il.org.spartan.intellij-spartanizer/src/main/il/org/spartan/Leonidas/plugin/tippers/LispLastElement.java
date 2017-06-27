@@ -53,9 +53,9 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
     }
 
     @Override
-    public PsiElement createReplacement(PsiMethodCallExpression x) {
-        @SuppressWarnings("ConstantConditions") PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(x.getMethodExpression(), PsiReferenceExpression.class)[0];
-        return JavaPsiFacade.getElementFactory(x.getProject()).createExpressionFromText("last(" + container.getText() + ")", x);
+    public PsiElement createReplacement(PsiMethodCallExpression ¢) {
+        @SuppressWarnings("ConstantConditions") PsiReferenceExpression $ = PsiTreeUtil.getChildrenOfType(¢.getMethodExpression(), PsiReferenceExpression.class)[0];
+        return JavaPsiFacade.getElementFactory(¢.getProject()).createExpressionFromText("last(" + $.getText() + ")", ¢);
     }
 
     @Override

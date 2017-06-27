@@ -8,5 +8,5 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
  */
 public interface EncapsulatorVisitor {
 
-    void visit(Encapsulator n);
+    void visit(Encapsulator e);
 }

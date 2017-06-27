@@ -49,7 +49,7 @@ public enum Utils {
      * @return list of all the appearance of the identifier.
      */
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier id) {
-        List<PsiIdentifier> identifiers = new ArrayList<>();
+        List<PsiIdentifier> $ = new ArrayList<>();
         if (root != null && id != null)
             root.accept(new JavaRecursiveElementVisitor() {
                 @Override
@@ -59,19 +59,19 @@ public enum Utils {
                         return;
                     PsiElement context = i.getContext();
                     if (iz.variable(context) || iz.referenceExpression(context))
-                        identifiers.add(i);
+                        $.add(i);
                 }
             });
-        return identifiers;
+        return $;
     }
 
     /**
-     * @param e JD
+     * @param ¢ JD
      * @return the document in which e is.
      */
-    public static Document getDocumentFromPsiElement(PsiElement e) {
-        PsiFile associatedFile = e.getContainingFile();
-        return PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
+    public static Document getDocumentFromPsiElement(PsiElement ¢) {
+        PsiFile $ = ¢.getContainingFile();
+        return PsiDocumentManager.getInstance($.getProject()).getDocument($);
     }
 
     /**
@@ -88,7 +88,7 @@ public enum Utils {
      * @return lists of all the children of the type T of e.
      */
     public static <T extends PsiElement> List<T> getChildrenOfType(@Nullable PsiElement e, @NotNull Class<T> aClass) {
-        Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
+        Wrapper<List<T>> $ = new Wrapper<>(new LinkedList<T>());
         assert e != null;
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
@@ -96,10 +96,10 @@ public enum Utils {
 			public void visitElement(PsiElement ¢) {
 				super.visitElement(¢);
 				if (aClass.isInstance(¢))
-					w.get().add((T) ¢);
+					$.get().add((T) ¢);
 			}
         });
-        return w.get();
+        return $.get();
     }
 
     /**
@@ -108,10 +108,10 @@ public enum Utils {
      */
     public static String getSourceCode(Class<?> c) {
         try {
-            InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
-            return is == null ? "" : IOUtils.toString(new BufferedReader(new InputStreamReader(is)));
-        } catch (IOException e) {
-            logger.error("could not read file", e);
+            InputStream $ = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
+            return $ == null ? "" : IOUtils.toString(new BufferedReader(new InputStreamReader($)));
+        } catch (IOException ¢) {
+            logger.error("could not read file", ¢);
         }
         return "";
     }
@@ -123,9 +123,9 @@ public enum Utils {
      * @param path the path to be fixed
      * @return fixed path. on error, returns null
      */
-    public static String fixSpacesProblemOnPath(String path) {
+    public static String fixSpacesProblemOnPath(String $) {
         try {
-            return URLDecoder.decode(path, "UTF-8");
+            return URLDecoder.decode($, "UTF-8");
         } catch (UnsupportedEncodingException ignore) {
             return "";
         }
@@ -138,70 +138,70 @@ public enum Utils {
      */
     @SuppressWarnings("StatementWithEmptyBody")
     public static PsiElement getFirstElementInsideBody(PsiCodeBlock cb) {
-        PsiElement c;
-        for (c = cb.getFirstBodyElement(); c != null && iz.whiteSpace(c); c = c.getNextSibling()) ;
-        return c;
+        PsiElement $;
+        for ($ = cb.getFirstBodyElement(); $ != null && iz.whiteSpace($); $ = $.getNextSibling()) ;
+        return $;
     }
 
-    public static List<Encapsulator> wrapWithList(Encapsulator e) {
-        List<Encapsulator> l = new LinkedList<>();
-        l.add(e);
-        return l;
+    public static List<Encapsulator> wrapWithList(Encapsulator ¢) {
+        List<Encapsulator> $ = new LinkedList<>();
+        $.add(¢);
+        return $;
     }
 
-    public static List<PsiElement> wrapWithList(PsiElement e) {
-        List<PsiElement> l = new LinkedList<>();
-        l.add(e);
-        return l;
+    public static List<PsiElement> wrapWithList(PsiElement ¢) {
+        List<PsiElement> $ = new LinkedList<>();
+        $.add(¢);
+        return $;
     }
 
-    public static PsiElement getNextActualSibling(PsiElement e) {
-        if (e == null) return null;
-        PsiElement current = e.getNextSibling();
-        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
-			current = current.getNextSibling();
-        return current;
+    public static PsiElement getNextActualSibling(PsiElement ¢) {
+        if (¢ == null) return null;
+        PsiElement $ = ¢.getNextSibling();
+        while ($ != null && (iz.whiteSpace($) || iz.comment($)))
+			$ = $.getNextSibling();
+        return $;
     }
 
-    public static PsiElement getPrevActualSibling(PsiElement e) {
-        if (e == null) return null;
-        PsiElement current = e.getPrevSibling();
-        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
-			current = current.getPrevSibling();
-        return current;
+    public static PsiElement getPrevActualSibling(PsiElement ¢) {
+        if (¢ == null) return null;
+        PsiElement $ = ¢.getPrevSibling();
+        while ($ != null && (iz.whiteSpace($) || iz.comment($)))
+			$ = $.getPrevSibling();
+        return $;
     }
 
-    public static PsiElement getNextActualSiblingWithComments(PsiElement e) {
-        if (e == null) return null;
-        PsiElement current = e.getNextSibling();
-        while (current != null && iz.whiteSpace(current))
-			current = current.getNextSibling();
-        return current;
+    public static PsiElement getNextActualSiblingWithComments(PsiElement ¢) {
+        if (¢ == null) return null;
+        PsiElement $ = ¢.getNextSibling();
+        while ($ != null && iz.whiteSpace($))
+			$ = $.getNextSibling();
+        return $;
     }
 
     public static int getNumberOfRootsPossible(PsiElement e) {
-        int i = 0;
+        int $ = 0;
         PsiElement current = e;
         if (e == null || iz.whiteSpace(current) || iz.comment(current)) return 0;
         while (current != null) {
-            ++i;
+            ++$;
             current = getNextActualSibling(current);
         }
-        return i;
+        return $;
     }
 
-    public static Method getDeclaredMethod(Class<?> c, String name, Class<?>... parameterTypes) throws NoSuchMethodException {
-        if (c.equals(Object.class)) throw new NoSuchMethodException();
+    public static Method getDeclaredMethod(Class<?> $, String name, Class<?>... parameterTypes) throws NoSuchMethodException {
+        if ($.equals(Object.class)) throw new NoSuchMethodException();
         try {
-            return c.getDeclaredMethod(name, parameterTypes);
+            return $.getDeclaredMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
         }
-        return getDeclaredMethod(c.getSuperclass(), name, parameterTypes);
+        return getDeclaredMethod($.getSuperclass(), name, parameterTypes);
     }
 
-    public static Optional<Method> getPublicMethod(Class<?> c, String name, Class<?>... parameterTypes) {
+    public static Optional<Method> getPublicMethod(Class<?> $, String name, Class<?>... parameterTypes) {
         try {
-            return Optional.of(c.getMethod(name, parameterTypes));
+            return Optional.of($.getMethod(name, parameterTypes));
         } catch (NoSuchMethodException e) {
             return Optional.empty();
         }

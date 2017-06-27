@@ -27,7 +27,7 @@ public abstract class The {
         return the;
     }
 
-    public static The the(Object... objects) {
+    public static The the(Object... os) {
         return the;
     }
 

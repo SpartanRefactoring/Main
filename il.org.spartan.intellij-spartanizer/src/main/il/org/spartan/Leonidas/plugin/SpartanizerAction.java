@@ -73,9 +73,9 @@ public class SpartanizerAction extends AnAction {
      **/
     @Nullable
     private PsiElement getPsiElementFromContext(AnActionEvent e) {
-        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
+        PsiFile $ = e.getData(LangDataKeys.PSI_FILE);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        return psiFile == null || editor == null ? null : psiFile.findElementAt(editor.getCaretModel().getOffset());
+        return $ == null || editor == null ? null : $.findElementAt(editor.getCaretModel().getOffset());
     }
 
     /**

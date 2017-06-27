@@ -49,30 +49,30 @@ public class Matcher {
      */
     @UpdatesIterator
     private MatchingResult matchingRecursion(EncapsulatorIterator needle, EncapsulatorIterator cursor,
-                                             MatchingResult m) {
+                                             MatchingResult r) {
         EncapsulatorIterator bgNeedle = needle.clone(), bgCursor = cursor.clone(); // base ground iterators
-        m.combineWith(matchBead(bgNeedle, bgCursor, m));
-        if (m.notMatches()) return m;
-        if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return m.setMatches();
-        if (bgNeedle.hasNext() != bgCursor.hasNext()) return  m.setNotMatches();
+        r.combineWith(matchBead(bgNeedle, bgCursor, r));
+        if (r.notMatches()) return r;
+        if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return r.setMatches();
+        if (bgNeedle.hasNext() != bgCursor.hasNext()) return  r.setNotMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (!iz.quantifier(bgNeedle.value()))
-			return m.setNotMatches();
-		int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
+			return r.setNotMatches();
+		int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, r.getMap());
 		for (int i = 0; i <= n; ++i) {
-			m.setMatches();
+			r.setMatches();
 			varNeedle = bgNeedle.clone();
 			varCursor = bgCursor.clone();
 			varNeedle.setNumberOfOccurrences(i);
-			MatchingResult mq = matchQuantifier(varNeedle, varCursor, m);
-			if (mq.notMatches())
+			MatchingResult $ = matchQuantifier(varNeedle, varCursor, r);
+			if ($.notMatches())
 				continue;
-			MatchingResult sr = matchingRecursion(varNeedle, varCursor, m);
+			MatchingResult sr = matchingRecursion(varNeedle, varCursor, r);
 			if (!sr.notMatches())
-				return m.combineWith(mq).combineWith(sr);
+				return r.combineWith($).combineWith(sr);
 			continue;
 		}
-		return m.setNotMatches();
+		return r.setNotMatches();
     }
 
     /**
@@ -82,22 +82,22 @@ public class Matcher {
      * of generic elements in this section to its instances if the sections match.
      */
     @UpdatesIterator
-    private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor, MatchingResult m) {
+    private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor, MatchingResult $) {
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), $.getMap());
             if (ic.notMatches() || (needle.hasNext() != cursor.hasNext()))
-                return m.setNotMatches();
-            m.combineWith(ic);
+                return $.setNotMatches();
+            $.combineWith(ic);
             if (needle.value().isGeneric()) {
-                if (!m.getMap().containsKey(az.generic(needle.value()).getId()))
-					m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
-				else if (m.getMap().get(az.generic(needle.value()).getId()).stream()
+                if (!$.getMap().containsKey(az.generic(needle.value()).getId()))
+					$.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+				else if ($.getMap().get(az.generic(needle.value()).getId()).stream()
 						.noneMatch(λ -> λ.getText().equals(cursor.value().getText())))
-					return m.setNotMatches();
+					return $.setNotMatches();
                 cursor.matchedWithGeneric();
             }
         }
-        return m;
+        return $;
     }
 
     /**
@@ -108,37 +108,37 @@ public class Matcher {
      */
     @UpdatesIterator
     private MatchingResult matchQuantifier(EncapsulatorIterator needle, EncapsulatorIterator cursor
-    ,MatchingResult m) {
+    ,MatchingResult $) {
        // MatchingResult m = new MatchingResult(true);
         int n = needle.getNumberOfOccurrences();
         if (n == 0) {
             needle.next();
-            return m.setMatches();
+            return $.setMatches();
         }
         for (int i = 0; i < n; needle.next(), cursor.next(), ++i) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), $.getMap());
             if (ic.notMatches() || (cursor.hasNext() ^ needle.hasNext()))
-				return m.setNotMatches();
-            m.combineWith(ic);
+				return $.setNotMatches();
+            $.combineWith(ic);
             if (needle.value().isGeneric()) {
-                m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+                $.put(az.generic(needle.value()).getId(), cursor.value().getInner());
                 cursor.matchedWithGeneric();
             }
         }
         needle.next();
-        return m;
+        return $;
     }
 
     /**
-     * @param matcher builds recursively the matchers for the constraints that are relevant to the current matcher.
+     * @param m builds recursively the matchers for the constraints that are relevant to the current matcher.
      * @param map     a mapping between id of generic elements and lists of constraints.
      */
-    private void buildMatcherTree(Matcher matcher, Map<Integer, List<Constraint>> map) {
+    private void buildMatcherTree(Matcher m, Map<Integer, List<Constraint>> map) {
         if (map == null) return;
-        matcher.getGenericElementsWithNoFields()
+        m.getGenericElementsWithNoFields()
                 .forEach((i, e) -> java.util.Optional.ofNullable(map.get(i)).ifPresent(z -> z.forEach(j -> {
                     if (j instanceof StructuralConstraint)
-                        matcher.addConstraint(i, (StructuralConstraint) j);
+                        m.addConstraint(i, (StructuralConstraint) j);
                     else {
                         NonStructuralConstraint nsc = (NonStructuralConstraint) j;
                         Encapsulator ie = !iz.quantifier(e) ? e : az.quantifier(e).getInternal();
@@ -149,7 +149,7 @@ public class Matcher {
                         }
                     }
                 })));
-        matcher.getConstraintsMatchers().forEach(im -> buildMatcherTree(im, map));
+        m.getConstraintsMatchers().forEach(im -> buildMatcherTree(im, map));
     }
 
     private void setRoots(List<Encapsulator> ¢) {
@@ -185,7 +185,7 @@ public class Matcher {
      * generic element to the element of the user.
      */
     public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
-        MatchingResult mr = new MatchingResult(false);
+        MatchingResult $ = new MatchingResult(false);
         List<Encapsulator> potentialRoots = new ArrayList<>();
         PsiElement ce = treeToMatch;
         for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); ++i){
@@ -195,15 +195,15 @@ public class Matcher {
             m.combineWith(matchingRecursion(
                     new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots),m));
             if (m.matches()){
-                mr.combineWith(m);
-                mr.setMatches();
+                $.combineWith(m);
+                $.setMatches();
                 numberOfNeighbors.set(i);
                 break;
             }
         }
-        if (mr.notMatches()) return mr;
+        if ($.notMatches()) return $;
 
-        Map<Integer, List<PsiElement>> info = mr.getMap();
+        Map<Integer, List<PsiElement>> info = $.getMap();
         return info.keySet().stream()
                 .allMatch(id -> {
                     boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
@@ -216,12 +216,12 @@ public class Matcher {
 
                     boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
                             info.get(id).stream().allMatch(λ ->
-                                    c.accept(new Encapsulator(λ), mr.getMap())
+                                    c.accept(new Encapsulator(λ), $.getMap())
                             )
                     );
                     return b1 && b2;
                 })
-                ? mr : mr.setNotMatches();
+                ? $ : $.setNotMatches();
     }
 
     /**
@@ -236,26 +236,26 @@ public class Matcher {
      * @return list of Ids of all the generic elements in the tipper.
      */
     private Map<Integer, GenericEncapsulator> getGenericElements() {
-        final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
+        final Map<Integer, GenericEncapsulator> $ = new HashMap<>();
         roots.forEach(root -> root.accept(λ -> {
             if (λ.isGeneric()) {
-                tmp.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
-                tmp.putAll(az.generic(λ).getGenericElements());
+                $.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
+                $.putAll(az.generic(λ).getGenericElements());
             }
         }));
-        return tmp;
+        return $;
     }
 
     /**
      * @return list of Ids of all the generic elements in the tipper.
      */
     private Map<Integer, GenericEncapsulator> getGenericElementsWithNoFields() {
-        final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
+        final Map<Integer, GenericEncapsulator> $ = new HashMap<>();
         roots.forEach(root -> root.accept(λ -> {
             if (λ.isGeneric())
-				tmp.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
+				$.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
         }));
-        return tmp;
+        return $;
     }
 
     public List<Encapsulator> getAllRoots() {

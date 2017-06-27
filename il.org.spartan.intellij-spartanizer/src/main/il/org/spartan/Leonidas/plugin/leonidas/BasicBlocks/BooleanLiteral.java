@@ -40,7 +40,7 @@ public class BooleanLiteral extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new BooleanLiteral(e);
     }
 }

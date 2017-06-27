@@ -69,8 +69,8 @@ public class CompilationCenter {
 		String source = f.getText();
 		try {
 			Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
-		} catch (IOException e) {
-			note.bug(e);
+		} catch (IOException ¢) {
+			note.bug(¢);
 		}
 		output.reset();
 		errors.reset();

@@ -49,19 +49,19 @@ public class Type extends NamedElement {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Type(e);
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (!iz.classDeclaration(elements.get(0)))
-			return super.replaceByRange(elements, m, r);
-		PsiClass c = az.classDeclaration(elements.get(0));
-		PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(),
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.classDeclaration(es.get(0)))
+			return super.replaceByRange(es, m, r);
+		PsiClass c = az.classDeclaration(es.get(0));
+		PsiTypeElement $ = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(),
 				c);
-		inner = pte;
-		return Utils.wrapWithList(pte);
+		inner = $;
+		return Utils.wrapWithList($);
     }
 }
 

@@ -71,9 +71,9 @@ public class AddSpartanizerUtilsAction extends AnAction {
 
     @Nullable
     private PsiElement getPsiElementFromContext(AnActionEvent e) {
-        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
+        PsiFile $ = e.getData(LangDataKeys.PSI_FILE);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        return psiFile == null || editor == null ? null : psiFile.findElementAt(editor.getCaretModel().getOffset());
+        return $ == null || editor == null ? null : $.findElementAt(editor.getCaretModel().getOffset());
     }
 
     @SuppressWarnings({"OptionalGetWithoutIsPresent", "ResultOfMethodCallIgnored"})
@@ -82,11 +82,11 @@ public class AddSpartanizerUtilsAction extends AnAction {
         File file = new File(is.getPath());
         FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
         file.setReadable(true, false);
-        PsiFile pf = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText("SpartanizerUtils.java", type, IOUtils.toString(new BufferedReader(
+        PsiFile $ = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText("SpartanizerUtils.java", type, IOUtils.toString(new BufferedReader(
 				new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
-        d.add(pf);
+        d.add($);
         Arrays.stream(d.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst().get().getVirtualFile().setWritable(false);
-        Toolbox.getInstance().excludeFile(pf);
-        return pf;
+        Toolbox.getInstance().excludeFile($);
+        return $;
     }
 }

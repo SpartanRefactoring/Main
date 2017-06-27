@@ -45,8 +45,8 @@ public abstract class ModifiableElement extends NamedElement {
         super(template);
     }
 
-    private boolean checkConstraint(Existence ex, PsiModifierListOwner mlo, Function<PsiModifierListOwner, Boolean> f){
-        switch (ex){
+    private boolean checkConstraint(Existence x, PsiModifierListOwner mlo, Function<PsiModifierListOwner, Boolean> f){
+        switch (x){
             case MUST_EXISTS: if (!f.apply(mlo)) return false; break;
             case DOES_NOT_EXISTS: if (f.apply(mlo)) return false; break;
         }
@@ -56,13 +56,13 @@ public abstract class ModifiableElement extends NamedElement {
     @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         if (super.generalizes(e, m).notMatches()) return new MatchingResult(false);
-        PsiModifierListOwner mlo = az.modifierListOwner(e.inner);
-        return new MatchingResult(checkConstraint(isPublic, mlo, haz::publicModifier) &&
-                checkConstraint(isPrivate, mlo, haz::privateModifier) &&
-                checkConstraint(isProtected, mlo, haz::protectedModifier) &&
-                checkConstraint(isStatic, mlo, haz::staticModifier) &&
-                checkConstraint(isFinal, mlo, haz::finalModifier) &&
-                checkConstraint(isAbstract, mlo, haz::abstractModifier));
+        PsiModifierListOwner $ = az.modifierListOwner(e.inner);
+        return new MatchingResult(checkConstraint(isPublic, $, haz::publicModifier) &&
+                checkConstraint(isPrivate, $, haz::privateModifier) &&
+                checkConstraint(isProtected, $, haz::protectedModifier) &&
+                checkConstraint(isStatic, $, haz::staticModifier) &&
+                checkConstraint(isFinal, $, haz::finalModifier) &&
+                checkConstraint(isAbstract, $, haz::abstractModifier));
     }
 
     /* Constraints Methods */

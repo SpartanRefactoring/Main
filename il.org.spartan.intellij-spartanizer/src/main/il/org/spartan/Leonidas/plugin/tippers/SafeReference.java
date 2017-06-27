@@ -181,20 +181,20 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
 
 	@Override
 	public Map<String,String> getExamples(){
-		Map<String,String> examples = new HashMap<>();
-		examples.put("x == null ? null : x.y","nullConditional(x , ¢ -> ¢.y)");
-		examples.put("null == x ? null : x.y","nullConditional(x , ¢ -> ¢.y)");
-		examples.put("x != null ? x.y : null","nullConditional(x , ¢ -> ¢.y)");
-		examples.put("null != x ? x.y : null","nullConditional(x , ¢ -> ¢.y)");
-		examples.put("x == null ? null : null",null);
-		examples.put("x == null ? x.y : null",null);
-		examples.put("x != null ? null : x.y",null);
-		examples.put("x != null ? null : null",null);
-		examples.put("y != null ? x.y: null",null);
-		examples.put("null < x ? x.y: null",null);
-		examples.put("null == x ? null : x.y()","nullConditional(x , ¢ -> ¢.y())");
-		examples.put("x == null ? null : x.y(p1)",null);
+		Map<String,String> $ = new HashMap<>();
+		$.put("x == null ? null : x.y","nullConditional(x , ¢ -> ¢.y)");
+		$.put("null == x ? null : x.y","nullConditional(x , ¢ -> ¢.y)");
+		$.put("x != null ? x.y : null","nullConditional(x , ¢ -> ¢.y)");
+		$.put("null != x ? x.y : null","nullConditional(x , ¢ -> ¢.y)");
+		$.put("x == null ? null : null",null);
+		$.put("x == null ? x.y : null",null);
+		$.put("x != null ? null : x.y",null);
+		$.put("x != null ? null : null",null);
+		$.put("y != null ? x.y: null",null);
+		$.put("null < x ? x.y: null",null);
+		$.put("null == x ? null : x.y()","nullConditional(x , ¢ -> ¢.y())");
+		$.put("x == null ? null : x.y(p1)",null);
 
-		return examples;
+		return $;
 	}
 }

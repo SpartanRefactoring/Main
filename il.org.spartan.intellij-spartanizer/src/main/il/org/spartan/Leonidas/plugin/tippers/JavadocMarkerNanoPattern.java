@@ -27,7 +27,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
 
     @Override
 	public final PsiElement createReplacement(PsiMethod m) {
-		String docOld = step.docCommentString(m), docNew = docOld + tag();
+		String docOld = step.docCommentString(m), $ = docOld + tag();
 		final Wrapper<String> methodText = new Wrapper<>("");
 		m.acceptChildren(new JavaElementVisitor() {
 			@Override
@@ -37,7 +37,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
 				super.visitElement(¢);
 			}
 		});
-		return JavaPsiFacade.getElementFactory(m.getProject()).createMethodFromText("/**" + docNew + "*/" + methodText,
+		return JavaPsiFacade.getElementFactory(m.getProject()).createMethodFromText("/**" + $ + "*/" + methodText,
 				m.getContext());
 	}
 

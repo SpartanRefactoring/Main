@@ -86,7 +86,7 @@ class ToolBoxController extends JFrame {
 						continue;
 					break;
 				}
-				textArea1.setText("Before:\n" + before + "\n\n" + "After:\n" + after);
+				textArea1.setText("Before:\n" + before + "\n\nAfter:\n" + after);
             }
         });
 

@@ -43,7 +43,7 @@ public class Block extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Block(e);
     }
 }

@@ -40,16 +40,16 @@ public class AnyNumberOfInterfaces extends AnyNumberOfBasedNames {
     @Override
     public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
         if (i.value().getParent() == null) return 1;
-        Wrapper<Integer> count = new Wrapper<>(0);
+        Wrapper<Integer> $ = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
         i.value().getParent().accept(λ -> {
-            if (generalizes(λ, m).matches()) count.set(count.get() + 1);
+            if (generalizes(λ, m).matches()) $.set($.get() + 1);
         });
-        return count.get();
+        return $.get();
     }
 
     @Override
-    public QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new AnyNumberOfInterfaces(e, internalEncapsulator(e));
     }
 

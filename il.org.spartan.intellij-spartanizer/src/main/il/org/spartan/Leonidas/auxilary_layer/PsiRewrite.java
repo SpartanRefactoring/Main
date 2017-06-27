@@ -34,15 +34,15 @@ public class PsiRewrite {
      */
     public PsiElement replace(PsiElement element1, PsiElement element2) {
         Toolbox.getInstance().replaced = true;
-        Wrapper<PsiElement> newElement = new Wrapper<>(null);
+        Wrapper<PsiElement> $ = new Wrapper<>(null);
         new WriteCommandAction.Simple(project, psiFile) {
             @Override
             protected void run() throws Throwable {
-                newElement.set(element1.replace(element2));
+                $.set(element1.replace(element2));
             }
 
         }.execute();
-        return newElement.get();
+        return $.get();
     }
 
     /**
@@ -63,12 +63,12 @@ public class PsiRewrite {
     /**
      * @param prev the replacing tree.
      */
-    public void addAfter(PsiElement parent, PsiElement prev, PsiElement element) {
+    public void addAfter(PsiElement parent, PsiElement prev, PsiElement e) {
         Toolbox.getInstance().replaced = true;
         new WriteCommandAction.Simple(project, psiFile) {
             @Override
             protected void run() throws Throwable {
-                parent.addAfter(element, prev);
+                parent.addAfter(e, prev);
             }
 
         }.execute();
@@ -77,12 +77,12 @@ public class PsiRewrite {
     /**
      * @param next the replacing tree.
      */
-    public void addBefore(PsiElement parent, PsiElement next, PsiElement element) {
+    public void addBefore(PsiElement parent, PsiElement next, PsiElement e) {
         Toolbox.getInstance().replaced = true;
         new WriteCommandAction.Simple(project, psiFile) {
             @Override
             protected void run() throws Throwable {
-                parent.addBefore(element, next);
+                parent.addBefore(e, next);
             }
 
         }.execute();

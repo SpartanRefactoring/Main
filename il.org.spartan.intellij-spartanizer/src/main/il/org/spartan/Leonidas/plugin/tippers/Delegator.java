@@ -24,15 +24,15 @@ public class Delegator extends JavadocMarkerNanoPattern {
         return getMethodCallExpression(¢) != null;
     }
 
-    private PsiMethodCallExpression getMethodCallExpression(PsiCodeBlock b) {
-		if (!hasOneStatement(b))
+    private PsiMethodCallExpression getMethodCallExpression(PsiCodeBlock ¢) {
+		if (!hasOneStatement(¢))
 			return null;
-		PsiStatement statement = b.getStatements()[0];
-		return iz.returnStatement(statement) && iz.methodCallExpression(az.returnStatement(statement).getReturnValue())
-				? az.methodCallExpression(az.returnStatement(statement).getReturnValue())
-				: iz.expressionStatement(statement)
-						&& iz.methodCallExpression(az.expressionStatement(statement).getExpression())
-								? az.methodCallExpression(az.expressionStatement(statement).getExpression()) : null;
+		PsiStatement $ = ¢.getStatements()[0];
+		return iz.returnStatement($) && iz.methodCallExpression(az.returnStatement($).getReturnValue())
+				? az.methodCallExpression(az.returnStatement($).getReturnValue())
+				: iz.expressionStatement($)
+						&& iz.methodCallExpression(az.expressionStatement($).getExpression())
+								? az.methodCallExpression(az.expressionStatement($).getExpression()) : null;
 	}
 
     @SuppressWarnings("ConstantConditions")

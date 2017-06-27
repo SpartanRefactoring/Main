@@ -66,8 +66,8 @@ public class Playground extends JFrame {
 				Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
 				theme.apply(inputArea);
 				theme.apply(outputArea);
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (IOException ¢) {
+				¢.printStackTrace();
 			}
 
         LeonidasIcon.apply(this);
@@ -131,8 +131,8 @@ public class Playground extends JFrame {
     }
 
     private String fixString(String outputStr, int i) {
-        String temp = outputStr.substring(before[i].length());
-        return (new ArrayList<>(Arrays.asList(temp.substring(0, temp.length() - after[i].length()).split("\n"))))
+        String $ = outputStr.substring(before[i].length());
+        return (new ArrayList<>(Arrays.asList($.substring(0, $.length() - after[i].length()).split("\n"))))
 				.stream().map(line -> line.replaceFirst(" {4}", "")).collect(Collectors.joining("\n"));
     }
 

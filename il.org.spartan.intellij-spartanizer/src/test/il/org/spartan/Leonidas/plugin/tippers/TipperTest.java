@@ -91,8 +91,8 @@ public class TipperTest{
         if(!setup)
 			try {
 				this.setUp();
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (Exception ¢) {
+				¢.printStackTrace();
 			}
         Map<String,String> examples = getExamples();
         Toolbox toolbox = Toolbox.getInstance();
@@ -132,10 +132,10 @@ public class TipperTest{
             int tipperAffected;
             try {
                 tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(), getTipperName());
-            } catch(Exception e){
+            } catch(Exception ¢){
                 log("An exception was thrown. \n");
                 if(printsToScreen){
-                    e.printStackTrace();
+                    ¢.printStackTrace();
                     log("\n");
                 }
                 crashTest();

@@ -19,20 +19,20 @@ public class Pruning {
      * Prunes all the stubs of the form "stub();" where "stub()"
      * is a method call for the method defined in GenericPsiElementStub.
      *
-     * @param n - the root from which all such stubs are pruned
+     * @param e - the root from which all such stubs are pruned
      */
-    public static Encapsulator prune(Encapsulator n, Map<Integer, List<Matcher.Constraint>> map) {
-        assert (n != null);
-        Wrapper<Encapsulator> o = new Wrapper<>(n);
-        n.accept(e1 -> Toolbox.getInstance().getGenericsBasicBlocks().stream()
+    public static Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
+        assert (e != null);
+        Wrapper<Encapsulator> $ = new Wrapper<>(e);
+        e.accept(e1 -> Toolbox.getInstance().getGenericsBasicBlocks().stream()
                 .filter(ge -> ge.conforms(e1.getInner()))
                 .findFirst()
                 .ifPresent(λ -> {
-                    if (λ.getConcreteParent(e1, map) != n)
-						λ.prune(e1, map);
+                    if (λ.getConcreteParent(e1, m) != e)
+						λ.prune(e1, m);
 					else
-						o.set(λ.prune(e1, map));
+						$.set(λ.prune(e1, m));
                 }));
-        return o.get();
+        return $.get();
     }
 }

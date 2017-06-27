@@ -49,8 +49,8 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 	 * @return an element tip to apply on e.
 	 */
 	@Override
-	public Tip tip(final N e) {
-		final PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
+	public Tip tip(final N $) {
+		final PsiDirectory srcDir = $.getContainingFile().getContainingDirectory();
 		try {
 			srcDir.checkCreateSubdirectory("spartanizer");
 			final Object[] options = { "Accept", "Cancel" };
@@ -61,23 +61,23 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 							+ "to your project directory.\n" + "To apply the tip, press the Accept button.",
 					"SpartanizerUtils", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, Icons.Leonidas,
 					options, options[1]) == 1)
-				return new Tip(description(e), e, this.getClass()) {
+				return new Tip(description($), $, this.getClass()) {
 					@Override
 					public void go(final PsiRewrite r) {
 					}
 				};
 		} catch (final Exception ex) {
 		}
-		return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
+		return !canTip($) ? null : new Tip(description($), $, this.getClass()) {
 			@Override
 			public void go(final PsiRewrite r) {
-				final PsiElement e_tag = createReplacement(e);
-				new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
+				final PsiElement e_tag = createReplacement($);
+				new WriteCommandAction.Simple($.getProject(), $.getContainingFile()) {
 					@Override
 					protected void run() throws Throwable {
 						if (!Toolbox.getInstance().playground && !Toolbox.getInstance().testing)
-							createEnvironment(e);
-						e.replace(e_tag);
+							createEnvironment($);
+						$.replace(e_tag);
 					}
 				}.execute();
 			}
@@ -100,14 +100,14 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 		final File file = new File(is.getPath());
 		final FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
 		file.setReadable(true, false);
-		final PsiFile pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type,
+		final PsiFile $ = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type,
 				IOUtils.toString(new BufferedReader(
 						new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
-		d.add(pf);
+		d.add($);
 		Arrays.stream(d.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst().get()
 				.getVirtualFile().setWritable(false);
-		Toolbox.getInstance().excludeFile(pf);
-		return pf;
+		Toolbox.getInstance().excludeFile($);
+		return $;
 	}
 
 	/**
@@ -120,21 +120,21 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 	 */
 	@SuppressWarnings("OptionalGetWithoutIsPresent")
 	private PsiFile insertSpartanizerUtils(final PsiElement e) throws IOException {
-		PsiFile pf;
+		PsiFile $;
 		final PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
 		// creates the directory and adds the file if needed
 		try {
 			srcDir.checkCreateSubdirectory("spartanizer");
-			pf = createUtilsFile(e, srcDir.createSubdirectory("spartanizer"));
+			$ = createUtilsFile(e, srcDir.createSubdirectory("spartanizer"));
 		} catch (final IncorrectOperationException x) {
 			final PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories())
 					.filter(λ -> "spartanizer".equals(λ.getName())).findAny().get();
-			pf = Arrays.stream(pd.getFiles()).noneMatch(λ -> "SpartanizerUtils.java".equals(λ.getName()))
+			$ = Arrays.stream(pd.getFiles()).noneMatch(λ -> "SpartanizerUtils.java".equals(λ.getName()))
 					? createUtilsFile(e, pd)
 					: Arrays.stream(pd.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst()
 							.get();
 		}
-		return pf;
+		return $;
 	}
 
 	/**

@@ -35,8 +35,8 @@ public class EncapsulatorTest extends PsiTypeHelper {
         if (e == null ^ node == null) return false;
         if (node.getInner() != e || node.getChildren().size() != e.getChildren().length)
             return false;
-        for (int i = 0; i < node.getChildren().size(); ++i)
-            if (!matchNodeTreeAndPsiTreeByReference(node.getChildren().get(i), e.getChildren()[i])) return false;
+        for (int ¢ = 0; ¢ < node.getChildren().size(); ++¢)
+            if (!matchNodeTreeAndPsiTreeByReference(node.getChildren().get(¢), e.getChildren()[¢])) return false;
         return true;
     }
 

@@ -50,12 +50,12 @@ public class SpartanizerAnnotator implements Annotator {
 					}
 
 					@Override
-					public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+					public boolean isAvailable(@NotNull Project p, Editor editor, PsiFile f) {
 						return true;
 					}
 
 					@Override
-					public void invoke(@NotNull Project project, Editor editor, PsiFile file)
+					public void invoke(@NotNull Project p, Editor editor, PsiFile f)
 							throws IncorrectOperationException {
 						Spartanizer.spartanizeElement(e, tipper);
 					}
@@ -69,8 +69,8 @@ public class SpartanizerAnnotator implements Annotator {
 				annotation.setEnforcedTextAttributes(
 						new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0));
 			});
-        } catch (Throwable t) {
-            new Logger(this.getClass()).error("", t);
+        } catch (Throwable ¢) {
+            new Logger(this.getClass()).error("", ¢);
         }
     }
 }
