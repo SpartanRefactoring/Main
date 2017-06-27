@@ -1,7 +1,9 @@
 package il.org.spartan.classfiles.reify;
 
+import java.io.*;
 import java.util.*;
 
+import fluent.ly.*;
 import il.org.spartan.classfiles.reify.OpCode.*;
 
 public class SimplifiedCode {
@@ -48,17 +50,21 @@ public class SimplifiedCode {
   }
   private void parse() {
     if (instructionsCount == 0)
-      for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
-        final Instruction i = OpCode.read(r);
-        if (i == null)
-          return;
-        if (i.invalid())
-          throw new RuntimeException();
-        if (i.opCode == OpCode.ATHROW)
-          ++throwCount;
-        if (isRelevant(i))
-          instructions.add(i);
-        ++instructionsCount;
+      try (BufferDataInputStream r = new BufferDataInputStream(codes)) {
+        for (;;) {
+          final Instruction i = OpCode.read(r);
+          if (i == null)
+            return;
+          if (i.invalid())
+            throw new RuntimeException();
+          if (i.opCode == OpCode.ATHROW)
+            ++throwCount;
+          if (isRelevant(i))
+            instructions.add(i);
+          ++instructionsCount;
+        }
+      } catch (IOException e) {
+        note.bug(e);
       }
   }
 }
