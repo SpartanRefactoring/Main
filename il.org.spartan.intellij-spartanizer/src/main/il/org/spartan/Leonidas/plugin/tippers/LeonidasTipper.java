@@ -210,7 +210,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the generic forest representing the replacer template
      */
     private List<Encapsulator> initializeReplacerRoots(Map<Integer, List<PsiMethodCallExpression>> m) {
-        List<Encapsulator> l = getForestFromMethod(((PsiMethod) getInterfaceMethod("replacer").copy()));
+        List<Encapsulator> l = getForestFromMethod((PsiMethod) getInterfaceMethod("replacer").copy());
         l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
             List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
             Encapsulator ie = !iz.quantifier(n) ? n : az.quantifier(n).getInternal();
@@ -228,7 +228,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return a copy of the replacer, since on each activation, the current replacer is corrupted.
      */
     private Replacer getReplacerCopy(){
-        return new Replacer(replacer, getForestFromMethod(((PsiMethod) getInterfaceMethod("replacer").copy())));
+        return new Replacer(replacer, getForestFromMethod((PsiMethod) getInterfaceMethod("replacer").copy()));
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Build additional rules ~~~~~~~~~~~~~~~~~~~~~~~~~~

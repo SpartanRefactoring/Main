@@ -96,7 +96,6 @@ public class ToolboxTest extends PsiTypeHelper {
         tb.initComponent();
         assert tb.isElementOfOperableType(createTestStatementFromString("if(true == false){}"));
         assert tb.isElementOfOperableType(createTestStatementFromString("while(true){}"));
-
         tb.disposeComponent();
     }
 

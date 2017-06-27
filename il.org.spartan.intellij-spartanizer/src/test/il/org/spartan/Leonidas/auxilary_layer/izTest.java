@@ -43,10 +43,10 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testBinaryExpression() throws Exception {
-        assert iz.binaryExpression(((PsiBinaryExpression) createTestExpression("x == y")));
-        assert iz.binaryExpression(((PsiBinaryExpression) createTestExpression("x != y")));
-        assert iz.binaryExpression(((PsiBinaryExpression) createTestExpression("x + y")));
-        assert iz.binaryExpression(((PsiBinaryExpression) createTestExpression("x % y")));
+        assert iz.binaryExpression((PsiBinaryExpression) createTestExpression("x == y"));
+        assert iz.binaryExpression((PsiBinaryExpression) createTestExpression("x != y"));
+        assert iz.binaryExpression((PsiBinaryExpression) createTestExpression("x + y"));
+        assert iz.binaryExpression((PsiBinaryExpression) createTestExpression("x % y"));
         assert !iz.binaryExpression(createTestExpression("!x"));
     }
 
@@ -121,8 +121,8 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testMethodCallExpression() throws Exception {
-        assert iz.methodCallExpression(((PsiMethodCallExpression) createTestExpression("getX()")));
-        assert iz.methodCallExpression(((PsiMethodCallExpression) createTestExpression("foo(x,y)")));
+        assert iz.methodCallExpression((PsiMethodCallExpression) createTestExpression("getX()"));
+        assert iz.methodCallExpression((PsiMethodCallExpression) createTestExpression("foo(x,y)"));
         assert iz.methodCallExpression(createTestExpression("list.size()"));
         assert !iz.methodCallExpression(createTestExpression("x+y"));
         assert !iz.methodCallExpression(createTestMethodFromString("foo(int x,double y)"));
@@ -435,12 +435,12 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testConditionalAnd() throws Exception {
-        assert iz.conditionalAnd(((PsiBinaryExpression) createTestExpression("x && y")));
+        assert iz.conditionalAnd((PsiBinaryExpression) createTestExpression("x && y"));
         assert !iz.conditionalAnd((PsiBinaryExpression) createTestExpression("x || y"));
     }
 
     public void testConditionalOr() throws Exception {
-        assert iz.conditionalOr(((PsiBinaryExpression) createTestExpression("x || y")));
+        assert iz.conditionalOr((PsiBinaryExpression) createTestExpression("x || y"));
         assert !iz.conditionalOr((PsiBinaryExpression) createTestExpression("x && y"));
     }
 

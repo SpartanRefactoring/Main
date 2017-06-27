@@ -28,14 +28,14 @@ public class hazTest extends PsiTypeHelper {
     }
 
     public void testHazEqualsOperator() throws Exception{
-        assert haz.equalsOperator(((PsiBinaryExpression) createTestExpression("x == y")));
-        assert !haz.equalsOperator(((PsiBinaryExpression) createTestExpression("x != y")));
+        assert haz.equalsOperator((PsiBinaryExpression) createTestExpression("x == y"));
+        assert !haz.equalsOperator((PsiBinaryExpression) createTestExpression("x != y"));
         assert !haz.equalsOperator((PsiBinaryExpression) createTestExpression("x > y"));
     }
 
     public void testHazNotEqualsOperator() throws Exception{
-        assert !haz.notEqualsOperator(((PsiBinaryExpression) createTestExpression("x == y")));
-        assert haz.notEqualsOperator(((PsiBinaryExpression) createTestExpression("x != y")));
+        assert !haz.notEqualsOperator((PsiBinaryExpression) createTestExpression("x == y"));
+        assert haz.notEqualsOperator((PsiBinaryExpression) createTestExpression("x != y"));
         assert !haz.notEqualsOperator((PsiBinaryExpression) createTestExpression("x > y"));
     }
 }
