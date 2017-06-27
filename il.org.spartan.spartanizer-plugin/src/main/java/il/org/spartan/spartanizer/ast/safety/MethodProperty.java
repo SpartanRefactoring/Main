@@ -21,8 +21,8 @@ public interface MethodProperty {
   static boolean callingOtherMethods(final Block ¢) {
     return callingOtherMethods(statements(¢));
   }
-  static boolean callingOtherMethods(final List<Statement> statements) {
-    return callingOtherMethods(statements.stream().map(x -> (ASTNode) x));
+  static boolean callingOtherMethods(final List<Statement> ss) {
+    return callingOtherMethods(ss.stream().map(λ -> (ASTNode) λ));
   }
   static boolean callingOtherMethods(final MethodDeclaration ¢) {
     return callingOtherMethods(body(¢));
