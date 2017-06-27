@@ -144,10 +144,10 @@ public class Toolbox implements ApplicationComponent {
     }
 
     private Set<Class<? extends GenericEncapsulator>> getAllSubTypes() {
-        Set<Class<? extends GenericEncapsulator>> allClasses =
-                new Reflections(GenericEncapsulator.class.getPackage().getName()).getSubTypesOf(GenericEncapsulator.class);
-        //noinspection unchecked
-        return allClasses.stream().filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers())).map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
+        return new Reflections(GenericEncapsulator.class.getPackage().getName())
+				.getSubTypesOf(GenericEncapsulator.class).stream()
+				.filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
+				.map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
     }
 
     @SuppressWarnings("unchecked")
@@ -243,8 +243,8 @@ public class Toolbox implements ApplicationComponent {
     public void executeTipper(PsiElement e, Tipper<PsiElement> tipper) {
         if (e != null && tipper != null && tipper.canTip(e))
 			tipper.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
-        AnActionEvent ana = AnActionEvent.createFromDataContext("banana",null ,new DataContext() {
-            @Override
+        new ReformatCodeAction().actionPerformed(AnActionEvent.createFromDataContext("banana", null, new DataContext() {
+			@Override
 			@Nullable
 			public Object getData(String dataId) {
 				if ("project".equals(dataId))
@@ -255,8 +255,7 @@ public class Toolbox implements ApplicationComponent {
 					return e.getContainingFile().getVirtualFile();
 				return null;
 			}
-        });
-        new ReformatCodeAction().actionPerformed(ana);
+		}));
     }
 
     /**

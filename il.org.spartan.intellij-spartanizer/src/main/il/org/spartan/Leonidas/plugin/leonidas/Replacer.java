@@ -87,8 +87,7 @@ public class Replacer {
      * @return the element that replaced the template
      */
     public PsiElement replaceSingleRoot(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        PsiElement element = getReplacingForest(roots, m, r).get(0);
-        return r.replace(treeToReplace, element);
+        return r.replace(treeToReplace, getReplacingForest(roots, m, r).get(0));
     }
 
     /**

@@ -63,8 +63,7 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     }
 
     public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {
-        QuantifierMethodCallBased q = create(n, map);
-        return q.getConcreteParent(n);
+        return create(n, map).getConcreteParent(n);
     }
 
     @PreservesIterator

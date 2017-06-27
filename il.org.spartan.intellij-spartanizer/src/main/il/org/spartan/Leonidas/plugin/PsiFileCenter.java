@@ -91,36 +91,14 @@ public class PsiFileCenter {
         }
 
         public String extractCanonicalSubtreeString() {
-            String raw = extractRelevantSubtreeString();
-            raw = raw.replaceAll("\t", " ");
-            raw = raw.trim().replaceAll(" +", " ");
-            raw = raw.replaceAll(" ,", ",");
-            raw = raw.replaceAll(", ", ",");
-            raw = raw.replaceAll(";;", "; ;");
-            raw = raw.replaceAll("\n+", "\n");
-            raw = raw.replaceAll("\n ", "\n");
-            raw = raw.replaceAll(" \n", "\n");
-            raw = raw.replaceAll("if \\(", "if(");
-            raw = raw.replaceAll("for \\(", "for(");
-            raw = raw.replaceAll("while \\(", "while(");
-            raw = raw.replaceAll("switch \\(", "switch(");
-            raw = raw.replaceAll("\\) \\{", "){");
-            raw = raw.replaceAll(" =", "=");
-            raw = raw.replaceAll("= ", "=");
-            raw = raw.replaceAll("! ", "!");
-            raw = raw.replaceAll(" !", "!"); //takes care of many versions
-            raw = raw.replaceAll(" >", ">");
-            raw = raw.replaceAll("> ", ">");
-            raw = raw.replaceAll(" <", "<");
-            raw = raw.replaceAll("< ", "<");
-            raw = raw.replaceAll("\\+ ", "+");
-            raw = raw.replaceAll(" \\+", "+");
-            raw = raw.replaceAll("- ", "-");
-            raw = raw.replaceAll(" -", "-");
-            raw = raw.replaceAll(" /", "/");
-            raw = raw.replaceAll("/ ", "/");
-            raw = raw.replaceAll(" \\*", "*");
-            raw = raw.replaceAll("\\* ", "*");
+            String raw = extractRelevantSubtreeString().replaceAll("\t", " ").trim().replaceAll(" +", " ").replaceAll(" ,", ",")
+					.replaceAll(", ", ",").replaceAll(";;", "; ;").replaceAll("\n+", "\n").replaceAll("\n ", "\n")
+					.replaceAll(" \n", "\n").replaceAll("if \\(", "if(").replaceAll("for \\(", "for(")
+					.replaceAll("while \\(", "while(").replaceAll("switch \\(", "switch(").replaceAll("\\) \\{", "){")
+					.replaceAll(" =", "=").replaceAll("= ", "=").replaceAll("! ", "!").replaceAll(" !", "!")
+					.replaceAll(" >", ">").replaceAll("> ", ">").replaceAll(" <", "<").replaceAll("< ", "<")
+					.replaceAll("\\+ ", "+").replaceAll(" \\+", "+").replaceAll("- ", "-").replaceAll(" -", "-")
+					.replaceAll(" /", "/").replaceAll("/ ", "/").replaceAll(" \\*", "*").replaceAll("\\* ", "*");
             return raw;
         }
 

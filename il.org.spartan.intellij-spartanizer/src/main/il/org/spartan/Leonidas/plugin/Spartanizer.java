@@ -97,8 +97,7 @@ public enum Spartanizer {
 
 
     public static void spartanizeElementWithTipper(PsiElement e, String tipperName) {
-        Toolbox toolbox = Toolbox.getInstance();
-        for (Tipper t : toolbox.getAllTippers())
+        for (Tipper t : Toolbox.getInstance().getAllTippers())
 			System.out.println(t.name());
     }
 }

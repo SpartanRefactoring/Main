@@ -101,9 +101,8 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
         if (o == this) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CustomLeonidasTippers that = (CustomLeonidasTippers) o;
-
-        return tippers == null ? that.tippers == null : tippers.equals(that.tippers);
+        return tippers == null ? ((CustomLeonidasTippers) o).tippers == null
+				: tippers.equals(((CustomLeonidasTippers) o).tippers);
     }
 
     @Override

@@ -41,8 +41,7 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
     @Override
     public AnyNumberOfMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
        PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-       Encapsulator e2 = internalEncapsulator(e);
-       return new AnyNumberOfMethodCallBased(e.getInner(), e2);
+       return new AnyNumberOfMethodCallBased(e.getInner(), internalEncapsulator(e));
     }
 
     private Encapsulator internalEncapsulator(Encapsulator e) {

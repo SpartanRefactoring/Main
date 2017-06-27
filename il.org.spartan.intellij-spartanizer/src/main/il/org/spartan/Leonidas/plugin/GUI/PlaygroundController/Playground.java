@@ -132,8 +132,8 @@ public class Playground extends JFrame {
 
     private String fixString(String outputStr, int i) {
         String temp = outputStr.substring(before[i].length());
-        ArrayList<String> lines = new ArrayList<>(Arrays.asList(temp.substring(0, temp.length() - after[i].length()).split("\n")));
-        return lines.stream().map(line -> line.replaceFirst(" {4}", "")).collect(Collectors.joining("\n"));
+        return (new ArrayList<>(Arrays.asList(temp.substring(0, temp.length() - after[i].length()).split("\n"))))
+				.stream().map(line -> line.replaceFirst(" {4}", "")).collect(Collectors.joining("\n"));
     }
 
     private void clearButtonClicked() {

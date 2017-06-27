@@ -32,44 +32,43 @@ public class SpartanizerAnnotator implements Annotator {
             if (!Spartanizer.canTip(e) || !Spartanizer.shouldSpartanize(e) || e.getContainingFile().getName().contains("Spartanizer"))
                 return;
 
-            final List<Tipper> tippers = Toolbox.getInstance().getTippers(e);
-
-            tippers.forEach(tipper -> {
-                Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
-                annotation.registerFix(new IntentionAction() {
-                    @Override
+            Toolbox.getInstance().getTippers(e).forEach(tipper -> {
+				Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
+				annotation.registerFix(new IntentionAction() {
+					@Override
 					@Nls
 					@NotNull
 					public String getText() {
 						return tipper.description(e);
 					}
 
-                    @Override
+					@Override
 					@Nls
 					@NotNull
 					public String getFamilyName() {
 						return "SpartanizerAction";
 					}
 
-                    @Override
-                    public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
-                        return true;
-                    }
+					@Override
+					public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+						return true;
+					}
 
-                    @Override
-                    public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
-                        Spartanizer.spartanizeElement(e, tipper);
-                    }
+					@Override
+					public void invoke(@NotNull Project project, Editor editor, PsiFile file)
+							throws IncorrectOperationException {
+						Spartanizer.spartanizeElement(e, tipper);
+					}
 
-                    @Override
-                    public boolean startInWriteAction() {
-                        return false;
-                    }
-                });
-
-                TextAttributesKey.createTextAttributesKey("");
-                annotation.setEnforcedTextAttributes(new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0));
-            });
+					@Override
+					public boolean startInWriteAction() {
+						return false;
+					}
+				});
+				TextAttributesKey.createTextAttributesKey("");
+				annotation.setEnforcedTextAttributes(
+						new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0));
+			});
         } catch (Throwable t) {
             new Logger(this.getClass()).error("", t);
         }

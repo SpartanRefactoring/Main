@@ -41,19 +41,13 @@ public class SpartanizerAction extends AnAction {
                 Object[] options = {"Accept",
                         "Cancel"};
 
-                int n = JOptionPane.showOptionDialog(new JFrame(),
-                        "You might be about to apply nano patterns.\n" +
-                                "Please notice that nano pattern tippers are " +
-                                "code transformations that require adding a '.java' file " +
-                                "to your project directory.\n" +
-                                "To apply these tippers, please press the Accept button.",
-                        "SpartanizerUtils",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        Icons.Leonidas,
-                        options,
-                        options[1]);
-                if (n != 1)
+                if (JOptionPane.showOptionDialog(new JFrame(),
+						"You might be about to apply nano patterns.\n" + "Please notice that nano pattern tippers are "
+								+ "code transformations that require adding a '.java' file "
+								+ "to your project directory.\n"
+								+ "To apply these tippers, please press the Accept button.",
+						"SpartanizerUtils", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, Icons.Leonidas,
+						options, options[1]) != 1)
 					new WriteCommandAction.Simple(e.getProject()) {
 						@Override
 						protected void run() throws Throwable {

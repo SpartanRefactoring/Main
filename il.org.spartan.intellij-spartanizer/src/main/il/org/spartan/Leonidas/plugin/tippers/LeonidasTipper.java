@@ -201,8 +201,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the generic forest representing the "matcher" template
      */
     private List<Encapsulator> getMatcherRootsTree() {
-        PsiMethod method = getInterfaceMethod("matcher");
-        return getForestFromMethod(method);
+        return getForestFromMethod(getInterfaceMethod("matcher"));
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Replacer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -229,8 +228,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return a copy of the replacer, since on each activation, the current replacer is corrupted.
      */
     private Replacer getReplacerCopy(){
-        PsiMethod replacerBody = (PsiMethod) getInterfaceMethod("replacer").copy();
-        return new Replacer(replacer, getForestFromMethod(replacerBody));
+        return new Replacer(replacer, getForestFromMethod(((PsiMethod) getInterfaceMethod("replacer").copy())));
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Build additional rules ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,8 +247,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 					x.set(expression);
             }
         });
-        PsiMethodCallExpression m = x.get();
-        return Integer.parseInt(step.arguments(m).get(0).getText());
+        return Integer.parseInt(step.arguments(x.get()).get(0).getText());
     }
 
     /**
