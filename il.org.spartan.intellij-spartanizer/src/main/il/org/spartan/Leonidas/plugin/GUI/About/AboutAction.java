@@ -8,6 +8,9 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
  * @since 28/04/2017
  */
 class AboutAction extends AnAction {
+
+    private static String backgroundImagePath = "aboutBG.jpg";
+
     public static void main(String[] args) {
         new AboutLeonidas();
     }
