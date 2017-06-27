@@ -168,7 +168,7 @@ public interface system {
   }
 
   String separator = System.getProperty("file.separator", "/");
-  String tmp = separator+ System.getProperty("java.io.tmpdir", "/tmp") + separator ;
+  String tmp = separator + System.getProperty("java.io.tmpdir", "/tmp") + separator;
   String UTF_8 = "utf-8";
 
   interface Extension {
