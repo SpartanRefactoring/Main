@@ -171,6 +171,10 @@ public interface system {
   String tmp = separator + System.getProperty("java.io.tmpdir", "/tmp") + separator;
   String UTF_8 = "utf-8";
 
+  public static Class<?> containingClass(Object o) {
+    return o.getClass().getEnclosingClass();
+  }
+
   interface Extension {
     File dot(String extentsion);
   }
