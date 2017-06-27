@@ -188,7 +188,9 @@ public abstract class LogBook implements Serializable {
    * @return <code><b>this</b></code>
    * @throws IOException in case of failure */
   public LogBook writeTo(final File ¢) throws IOException {
-    return writeTo(new FileOutputStream(¢));
+    try (FileOutputStream s = new FileOutputStream(¢)) {
+      return writeTo(s);
+    }
   }
   /** @param s a file to write to
    * @return <code><b>this</b></code>

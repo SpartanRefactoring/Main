@@ -31,10 +31,10 @@ public class TestNoOther {
   }
   public static String read(final File f) throws IOException {
     final char[] $ = new char[(int) f.length()];
-    final FileReader x = new FileReader(f);
-    final int n = x.read($);
-    x.close();
-    return String.valueOf(Arrays.copyOf($, n));
+    try (FileReader x = new FileReader(f)) {
+      final int n = x.read($);
+      return String.valueOf(Arrays.copyOf($, n));
+    }
   }
   public static void write(final File f, final String text) throws IOException {
     try (Writer w = new FileWriter(f)) {
