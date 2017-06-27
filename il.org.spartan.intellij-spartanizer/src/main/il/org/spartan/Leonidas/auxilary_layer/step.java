@@ -19,32 +19,32 @@ import java.util.Optional;
 public enum step {
     ;
 
-    public static List<PsiParameter> parameters(PsiMethod m) {
-        return m == null ? new ArrayList<>() : parameters(m.getParameterList());
+    public static List<PsiParameter> parameters(PsiMethod ¢) {
+        return ¢ == null ? new ArrayList<>() : parameters(¢.getParameterList());
     }
 
     public static List<PsiParameter> parameters(PsiParameterList method) {
         return method == null ? new ArrayList<>() : Arrays.asList(method.getParameters());
     }
 
-    public static PsiParameter firstParameter(PsiParameterList l) {
-        return parameters(l).isEmpty() ? null : l.getParameters()[0];
+    public static PsiParameter firstParameter(PsiParameterList ¢) {
+        return parameters(¢).isEmpty() ? null : ¢.getParameters()[0];
     }
 
-    public static PsiParameter secondParameter(PsiParameterList l) {
-        return parameters(l).size() > 1 ? null : l.getParameters()[1];
+    public static PsiParameter secondParameter(PsiParameterList ¢) {
+        return parameters(¢).size() > 1 ? null : ¢.getParameters()[1];
     }
 
-    public static PsiParameter firstParameter(PsiMethod m) {
-        return m == null ? null : firstParameter(m.getParameterList());
+    public static PsiParameter firstParameter(PsiMethod ¢) {
+        return ¢ == null ? null : firstParameter(¢.getParameterList());
     }
 
-    public static PsiExpression firstParameterExpression(PsiMethodCallExpression x) {
-        return x == null || x.getArgumentList().getExpressions().length < 1 ? null : x.getArgumentList().getExpressions()[0];
+    public static PsiExpression firstParameterExpression(PsiMethodCallExpression ¢) {
+        return ¢ == null || ¢.getArgumentList().getExpressions().length < 1 ? null : ¢.getArgumentList().getExpressions()[0];
     }
 
-    public static PsiExpression secondParameterExpression(PsiMethodCallExpression x) {
-        return x == null || x.getArgumentList().getExpressions().length < 2 ? null : x.getArgumentList().getExpressions()[1];
+    public static PsiExpression secondParameterExpression(PsiMethodCallExpression ¢) {
+        return ¢ == null || ¢.getArgumentList().getExpressions().length < 2 ? null : ¢.getArgumentList().getExpressions()[1];
     }
 
     /**
@@ -52,68 +52,68 @@ public enum step {
      * following method call expression <code>test(1, "dsa", 3)</code> should return a list
      * containing 1, "dsa" and 3.
      *
-     * @param method method call expression from which the arguments should be extracted
+     * @param ¢ method call expression from which the arguments should be extracted
      * @return list of method call's arguments
      */
-    public static List<PsiExpression> arguments(PsiMethodCallExpression method) {
-        return method == null ? null : new ArrayList<>(Arrays.asList(method.getArgumentList().getExpressions()));
+    public static List<PsiExpression> arguments(PsiMethodCallExpression ¢) {
+        return ¢ == null ? null : new ArrayList<>(Arrays.asList(¢.getArgumentList().getExpressions()));
     }
 
-    public static PsiStatement firstStatement(PsiCodeBlock b) {
-        return b == null || statements(b).isEmpty() ? null : statements(b).get(0);
+    public static PsiStatement firstStatement(PsiCodeBlock ¢) {
+        return ¢ == null || statements(¢).isEmpty() ? null : statements(¢).get(0);
     }
 
-    public static String name(PsiNamedElement e) {
-        return e == null ? null : e.getName();
+    public static String name(PsiNamedElement ¢) {
+        return ¢ == null ? null : ¢.getName();
     }
 
-    public static List<PsiStatement> statements(PsiCodeBlock b) {
-        return b == null ? new ArrayList<>() : Arrays.asList(b.getStatements());
+    public static List<PsiStatement> statements(PsiCodeBlock ¢) {
+        return ¢ == null ? new ArrayList<>() : Arrays.asList(¢.getStatements());
     }
 
-    public static PsiCodeBlock blockBody(PsiLambdaExpression x) {
-        return !iz.block(x.getBody()) ? null : (PsiCodeBlock) x.getBody();
+    public static PsiCodeBlock blockBody(PsiLambdaExpression ¢) {
+        return !iz.block(¢.getBody()) ? null : (PsiCodeBlock) ¢.getBody();
     }
 
-    public static PsiExpression expression(PsiReturnStatement s) {
-        return s == null ? null : s.getReturnValue();
+    public static PsiExpression expression(PsiReturnStatement ¢) {
+        return ¢ == null ? null : ¢.getReturnValue();
     }
 
-    public static PsiExpression expression(PsiExpressionStatement s) {
-        return s == null ? null : s.getExpression();
+    public static PsiExpression expression(PsiExpressionStatement ¢) {
+        return ¢ == null ? null : ¢.getExpression();
     }
 
-    public static PsiType returnType(PsiMethod m) {
-        return m == null ? null : m.getReturnType();
+    public static PsiType returnType(PsiMethod ¢) {
+        return ¢ == null ? null : ¢.getReturnType();
     }
 
     public static List<PsiField> fields(PsiClass clazz) {
         return Arrays.asList(clazz.getFields());
     }
 
-    public static PsiExpression conditionExpression(PsiConditionalExpression x) {
-        return x == null ? null : x.getCondition();
+    public static PsiExpression conditionExpression(PsiConditionalExpression ¢) {
+        return ¢ == null ? null : ¢.getCondition();
     }
 
-    public static IElementType operator(PsiBinaryExpression x) {
-        return x == null ? null : x.getOperationTokenType();
+    public static IElementType operator(PsiBinaryExpression ¢) {
+        return ¢ == null ? null : ¢.getOperationTokenType();
     }
 
-    public static PsiExpression leftOperand(PsiBinaryExpression x) {
+    public static PsiExpression leftOperand(PsiBinaryExpression ¢) {
 
-        return x == null ? null : x.getLOperand();
+        return ¢ == null ? null : ¢.getLOperand();
     }
 
-    public static PsiExpression rightOperand(PsiBinaryExpression x) {
-        return x == null ? null : x.getROperand();
+    public static PsiExpression rightOperand(PsiBinaryExpression ¢) {
+        return ¢ == null ? null : ¢.getROperand();
     }
 
-    public static PsiExpression thenExpression(PsiConditionalExpression x) {
-        return x == null ? null : x.getThenExpression();
+    public static PsiExpression thenExpression(PsiConditionalExpression ¢) {
+        return ¢ == null ? null : ¢.getThenExpression();
     }
 
-    public static PsiExpression elseExpression(PsiConditionalExpression x) {
-        return x == null ? null : x.getElseExpression();
+    public static PsiExpression elseExpression(PsiConditionalExpression ¢) {
+        return ¢ == null ? null : ¢.getElseExpression();
     }
 
     public static PsiElement nextSibling(PsiElement e) {
@@ -141,12 +141,12 @@ public enum step {
      * for example, <code>NULL_KEYWORD</code>, <code>TRUE_KEYWORD</code>,
      * <code>INTEGER_LITERAL</code>, etc...
      *
-     * @param e literal expression
+     * @param ¢ literal expression
      * @return type of the literal expression
      * @see com.intellij.psi.JavaTokenType for a full list of possibly types
      */
-    public static IElementType literalType(PsiLiteralExpression e) {
-        return e == null ? null : ((PsiJavaToken) e.getFirstChild()).getTokenType();
+    public static IElementType literalType(PsiLiteralExpression ¢) {
+        return ¢ == null ? null : ((PsiJavaToken) ¢.getFirstChild()).getTokenType();
     }
 
     /**
@@ -155,11 +155,11 @@ public enum step {
      * for example:
      * obj.foo(x,y,z) -> foo
      *
-     * @param e method call expression
+     * @param ¢ method call expression
      * @return method name
      */
-    public static PsiReferenceExpression methodExpression(PsiMethodCallExpression e) {
-        return e == null ? null : e.getMethodExpression();
+    public static PsiReferenceExpression methodExpression(PsiMethodCallExpression ¢) {
+        return ¢ == null ? null : ¢.getMethodExpression();
     }
 
     public static Optional<PsiClass> clazz(PsiFile f) {
@@ -171,6 +171,6 @@ public enum step {
             }
         });
 
-        return result.get() != null ? Optional.of(result.get()) : Optional.empty();
+        return result.get() == null ? Optional.empty() : Optional.of(result.get());
     }
 }

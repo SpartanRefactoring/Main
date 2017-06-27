@@ -29,8 +29,9 @@ public class OptionalMethodCallBased extends QuantifierMethodCallBased {
 
     @Override
     public OptionalMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-        return new OptionalMethodCallBased(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p), map));
+        return new OptionalMethodCallBased(e.getInner(), Pruning.prune(
+				Encapsulator.buildTreeFromPsi(step.firstParameterExpression(az.methodCallExpression(e.getInner()))),
+				map));
     }
 
     @Override

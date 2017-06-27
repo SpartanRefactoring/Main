@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, Cloneable {
 
-    int cursor = 0;
+    int cursor;
     private int skipCounter;
     private int skipOverall;
     private boolean shouldSkip;
@@ -31,7 +31,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
 
     private void initializeElements(Encapsulator e, List<Encapsulator> l) {
         if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) l.add(e);
-        e.getActualChildren().forEach(c -> initializeElements(c, l));
+        e.getActualChildren().forEach(λ -> initializeElements(λ, l));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     @Override
     public Encapsulator next() {
         if (shouldSkip && skipCounter < skipOverall) {
-            skipCounter++;
+            ++skipCounter;
             return elements.get(cursor);
         }
         shouldSkip = false;
@@ -72,9 +72,9 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
         return skipOverall;
     }
 
-    public EncapsulatorIterator setNumberOfOccurrences(int i) {
+    public EncapsulatorIterator setNumberOfOccurrences(int ¢) {
         shouldSkip = true;
-        skipOverall = i;
+        skipOverall = ¢;
         return this;
     }
 
@@ -84,9 +84,9 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
      */
     public void matchedWithGeneric() {
         Encapsulator current = elements.get(cursor);
-        current.accept(n -> {
-            if (n != current)
-                elements.remove(n);
+        current.accept(λ -> {
+            if (λ != current)
+                elements.remove(λ);
         });
     }
 }

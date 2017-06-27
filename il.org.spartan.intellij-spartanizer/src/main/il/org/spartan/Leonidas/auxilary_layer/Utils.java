@@ -36,11 +36,11 @@ public enum Utils {
     }
 
     /**
-     * @param p the current project
+     * @param ¢ the current project
      * @return the PsiManager of the project.
      */
-    public static PsiManager getPsiManager(Project p) {
-        return PsiManager.getInstance(p);
+    public static PsiManager getPsiManager(Project ¢) {
+        return PsiManager.getInstance(¢);
     }
 
     /**
@@ -71,10 +71,7 @@ public enum Utils {
      */
     public static Document getDocumentFromPsiElement(PsiElement e) {
         PsiFile associatedFile = e.getContainingFile();
-        Project p = associatedFile.getProject();
-        PsiDocumentManager pdm = PsiDocumentManager.getInstance(p);
-        Document res = pdm.getDocument(associatedFile);
-        return res;
+        return PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
     }
 
     /**
@@ -94,13 +91,13 @@ public enum Utils {
         Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
         assert e != null;
         e.accept(new JavaRecursiveElementVisitor() {
-            @SuppressWarnings("unchecked")
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                if (aClass.isInstance(e))
-                    w.get().add((T) e);
-            }
+			@SuppressWarnings("unchecked")
+			public void visitElement(PsiElement ¢) {
+				super.visitElement(¢);
+				if (aClass.isInstance(¢))
+					w.get().add((T) ¢);
+			}
         });
         return w.get();
     }
@@ -112,7 +109,7 @@ public enum Utils {
     public static String getSourceCode(Class<?> c) {
         try {
             InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
-            return is != null ? IOUtils.toString(new BufferedReader(new InputStreamReader(is))) : "";
+            return is == null ? "" : IOUtils.toString(new BufferedReader(new InputStreamReader(is)));
         } catch (IOException e) {
             logger.error("could not read file", e);
         }
@@ -161,27 +158,24 @@ public enum Utils {
     public static PsiElement getNextActualSibling(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
-        while (current != null && (iz.whiteSpace(current) || iz.comment(current))) {
-            current = current.getNextSibling();
-        }
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
+			current = current.getNextSibling();
         return current;
     }
 
     public static PsiElement getPrevActualSibling(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getPrevSibling();
-        while (current != null && (iz.whiteSpace(current) || iz.comment(current))) {
-            current = current.getPrevSibling();
-        }
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
+			current = current.getPrevSibling();
         return current;
     }
 
     public static PsiElement getNextActualSiblingWithComments(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
-        while (current != null && iz.whiteSpace(current)) {
-            current = current.getNextSibling();
-        }
+        while (current != null && iz.whiteSpace(current))
+			current = current.getNextSibling();
         return current;
     }
 
@@ -190,7 +184,7 @@ public enum Utils {
         PsiElement current = e;
         if (e == null || iz.whiteSpace(current) || iz.comment(current)) return 0;
         while (current != null) {
-            i++;
+            ++i;
             current = getNextActualSibling(current);
         }
         return i;

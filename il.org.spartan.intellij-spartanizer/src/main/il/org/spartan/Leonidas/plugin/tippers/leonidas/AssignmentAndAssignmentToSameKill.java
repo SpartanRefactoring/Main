@@ -32,12 +32,7 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
 
     @Override
     public void replacer() {
-        new Template(() ->
-        {
-            /* start */
-            identifier0 = expression(2);
-            /* end */
-        });
+        new Template(() -> identifier0 = expression(2));
     }
 
     @Override

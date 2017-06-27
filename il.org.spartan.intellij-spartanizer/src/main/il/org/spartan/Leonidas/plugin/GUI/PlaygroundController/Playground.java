@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @since 22/04/2017
  */
 public class Playground extends JFrame {
-    private static boolean active = false;
+    private static boolean active;
     private JPanel mainPanel;
     private JButton clearButton;
     private JButton spartanizeButton;
@@ -56,21 +56,19 @@ public class Playground extends JFrame {
 
     public Playground() {
         super("Spartanizer Playground");
-        if(active){return;}
+        if(active)
+			return;
         active = true;
         inputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         outputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        if (UIUtil.isUnderDarcula()) {
-            try {
-                Theme theme = Theme.load(getClass().getResourceAsStream(
-                        "/ui/dark.xml"));
-                theme.apply(inputArea);
-                theme.apply(outputArea);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // TODO @RoeiRaz do something that makes sense here
-            }
-        }
+        if (UIUtil.isUnderDarcula())
+			try {
+				Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
+				theme.apply(inputArea);
+				theme.apply(outputArea);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
         LeonidasIcon.apply(this);
         setContentPane(mainPanel);
@@ -78,9 +76,9 @@ public class Playground extends JFrame {
         pack();
         setVisible(true);
         outputArea.setEditable(false);
-        spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
-       clearButton.addActionListener(e -> clearButtonClicked());
-        closeButton.addActionListener(e -> closeButtonClicked());
+        spartanizeButton.addActionListener(λ -> spartanizeButtonClicked(false));
+       clearButton.addActionListener(λ -> clearButtonClicked());
+        closeButton.addActionListener(λ -> closeButtonClicked());
         this.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
@@ -90,8 +88,8 @@ public class Playground extends JFrame {
         });
         RecursiveJavaButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+            public void mouseClicked(MouseEvent ¢) {
+                super.mouseClicked(¢);
                 spartanizeRecursivelyButtonClicked();
             }
         });
@@ -114,22 +112,17 @@ public class Playground extends JFrame {
     }
 
     private void spartanizeButtonClicked(boolean recursive) {
-        if (inputArea.getText().trim().isEmpty()) {
-            return;
-        }
+        if (inputArea.getText().trim().isEmpty())
+			return;
         Toolbox.getInstance().playground = true;
-        PsiFileCenter pfc = new PsiFileCenter();
-        PsiFileCenter.PsiFileWrapper pfw = pfc.createFileFromString(inputArea.getText());
-        if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL){
-            outputArea.setText("Input didn't contain legal java code!");
-        }
-        else{
-            if (!recursive) {
-                Spartanizer.spartanizeFileOnePass(pfw.getFile());
-            }
-            else {
-                Spartanizer.spartanizeFileRecursively(pfw.getFile());
-            }
+        PsiFileCenter.PsiFileWrapper pfw = new PsiFileCenter().createFileFromString(inputArea.getText());
+        if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL)
+			outputArea.setText("Input didn't contain legal java code!");
+		else{
+            if (!recursive)
+				Spartanizer.spartanizeFileOnePass(pfw.getFile());
+			else
+				Spartanizer.spartanizeFileRecursively(pfw.getFile());
             outputArea.setText(pfw.extractCanonicalSubtreeString());
         }
         Toolbox.getInstance().playground = false;
@@ -139,8 +132,8 @@ public class Playground extends JFrame {
 
     private String fixString(String outputStr, int i) {
         String temp = outputStr.substring(before[i].length());
-        ArrayList<String> lines = new ArrayList<>(Arrays.asList(temp.substring(0, temp.length() - after[i].length()).split("\n")));
-        return lines.stream().map(line -> line.replaceFirst(" {4}", "")).collect(Collectors.joining("\n"));
+        return (new ArrayList<>(Arrays.asList(temp.substring(0, temp.length() - after[i].length()).split("\n"))))
+				.stream().map(line -> line.replaceFirst(" {4}", "")).collect(Collectors.joining("\n"));
     }
 
     private void clearButtonClicked() {
@@ -173,9 +166,8 @@ public class Playground extends JFrame {
     }
 
     public void doClose() {
-        if(active) {
-            closeButton.doClick();
-        }
+        if(active)
+			closeButton.doClick();
     }
 
     /**
@@ -203,12 +195,12 @@ public class Playground extends JFrame {
         final JSplitPane splitPane1 = new JSplitPane();
         splitPane1.setDividerLocation(200);
         splitPane1.setOrientation(0);
-        textPanel.add(splitPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        textPanel.add(splitPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, new Dimension(200, 200), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         splitPane1.setLeftComponent(panel1);
         inputScroll = new JScrollPane();
-        panel1.add(inputScroll, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(inputScroll, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, null, null, 0, false));
         inputArea = new RSyntaxTextArea();
         inputArea.setBracketMatchingEnabled(false);
         inputArea.setDoubleBuffered(false);
@@ -221,7 +213,7 @@ public class Playground extends JFrame {
         panel2.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         splitPane1.setRightComponent(panel2);
         outputScroll = new JScrollPane();
-        panel2.add(outputScroll, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel2.add(outputScroll, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, null, null, 0, false));
         outputArea = new RSyntaxTextArea();
         outputArea.setBracketMatchingEnabled(false);
         outputScroll.setViewportView(outputArea);
@@ -247,7 +239,7 @@ public class Playground extends JFrame {
         buttonPanel.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         closeButton = new JButton();
         closeButton.setText("Close");
-        buttonPanel.add(closeButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonPanel.add(closeButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         spartanizeButton = new JButton();
         spartanizeButton.setText("Spartanize");
         gbc = new GridBagConstraints();

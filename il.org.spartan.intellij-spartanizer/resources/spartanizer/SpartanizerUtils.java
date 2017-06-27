@@ -19,8 +19,8 @@ public class SpartanizerUtils {
 
     public static <T> Eval<T> eval(T y) { return new Eval<T>(y); }
 
-    public static <T> T last(List<T> ts) {
-        return ts.get(ts.size() - 1);
+    public static <T> T last(List<T> ¢) {
+        return ¢.get(¢.size() - 1);
     }
 
     public static <T,R> R nullConditional(T x, Function<T,R> f){return x == null ? null : f.apply(x);}

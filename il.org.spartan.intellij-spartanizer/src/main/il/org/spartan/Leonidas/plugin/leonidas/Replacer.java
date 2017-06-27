@@ -27,11 +27,9 @@ public class Replacer {
 
     public Replacer(Replacer r, List<Encapsulator> roots){
         this.roots = roots;
-        for (EncapsulatorIterator src = new EncapsulatorIterator(r.roots), dst = new EncapsulatorIterator(roots); src.hasNext() && dst.hasNext(); src.next(), dst.next()){
-            if (iz.generic(src.value()) && iz.generic(dst.value())){
-                putReplacingRulesRecursively(az.generic(src.value()), az.generic(dst.value()));
-            }
-        }
+        for (EncapsulatorIterator src = new EncapsulatorIterator(r.roots), dst = new EncapsulatorIterator(roots); src.hasNext() && dst.hasNext(); src.next(), dst.next())
+			if (iz.generic(src.value()) && iz.generic(dst.value()))
+				putReplacingRulesRecursively(az.generic(src.value()), az.generic(dst.value()));
     }
 
     /**
@@ -57,30 +55,25 @@ public class Replacer {
         List<PsiElement> elements = getReplacingForest(roots, m, r);
         PsiElement prev = treeToReplace.getPrevSibling();
         PsiElement last = treeToReplace;
-        for (int i = 1; i < numberOfRoots; i++) {
-            last = Utils.getNextActualSibling(last);
-        }
+        for (int i = 1; i < numberOfRoots; ++i)
+			last = Utils.getNextActualSibling(last);
         PsiElement parent = treeToReplace.getParent();
         if (iz.declarationStatement(parent))
             return;
-        if (prev == null) {
-            prev = parent.getFirstChild();
-            for (PsiElement element : elements) {
-                r.addBefore(parent, prev, element);
-            }
-        } else {
-            for (PsiElement element : elements) {
-                r.addAfter(parent, prev, element);
-                prev = treeToReplace.getPrevSibling();
-            }
-        }
+        if (prev != null)
+			for (PsiElement element : elements) {
+				r.addAfter(parent, prev, element);
+				prev = treeToReplace.getPrevSibling();
+			}
+		else {
+			prev = parent.getFirstChild();
+			for (PsiElement element : elements)
+				r.addBefore(parent, prev, element);
+		}
         if (iz.methodCallExpression(parent.getParent()))
             treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
-        if (parent.getChildren().length <= 1)
-            return;
-        //if (iz.whiteSpace(last.getNextSibling()))
-        //    last = last.getNextSibling();
-        r.deleteByRange(parent, treeToReplace, last);
+        if (parent.getChildren().length > 1)
+			r.deleteByRange(parent, treeToReplace, last);
     }
 
     /**
@@ -91,8 +84,7 @@ public class Replacer {
      * @return the element that replaced the template
      */
     public PsiElement replaceSingleRoot(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        PsiElement element = getReplacingForest(roots, m, r).get(0);
-        return r.replace(treeToReplace, element);
+        return r.replace(treeToReplace, getReplacingForest(roots, m, r).get(0));
     }
 
     /**
@@ -103,10 +95,9 @@ public class Replacer {
     private List<PsiElement> getReplacingForest(List<Encapsulator> rootsCopy, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         List<PsiElement> elements = new LinkedList<>();
         rootsCopy.forEach(rootCopy -> {
-            if (rootCopy.isGeneric()) {
-                GenericEncapsulator ge = az.generic(rootCopy);
-                elements.addAll(ge.replaceByRange(m.get(az.generic(rootCopy).getId()), m, r)); //TODO
-            } else {
+            if (rootCopy.isGeneric())
+				elements.addAll(az.generic(rootCopy).replaceByRange(m.get(az.generic(rootCopy).getId()), m, r));
+			else {
                 rootCopy.accept(e -> {
                     if (!e.isGeneric()) return;
                     GenericEncapsulator ge = az.generic(e);

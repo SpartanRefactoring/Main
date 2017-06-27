@@ -33,11 +33,7 @@ public class AssignmentAndReturn implements LeonidasTipperDefinition {
 
     @Override
     public void replacer() {
-        new Template(() -> {
-            /* start */
-            return identifier1 = expression(1);
-            /* end */
-        });
+        new Template(() -> identifier1 = expression(1));
     }
 
 

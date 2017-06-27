@@ -63,15 +63,15 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
         return "DefaultsTo";
     }
 
-    private boolean eqOperator(PsiConditionalExpression x) {
-        return iz.equalsOperator(step.operator(az.binaryExpression(step.conditionExpression(x))));
+    private boolean eqOperator(PsiConditionalExpression ¢) {
+        return iz.equalsOperator(step.operator(az.binaryExpression(step.conditionExpression(¢))));
     }
 
     @Override
 	@SuppressWarnings("ConstantConditions")
-	public PsiElement createReplacement(PsiConditionalExpression x) {
-		return JavaPsiFacade.getElementFactory(x.getProject()).createExpressionFromText("defaults(" + (eqOperator(x) ? x.getElseExpression() : x.getThenExpression()).getText() + ").to("
-				+ (eqOperator(x) ? x.getThenExpression() : x.getElseExpression()).getText() + ")", x);
+	public PsiElement createReplacement(PsiConditionalExpression ¢) {
+		return JavaPsiFacade.getElementFactory(¢.getProject()).createExpressionFromText("defaults(" + (eqOperator(¢) ? ¢.getElseExpression() : ¢.getThenExpression()).getText() + ").to("
+				+ (eqOperator(¢) ? ¢.getThenExpression() : ¢.getElseExpression()).getText() + ")", ¢);
 	}
 
     @Override

@@ -34,13 +34,13 @@ public class Type extends NamedElement {
     }
 
     @Override
-    protected String getName(PsiElement e) {
-        return iz.type(e) ? az.type(e).getText() : null;
+    protected String getName(PsiElement ¢) {
+        return !iz.type(¢) ? null : az.type(¢).getText();
     }
 
     @Override
-    public boolean conforms(PsiElement e) {
-        return iz.type(e) && super.conforms(e);
+    public boolean conforms(PsiElement ¢) {
+        return iz.type(¢) && super.conforms(¢);
     }
 
     @Override
@@ -55,13 +55,13 @@ public class Type extends NamedElement {
 
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (iz.classDeclaration(elements.get(0))) { // Notice the element that type will be replaced by is assign to PsiClass, so we need to extract its name.
-            PsiClass c = az.classDeclaration(elements.get(0));
-            PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c);
-            inner = pte;
-            return Utils.wrapWithList(pte);
-        }
-        return super.replaceByRange(elements, m, r);
+        if (!iz.classDeclaration(elements.get(0)))
+			return super.replaceByRange(elements, m, r);
+		PsiClass c = az.classDeclaration(elements.get(0));
+		PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(),
+				c);
+		inner = pte;
+		return Utils.wrapWithList(pte);
     }
 }
 

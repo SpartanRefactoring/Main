@@ -49,13 +49,9 @@ public class BooleanLiteralTest extends PsiTypeHelper {
     public void testTipper() throws Exception {
         File f = new File(Resources.getResource("BooleanLiteralTestTip.java").getPath());
         LeonidasTipper lt = new LeonidasTipper("BooleanLiteralTestTip.java", IOUtils.toString(new BufferedReader(new InputStreamReader(new FileInputStream(f)))));
-        PsiWhileStatement pws1 = createTestWhileStatementFromString("while (true) {\nx++;\n}");
-        assertTrue(lt.canTip(pws1));
-        PsiWhileStatement pws2 = createTestWhileStatementFromString("while (false) {\nx++;\n}");
-        assertTrue(lt.canTip(pws2));
-        PsiWhileStatement pws3 = createTestWhileStatementFromString("while (x > 2) {\nx++;\n}");
-        assertFalse(lt.canTip(pws3));
-        PsiWhileStatement pws4 = createTestWhileStatementFromString("while (true) {\nx++; x--;\n}");
-        assertFalse(lt.canTip(pws4));
+        assert lt.canTip(createTestWhileStatementFromString("while (true) {\nx++;\n}"));
+        assert lt.canTip(createTestWhileStatementFromString("while (false) {\nx++;\n}"));
+        assert !lt.canTip(createTestWhileStatementFromString("while (x > 2) {\nx++;\n}"));
+        assert !lt.canTip(createTestWhileStatementFromString("while (true) {\nx++; x--;\n}"));
     }
 }

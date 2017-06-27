@@ -28,12 +28,8 @@ public class IfEmptyThen implements LeonidasTipperDefinition {
     @Override
     public void matcher() {
         new Template(() -> {
-            /* start */
-            if (booleanExpression(0))
-                ;
-            else
-                statement(1);
-            /* end */
+            if (!booleanExpression(0))
+				statement(1);
         });
     }
 

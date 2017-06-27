@@ -15,9 +15,9 @@ public enum haz {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitIdentifier(PsiIdentifier i) {
-                super.visitIdentifier(i);
-                if (i.getText().contains("¢"))
+            public void visitIdentifier(PsiIdentifier ¢) {
+                super.visitIdentifier(¢);
+                if (¢.getText().contains("¢"))
 					b.set(true);
             }
         });
@@ -29,33 +29,33 @@ public enum haz {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethod(PsiMethod m) {
-                super.visitMethod(m);
-                b.inner = !m.getName().equals(name) ? b.inner : Boolean.TRUE;
+            public void visitMethod(PsiMethod ¢) {
+                super.visitMethod(¢);
+                b.inner = !¢.getName().equals(name) ? b.inner : Boolean.TRUE;
             }
         });
         assert b.inner != null;
         return b.inner;
     }
 
-    public static boolean equalsOperator(PsiBinaryExpression x) {
-        return x != null && iz.equalsOperator(step.operator(x));
+    public static boolean equalsOperator(PsiBinaryExpression ¢) {
+        return ¢ != null && iz.equalsOperator(step.operator(¢));
     }
 
-    public static boolean notEqualsOperator(PsiBinaryExpression x) {
-        return x != null && step.operator(x).equals(JavaTokenType.NE);
+    public static boolean notEqualsOperator(PsiBinaryExpression ¢) {
+        return ¢ != null && step.operator(¢).equals(JavaTokenType.NE);
     }
 
-    public static boolean compilationErrors(PsiFile f){
-        return haz.syntaxErrors(f) || CompilationCenter.hasCompilationErrors(f);
+    public static boolean compilationErrors(PsiFile ¢){
+        return haz.syntaxErrors(¢) || CompilationCenter.hasCompilationErrors(¢);
     }
 
-    public static boolean syntaxErrors(PsiElement e) {
-        return (PsiTreeUtil.hasErrorElements(e));
+    public static boolean syntaxErrors(PsiElement ¢) {
+        return (PsiTreeUtil.hasErrorElements(¢));
     }
 
-    public static boolean body(PsiMethod m){
-        return m != null && m.getBody() != null;
+    public static boolean body(PsiMethod ¢){
+        return ¢ != null && ¢.getBody() != null;
     }
 
     public static boolean publicModifier(PsiModifierListOwner mlo){

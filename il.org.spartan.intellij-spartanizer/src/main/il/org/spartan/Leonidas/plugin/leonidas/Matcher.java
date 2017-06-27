@@ -28,10 +28,6 @@ public class Matcher {
     private final Map<Integer, List<StructuralConstraint>> constrains = new HashMap<>();
     private List<Encapsulator> roots;
 
-    Matcher() {
-        roots = null;
-    }
-
     public Matcher(List<Encapsulator> r, Map<Integer, List<Constraint>> map) {
         roots = r;
         buildMatcherTree(this, map);
@@ -60,21 +56,23 @@ public class Matcher {
         if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return m.setMatches();
         if (bgNeedle.hasNext() != bgCursor.hasNext()) return  m.setNotMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
-        if (iz.quantifier(bgNeedle.value())) {
-            int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
-            for (int i = 0; i <= n; i++) {
-                m.setMatches();
-                varNeedle = bgNeedle.clone();
-                varCursor = bgCursor.clone();
-                varNeedle.setNumberOfOccurrences(i);
-                MatchingResult mq = matchQuantifier(varNeedle, varCursor, m);
-                if (mq.notMatches()) continue;
-                MatchingResult sr = matchingRecursion(varNeedle, varCursor, m);
-                if (sr.notMatches()) continue;
-                return m.combineWith(mq).combineWith(sr);
-            }
-        }
-        return m.setNotMatches();
+        if (!iz.quantifier(bgNeedle.value()))
+			return m.setNotMatches();
+		int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
+		for (int i = 0; i <= n; ++i) {
+			m.setMatches();
+			varNeedle = bgNeedle.clone();
+			varCursor = bgCursor.clone();
+			varNeedle.setNumberOfOccurrences(i);
+			MatchingResult mq = matchQuantifier(varNeedle, varCursor, m);
+			if (mq.notMatches())
+				continue;
+			MatchingResult sr = matchingRecursion(varNeedle, varCursor, m);
+			if (!sr.notMatches())
+				return m.combineWith(mq).combineWith(sr);
+			continue;
+		}
+		return m.setNotMatches();
     }
 
     /**
@@ -91,12 +89,11 @@ public class Matcher {
                 return m.setNotMatches();
             m.combineWith(ic);
             if (needle.value().isGeneric()) {
-                if (m.getMap().containsKey(az.generic(needle.value()).getId())) {
-                    if (m.getMap().get(az.generic(needle.value()).getId()).stream().noneMatch(e -> e.getText().equals(cursor.value().getText()))) {
-                        return m.setNotMatches();
-                    }
-                } else
-                    m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+                if (!m.getMap().containsKey(az.generic(needle.value()).getId()))
+					m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+				else if (m.getMap().get(az.generic(needle.value()).getId()).stream()
+						.noneMatch(λ -> λ.getText().equals(cursor.value().getText())))
+					return m.setNotMatches();
                 cursor.matchedWithGeneric();
             }
         }
@@ -118,11 +115,10 @@ public class Matcher {
             needle.next();
             return m.setMatches();
         }
-        for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
+        for (int i = 0; i < n; needle.next(), cursor.next(), ++i) {
             MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
-            if (ic.notMatches() || (needle.hasNext() ^ cursor.hasNext())) {
-                return m.setNotMatches();
-            }
+            if (ic.notMatches() || (cursor.hasNext() ^ needle.hasNext()))
+				return m.setNotMatches();
             m.combineWith(ic);
             if (needle.value().isGeneric()) {
                 m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
@@ -145,7 +141,7 @@ public class Matcher {
                         matcher.addConstraint(i, (StructuralConstraint) j);
                     else {
                         NonStructuralConstraint nsc = (NonStructuralConstraint) j;
-                        Encapsulator ie = iz.quantifier(e) ? az.quantifier(e).getInternal() : e;
+                        Encapsulator ie = !iz.quantifier(e) ? e : az.quantifier(e).getInternal();
                         try {
                             Utils.getDeclaredMethod(ie.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, nsc.objects);
                         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
@@ -156,8 +152,8 @@ public class Matcher {
         matcher.getConstraintsMatchers().forEach(im -> buildMatcherTree(im, map));
     }
 
-    private void setRoots(List<Encapsulator> n) {
-        roots = n;
+    private void setRoots(List<Encapsulator> ¢) {
+        roots = ¢;
     }
 
     /**
@@ -192,7 +188,7 @@ public class Matcher {
         MatchingResult mr = new MatchingResult(false);
         List<Encapsulator> potentialRoots = new ArrayList<>();
         PsiElement ce = treeToMatch;
-        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++){
+        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); ++i){
             MatchingResult m = new MatchingResult(true);
             potentialRoots.add(Encapsulator.buildTreeFromPsi(ce));
             ce = Utils.getNextActualSibling(ce);
@@ -210,17 +206,17 @@ public class Matcher {
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
                 .allMatch(id -> {
-                    Boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
+                    boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
                             info.get(id).stream()
-                                    .peek(x->{}) // Do not remove, magic happen here :(
+                                    .peek(λ->{}) // Do not remove, magic happen here :(
                                     .allMatch(
                                             c::match
                                     )
                     );
 
-                    Boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
-                            info.get(id).stream().allMatch(e ->
-                                    c.accept(new Encapsulator(e), mr.getMap())
+                    boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
+                            info.get(id).stream().allMatch(λ ->
+                                    c.accept(new Encapsulator(λ), mr.getMap())
                             )
                     );
                     return b1 && b2;
@@ -241,10 +237,10 @@ public class Matcher {
      */
     private Map<Integer, GenericEncapsulator> getGenericElements() {
         final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
-        roots.forEach(root -> root.accept(e -> {
-            if (e.isGeneric()) {
-                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
-                tmp.putAll(az.generic(e).getGenericElements());
+        roots.forEach(root -> root.accept(λ -> {
+            if (λ.isGeneric()) {
+                tmp.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
+                tmp.putAll(az.generic(λ).getGenericElements());
             }
         }));
         return tmp;
@@ -255,10 +251,9 @@ public class Matcher {
      */
     private Map<Integer, GenericEncapsulator> getGenericElementsWithNoFields() {
         final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
-        roots.forEach(root -> root.accept(e -> {
-            if (e.isGeneric()) {
-                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
-            }
+        roots.forEach(root -> root.accept(λ -> {
+            if (λ.isGeneric())
+				tmp.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
         }));
         return tmp;
     }
@@ -267,19 +262,17 @@ public class Matcher {
         return roots;
     }
 
-    public static abstract class Constraint {
-        protected final ConstraintType type;
+    public abstract static class Constraint {
+		protected final ConstraintType type;
 
-        Constraint(ConstraintType t) {
-            type = t;
-        }
+		Constraint(ConstraintType t) {
+			type = t;
+		}
 
-        public enum ConstraintType {
-            IS,
-            ISNOT,
-            SPECIFIC,
-        }
-    }
+		public enum ConstraintType {
+			IS, ISNOT, SPECIFIC
+		}
+	}
 
     /**
      * Represents a constraint on a generalized variable of the leonidas language.
@@ -302,11 +295,11 @@ public class Matcher {
         }
 
         /**
-         * @param e the users tree to match.
+         * @param ¢ the users tree to match.
          * @return indication of e being matched recursively to the matcher, when taking in consideration the type of the constraint.
          */
-        boolean match(PsiElement e) {
-            return (type == ConstraintType.IS && matcher.match(e)) || (type == ConstraintType.ISNOT && !matcher.match(e));
+        boolean match(PsiElement ¢) {
+            return (type == ConstraintType.IS && matcher.match(¢)) || (type == ConstraintType.ISNOT && !matcher.match(¢));
         }
     }
 
@@ -321,8 +314,8 @@ public class Matcher {
             objects = o;
         }
 
-        public void setElement(Encapsulator e) {
-            element = e;
+        public void setElement(Encapsulator ¢) {
+            element = ¢;
         }
     }
 }

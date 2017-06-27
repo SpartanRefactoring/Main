@@ -9,8 +9,6 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.MethodInvocationToStringT
 public class MethodInvocationToStringToEmptyStringAdditionTest extends PsiTypeHelper {
 
     public void testTipperTest(){
-        MethodInvocationToStringToEmptyStringAddition idn = new MethodInvocationToStringToEmptyStringAddition();
-        TipperTest ts = new TipperTest(idn,this,true,false);
-        ts.check();
+        new TipperTest(new MethodInvocationToStringToEmptyStringAddition(), this, true, false).check();
     }
 }

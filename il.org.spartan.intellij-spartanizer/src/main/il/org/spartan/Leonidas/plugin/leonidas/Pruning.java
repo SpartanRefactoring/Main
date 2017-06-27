@@ -27,11 +27,11 @@ public class Pruning {
         n.accept(e1 -> Toolbox.getInstance().getGenericsBasicBlocks().stream()
                 .filter(ge -> ge.conforms(e1.getInner()))
                 .findFirst()
-                .ifPresent(g -> {
-                    if (g.getConcreteParent(e1, map) == n)
-                        o.set(g.prune(e1, map));
-                    else
-                        g.prune(e1, map);
+                .ifPresent(λ -> {
+                    if (λ.getConcreteParent(e1, map) != n)
+						λ.prune(e1, map);
+					else
+						o.set(λ.prune(e1, map));
                 }));
         return o.get();
     }

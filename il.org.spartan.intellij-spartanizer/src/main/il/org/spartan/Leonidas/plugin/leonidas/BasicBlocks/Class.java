@@ -37,13 +37,13 @@ public class Class extends NamedElement{
     }
 
     @Override
-    protected String getName(PsiElement e) {
-        return iz.classDeclaration(e) ? az.classDeclaration(e).getName() : null;
+    protected String getName(PsiElement ¢) {
+        return !iz.classDeclaration(¢) ? null : az.classDeclaration(¢).getName();
     }
 
     @Override
-    public boolean conforms(PsiElement e) {
-        return iz.classDeclaration(e) && super.conforms(e);
+    public boolean conforms(PsiElement ¢) {
+        return iz.classDeclaration(¢) && super.conforms(¢);
     }
 
     @Override
@@ -54,11 +54,11 @@ public class Class extends NamedElement{
     @Override
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         Class c = new Class(e);
-        c.fields = Arrays.stream(az.classDeclaration(e.getInner()).getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
-        c.methods = Arrays.stream(az.classDeclaration(e.getInner()).getMethods()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
-        c.innerClasses = Arrays.stream(az.classDeclaration(e.getInner()).getInnerClasses()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), map)).collect(Collectors.toList());
-        c.fieldsMatchers = c.fields.stream().map(f -> new Matcher(Utils.wrapWithList(f), map)).collect(Collectors.toList());
-        c.methodsMatchers = c.methods.stream().map(m -> new Matcher(Utils.wrapWithList(m), map)).collect(Collectors.toList());
+        c.fields = Arrays.stream(az.classDeclaration(e.getInner()).getFields()).map(λ -> Pruning.prune(Encapsulator.buildTreeFromPsi(λ), map)).collect(Collectors.toList());
+        c.methods = Arrays.stream(az.classDeclaration(e.getInner()).getMethods()).map(λ -> Pruning.prune(Encapsulator.buildTreeFromPsi(λ), map)).collect(Collectors.toList());
+        c.innerClasses = Arrays.stream(az.classDeclaration(e.getInner()).getInnerClasses()).map(λ -> Pruning.prune(Encapsulator.buildTreeFromPsi(λ), map)).collect(Collectors.toList());
+        c.fieldsMatchers = c.fields.stream().map(λ -> new Matcher(Utils.wrapWithList(λ), map)).collect(Collectors.toList());
+        c.methodsMatchers = c.methods.stream().map(λ -> new Matcher(Utils.wrapWithList(λ), map)).collect(Collectors.toList());
         c.innerClassesMatchers = c.innerClasses.stream().map(ic -> new Matcher(Utils.wrapWithList(ic), map)).collect(Collectors.toList());
         return c;
     }
@@ -82,14 +82,13 @@ public class Class extends NamedElement{
      * @return A matching result for matching the elements of the user with the templates, regardless of order.
      */
     private MatchingResult matchInnerElements(PsiElement[] innerElements, List<Matcher> matchers){
-        if (matchers.size() == 0) return new MatchingResult(true);
+        if (matchers.isEmpty()) return new MatchingResult(true);
         List<List<MatchingResult>> l = matchers.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
         MatchingResult[] ass = new MatchingResult[matchers.size()];
-        if (!matchInnerElementAux(l, matchers.size() - 1, new LinkedList<>(), ass)){
-            return new MatchingResult(false);
-        }
+        if (!matchInnerElementAux(l, matchers.size() - 1, new LinkedList<>(), ass))
+			return new MatchingResult(false);
         MatchingResult mr = new MatchingResult(true);
-        Arrays.stream(ass).forEach(a -> mr.combineWith(a));
+        Arrays.stream(ass).forEach(λ -> mr.combineWith(λ));
         return mr;
     }
 
@@ -111,9 +110,9 @@ public class Class extends NamedElement{
         PsiClass psiClass = az.classDeclaration(elements.get(0));
         PsiClass innerAsClass = az.classDeclaration(inner);
         innerAsClass.setName(psiClass.getName());
-        List<Encapsulator> methods = Arrays.stream(innerAsClass.getMethods()).map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList());
-        List<Encapsulator> fields = Arrays.stream(innerAsClass.getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), null)).collect(Collectors.toList());
-        List<Encapsulator> innerClasses = Arrays.stream(innerAsClass.getInnerClasses()).map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList());
+        List<Encapsulator> methods = Arrays.stream(innerAsClass.getMethods()).map(λ -> Pruning.prune(Encapsulator.buildTreeFromPsi(λ), null)).collect(Collectors.toList());
+        List<Encapsulator> fields = Arrays.stream(innerAsClass.getFields()).map(λ -> Pruning.prune(Encapsulator.buildTreeFromPsi(λ), null)).collect(Collectors.toList());
+        List<Encapsulator> innerClasses = Arrays.stream(innerAsClass.getInnerClasses()).map(λ -> Pruning.prune(Encapsulator.buildTreeFromPsi(λ), null)).collect(Collectors.toList());
         List<Encapsulator> prunedChildren = new LinkedList<>();
         prunedChildren.addAll(methods);
         prunedChildren.addAll(fields);

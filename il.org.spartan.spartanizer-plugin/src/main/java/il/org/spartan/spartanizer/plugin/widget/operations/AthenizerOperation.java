@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
-import org.eclipse.ui.*;
 
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.plugin.widget.*;

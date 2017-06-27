@@ -28,13 +28,13 @@ public class BaseType extends NamedElement {
         super(TEMPLATE);
     }
     @Override
-    protected String getName(PsiElement e) {
-        return az.javaCodeReference(e).getQualifiedName();
+    protected String getName(PsiElement ¢) {
+        return az.javaCodeReference(¢).getQualifiedName();
     }
 
     @Override
-    public boolean conforms(PsiElement e) {
-        return iz.javaCodeReference(e) && super.conforms(e);
+    public boolean conforms(PsiElement ¢) {
+        return iz.javaCodeReference(¢) && super.conforms(¢);
     }
 
     @Override

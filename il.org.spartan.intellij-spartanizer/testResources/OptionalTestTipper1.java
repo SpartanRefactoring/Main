@@ -29,9 +29,9 @@ public class OptionalTestTipper1 implements LeonidasTipperDefinition {
             int x;
             /** start */
             while (booleanExpression(0)){
-                x++;
+                ++x;
                 optional(statement(1));
-                x--;
+                --x;
             }
             /** end */
         });
@@ -41,10 +41,8 @@ public class OptionalTestTipper1 implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /** start */
-            while (booleanExpression(0)) {
-                optional(statement(1));
-            }
-            /** end */
+            while (booleanExpression(0))
+				optional(statement(1));
         });
     }
 }

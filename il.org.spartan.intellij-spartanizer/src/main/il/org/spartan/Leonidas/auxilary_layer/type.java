@@ -18,14 +18,14 @@ public class type {
             }
 
             @Override
-            public void visitCallExpression(PsiCallExpression x) {
-                super.visitCallExpression(x);
+            public void visitCallExpression(PsiCallExpression ¢) {
+                super.visitCallExpression(¢);
                 myClass.set(PsiCallExpression.class);
             }
 
             @Override
-            public void visitMethodReferenceExpression(PsiMethodReferenceExpression x) {
-                super.visitMethodReferenceExpression(x);
+            public void visitMethodReferenceExpression(PsiMethodReferenceExpression ¢) {
+                super.visitMethodReferenceExpression(¢);
                 myClass.set(PsiMethodReferenceExpression.class);
             }
 
@@ -48,8 +48,8 @@ public class type {
             }
 
             @Override
-            public void visitForeachStatement(PsiForeachStatement s) {
-                super.visitForeachStatement(s);
+            public void visitForeachStatement(PsiForeachStatement ¢) {
+                super.visitForeachStatement(¢);
                 myClass.set(PsiForeachStatement.class);
             }
 
@@ -72,32 +72,32 @@ public class type {
             }
 
             @Override
-            public void visitIfStatement(PsiIfStatement s) {
-                super.visitIfStatement(s);
+            public void visitIfStatement(PsiIfStatement ¢) {
+                super.visitIfStatement(¢);
                 myClass.set(PsiIfStatement.class);
             }
 
             @Override
-            public void visitWhileStatement(PsiWhileStatement s) {
-                super.visitWhileStatement(s);
+            public void visitWhileStatement(PsiWhileStatement ¢) {
+                super.visitWhileStatement(¢);
                 myClass.set(PsiWhileStatement.class);
             }
 
             @Override
-            public void visitPrefixExpression(PsiPrefixExpression expression) {
-                super.visitPrefixExpression(expression);
+            public void visitPrefixExpression(PsiPrefixExpression ¢) {
+                super.visitPrefixExpression(¢);
                 myClass.set(PsiPrefixExpression.class);
             }
 
             @Override
-            public void visitDeclarationStatement(PsiDeclarationStatement statement) {
-                super.visitDeclarationStatement(statement);
+            public void visitDeclarationStatement(PsiDeclarationStatement ¢) {
+                super.visitDeclarationStatement(¢);
                 myClass.set(PsiDeclarationStatement.class);
             }
 
             @Override
-            public void visitForStatement(PsiForStatement statement) {
-                super.visitForStatement(statement);
+            public void visitForStatement(PsiForStatement ¢) {
+                super.visitForStatement(¢);
                 myClass.set(PsiForStatement.class);
             }
         });

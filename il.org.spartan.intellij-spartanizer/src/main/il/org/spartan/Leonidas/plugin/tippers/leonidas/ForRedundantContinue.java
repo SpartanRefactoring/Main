@@ -40,10 +40,8 @@ public class ForRedundantContinue implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /* start */
-            for (statement(0); booleanExpression(1); statement(2)) {
-                anyNumberOf(statement(3));
-            }
-            /* end */
+            for (statement(0); booleanExpression(1); statement(2))
+				anyNumberOf(statement(3));
         });
     }
 

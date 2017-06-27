@@ -16,14 +16,7 @@ public class EliminateTryBodyEmptyNoCatchesNoFinally implements LeonidasTipperDe
 
     @Override
     public void matcher() {
-        new Template(() -> {
-            /* start */
-            try {
-                anyNumberOf(statement(0));
-            } finally {
-            }
-            /* end */
-        });
+        new Template(() -> anyNumberOf(statement(0)));
     }
 
     @Override

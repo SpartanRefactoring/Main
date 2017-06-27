@@ -11,8 +11,8 @@ import java.util.HashMap;
  * @since 20.5.17
  */
 public class UnionTest extends PsiTypeHelper {
-    protected PsiMethodCallExpression methodCallExpression(String s) {
-        return (PsiMethodCallExpression) createTestExpression(s);
+    protected PsiMethodCallExpression methodCallExpression(String ¢) {
+        return (PsiMethodCallExpression) createTestExpression(¢);
     }
 
     public void testUnionOfStatement() {
@@ -23,19 +23,28 @@ public class UnionTest extends PsiTypeHelper {
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x++;")), new HashMap<>()).matches();
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("System.out.println();")), new HashMap<>()).matches();
 
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x++")), new HashMap<>()).matches());
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("1 + 2")), new HashMap<>()).matches());
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestClassFromString("class XX {}")), new HashMap<>()).matches());
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("public void a()")), new HashMap<>()).matches());
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x++")), new HashMap<>())
+				.matches();
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("1 + 2")), new HashMap<>())
+				.matches();
+        assert !union
+				.generalizes(Encapsulator.buildTreeFromPsi(createTestClassFromString("class XX {}")), new HashMap<>())
+				.matches();
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("public void a()")),
+				new HashMap<>()).matches();
     }
 
     public void testUnionOfStatementAndMethod() {
         PsiElement element = methodCallExpression("union(0, statement(1), method(2))");
         Union union = new Union(element);
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;")), new HashMap<>()).matches();
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x++")), new HashMap<>()).matches());
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("1 + 2")), new HashMap<>()).matches());
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestClassFromString("class XX {}")), new HashMap<>()).matches());
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x++")), new HashMap<>())
+				.matches();
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("1 + 2")), new HashMap<>())
+				.matches();
+        assert !union
+				.generalizes(Encapsulator.buildTreeFromPsi(createTestClassFromString("class XX {}")), new HashMap<>())
+				.matches();
     }
 
     public void testUnionOfStatementAndBooleanLiteral() {
@@ -47,8 +56,9 @@ public class UnionTest extends PsiTypeHelper {
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x, y;")), new HashMap<>()).matches();
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("someMethod();")), new HashMap<>()).matches();
 
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("3")), new HashMap<>()).matches());
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("41.4")), new HashMap<>()).matches());
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("3")), new HashMap<>()).matches();
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("41.4")), new HashMap<>())
+				.matches();
     }
 
     public void testMultipleUnionsOfSameThingWorkAsExpected() {
@@ -60,7 +70,8 @@ public class UnionTest extends PsiTypeHelper {
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x, y;")), new HashMap<>()).matches();
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("someMethod();")), new HashMap<>()).matches();
 
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("3")), new HashMap<>()).matches());
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("41.4")), new HashMap<>()).matches());
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("3")), new HashMap<>()).matches();
+        assert !union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("41.4")), new HashMap<>())
+				.matches();
     }
 }

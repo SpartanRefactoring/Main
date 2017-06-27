@@ -42,26 +42,23 @@ public class PsiFileCenter {
     }
 
     public PsiFileWrapper createFileFromString(String s) {
-        if (s == null) {
-            return null;
-        }
+        if (s == null)
+			return null;
         List<CodeType> codeTypesByGenerality = Arrays.asList(CodeType.FILE_BOUND, CodeType.CLASS_BOUND, CodeType.METHOD_BOUND, CodeType.EXPRESSION, CodeType.ENUM_BOUND);
         PsiFile file;
         for (CodeType type : codeTypesByGenerality) {
-            String currText = wrappingPrefixes.get(type) + marker + "\n\n" + s + "\n\n" + marker + wrappingPostfixes.get(type);
             file = PsiFileFactory.getInstance(Utils.getProject())
-                    .createFileFromText(JavaLanguage.INSTANCE, currText);
+                    .createFileFromText(JavaLanguage.INSTANCE, wrappingPrefixes.get(type) + marker + "\n\n" + s + "\n\n" + marker + wrappingPostfixes.get(type));
             Wrapper<Boolean> isValid = new Wrapper(true);
             file.accept(new JavaRecursiveElementVisitor() {
                 @Override
-                public void visitErrorElement(PsiErrorElement element) {
+                public void visitErrorElement(PsiErrorElement ¢) {
                     isValid.set(false);
-                    super.visitErrorElement(element);
+                    super.visitErrorElement(¢);
                 }
             });
-            if (isValid.get()) {
-                return new PsiFileWrapper(file, type);
-            }
+            if (isValid.get())
+				return new PsiFileWrapper(file, type);
         }
 
         return new PsiFileWrapper(null, CodeType.ILLEGAL);
@@ -94,36 +91,14 @@ public class PsiFileCenter {
         }
 
         public String extractCanonicalSubtreeString() {
-            String raw = extractRelevantSubtreeString();
-            raw = raw.replaceAll("\t", " ");
-            raw = raw.trim().replaceAll(" +", " ");
-            raw = raw.replaceAll(" ,", ",");
-            raw = raw.replaceAll(", ", ",");
-            raw = raw.replaceAll(";;", "; ;");
-            raw = raw.replaceAll("\n+", "\n");
-            raw = raw.replaceAll("\n ", "\n");
-            raw = raw.replaceAll(" \n", "\n");
-            raw = raw.replaceAll("if \\(", "if(");
-            raw = raw.replaceAll("for \\(", "for(");
-            raw = raw.replaceAll("while \\(", "while(");
-            raw = raw.replaceAll("switch \\(", "switch(");
-            raw = raw.replaceAll("\\) \\{", "){");
-            raw = raw.replaceAll(" =", "=");
-            raw = raw.replaceAll("= ", "=");
-            raw = raw.replaceAll("! ", "!");
-            raw = raw.replaceAll(" !", "!"); //takes care of many versions
-            raw = raw.replaceAll(" >", ">");
-            raw = raw.replaceAll("> ", ">");
-            raw = raw.replaceAll(" <", "<");
-            raw = raw.replaceAll("< ", "<");
-            raw = raw.replaceAll("\\+ ", "+");
-            raw = raw.replaceAll(" \\+", "+");
-            raw = raw.replaceAll("- ", "-");
-            raw = raw.replaceAll(" -", "-");
-            raw = raw.replaceAll(" /", "/");
-            raw = raw.replaceAll("/ ", "/");
-            raw = raw.replaceAll(" \\*", "*");
-            raw = raw.replaceAll("\\* ", "*");
+            String raw = extractRelevantSubtreeString().replaceAll("\t", " ").trim().replaceAll(" +", " ").replaceAll(" ,", ",")
+					.replaceAll(", ", ",").replaceAll(";;", "; ;").replaceAll("\n+", "\n").replaceAll("\n ", "\n")
+					.replaceAll(" \n", "\n").replaceAll("if \\(", "if(").replaceAll("for \\(", "for(")
+					.replaceAll("while \\(", "while(").replaceAll("switch \\(", "switch(").replaceAll("\\) \\{", "){")
+					.replaceAll(" =", "=").replaceAll("= ", "=").replaceAll("! ", "!").replaceAll(" !", "!")
+					.replaceAll(" >", ">").replaceAll("> ", ">").replaceAll(" <", "<").replaceAll("< ", "<")
+					.replaceAll("\\+ ", "+").replaceAll(" \\+", "+").replaceAll("- ", "-").replaceAll(" -", "-")
+					.replaceAll(" /", "/").replaceAll("/ ", "/").replaceAll(" \\*", "*").replaceAll("\\* ", "*");
             return raw;
         }
 

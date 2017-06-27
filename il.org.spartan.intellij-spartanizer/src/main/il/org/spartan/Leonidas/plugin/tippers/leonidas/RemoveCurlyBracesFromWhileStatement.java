@@ -31,10 +31,8 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
     public void matcher() {
         new Template(() -> {
             /* start */
-            while (booleanExpression(0)) {
-                statement(1);
-            }
-            /* end */
+            while (booleanExpression(0))
+				statement(1);
         });
     }
 

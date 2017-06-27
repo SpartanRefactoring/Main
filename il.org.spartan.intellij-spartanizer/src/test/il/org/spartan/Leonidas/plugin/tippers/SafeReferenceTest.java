@@ -11,9 +11,7 @@ public class SafeReferenceTest extends PsiTypeHelper {
 
     @Test
     public void testSafeReference(){
-        SafeReference idn = new SafeReference();
-        TipperTest ts = new TipperTest(idn,this,false,false);
-        ts.check();
+        new TipperTest(new SafeReference(), this, false, false).check();
     }
 
 }

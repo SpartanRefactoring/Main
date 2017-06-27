@@ -46,7 +46,7 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     @Override
     public Integer extractId(PsiElement e) {
         PsiElement ie = step.firstParameterExpression(az.methodCallExpression(e));
-        return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
+        return Toolbox.getInstance().getGeneric(ie).map(λ -> λ.extractId(ie)).orElse(null);
     }
 
     @Override
@@ -55,16 +55,15 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
         QuantifierMethodCallBased o = create(e, map);
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
-        if (o.isGeneric()) {
-            o.putId(o.extractId(e.getInner()));
-            o.extractAndAssignDescription(e.getInner());
-        }
-        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+        if (!o.isGeneric())
+			return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+		o.putId(o.extractId(e.getInner()));
+		o.extractAndAssignDescription(e.getInner());
+		return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
     public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {
-        QuantifierMethodCallBased q = create(n, map);
-        return q.getConcreteParent(n);
+        return create(n, map).getConcreteParent(n);
     }
 
     @PreservesIterator
@@ -79,11 +78,10 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         if (!iz.generic(internal)) return super.replaceByRange(elements, m ,r);
-        GenericEncapsulator ge = az.generic(internal);
-        elements = ge.applyReplacingRules(elements, m);
+        elements = az.generic(internal).applyReplacingRules(elements, m);
         if (parent == null) return elements;
         List<PsiElement> l = Lists.reverse(elements);
-        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+        l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
         r.deleteByRange(inner.getParent(), inner, inner);
         return elements;
     }

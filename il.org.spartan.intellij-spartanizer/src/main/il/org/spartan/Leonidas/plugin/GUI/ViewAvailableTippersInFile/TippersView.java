@@ -21,11 +21,12 @@ public class TippersView extends JFrame{
     private JList list;
 
     private TippersList cl;
-    private static boolean active = false;
+    private static boolean active;
 
     public TippersView(PsiFile pf){
         super("Available Tippers In Current File");
-        if(active){return;}
+        if(active)
+			return;
         active = true;
         LeonidasIcon.apply(this);
 
@@ -33,18 +34,16 @@ public class TippersView extends JFrame{
         Toolbox toolbox = Toolbox.getInstance();
         pf.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                tippers.addAll(toolbox.getAvailableTipsInfo(e));
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
+                tippers.addAll(toolbox.getAvailableTipsInfo(¢));
             }
         });
 
         setContentPane(mainPanel);
         cl = new TippersList(this);
-        for(String tip : tippers){
-            cl.addTipper(new JLabel(tip));
-        }
-        //list.add("here",new JLabel("x"));
+        for(String tip : tippers)
+		 cl.addTipper(new JLabel(tip));
 
         this.addWindowListener(new WindowAdapter()
         {

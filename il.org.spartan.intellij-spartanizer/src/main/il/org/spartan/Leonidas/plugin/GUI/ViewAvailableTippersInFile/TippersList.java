@@ -30,23 +30,21 @@ class TippersList extends JList {
         addMouseListener(new MouseAdapter() {
                              public void mouseClicked(MouseEvent e) {
                                  int index = locationToIndex(e.getPoint());
-                                 if (e.getClickCount() == 2) {
-                                     // double click
-                                     JLabel label = (JLabel) getModel().getElementAt(index);
-                                     String tipperLine = label.getText().substring(label.getText().indexOf("Line")+5);
-                                     EditorImpl editor = ((EditorImpl) FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor());
-                                     editor.getCaretModel().
-                                             moveToOffset(editor.logicalPositionToOffset(new LogicalPosition(Integer.parseInt(tipperLine)-1,0)));
-
-                                     Point caretLocation = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
-                                     //int scrollOffset = caretLocation.y - myCaretUpdateVShift;
-                                     editor.getScrollingModel().disableAnimation();
-                                     editor.getScrollingModel().scrollVertically(
-                                             editor.logicalPositionToOffset(new LogicalPosition(Integer.parseInt(tipperLine)-1,0)));
-                                     editor.getScrollingModel().enableAnimation();
-                                            // .moveToLogicalPosition(new LogicalPosition(Integer.parseInt(tipperLine),0));
-                                     frame.setState(Frame.ICONIFIED);
-                                 }
+                                 if (e.getClickCount() != 2)
+									return;
+								JLabel label = (JLabel) getModel().getElementAt(index);
+								String tipperLine = label.getText().substring(label.getText().indexOf("Line") + 5);
+								EditorImpl editor = ((EditorImpl) FileEditorManager.getInstance(Utils.getProject())
+										.getSelectedTextEditor());
+								editor.getCaretModel().moveToOffset(editor.logicalPositionToOffset(
+										new LogicalPosition(Integer.parseInt(tipperLine) - 1, 0)));
+								Point caretLocation = editor
+										.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+								editor.getScrollingModel().disableAnimation();
+								editor.getScrollingModel().scrollVertically(editor.logicalPositionToOffset(
+										new LogicalPosition(Integer.parseInt(tipperLine) - 1, 0)));
+								editor.getScrollingModel().enableAnimation();
+								frame.setState(Frame.ICONIFIED);
                              }
                          }
         );
@@ -60,12 +58,11 @@ class TippersList extends JList {
     }
 
     public void addTipper(JLabel label) {
-        numOfElements++;
+        ++numOfElements;
         ListModel currentList = this.getModel();
         JLabel[] newList = new JLabel[currentList.getSize() + 1];
-        for (int i = 0; i < currentList.getSize(); i++) {
-            newList[i] = (JLabel) currentList.getElementAt(i);
-        }
+        for (int i = 0; i < currentList.getSize(); ++i)
+			newList[i] = (JLabel) currentList.getElementAt(i);
         newList[newList.length - 1] = label;
         setListData(newList);
     }
@@ -78,7 +75,7 @@ class TippersList extends JList {
             label.setForeground(getForeground());
             label.setEnabled(isEnabled());
             label.setFont(getFont());
-            label.setBorder(isSelected ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
+            label.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
             return label;
         }
     }

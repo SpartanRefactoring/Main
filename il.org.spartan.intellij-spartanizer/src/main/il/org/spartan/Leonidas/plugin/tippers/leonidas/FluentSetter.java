@@ -20,8 +20,7 @@ public class FluentSetter implements LeonidasTipperDefinition {
     public void constraints() {
         element(1).asMethod.startsWith("set");
         element(4).isNot(() -> {
-            return;
-        });
+		});
     }
 
     @Override

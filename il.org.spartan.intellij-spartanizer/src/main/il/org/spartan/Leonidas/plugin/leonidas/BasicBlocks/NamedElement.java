@@ -25,25 +25,24 @@ public abstract class NamedElement extends GenericEncapsulator{
     public NamedElement(String template) { this.template = template; }
 
     @Override
-    public boolean conforms(PsiElement e) {
-        return getName(e) != null && getName(e).startsWith(template);
+    public boolean conforms(PsiElement ¢) {
+        return getName(¢) != null && getName(¢).startsWith(template);
     }
 
     @Override
-    public Integer extractId(PsiElement e) {
-        return Integer.parseInt(getName(e).split("\\$")[0].substring(template.length()));
+    public Integer extractId(PsiElement ¢) {
+        return Integer.parseInt(getName(¢).split("\\$")[0].substring(template.length()));
     }
 
     @Override
     public GenericEncapsulator extractAndAssignDescription(PsiElement e) {
-        if (getName(e).contains("$")) {
-            description = "";
-            String [] words = getName(e).split("\\$")[1].split("_");
-            for(int i = 0; i<words.length; i++) {
-                description += (words[i]+" ");
-            }
-        }
-        return this;
+        if (!getName(e).contains("$"))
+			return this;
+		description = "";
+		String[] words = getName(e).split("\\$")[1].split("_");
+		for (int i = 0; i < words.length; ++i)
+			description += (words[i] + " ");
+		return this;
     }
 
     /**

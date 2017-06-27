@@ -17,8 +17,8 @@ import static il.org.spartan.Leonidas.auxilary_layer.Utils.isAnnotationPresent;
 public enum Spartanizer {
     ;
 
-    static boolean canTip(PsiElement e) {
-        return Toolbox.getInstance().canTip(e);
+    static boolean canTip(PsiElement ¢) {
+        return Toolbox.getInstance().canTip(¢);
     }
 
     static boolean shouldSpartanize(PsiElement e) {
@@ -32,16 +32,16 @@ public enum Spartanizer {
         Toolbox toolbox = Toolbox.getInstance();
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                toolbox.executeAllTippers(e);
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
+                toolbox.executeAllTippers(¢);
             }
         });
     }
 
-    static void spartanizeElement(PsiElement e) {
-        if (shouldSpartanize(e))
-            Toolbox.getInstance().executeAllTippers(e);
+    static void spartanizeElement(PsiElement ¢) {
+        if (shouldSpartanize(¢))
+            Toolbox.getInstance().executeAllTippers(¢);
     }
 
     static void spartanizeElement(PsiElement e, Tipper tipper) {
@@ -55,9 +55,9 @@ public enum Spartanizer {
         Toolbox toolbox = Toolbox.getInstance();
         f.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                toolbox.executeAllTippers(e);
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
+                toolbox.executeAllTippers(¢);
             }
         });
     }
@@ -78,9 +78,9 @@ public enum Spartanizer {
         Toolbox toolbox = Toolbox.getInstance();
         f.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                toolbox.executeAllTippersNoNanos(e);
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
+                toolbox.executeAllTippersNoNanos(¢);
             }
         });
     }
@@ -97,9 +97,7 @@ public enum Spartanizer {
 
 
     public static void spartanizeElementWithTipper(PsiElement e, String tipperName) {
-        Toolbox toolbox = Toolbox.getInstance();
-        for (Tipper t : toolbox.getAllTippers()) {
-            System.out.println(t.name());
-        }
+        for (Tipper t : Toolbox.getInstance().getAllTippers())
+			System.out.println(t.name());
     }
 }

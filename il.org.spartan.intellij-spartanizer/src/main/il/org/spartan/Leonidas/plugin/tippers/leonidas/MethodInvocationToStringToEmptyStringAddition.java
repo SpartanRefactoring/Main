@@ -21,18 +21,14 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
     @Override
     public void matcher() {
         new Template(() ->
-                /* start */
-                identifier0.toString()
-                /* end */
+                identifier0 + ""
         );
     }
 
     @Override
     public void replacer() {
         new Template(() ->
-                /* start */
-                "" + identifier0
-                /* end */
+                identifier0 + ""
         );
     }
 

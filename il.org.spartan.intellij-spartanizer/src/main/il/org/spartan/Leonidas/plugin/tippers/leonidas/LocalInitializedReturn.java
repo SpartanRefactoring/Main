@@ -37,11 +37,7 @@ public class LocalInitializedReturn implements LeonidasTipperDefinition {
 
     @Override
     public void replacer() {
-        new Template(() -> {
-            /* start */
-            return expression(2);
-            /* end */
-        });
+        new Template(() -> expression(2));
     }
 
     /**

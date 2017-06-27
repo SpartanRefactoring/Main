@@ -42,13 +42,13 @@ public class Identifier extends NamedElement {
     }
 
     @Override
-    protected String getName(PsiElement e) {
-        return iz.identifier(e) ? az.identifier(e).getText() : null;
+    protected String getName(PsiElement ¢) {
+        return !iz.identifier(¢) ? null : az.identifier(¢).getText();
     }
 
     @Override
-    public boolean conforms(PsiElement e) {
-        return iz.identifier(e) && super.conforms(e);
+    public boolean conforms(PsiElement ¢) {
+        return iz.identifier(¢) && super.conforms(¢);
     }
 
     @Override

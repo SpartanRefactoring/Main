@@ -23,16 +23,16 @@ public class ToolboxTest extends PsiTypeHelper {
         List<String> names = new ArrayList<>();
         list.forEach(tipper -> names.add(tipper.name()));
 
-        assertTrue(names.contains("SafeReference"));
-        assertTrue(names.contains("Unless"));
-        assertTrue(names.contains("Delegator"));
-        assertTrue(names.contains("RemoveCurlyBracesFromIfStatement"));
-        assertTrue(names.contains("IfEmptyThen"));
-        assertTrue(names.contains("LispLastElement"));
-        assertTrue(names.contains("DefaultsTo"));
-        assertTrue(names.contains("RemoveCurlyBracesFromWhileStatement"));
-        assertTrue(names.contains("LambdaExpressionRemoveRedundantCurlyBraces"));
-        assertTrue(names.contains("IfDoubleNot"));
+        assert names.contains("SafeReference");
+        assert names.contains("Unless");
+        assert names.contains("Delegator");
+        assert names.contains("RemoveCurlyBracesFromIfStatement");
+        assert names.contains("IfEmptyThen");
+        assert names.contains("LispLastElement");
+        assert names.contains("DefaultsTo");
+        assert names.contains("RemoveCurlyBracesFromWhileStatement");
+        assert names.contains("LambdaExpressionRemoveRedundantCurlyBraces");
+        assert names.contains("IfDoubleNot");
 
         tb.disposeComponent();
     }
@@ -41,17 +41,17 @@ public class ToolboxTest extends PsiTypeHelper {
         tb.initComponent();
         List<String> currNames = tb.getAllTippers().stream().map(Tipper::name).collect(Collectors.toList());
 
-        assertFalse(currNames.contains("myOpt"));
-        assertTrue(currNames.contains("SafeReference"));
-        assertTrue(currNames.contains("Unless"));
-        assertTrue(currNames.contains("Delegator"));
-        assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
-        assertTrue(currNames.contains("IfEmptyThen"));
-        assertTrue(currNames.contains("LispLastElement"));
-        assertTrue(currNames.contains("DefaultsTo"));
-        assertTrue(currNames.contains("RemoveCurlyBracesFromWhileStatement"));
-        assertTrue(currNames.contains("LambdaExpressionRemoveRedundantCurlyBraces"));
-        assertTrue(currNames.contains("IfDoubleNot"));
+        assert !currNames.contains("myOpt");
+        assert currNames.contains("SafeReference");
+        assert currNames.contains("Unless");
+        assert currNames.contains("Delegator");
+        assert currNames.contains("RemoveCurlyBracesFromIfStatement");
+        assert currNames.contains("IfEmptyThen");
+        assert currNames.contains("LispLastElement");
+        assert currNames.contains("DefaultsTo");
+        assert currNames.contains("RemoveCurlyBracesFromWhileStatement");
+        assert currNames.contains("LambdaExpressionRemoveRedundantCurlyBraces");
+        assert currNames.contains("IfDoubleNot");
 
         tb.disposeComponent();
     }
@@ -70,11 +70,11 @@ public class ToolboxTest extends PsiTypeHelper {
         list.forEach(tipper -> currNames.add(tipper.name()));
 
 
-        assertFalse(currNames.contains("SafeReference"));
-        assertFalse(currNames.contains("Unless"));
-        assertTrue(currNames.contains("Delegator"));
-        assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
-        assertTrue(currNames.contains("IfEmptyThen"));
+        assert !currNames.contains("SafeReference");
+        assert !currNames.contains("Unless");
+        assert currNames.contains("Delegator");
+        assert currNames.contains("RemoveCurlyBracesFromIfStatement");
+        assert currNames.contains("IfEmptyThen");
 
         names.remove("SafeReference");
         names.add("Unless");
@@ -83,31 +83,26 @@ public class ToolboxTest extends PsiTypeHelper {
         List<String> finalNames = new ArrayList<>();
         list.forEach(tipper -> finalNames.add(tipper.name()));
 
-        assertFalse(finalNames.contains("SafeReference"));
-        assertTrue(finalNames.contains("Unless"));
-        assertTrue(finalNames.contains("Delegator"));
-        assertTrue(finalNames.contains("RemoveCurlyBracesFromIfStatement"));
-        assertTrue(finalNames.contains("IfEmptyThen"));
+        assert !finalNames.contains("SafeReference");
+        assert finalNames.contains("Unless");
+        assert finalNames.contains("Delegator");
+        assert finalNames.contains("RemoveCurlyBracesFromIfStatement");
+        assert finalNames.contains("IfEmptyThen");
 
         tb.disposeComponent();
     }
 
     public void testIsElementOfOperableType() throws Exception {
         tb.initComponent();
-        assertTrue(tb.isElementOfOperableType(createTestStatementFromString("if(true == false){}")));
-        //Removing because it will fail in the future. but works fine.
-        //assertFalse(tb.isElementOfOperableType(createTestStatementFromString("for(;;){}")));
-        assertTrue(tb.isElementOfOperableType(createTestStatementFromString("while(true){}")));
-
+        assert tb.isElementOfOperableType(createTestStatementFromString("if(true == false){}"));
+        assert tb.isElementOfOperableType(createTestStatementFromString("while(true){}"));
         tb.disposeComponent();
     }
 
     public void testCanTip() throws Exception {
         tb.initComponent();
-        assertTrue(tb.canTip(createTestIfStatement("true", "x++;")));
-        assertTrue(tb.canTip(createTestWhileStatementFromString("while(true){x++;}")));
-        //Removing because it will fail in the future. but works fine.
-        //assertFalse(tb.canTip(createTestIfStatement("true", "x++;\ny++;")));
+        assert tb.canTip(createTestIfStatement("true", "x++;"));
+        assert tb.canTip(createTestWhileStatementFromString("while(true){x++;}"));
 
         tb.disposeComponent();
     }
@@ -125,9 +120,9 @@ public class ToolboxTest extends PsiTypeHelper {
         tb.initComponent();
         PsiFile f = createTestFileFromString("class A{}");
         tb.excludeFile(f);
-        assertTrue(tb.checkExcluded(f));
+        assert tb.checkExcluded(f);
         tb.includeFile(f);
-        assertFalse(tb.checkExcluded(f));
+        assert !tb.checkExcluded(f);
 
         tb.disposeComponent();
     }

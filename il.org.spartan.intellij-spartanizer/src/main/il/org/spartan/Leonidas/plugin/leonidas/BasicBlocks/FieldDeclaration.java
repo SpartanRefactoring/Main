@@ -36,13 +36,13 @@ public class FieldDeclaration extends ModifiableElement {
     }
 
     @Override
-    public Integer extractId(PsiElement e) {
-        return Integer.parseInt(az.fieldDeclaration(e).getName().substring(TEMPLATE.length()));
+    public Integer extractId(PsiElement ¢) {
+        return Integer.parseInt(az.fieldDeclaration(¢).getName().substring(TEMPLATE.length()));
     }
 
     @Override
-    protected String getName(PsiElement e) {
-        return iz.fieldDeclaration(e) ? az.fieldDeclaration(e).getName() : null;
+    protected String getName(PsiElement ¢) {
+        return !iz.fieldDeclaration(¢) ? null : az.fieldDeclaration(¢).getName();
     }
 
     @Override
