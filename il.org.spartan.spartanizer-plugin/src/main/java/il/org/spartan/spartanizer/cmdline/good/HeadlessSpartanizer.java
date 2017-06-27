@@ -49,7 +49,8 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator(),
           defaultSelection = defaultApplicator2.defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
       if (DefaultApplicator) {
-        commandLineApplicator.listener(λ -> System.out.println("Running DefaultApplicator: " + Arrays.toString(λ)));
+        commandLineApplicator.listener(//
+            λ -> System.out.println("Running DefaultApplicator: " + Arrays.toString(λ)));
         defaultSelection.defaultListenerNoisy().go();
       }
       if (Spartanizer$Applicator)
