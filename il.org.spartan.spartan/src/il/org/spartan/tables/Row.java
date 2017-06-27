@@ -12,8 +12,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2017-01-04 */
 public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Object> {
+  public static final String ARRAY_SEPARATOR = "; ";
   private static final long serialVersionUID = 0x5F4CC2841512340L;
-
   public Row() {
     reset();
   }
@@ -35,6 +35,13 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    * @return {@code this} */
   public final Self col(final String key) {
     return col(key, "");
+  }
+  /** Add a key and a {@code boolean} value to this instance
+   * @param key The key to be added; must not be {@code null
+   * @param value The value associated with the key
+   * @return {@code this} */
+  public final Self col(final String key, final boolean value) {
+    return col(key, value + "");
   }
   /** Add a key and a {@code char} value to this instance
    * @param key The key to be added; must not be {@code null
@@ -83,11 +90,11 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     super.put(key, value);
     return self();
   }
-  public final Self col(final String key, final Object[] a, final int i) {
-    return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
-  }
   public final Self col(final String key, final Object... os) {
     return col(key, os == null || os.length == 0 ? null : (Object) os);
+  }
+  public final Self col(final String key, final Object[] a, final int i) {
+    return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
   /** A mutator to add a key and a general {@link String} value to this instance
    * @param key The key to be added; must not be {@code null
@@ -106,7 +113,6 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return $;
   }
   protected abstract Self reset();
-  protected abstract Self self();
 
-  public static final String ARRAY_SEPARATOR = "; ";
+  protected abstract Self self();
 }

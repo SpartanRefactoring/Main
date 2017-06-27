@@ -28,38 +28,6 @@ import junit.framework.*;
  * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  public static class BucketMethods {
-    static boolean letItBeIn(final List<Statement> ¢) {
-      return ¢.size() == 2 && the.firstOf(¢) instanceof VariableDeclarationStatement;
-    }
-    public static void main(final String[] args) {
-      out = system.callingClassUniqueWriter();
-      new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
-        boolean interesting(final List<Statement> ¢) {
-          return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
-        }
-        @Override boolean interesting(final MethodDeclaration ¢) {
-          return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
-        }
-        boolean leaking(final ASTNode ¢) {
-          return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
-              SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
-        }
-        boolean leaking(final Stream<ASTNode> ¢) {
-          return ¢.noneMatch(this::leaking);
-        }
-        @Override protected void record(final String summary) {
-          try {
-            out.write(summary);
-          } catch (final IOException ¢) {
-            System.err.println("Error: " + ¢.getMessage());
-          }
-          super.record(summary);
-        }
-      });
-    }
-  }
-
   public static class ExpressionChain {
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
@@ -87,45 +55,7 @@ public class ASTInFilesVisitor {
     }
   }
 
-  public static class FieldsOnly {
-    public static void main(final String[] args) {
-      new ASTInFilesVisitor(args).visitAll(new ASTVisitor(true) {
-        @Override public boolean visit(final FieldDeclaration ¢) {
-          System.out.println(¢);
-          return true;
-        }
-      });
-    }
-  }
 
-  public interface Listener extends Tapper {
-    @Override default void beginBatch() {/**/}
-    //@formatter:off
-    @Override default  void  beginFile()      {/**/}
-    @Override default  void  beginLocation()  {/**/}
-    @Override default void endBatch() {/**/}
-    @Override default  void  endFile()        {/**/}
-    @Override default  void  endLocation()    {/**/}
-    //@formatter:on
-  }
-
-  public static class PrintAllInterfaces {
-    public static void main(final String[] args) {
-      out = system.callingClassUniqueWriter();
-      MethodHandles.lookup();
-      new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
-        {
-          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(λ -> System.out.println(λ.getName()));
-          final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
-            System.out.println(λ);
-            return λ.isInterface();
-          };
-          final Consumer<TypeDeclaration> c = λ -> System.out.println(λ);
-          on(TypeDeclaration.class).hook(r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p));
-        }
-      });
-    }
-  }
 
   interface Tapper {
     void beginBatch();
@@ -185,9 +115,6 @@ public class ASTInFilesVisitor {
     return $.get();
   }
 
-  static boolean letItBeIn(final List<Statement> ¢) {
-    return ¢.size() == 2 && the.firstOf(¢) instanceof VariableDeclarationStatement;
-  }
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       /* Override here which ever method you like */
