@@ -15,15 +15,17 @@ import il.org.spartan.spartanizer.cmdline.good.*;
 public class spartanize {
   @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
+  @External(alias = "t", value = "sp_type") @SuppressWarnings("CanBeFinal") protected static String spartanization_type = "batch";
 
   private static final Nanonizer nanonizer = new Nanonizer();
   private static final InteractiveSpartanizer is = new InteractiveSpartanizer();
   
   public static void main(final String[] args) {
-    run(args);
+    if(spartanization_type.equals("batch"))
+      batchSpartanize(args);
   }
 
-  private static void run(final String[] args) {
+  private static void batchSpartanize(final String[] args) {
     if (args.length != 0)
       as.list(args).forEach(λ -> new BatchSpartanizer(λ).fire());
     else
