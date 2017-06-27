@@ -11,7 +11,7 @@ public class WhilesCounter {
   static int whiles;
 
   public static void main(final String[] args) {
-    new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTVisitor() {
+    new GrandVisitor(args) {/**/}.visitAll(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement node) {
         ++whiles;
         return true;

@@ -13,9 +13,9 @@ import il.org.spartan.tables.*;
 public class Table_All_Names extends NominalTables {
   public static void main(final String[] args) {
     namePrevelance = new HashMap<>();
-    new ASTInFilesVisitor(args) {
+    new GrandVisitor(args) {
       {
-        listen(new Listener() {
+        listen(new Tapper() {
           @Override public void endLocation() {
             done(getCurrentLocation());
           }

@@ -21,7 +21,7 @@ public class Issue1345 {
     trimmer = new TextualTraversals();
   }
   @Test(timeout = 30000) public void runTheAthenizerOnItself() {
-    new ASTInFilesVisitor(new String[] { "-i", ".", "." }) {
+    new GrandVisitor(new String[] { "-i", ".", "." }) {
       @Override public void visitFile(final File f) {
         try {
           // TODO Tomer Dragucki: replace this line so bloating will be

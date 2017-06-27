@@ -97,7 +97,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   void visit(final File f) {
     if (!silent)
       dotter.click();
-    if (!Utils.isTestFile(f) && ASTInFilesVisitor.productionCode(f))
+    if (!Utils.isTestFile(f) && GrandVisitor.productionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();
