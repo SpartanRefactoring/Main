@@ -2,14 +2,16 @@ package il.org.spartan.Leonidas.plugin.GUI.About;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import il.org.spartan.Leonidas.plugin.GUI.JPanelWithBackground;
+
+import javax.swing.*;
+import java.io.IOException;
 
 /**
  * @author Amir Sagiv
  * @since 28/04/2017
  */
-class AboutAction extends AnAction {
-
-    private static String backgroundImagePath = "aboutBG.jpg";
+public class AboutAction extends AnAction {
 
     public static void main(String[] args) {
         new AboutLeonidas();
