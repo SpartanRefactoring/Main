@@ -93,13 +93,13 @@
         <action class="il.org.spartan.Leonidas.plugin.SpartanizeProjectAction"
                 id="myPlugin8"
                 text="Spartanize Project"
-                icon="Icons.LeonidasSmall">
+                icon="Icons.LeonidasSmallPurple">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.AddSpartanizerUtilsAction"
                 id="myPlugin9"
                 text="Add SpartanizerUtils"
-                icon="Icons.LeonidasSmall">
+                icon="Icons.LeonidasSmallRed">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.GUI.AddTipper.AddTipperAction"
@@ -111,7 +111,7 @@
         <action class="il.org.spartan.Leonidas.plugin.GUI.ViewAvailableTippersInFile.TippersViewAction"
                 id="myPlugin11"
                 text="Analyze File"
-                icon="Icons.LeonidasSmall">
+                icon="Icons.LeonidasSmallGray">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
     </actions>

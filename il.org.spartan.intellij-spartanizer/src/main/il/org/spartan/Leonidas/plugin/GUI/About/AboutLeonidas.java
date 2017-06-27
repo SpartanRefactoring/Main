@@ -5,10 +5,13 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -53,12 +56,13 @@ class AboutLeonidas extends JFrame {
                 "\n\n" +
                 "In addition to the tipping mechanism, We offer you to enjoy our user services which can be found under 'Leonidas' section in the menu bar of IntelliJ.\n" +
                 "There are currently 3 services available:\n" +
-                "(1) ToolBox Controller - Decide the tippers you want to be notified about.\n" +
-                "(2) Playground - experience the Spartanizer tippers in an isolated environment without effecting your code.\n" +
+                "(1) ToolBox Controller - Decide which tippers you want to be notified about.\n" +
+                "(2) Playground - experience and play with the Spartanizer tippers in an isolated environment without effecting your code.\n" +
                 "(3) Tipper creator - easily create new tippers by code examples without knowing Leonidas language at all!" +
                 "\n\nWe encourage you all to join us in developing and enjoying the power of our plugin and the Leonidas language.\n\n" +
                 "Leonidas Team.");
     }
+
 
     private void closeButtonListener() {
         this.dispose(); active = false;

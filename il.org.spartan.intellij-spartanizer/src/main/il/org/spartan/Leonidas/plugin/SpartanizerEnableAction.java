@@ -16,18 +16,21 @@ import icons.Icons;
 public class SpartanizerEnableAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
-        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
-        assert psiFile != null;
-        Project p = psiFile.getProject();
-        Toolbox tb = Toolbox.getInstance();
-        if (tb.checkExcluded(psiFile))
-			tb.includeFile(psiFile);
-		else
-			tb.excludeFile(psiFile);
-        Presentation presentation = e.getPresentation();
-        presentation.setText((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? "Enable" : "Disable")
-				+ " Spartanization In Current File");
-        presentation.setIcon((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? Icons.Enable : Icons.Disable));
-        DaemonCodeAnalyzer.getInstance(p).restart();
+        try {
+            PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
+            Project p = psiFile.getProject();
+            Toolbox tb = Toolbox.getInstance();
+            if (tb.checkExcluded(psiFile))
+                tb.includeFile(psiFile);
+            else
+                tb.excludeFile(psiFile);
+            Presentation presentation = e.getPresentation();
+            presentation.setText((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? "Enable" : "Disable")
+                    + " Spartanization In Current File");
+            presentation.setIcon((Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? Icons.Enable : Icons.Disable));
+            DaemonCodeAnalyzer.getInstance(p).restart();
+        }catch (NullPointerException exc){
+
+        }
     }
 }
