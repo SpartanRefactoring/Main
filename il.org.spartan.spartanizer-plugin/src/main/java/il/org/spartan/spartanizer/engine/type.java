@@ -261,9 +261,21 @@ public interface type {
     }
     private static implementation lookDown(final SimpleName ¢) {
       final Namespace $ = Environment.of(¢);
-      if(!$.has(¢.getIdentifier()))
+      if (!$.has(¢.getIdentifier()))
         return NOTHING;
-      implementation i = (implementation) $.get(¢.getIdentifier()).getType(); //TODO yg: getType probably returns null for some enum (gives exceptions on guava->CaseFormat)
+      final implementation i = (implementation) $.get(¢.getIdentifier()).getType(); // TODO
+                                                                              // yg:
+                                                                              // getType
+                                                                              // probably
+                                                                              // returns
+                                                                              // null
+                                                                              // for
+                                                                              // some
+                                                                              // enum
+                                                                              // (gives
+                                                                              // exceptions
+                                                                              // on
+                                                                              // guava->CaseFormat)
       return i != null ? i : NOTHING;
     }
     /** @param x JD

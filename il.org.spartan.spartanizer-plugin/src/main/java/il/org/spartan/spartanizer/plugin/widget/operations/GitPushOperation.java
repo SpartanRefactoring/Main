@@ -22,15 +22,14 @@ public class GitPushOperation extends GitOperation {
   }
   @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {
     try {
-      Iterable<PushResult> i = g.push().call();
-      for(PushResult p : i) {
-        if (p.getRemoteUpdates().size()==1)
-          for(RemoteRefUpdate r: p.getRemoteUpdates())
-            if(r.getStatus() == RemoteRefUpdate.Status.UP_TO_DATE) {
+      final Iterable<PushResult> i = g.push().call();
+      for (final PushResult p : i)
+        if (p.getRemoteUpdates().size() == 1)
+          for (final RemoteRefUpdate r : p.getRemoteUpdates())
+            if (r.getStatus() == RemoteRefUpdate.Status.UP_TO_DATE) {
               displayMessage("No commits to push");
               return;
             }
-      }
     } catch (final InvalidRemoteException ¢) {
       displayMessage("Git Error: Push failed due to an invalid remote");
       return;

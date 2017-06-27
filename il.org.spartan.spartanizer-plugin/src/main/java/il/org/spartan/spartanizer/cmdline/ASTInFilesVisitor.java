@@ -28,33 +28,26 @@ import junit.framework.*;
  * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  
-  
   public static class BucketMethods {
     static boolean letItBeIn(final List<Statement> ¢) {
       return ¢.size() == 2 && the.firstOf(¢) instanceof VariableDeclarationStatement;
     }
-
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
       new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         boolean interesting(final List<Statement> ¢) {
           return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
         }
-
         @Override boolean interesting(final MethodDeclaration ¢) {
           return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
         }
-
         boolean leaking(final ASTNode ¢) {
           return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
               SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
         }
-
         boolean leaking(final Stream<ASTNode> ¢) {
           return ¢.noneMatch(this::leaking);
         }
-
         @Override protected void record(final String summary) {
           try {
             out.write(summary);
@@ -66,6 +59,7 @@ public class ASTInFilesVisitor {
       });
     }
   }
+
   public static class ExpressionChain {
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
@@ -75,7 +69,6 @@ public class ASTInFilesVisitor {
             @Override public Void fire() {
               return null;
             }
-
             @Override public boolean ok(final ExpressionStatement ¢) {
               return compute.useSpots(¢.getExpression()).size() == 1;
             }
@@ -104,6 +97,7 @@ public class ASTInFilesVisitor {
       });
     }
   }
+
   public interface Listener extends Tapper {
     @Override default void beginBatch() {/**/}
     //@formatter:off
@@ -114,6 +108,7 @@ public class ASTInFilesVisitor {
     @Override default  void  endLocation()    {/**/}
     //@formatter:on
   }
+
   public static class PrintAllInterfaces {
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
@@ -131,6 +126,7 @@ public class ASTInFilesVisitor {
       });
     }
   }
+
   interface Tapper {
     void beginBatch();
     //@formatter:off

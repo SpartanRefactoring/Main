@@ -14,7 +14,7 @@ public class TableMethodProperties {
           t//
               .col("Name", ¢.getName()) //
               .col("#Parameters", parameters(¢).size()) //
-              .col("Private", Modifier.isStatic(¢.getModifiers())) //
+              .col("Private", java.lang.reflect.Modifier.isStatic(¢.getModifiers())) //
               .nl();
           return true;
         }
