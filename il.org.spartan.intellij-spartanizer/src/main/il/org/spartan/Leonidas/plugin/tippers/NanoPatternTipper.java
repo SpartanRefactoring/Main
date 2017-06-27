@@ -53,14 +53,12 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
                     Icons.Leonidas,
                     options,
                     options[1]);
-            if(n == 1){
-                return new Tip(description(e), e, this.getClass()) {
-                    @Override
-                    public void go(PsiRewrite r) {
-
-                    }
-                };
-            }
+            if(n == 1)
+				return new Tip(description(e), e, this.getClass()) {
+					@Override
+					public void go(PsiRewrite r) {
+					}
+				};
         } catch (Exception ex) {}
         return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
             @Override
@@ -69,9 +67,8 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
                 new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
                     @Override
                     protected void run() throws Throwable {
-                        if ( (!Toolbox.getInstance().playground) && (!Toolbox.getInstance().testing) ) {
-                            createEnvironment(e);
-                        }
+                        if ( (!Toolbox.getInstance().playground) && (!Toolbox.getInstance().testing) )
+							createEnvironment(e);
                         e.replace(e_tag);
                     }
                 }.execute();

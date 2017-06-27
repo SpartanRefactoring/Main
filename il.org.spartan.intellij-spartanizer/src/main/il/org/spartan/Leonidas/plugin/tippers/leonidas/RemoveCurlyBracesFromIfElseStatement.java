@@ -25,12 +25,10 @@ public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefin
     public void matcher() {
         new Template(() -> {
             /* start */
-            if (booleanExpression(0)) {
-                statement(1);
-            } else {
-                statement(2);
-            }
-            /* end */
+            if (booleanExpression(0))
+				statement(1);
+			else
+				statement(2);
         });
     }
 

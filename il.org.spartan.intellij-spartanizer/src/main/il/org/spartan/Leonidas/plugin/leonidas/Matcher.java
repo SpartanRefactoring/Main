@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class Matcher {
 
     private final Map<Integer, List<StructuralConstraint>> constrains = new HashMap<>();
-    private List<Encapsulator> roots = null;
+    private List<Encapsulator> roots;
 
     public Matcher(List<Encapsulator> r, Map<Integer, List<Constraint>> map) {
         roots = r;
@@ -90,9 +90,8 @@ public class Matcher {
                 if (!m.getMap().containsKey(az.generic(needle.value()).getId()))
 					m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
 				else if (m.getMap().get(az.generic(needle.value()).getId()).stream()
-						.noneMatch(e -> e.getText().equals(cursor.value().getText()))) {
+						.noneMatch(e -> e.getText().equals(cursor.value().getText())))
 					return m.setNotMatches();
-				}
                 cursor.matchedWithGeneric();
             }
         }
@@ -116,9 +115,8 @@ public class Matcher {
         }
         for (int i = 0; i < n; needle.next(), cursor.next(), ++i) {
             MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
-            if (ic.notMatches() || (cursor.hasNext() ^ needle.hasNext())) {
-                return m.setNotMatches();
-            }
+            if (ic.notMatches() || (cursor.hasNext() ^ needle.hasNext()))
+				return m.setNotMatches();
             m.combineWith(ic);
             if (needle.value().isGeneric()) {
                 m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
@@ -252,9 +250,8 @@ public class Matcher {
     private Map<Integer, GenericEncapsulator> getGenericElementsWithNoFields() {
         final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
         roots.forEach(root -> root.accept(e -> {
-            if (e.isGeneric()) {
-                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
-            }
+            if (e.isGeneric())
+				tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
         }));
         return tmp;
     }

@@ -19,14 +19,15 @@ import java.io.IOException;
  * @since 28/04/2017
  */
 class AboutLeonidas extends JFrame {
-    private static boolean active = false;
+    private static boolean active;
     private JPanel panel1;
     private JTextPane textPane1;
     private JButton closeButton;
 
     public AboutLeonidas() {
         super("About Leonidas Plugin");
-        if(active){return;}
+        if(active)
+			return;
         active = true;
         LeonidasIcon.apply(this);
         setContentPane(panel1);

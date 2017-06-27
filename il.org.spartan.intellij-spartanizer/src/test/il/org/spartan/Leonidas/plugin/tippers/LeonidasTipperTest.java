@@ -16,10 +16,6 @@ public class LeonidasTipperTest extends PsiTypeHelper {
 
     private LeonidasTipper $;
 
-    public LeonidasTipperTest() {
-
-    }
-
     public void testOrenPleaseFixMe(){
     }
     private PsiMethod test(String s) {

@@ -73,19 +73,18 @@ public class Union extends GenericMethodCallBasedBlock {
         arguments.forEach(arg -> {
             GenericEncapsulator encapsulator = null;
 
-            if (arg.getText().startsWith("method")) {
-                encapsulator = new Method();
-            } else if (arg.getText().startsWith("statement")) {
-                encapsulator = new Statement();
-            } else if (arg.getText().startsWith("anyBlock")) {
-                encapsulator = new Block();
-            } else if (arg.getText().startsWith("booleanExpression")) {
-                encapsulator = new BooleanExpression();
-            } else if (arg.getText().startsWith("booleanLiteral")) {
-                encapsulator = new BooleanLiteral();
-            } else if (arg.getText().startsWith("expression")) {
-                encapsulator = new Expression();
-            }
+            if (arg.getText().startsWith("method"))
+				encapsulator = new Method();
+			else if (arg.getText().startsWith("statement"))
+				encapsulator = new Statement();
+			else if (arg.getText().startsWith("anyBlock"))
+				encapsulator = new Block();
+			else if (arg.getText().startsWith("booleanExpression"))
+				encapsulator = new BooleanExpression();
+			else if (arg.getText().startsWith("booleanLiteral"))
+				encapsulator = new BooleanLiteral();
+			else if (arg.getText().startsWith("expression"))
+				encapsulator = new Expression();
 
             if (encapsulator != null) {
                 int id = az.integer(step.firstParameterExpression(az.methodCallExpression(arg)));

@@ -121,9 +121,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitComment(PsiComment comment) {
                 super.visitComment(comment);
-                if (comment.getText().contains("start")) {
-                    we.set(comment);
-                }
+                if (comment.getText().contains("start"))
+					we.set(comment);
             }
         });
         current = we.get();
@@ -164,9 +163,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitMethod(PsiMethod method) {
                 super.visitMethod(method);
-                if (method.getName().equals(name)) {
-                    x.set(method);
-                }
+                if (method.getName().equals(name))
+					x.set(method);
             }
         });
         if (x.get() == null) return null;
@@ -194,9 +192,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             );
         language = viewProvider.getBaseLanguage();
         final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
-        if (parserDefinition != null) {
-            return (PsiJavaFile) viewProvider.getPsi(language);
-        }
+        if (parserDefinition != null)
+			return (PsiJavaFile) viewProvider.getPsi(language);
         return null;
     }
 
@@ -251,9 +248,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
-                if ("element".equals(expression.getMethodExpression().getText())) {
-                    x.set(expression);
-                }
+                if ("element".equals(expression.getMethodExpression().getText()))
+					x.set(expression);
             }
         });
         PsiMethodCallExpression m = x.get();
@@ -339,9 +335,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
-                if (expression.getMethodExpression().getText().endsWith("ofType")) {
-                    wq.set(Optional.of(getPsiClass(expression.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
-                }
+                if (expression.getMethodExpression().getText().endsWith("ofType"))
+					wq.set(Optional.of(getPsiClass(
+							expression.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
             }
         });
         return wq.get();
@@ -364,9 +360,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private Map<Integer, List<Constraint>> getConstraints() {
         Map<Integer, List<Constraint>> map = new HashMap<>();
         PsiMethod constrainsMethod = getInterfaceMethod("constraints");
-        if (constrainsMethod == null || !haz.body(constrainsMethod)) {
-            return map;
-        }
+        if (constrainsMethod == null || !haz.body(constrainsMethod))
+			return map;
         Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
             Integer elementId = extractIdFromRule(s);
             Constraint.ConstraintType constraintType = extractConstraintType(s);
@@ -403,9 +398,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private Map<Integer, List<PsiMethodCallExpression>> getReplacingRules() {
         Map<Integer, List<PsiMethodCallExpression>> map = new HashMap<>();
         PsiMethod replacingRulesMethod = getInterfaceMethod("replacingRules");
-        if (replacingRulesMethod == null || !haz.body(replacingRulesMethod)) {
-            return map;
-        }
+        if (replacingRulesMethod == null || !haz.body(replacingRulesMethod))
+			return map;
         Arrays.stream(replacingRulesMethod.getBody().getStatements()).forEach(s -> {
             Integer elementId = extractIdFromRule(s);
             PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());

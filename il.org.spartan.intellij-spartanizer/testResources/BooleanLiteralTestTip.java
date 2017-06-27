@@ -26,10 +26,8 @@ public class BooleanLiteralTestTip implements LeonidasTipperDefinition {
     public void matcher() {
         new Template(() -> {
             /** start */
-            while (booleanLiteral(0)){
-                statement(1);
-            }
-            /** end */
+            while (booleanLiteral(0))
+				statement(1);
         });
     }
 

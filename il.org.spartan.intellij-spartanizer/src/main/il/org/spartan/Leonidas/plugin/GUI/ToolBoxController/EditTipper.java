@@ -48,17 +48,14 @@ public class EditTipper extends JFrame {
         currentTip = null;
         List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
         List<LeonidasTipperDefinition> tippersInstances=Toolbox.getInstance().getAllTipperInstances();
-        for (Tipper tip : tippers) {
-            //           JOptionPane.showMessageDialog(this, tip.getClass().getSimpleName() + ", " + tipperName);
-            if (tip.name().equals(tipperName)) {
-                currentTip = tip;
-                break;
-            }
-        }
+        for (Tipper tip : tippers)
+			if (tip.name().equals(tipperName)) {
+				currentTip = tip;
+				break;
+			}
 
-        if(!canBeEdited(tippersInstances)){
-            return;
-        }
+        if(!canBeEdited(tippersInstances))
+			return;
 
 
         table = new ComponentJTable();
@@ -74,9 +71,7 @@ public class EditTipper extends JFrame {
 
 
         applyButton.addActionListener(e -> applyListener());
-        closeButton.addActionListener(e -> {
-            this.dispose();
-        });
+        closeButton.addActionListener(e -> this.dispose());
         table.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -101,11 +96,9 @@ public class EditTipper extends JFrame {
             return false;
         }
         LeonidasTipperDefinition ltd = null;
-        for(LeonidasTipperDefinition instance : tippersInstances){
-            if(instance.getClass().getSimpleName().equals( currentTip.name())){
-                ltd = instance;
-            }
-        }
+        for(LeonidasTipperDefinition instance : tippersInstances)
+			if (instance.getClass().getSimpleName().equals(currentTip.name()))
+				ltd = instance;
         if(ltd == null || !ltd.getClass().isAnnotationPresent(UserControlledTipper.class)){
             JOptionPane.showMessageDialog(this, "The tip: "+ currentTip.name() + " Can't Be Edited. ");
             return false;
@@ -121,14 +114,12 @@ public class EditTipper extends JFrame {
             for (Field field : fields) {
                 if ((matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
-                    continue;
-                }
+                                !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart())))
+					continue;
                 if ((!matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (!matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !"Replacer".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
-                    continue;
-                }
+                                !"Replacer".equals(field.getAnnotation(UserControlled.class).templatePart())))
+					continue;
 
                 UserControlled annotation = field.getAnnotation(UserControlled.class);
                 Class type = field.getType();
@@ -188,14 +179,12 @@ public class EditTipper extends JFrame {
             for (Field field : fields) {
                 if ((matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
-                    continue;
-                }
+                                !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart())))
+					continue;
                 if ((!matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (!matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !"Replacer".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
-                    continue;
-                }
+                                !"Replacer".equals(field.getAnnotation(UserControlled.class).templatePart())))
+					continue;
 
                 Class type = field.getType();
                 try {
@@ -207,16 +196,14 @@ public class EditTipper extends JFrame {
                     if (type == List.class) {
                         int listSize = ((List)field.get(root)).size();
                         ((List)field.get(root)).clear();
-                        for(int j = 0; j < listSize; ++j){
-                            ((List)field.get(root)).add(((JTextField)table.getValueAt(i++,1)).getText());
-                        }
+                        for(int j = 0; j < listSize; ++j)
+							((List) field.get(root)).add(((JTextField) table.getValueAt(i++, 1)).getText());
                         continue;
                     }
                     if (type == Map.class) {
                         for (Map.Entry<Integer, String> entry : ((Map<Integer,String>)field.get(root)).entrySet())
-                        {
-                            ((Map<Integer,String>)field.get(root)).put(entry.getKey(),((JTextField)table.getValueAt(i,1)).getText());
-                        }
+							((Map<Integer, String>) field.get(root)).put(entry.getKey(),
+									((JTextField) table.getValueAt(i, 1)).getText());
                         continue;
                     }
 

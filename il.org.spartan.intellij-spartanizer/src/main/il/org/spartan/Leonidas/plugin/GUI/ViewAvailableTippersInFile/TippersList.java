@@ -63,9 +63,8 @@ class TippersList extends JList {
         ++numOfElements;
         ListModel currentList = this.getModel();
         JLabel[] newList = new JLabel[currentList.getSize() + 1];
-        for (int i = 0; i < currentList.getSize(); ++i) {
-            newList[i] = (JLabel) currentList.getElementAt(i);
-        }
+        for (int i = 0; i < currentList.getSize(); ++i)
+			newList[i] = (JLabel) currentList.getElementAt(i);
         newList[newList.length - 1] = label;
         setListData(newList);
     }

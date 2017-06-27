@@ -42,10 +42,8 @@ public class AnyNumberOfTipperTest implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /** start */
-            while (booleanExpression(0)) {
-                anyNumberOf(statement(1));
-            }
-            /** end */
+            while (booleanExpression(0))
+				anyNumberOf(statement(1));
         });
     }
 }

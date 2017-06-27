@@ -46,9 +46,8 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
     }
 
     private Encapsulator internalEncapsulator(Encapsulator e) {
-        if (!e.getText().contains("anyNumberOf")) {
-            return e;
-        }
+        if (!e.getText().contains("anyNumberOf"))
+			return e;
         return e.getActualChildren().get(1).getActualChildren().get(1);
     }
 }

@@ -42,9 +42,8 @@ public class PsiFileCenter {
     }
 
     public PsiFileWrapper createFileFromString(String s) {
-        if (s == null) {
-            return null;
-        }
+        if (s == null)
+			return null;
         List<CodeType> codeTypesByGenerality = Arrays.asList(CodeType.FILE_BOUND, CodeType.CLASS_BOUND, CodeType.METHOD_BOUND, CodeType.EXPRESSION, CodeType.ENUM_BOUND);
         PsiFile file;
         for (CodeType type : codeTypesByGenerality) {
@@ -59,9 +58,8 @@ public class PsiFileCenter {
                     super.visitErrorElement(element);
                 }
             });
-            if (isValid.get()) {
-                return new PsiFileWrapper(file, type);
-            }
+            if (isValid.get())
+				return new PsiFileWrapper(file, type);
         }
 
         return new PsiFileWrapper(null, CodeType.ILLEGAL);

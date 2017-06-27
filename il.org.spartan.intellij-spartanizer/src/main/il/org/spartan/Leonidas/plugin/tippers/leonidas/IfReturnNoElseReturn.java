@@ -33,11 +33,7 @@ public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
 
     @Override
     public void replacer() {
-        new Template(() -> {
-            /* start */
-            return booleanExpression(0) ? expression(1) : expression(2);
-            /* end */
-        });
+        new Template(() -> booleanExpression(0) ? expression(1) : expression(2));
     }
 
 

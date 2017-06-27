@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @since 22/04/2017
  */
 public class Playground extends JFrame {
-    private static boolean active = false;
+    private static boolean active;
     private JPanel mainPanel;
     private JButton clearButton;
     private JButton spartanizeButton;
@@ -56,21 +56,19 @@ public class Playground extends JFrame {
 
     public Playground() {
         super("Spartanizer Playground");
-        if(active){return;}
+        if(active)
+			return;
         active = true;
         inputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         outputArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        if (UIUtil.isUnderDarcula()) {
-            try {
-                Theme theme = Theme.load(getClass().getResourceAsStream(
-                        "/ui/dark.xml"));
-                theme.apply(inputArea);
-                theme.apply(outputArea);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // TODO @RoeiRaz do something that makes sense here
-            }
-        }
+        if (UIUtil.isUnderDarcula())
+			try {
+				Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
+				theme.apply(inputArea);
+				theme.apply(outputArea);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
         LeonidasIcon.apply(this);
         setContentPane(mainPanel);
@@ -114,22 +112,18 @@ public class Playground extends JFrame {
     }
 
     private void spartanizeButtonClicked(boolean recursive) {
-        if (inputArea.getText().trim().isEmpty()) {
-            return;
-        }
+        if (inputArea.getText().trim().isEmpty())
+			return;
         Toolbox.getInstance().playground = true;
         PsiFileCenter pfc = new PsiFileCenter();
         PsiFileCenter.PsiFileWrapper pfw = pfc.createFileFromString(inputArea.getText());
-        if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL){
-            outputArea.setText("Input didn't contain legal java code!");
-        }
-        else{
-            if (!recursive) {
-                Spartanizer.spartanizeFileOnePass(pfw.getFile());
-            }
-            else {
-                Spartanizer.spartanizeFileRecursively(pfw.getFile());
-            }
+        if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL)
+			outputArea.setText("Input didn't contain legal java code!");
+		else{
+            if (!recursive)
+				Spartanizer.spartanizeFileOnePass(pfw.getFile());
+			else
+				Spartanizer.spartanizeFileRecursively(pfw.getFile());
             outputArea.setText(pfw.extractCanonicalSubtreeString());
         }
         Toolbox.getInstance().playground = false;
@@ -173,9 +167,8 @@ public class Playground extends JFrame {
     }
 
     public void doClose() {
-        if(active) {
-            closeButton.doClick();
-        }
+        if(active)
+			closeButton.doClick();
     }
 
     /**

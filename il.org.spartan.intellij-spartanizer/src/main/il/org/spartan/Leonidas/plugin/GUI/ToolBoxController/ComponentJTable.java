@@ -15,7 +15,7 @@ public class ComponentJTable extends JTable {
     public ComponentJTable() {
 
         DefaultTableModel model = new DefaultTableModel() {
-            private static final long serialVersionUID = 1;
+            static final long serialVersionUID = 1;
 
             @Override
 			@SuppressWarnings({ "unchecked", "rawtypes" })

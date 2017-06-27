@@ -47,12 +47,11 @@ public class ComponentJList extends JList {
         ++numOfElements;
         ListModel currentList = this.getModel();
         Component[] newList = new Component[currentList.getSize() + 1];
-        for (int i = 0; i < currentList.getSize(); ++i) {
-            if (currentList.getElementAt(i) instanceof JCheckBox)
-                newList[i] = (JCheckBox) currentList.getElementAt(i);
-            else
-                newList[i] = (TextFieldComponent) currentList.getElementAt(i);
-        }
+        for (int i = 0; i < currentList.getSize(); ++i)
+			if (currentList.getElementAt(i) instanceof JCheckBox)
+				newList[i] = (JCheckBox) currentList.getElementAt(i);
+			else
+				newList[i] = (TextFieldComponent) currentList.getElementAt(i);
         newList[newList.length - 1] = component;
         setListData(newList);
     }

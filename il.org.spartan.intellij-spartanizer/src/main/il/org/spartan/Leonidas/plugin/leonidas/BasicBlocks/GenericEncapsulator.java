@@ -129,9 +129,8 @@ public abstract class GenericEncapsulator extends Encapsulator {
     protected List<PsiElement> applyReplacingRules(List<PsiElement> elements, Map<Integer, List<PsiElement>> map){
         return elements.stream().map(e -> {
             PsiElement temp = e;
-            for (ReplacingRule rr : replacingRules) {
-                temp = rr.replace(temp, map);
-            }
+            for (ReplacingRule rr : replacingRules)
+				temp = rr.replace(temp, map);
             return temp;
         }).collect(Collectors.toList());
     }

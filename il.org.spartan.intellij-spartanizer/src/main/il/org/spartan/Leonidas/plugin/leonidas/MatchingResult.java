@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class MatchingResult {
     Map<Integer, List<PsiElement>> m = new HashMap<>();
-    boolean b = false;
+    boolean b;
 
     public MatchingResult(boolean defaultRes) {
         b = defaultRes;

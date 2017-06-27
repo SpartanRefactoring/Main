@@ -27,7 +27,7 @@ import java.util.Map;
  * @since 24/04/2017
  */
 class ToolBoxController extends JFrame {
-    private static boolean active = false;
+    private static boolean active;
     private JPanel mainPanel;
     private JButton applyButton;
     private JButton clearAllButton;
@@ -44,7 +44,8 @@ class ToolBoxController extends JFrame {
 
     public ToolBoxController() {
         super("Spartanizer ToolBox Controller");
-        if(active){return;}
+        if(active)
+			return;
         active = true;
         LeonidasIcon.apply(this);
         list = new CheckBoxList();
@@ -83,9 +84,8 @@ class ToolBoxController extends JFrame {
                     for (Map.Entry<String, String> entry : examples.entrySet()) {
                         before = entry.getKey();
                         after = entry.getValue();
-                        if (before == null || after == null) {
-                            continue;
-                        }
+                        if (before == null || after == null)
+							continue;
                         break;
                     }
                     String text = "Before:\n" + before + "\n\n" +
@@ -132,9 +132,8 @@ class ToolBoxController extends JFrame {
         for (int i = 0; i < list.getNumOfElements(); ++i) {
             JCheckBox checkbox = (JCheckBox)
                     list.getModel().getElementAt(i);
-            if (checkbox.isSelected()) {
-                updateList.add(checkbox.getText());
-            }
+            if (checkbox.isSelected())
+				updateList.add(checkbox.getText());
         }
         Toolbox.getInstance().updateTipperList(updateList);
         Project p = Utils.getProject();

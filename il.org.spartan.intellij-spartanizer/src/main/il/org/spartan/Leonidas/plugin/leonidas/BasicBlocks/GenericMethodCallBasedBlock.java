@@ -26,7 +26,6 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
      */
     @SuppressWarnings("unused")
     protected GenericMethodCallBasedBlock(String template) {
-        super();
         this.template = template;
     }
 

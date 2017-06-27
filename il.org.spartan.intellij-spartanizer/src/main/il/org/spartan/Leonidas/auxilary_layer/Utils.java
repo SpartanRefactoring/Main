@@ -161,27 +161,24 @@ public enum Utils {
     public static PsiElement getNextActualSibling(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
-        while (current != null && (iz.whiteSpace(current) || iz.comment(current))) {
-            current = current.getNextSibling();
-        }
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
+			current = current.getNextSibling();
         return current;
     }
 
     public static PsiElement getPrevActualSibling(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getPrevSibling();
-        while (current != null && (iz.whiteSpace(current) || iz.comment(current))) {
-            current = current.getPrevSibling();
-        }
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
+			current = current.getPrevSibling();
         return current;
     }
 
     public static PsiElement getNextActualSiblingWithComments(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
-        while (current != null && iz.whiteSpace(current)) {
-            current = current.getNextSibling();
-        }
+        while (current != null && iz.whiteSpace(current))
+			current = current.getNextSibling();
         return current;
     }
 

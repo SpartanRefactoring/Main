@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, Cloneable {
 
-    int cursor = 0;
+    int cursor;
     private int skipCounter;
     private int skipOverall;
     private boolean shouldSkip;

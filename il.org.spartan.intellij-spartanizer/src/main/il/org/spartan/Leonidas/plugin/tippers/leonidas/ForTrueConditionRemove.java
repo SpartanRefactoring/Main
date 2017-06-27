@@ -25,10 +25,8 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
     public void matcher() {
         new Template(() -> {
             /* start */
-            for (statement(0); true; statement(1)) {
-                anyNumberOf(statement(2));
-            }
-            /* end */
+            for (statement(0); true; statement(1))
+				anyNumberOf(statement(2));
         });
     }
 
@@ -36,10 +34,8 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /* start */
-            for (statement(0); ; statement(1)) {
-                anyNumberOf(statement(2));
-            }
-            /* end */
+            for (statement(0); ; statement(1))
+				anyNumberOf(statement(2));
         });
     }
 

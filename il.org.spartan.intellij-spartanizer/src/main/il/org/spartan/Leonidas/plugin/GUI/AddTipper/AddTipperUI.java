@@ -25,15 +25,14 @@ public class AddTipperUI extends JFrame {
         setSize(600, 800);
         matcherTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         replacerTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        if (UIUtil.isUnderDarcula()) {
-            try {
-                Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
-                theme.apply(matcherTextArea);
-                theme.apply(replacerTextArea);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        if (UIUtil.isUnderDarcula())
+			try {
+				Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
+				theme.apply(matcherTextArea);
+				theme.apply(replacerTextArea);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     }
 
     private void buttonSaveActionPerformed(ActionEvent e) {
@@ -127,10 +126,7 @@ public class AddTipperUI extends JFrame {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 0), 0, 0));
 
-            //======== scrollPane1 ========
-            {
-                scrollPane1.setViewportView(matcherTextArea);
-            }
+            scrollPane1.setViewportView(matcherTextArea);
             panel1.add(scrollPane1, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
@@ -153,10 +149,7 @@ public class AddTipperUI extends JFrame {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 0), 0, 0));
 
-            //======== scrollPane2 ========
-            {
-                scrollPane2.setViewportView(replacerTextArea);
-            }
+            scrollPane2.setViewportView(replacerTextArea);
             panel2.add(scrollPane2, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));

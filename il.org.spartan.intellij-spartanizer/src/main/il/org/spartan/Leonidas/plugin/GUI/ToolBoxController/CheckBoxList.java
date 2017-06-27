@@ -29,10 +29,8 @@ class CheckBoxList extends JList {
                                      checkbox.setSelected(!checkbox.isSelected());
                                      repaint();
                                  }
-                                 if (e.getClickCount() == 2) {
-                                     // double click
-                                     new EditTipper(((JCheckBox) getModel().getElementAt(index)).getText());
-                                 }
+                                 if (e.getClickCount() == 2)
+									new EditTipper(((JCheckBox) getModel().getElementAt(index)).getText());
                              }
                          }
         );
@@ -49,9 +47,8 @@ class CheckBoxList extends JList {
         ++numOfElements;
         ListModel currentList = this.getModel();
         JCheckBox[] newList = new JCheckBox[currentList.getSize() + 1];
-        for (int i = 0; i < currentList.getSize(); ++i) {
-            newList[i] = (JCheckBox) currentList.getElementAt(i);
-        }
+        for (int i = 0; i < currentList.getSize(); ++i)
+			newList[i] = (JCheckBox) currentList.getElementAt(i);
         newList[newList.length - 1] = checkBox;
         setListData(newList);
     }

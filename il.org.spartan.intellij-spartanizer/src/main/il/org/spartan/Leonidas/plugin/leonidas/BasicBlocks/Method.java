@@ -105,9 +105,8 @@ public class Method extends ModifiableElement {
         l.forEach(root -> root.accept(e -> {
             if (e.isGeneric()) {
                 map.put(az.generic(e).getId(), (GenericEncapsulator) e);
-                if (iz.quantifier(e)){
-                    map.put(az.quantifier(e).getId(), az.generic(az.quantifier(e).getInternal()));
-                }
+                if (iz.quantifier(e))
+					map.put(az.quantifier(e).getId(), az.generic(az.quantifier(e).getInternal()));
             }
         }));
 

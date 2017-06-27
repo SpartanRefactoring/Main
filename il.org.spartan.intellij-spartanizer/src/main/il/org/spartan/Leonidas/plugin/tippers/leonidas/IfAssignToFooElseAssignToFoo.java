@@ -35,11 +35,7 @@ public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
 
     @Override
     public void replacer() {
-        new Template(() -> {
-            /* start */
-            identifier0 = booleanExpression(1) ? expression(2) : expression(3);
-            /* end */
-        }
+        new Template(() -> identifier0 = booleanExpression(1) ? expression(2) : expression(3)
         );
     }
 

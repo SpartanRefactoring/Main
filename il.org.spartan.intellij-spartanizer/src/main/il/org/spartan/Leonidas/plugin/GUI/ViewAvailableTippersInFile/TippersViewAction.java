@@ -19,9 +19,8 @@ class TippersViewAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
         PsiClass psiClass = getPsiClassFromContext(anActionEvent);
-        if(psiClass == null){
-            return;
-        }
+        if(psiClass == null)
+			return;
         PsiFile pf = psiClass.getContainingFile();
 //        if (!Spartanizer.shouldSpartanize(pf))
 //            return;

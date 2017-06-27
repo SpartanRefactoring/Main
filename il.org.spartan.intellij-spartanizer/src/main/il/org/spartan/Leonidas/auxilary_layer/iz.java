@@ -209,9 +209,8 @@ public enum iz {
     public static MatchingResult conforms(Encapsulator e1, Encapsulator e2, Map<Integer, List<PsiElement>> m) {
         if (literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner()))
             return new MatchingResult(true);
-        if (iz.generic(e2)){
-            return genericConforms(e1, e2, m);
-        }
+        if (iz.generic(e2))
+			return genericConforms(e1, e2, m);
         return new MatchingResult(elseConforms(e1.getInner(), e2.getInner()));
     }
 
@@ -482,9 +481,8 @@ public enum iz {
             return type == INTEGER_LITERAL || type == DOUBLE_LITERAL || type == FLOAT_LITERAL;
         }
 
-        if (!iz.binaryExpression(e)) {
-            return false;
-        }
+        if (!iz.binaryExpression(e))
+			return false;
 
         PsiBinaryExpression be = az.binaryExpression(e);
         return arithmetic(be.getLOperand()) && arithmetic(be.getROperand());

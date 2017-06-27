@@ -85,9 +85,8 @@ public class Class extends NamedElement{
         if (matchers.isEmpty()) return new MatchingResult(true);
         List<List<MatchingResult>> l = matchers.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
         MatchingResult[] ass = new MatchingResult[matchers.size()];
-        if (!matchInnerElementAux(l, matchers.size() - 1, new LinkedList<>(), ass)){
-            return new MatchingResult(false);
-        }
+        if (!matchInnerElementAux(l, matchers.size() - 1, new LinkedList<>(), ass))
+			return new MatchingResult(false);
         MatchingResult mr = new MatchingResult(true);
         Arrays.stream(ass).forEach(a -> mr.combineWith(a));
         return mr;
