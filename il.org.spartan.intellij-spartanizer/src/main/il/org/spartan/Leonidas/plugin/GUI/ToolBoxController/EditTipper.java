@@ -218,9 +218,10 @@ public class EditTipper extends JFrame {
         LeonidasTipper lt = (LeonidasTipper)currentTip;
         List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
 
-        int currRow = updateFieldsFromTable(tipperMatcherRoots, 0, true);
-        updateFieldsFromTable(lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root))
-				.flatMap(list -> list.stream()).collect(Collectors.toList()),currRow,false);
+        updateFieldsFromTable(
+				lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root))
+						.flatMap(list -> list.stream()).collect(Collectors.toList()),
+				updateFieldsFromTable(tipperMatcherRoots, 0, true), false);
 
     }
 
