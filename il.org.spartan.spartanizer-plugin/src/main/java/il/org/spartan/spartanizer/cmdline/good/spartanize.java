@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import org.junit.*;
-
 import fluent.ly.*;
 import il.org.spartan.external.*;
 
@@ -21,7 +19,7 @@ public class spartanize {
     visit(args.length != 0 ? args : defaultArguments);
   }
   public static void visit(final String... arguments) {
-    for (final String ¢ : External.Introspector.extract(arguments, system.myCallerFullClassName()))
+    for (final String ¢ : External.Introspector.extract(arguments, system.containingClass(new Object(){})))
       matteo(¢);
   }
   private static void matteo(String ¢) {
