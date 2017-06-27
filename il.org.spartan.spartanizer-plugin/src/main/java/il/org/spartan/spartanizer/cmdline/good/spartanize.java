@@ -13,15 +13,15 @@ import il.org.spartan.spartanizer.cmdline.good.*;
  * @author Matteo Orru'
  * @since 2017-06-25 */
 public class spartanize {
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputDir = system.isWindows() ? "" : ".";
+  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputDir = "/tmp";
   @External(alias = "t", value = "sp_type") @SuppressWarnings("CanBeFinal") protected static String spartanization_type = "batch";
 
-  private static final Nanonizer nanonizer = new Nanonizer();
+  // private static final Nanonizer nanonizer = new Nanonizer();
   private static final InteractiveSpartanizer is = new InteractiveSpartanizer();
   
   public static void main(final String[] args) {
-    if(spartanization_type.equals("batch"))
+    //if(spartanization_type.equals("batch"))
       batchSpartanize(args);
   }
 
