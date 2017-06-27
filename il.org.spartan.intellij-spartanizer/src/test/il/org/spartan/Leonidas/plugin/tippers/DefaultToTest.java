@@ -82,9 +82,9 @@ public class DefaultToTest extends PsiTypeHelper {
     }
 
     private PsiConditionalExpression createConditionalExpressionFromLegalString(String conditionalString) {
-        int indexOfQuestionMark = conditionalString.indexOf('?'), indexOfColon = conditionalString.indexOf(':');
-        return createTestConditionalExpression(conditionalString.substring(0, indexOfQuestionMark).trim(),
-				conditionalString.substring(indexOfQuestionMark + 1, indexOfColon).trim(),
+        int $ = conditionalString.indexOf('?'), indexOfColon = conditionalString.indexOf(':');
+        return createTestConditionalExpression(conditionalString.substring(0, $).trim(),
+				conditionalString.substring($ + 1, indexOfColon).trim(),
 				conditionalString.substring(indexOfColon + 1).trim());
     }
 

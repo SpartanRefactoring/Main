@@ -45,12 +45,12 @@ public class PsiFileCenter {
         if (s == null)
 			return null;
         List<CodeType> codeTypesByGenerality = Arrays.asList(CodeType.FILE_BOUND, CodeType.CLASS_BOUND, CodeType.METHOD_BOUND, CodeType.EXPRESSION, CodeType.ENUM_BOUND);
-        PsiFile file;
+        PsiFile $;
         for (CodeType type : codeTypesByGenerality) {
-            file = PsiFileFactory.getInstance(Utils.getProject())
+            $ = PsiFileFactory.getInstance(Utils.getProject())
                     .createFileFromText(JavaLanguage.INSTANCE, wrappingPrefixes.get(type) + marker + "\n\n" + s + "\n\n" + marker + wrappingPostfixes.get(type));
             Wrapper<Boolean> isValid = new Wrapper(true);
-            file.accept(new JavaRecursiveElementVisitor() {
+            $.accept(new JavaRecursiveElementVisitor() {
                 @Override
                 public void visitErrorElement(PsiErrorElement ¢) {
                     isValid.set(false);
@@ -58,7 +58,7 @@ public class PsiFileCenter {
                 }
             });
             if (isValid.get())
-				return new PsiFileWrapper(file, type);
+				return new PsiFileWrapper($, type);
         }
 
         return new PsiFileWrapper(null, CodeType.ILLEGAL);
@@ -91,7 +91,7 @@ public class PsiFileCenter {
         }
 
         public String extractCanonicalSubtreeString() {
-            String raw = extractRelevantSubtreeString().replaceAll("\t", " ").trim().replaceAll(" +", " ").replaceAll(" ,", ",")
+            String $ = extractRelevantSubtreeString().replaceAll("\t", " ").trim().replaceAll(" +", " ").replaceAll(" ,", ",")
 					.replaceAll(", ", ",").replaceAll(";;", "; ;").replaceAll("\n+", "\n").replaceAll("\n ", "\n")
 					.replaceAll(" \n", "\n").replaceAll("if \\(", "if(").replaceAll("for \\(", "for(")
 					.replaceAll("while \\(", "while(").replaceAll("switch \\(", "switch(").replaceAll("\\) \\{", "){")
@@ -99,7 +99,7 @@ public class PsiFileCenter {
 					.replaceAll(" >", ">").replaceAll("> ", ">").replaceAll(" <", "<").replaceAll("< ", "<")
 					.replaceAll("\\+ ", "+").replaceAll(" \\+", "+").replaceAll("- ", "-").replaceAll(" -", "-")
 					.replaceAll(" /", "/").replaceAll("/ ", "/").replaceAll(" \\*", "*").replaceAll("\\* ", "*");
-            return raw;
+            return $;
         }
 
         private String extractRelevantSubtreeString() {

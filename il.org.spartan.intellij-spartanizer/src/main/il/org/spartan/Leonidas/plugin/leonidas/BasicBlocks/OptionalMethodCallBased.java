@@ -28,14 +28,14 @@ public class OptionalMethodCallBased extends QuantifierMethodCallBased {
     }
 
     @Override
-    public OptionalMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public OptionalMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new OptionalMethodCallBased(e.getInner(), Pruning.prune(
 				Encapsulator.buildTreeFromPsi(step.firstParameterExpression(az.methodCallExpression(e.getInner()))),
-				map));
+				m));
     }
 
     @Override
-    public int getNumberOfOccurrences(EncapsulatorIterator it, Map<Integer, List<PsiElement>> m) {
-        return iz.conforms(it.value(), internal, m).matches() ? 1 : 0;
+    public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
+        return iz.conforms(i.value(), internal, m).matches() ? 1 : 0;
     }
 }

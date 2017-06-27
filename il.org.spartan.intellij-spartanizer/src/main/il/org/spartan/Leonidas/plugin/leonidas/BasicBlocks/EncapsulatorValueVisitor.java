@@ -7,5 +7,5 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
  * @since 22-02-2017.
  */
 public interface EncapsulatorValueVisitor<T> {
-    T visit(Encapsulator n);
+    T visit(Encapsulator e);
 }

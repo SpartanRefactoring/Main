@@ -43,37 +43,37 @@ class CheckBoxList extends JList {
         return numOfElements;
     }
 
-    public void addCheckbox(JCheckBox checkBox) {
+    public void addCheckbox(JCheckBox b) {
         ++numOfElements;
         ListModel currentList = this.getModel();
         JCheckBox[] newList = new JCheckBox[currentList.getSize() + 1];
-        for (int i = 0; i < currentList.getSize(); ++i)
-			newList[i] = (JCheckBox) currentList.getElementAt(i);
-        newList[newList.length - 1] = checkBox;
+        for (int ¢ = 0; ¢ < currentList.getSize(); ++¢)
+			newList[¢] = (JCheckBox) currentList.getElementAt(¢);
+        newList[newList.length - 1] = b;
         setListData(newList);
     }
 
     public void setAllCheckBoxes(boolean flag) {
         ListModel currentList = this.getModel();
         JCheckBox[] newList = new JCheckBox[currentList.getSize()];
-        for (int i = 0; i < currentList.getSize(); ++i) {
-            newList[i] = (JCheckBox) currentList.getElementAt(i);
-            newList[i].setSelected(flag);
+        for (int ¢ = 0; ¢ < currentList.getSize(); ++¢) {
+            newList[¢] = (JCheckBox) currentList.getElementAt(¢);
+            newList[¢].setSelected(flag);
         }
         setListData(newList);
     }
 
     protected class CellRenderer implements ListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JCheckBox checkbox = (JCheckBox) value;
-            checkbox.setBackground(getBackground());
-            checkbox.setForeground(getForeground());
-            checkbox.setEnabled(isEnabled());
-            checkbox.setFont(getFont());
-            checkbox.setFocusPainted(false);
-            checkbox.setBorderPainted(true);
-            checkbox.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
-            return checkbox;
+            JCheckBox $ = (JCheckBox) value;
+            $.setBackground(getBackground());
+            $.setForeground(getForeground());
+            $.setEnabled(isEnabled());
+            $.setFont(getFont());
+            $.setFocusPainted(false);
+            $.setBorderPainted(true);
+            $.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+            return $;
         }
     }
 

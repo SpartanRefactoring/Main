@@ -57,26 +57,26 @@ class TippersList extends JList {
         return numOfElements;
     }
 
-    public void addTipper(JLabel label) {
+    public void addTipper(JLabel l) {
         ++numOfElements;
         ListModel currentList = this.getModel();
         JLabel[] newList = new JLabel[currentList.getSize() + 1];
-        for (int i = 0; i < currentList.getSize(); ++i)
-			newList[i] = (JLabel) currentList.getElementAt(i);
-        newList[newList.length - 1] = label;
+        for (int ¢ = 0; ¢ < currentList.getSize(); ++¢)
+			newList[¢] = (JLabel) currentList.getElementAt(¢);
+        newList[newList.length - 1] = l;
         setListData(newList);
     }
 
 
     protected class CellRenderer implements ListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) value;
-            label.setBackground(getBackground());
-            label.setForeground(getForeground());
-            label.setEnabled(isEnabled());
-            label.setFont(getFont());
-            label.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
-            return label;
+            JLabel $ = (JLabel) value;
+            $.setBackground(getBackground());
+            $.setForeground(getForeground());
+            $.setEnabled(isEnabled());
+            $.setFont(getFont());
+            $.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+            return $;
         }
     }
 

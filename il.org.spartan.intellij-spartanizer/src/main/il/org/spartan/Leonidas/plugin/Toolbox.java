@@ -3,16 +3,11 @@ package il.org.spartan.Leonidas.plugin;
 import com.google.gson.Gson;
 import com.intellij.codeInsight.actions.ReformatCodeAction;
 import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.actionSystem.Presentation;
-import com.intellij.openapi.actionSystem.impl.ActionManagerImpl;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
-import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.keymap.KeymapManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
@@ -69,15 +64,15 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public List<Tipper> getAllTippers() {
-        List<Tipper> list = new ArrayList<>();
-        this.allTipperMap.values().forEach(element -> element.forEach(list::add));
-        return list;
+        List<Tipper> $ = new ArrayList<>();
+        this.allTipperMap.values().forEach(element -> element.forEach($::add));
+        return $;
     }
 
     public List<Tipper> getCurrentTippers() {
-        List<Tipper> list = new ArrayList<>();
-        this.tipperMap.values().forEach(element -> element.forEach(list::add));
-        return list;
+        List<Tipper> $ = new ArrayList<>();
+        this.tipperMap.values().forEach(element -> element.forEach($::add));
+        return $;
     }
 
     private void initializeInstance() {
@@ -113,8 +108,8 @@ public class Toolbox implements ApplicationComponent {
                 .forEach(c -> {
                     try {
                         tipperInstances.add(c.newInstance());
-                    } catch (InstantiationException | IllegalAccessException e) {
-                        e.printStackTrace();
+                    } catch (InstantiationException | IllegalAccessException ¢) {
+                        ¢.printStackTrace();
                     }
                 });
     }
@@ -229,11 +224,11 @@ public class Toolbox implements ApplicationComponent {
      * Apply the tipper on the given element if possible.
      *
      * @param e      element to spartanize
-     * @param tipper tipper to be used
+     * @param t tipper to be used
      */
-    public void executeTipper(PsiElement e, Tipper<PsiElement> tipper) {
-        if (e != null && tipper != null && tipper.canTip(e))
-			tipper.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
+    public void executeTipper(PsiElement e, Tipper<PsiElement> t) {
+        if (e != null && t != null && t.canTip(e))
+			t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
         new ReformatCodeAction().actionPerformed(AnActionEvent.createFromDataContext("banana", null, new DataContext() {
 			@Override
 			@Nullable
@@ -298,14 +293,14 @@ public class Toolbox implements ApplicationComponent {
      * @return a tipper that can be applied on the element if one was found, <code>null</code> otherwise
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public Tipper getTipper(PsiElement e) {
+    public Tipper getTipper(PsiElement $) {
         try {
-            if (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) &&
-                    tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)))
+            if (!checkExcluded($.getContainingFile()) && canTipType($.getClass()) &&
+                    tipperMap.get($.getClass()).stream().anyMatch(tip -> tip.canTip($)))
 
-                return tipperMap.get(e.getClass())
+                return tipperMap.get($.getClass())
                         .stream()
-                        .filter(tip -> tip.canTip(e))
+                        .filter(tip -> tip.canTip($))
                         .findFirst()
                         .get();
         } catch (Exception ignore) {
@@ -319,14 +314,14 @@ public class Toolbox implements ApplicationComponent {
      * @param e element to check for tippers availability on
      * @return list of tippers
      */
-    public List<Tipper> getTippers(PsiElement e) {
+    public List<Tipper> getTippers(PsiElement $) {
         try {
-            if (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) &&
-                    tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)))
+            if (!checkExcluded($.getContainingFile()) && canTipType($.getClass()) &&
+                    tipperMap.get($.getClass()).stream().anyMatch(tip -> tip.canTip($)))
 
-                return tipperMap.get(e.getClass())
+                return tipperMap.get($.getClass())
                         .stream()
-                        .filter(tip -> tip.canTip(e))
+                        .filter(tip -> tip.canTip($))
                         .collect(Collectors.toList());
         } catch (Exception ignore) {
         }
@@ -335,16 +330,16 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public Tipper getTipperByName(String name) {
-        Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
-        if (!res.isPresent())
+        Optional<Tipper> $ = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
+        if (!$.isPresent())
 			return null;
-		return res.get();
+		return $.get();
     }
 
     public LeonidasTipperDefinition getTipperInstanceByName(String name) {
-        for (LeonidasTipperDefinition t : tipperInstances)
-			if (t.getClass().getName().substring(t.getClass().getName().lastIndexOf(".") + 1).equals(name))
-				return t;
+        for (LeonidasTipperDefinition $ : tipperInstances)
+			if ($.getClass().getName().substring($.getClass().getName().lastIndexOf(".") + 1).equals(name))
+				return $;
         return null;
     }
 
@@ -403,9 +398,9 @@ public class Toolbox implements ApplicationComponent {
         if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
             return new HashSet<>();
 
-        int line = FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor().offsetToLogicalPosition(e.getTextOffset()).line + 1;
+        int $ = FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor().offsetToLogicalPosition(e.getTextOffset()).line + 1;
         return tipperMap.get(e.getClass())
                 .stream()
-                .filter(tipper -> tipper.canTip(e)).map(tipper -> tipper.name() + " - Line " + line).collect(Collectors.toSet());
+                .filter(tipper -> tipper.canTip(e)).map(tipper -> tipper.name() + " - Line " + $).collect(Collectors.toSet());
     }
 }

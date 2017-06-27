@@ -64,10 +64,10 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public Map<String,String> getExamples(){
-        Map<String,String> examples = new HashMap<>();
-        examples.put("x>6 ? null : x;","eval(x).unless(x>6);");
-        examples.put("x>6 ? x : null",null);
-        examples.put("6==6 ? null : x","eval(x).unless(6==6);");
-        return examples;
+        Map<String,String> $ = new HashMap<>();
+        $.put("x>6 ? null : x;","eval(x).unless(x>6);");
+        $.put("x>6 ? x : null",null);
+        $.put("6==6 ? null : x","eval(x).unless(6==6);");
+        return $;
     }
 }

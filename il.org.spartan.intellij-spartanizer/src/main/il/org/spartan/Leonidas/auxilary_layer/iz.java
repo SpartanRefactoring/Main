@@ -472,19 +472,19 @@ public enum iz {
      *  3 + 4
      *  5 * 6
      *
-     * @param e element to check
+     * @param x element to check
      * @return <code>true</code> if the element is arithmetic, <code>false</code> otherwise
      */
-    public static boolean arithmetic(PsiExpression e) {
-        if (iz.literal(e)) {
-            IElementType type = az.javaToken(az.literal(e).getFirstChild()).getTokenType();
+    public static boolean arithmetic(PsiExpression x) {
+        if (iz.literal(x)) {
+            IElementType type = az.javaToken(az.literal(x).getFirstChild()).getTokenType();
             return type == INTEGER_LITERAL || type == DOUBLE_LITERAL || type == FLOAT_LITERAL;
         }
 
-        if (!iz.binaryExpression(e))
+        if (!iz.binaryExpression(x))
 			return false;
 
-        PsiBinaryExpression be = az.binaryExpression(e);
+        PsiBinaryExpression be = az.binaryExpression(x);
         return arithmetic(be.getLOperand()) && arithmetic(be.getROperand());
     }
 

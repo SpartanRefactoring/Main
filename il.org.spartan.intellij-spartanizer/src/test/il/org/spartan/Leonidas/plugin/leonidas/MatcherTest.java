@@ -119,9 +119,9 @@ public class MatcherTest extends PsiTypeHelper {
     private void giveIdToStubMethodCalls(PsiElement tree) {
         tree.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(element)).findFirst().ifPresent(λ -> element.putUserData(KeyDescriptionParameters.ID, λ.extractId(element)));
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(e)).findFirst().ifPresent(λ -> e.putUserData(KeyDescriptionParameters.ID, λ.extractId(e)));
             }
         });
     }

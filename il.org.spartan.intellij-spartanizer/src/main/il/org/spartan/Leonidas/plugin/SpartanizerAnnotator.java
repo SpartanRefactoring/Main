@@ -13,12 +13,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.JBColor;
 import com.intellij.util.IncorrectOperationException;
-import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * @author Oren Afek
@@ -50,12 +47,12 @@ public class SpartanizerAnnotator implements Annotator {
 					}
 
 					@Override
-					public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+					public boolean isAvailable(@NotNull Project p, Editor editor, PsiFile f) {
 						return true;
 					}
 
 					@Override
-					public void invoke(@NotNull Project project, Editor editor, PsiFile file)
+					public void invoke(@NotNull Project p, Editor editor, PsiFile f)
 							throws IncorrectOperationException {
 						Spartanizer.spartanizeElement(e, tipper);
 					}
@@ -69,8 +66,8 @@ public class SpartanizerAnnotator implements Annotator {
 				annotation.setEnforcedTextAttributes(
 						new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0));
 			});
-        } catch (Throwable t) {
-            new Logger(this.getClass()).error("", t);
+        } catch (Throwable ¢) {
+            new Logger(this.getClass()).error("", ¢);
         }
     }
 }

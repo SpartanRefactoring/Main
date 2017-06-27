@@ -56,43 +56,43 @@ public class GridBagTable extends JPanel {
     }
 
     private JLabel makeHeaderLabel(String label) {
-        JLabel labelPropertyId = new JLabel(label);
-        labelPropertyId.setHorizontalAlignment(JLabel.CENTER);
-        labelPropertyId.setFont(new Font(Font.DIALOG, Font.BOLD, 14));
-        return labelPropertyId;
+        JLabel $ = new JLabel(label);
+        $.setHorizontalAlignment(JLabel.CENTER);
+        $.setFont(new Font(Font.DIALOG, Font.BOLD, 14));
+        return $;
     }
 
     private GridBagConstraints makeHeaderConstraints(int gridx) {
         final int headerGridY = 0;
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.gridx = gridx;
-        gc.gridy = headerGridY;
-        gc.weightx = 50;
-        gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.insets = new Insets(5, 5, 5, 5);
-        return gc;
+        GridBagConstraints $ = new GridBagConstraints();
+        $.gridx = gridx;
+        $.gridy = headerGridY;
+        $.weightx = 50;
+        $.fill = GridBagConstraints.HORIZONTAL;
+        $.insets = new Insets(5, 5, 5, 5);
+        return $;
     }
 
     private GridBagConstraints makeContentConstraints(int gridx, int gridy, int weightx) {
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.gridx = gridx;
-        gc.gridy = gridy;
-        gc.weightx = weightx;
-        gc.anchor = GridBagConstraints.FIRST_LINE_START;
-        gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.insets = new Insets(5, 5, 5, 5);
-        return gc;
+        GridBagConstraints $ = new GridBagConstraints();
+        $.gridx = gridx;
+        $.gridy = gridy;
+        $.weightx = weightx;
+        $.anchor = GridBagConstraints.FIRST_LINE_START;
+        $.fill = GridBagConstraints.HORIZONTAL;
+        $.insets = new Insets(5, 5, 5, 5);
+        return $;
     }
 
     private GridBagConstraints makeSeparatorConstraints(int gridy) {
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.gridx = 0;
-        gc.gridy = gridy;
-        gc.weightx = 1;
-        gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.anchor = GridBagConstraints.FIRST_LINE_START;
-        gc.gridwidth = 2;
-        return gc;
+        GridBagConstraints $ = new GridBagConstraints();
+        $.gridx = 0;
+        $.gridy = gridy;
+        $.weightx = 1;
+        $.fill = GridBagConstraints.HORIZONTAL;
+        $.anchor = GridBagConstraints.FIRST_LINE_START;
+        $.gridwidth = 2;
+        return $;
     }
 }
 

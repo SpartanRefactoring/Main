@@ -40,33 +40,33 @@ public abstract class QuantifierBasedNames extends NamedElement{
     }
 
     @Override
-    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        QuantifierBasedNames o = create(e, map);
-        Encapsulator upperElement = o.getConcreteParent(e);
-        o.inner = upperElement.inner;
-        if (o.isGeneric())
-            o.putId(o.extractId(e.getInner()));
-        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+        QuantifierBasedNames $ = create(e, m);
+        Encapsulator upperElement = $.getConcreteParent(e);
+        $.inner = upperElement.inner;
+        if ($.isGeneric())
+            $.putId($.extractId(e.getInner()));
+        return upperElement.getParent() == null ? $ : upperElement.generalizeWith($);
     }
 
     @PreservesIterator
     public abstract int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m);
 
-    public abstract QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
+    public abstract QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m);
 
     public Encapsulator getInternal(){
         return internal;
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (!iz.generic(internal)) return super.replaceByRange(elements, m ,r);
-        elements = az.generic(internal).applyReplacingRules(elements, m);
-        if (parent == null) return elements;
-        List<PsiElement> l = Lists.reverse(elements);
+    public List<PsiElement> replaceByRange(List<PsiElement> $, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.generic(internal)) return super.replaceByRange($, m ,r);
+        $ = az.generic(internal).applyReplacingRules($, m);
+        if (parent == null) return $;
+        List<PsiElement> l = Lists.reverse($);
         l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
         r.deleteByRange(inner.getParent(), inner, inner);
-        return elements;
+        return $;
     }
 }

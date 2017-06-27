@@ -77,10 +77,10 @@ public class GenericPsiElementStub {
      * The above code example represents a union of a method and a statement.
      *
      * @param id      the serial no to distinct between several statements in the same tipper
-     * @param objects list of objects this union represents
+     * @param os list of objects this union represents
      * @return Union object that allows putting constraints on the union
      */
-    public static Union union(int id, Object... objects) {
+    public static Union union(int id, Object... os) {
         return new Union();
     }
 

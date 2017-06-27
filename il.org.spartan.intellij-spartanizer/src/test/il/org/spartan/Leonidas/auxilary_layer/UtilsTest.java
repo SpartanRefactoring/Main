@@ -1,8 +1,6 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
-import com.intellij.psi.PsiCodeBlock;
 import com.intellij.psi.PsiIdentifier;
-import com.intellij.psi.PsiIfStatement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 

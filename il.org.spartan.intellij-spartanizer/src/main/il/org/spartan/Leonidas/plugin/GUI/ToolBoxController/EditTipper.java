@@ -14,13 +14,8 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +100,7 @@ public class EditTipper extends JFrame {
 		return false;
     }
 
-    private int buildTableFields(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
+    private int buildTableFields(List<GenericEncapsulator> tipperRoots,int $,boolean matcher){
         for(GenericEncapsulator root : tipperRoots)
 			for (Field field : root.getClass().getFields()) {
 				if ((matcher && !field.isAnnotationPresent(UserControlled.class))
@@ -120,23 +115,23 @@ public class EditTipper extends JFrame {
 				Class type = field.getType();
 				try {
 					if (type.isPrimitive() && "boolean".equals(type.getName())) {
-						table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i, 0);
-						table.getModel().setValueAt(new JCheckBox("", (Boolean) field.get(root)), i++, 1);
+						table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), $, 0);
+						table.getModel().setValueAt(new JCheckBox("", (Boolean) field.get(root)), $++, 1);
 						continue;
 					}
 					if (type == List.class) {
 						for (Object element : (List) field.get(root)) {
-							table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i,
+							table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), $,
 									0);
-							table.getModel().setValueAt(new JTextField((String) element), i++, 1);
+							table.getModel().setValueAt(new JTextField((String) element), $++, 1);
 						}
 						continue;
 					}
 					if (type == Map.class) {
 						for (Map.Entry<Integer, String> entry : ((Map<Integer, String>) field.get(root)).entrySet()) {
-							table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i,
+							table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), $,
 									0);
-							table.getModel().setValueAt(new JTextField((String) entry.getValue()), i++, 1);
+							table.getModel().setValueAt(new JTextField((String) entry.getValue()), $++, 1);
 						}
 						continue;
 					}
@@ -144,25 +139,25 @@ public class EditTipper extends JFrame {
 						JComboBox cb = new JComboBox(new Existence[] { Existence.DO_NOT_CARE, Existence.MUST_EXISTS,
 								Existence.DOES_NOT_EXISTS });
 						cb.setSelectedItem(field.get(root));
-						table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i, 0);
-						table.getModel().setValueAt(cb, i++, 1);
+						table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), $, 0);
+						table.getModel().setValueAt(cb, $++, 1);
 						continue;
 					}
 					if (type.newInstance() instanceof String) {
 						if ("".equals((String) field.get(root)))
 							continue;
-						table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i, 0);
-						table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
+						table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), $, 0);
+						table.getModel().setValueAt(new JTextField((String) field.get(root)), $++, 1);
 						continue;
 					}
-				} catch (Exception e) {
-					note.bug(e);
+				} catch (Exception ¢) {
+					note.bug(¢);
 				}
 			}
-        return i;
+        return $;
     }
 
-    private int updateFieldsFromTable(List<GenericEncapsulator> tipperRoots,int i,boolean matcher){
+    private int updateFieldsFromTable(List<GenericEncapsulator> tipperRoots,int $,boolean matcher){
         for(GenericEncapsulator root : tipperRoots)
 			for (Field field : root.getClass().getFields()) {
 				if ((matcher && !field.isAnnotationPresent(UserControlled.class))
@@ -176,35 +171,35 @@ public class EditTipper extends JFrame {
 				Class type = field.getType();
 				try {
 					if (type.isPrimitive() && "boolean".equals(type.getName())) {
-						field.set(root, ((JCheckBox) table.getValueAt(i++, 1)).isSelected());
+						field.set(root, ((JCheckBox) table.getValueAt($++, 1)).isSelected());
 						continue;
 					}
 					if (type == List.class) {
 						int listSize = ((List) field.get(root)).size();
 						((List) field.get(root)).clear();
 						for (int j = 0; j < listSize; ++j)
-							((List) field.get(root)).add(((JTextField) table.getValueAt(i++, 1)).getText());
+							((List) field.get(root)).add(((JTextField) table.getValueAt($++, 1)).getText());
 						continue;
 					}
 					if (type == Map.class) {
 						for (Map.Entry<Integer, String> entry : ((Map<Integer, String>) field.get(root)).entrySet())
 							((Map<Integer, String>) field.get(root)).put(entry.getKey(),
-									((JTextField) table.getValueAt(i, 1)).getText());
+									((JTextField) table.getValueAt($, 1)).getText());
 						continue;
 					}
 					if (type == Existence.class) {
-						field.set(root, ((JComboBox) table.getValueAt(i++, 1)).getSelectedItem());
+						field.set(root, ((JComboBox) table.getValueAt($++, 1)).getSelectedItem());
 						continue;
 					}
 					if (type.newInstance() instanceof String) {
-						field.set(root, ((JTextField) table.getValueAt(i++, 1)).getText());
+						field.set(root, ((JTextField) table.getValueAt($++, 1)).getText());
 						continue;
 					}
-				} catch (Exception e) {
-					note.bug(e);
+				} catch (Exception ¢) {
+					note.bug(¢);
 				}
 			}
-        return i;
+        return $;
     }
 
     private void applyListener() {

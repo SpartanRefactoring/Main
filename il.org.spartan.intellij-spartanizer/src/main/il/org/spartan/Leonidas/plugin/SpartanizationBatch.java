@@ -47,9 +47,9 @@ public class SpartanizationBatch extends Task.Modal {
             ApplicationManager.getApplication().invokeLater(() -> {
                 try {
                     Spartanizer.spartanizeFileRecursively(f);
-                } catch (Throwable throwable) {
+                } catch (Throwable ¢) {
                     // we catch all throwables to prevent deadlock further ahead.
-                    fault.set(throwable);
+                    fault.set(¢);
                 } finally {
                     atomicBoolean.set(true);
                 }

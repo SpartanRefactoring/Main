@@ -30,18 +30,18 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
     @Override
     public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
         if (i.value().getParent() == null) return 1;
-        Wrapper<Integer> count = new Wrapper<>(0);
+        Wrapper<Integer> $ = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
         i.value().getParent().accept(λ -> {
-            if (generalizes(λ, m).matches()) count.set(count.get() + 1);
+            if (generalizes(λ, m).matches()) $.set($.get() + 1);
         });
-        return count.get();
+        return $.get();
     }
 
     @Override
-    public AnyNumberOfMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-       PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-       return new AnyNumberOfMethodCallBased(e.getInner(), internalEncapsulator(e));
+    public AnyNumberOfMethodCallBased create(Encapsulator $, Map<Integer, List<Matcher.Constraint>> m) {
+       PsiElement p = step.firstParameterExpression(az.methodCallExpression($.getInner()));
+       return new AnyNumberOfMethodCallBased($.getInner(), internalEncapsulator($));
     }
 
     private Encapsulator internalEncapsulator(Encapsulator ¢) {

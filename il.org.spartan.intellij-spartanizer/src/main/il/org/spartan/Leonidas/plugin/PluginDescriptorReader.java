@@ -36,16 +36,16 @@ public class PluginDescriptorReader {
         try {
             document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 					.parse(new InputSource(pluginXmlBuffer));
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-note.bug(e);
+        } catch (ParserConfigurationException | SAXException | IOException ¢) {
+note.bug(¢);
         }
     }
 
     public static String getPluginId() {
-        NodeList nodeList = document.getElementsByTagName(ID_ELEMENT_NAME);
-        for (int i = 0; i < nodeList.getLength(); ++i)
-			if (ROOT_ELEMENT_NAME.equals(nodeList.item(i).getParentNode().getNodeName()))
-				return nodeList.item(i).getTextContent();
+        NodeList $ = document.getElementsByTagName(ID_ELEMENT_NAME);
+        for (int ¢ = 0; ¢ < $.getLength(); ++¢)
+			if (ROOT_ELEMENT_NAME.equals($.item(¢).getParentNode().getNodeName()))
+				return $.item(¢).getTextContent();
         throw new RuntimeException("ID element wasn't found in plugin.xml");
     }
 }

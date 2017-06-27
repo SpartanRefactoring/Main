@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguageParserDefinitions;
-import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
@@ -77,7 +76,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     @Override
-    public String description(PsiElement element) {
+    public String description(PsiElement e) {
         return description;
     }
 
@@ -109,11 +108,11 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @param method the template method
+     * @param m the template method
      * @return The list of template roots inside 'start - and' section
      */
-    private List<Encapsulator> getForestFromMethod(PsiMethod method) {
-        PsiNewExpression ne = az.newExpression(az.expressionStatement(method.getBody().getStatements()[0]).getExpression());
+    private List<Encapsulator> getForestFromMethod(PsiMethod m) {
+        PsiNewExpression ne = az.newExpression(az.expressionStatement(m.getBody().getStatements()[0]).getExpression());
         PsiElement current;
         Wrapper<PsiElement> we = new Wrapper<>(ne);
         ne.accept(new JavaRecursiveElementVisitor() {
@@ -126,14 +125,14 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         });
         current = we.get();
         current = Utils.getNextActualSiblingWithComments(current);
-        List<Encapsulator> roots = new ArrayList<>();
+        List<Encapsulator> $ = new ArrayList<>();
         if (iz.declarationStatement(current) && iz.classDeclaration(current.getFirstChild()))
             current = current.getFirstChild();
         while (current != null && (!iz.comment(current) || !az.comment(current).getText().contains("end"))) {
-            roots.add(Pruning.prune(Encapsulator.buildTreeFromPsi(current), map));
+            $.add(Pruning.prune(Encapsulator.buildTreeFromPsi(current), map));
             current = Utils.getNextActualSiblingWithComments(current);
         }
-        return roots;
+        return $;
     }
 
     /**
@@ -145,9 +144,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private void giveIdToStubElements(PsiElement tree) {
         tree.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(element)).findFirst().ifPresent(λ -> element.putUserData(KeyDescriptionParameters.ID, λ.extractId(element)));
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(e)).findFirst().ifPresent(λ -> e.putUserData(KeyDescriptionParameters.ID, λ.extractId(e)));
             }
         });
     }
@@ -157,18 +156,18 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the body of the method
      */
     private PsiMethod getInterfaceMethod(String name) {
-        Wrapper<PsiMethod> x = new Wrapper<>();
+        Wrapper<PsiMethod> $ = new Wrapper<>();
         file.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethod(PsiMethod ¢) {
                 super.visitMethod(¢);
                 if (¢.getName().equals(name))
-					x.set(¢);
+					$.set(¢);
             }
         });
-        if (x.get() == null) return null;
-        giveIdToStubElements(x.get());
-        return x.get();
+        if ($.get() == null) return null;
+        giveIdToStubElements($.get());
+        return $.get();
     }
 
     /**
@@ -177,22 +176,22 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return PsiFile representing the file of the tipper
      */
     private PsiJavaFile getPsiTreeFromString(String name, String content) {
-        Language language = JavaLanguage.INSTANCE;
-        LightVirtualFile virtualFile = new LightVirtualFile(name, language, content);
+        Language $ = JavaLanguage.INSTANCE;
+        LightVirtualFile virtualFile = new LightVirtualFile(name, $, content);
         SingleRootFileViewProvider.doNotCheckFileSizeLimit(virtualFile);
-        final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage(language);
+        final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage($);
         FileViewProvider viewProvider = factory == null ? null
-				: factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true);
+				: factory.createFileViewProvider(virtualFile, $, Utils.getPsiManager(Utils.getProject()), true);
         if (viewProvider == null)
             viewProvider = new SingleRootFileViewProvider(
                     Utils.getPsiManager(ProjectManager.getInstance().getDefaultProject()),
                     virtualFile,
                     true
             );
-        language = viewProvider.getBaseLanguage();
-        if (LanguageParserDefinitions.INSTANCE.forLanguage(language) == null)
+        $ = viewProvider.getBaseLanguage();
+        if (LanguageParserDefinitions.INSTANCE.forLanguage($) == null)
 			return null;
-		return (PsiJavaFile) viewProvider.getPsi(language);
+		return (PsiJavaFile) viewProvider.getPsi($);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build Matcher ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -210,8 +209,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the generic forest representing the replacer template
      */
     private List<Encapsulator> initializeReplacerRoots(Map<Integer, List<PsiMethodCallExpression>> m) {
-        List<Encapsulator> l = getForestFromMethod((PsiMethod) getInterfaceMethod("replacer").copy());
-        l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
+        List<Encapsulator> $ = getForestFromMethod((PsiMethod) getInterfaceMethod("replacer").copy());
+        $.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
             List<Object> arguments = step.arguments(mce).stream().map(λ -> az.literal(λ).getValue()).collect(Collectors.toList());
             Encapsulator ie = !iz.quantifier(n) ? n : az.quantifier(n).getInternal();
             try {
@@ -221,7 +220,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             }
 
         })));
-        return l;
+        return $;
     }
 
     /**
@@ -238,16 +237,16 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the ID on which the rule applies. The previous example will return 3.
      */
     private Integer extractIdFromRule(PsiStatement s) {
-        Wrapper<PsiMethodCallExpression> x = new Wrapper<>();
+        Wrapper<PsiMethodCallExpression> $ = new Wrapper<>();
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression ¢) {
                 super.visitMethodCallExpression(¢);
                 if ("element".equals(¢.getMethodExpression().getText()))
-					x.set(¢);
+					$.set(¢);
             }
         });
-        return Integer.parseInt(step.arguments(x.get()).get(0).getText());
+        return Integer.parseInt(step.arguments($.get()).get(0).getText());
     }
 
     /**
@@ -256,9 +255,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * s is of the form 'element(index).isNot(constraint)' and "specific" if s is not structural rule.
      */
     private Constraint.ConstraintType extractConstraintType(PsiStatement s) {
-        String constraintName = az.methodCallExpression(s.getFirstChild()).getMethodExpression().getReferenceName();
+        String $ = az.methodCallExpression(s.getFirstChild()).getMethodExpression().getReferenceName();
         try {
-            return Constraint.ConstraintType.valueOf(constraintName.toUpperCase());
+            return Constraint.ConstraintType.valueOf($.toUpperCase());
         } catch (Exception ignore) {
         }
         return Constraint.ConstraintType.SPECIFIC;
@@ -270,34 +269,34 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @param s a string representing Psi element class. For example "PsiIfStatement".
      * @return a class object of the received class. For example "PsiIfStatement.class"
      */
-    private Class<? extends PsiElement> getPsiClass(String s) {
+    private Class<? extends PsiElement> getPsiClass(String $) {
         try {
             //noinspection unchecked
-            return (Class<? extends PsiElement>) Class.forName("com.intellij.psi." + s);
+            return (Class<? extends PsiElement>) Class.forName("com.intellij.psi." + $);
         } catch (ClassNotFoundException ignore) {
         }
         return PsiElement.class;
     }
 
     /**
-     * @param element         the root of the template.
+     * @param e         the root of the template.
      * @param rootElementType the type of the inner element to extract
      * @return the inner element derived by its type
      */
-    private PsiElement getRealRootByType(PsiElement element, Class<? extends PsiElement> rootElementType) {
-        Wrapper<PsiElement> result = new Wrapper<>();
+    private PsiElement getRealRootByType(PsiElement e, Class<? extends PsiElement> rootElementType) {
+        Wrapper<PsiElement> $ = new Wrapper<>();
         Wrapper<Boolean> stop = new Wrapper<>(false);
-        element.accept(new JavaRecursiveElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitElement(PsiElement ¢) {
                 super.visitElement(¢);
                 if (stop.get() || !iz.ofType(¢, rootElementType))
 					return;
-				result.set(¢);
+				$.set(¢);
 				stop.set(true);
             }
         });
-        return result.get();
+        return $.get();
     }
 
     /**
@@ -305,16 +304,16 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the body of the lambda expression that defines the constraint. The previous example will return !booleanExpression(4).
      */
     private PsiElement getLambdaExpressionBody(PsiStatement s) {
-        Wrapper<PsiLambdaExpression> l = new Wrapper<>();
+        Wrapper<PsiLambdaExpression> $ = new Wrapper<>();
         s.accept(new JavaRecursiveElementVisitor() {
 
             @Override
             public void visitLambdaExpression(PsiLambdaExpression ¢) {
                 super.visitLambdaExpression(¢);
-                l.set(¢);
+                $.set(¢);
             }
         });
-        return l.get().getBody();
+        return $.get().getBody();
     }
 
     /**
@@ -323,17 +322,17 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * if no "ofType" expression is found, Optional.empty() is returned.
      */
     private Optional<Class<? extends PsiElement>> getTypeOf(PsiStatement s) {
-        Wrapper<Optional<Class<? extends PsiElement>>> wq = new Wrapper<>(Optional.empty());
+        Wrapper<Optional<Class<? extends PsiElement>>> $ = new Wrapper<>(Optional.empty());
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression ¢) {
                 super.visitMethodCallExpression(¢);
                 if (¢.getMethodExpression().getText().endsWith("ofType"))
-					wq.set(Optional.of(getPsiClass(
+					$.set(Optional.of(getPsiClass(
 							¢.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
             }
         });
-        return wq.get();
+        return $.get();
     }
 
     // ~~~~~~~~~~~~~~~~~~ Build Constraints and Replacing rules ~~~~~~~~~~~~~~~~~~
@@ -351,10 +350,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return a mapping between the ID of generic elements to a list of all the constraint that apply on them.
      */
     private Map<Integer, List<Constraint>> getConstraints() {
-        Map<Integer, List<Constraint>> map = new HashMap<>();
+        Map<Integer, List<Constraint>> $ = new HashMap<>();
         PsiMethod constrainsMethod = getInterfaceMethod("constraints");
         if (constrainsMethod == null || !haz.body(constrainsMethod))
-			return map;
+			return $;
         Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
             Integer elementId = extractIdFromRule(s);
             Constraint.ConstraintType constraintType = extractConstraintType(s);
@@ -363,20 +362,20 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 				PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
 				List<Object> arguments = step.arguments(method).stream().map(λ -> az.literal(λ).getValue())
 						.collect(Collectors.toList());
-				map.putIfAbsent(elementId, new LinkedList<>());
-				map.get(elementId).add(new Matcher.NonStructuralConstraint(
+				$.putIfAbsent(elementId, new LinkedList<>());
+				$.get(elementId).add(new Matcher.NonStructuralConstraint(
 						method.getMethodExpression().getReferenceName(), arguments.toArray()));
 			} else {
 				PsiElement y = getLambdaExpressionBody(s);
 				Optional<Class<? extends PsiElement>> q = getTypeOf(s);
 				y = !q.isPresent() ? y : getRealRootByType(y, q.get());
-				map.putIfAbsent(elementId, new LinkedList<>());
+				$.putIfAbsent(elementId, new LinkedList<>());
 				List<Encapsulator> l = new LinkedList<>();
-				l.add(Pruning.prune(Encapsulator.buildTreeFromPsi(y), map));
-				map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, l));
+				l.add(Pruning.prune(Encapsulator.buildTreeFromPsi(y), $));
+				$.get(elementId).add(new Matcher.StructuralConstraint(constraintType, l));
 			}
         });
-        return map;
+        return $;
     }
 
     /**
@@ -389,18 +388,18 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return a mapping between the ID of generic elements to a list of all the replacing rules that apply on them.
      */
     private Map<Integer, List<PsiMethodCallExpression>> getReplacingRules() {
-        Map<Integer, List<PsiMethodCallExpression>> map = new HashMap<>();
+        Map<Integer, List<PsiMethodCallExpression>> $ = new HashMap<>();
         PsiMethod replacingRulesMethod = getInterfaceMethod("replacingRules");
         if (replacingRulesMethod == null || !haz.body(replacingRulesMethod))
-			return map;
+			return $;
         Arrays.stream(replacingRulesMethod.getBody().getStatements()).forEach(s -> {
             Integer elementId = extractIdFromRule(s);
             PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
-            map.putIfAbsent(elementId, new LinkedList<>());
-            map.get(elementId).add(method);
+            $.putIfAbsent(elementId, new LinkedList<>());
+            $.get(elementId).add(method);
 
         });
-        return map;
+        return $;
     }
 
     public Matcher getMatcher() {

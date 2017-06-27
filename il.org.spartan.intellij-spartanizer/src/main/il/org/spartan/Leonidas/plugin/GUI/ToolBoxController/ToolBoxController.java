@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
-import com.intellij.openapi.project.Project;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -15,8 +14,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +83,7 @@ class ToolBoxController extends JFrame {
 						continue;
 					break;
 				}
-				textArea1.setText("Before:\n" + before + "\n\n" + "After:\n" + after);
+				textArea1.setText("Before:\n" + before + "\n\nAfter:\n" + after);
             }
         });
 

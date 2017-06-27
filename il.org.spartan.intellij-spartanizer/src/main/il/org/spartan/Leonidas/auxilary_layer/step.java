@@ -116,24 +116,24 @@ public enum step {
         return ¢ == null ? null : ¢.getElseExpression();
     }
 
-    public static PsiElement nextSibling(PsiElement e) {
-        PsiElement b = e.getNextSibling();
-        while (b != null && iz.whiteSpace(b))
-            b = b.getNextSibling();
-        return b;
+    public static PsiElement nextSibling(PsiElement ¢) {
+        PsiElement $ = ¢.getNextSibling();
+        while ($ != null && iz.whiteSpace($))
+            $ = $.getNextSibling();
+        return $;
     }
 
     @NotNull
-    public static String docCommentString(@NotNull PsiJavaDocumentedElement e) {
-        PsiDocComment doc = e.getDocComment();
-        return doc == null ? "" : doc.getText().substring(3, doc.getText().length() - 2);
+    public static String docCommentString(@NotNull PsiJavaDocumentedElement ¢) {
+        PsiDocComment $ = ¢.getDocComment();
+        return $ == null ? "" : $.getText().substring(3, $.getText().length() - 2);
     }
 
     public static PsiElement getHighestParent(PsiElement e) {
-        PsiElement prev = e, next = e.getParent();
-        for (; next != null && next.getText().startsWith(prev.getText()); next = next.getParent())
-            prev = next;
-        return prev;
+        PsiElement $ = e, next = e.getParent();
+        for (; next != null && next.getText().startsWith($.getText()); next = next.getParent())
+            $ = next;
+        return $;
     }
 
     /**
@@ -163,14 +163,14 @@ public enum step {
     }
 
     public static Optional<PsiClass> clazz(PsiFile f) {
-        Wrapper<PsiClass> result = new Wrapper<>(null);
+        Wrapper<PsiClass> $ = new Wrapper<>(null);
         f.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitClass(PsiClass aClass) {
-                result.set(aClass);
+                $.set(aClass);
             }
         });
 
-        return result.get() == null ? Optional.empty() : Optional.of(result.get());
+        return $.get() == null ? Optional.empty() : Optional.of($.get());
     }
 }

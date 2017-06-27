@@ -51,7 +51,7 @@ public class FieldDeclaration extends ModifiableElement {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new FieldDeclaration(e);
     }
 

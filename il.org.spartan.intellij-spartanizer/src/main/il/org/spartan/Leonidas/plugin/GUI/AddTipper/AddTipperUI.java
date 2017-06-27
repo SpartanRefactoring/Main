@@ -30,8 +30,8 @@ public class AddTipperUI extends JFrame {
 				Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
 				theme.apply(matcherTextArea);
 				theme.apply(replacerTextArea);
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (IOException ¢) {
+				¢.printStackTrace();
 			}
     }
 

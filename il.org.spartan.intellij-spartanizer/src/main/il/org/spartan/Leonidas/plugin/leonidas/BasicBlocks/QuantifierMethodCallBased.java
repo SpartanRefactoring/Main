@@ -45,44 +45,44 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
 
     @Override
     public Integer extractId(PsiElement e) {
-        PsiElement ie = step.firstParameterExpression(az.methodCallExpression(e));
-        return Toolbox.getInstance().getGeneric(ie).map(λ -> λ.extractId(ie)).orElse(null);
+        PsiElement $ = step.firstParameterExpression(az.methodCallExpression(e));
+        return Toolbox.getInstance().getGeneric($).map(λ -> λ.extractId($)).orElse(null);
     }
 
     @Override
-    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        QuantifierMethodCallBased o = create(e, map);
-        Encapsulator upperElement = o.getConcreteParent(e);
-        o.inner = upperElement.inner;
-        if (!o.isGeneric())
-			return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
-		o.putId(o.extractId(e.getInner()));
-		o.extractAndAssignDescription(e.getInner());
-		return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+        QuantifierMethodCallBased $ = create(e, m);
+        Encapsulator upperElement = $.getConcreteParent(e);
+        $.inner = upperElement.inner;
+        if (!$.isGeneric())
+			return upperElement.getParent() == null ? $ : upperElement.generalizeWith($);
+		$.putId($.extractId(e.getInner()));
+		$.extractAndAssignDescription(e.getInner());
+		return upperElement.getParent() == null ? $ : upperElement.generalizeWith($);
     }
 
-    public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {
-        return create(n, map).getConcreteParent(n);
+    public Encapsulator getConcreteParent(Encapsulator e,  Map<Integer, List<Matcher.Constraint>> m) {
+        return create(e, m).getConcreteParent(e);
     }
 
     @PreservesIterator
     public abstract int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m);
 
-    public abstract QuantifierMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
+    public abstract QuantifierMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m);
 
     public Encapsulator getInternal(){
         return internal;
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (!iz.generic(internal)) return super.replaceByRange(elements, m ,r);
-        elements = az.generic(internal).applyReplacingRules(elements, m);
-        if (parent == null) return elements;
-        List<PsiElement> l = Lists.reverse(elements);
+    public List<PsiElement> replaceByRange(List<PsiElement> $, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.generic(internal)) return super.replaceByRange($, m ,r);
+        $ = az.generic(internal).applyReplacingRules($, m);
+        if (parent == null) return $;
+        List<PsiElement> l = Lists.reverse($);
         l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
         r.deleteByRange(inner.getParent(), inner, inner);
-        return elements;
+        return $;
     }
 }

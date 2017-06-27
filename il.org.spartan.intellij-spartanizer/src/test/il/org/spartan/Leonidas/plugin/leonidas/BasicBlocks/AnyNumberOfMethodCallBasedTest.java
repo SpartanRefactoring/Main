@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.google.common.io.Resources;
-import com.intellij.psi.PsiWhileStatement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
@@ -25,7 +24,7 @@ public class AnyNumberOfMethodCallBasedTest extends PsiTypeHelper {
         AnyNumberOfMethodCallBased ano = az.anyNumberOf(Pruning.prune(n, new HashMap<>()));
         EncapsulatorIterator it = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}")).iterator();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 1);
-        for (int i = 0; i < 13; ++i) it.next();
+        for (int ¢ = 0; ¢ < 13; ++¢) it.next();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 4);
     }
 

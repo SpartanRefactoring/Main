@@ -74,15 +74,15 @@ public abstract class GenericEncapsulator extends Encapsulator {
      *          for example: the methodCallExpression: statement(0).
      * @return The replacer of the syntactic generic element with the GenericEncapsulator
      */
-    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        Encapsulator upperElement = getConcreteParent(e);
-        GenericEncapsulator ge = create(upperElement, map);
+        Encapsulator $ = getConcreteParent(e);
+        GenericEncapsulator ge = create($, m);
         if (!isGeneric())
-			return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
+			return $.getParent() == null ? ge : $.generalizeWith(ge);
 		ge.putId(ge.extractId(e.getInner()));
 		ge.extractAndAssignDescription(e.getInner());
-		return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
+		return $.getParent() == null ? ge : $.generalizeWith(ge);
     }
 
     /**
@@ -104,10 +104,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * Creates another one like me, with concrete PsiElement within, since in the toolbox, only stubs are created.
      *
      * @param e element within.
-     * @param map a mapping between an id of generic element to it's list of constraints.
+     * @param m a mapping between an id of generic element to it's list of constraints.
      * @return new <B>Specific</B> GenericEncapsulator
      */
-    public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
+    public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m);
 
     /**
      * Do I generalize a concrete element
@@ -122,16 +122,16 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     /**
-     * @param elements the matching elements of this generic basic block of the user.
-     * @param map      the mapping between ids of generic elements and their concrete corresponding elements.
+     * @param es the matching elements of this generic basic block of the user.
+     * @param m      the mapping between ids of generic elements and their concrete corresponding elements.
      * @return the replaced elements.
      */
-    protected List<PsiElement> applyReplacingRules(List<PsiElement> elements, Map<Integer, List<PsiElement>> map){
-        return elements.stream().map(e -> {
-            PsiElement temp = e;
+    protected List<PsiElement> applyReplacingRules(List<PsiElement> es, Map<Integer, List<PsiElement>> m){
+        return es.stream().map(e -> {
+            PsiElement $ = e;
             for (ReplacingRule rr : replacingRules)
-				temp = rr.replace(temp, map);
-            return temp;
+				$ = rr.replace($, m);
+            return $;
         }).collect(Collectors.toList());
     }
 
@@ -141,39 +141,39 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @param r PsiRewrite
      * @return the concrete replacer of this generic basic block.
      */
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        elements = applyReplacingRules(elements, m);
-        if (parent == null) return elements;
-        if (elements.size() <= 1)
-			return Utils.wrapWithList(r.replace(inner, elements.get(0)));
-		List<PsiElement> l = Lists.reverse(elements);
+    public List<PsiElement> replaceByRange(List<PsiElement> $, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        $ = applyReplacingRules($, m);
+        if (parent == null) return $;
+        if ($.size() <= 1)
+			return Utils.wrapWithList(r.replace(inner, $.get(0)));
+		List<PsiElement> l = Lists.reverse($);
 		l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
 		r.deleteByRange(inner.getParent(), inner, inner);
-		return elements;
+		return $;
 
     }
 
     /**
-     * @param n stub representing generic element.
+     * @param e stub representing generic element.
      * @return the highest generic parent that should be pruned.
      */
-    public Encapsulator getConcreteParent(Encapsulator n) {
-        if (n.parent == null) return n;
-        Encapsulator prev = n, next = n.getParent();
-        while (goUpwards(prev, next)) {
-            prev = next;
+    public Encapsulator getConcreteParent(Encapsulator e) {
+        if (e.parent == null) return e;
+        Encapsulator $ = e, next = e.getParent();
+        while (goUpwards($, next)) {
+            $ = next;
             next = next.getParent();
         }
-        return prev;
+        return $;
     }
 
     /**
-     * @param n stub representing generic element.
-     * @param map the mapping between ids of generic elements and their concrete corresponding elements.
+     * @param e stub representing generic element.
+     * @param m the mapping between ids of generic elements and their concrete corresponding elements.
      * @return the highest generic parent that should be pruned.
      */
-    public Encapsulator getConcreteParent(Encapsulator n, Map<Integer, List<Matcher.Constraint>> map) {
-        return getConcreteParent(n);
+    public Encapsulator getConcreteParent(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
+        return getConcreteParent(e);
     }
 
     @Override
@@ -217,11 +217,11 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     public interface Constraint {
-        boolean accept(Encapsulator encapsulator);
+        boolean accept(Encapsulator e);
     }
 
     public interface BiConstraint {
-        boolean accept(Encapsulator encapsulator, Map<Integer, List<PsiElement>> m);
+        boolean accept(Encapsulator e, Map<Integer, List<PsiElement>> m);
     }
 
     protected interface ReplacingRule {

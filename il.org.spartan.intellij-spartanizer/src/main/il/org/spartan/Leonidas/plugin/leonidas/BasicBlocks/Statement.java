@@ -6,8 +6,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.UserControlled;
-import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
-import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
@@ -58,7 +56,7 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Statement(e);
     }
 
@@ -73,21 +71,21 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     private int countReferences(Encapsulator e, Integer id, Map<Integer, List<PsiElement>> m) {
-        Wrapper<Integer> wi = new Wrapper<>(0);
+        Wrapper<Integer> $ = new Wrapper<>(0);
         e.accept(λ -> {
             if (iz.identifier(λ.getInner()) && az.identifier(λ.getInner()).getText().equals(m.get(id).get(0).getText()))
-                wi.set(wi.get() + 1);
+                $.set($.get() + 1);
         });
-        return wi.get();
+        return $.get();
     }
 
     private int countReferences(Encapsulator e, String s) {
-        Wrapper<Integer> wi = new Wrapper<>(0);
+        Wrapper<Integer> $ = new Wrapper<>(0);
         e.accept(λ -> {
             if (iz.identifier(λ.getInner()) && az.identifier(λ.getInner()).getText().equals(s))
-                wi.set(wi.get() + 1);
+                $.set($.get() + 1);
         });
-        return wi.get();
+        return $.get();
     }
 
     /**

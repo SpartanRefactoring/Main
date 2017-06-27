@@ -6,8 +6,6 @@ import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.UserControlled;
-import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
-import il.org.spartan.Leonidas.plugin.UserControlledReplacer;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
@@ -62,7 +60,7 @@ public class Identifier extends NamedElement {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Identifier(e);
     }
 

@@ -86,19 +86,19 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public Map<String,String> getExamples(){
-        Map<String,String> examples = new HashMap<>();
-        examples.put("x != null ? x : y","defaults(x).to(y)");
-        examples.put("x == null ? y : x","defaults(x).to(y)");
-        examples.put("null == x ? y : x","defaults(x).to(y)");
-        examples.put("null != x ? x : y","defaults(x).to(y)");
-        examples.put("null == null ? x : y",null); //<should not be able to tip
-        examples.put("null != null ? x : y",null);
-        examples.put("x == y ? x : y",null);
-        examples.put("x != null ? y : z",null);
-        examples.put("x != null ? y : x",null);
-        examples.put("x == null ? x : y",null);
-        examples.put("null == x ? x : y",null);
-        examples.put("null != x ? y : x",null);
-        return examples;
+        Map<String,String> $ = new HashMap<>();
+        $.put("x != null ? x : y","defaults(x).to(y)");
+        $.put("x == null ? y : x","defaults(x).to(y)");
+        $.put("null == x ? y : x","defaults(x).to(y)");
+        $.put("null != x ? x : y","defaults(x).to(y)");
+        $.put("null == null ? x : y",null); //<should not be able to tip
+        $.put("null != null ? x : y",null);
+        $.put("x == y ? x : y",null);
+        $.put("x != null ? y : z",null);
+        $.put("x != null ? y : x",null);
+        $.put("x == null ? x : y",null);
+        $.put("null == x ? x : y",null);
+        $.put("null != x ? y : x",null);
+        return $;
     }
 }

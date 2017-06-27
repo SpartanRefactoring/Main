@@ -50,14 +50,14 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     /**
-     * @param s - A string consists of a Java class
+     * @param ¢ - A string consists of a Java class
      * @return - PsiClass element that represents the given class
      */
-    public PsiClass createTestClassFromString(String s) {
-        PsiClass dummyClass = getTestFactory().createClassFromText(s, getTestFile());
+    public PsiClass createTestClassFromString(String ¢) {
+        PsiClass $ = getTestFactory().createClassFromText(¢, getTestFile());
         //noinspection ConstantConditions
-        assert dummyClass != null;
-        return Utils.getChildrenOfType(dummyClass, PsiClass.class).get(0);
+        assert $ != null;
+        return Utils.getChildrenOfType($, PsiClass.class).get(0);
     }
 
     /**
@@ -68,14 +68,14 @@ public class PsiTypeHelper extends PsiTestCase {
      * @return - PsiClass element with the given content.
      */
     protected PsiClass createTestClassFromString(String javadoc, String className, String classBody, String... classModifiers) {
-        StringBuilder sb = new StringBuilder();
-        Arrays.stream(classModifiers).forEach(sb::append);
-        sb.append("class")
+        StringBuilder $ = new StringBuilder();
+        Arrays.stream(classModifiers).forEach($::append);
+        $.append("class")
                 .append(className)
                 .append("{")
                 .append(classBody)
                 .append("}");
-        return getTestFactory().createClassFromText(sb + "", getTestFile());
+        return getTestFactory().createClassFromText($ + "", getTestFile());
     }
 
     /**
@@ -85,14 +85,14 @@ public class PsiTypeHelper extends PsiTestCase {
      * @return PsiInterface element representing the given content
      */
     protected PsiClass createTestInterfaceFromString(String interfaceName, String interfaceBody, String... interfaceModifiers) {
-        StringBuilder sb = new StringBuilder();
-        Arrays.stream(interfaceModifiers).forEach(sb::append);
-        sb.append("interface")
+        StringBuilder $ = new StringBuilder();
+        Arrays.stream(interfaceModifiers).forEach($::append);
+        $.append("interface")
                 .append(interfaceName)
                 .append("{")
                 .append(interfaceBody)
                 .append("}");
-        return getTestFactory().createClassFromText(sb + "", getTestFile());
+        return getTestFactory().createClassFromText($ + "", getTestFile());
     }
 
     protected PsiClass createEnumClassFromString(String ¢) {
@@ -114,14 +114,14 @@ public class PsiTypeHelper extends PsiTestCase {
      * @return the highest class defined in the file
      */
     protected PsiClass getClassInFile(PsiFile f) {
-        Wrapper<PsiClass> classWrapper = new Wrapper<>(null);
+        Wrapper<PsiClass> $ = new Wrapper<>(null);
         f.acceptChildren(new JavaElementVisitor() {
             @Override
             public void visitClass(PsiClass aClass) {
-                classWrapper.set(aClass);
+                $.set(aClass);
             }
         });
-        return classWrapper.get();
+        return $.get();
     }
 
     protected PsiMethod createTestMethodFromString(String ¢) {
@@ -231,12 +231,12 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     protected PsiMethodCallExpression createTestMethodCallExpression(String methodName, String... args) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(methodName).append("(");
-        Arrays.stream(args).forEach(sb::append);
-        sb.append(")");
+        StringBuilder $ = new StringBuilder();
+        $.append(methodName).append("(");
+        Arrays.stream(args).forEach($::append);
+        $.append(")");
         return (PsiMethodCallExpression) getTestFactory()
-                .createExpressionFromText(sb + "", getTestFile());
+                .createExpressionFromText($ + "", getTestFile());
     }
 
     protected PsiExpression createTestExpression(String expression) {
@@ -270,13 +270,13 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     protected PsiNewExpression createTestNewExpression(String typeName, String... parameters) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("new ")
+        StringBuilder $ = new StringBuilder();
+        $.append("new ")
                 .append(typeName)
                 .append("(");
-        Arrays.stream(parameters).forEach(sb::append);
-        sb.append(")");
-        return (PsiNewExpression) getTestFactory().createExpressionFromText(sb + "", getTestFile());
+        Arrays.stream(parameters).forEach($::append);
+        $.append(")");
+        return (PsiNewExpression) getTestFactory().createExpressionFromText($ + "", getTestFile());
     }
 
     protected PsiMethodReferenceExpression createTestMethodReferenceExpression(String typeName, String methodName) {
