@@ -21,8 +21,8 @@ import il.org.spartan.Leonidas.auxilary_layer.step;
  */
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMethod> {
     @Override
-    public boolean canTip(PsiElement e) {
-        return iz.method(e) && !hasTag(az.method(e)) && prerequisites(az.method(e));
+    public boolean canTip(PsiElement ¢) {
+        return iz.method(¢) && !hasTag(az.method(¢)) && prerequisites(az.method(¢));
     }
 
     @Override
@@ -31,10 +31,10 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
 		final Wrapper<String> methodText = new Wrapper<>("");
 		m.acceptChildren(new JavaElementVisitor() {
 			@Override
-			public void visitElement(PsiElement e) {
-				if (!iz.javadoc(e))
-					methodText.set(methodText.get() + e.getText());
-				super.visitElement(e);
+			public void visitElement(PsiElement ¢) {
+				if (!iz.javadoc(¢))
+					methodText.set(methodText.get() + ¢.getText());
+				super.visitElement(¢);
 			}
 		});
 		return JavaPsiFacade.getElementFactory(m.getProject()).createMethodFromText("/**" + docNew + "*/" + methodText,
@@ -52,8 +52,8 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
         return "[[" + this.getClass().getSimpleName() + "]]";
     }
 
-    private boolean hasTag(PsiMethod m) {
-        return step.docCommentString(m).contains(tag());
+    private boolean hasTag(PsiMethod ¢) {
+        return step.docCommentString(¢).contains(tag());
     }
 
     @Override

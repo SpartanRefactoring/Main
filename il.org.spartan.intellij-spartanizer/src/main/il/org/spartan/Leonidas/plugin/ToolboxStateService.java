@@ -56,7 +56,7 @@ public class ToolboxStateService implements PersistentStateComponent<ToolboxStat
 	}
 
     @Override
-    public void loadState(ToolboxStateService state) {
-        XmlSerializerUtil.copyBean(state, this);
+    public void loadState(ToolboxStateService ¢) {
+        XmlSerializerUtil.copyBean(¢, this);
     }
 }

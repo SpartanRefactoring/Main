@@ -52,9 +52,9 @@ public class PsiFileCenter {
             Wrapper<Boolean> isValid = new Wrapper(true);
             file.accept(new JavaRecursiveElementVisitor() {
                 @Override
-                public void visitErrorElement(PsiErrorElement element) {
+                public void visitErrorElement(PsiErrorElement ¢) {
                     isValid.set(false);
-                    super.visitErrorElement(element);
+                    super.visitErrorElement(¢);
                 }
             });
             if (isValid.get())

@@ -30,7 +30,7 @@ public class SpartanizeProjectAction extends AnAction {
             @Override
             public boolean processFile(VirtualFile fileOrDir) {
                 Optional.ofNullable(PsiManager.getInstance(e.getProject()).findFile(fileOrDir))
-                        .filter(f -> f instanceof PsiJavaFile).ifPresent(psiFiles::add);
+                        .filter(λ -> λ instanceof PsiJavaFile).ifPresent(psiFiles::add);
                 return true;
             }
         });

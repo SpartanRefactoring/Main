@@ -25,11 +25,11 @@ import java.util.Arrays;
  */
 public class AddSpartanizerUtilsAction extends AnAction {
     @Override
-    public void actionPerformed(AnActionEvent e) {
-        new WriteCommandAction.Simple(e.getProject()) {
+    public void actionPerformed(AnActionEvent ¢) {
+        new WriteCommandAction.Simple(¢.getProject()) {
             @Override
             protected void run() throws Throwable {
-                createEnvironment(e);
+                createEnvironment(¢);
             }
         }.execute();
 
@@ -48,11 +48,11 @@ public class AddSpartanizerUtilsAction extends AnAction {
             srcDir.checkCreateSubdirectory("spartanizer");
             pf = createUtilsFile(srcDir.createSubdirectory("spartanizer"));
         } catch (IncorrectOperationException x) {
-            PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(d -> "spartanizer".equals(d.getName())).findAny().get();
+            PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(λ -> "spartanizer".equals(λ.getName())).findAny().get();
             try {
-                pf = Arrays.stream(pd.getFiles()).noneMatch(f -> "SpartanizerUtils.java".equals(f.getName()))
+                pf = Arrays.stream(pd.getFiles()).noneMatch(λ -> "SpartanizerUtils.java".equals(λ.getName()))
                         ? createUtilsFile(pd)
-                        : Arrays.stream(pd.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst()
+                        : Arrays.stream(pd.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst()
                         .get();
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -85,7 +85,7 @@ public class AddSpartanizerUtilsAction extends AnAction {
         PsiFile pf = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText("SpartanizerUtils.java", type, IOUtils.toString(new BufferedReader(
 				new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
         d.add(pf);
-        Arrays.stream(d.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst().get().getVirtualFile().setWritable(false);
+        Arrays.stream(d.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst().get().getVirtualFile().setWritable(false);
         Toolbox.getInstance().excludeFile(pf);
         return pf;
     }

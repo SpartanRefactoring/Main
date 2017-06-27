@@ -12,136 +12,136 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 public enum az {
     ;
 
-    public static PsiStatement statement(PsiElement e) {
-        return e == null || !iz.statement(e) ? null : (PsiStatement) e;
+    public static PsiStatement statement(PsiElement ¢) {
+        return ¢ == null || !iz.statement(¢) ? null : (PsiStatement) ¢;
     }
 
-    public static PsiCodeBlock block(PsiElement e) {
-        return e == null || !iz.block(e) ? null : (PsiCodeBlock) e;
+    public static PsiCodeBlock block(PsiElement ¢) {
+        return ¢ == null || !iz.block(¢) ? null : (PsiCodeBlock) ¢;
     }
 
-    public static PsiBlockStatement blockStatement(PsiElement e) {
-        return e == null || !iz.blockStatement(e) ? null : (PsiBlockStatement) e;
+    public static PsiBlockStatement blockStatement(PsiElement ¢) {
+        return ¢ == null || !iz.blockStatement(¢) ? null : (PsiBlockStatement) ¢;
     }
 
-    public static PsiDeclarationStatement declarationStatement(PsiElement e) {
-        return e == null || !iz.declarationStatement(e) ? null : (PsiDeclarationStatement) e;
+    public static PsiDeclarationStatement declarationStatement(PsiElement ¢) {
+        return ¢ == null || !iz.declarationStatement(¢) ? null : (PsiDeclarationStatement) ¢;
     }
 
-    public static PsiEnumConstant enumConstant(PsiElement e) {
-        return e == null || !iz.enumConstant(e) ? null : (PsiEnumConstant) e;
+    public static PsiEnumConstant enumConstant(PsiElement ¢) {
+        return ¢ == null || !iz.enumConstant(¢) ? null : (PsiEnumConstant) ¢;
     }
 
-    public static PsiField fieldDeclaration(PsiElement e) {
-        return e == null || !iz.fieldDeclaration(e) ? null : (PsiField) e;
+    public static PsiField fieldDeclaration(PsiElement ¢) {
+        return ¢ == null || !iz.fieldDeclaration(¢) ? null : (PsiField) ¢;
     }
 
-    public static PsiExpressionStatement expressionStatement(PsiElement e) {
-        return e == null || !iz.expressionStatement(e) ? null : (PsiExpressionStatement) e;
+    public static PsiExpressionStatement expressionStatement(PsiElement ¢) {
+        return ¢ == null || !iz.expressionStatement(¢) ? null : (PsiExpressionStatement) ¢;
     }
 
-    public static PsiIdentifier identifier(PsiElement e) {
-        return e == null || !iz.identifier(e) ? null : (PsiIdentifier) e;
+    public static PsiIdentifier identifier(PsiElement ¢) {
+        return ¢ == null || !iz.identifier(¢) ? null : (PsiIdentifier) ¢;
     }
 
-    public static PsiConditionalExpression conditionalExpression(PsiElement e) {
-        return e == null || !iz.conditionalExpression(e) ? null : (PsiConditionalExpression) e;
+    public static PsiConditionalExpression conditionalExpression(PsiElement ¢) {
+        return ¢ == null || !iz.conditionalExpression(¢) ? null : (PsiConditionalExpression) ¢;
     }
 
-    public static PsiBinaryExpression binaryExpression(PsiElement e) {
-        return e == null || !iz.binaryExpression(e) ? null : (PsiBinaryExpression) e;
+    public static PsiBinaryExpression binaryExpression(PsiElement ¢) {
+        return ¢ == null || !iz.binaryExpression(¢) ? null : (PsiBinaryExpression) ¢;
     }
 
-    public static PsiReferenceExpression referenceExpression(PsiElement e) {
-        return e == null || !iz.referenceExpression(e) ? null : (PsiReferenceExpression) e;
+    public static PsiReferenceExpression referenceExpression(PsiElement ¢) {
+        return ¢ == null || !iz.referenceExpression(¢) ? null : (PsiReferenceExpression) ¢;
     }
 
-    public static PsiJavaCodeReferenceElement javaCodeReference(PsiElement e) {
-        return e == null || !iz.javaCodeReference(e) ? null : (PsiJavaCodeReferenceElement) e;
+    public static PsiJavaCodeReferenceElement javaCodeReference(PsiElement ¢) {
+        return ¢ == null || !iz.javaCodeReference(¢) ? null : (PsiJavaCodeReferenceElement) ¢;
     }
 
-    public static PsiLiteral literal(PsiElement e) {
-        return e == null || !iz.literal(e) ? null : (PsiLiteral) e;
+    public static PsiLiteral literal(PsiElement ¢) {
+        return ¢ == null || !iz.literal(¢) ? null : (PsiLiteral) ¢;
     }
 
-    public static PsiClass classDeclaration(PsiElement e) {
-        return e == null || !iz.classDeclaration(e) ? null : (PsiClass) e;
+    public static PsiClass classDeclaration(PsiElement ¢) {
+        return ¢ == null || !iz.classDeclaration(¢) ? null : (PsiClass) ¢;
     }
 
-    public static PsiForeachStatement forEachStatement(PsiElement e) {
-        return e == null || !iz.forEachStatement(e) ? null : (PsiForeachStatement) e;
+    public static PsiForeachStatement forEachStatement(PsiElement ¢) {
+        return ¢ == null || !iz.forEachStatement(¢) ? null : (PsiForeachStatement) ¢;
     }
 
-    public static PsiIfStatement ifStatement(PsiElement e) {
-        return e == null || !iz.ifStatement(e) ? null : (PsiIfStatement) e;
+    public static PsiIfStatement ifStatement(PsiElement ¢) {
+        return ¢ == null || !iz.ifStatement(¢) ? null : (PsiIfStatement) ¢;
     }
 
-    public static PsiReturnStatement returnStatement(PsiElement e) {
-        return e == null || !iz.returnStatement(e) ? null : (PsiReturnStatement) e;
+    public static PsiReturnStatement returnStatement(PsiElement ¢) {
+        return ¢ == null || !iz.returnStatement(¢) ? null : (PsiReturnStatement) ¢;
     }
 
-    public static PsiImportList importList(PsiElement e) {
-        return e == null || !iz.importList(e) ? null : (PsiImportList) e;
+    public static PsiImportList importList(PsiElement ¢) {
+        return ¢ == null || !iz.importList(¢) ? null : (PsiImportList) ¢;
     }
 
-    public static PsiJavaToken javaToken(PsiElement e) {
-        return e == null || !iz.javaToken(e) ? null : (PsiJavaToken) e;
+    public static PsiJavaToken javaToken(PsiElement ¢) {
+        return ¢ == null || !iz.javaToken(¢) ? null : (PsiJavaToken) ¢;
     }
 
-    public static PsiMethodCallExpression methodCallExpression(PsiElement e) {
-        return e == null || !iz.methodCallExpression(e) ? null : (PsiMethodCallExpression) e;
+    public static PsiMethodCallExpression methodCallExpression(PsiElement ¢) {
+        return ¢ == null || !iz.methodCallExpression(¢) ? null : (PsiMethodCallExpression) ¢;
     }
 
     public static <T extends PsiElement> Integer integer(T value){
         return Integer.valueOf(value.getText());
     }
 
-    public static PsiMethod method(PsiElement e) {
-        return e == null || !iz.method(e) ? null : (PsiMethod) e;
+    public static PsiMethod method(PsiElement ¢) {
+        return ¢ == null || !iz.method(¢) ? null : (PsiMethod) ¢;
     }
 
-    public static GenericEncapsulator generic(Encapsulator e) {
-        return e == null ? null : (GenericEncapsulator) e;
+    public static GenericEncapsulator generic(Encapsulator ¢) {
+        return ¢ == null ? null : (GenericEncapsulator) ¢;
     }
 
-    public static PsiNewExpression newExpression(PsiElement e) {
-        return e == null || !iz.newExpression(e) ? null : (PsiNewExpression) e;
+    public static PsiNewExpression newExpression(PsiElement ¢) {
+        return ¢ == null || !iz.newExpression(¢) ? null : (PsiNewExpression) ¢;
     }
 
-    public static PsiExpression expression(PsiElement e) {
-        return e == null || !iz.expression(e) ? null : (PsiExpression) e;
+    public static PsiExpression expression(PsiElement ¢) {
+        return ¢ == null || !iz.expression(¢) ? null : (PsiExpression) ¢;
     }
 
-    public static OptionalMethodCallBased optional(Encapsulator e) {
-        return e == null ? null : (OptionalMethodCallBased) e;
+    public static OptionalMethodCallBased optional(Encapsulator ¢) {
+        return ¢ == null ? null : (OptionalMethodCallBased) ¢;
     }
 
-    public static AnyNumberOfMethodCallBased anyNumberOf(Encapsulator e) {
-        return e == null ? null : (AnyNumberOfMethodCallBased) e;
+    public static AnyNumberOfMethodCallBased anyNumberOf(Encapsulator ¢) {
+        return ¢ == null ? null : (AnyNumberOfMethodCallBased) ¢;
     }
 
-    public static QuantifierMethodCallBased quantifier(Encapsulator e) {
-        return e == null ? null : (QuantifierMethodCallBased) e;
+    public static QuantifierMethodCallBased quantifier(Encapsulator ¢) {
+        return ¢ == null ? null : (QuantifierMethodCallBased) ¢;
     }
 
-    public static PsiDocComment javadoc(PsiElement e){
-        return e == null || !iz.javadoc(e) ? null : (PsiDocComment) e;
+    public static PsiDocComment javadoc(PsiElement ¢){
+        return ¢ == null || !iz.javadoc(¢) ? null : (PsiDocComment) ¢;
     }
 
-    public static PsiModifierListOwner modifierListOwner(PsiElement e) {
-        return e != null && !iz.modifierListOwner(e) ? null : (PsiModifierListOwner) e;
+    public static PsiModifierListOwner modifierListOwner(PsiElement ¢) {
+        return ¢ != null && !iz.modifierListOwner(¢) ? null : (PsiModifierListOwner) ¢;
     }
 
-    public static PsiTypeElement type(PsiElement e) {
-        return e != null && !iz.type(e) ? null : (PsiTypeElement) e;
+    public static PsiTypeElement type(PsiElement ¢) {
+        return ¢ != null && !iz.type(¢) ? null : (PsiTypeElement) ¢;
     }
 
-    public static PsiComment comment(PsiElement e) {
-        return e != null && !iz.comment(e) ? null : (PsiComment) e;
+    public static PsiComment comment(PsiElement ¢) {
+        return ¢ != null && !iz.comment(¢) ? null : (PsiComment) ¢;
     }
 
-    public static PsiFile psiFile(PsiElement e) {
-        return e == null ? null : (PsiFile) e;
+    public static PsiFile psiFile(PsiElement ¢) {
+        return ¢ == null ? null : (PsiFile) ¢;
     }
 
     public static <T extends PsiElement> String string(T value) {

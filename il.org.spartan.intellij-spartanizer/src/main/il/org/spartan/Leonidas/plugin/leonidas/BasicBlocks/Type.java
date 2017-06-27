@@ -34,13 +34,13 @@ public class Type extends NamedElement {
     }
 
     @Override
-    protected String getName(PsiElement e) {
-        return !iz.type(e) ? null : az.type(e).getText();
+    protected String getName(PsiElement ¢) {
+        return !iz.type(¢) ? null : az.type(¢).getText();
     }
 
     @Override
-    public boolean conforms(PsiElement e) {
-        return iz.type(e) && super.conforms(e);
+    public boolean conforms(PsiElement ¢) {
+        return iz.type(¢) && super.conforms(¢);
     }
 
     @Override

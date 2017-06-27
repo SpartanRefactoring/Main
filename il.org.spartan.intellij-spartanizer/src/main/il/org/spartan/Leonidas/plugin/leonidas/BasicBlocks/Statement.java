@@ -74,8 +74,8 @@ public class Statement extends GenericMethodCallBasedBlock {
 
     private int countReferences(Encapsulator e, Integer id, Map<Integer, List<PsiElement>> m) {
         Wrapper<Integer> wi = new Wrapper<>(0);
-        e.accept(n -> {
-            if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(m.get(id).get(0).getText()))
+        e.accept(λ -> {
+            if (iz.identifier(λ.getInner()) && az.identifier(λ.getInner()).getText().equals(m.get(id).get(0).getText()))
                 wi.set(wi.get() + 1);
         });
         return wi.get();
@@ -83,8 +83,8 @@ public class Statement extends GenericMethodCallBasedBlock {
 
     private int countReferences(Encapsulator e, String s) {
         Wrapper<Integer> wi = new Wrapper<>(0);
-        e.accept(n -> {
-            if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(s))
+        e.accept(λ -> {
+            if (iz.identifier(λ.getInner()) && az.identifier(λ.getInner()).getText().equals(s))
                 wi.set(wi.get() + 1);
         });
         return wi.get();
@@ -101,7 +101,7 @@ public class Statement extends GenericMethodCallBasedBlock {
      * Will accept only if this statement is not a declaration statement.
      */
     public void isNotDeclarationStatement() {
-        addConstraint(e -> !iz.declarationStatement(e.inner));
+        addConstraint(λ -> !iz.declarationStatement(λ.inner));
     }
 
     public void replaceIdentifiers(Integer id, String to) {
@@ -109,12 +109,12 @@ public class Statement extends GenericMethodCallBasedBlock {
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
                 @Override
-                public void visitIdentifier(PsiIdentifier identifier) {
-                    super.visitIdentifier(identifier);
-                    if (identifier.getText().equals(map.get(id).get(0).getText()) &&
-                            !iz.dot(Utils.getPrevActualSibling(Utils.getPrevActualSibling(identifier))) &&
-                            !iz.methodCallExpression(identifier.getParent().getParent()))
-						new PsiRewrite().replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject())
+                public void visitIdentifier(PsiIdentifier ¢) {
+                    super.visitIdentifier(¢);
+                    if (¢.getText().equals(map.get(id).get(0).getText()) &&
+                            !iz.dot(Utils.getPrevActualSibling(Utils.getPrevActualSibling(¢))) &&
+                            !iz.methodCallExpression(¢.getParent().getParent()))
+						new PsiRewrite().replace(¢, JavaPsiFacade.getElementFactory(Utils.getProject())
 								.createIdentifier(replacingIdentifier.get(id)));
                 }
             });
@@ -131,10 +131,10 @@ public class Statement extends GenericMethodCallBasedBlock {
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
                 @Override
-                public void visitIdentifier(PsiIdentifier identifier) {
-                    super.visitIdentifier(identifier);
-                    if (identifier.getText().equals(map.get(from).get(0).getText()))
-						new PsiRewrite().replace(identifier, map.get(to).get(0));
+                public void visitIdentifier(PsiIdentifier ¢) {
+                    super.visitIdentifier(¢);
+                    if (¢.getText().equals(map.get(from).get(0).getText()))
+						new PsiRewrite().replace(¢, map.get(to).get(0));
                 }
             });
             return e;

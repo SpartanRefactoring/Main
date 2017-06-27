@@ -118,7 +118,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @SuppressWarnings("InfiniteRecursion")
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         return new MatchingResult(constraints.stream()
-                .allMatch(c -> c.accept(e, m)));
+                .allMatch(λ -> λ.accept(e, m)));
     }
 
     /**
@@ -147,7 +147,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
         if (elements.size() <= 1)
 			return Utils.wrapWithList(r.replace(inner, elements.get(0)));
 		List<PsiElement> l = Lists.reverse(elements);
-		l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+		l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
 		r.deleteByRange(inner.getParent(), inner, inner);
 		return elements;
 
@@ -190,19 +190,19 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     /**
-     * @param c constraint
+     * @param ¢ constraint
      * When building the matcher, adds a constraint that uses the map to the list of constraints.
      */
-    protected void addConstraint(BiConstraint c) {
-        constraints.add(c);
+    protected void addConstraint(BiConstraint ¢) {
+        constraints.add(¢);
     }
 
     /**
-     * @param rr replacing rule.
+     * @param ¢ replacing rule.
      * When building the replacer, adds a replacing rule to the basic block.
      */
-    protected void addReplacingRule(ReplacingRule rr){
-        replacingRules.add(rr);
+    protected void addReplacingRule(ReplacingRule ¢){
+        replacingRules.add(¢);
     }
 
     /**

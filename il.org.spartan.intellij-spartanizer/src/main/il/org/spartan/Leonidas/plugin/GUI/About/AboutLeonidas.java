@@ -35,7 +35,7 @@ class AboutLeonidas extends JFrame {
         setResizable(false);
         pack();
         setVisible(true);
-        closeButton.addActionListener(e -> closeButtonListener());
+        closeButton.addActionListener(λ -> closeButtonListener());
         this.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)

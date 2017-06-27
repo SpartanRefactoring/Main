@@ -63,17 +63,17 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      */
     public static List<GenericEncapsulator> getGenericElements(Encapsulator e) {
         List<GenericEncapsulator> lge = new LinkedList<>();
-        e.accept(n -> {
-            if (!iz.generic(n)) return;
-            lge.add(az.generic(n));
-            lge.addAll(az.generic(n).getGenericElements().values());
+        e.accept(λ -> {
+            if (!iz.generic(λ)) return;
+            lge.add(az.generic(λ));
+            lge.addAll(az.generic(λ).getGenericElements().values());
         });
         return lge;
     }
 
     @Override
-    public boolean canTip(PsiElement e) {
-        return matcher.match(e);
+    public boolean canTip(PsiElement ¢) {
+        return matcher.match(¢);
     }
 
     @Override
@@ -118,10 +118,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         Wrapper<PsiElement> we = new Wrapper<>(ne);
         ne.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitComment(PsiComment comment) {
-                super.visitComment(comment);
-                if (comment.getText().contains("start"))
-					we.set(comment);
+            public void visitComment(PsiComment ¢) {
+                super.visitComment(¢);
+                if (¢.getText().contains("start"))
+					we.set(¢);
             }
         });
         current = we.get();
@@ -147,7 +147,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitElement(PsiElement element) {
                 super.visitElement(element);
-                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(g -> g.conforms(element)).findFirst().ifPresent(g -> element.putUserData(KeyDescriptionParameters.ID, g.extractId(element)));
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(element)).findFirst().ifPresent(λ -> element.putUserData(KeyDescriptionParameters.ID, λ.extractId(element)));
             }
         });
     }
@@ -160,10 +160,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         Wrapper<PsiMethod> x = new Wrapper<>();
         file.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethod(PsiMethod method) {
-                super.visitMethod(method);
-                if (method.getName().equals(name))
-					x.set(method);
+            public void visitMethod(PsiMethod ¢) {
+                super.visitMethod(¢);
+                if (¢.getName().equals(name))
+					x.set(¢);
             }
         });
         if (x.get() == null) return null;
@@ -212,7 +212,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private List<Encapsulator> initializeReplacerRoots(Map<Integer, List<PsiMethodCallExpression>> m) {
         List<Encapsulator> l = getForestFromMethod((PsiMethod) getInterfaceMethod("replacer").copy());
         l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
-            List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
+            List<Object> arguments = step.arguments(mce).stream().map(λ -> az.literal(λ).getValue()).collect(Collectors.toList());
             Encapsulator ie = !iz.quantifier(n) ? n : az.quantifier(n).getInternal();
             try {
                 Utils.getDeclaredMethod(ie.getClass(), mce.getMethodExpression().getReferenceName(), Arrays.stream(arguments.toArray()).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, arguments.toArray());
@@ -241,10 +241,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         Wrapper<PsiMethodCallExpression> x = new Wrapper<>();
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                super.visitMethodCallExpression(expression);
-                if ("element".equals(expression.getMethodExpression().getText()))
-					x.set(expression);
+            public void visitMethodCallExpression(PsiMethodCallExpression ¢) {
+                super.visitMethodCallExpression(¢);
+                if ("element".equals(¢.getMethodExpression().getText()))
+					x.set(¢);
             }
         });
         return Integer.parseInt(step.arguments(x.get()).get(0).getText());
@@ -289,11 +289,11 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         Wrapper<Boolean> stop = new Wrapper<>(false);
         element.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                if (stop.get() || !iz.ofType(element, rootElementType))
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
+                if (stop.get() || !iz.ofType(¢, rootElementType))
 					return;
-				result.set(element);
+				result.set(¢);
 				stop.set(true);
             }
         });
@@ -309,9 +309,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         s.accept(new JavaRecursiveElementVisitor() {
 
             @Override
-            public void visitLambdaExpression(PsiLambdaExpression expression) {
-                super.visitLambdaExpression(expression);
-                l.set(expression);
+            public void visitLambdaExpression(PsiLambdaExpression ¢) {
+                super.visitLambdaExpression(¢);
+                l.set(¢);
             }
         });
         return l.get().getBody();
@@ -326,11 +326,11 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         Wrapper<Optional<Class<? extends PsiElement>>> wq = new Wrapper<>(Optional.empty());
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                super.visitMethodCallExpression(expression);
-                if (expression.getMethodExpression().getText().endsWith("ofType"))
+            public void visitMethodCallExpression(PsiMethodCallExpression ¢) {
+                super.visitMethodCallExpression(¢);
+                if (¢.getMethodExpression().getText().endsWith("ofType"))
 					wq.set(Optional.of(getPsiClass(
-							expression.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
+							¢.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
             }
         });
         return wq.get();
@@ -361,7 +361,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
             if (constraintType != Constraint.ConstraintType.IS && constraintType != Constraint.ConstraintType.ISNOT) {
 				PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
-				List<Object> arguments = step.arguments(method).stream().map(e -> az.literal(e).getValue())
+				List<Object> arguments = step.arguments(method).stream().map(λ -> az.literal(λ).getValue())
 						.collect(Collectors.toList());
 				map.putIfAbsent(elementId, new LinkedList<>());
 				map.get(elementId).add(new Matcher.NonStructuralConstraint(

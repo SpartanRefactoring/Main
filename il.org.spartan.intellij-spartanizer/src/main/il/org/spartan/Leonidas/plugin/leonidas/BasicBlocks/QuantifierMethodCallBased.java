@@ -46,7 +46,7 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     @Override
     public Integer extractId(PsiElement e) {
         PsiElement ie = step.firstParameterExpression(az.methodCallExpression(e));
-        return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
+        return Toolbox.getInstance().getGeneric(ie).map(λ -> λ.extractId(ie)).orElse(null);
     }
 
     @Override
@@ -81,7 +81,7 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
         elements = az.generic(internal).applyReplacingRules(elements, m);
         if (parent == null) return elements;
         List<PsiElement> l = Lists.reverse(elements);
-        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+        l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
         r.deleteByRange(inner.getParent(), inner, inner);
         return elements;
     }

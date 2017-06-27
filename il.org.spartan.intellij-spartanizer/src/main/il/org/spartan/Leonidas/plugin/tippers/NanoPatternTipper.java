@@ -104,7 +104,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 				IOUtils.toString(new BufferedReader(
 						new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
 		d.add(pf);
-		Arrays.stream(d.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst().get()
+		Arrays.stream(d.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst().get()
 				.getVirtualFile().setWritable(false);
 		Toolbox.getInstance().excludeFile(pf);
 		return pf;
@@ -128,10 +128,10 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 			pf = createUtilsFile(e, srcDir.createSubdirectory("spartanizer"));
 		} catch (final IncorrectOperationException x) {
 			final PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories())
-					.filter(d -> "spartanizer".equals(d.getName())).findAny().get();
-			pf = Arrays.stream(pd.getFiles()).noneMatch(f -> "SpartanizerUtils.java".equals(f.getName()))
+					.filter(λ -> "spartanizer".equals(λ.getName())).findAny().get();
+			pf = Arrays.stream(pd.getFiles()).noneMatch(λ -> "SpartanizerUtils.java".equals(λ.getName()))
 					? createUtilsFile(e, pd)
-					: Arrays.stream(pd.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst()
+					: Arrays.stream(pd.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst()
 							.get();
 		}
 		return pf;
@@ -151,7 +151,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 		final PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject())
 				.createImportStaticStatement(PsiTreeUtil.getChildOfType(f, PsiClass.class), "*");
 		final PsiImportList pil = ((PsiJavaFile) e.getContainingFile()).getImportList();
-		if (Arrays.stream(pil.getImportStaticStatements()).noneMatch(x -> x.getText().contains("spartanizer")))
+		if (Arrays.stream(pil.getImportStaticStatements()).noneMatch(λ -> λ.getText().contains("spartanizer")))
 			pil.add(piss);
 
 	}

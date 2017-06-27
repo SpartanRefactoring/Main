@@ -20,10 +20,10 @@ public class JPanelWithBackground extends JPanel {
         backgroundImage = ImageIO.read(new File(fileName));
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paintComponent(Graphics ¢) {
+        super.paintComponent(¢);
 
         // Draw the background image.
-        g.drawImage(backgroundImage, 0, 0, this);
+        ¢.drawImage(backgroundImage, 0, 0, this);
     }
 }

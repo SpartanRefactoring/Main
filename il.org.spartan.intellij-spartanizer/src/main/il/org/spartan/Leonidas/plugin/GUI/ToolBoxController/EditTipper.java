@@ -61,24 +61,24 @@ public class EditTipper extends JFrame {
         table = new ComponentJTable();
         ((DefaultTableModel) table.getModel()).setRowCount(100); //TODO: MAGIC NUMBER
         LeonidasTipper lt = (LeonidasTipper)currentTip;
-        List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
+        List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(λ-> λ.stream()).collect(Collectors.toList());
 
         int currRow = buildTableFields(
 				lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root))
-						.flatMap(list -> list.stream()).collect(Collectors.toList()),
+						.flatMap(λ -> λ.stream()).collect(Collectors.toList()),
 				buildTableFields(tipperMatcherRoots, 0, true), false);
         ((DefaultTableModel) table.getModel()).setRowCount(currRow);
 
 
-        applyButton.addActionListener(e -> applyListener());
-        closeButton.addActionListener(e -> this.dispose());
+        applyButton.addActionListener(λ -> applyListener());
+        closeButton.addActionListener(λ -> this.dispose());
         table.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 applyButton.setEnabled(true);
             }
         });
-        OKButton.addActionListener(e->{
+        OKButton.addActionListener(λ->{
             applyListener();
             this.dispose();
         });
@@ -212,11 +212,11 @@ public class EditTipper extends JFrame {
         applyButton.setEnabled(false);
        // applyButton.setDisabledSelectedIcon(applyButton.getDisabledIcon());
         LeonidasTipper lt = (LeonidasTipper)currentTip;
-        List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(list-> list.stream()).collect(Collectors.toList());
+        List<GenericEncapsulator> tipperMatcherRoots = lt.getMatcher().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root)).flatMap(λ-> λ.stream()).collect(Collectors.toList());
 
         updateFieldsFromTable(
 				lt.getReplacer().getAllRoots().stream().map(root -> LeonidasTipper.getGenericElements(root))
-						.flatMap(list -> list.stream()).collect(Collectors.toList()),
+						.flatMap(λ -> λ.stream()).collect(Collectors.toList()),
 				updateFieldsFromTable(tipperMatcherRoots, 0, true), false);
 
     }

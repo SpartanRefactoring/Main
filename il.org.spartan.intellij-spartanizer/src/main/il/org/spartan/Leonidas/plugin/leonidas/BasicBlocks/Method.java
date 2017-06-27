@@ -39,13 +39,13 @@ public class Method extends ModifiableElement {
     }
 
     @Override
-    protected String getName(PsiElement e) {
-        return !iz.method(e) ? null : az.method(e).getName();
+    protected String getName(PsiElement ¢) {
+        return !iz.method(¢) ? null : az.method(¢).getName();
     }
 
     @Override
-    public boolean conforms(PsiElement e) {
-        return iz.method(e) && super.conforms(e);
+    public boolean conforms(PsiElement ¢) {
+        return iz.method(¢) && super.conforms(¢);
     }
 
     @Override
@@ -102,11 +102,11 @@ public class Method extends ModifiableElement {
 
         List<Encapsulator> l = new ArrayList<>(set);
 
-        l.forEach(root -> root.accept(e -> {
-            if (e.isGeneric()) {
-                map.put(az.generic(e).getId(), (GenericEncapsulator) e);
-                if (iz.quantifier(e))
-					map.put(az.quantifier(e).getId(), az.generic(az.quantifier(e).getInternal()));
+        l.forEach(root -> root.accept(λ -> {
+            if (λ.isGeneric()) {
+                map.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
+                if (iz.quantifier(λ))
+					map.put(az.quantifier(λ).getId(), az.generic(az.quantifier(λ).getInternal()));
             }
         }));
 

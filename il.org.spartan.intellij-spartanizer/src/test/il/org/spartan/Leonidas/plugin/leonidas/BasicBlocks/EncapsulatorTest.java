@@ -65,9 +65,9 @@ public class EncapsulatorTest extends PsiTypeHelper {
 
     public void testAccept() throws Exception {
         List<Integer> ids = new LinkedList<>();
-        node.accept(n -> {
-            if (iz.literal(n.getInner()))
-				ids.add(Integer.parseInt(az.literal(n.getInner()).getText()));
+        node.accept(λ -> {
+            if (iz.literal(λ.getInner()))
+				ids.add(Integer.parseInt(az.literal(λ.getInner()).getText()));
         });
         assert ids.contains(0);
         assert ids.contains(1);

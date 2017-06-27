@@ -168,14 +168,14 @@ public class AddTipperUI extends JFrame {
 
             //---- buttonSave ----
             buttonSave.setText("Save");
-            buttonSave.addActionListener(e -> buttonSaveActionPerformed(e));
+            buttonSave.addActionListener(λ -> buttonSaveActionPerformed(λ));
             panel3.add(buttonSave, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(2, 2, 2, 7), 0, 0));
 
             //---- buttonClose ----
             buttonClose.setText("Close");
-            buttonClose.addActionListener(e -> buttonCloseActionPerformed(e));
+            buttonClose.addActionListener(λ -> buttonCloseActionPerformed(λ));
             panel3.add(buttonClose, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(2, 2, 2, 2), 0, 0));

@@ -36,11 +36,11 @@ public enum Utils {
     }
 
     /**
-     * @param p the current project
+     * @param ¢ the current project
      * @return the PsiManager of the project.
      */
-    public static PsiManager getPsiManager(Project p) {
-        return PsiManager.getInstance(p);
+    public static PsiManager getPsiManager(Project ¢) {
+        return PsiManager.getInstance(¢);
     }
 
     /**
@@ -93,10 +93,10 @@ public enum Utils {
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
 			@SuppressWarnings("unchecked")
-			public void visitElement(PsiElement e) {
-				super.visitElement(e);
-				if (aClass.isInstance(e))
-					w.get().add((T) e);
+			public void visitElement(PsiElement ¢) {
+				super.visitElement(¢);
+				if (aClass.isInstance(¢))
+					w.get().add((T) ¢);
 			}
         });
         return w.get();

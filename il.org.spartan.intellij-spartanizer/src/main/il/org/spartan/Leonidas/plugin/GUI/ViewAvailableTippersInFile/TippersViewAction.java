@@ -31,7 +31,7 @@ class TippersViewAction extends AnAction {
         }
 
 
-        private PsiClass getPsiClassFromContext(AnActionEvent a) {
-            return PsiTreeUtil.getParentOfType(getPsiElementFromContext(a), PsiClass.class);
+        private PsiClass getPsiClassFromContext(AnActionEvent ¢) {
+            return PsiTreeUtil.getParentOfType(getPsiElementFromContext(¢), PsiClass.class);
         }
 }

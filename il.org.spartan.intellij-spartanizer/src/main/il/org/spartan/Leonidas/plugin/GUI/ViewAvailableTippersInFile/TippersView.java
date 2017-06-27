@@ -34,9 +34,9 @@ public class TippersView extends JFrame{
         Toolbox toolbox = Toolbox.getInstance();
         pf.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                tippers.addAll(toolbox.getAvailableTipsInfo(e));
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
+                tippers.addAll(toolbox.getAvailableTipsInfo(¢));
             }
         });
 

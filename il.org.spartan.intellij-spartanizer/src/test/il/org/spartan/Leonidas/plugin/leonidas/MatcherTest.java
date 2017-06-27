@@ -121,13 +121,13 @@ public class MatcherTest extends PsiTypeHelper {
             @Override
             public void visitElement(PsiElement element) {
                 super.visitElement(element);
-                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(g -> g.conforms(element)).findFirst().ifPresent(g -> element.putUserData(KeyDescriptionParameters.ID, g.extractId(element)));
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(element)).findFirst().ifPresent(λ -> element.putUserData(KeyDescriptionParameters.ID, λ.extractId(element)));
             }
         });
     }
 
-    private Encapsulator buildTemplate(PsiElement e) {
-        giveIdToStubMethodCalls(e);
-        return Pruning.prune(Encapsulator.buildTreeFromPsi(e), new HashMap<>());
+    private Encapsulator buildTemplate(PsiElement ¢) {
+        giveIdToStubMethodCalls(¢);
+        return Pruning.prune(Encapsulator.buildTreeFromPsi(¢), new HashMap<>());
     }
 }

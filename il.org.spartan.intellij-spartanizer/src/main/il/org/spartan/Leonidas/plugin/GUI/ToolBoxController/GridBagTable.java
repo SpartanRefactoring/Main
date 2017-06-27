@@ -27,10 +27,10 @@ public class GridBagTable extends JPanel {
         add(makeHeaderLabel(rightLabel), makeHeaderConstraints(1));
 
         // add tippers
-        IntStream.range(0, components.size()).forEach(i -> {
-            add(new JLabel(components.get(i).getName()), makeContentConstraints(0, 2 * i + 2, 50));
-            add(components.get(i), makeContentConstraints(1, 2 * i + 2, 50));
-            add(new JSeparator(JSeparator.HORIZONTAL), makeSeparatorConstraints(2 * i + 1));
+        IntStream.range(0, components.size()).forEach(λ -> {
+            add(new JLabel(components.get(λ).getName()), makeContentConstraints(0, 2 * λ + 2, 50));
+            add(components.get(λ), makeContentConstraints(1, 2 * λ + 2, 50));
+            add(new JSeparator(JSeparator.HORIZONTAL), makeSeparatorConstraints(2 * λ + 1));
         });
     }
 

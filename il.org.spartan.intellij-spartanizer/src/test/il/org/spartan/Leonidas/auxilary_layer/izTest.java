@@ -248,9 +248,9 @@ public class izTest extends PsiTypeHelper {
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitConditionalExpression(PsiConditionalExpression x) {
-                super.visitConditionalExpression(x);
-                w.inner = x;
+            public void visitConditionalExpression(PsiConditionalExpression ¢) {
+                super.visitConditionalExpression(¢);
+                w.inner = ¢;
             }
         });
         assert (iz.conditionalExpression(w.inner));

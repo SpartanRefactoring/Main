@@ -48,12 +48,12 @@ public class CompilationCenter {
 	/**
 	 * Checks whether or not the given PsiFile has any compilation errors
 	 * 
-	 * @param f
+	 * @param ¢
 	 *            - JD
 	 * @return has any compilation errors
 	 */
-	public static boolean hasCompilationErrors(PsiFile f) {
-		compile(f);
+	public static boolean hasCompilationErrors(PsiFile ¢) {
+		compile(¢);
 		return (errors + "").length() != 0;
 	}
 

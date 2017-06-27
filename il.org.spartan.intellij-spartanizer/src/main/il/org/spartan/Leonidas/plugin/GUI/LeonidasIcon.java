@@ -12,7 +12,7 @@ public enum LeonidasIcon {
     ;
     private static final String iconPath = "leonidas.png";
 
-    public static void apply(JFrame frame) {
-        frame.setIconImage(new ImageIcon(LeonidasIcon.class.getClassLoader().getResource(iconPath)).getImage());
+    public static void apply(JFrame ¢) {
+        ¢.setIconImage(new ImageIcon(LeonidasIcon.class.getClassLoader().getResource(iconPath)).getImage());
     }
 }

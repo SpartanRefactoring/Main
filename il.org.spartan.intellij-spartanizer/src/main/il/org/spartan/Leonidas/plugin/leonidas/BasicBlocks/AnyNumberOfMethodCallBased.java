@@ -32,8 +32,8 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
         if (i.value().getParent() == null) return 1;
         Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
-        i.value().getParent().accept(n -> {
-            if (generalizes(n, m).matches()) count.set(count.get() + 1);
+        i.value().getParent().accept(λ -> {
+            if (generalizes(λ, m).matches()) count.set(count.get() + 1);
         });
         return count.get();
     }
@@ -44,9 +44,9 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
        return new AnyNumberOfMethodCallBased(e.getInner(), internalEncapsulator(e));
     }
 
-    private Encapsulator internalEncapsulator(Encapsulator e) {
-        if (!e.getText().contains("anyNumberOf"))
-			return e;
-        return e.getActualChildren().get(1).getActualChildren().get(1);
+    private Encapsulator internalEncapsulator(Encapsulator ¢) {
+        if (!¢.getText().contains("anyNumberOf"))
+			return ¢;
+        return ¢.getActualChildren().get(1).getActualChildren().get(1);
     }
 }

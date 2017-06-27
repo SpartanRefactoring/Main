@@ -92,7 +92,7 @@ public class Matcher {
                 if (!m.getMap().containsKey(az.generic(needle.value()).getId()))
 					m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
 				else if (m.getMap().get(az.generic(needle.value()).getId()).stream()
-						.noneMatch(e -> e.getText().equals(cursor.value().getText())))
+						.noneMatch(λ -> λ.getText().equals(cursor.value().getText())))
 					return m.setNotMatches();
                 cursor.matchedWithGeneric();
             }
@@ -152,8 +152,8 @@ public class Matcher {
         matcher.getConstraintsMatchers().forEach(im -> buildMatcherTree(im, map));
     }
 
-    private void setRoots(List<Encapsulator> n) {
-        roots = n;
+    private void setRoots(List<Encapsulator> ¢) {
+        roots = ¢;
     }
 
     /**
@@ -208,15 +208,15 @@ public class Matcher {
                 .allMatch(id -> {
                     boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
                             info.get(id).stream()
-                                    .peek(x->{}) // Do not remove, magic happen here :(
+                                    .peek(λ->{}) // Do not remove, magic happen here :(
                                     .allMatch(
                                             c::match
                                     )
                     );
 
                     boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
-                            info.get(id).stream().allMatch(e ->
-                                    c.accept(new Encapsulator(e), mr.getMap())
+                            info.get(id).stream().allMatch(λ ->
+                                    c.accept(new Encapsulator(λ), mr.getMap())
                             )
                     );
                     return b1 && b2;
@@ -237,10 +237,10 @@ public class Matcher {
      */
     private Map<Integer, GenericEncapsulator> getGenericElements() {
         final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
-        roots.forEach(root -> root.accept(e -> {
-            if (e.isGeneric()) {
-                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
-                tmp.putAll(az.generic(e).getGenericElements());
+        roots.forEach(root -> root.accept(λ -> {
+            if (λ.isGeneric()) {
+                tmp.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
+                tmp.putAll(az.generic(λ).getGenericElements());
             }
         }));
         return tmp;
@@ -251,9 +251,9 @@ public class Matcher {
      */
     private Map<Integer, GenericEncapsulator> getGenericElementsWithNoFields() {
         final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
-        roots.forEach(root -> root.accept(e -> {
-            if (e.isGeneric())
-				tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
+        roots.forEach(root -> root.accept(λ -> {
+            if (λ.isGeneric())
+				tmp.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
         }));
         return tmp;
     }
@@ -295,11 +295,11 @@ public class Matcher {
         }
 
         /**
-         * @param e the users tree to match.
+         * @param ¢ the users tree to match.
          * @return indication of e being matched recursively to the matcher, when taking in consideration the type of the constraint.
          */
-        boolean match(PsiElement e) {
-            return (type == ConstraintType.IS && matcher.match(e)) || (type == ConstraintType.ISNOT && !matcher.match(e));
+        boolean match(PsiElement ¢) {
+            return (type == ConstraintType.IS && matcher.match(¢)) || (type == ConstraintType.ISNOT && !matcher.match(¢));
         }
     }
 
@@ -314,8 +314,8 @@ public class Matcher {
             objects = o;
         }
 
-        public void setElement(Encapsulator e) {
-            element = e;
+        public void setElement(Encapsulator ¢) {
+            element = ¢;
         }
     }
 }

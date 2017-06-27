@@ -43,13 +43,13 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
     }
 
     @Override
-    public boolean canTip(PsiElement e) {
-        return iz.methodCallExpression(e) && canTip(az.methodCallExpression(e));
+    public boolean canTip(PsiElement ¢) {
+        return iz.methodCallExpression(¢) && canTip(az.methodCallExpression(¢));
     }
 
     @Override
-    public String description(PsiMethodCallExpression x) {
-        return "replace " + x.getText() + " with list last";
+    public String description(PsiMethodCallExpression ¢) {
+        return "replace " + ¢.getText() + " with list last";
     }
 
     @Override

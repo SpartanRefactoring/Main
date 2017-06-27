@@ -65,7 +65,7 @@ public abstract class QuantifierBasedNames extends NamedElement{
         elements = az.generic(internal).applyReplacingRules(elements, m);
         if (parent == null) return elements;
         List<PsiElement> l = Lists.reverse(elements);
-        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+        l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
         r.deleteByRange(inner.getParent(), inner, inner);
         return elements;
     }

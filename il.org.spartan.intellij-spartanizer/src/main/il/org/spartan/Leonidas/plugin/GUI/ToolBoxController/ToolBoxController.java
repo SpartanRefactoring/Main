@@ -90,7 +90,7 @@ class ToolBoxController extends JFrame {
             }
         });
 
-        OKButton.addActionListener(e ->{
+        OKButton.addActionListener(λ ->{
             applyListener();
             this.dispose();
         });
@@ -102,9 +102,9 @@ class ToolBoxController extends JFrame {
             }
         });
         tippersPane.setViewportView(list);
-        selectAllButton.addActionListener(e -> selectAllListener());
-        clearAllButton.addActionListener(e -> clearAllListener());
-        applyButton.addActionListener(e -> applyListener());
+        selectAllButton.addActionListener(λ -> selectAllListener());
+        clearAllButton.addActionListener(λ -> clearAllListener());
+        applyButton.addActionListener(λ -> applyListener());
 
         this.addWindowListener(new WindowAdapter()
         {

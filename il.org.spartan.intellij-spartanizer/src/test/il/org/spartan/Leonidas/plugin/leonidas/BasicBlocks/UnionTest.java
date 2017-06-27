@@ -11,8 +11,8 @@ import java.util.HashMap;
  * @since 20.5.17
  */
 public class UnionTest extends PsiTypeHelper {
-    protected PsiMethodCallExpression methodCallExpression(String s) {
-        return (PsiMethodCallExpression) createTestExpression(s);
+    protected PsiMethodCallExpression methodCallExpression(String ¢) {
+        return (PsiMethodCallExpression) createTestExpression(¢);
     }
 
     public void testUnionOfStatement() {

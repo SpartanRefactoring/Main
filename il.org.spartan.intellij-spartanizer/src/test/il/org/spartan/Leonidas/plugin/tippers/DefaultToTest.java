@@ -75,9 +75,9 @@ public class DefaultToTest extends PsiTypeHelper {
     }
 
     public void testCreateReplacementLegalCases() {
-        Arrays.stream(legalCasesStrings).forEach(s ->
+        Arrays.stream(legalCasesStrings).forEach(λ ->
                 assertEqualsByText(new DefaultsTo().createReplacement(
-                        createConditionalExpressionFromLegalString(s)),
+                        createConditionalExpressionFromLegalString(λ)),
                         createTestExpression(legalReplacement)));
     }
 

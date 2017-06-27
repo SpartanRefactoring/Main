@@ -76,9 +76,9 @@ public class TipperTest{
 			setup = true;
     }
 
-    private void log(String s){
+    private void log(String ¢){
         if (printsToScreen)
-			System.out.println(s);
+			System.out.println(¢);
     }
 
     private void crashTest(){

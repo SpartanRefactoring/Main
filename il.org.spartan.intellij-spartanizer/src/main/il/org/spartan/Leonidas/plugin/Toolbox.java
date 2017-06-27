@@ -125,7 +125,7 @@ public class Toolbox implements ApplicationComponent {
 
     private void initBasicBlocks() {
         blocks.addAll(getAllSubTypes().stream()
-                .filter(c -> !isAbstract(c.getModifiers()))
+                .filter(λ -> !isAbstract(λ.getModifiers()))
                 .map(c -> {
                     try {
                         Constructor<? extends GenericEncapsulator> cc = c.getDeclaredConstructor();
@@ -135,15 +135,15 @@ public class Toolbox implements ApplicationComponent {
                     return null;
                 })
                 .filter(Objects::nonNull)
-                .map(i -> (GenericEncapsulator) i)
+                .map(λ -> (GenericEncapsulator) λ)
                 .collect(Collectors.toList()));
     }
 
     private Set<Class<? extends GenericEncapsulator>> getAllSubTypes() {
         return new Reflections(GenericEncapsulator.class.getPackage().getName())
 				.getSubTypesOf(GenericEncapsulator.class).stream()
-				.filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
-				.map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
+				.filter(λ -> GenericEncapsulator.class.isAssignableFrom(λ) && !Modifier.isAbstract(λ.getModifiers()))
+				.map(λ -> (Class<? extends GenericEncapsulator>) λ).collect(Collectors.toSet());
     }
 
     @SuppressWarnings("unchecked")
@@ -173,7 +173,7 @@ public class Toolbox implements ApplicationComponent {
     private void createLeonidasTippers() {
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
                 .stream()
-                .filter(c -> !c.isAnnotationPresent(TipperUnderConstruction.class))
+                .filter(λ -> !λ.isAnnotationPresent(TipperUnderConstruction.class))
                 .forEach(c -> {
                     String source = Utils.getSourceCode(c);
                     if (!"".equals(source))
@@ -200,17 +200,17 @@ public class Toolbox implements ApplicationComponent {
         }));
     }
 
-    public Toolbox add(Tipper<? extends PsiElement> t) {
-        tipperMap.putIfAbsent(t.getOperableType(), new CopyOnWriteArrayList<>());
-        operableTypes.add(t.getOperableType());
-        tipperMap.get(t.getOperableType()).add(t);
-        allTipperMap.putIfAbsent(t.getOperableType(), new CopyOnWriteArrayList<>());
-        allTipperMap.get(t.getOperableType()).add(t);
+    public Toolbox add(Tipper<? extends PsiElement> ¢) {
+        tipperMap.putIfAbsent(¢.getOperableType(), new CopyOnWriteArrayList<>());
+        operableTypes.add(¢.getOperableType());
+        tipperMap.get(¢.getOperableType()).add(¢);
+        allTipperMap.putIfAbsent(¢.getOperableType(), new CopyOnWriteArrayList<>());
+        allTipperMap.get(¢.getOperableType()).add(¢);
         return this;
     }
 
     public boolean isElementOfOperableType(PsiElement e) {
-        return operableTypes.stream().anyMatch(t -> t.isAssignableFrom(e.getClass()));
+        return operableTypes.stream().anyMatch(λ -> λ.isAssignableFrom(e.getClass()));
     }
 
     /**
@@ -222,7 +222,7 @@ public class Toolbox implements ApplicationComponent {
     public void executeAllTippers(PsiElement e) {
         if (!checkExcluded(e.getContainingFile()) && isElementOfOperableType(e))
 			tipperMap.get(e.getClass()).stream().filter(tipper -> tipper.canTip(e)).findFirst()
-					.ifPresent(t -> executeTipper(e, t));
+					.ifPresent(λ -> executeTipper(e, λ));
     }
 
     /**
@@ -266,11 +266,11 @@ public class Toolbox implements ApplicationComponent {
         Wrapper<Boolean> modified = new Wrapper<>(false);
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement el) {
-                super.visitElement(el);
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
                 if (!modified.get())
-					if (tipper.canTip(el)) {
-						toReplace.set(el);
+					if (tipper.canTip(¢)) {
+						toReplace.set(¢);
 						modified.set(true);
 					}
             }
@@ -348,20 +348,20 @@ public class Toolbox implements ApplicationComponent {
         return null;
     }
 
-    public boolean checkExcluded(PsiFile f) {
-        return f == null || excludedFiles.contains(f.getVirtualFile());
+    public boolean checkExcluded(PsiFile ¢) {
+        return ¢ == null || excludedFiles.contains(¢.getVirtualFile());
     }
 
-    public void excludeFile(PsiFile f) {
-        excludedFiles.add(f.getVirtualFile());
+    public void excludeFile(PsiFile ¢) {
+        excludedFiles.add(¢.getVirtualFile());
     }
 
-    public void includeFile(PsiFile f) {
-        excludedFiles.remove(f.getVirtualFile());
+    public void includeFile(PsiFile ¢) {
+        excludedFiles.remove(¢.getVirtualFile());
     }
 
     private boolean canTipType(Class<? extends PsiElement> c) {
-        return tipperMap.keySet().stream().anyMatch(x -> x.equals(c));
+        return tipperMap.keySet().stream().anyMatch(λ -> λ.equals(c));
     }
 
     /**
@@ -389,14 +389,14 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public Optional<GenericEncapsulator> getGeneric(PsiElement e) {
-        return getGenericsBasicBlocks().stream().filter(g -> g.conforms(e)).findFirst();
+        return getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(e)).findFirst();
     }
 
     public void executeAllTippersNoNanos(PsiElement e) {
         if (!checkExcluded(e.getContainingFile()) && isElementOfOperableType(e))
 			tipperMap.get(e.getClass()).stream()
 					.filter(tipper -> tipper.canTip(e) && !(tipper instanceof NanoPatternTipper)).findFirst()
-					.ifPresent(t -> executeTipper(e, t));
+					.ifPresent(λ -> executeTipper(e, λ));
     }
 
     public Set<String> getAvailableTipsInfo(PsiElement e) {

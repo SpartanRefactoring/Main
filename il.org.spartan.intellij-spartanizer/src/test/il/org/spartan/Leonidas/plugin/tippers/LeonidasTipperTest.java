@@ -18,8 +18,8 @@ public class LeonidasTipperTest extends PsiTypeHelper {
 
     public void testOrenPleaseFixMe(){
     }
-    private PsiMethod test(String s) {
-        return createTestMethodFromString(s);
+    private PsiMethod test(String ¢) {
+        return createTestMethodFromString(¢);
     }
 /*
     public void testCanTip() throws Exception {

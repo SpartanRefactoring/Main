@@ -12,16 +12,16 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
  */
 public class Delegator extends JavadocMarkerNanoPattern {
     @Override
-    protected boolean prerequisites(PsiMethod m) {
-        return delegation(m);
+    protected boolean prerequisites(PsiMethod ¢) {
+        return delegation(¢);
     }
 
-    private boolean hasOneStatement(PsiCodeBlock b) {
-        return (b != null) && b.getStatements().length == 1;
+    private boolean hasOneStatement(PsiCodeBlock ¢) {
+        return (¢ != null) && ¢.getStatements().length == 1;
     }
 
-    private boolean hasOnlyMethodCall(PsiCodeBlock b) {
-        return getMethodCallExpression(b) != null;
+    private boolean hasOnlyMethodCall(PsiCodeBlock ¢) {
+        return getMethodCallExpression(¢) != null;
     }
 
     private PsiMethodCallExpression getMethodCallExpression(PsiCodeBlock b) {

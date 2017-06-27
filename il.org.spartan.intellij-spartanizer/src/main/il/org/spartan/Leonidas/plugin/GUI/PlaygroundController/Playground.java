@@ -76,9 +76,9 @@ public class Playground extends JFrame {
         pack();
         setVisible(true);
         outputArea.setEditable(false);
-        spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
-       clearButton.addActionListener(e -> clearButtonClicked());
-        closeButton.addActionListener(e -> closeButtonClicked());
+        spartanizeButton.addActionListener(λ -> spartanizeButtonClicked(false));
+       clearButton.addActionListener(λ -> clearButtonClicked());
+        closeButton.addActionListener(λ -> closeButtonClicked());
         this.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
@@ -88,8 +88,8 @@ public class Playground extends JFrame {
         });
         RecursiveJavaButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+            public void mouseClicked(MouseEvent ¢) {
+                super.mouseClicked(¢);
                 spartanizeRecursivelyButtonClicked();
             }
         });
