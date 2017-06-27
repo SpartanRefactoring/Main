@@ -26,11 +26,7 @@ import java.util.stream.Collectors;
 public class Matcher {
 
     private final Map<Integer, List<StructuralConstraint>> constrains = new HashMap<>();
-    private List<Encapsulator> roots;
-
-    Matcher() {
-        roots = null;
-    }
+    private List<Encapsulator> roots = null;
 
     public Matcher(List<Encapsulator> r, Map<Integer, List<Constraint>> map) {
         roots = r;
@@ -210,7 +206,7 @@ public class Matcher {
         Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
                 .allMatch(id -> {
-                    Boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
+                    boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
                             info.get(id).stream()
                                     .peek(x->{}) // Do not remove, magic happen here :(
                                     .allMatch(
@@ -218,7 +214,7 @@ public class Matcher {
                                     )
                     );
 
-                    Boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
+                    boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
                             info.get(id).stream().allMatch(e ->
                                     c.accept(new Encapsulator(e), mr.getMap())
                             )

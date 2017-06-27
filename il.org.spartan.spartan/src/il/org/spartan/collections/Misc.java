@@ -8,16 +8,16 @@ public class Misc {
   public static boolean compareWithStream(final String s, final InputStream is) {
     try (final Scanner actual = new Scanner(s); final Scanner expected = new Scanner(is);) {
       for (;;) {
-      if (actual.hasNext() != expected.hasNext())
-        return false;
-      if (!actual.hasNext())
-        return true;
-      final String a = actual.nextLine().trim(), b = expected.nextLine().trim();
-      if (!a.equals(b)) {
-        System.err.println("a=" + a);
-        System.err.println("b=" + b);
-        return false;
-      }
+        if (actual.hasNext() != expected.hasNext())
+          return false;
+        if (!actual.hasNext())
+          return true;
+        final String a = actual.nextLine().trim(), b = expected.nextLine().trim();
+        if (!a.equals(b)) {
+          System.err.println("a=" + a);
+          System.err.println("b=" + b);
+          return false;
+        }
       }
     }
   }
