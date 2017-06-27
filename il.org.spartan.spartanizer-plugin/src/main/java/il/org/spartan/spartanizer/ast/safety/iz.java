@@ -1156,9 +1156,6 @@ public interface iz {
       return false;
     }
   }
-  public static boolean letItBeIn(final List<Statement> ¢) {
-    return ¢.size() == 2 && the.firstOf(¢) instanceof VariableDeclarationStatement;
-  }
   static boolean hexaDecimal(final Expression ¢) {
     return iz.numberLiteral(¢) && az.numberLiteral(¢).getToken().startsWith("0x");
   }
