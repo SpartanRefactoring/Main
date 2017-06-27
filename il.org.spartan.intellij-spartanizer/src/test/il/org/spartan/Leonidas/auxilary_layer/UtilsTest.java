@@ -16,12 +16,12 @@ import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
 public class UtilsTest extends PsiTypeHelper {
 
     public void testIn() throws Exception {
-        assertTrue(in(5, 3, 4, 5, 6));
-        assertFalse(in(2, 3, 4, 5, 6));
-        assertTrue(in("banana", "apple", "pear", "avocado", "banana"));
-        assertFalse(in(3));
-        assertFalse(in(new Object()));
-        assertFalse(in(null));
+        assert in(5, 3, 4, 5, 6);
+        assert !in(2, 3, 4, 5, 6);
+        assert in("banana", "apple", "pear", "avocado", "banana");
+        assert !in(3);
+        assert !in(new Object());
+        assert !in(null);
     }
 
     public void testGetAllReferences() throws Exception {

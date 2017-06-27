@@ -98,16 +98,16 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (o == this) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         CustomLeonidasTippers that = (CustomLeonidasTippers) o;
 
-        return tippers != null ? tippers.equals(that.tippers) : that.tippers == null;
+        return tippers == null ? that.tippers == null : tippers.equals(that.tippers);
     }
 
     @Override
     public int hashCode() {
-        return tippers != null ? tippers.hashCode() : 0;
+        return tippers == null ? 0 : tippers.hashCode();
     }
 }

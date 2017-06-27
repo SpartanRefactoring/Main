@@ -25,7 +25,7 @@ public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition 
     public void replacer() {
         new Template(() -> {
             /* start */
-            identifier0++;
+            ++identifier0;
             /* end */
         });
     }

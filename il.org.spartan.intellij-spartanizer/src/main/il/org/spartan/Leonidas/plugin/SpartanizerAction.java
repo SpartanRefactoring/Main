@@ -53,18 +53,18 @@ public class SpartanizerAction extends AnAction {
                         Icons.Leonidas,
                         options,
                         options[1]);
-                if(n == 1){
-                    Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
-                    Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
-                    return;
-                }else{
-                    new WriteCommandAction.Simple(e.getProject()) {
-                        @Override
-                        protected void run() throws Throwable {
-                            new AddSpartanizerUtilsAction().createEnvironment(e);
-                        }
-                    }.execute();
-                }
+                if (n != 1)
+					new WriteCommandAction.Simple(e.getProject()) {
+						@Override
+						protected void run() throws Throwable {
+							new AddSpartanizerUtilsAction().createEnvironment(e);
+						}
+					}.execute();
+				else {
+					Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
+					Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
+					return;
+				}
             } catch (Exception ex) {}
 
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());

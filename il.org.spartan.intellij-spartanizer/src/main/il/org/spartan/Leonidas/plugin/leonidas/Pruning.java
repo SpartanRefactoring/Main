@@ -28,10 +28,10 @@ public class Pruning {
                 .filter(ge -> ge.conforms(e1.getInner()))
                 .findFirst()
                 .ifPresent(g -> {
-                    if (g.getConcreteParent(e1, map) == n)
-                        o.set(g.prune(e1, map));
-                    else
-                        g.prune(e1, map);
+                    if (g.getConcreteParent(e1, map) != n)
+						g.prune(e1, map);
+					else
+						o.set(g.prune(e1, map));
                 }));
         return o.get();
     }

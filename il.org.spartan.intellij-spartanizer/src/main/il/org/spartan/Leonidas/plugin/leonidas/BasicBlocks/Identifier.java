@@ -43,7 +43,7 @@ public class Identifier extends NamedElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.identifier(e) ? az.identifier(e).getText() : null;
+        return !iz.identifier(e) ? null : az.identifier(e).getText();
     }
 
     @Override

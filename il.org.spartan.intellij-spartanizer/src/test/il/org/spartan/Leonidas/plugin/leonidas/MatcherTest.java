@@ -64,17 +64,17 @@ public class MatcherTest extends PsiTypeHelper {
 
         Matcher m = new Matcher(Utils.wrapWithList(n), constrains);
         PsiIfStatement tm1 = createTestIfStatement("x > 2", "\nx++; \nreturn null;");
-        assertTrue(m.match(tm1));
+        assert m.match(tm1);
         PsiIfStatement tm2 = createTestIfStatement("x > 2", "\nif(!(x > 4)){x--;} \nreturn null;");
-        assertTrue(m.match(tm2));
+        assert m.match(tm2);
         PsiIfStatement tm3 = createTestIfStatement("x > 2", "\nx++; \nx--;");
-        assertFalse(m.match(tm3));
+        assert !m.match(tm3);
         PsiIfStatement tm4 = createTestIfStatement("x > 2", "\nreturn null; \nreturn null;");
-        assertFalse(m.match(tm4));
+        assert !m.match(tm4);
         PsiIfStatement tm5 = createTestIfStatement("x > 2", "\nif(x < 3){x--;} \nreturn null;");
-        assertFalse(m.match(tm5));
+        assert !m.match(tm5);
         PsiIfStatement tm6 = createTestIfStatement("x > 2", "\nif(x > 4){x--;} \nreturn null;");
-        assertFalse(m.match(tm6));
+        assert !m.match(tm6);
     }
 
     public void testExtractInfo() throws Exception {

@@ -15,7 +15,7 @@ public class ComponentJTable extends JTable {
     public ComponentJTable() {
 
         DefaultTableModel model = new DefaultTableModel() {
-            private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1;
 
             @Override
 			@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -36,7 +36,7 @@ public class ComponentJTable extends JTable {
         Object[] headers = {"ID", "Value"};
         model.setColumnIdentifiers(headers);
         this.setRowHeight(30);
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; ++i) {
             this.getColumnModel().getColumn(i).setCellRenderer(new CellRenderer());
             this.getColumnModel().getColumn(i).setMinWidth(150);
             this.getColumnModel().getColumn(i).setCellEditor(new CellEditor());
@@ -45,7 +45,7 @@ public class ComponentJTable extends JTable {
 
     private class CellRenderer extends DefaultTableCellRenderer {
 
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1;
 
         /*
          * @see TableCellRenderer#getTableCellRendererComponent(JTable, Object, boolean, boolean, int, int)
@@ -62,9 +62,7 @@ public class ComponentJTable extends JTable {
                 checkbox.setFont(getFont());
                 checkbox.setFocusPainted(false);
                 checkbox.setBorderPainted(true);
-                checkbox.setBorder(isSelected ?
-                        UIManager.getBorder(
-                                "List.focusCellHighlightBorder") : noFocusBorder);
+                checkbox.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
                 return checkbox;
             }
             if (value instanceof JTextField) {
@@ -91,9 +89,7 @@ public class ComponentJTable extends JTable {
                 box.setForeground(getForeground());
                 box.setEnabled(isEnabled());
                 box.setFont(getFont());
-                box.setBorder(isSelected ?
-                        UIManager.getBorder(
-                                "List.focusCellHighlightBorder") : noFocusBorder);
+                box.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
                 return box;
             }
 

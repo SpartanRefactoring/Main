@@ -184,7 +184,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         LightVirtualFile virtualFile = new LightVirtualFile(name, language, content);
         SingleRootFileViewProvider.doNotCheckFileSizeLimit(virtualFile);
         final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage(language);
-        FileViewProvider viewProvider = factory != null ? factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true) : null;
+        FileViewProvider viewProvider = factory == null ? null
+				: factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true);
         if (viewProvider == null)
             viewProvider = new SingleRootFileViewProvider(
                     Utils.getPsiManager(ProjectManager.getInstance().getDefaultProject()),
@@ -219,7 +220,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         List<Encapsulator> l = getForestFromMethod(replacerBody);
         l.forEach(root -> getGenericElements(root).forEach(n -> m.getOrDefault(n.getId(), new LinkedList<>()).forEach(mce -> {
             List<Object> arguments = step.arguments(mce).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
-            Encapsulator ie = iz.quantifier(n) ? az.quantifier(n).getInternal() : n;
+            Encapsulator ie = !iz.quantifier(n) ? n : az.quantifier(n).getInternal();
             try {
                 Utils.getDeclaredMethod(ie.getClass(), mce.getMethodExpression().getReferenceName(), Arrays.stream(arguments.toArray()).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, arguments.toArray());
             } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
@@ -370,20 +371,22 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             Integer elementId = extractIdFromRule(s);
             Constraint.ConstraintType constraintType = extractConstraintType(s);
 
-            if (constraintType == Constraint.ConstraintType.IS || constraintType == Constraint.ConstraintType.ISNOT) {
-                PsiElement y = getLambdaExpressionBody(s);
-                Optional<Class<? extends PsiElement>> q = getTypeOf(s);
-                y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
-                map.putIfAbsent(elementId, new LinkedList<>());
-                List<Encapsulator> l = new LinkedList<>();
-                l.add(Pruning.prune(Encapsulator.buildTreeFromPsi(y), map));
-                map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, l));
-            } else {
-                PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
-                List<Object> arguments = step.arguments(method).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
-                map.putIfAbsent(elementId, new LinkedList<>());
-                map.get(elementId).add(new Matcher.NonStructuralConstraint(method.getMethodExpression().getReferenceName(), arguments.toArray()));
-            }
+            if (constraintType != Constraint.ConstraintType.IS && constraintType != Constraint.ConstraintType.ISNOT) {
+				PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
+				List<Object> arguments = step.arguments(method).stream().map(e -> az.literal(e).getValue())
+						.collect(Collectors.toList());
+				map.putIfAbsent(elementId, new LinkedList<>());
+				map.get(elementId).add(new Matcher.NonStructuralConstraint(
+						method.getMethodExpression().getReferenceName(), arguments.toArray()));
+			} else {
+				PsiElement y = getLambdaExpressionBody(s);
+				Optional<Class<? extends PsiElement>> q = getTypeOf(s);
+				y = !q.isPresent() ? y : getRealRootByType(y, q.get());
+				map.putIfAbsent(elementId, new LinkedList<>());
+				List<Encapsulator> l = new LinkedList<>();
+				l.add(Pruning.prune(Encapsulator.buildTreeFromPsi(y), map));
+				map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, l));
+			}
         });
         return map;
     }

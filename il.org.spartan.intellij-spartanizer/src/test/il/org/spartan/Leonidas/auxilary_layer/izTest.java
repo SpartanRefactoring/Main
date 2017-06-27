@@ -489,16 +489,16 @@ public class izTest extends PsiTypeHelper {
 
     public void testFinalMember() throws Exception {
         PsiMember e1 = createTestFieldDeclarationFromString("final private int x");
-        assertTrue(iz.final¢(e1));
+        assert iz.final¢(e1);
         PsiMember e2 = createTestFieldDeclarationFromString("private int x");
-        assertFalse(iz.final¢(e2));
+        assert !iz.final¢(e2);
     }
 
     public void testFinalVariable() throws Exception {
         PsiVariable e1 = createTestFieldDeclarationFromString("final private int x");
-        assertTrue(iz.final¢(e1));
+        assert iz.final¢(e1);
         PsiVariable e2 = createTestFieldDeclarationFromString("private int x");
-        assertFalse(iz.final¢(e2));
+        assert !iz.final¢(e2);
     }
 
     public void testDefault() throws Exception {
@@ -609,12 +609,12 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testArithmetic() {
-        assertTrue(iz.arithmetic(createTestExpression("3")));
-        assertTrue(iz.arithmetic(createTestExpression("3 + 5")));
-        assertTrue(iz.arithmetic(createTestExpression("3 + 5 * 8")));
+        assert iz.arithmetic(createTestExpression("3"));
+        assert iz.arithmetic(createTestExpression("3 + 5"));
+        assert iz.arithmetic(createTestExpression("3 + 5 * 8"));
 
-        assertFalse(iz.arithmetic(createTestExpression("true")));
-        assertFalse(iz.arithmetic(createTestExpression("x && y")));
-        assertFalse(iz.arithmetic(createTestExpression("3 + i")));
+        assert !iz.arithmetic(createTestExpression("true"));
+        assert !iz.arithmetic(createTestExpression("x && y"));
+        assert !iz.arithmetic(createTestExpression("3 + i"));
     }
 }

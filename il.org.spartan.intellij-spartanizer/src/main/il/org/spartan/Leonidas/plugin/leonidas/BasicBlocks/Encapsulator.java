@@ -109,12 +109,12 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     public String toString() {
-        return inner != null ? inner + "" : "stub";
+        return inner == null ? "stub" : inner + "";
     }
 
     @NotNull
     public String getText() {
-        return inner.getText() != null ? inner.getText() : "";
+        return inner.getText() == null ? "" : inner.getText();
     }
 
     @Override
@@ -129,7 +129,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
      * @return the replacer
      */
     public Encapsulator generalizeWith(Encapsulator replacer) {
-        parent.children.replaceAll(e -> e == Encapsulator.this ? replacer : e);
+        parent.children.replaceAll(e -> e != Encapsulator.this ? e : replacer);
         replacer.parent = this.parent;
         return replacer;
     }

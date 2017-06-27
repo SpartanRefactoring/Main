@@ -102,7 +102,7 @@ public class TipperTest{
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.testing = true;
         log("\n*************************Now testing "+getTipperName()+":*************************\n");
-        if(examples.entrySet().size() == 0){
+        if(examples.entrySet().isEmpty()){
             log("No examples exist for tipper "+getTipperName());
         }
         for (Map.Entry<String,String> entry : examples.entrySet()) {

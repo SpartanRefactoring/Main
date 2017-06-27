@@ -17,13 +17,32 @@ public class FieldDeclarationTest extends PsiTypeHelper {
     }
 
     public void testFieldDeclaration() {
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x;")), new HashMap<>()).matches());
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x, y;")), new HashMap<>()).matches());
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int[] x = new int[5];")), new HashMap<>()).matches());
-        assertTrue(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("public static final String s = \"dsa\"")), new HashMap<>()).matches());
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x")), new HashMap<>()).matches());
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true")), new HashMap<>()).matches());
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("int a() {return 0;}")), new HashMap<>()).matches());
-        assertFalse(fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("void a(int x) {}")), new HashMap<>()).matches());
+        assert fieldDeclaration
+				.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x;")),
+						new HashMap<>())
+				.matches();
+        assert fieldDeclaration
+				.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x, y;")),
+						new HashMap<>())
+				.matches();
+        assert fieldDeclaration.generalizes(
+				Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int[] x = new int[5];")),
+				new HashMap<>()).matches();
+        assert fieldDeclaration.generalizes(
+				Encapsulator.buildTreeFromPsi(
+						createTestFieldDeclarationFromString("public static final String s = \"dsa\"")),
+				new HashMap<>()).matches();
+        assert !fieldDeclaration.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("x")), new HashMap<>())
+				.matches();
+        assert !fieldDeclaration
+				.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true")), new HashMap<>()).matches();
+        assert !fieldDeclaration
+				.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("int a() {return 0;}")),
+						new HashMap<>())
+				.matches();
+        assert !fieldDeclaration
+				.generalizes(Encapsulator.buildTreeFromPsi(createTestMethodFromString("void a(int x) {}")),
+						new HashMap<>())
+				.matches();
     }
 }

@@ -60,10 +60,10 @@ class TippersList extends JList {
     }
 
     public void addTipper(JLabel label) {
-        numOfElements++;
+        ++numOfElements;
         ListModel currentList = this.getModel();
         JLabel[] newList = new JLabel[currentList.getSize() + 1];
-        for (int i = 0; i < currentList.getSize(); i++) {
+        for (int i = 0; i < currentList.getSize(); ++i) {
             newList[i] = (JLabel) currentList.getElementAt(i);
         }
         newList[newList.length - 1] = label;
@@ -78,7 +78,7 @@ class TippersList extends JList {
             label.setForeground(getForeground());
             label.setEnabled(isEnabled());
             label.setFont(getFont());
-            label.setBorder(isSelected ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
+            label.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
             return label;
         }
     }

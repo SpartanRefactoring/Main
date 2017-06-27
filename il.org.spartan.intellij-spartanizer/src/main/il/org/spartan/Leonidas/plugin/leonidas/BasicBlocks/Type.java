@@ -35,7 +35,7 @@ public class Type extends NamedElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.type(e) ? az.type(e).getText() : null;
+        return !iz.type(e) ? null : az.type(e).getText();
     }
 
     @Override

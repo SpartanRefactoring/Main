@@ -57,23 +57,23 @@ public class Replacer {
         List<PsiElement> elements = getReplacingForest(roots, m, r);
         PsiElement prev = treeToReplace.getPrevSibling();
         PsiElement last = treeToReplace;
-        for (int i = 1; i < numberOfRoots; i++) {
+        for (int i = 1; i < numberOfRoots; ++i) {
             last = Utils.getNextActualSibling(last);
         }
         PsiElement parent = treeToReplace.getParent();
         if (iz.declarationStatement(parent))
             return;
-        if (prev == null) {
-            prev = parent.getFirstChild();
-            for (PsiElement element : elements) {
-                r.addBefore(parent, prev, element);
-            }
-        } else {
-            for (PsiElement element : elements) {
-                r.addAfter(parent, prev, element);
-                prev = treeToReplace.getPrevSibling();
-            }
-        }
+        if (prev != null)
+			for (PsiElement element : elements) {
+				r.addAfter(parent, prev, element);
+				prev = treeToReplace.getPrevSibling();
+			}
+		else {
+			prev = parent.getFirstChild();
+			for (PsiElement element : elements) {
+				r.addBefore(parent, prev, element);
+			}
+		}
         if (iz.methodCallExpression(parent.getParent()))
             treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
         if (parent.getChildren().length <= 1)

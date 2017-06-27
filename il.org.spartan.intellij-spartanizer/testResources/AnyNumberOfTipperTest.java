@@ -30,9 +30,9 @@ public class AnyNumberOfTipperTest implements LeonidasTipperDefinition {
             int x;
             /** start */
             while (booleanExpression(0)){
-                x++;
+                ++x;
                 anyNumberOf(statement(1));
-                x--;
+                --x;
             }
             /** end */
         });

@@ -42,7 +42,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     @Override
     public Encapsulator next() {
         if (shouldSkip && skipCounter < skipOverall) {
-            skipCounter++;
+            ++skipCounter;
             return elements.get(cursor);
         }
         shouldSkip = false;

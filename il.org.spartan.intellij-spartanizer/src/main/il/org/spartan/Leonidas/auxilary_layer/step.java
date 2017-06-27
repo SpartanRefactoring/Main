@@ -171,6 +171,6 @@ public enum step {
             }
         });
 
-        return result.get() != null ? Optional.of(result.get()) : Optional.empty();
+        return result.get() == null ? Optional.empty() : Optional.of(result.get());
     }
 }

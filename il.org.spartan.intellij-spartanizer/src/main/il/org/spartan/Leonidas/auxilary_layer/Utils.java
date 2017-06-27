@@ -112,7 +112,7 @@ public enum Utils {
     public static String getSourceCode(Class<?> c) {
         try {
             InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
-            return is != null ? IOUtils.toString(new BufferedReader(new InputStreamReader(is))) : "";
+            return is == null ? "" : IOUtils.toString(new BufferedReader(new InputStreamReader(is)));
         } catch (IOException e) {
             logger.error("could not read file", e);
         }
@@ -190,7 +190,7 @@ public enum Utils {
         PsiElement current = e;
         if (e == null || iz.whiteSpace(current) || iz.comment(current)) return 0;
         while (current != null) {
-            i++;
+            ++i;
             current = getNextActualSibling(current);
         }
         return i;

@@ -40,7 +40,7 @@ public class Method extends ModifiableElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.method(e) ? az.method(e).getName() : null;
+        return !iz.method(e) ? null : az.method(e).getName();
     }
 
     @Override

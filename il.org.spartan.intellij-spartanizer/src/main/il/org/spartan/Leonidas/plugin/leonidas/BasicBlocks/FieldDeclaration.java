@@ -42,7 +42,7 @@ public class FieldDeclaration extends ModifiableElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.fieldDeclaration(e) ? az.fieldDeclaration(e).getName() : null;
+        return !iz.fieldDeclaration(e) ? null : az.fieldDeclaration(e).getName();
     }
 
     @Override

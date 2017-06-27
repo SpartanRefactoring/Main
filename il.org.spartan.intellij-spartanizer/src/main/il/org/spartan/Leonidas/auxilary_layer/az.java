@@ -101,7 +101,7 @@ public enum az {
     }
 
     public static GenericEncapsulator generic(Encapsulator e) {
-        return e != null ? (GenericEncapsulator) e : null;
+        return e == null ? null : (GenericEncapsulator) e;
     }
 
     public static PsiNewExpression newExpression(PsiElement e) {
@@ -113,15 +113,15 @@ public enum az {
     }
 
     public static OptionalMethodCallBased optional(Encapsulator e) {
-        return e != null ? (OptionalMethodCallBased) e : null;
+        return e == null ? null : (OptionalMethodCallBased) e;
     }
 
     public static AnyNumberOfMethodCallBased anyNumberOf(Encapsulator e) {
-        return e != null ? (AnyNumberOfMethodCallBased) e : null;
+        return e == null ? null : (AnyNumberOfMethodCallBased) e;
     }
 
     public static QuantifierMethodCallBased quantifier(Encapsulator e) {
-        return e != null ? (QuantifierMethodCallBased) e : null;
+        return e == null ? null : (QuantifierMethodCallBased) e;
     }
 
     public static PsiDocComment javadoc(PsiElement e){
@@ -141,7 +141,7 @@ public enum az {
     }
 
     public static PsiFile psiFile(PsiElement e) {
-        return e != null ? (PsiFile)e : null;
+        return e == null ? null : (PsiFile) e;
     }
 
     public static <T extends PsiElement> String string(T value) {

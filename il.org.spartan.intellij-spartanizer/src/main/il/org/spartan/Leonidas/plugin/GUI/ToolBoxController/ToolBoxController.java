@@ -72,12 +72,12 @@ class ToolBoxController extends JFrame {
                             list.getModel().getElementAt(index);
                     Map<String, String> examples = null;
                     LeonidasTipperDefinition ltd = Toolbox.getInstance().getTipperInstanceByName(checkbox.getText());
-                    if (ltd == null) {
-                        Tipper tipper = Toolbox.getInstance().getTipperByName(checkbox.getText());
-                        examples = tipper.getExamples();
-                    } else { // leonidasTipper
-                        examples = ltd.getExamples();
-                    }
+                    if (ltd != null)
+						examples = ltd.getExamples();
+					else {
+						Tipper tipper = Toolbox.getInstance().getTipperByName(checkbox.getText());
+						examples = tipper.getExamples();
+					}
                     String before = "";
                     String after = "";
                     for (Map.Entry<String, String> entry : examples.entrySet()) {
@@ -129,7 +129,7 @@ class ToolBoxController extends JFrame {
     private void applyListener() {
         applyButton.setEnabled(false);
         List<String> updateList = new ArrayList<>();
-        for (int i = 0; i < list.getNumOfElements(); i++) {
+        for (int i = 0; i < list.getNumOfElements(); ++i) {
             JCheckBox checkbox = (JCheckBox)
                     list.getModel().getElementAt(i);
             if (checkbox.isSelected()) {
@@ -171,13 +171,13 @@ class ToolBoxController extends JFrame {
         splitPanel.setDividerLocation(400);
         splitPanel.setDividerSize(10);
         splitPanel.setEnabled(false);
-        mainPanel.add(splitPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        mainPanel.add(splitPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, new Dimension(200, 200), null, 0, false));
         rightPanel = new JPanel();
         rightPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         splitPanel.setRightComponent(rightPanel);
         infoPanel = new JPanel();
         infoPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        rightPanel.add(infoPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        rightPanel.add(infoPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Choose the tippers you want to be notified on:");
         infoPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -186,18 +186,18 @@ class ToolBoxController extends JFrame {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayoutManager(2, 3, new Insets(0, 10, 20, 10), -1, -1));
         buttonsPanel.setEnabled(true);
-        rightPanel.add(buttonsPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        rightPanel.add(buttonsPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, null, null, 0, false));
         applyButton = new JButton();
         applyButton.setText("Apply");
-        buttonsPanel.add(applyButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonsPanel.add(applyButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         buttonsPanel.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         clearAllButton = new JButton();
         clearAllButton.setText("Clear All");
-        buttonsPanel.add(clearAllButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonsPanel.add(clearAllButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         selectAllButton = new JButton();
         selectAllButton.setText("Select All");
-        buttonsPanel.add(selectAllButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonsPanel.add(selectAllButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tippersPane = new JScrollPane();
         tippersPane.setVerticalScrollBarPolicy(22);
         splitPanel.setLeftComponent(tippersPane);
