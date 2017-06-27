@@ -37,9 +37,9 @@ public class IfDoubleNot implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("if(!(!(5==5))){\n\tSystem.out.Println(\"ok\");\n}", "if(5==5){\n\tSystem.out.Println(\"ok\");\n}")
-                .put("boolean b = !(!(true));", "boolean b = true;")
-                .put("for(int i = 0; !(!(i< 20)) ; ++i){\n\ti+=1;\n}", "for(int i = 0; i< 20 ; ++i){\n\ti+=1;\n}")
+                //.put("if(!(!(5==5))){\n\tSystem.out.Println(\"ok\");\n}", "if(5==5){\n\tSystem.out.Println(\"ok\");\n}")
+                //.put("boolean b = !(!(true));", "boolean b = true;")
+                //.put("for(int i = 0; !(!(i< 20)) ; ++i){\n\ti+=1;\n}", "for(int i = 0; i< 20 ; ++i){\n\ti+=1;\n}")
                 .map();
 
     }
