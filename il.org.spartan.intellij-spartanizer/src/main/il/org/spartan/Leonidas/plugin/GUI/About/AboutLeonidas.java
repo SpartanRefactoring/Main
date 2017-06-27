@@ -15,6 +15,11 @@ import javax.swing.JTextPane;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+<<<<<<< Updated upstream
+=======
+import il.org.spartan.Leonidas.plugin.GUI.JPanelWithBackground;
+import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
+>>>>>>> Stashed changes
 
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 
@@ -28,12 +33,19 @@ class AboutLeonidas extends JFrame {
     private JPanel panel1;
     private JTextPane textPane1;
     private JButton closeButton;
+    private static String backgroundImagePath = "/aboutBG.jpg";
+
 
     public AboutLeonidas() {
         super("About Leonidas Plugin");
         if(active)
 			return;
         active = true;
+        try {
+            this.getContentPane().add(new JPanelWithBackground(backgroundImagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         LeonidasIcon.apply(this);
         setContentPane(panel1);
         setPreferredSize(new Dimension(1000, 600));

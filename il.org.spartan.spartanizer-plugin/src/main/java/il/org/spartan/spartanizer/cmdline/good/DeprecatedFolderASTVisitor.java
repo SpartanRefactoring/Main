@@ -1,15 +1,11 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
 import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.stream.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
@@ -17,7 +13,6 @@ import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.library.*;
@@ -152,20 +147,10 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       return true;
     }
     private static boolean interesting(final MethodDeclaration ¢) {
-      return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
-    }
-    private static boolean leaking(final Stream<ASTNode> ¢) {
-      return ¢.noneMatch(BucketMethods::leaking);
+      return !¢.isConstructor() && interesting(statements(body(¢))) && MethodProperty.callingOtherMethods(¢);
     }
     private static boolean interesting(final List<Statement> ¢) {
-      return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
-    }
-    static boolean letItBeIn(final List<Statement> ¢) {
-      return ¢.size() == 2 && the.firstOf(¢) instanceof VariableDeclarationStatement;
-    }
-    private static boolean leaking(final ASTNode ¢) {
-      return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
-          SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
+      return ¢ != null && ¢.size() >= 2 && !MethodProperty.letItBeIn(¢);
     }
   }
 }

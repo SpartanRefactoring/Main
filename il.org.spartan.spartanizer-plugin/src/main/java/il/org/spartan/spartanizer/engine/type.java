@@ -264,18 +264,18 @@ public interface type {
       if (!$.has(¢.getIdentifier()))
         return NOTHING;
       final implementation i = (implementation) $.get(¢.getIdentifier()).getType(); // TODO
-                                                                              // yg:
-                                                                              // getType
-                                                                              // probably
-                                                                              // returns
-                                                                              // null
-                                                                              // for
-                                                                              // some
-                                                                              // enum
-                                                                              // (gives
-                                                                              // exceptions
-                                                                              // on
-                                                                              // guava->CaseFormat)
+      // yg:
+      // getType
+      // probably
+      // returns
+      // null
+      // for
+      // some
+      // enum
+      // (gives
+      // exceptions
+      // on
+      // guava->CaseFormat)
       return i != null ? i : NOTHING;
     }
     /** @param x JD

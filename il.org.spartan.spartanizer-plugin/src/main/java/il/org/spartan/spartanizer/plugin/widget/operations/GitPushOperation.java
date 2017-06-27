@@ -22,8 +22,7 @@ public class GitPushOperation extends GitOperation {
   }
   @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {
     try {
-      final Iterable<PushResult> i = g.push().call();
-      for (final PushResult p : i)
+      for (final PushResult p : g.push().call())
         if (p.getRemoteUpdates().size() == 1)
           for (final RemoteRefUpdate r : p.getRemoteUpdates())
             if (r.getStatus() == RemoteRefUpdate.Status.UP_TO_DATE) {

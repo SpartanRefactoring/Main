@@ -47,11 +47,8 @@ public class GrandVisitor {
     }
   }
 
-
-
   protected static final String[] defaultArguments = as.array("..");
-
-  protected static BufferedWriter out;
+  public static BufferedWriter out;
 
   /** Check whether given string containing Java code contains {@link Test}
    * annotations
@@ -72,7 +69,6 @@ public class GrandVisitor {
     });
     return $.get();
   }
-
   public static void main(final String[] args) {
     new GrandVisitor(args) {
       /* Override here which ever method you like */
@@ -92,6 +88,7 @@ public class GrandVisitor {
       return false;
     }
   }
+
   protected String absolutePath;
   private ASTVisitor astVisitor;
   @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
@@ -99,7 +96,6 @@ public class GrandVisitor {
   private String currentLocation;
   @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
   private final List<String> locations;
-
   public final Tappers notify = new Tappers()//
       .push(new Tapper() {
         /** @formatter:off */
