@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.internal.core.*;
 
 import fluent.ly.*;
 import il.org.spartan.collections.*;
@@ -21,7 +22,7 @@ import il.org.spartan.utils.*;
  * file, and would be overwritten each time this program is run.
  * @author Matteo Orru'
  * @since 2017-06-25 */
-public class spartanize extends {
+public class spartanize extends ASTInFilesVisitor {
   @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
@@ -30,8 +31,8 @@ public class spartanize extends {
   protected static String presentSourcePath;
   private static String currentLocation;
   private static File currentFile;
+  
   public static void main(final String[] args) throws SecurityException, IllegalArgumentException {
-    System.err.println(defaultArguments[0]);
     visit(args.length != 0 ? args : defaultArguments);
   }
   public static void visit(final String... args) {
@@ -45,22 +46,7 @@ public class spartanize extends {
   private static void matteo(String ¢) {
     forget.it(¢);
   }
-  
-  public static String getCurrentLocation() {
-    return currentLocation;
-  }
-  
-  public void visitFile(final File f) {
-    // notify.beginFile();
-    if (Utils.isProductionCode(f) && productionCode(f))
-      try {
-        absolutePath = f.getAbsolutePath();
-        relativePath = f.getPath();
-        collect(FileUtils.read(f));
-      } catch (final IOException ¢) {
-        note.io(¢, "File = " + f);
-      }
-    notify.endFile();
-  }
+
+
 }
 
