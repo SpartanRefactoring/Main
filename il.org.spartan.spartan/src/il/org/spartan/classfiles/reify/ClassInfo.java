@@ -6,6 +6,7 @@ import java.util.*;
 
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.ConstantPool.*;
+import il.org.spartan.collections.*;
 
 /** An in memory representation of a class file.
  * @author Yossi Gil */
