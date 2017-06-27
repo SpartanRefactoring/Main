@@ -114,7 +114,7 @@ public class Logger {
 
     private void log(BasicLogEntry e) {
         if (e.getLogLevel().greaterOrEqual(this.getLogLevel()))
-			LogFileUtils.appendToLogFile(e.toString());
+			LogFileUtils.appendToLogFile(e + "");
     }
 
     public enum LEVEL {

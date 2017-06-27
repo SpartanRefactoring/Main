@@ -250,7 +250,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
-                if (expression.getMethodExpression().getText().equals("element")) {
+                if ("element".equals(expression.getMethodExpression().getText())) {
                     x.set(expression);
                 }
             }

@@ -505,7 +505,7 @@ public enum iz {
     }
 
     public static boolean dot(PsiElement e) {
-        return iz.javaToken(e) && az.javaToken(e).getText().equals(".");
+        return iz.javaToken(e) && ".".equals(az.javaToken(e).getText());
     }
 
     public static boolean referenceParameterList(PsiElement e) {

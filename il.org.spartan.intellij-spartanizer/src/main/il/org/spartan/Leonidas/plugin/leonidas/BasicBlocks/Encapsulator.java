@@ -109,7 +109,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     public String toString() {
-        return inner != null ? inner.toString() : "stub";
+        return inner != null ? inner + "" : "stub";
     }
 
     @NotNull

@@ -29,7 +29,7 @@ public class NanoPatternsEnableAction extends AnAction {
         Presentation presentation = e.getPresentation();
         presentation.setText((buttonText.startsWith("Disable") ? "Enable" : "Disable")
                 + " Nano Patterns");
-        presentation.setIcon((buttonText.startsWith("Disable") ? Icons.Enable : Icons.Disable));
+        presentation.setIcon(buttonText.startsWith("Disable") ? Icons.Enable : Icons.Disable);
         DaemonCodeAnalyzer.getInstance(p).restart();
     }
 }

@@ -121,19 +121,19 @@ public class EditTipper extends JFrame {
             for (Field field : fields) {
                 if ((matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !field.getAnnotation(UserControlled.class).templatePart().equals("Matcher"))) {
+                                !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
                     continue;
                 }
                 if ((!matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (!matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !field.getAnnotation(UserControlled.class).templatePart().equals("Replacer"))) {
+                                !"Replacer".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
                     continue;
                 }
 
                 UserControlled annotation = field.getAnnotation(UserControlled.class);
                 Class type = field.getType();
                 try {
-                    if (type.isPrimitive() && type.getName().equals("boolean")) {
+                    if (type.isPrimitive() && "boolean".equals(type.getName())) {
                         table.getModel().setValueAt(new JLabel(root.getDescription()+ " "+ annotation.name()), i, 0);
                         table.getModel().setValueAt(new JCheckBox("", (Boolean) field.get(root)), i++, 1);
                         continue;
@@ -165,7 +165,7 @@ public class EditTipper extends JFrame {
 
                     Object obj = type.newInstance();
                     if (obj instanceof String) {
-                        if(!((String) field.get(root)).equals("")) {
+                        if(!"".equals((String) field.get(root))) {
                             table.getModel().setValueAt(new JLabel(root.getDescription()+ " "+ annotation.name()), i, 0);
                             table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
                         }
@@ -188,18 +188,18 @@ public class EditTipper extends JFrame {
             for (Field field : fields) {
                 if ((matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !field.getAnnotation(UserControlled.class).templatePart().equals("Matcher"))) {
+                                !"Matcher".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
                     continue;
                 }
                 if ((!matcher && !field.isAnnotationPresent(UserControlled.class))||
                         (!matcher && field.isAnnotationPresent(UserControlled.class) &&
-                                !field.getAnnotation(UserControlled.class).templatePart().equals("Replacer"))) {
+                                !"Replacer".equals(field.getAnnotation(UserControlled.class).templatePart()))) {
                     continue;
                 }
 
                 Class type = field.getType();
                 try {
-                    if (type.isPrimitive() && type.getName().equals("boolean")) {
+                    if (type.isPrimitive() && "boolean".equals(type.getName())) {
                         field.set(root, ((JCheckBox)table.getValueAt(i++,1)).isSelected());
                         continue;
                     }

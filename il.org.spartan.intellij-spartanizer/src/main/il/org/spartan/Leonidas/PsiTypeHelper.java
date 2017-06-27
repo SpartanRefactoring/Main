@@ -75,7 +75,7 @@ public class PsiTypeHelper extends PsiTestCase {
                 .append("{")
                 .append(classBody)
                 .append("}");
-        return getTestFactory().createClassFromText(sb.toString(), getTestFile());
+        return getTestFactory().createClassFromText(sb + "", getTestFile());
     }
 
     /**
@@ -92,7 +92,7 @@ public class PsiTypeHelper extends PsiTestCase {
                 .append("{")
                 .append(interfaceBody)
                 .append("}");
-        return getTestFactory().createClassFromText(sb.toString(), getTestFile());
+        return getTestFactory().createClassFromText(sb + "", getTestFile());
     }
 
     protected PsiClass createEnumClassFromString(String s) {
@@ -236,7 +236,7 @@ public class PsiTypeHelper extends PsiTestCase {
         Arrays.stream(args).forEach(sb::append);
         sb.append(")");
         return (PsiMethodCallExpression) getTestFactory()
-                .createExpressionFromText(sb.toString(), getTestFile());
+                .createExpressionFromText(sb + "", getTestFile());
     }
 
     protected PsiExpression createTestExpression(String expression) {
@@ -276,7 +276,7 @@ public class PsiTypeHelper extends PsiTestCase {
                 .append("(");
         Arrays.stream(parameters).forEach(sb::append);
         sb.append(")");
-        return (PsiNewExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
+        return (PsiNewExpression) getTestFactory().createExpressionFromText(sb + "", getTestFile());
     }
 
     protected PsiMethodReferenceExpression createTestMethodReferenceExpression(String typeName, String methodName) {

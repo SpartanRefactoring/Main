@@ -86,7 +86,7 @@ public class TipperTest{
     private void crashTest(){
         crashed = true;
         if(!quietCrash){
-            assert(false);
+            assert false;
         }
     }
 

@@ -184,7 +184,7 @@ public class Toolbox implements ApplicationComponent {
                 .filter(c -> !c.isAnnotationPresent(TipperUnderConstruction.class))
                 .forEach(c -> {
                     String source = Utils.getSourceCode(c);
-                    if (!source.equals(""))
+                    if (!"".equals(source))
                         add(new LeonidasTipper(c.getSimpleName(), source));
                 });
     }
@@ -253,13 +253,13 @@ public class Toolbox implements ApplicationComponent {
             @Nullable
             @Override
             public Object getData(String dataId) {
-                if (dataId.equals("project")) {
+                if ("project".equals(dataId)) {
                     return Utils.getProject();
                 }
-                if (dataId.equals("editor")) {
+                if ("editor".equals(dataId)) {
                     return FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor();
                 }
-                if (dataId.equals("virtualFile")) {
+                if ("virtualFile".equals(dataId)) {
                     return e.getContainingFile().getVirtualFile();
                 }
                 return null;

@@ -23,11 +23,11 @@ public class WrapperTest extends PsiTypeHelper {
 
     public void testToString() {
         Wrapper<Integer> wrapper = new Wrapper<>();
-        assertEquals("null", wrapper.toString());
+        assertEquals("null", wrapper + "");
         Integer x = 2;
         wrapper.set(x);
-        assertEquals(x.toString(), wrapper.toString());
-        assertEquals("string", (new Wrapper<>("string")).toString());
+        assertEquals(x + "", wrapper + "");
+        assertEquals("string", new Wrapper<>("string") + "");
     }
 
     public void testHashCode() {

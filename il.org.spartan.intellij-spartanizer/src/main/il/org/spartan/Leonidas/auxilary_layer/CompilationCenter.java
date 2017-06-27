@@ -54,7 +54,7 @@ public class CompilationCenter {
 	 */
 	public static boolean hasCompilationErrors(PsiFile f) {
 		compile(f);
-		return errors.toString().length() != 0;
+		return (errors + "").length() != 0;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class CompilationCenter {
 	public static String getLatestCompilationErrors() {
 		if (!initialized)
 			initialize();
-		return errors.toString();
+		return errors + "";
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class CompilationCenter {
 	public static String getLatestCompilationOutput() {
 		if (!initialized)
 			initialize();
-		return output.toString();
+		return output + "";
 	}
 
 }

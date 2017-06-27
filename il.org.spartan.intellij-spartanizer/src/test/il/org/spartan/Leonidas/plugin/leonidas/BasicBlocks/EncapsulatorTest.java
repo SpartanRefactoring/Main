@@ -88,7 +88,7 @@ public class EncapsulatorTest extends PsiTypeHelper {
     }
 
     public void testToString() {
-        assertEquals("PsiIfStatement", node.toString());
+        assertEquals("PsiIfStatement", node + "");
     }
 
     public void testGetText() {

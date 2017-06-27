@@ -25,42 +25,42 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
 
     public void testLeonidasTipper1() {
         preparePlayground("if(x==0){\n\tx=1;\n}");
-        assert playground.getOutput().replaceAll("\\s+","").equals("if(x==0)x=1;");
+        assert "if(x==0)x=1;".equals(playground.getOutput().replaceAll("\\s+", ""));
     }
 
     public void testLeonidasTipper2() {
         preparePlayground("while(x==0){x=1;}");
-        assert playground.getOutput().replaceAll("\\s+","").equals("while(x==0)x=1;");
+        assert "while(x==0)x=1;".equals(playground.getOutput().replaceAll("\\s+", ""));
 
     }
 
     public void testLeonidasTipper3() {
         preparePlayground("!(!(x))");
-        assert playground.getOutput().equals("x");
+        assert "x".equals(playground.getOutput());
     }
 
 
     public void testNanoTipper1() {
         preparePlayground("l.get(l.size()-1)");
-        assert playground.getOutput().equals("last(l)");
+        assert "last(l)".equals(playground.getOutput());
     }
 
     public void testNanoTipper2() {
         preparePlayground("X == null ? Y : X");
-        assert playground.getOutput().equals("defaults(X).to(Y)");
+        assert "defaults(X).to(Y)".equals(playground.getOutput());
     }
 
     public void testNanoTipper3() {
         preparePlayground("i->{return i;}");
-        assert playground.getOutput().equals("i->i");
+        assert "i->i".equals(playground.getOutput());
     }
 
     public void testClear() {
         preparePlayground("x");
-        assert playground.getOutput().equals("x");
+        assert "x".equals(playground.getOutput());
         playground.doClear();
-        assert playground.getOutput().equals("");
-        assert playground.getInput().equals("");
+        assert "".equals(playground.getOutput());
+        assert "".equals(playground.getInput());
     }
 
     public void testClose() {
