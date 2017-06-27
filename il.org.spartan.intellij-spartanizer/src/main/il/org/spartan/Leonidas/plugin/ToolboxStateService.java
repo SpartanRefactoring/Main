@@ -50,11 +50,11 @@ public class ToolboxStateService implements PersistentStateComponent<ToolboxStat
         });
     }
 
-    @Nullable
     @Override
-    public ToolboxStateService getState() {
-        return this;
-    }
+	@Nullable
+	public ToolboxStateService getState() {
+		return this;
+	}
 
     @Override
     public void loadState(ToolboxStateService state) {

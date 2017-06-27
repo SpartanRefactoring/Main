@@ -38,19 +38,19 @@ public class SpartanizerAnnotator implements Annotator {
             tippers.forEach(tipper -> {
                 Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
                 annotation.registerFix(new IntentionAction() {
-                    @Nls
-                    @NotNull
                     @Override
-                    public String getText() {
-                        return tipper.description(e);
-                    }
+					@Nls
+					@NotNull
+					public String getText() {
+						return tipper.description(e);
+					}
 
-                    @Nls
-                    @NotNull
                     @Override
-                    public String getFamilyName() {
-                        return "SpartanizerAction";
-                    }
+					@Nls
+					@NotNull
+					public String getFamilyName() {
+						return "SpartanizerAction";
+					}
 
                     @Override
                     public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {

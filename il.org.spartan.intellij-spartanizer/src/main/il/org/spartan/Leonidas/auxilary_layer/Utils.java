@@ -94,13 +94,13 @@ public enum Utils {
         Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
         assert e != null;
         e.accept(new JavaRecursiveElementVisitor() {
-            @SuppressWarnings("unchecked")
             @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                if (aClass.isInstance(e))
-                    w.get().add((T) e);
-            }
+			@SuppressWarnings("unchecked")
+			public void visitElement(PsiElement e) {
+				super.visitElement(e);
+				if (aClass.isInstance(e))
+					w.get().add((T) e);
+			}
         });
         return w.get();
     }

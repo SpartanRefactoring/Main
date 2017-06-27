@@ -35,11 +35,11 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
         return ServiceManager.getService(CustomLeonidasTippers.class);
     }
 
-    @Nullable
     @Override
-    public CustomLeonidasTippers getState() {
-        return this;
-    }
+	@Nullable
+	public CustomLeonidasTippers getState() {
+		return this;
+	}
 
     @Override
     public void loadState(CustomLeonidasTippers state) {

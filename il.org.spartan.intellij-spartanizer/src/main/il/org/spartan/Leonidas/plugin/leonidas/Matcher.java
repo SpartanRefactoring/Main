@@ -263,19 +263,17 @@ public class Matcher {
         return roots;
     }
 
-    public static abstract class Constraint {
-        protected final ConstraintType type;
+    public abstract static class Constraint {
+		protected final ConstraintType type;
 
-        Constraint(ConstraintType t) {
-            type = t;
-        }
+		Constraint(ConstraintType t) {
+			type = t;
+		}
 
-        public enum ConstraintType {
-            IS,
-            ISNOT,
-            SPECIFIC,
-        }
-    }
+		public enum ConstraintType {
+			IS, ISNOT, SPECIFIC
+		}
+	}
 
     /**
      * Represents a constraint on a generalized variable of the leonidas language.

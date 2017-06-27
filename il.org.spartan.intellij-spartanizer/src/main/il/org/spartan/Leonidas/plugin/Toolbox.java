@@ -250,20 +250,20 @@ public class Toolbox implements ApplicationComponent {
             tipper.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
         }
         AnActionEvent ana = AnActionEvent.createFromDataContext("banana",null ,new DataContext() {
-            @Nullable
             @Override
-            public Object getData(String dataId) {
-                if ("project".equals(dataId)) {
-                    return Utils.getProject();
-                }
-                if ("editor".equals(dataId)) {
-                    return FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor();
-                }
-                if ("virtualFile".equals(dataId)) {
-                    return e.getContainingFile().getVirtualFile();
-                }
-                return null;
-            }
+			@Nullable
+			public Object getData(String dataId) {
+				if ("project".equals(dataId)) {
+					return Utils.getProject();
+				}
+				if ("editor".equals(dataId)) {
+					return FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor();
+				}
+				if ("virtualFile".equals(dataId)) {
+					return e.getContainingFile().getVirtualFile();
+				}
+				return null;
+			}
         });
         ReformatCodeAction rca = new ReformatCodeAction();
         rca.actionPerformed(ana);
@@ -406,11 +406,11 @@ public class Toolbox implements ApplicationComponent {
         logger.info("Disposed toolbox component");
     }
 
-    @NotNull
     @Override
-    public String getComponentName() {
-        return auxGetComponentName();
-    }
+	@NotNull
+	public String getComponentName() {
+		return auxGetComponentName();
+	}
 
     public List<GenericEncapsulator> getGenericsBasicBlocks() {
         return this.blocks;

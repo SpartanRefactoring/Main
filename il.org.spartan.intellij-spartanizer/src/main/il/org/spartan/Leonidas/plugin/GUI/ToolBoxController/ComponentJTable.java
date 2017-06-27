@@ -17,11 +17,11 @@ public class ComponentJTable extends JTable {
         DefaultTableModel model = new DefaultTableModel() {
             private static final long serialVersionUID = 1L;
 
-            @SuppressWarnings({"unchecked", "rawtypes"})
             @Override
-            public Class getColumnClass(int column) {
-                return getValueAt(0, column).getClass();
-            }
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
 
             public boolean isCellEditable(int row, int column) {
                 return column != 0;
