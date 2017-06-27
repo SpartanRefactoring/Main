@@ -151,19 +151,19 @@ public enum CSV {
   public static String unescape(final String s) {
     if (NULL.equals(s))
       return null;
-    boolean esc = false;
+    boolean faceValue = true;
     final int length = s.length();
     final StringBuilder $ = new StringBuilder(length);
     for (int i = 0; i < length; ++i) {
       final char c = s.charAt(i);
-      if (!esc) {
+      if (faceValue) {
         if (c == '\\')
-          esc = true;
+          faceValue = false;
         else
           $.append(c);
         continue;
       }
-      esc = false;
+      faceValue = true;
       switch (c) {
         case 'n':
           $.append("\n");

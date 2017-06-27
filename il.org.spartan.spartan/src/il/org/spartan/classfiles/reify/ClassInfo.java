@@ -6,7 +6,6 @@ import java.util.*;
 
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.ConstantPool.*;
-import il.org.spartan.collections.*;
 
 /** An in memory representation of a class file.
  * @author Yossi Gil */
@@ -269,14 +268,14 @@ public final class ClassInfo extends ConstantPoolEntity {
           continue;
         final Set<String> s2 = m2.instanceVariables();
         s2.retainAll(m1.instanceVariables());
-        boolean found = false;
+        boolean searching = true;
         for (final String ¢ : s2)
           if (¢.startsWith(name + ":")) {
             ++nonEmptyIntersect;
-            found = true;
+            searching = false;
             break;
           }
-        if (!found)
+        if (searching)
           ++$;
       }
     return Math.max($ - nonEmptyIntersect, 0);
