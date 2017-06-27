@@ -61,7 +61,7 @@ public class PossiblyMultipleExecution {
     return touched(body($));
   }
   private boolean multiple(final ForStatement $) {
-    return touched(expression($)) || updaters($).stream().anyMatch(λ -> touched(λ));
+    return touched(expression($)) || updaters($).stream().anyMatch(this::touched);
   }
   private boolean touched(final ASTNode n) {
     return descendants.streamOf(n).anyMatch(λ -> λ == what);

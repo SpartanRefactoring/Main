@@ -26,7 +26,7 @@ public class ConstructorEmptyRemove extends ConstructorPattern implements Catego
         () -> statements(body).isEmpty());
     notNil("Containing class", () -> typeDelcaration = az.typeDeclaration(parent));
     andAlso("Visibility is no lesser than of containing class", () -> visibility.of(current) >= visibility.of(typeDelcaration));
-    andAlso("No other constructors defined", () -> step.methods(typeDelcaration).stream().filter(λ -> λ.isConstructor()).count() == 1);
+    andAlso("No other constructors defined", () -> step.methods(typeDelcaration).stream().filter(MethodDeclaration::isConstructor).count() == 1);
   }
   @Override public Examples examples() {
     return convert("class A { A(){}}").to("class A{}") //

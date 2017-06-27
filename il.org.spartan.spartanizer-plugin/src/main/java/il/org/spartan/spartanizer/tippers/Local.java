@@ -36,7 +36,7 @@ public abstract class Local extends FragmentAmongFragments {
     else {
       final VariableDeclarationStatement newParent = copy.of(declaration);
       fragments(newParent).clear();
-      fragments(newParent).addAll(live.stream().map(λ -> copy.of(λ)).collect(Collectors.toList()));
+      fragments(newParent).addAll(live.stream().map(copy::of).collect(Collectors.toList()));
       $.replace(declaration, newParent, g);
     }
     return $;

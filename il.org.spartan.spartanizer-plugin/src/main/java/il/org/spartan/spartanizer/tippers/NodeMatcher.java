@@ -83,7 +83,7 @@ public abstract class NodeMatcher<N extends ASTNode> extends CarefulTipper<N> {
     return this;
   }
   protected NodeMatcher<N> property(final String fieldName, final Runnable r) {
-    return andAlso("Extract " + fieldName, () -> yes.forgetting(() -> r.run()));
+    return andAlso("Extract " + fieldName, () -> yes.forgetting(r::run));
   }
   protected ASTNode[] span() {
     return as.array(current);

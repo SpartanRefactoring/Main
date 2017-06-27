@@ -4,6 +4,7 @@ import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import java.util.concurrent.atomic.*;
+import java.util.function.Consumer;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -137,6 +138,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
       notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
       WidgetPreferences.setDefaults();
-    }, λ -> note.bug(λ));
+    }, (Consumer<Exception>) note::bug);
   }
 }

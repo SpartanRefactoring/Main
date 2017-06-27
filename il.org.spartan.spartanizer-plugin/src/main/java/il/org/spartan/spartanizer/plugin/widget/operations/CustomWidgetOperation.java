@@ -24,7 +24,7 @@ public class CustomWidgetOperation extends WidgetOperation {
   }
   @Override public void onMouseUp(final WidgetContext __) throws Throwable {
     super.onMouseUp(__);
-    getCommands().forEach(λ -> CmdOperation.go(λ));
+    getCommands().forEach(CmdOperation::go);
   }
   /* TODO: Yuval Simon I have no idea what is going on here, considering you
    * don't override configurationComponents this code seems incomplete. Please

@@ -8,6 +8,7 @@ import static fluent.ly.azzert.*;
 import java.util.*;
 import java.util.stream.*;
 
+import an.empty;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -122,7 +123,7 @@ public enum as {
     return Arrays.asList($).stream().collect(Collectors.toList());
   }
   @SafeVarargs public static List<Integer> ilist(final int... $) {
-    return Arrays.stream($).collect(() -> an.empty.list(), (l, i) -> l.add(Integer.valueOf(i)), (l1, l2) -> l1.addAll(l2));
+    return Arrays.stream($).collect(empty::list, (l, i) -> l.add(Integer.valueOf(i)), List::addAll);
   }
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values

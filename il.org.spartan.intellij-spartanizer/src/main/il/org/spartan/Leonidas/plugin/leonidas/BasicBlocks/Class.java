@@ -88,7 +88,7 @@ public class Class extends NamedElement{
         if (!matchInnerElementAux(l, ms.size() - 1, new LinkedList<>(), ass))
 			return new MatchingResult(false);
         MatchingResult $ = new MatchingResult(true);
-        Arrays.stream(ass).forEach(λ -> $.combineWith(λ));
+        Arrays.stream(ass).forEach($::combineWith);
         return $;
     }
 

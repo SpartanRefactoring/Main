@@ -55,7 +55,7 @@ public class Eclipse {
   /** @return current mouse location */
   public static Point mouseLocation() {
     return Optional.ofNullable(Display.getCurrent()) //
-        .map(λ -> λ.getCursorLocation()).orElse(new Point(0, 0));
+        .map(Display::getCursorLocation).orElse(new Point(0, 0));
   }
   /** @param mouseUp mouse up operation
    * @param mouseDown mouse down operation

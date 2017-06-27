@@ -44,7 +44,7 @@ public class LocalInitializedCollection extends LocalInitialized {
   }
   private static boolean hasEmptyConstructor(final ITypeBinding tb) {
     return tb != null && as.list(tb.getDeclaredMethods()).stream()//
-        .filter(m -> m.isConstructor())//
+        .filter(IMethodBinding::isConstructor)//
         .filter(λ -> λ.getParameterTypes().length == 0)//
         .findAny()//
         .isPresent();

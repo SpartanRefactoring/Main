@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import org.junit.*;
-
 import fluent.ly.*;
 import il.org.spartan.external.*;
 
