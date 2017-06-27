@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
-import org.eclipse.ui.*;
 
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
@@ -43,11 +42,8 @@ public class AthenizerOperation extends WidgetOperation {
   @Override public Function<ImageData, ImageData> scale() {
     return λ -> λ.scaledTo(20, 20);
   }
-  @Deprecated @Override public String imageURL() {
-    return "platform:/plugin/org.eclipse.ui/icons/full/obj16/menu.png";
-  }
-  @Override public String imageKey() {
-    return ISharedImages.IMG_TOOL_COPY;
+  @Override public String imageURL() {
+    return "file:/plugin/pictures/athenizeicon.png";
   }
   @Override public String description() {
     return "Athenize";

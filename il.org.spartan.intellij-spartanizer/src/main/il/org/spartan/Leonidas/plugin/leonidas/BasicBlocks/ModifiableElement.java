@@ -5,6 +5,7 @@ import com.intellij.psi.PsiModifierListOwner;
 import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
+import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
@@ -21,17 +22,17 @@ import static il.org.spartan.Leonidas.auxilary_layer.Existence.*;
  */
 public abstract class ModifiableElement extends NamedElement {
 
-    @UserControlledMatcher
+    @UserControlled(name="public modifier: " , templatePart = "Matcher")
     public Existence isPublic = DO_NOT_CARE; // present the user with multiply choice from Existence enum.
-    @UserControlledMatcher
+    @UserControlled(name="protected modifier: " , templatePart = "Matcher")
     public Existence isProtected = DO_NOT_CARE;
-    @UserControlledMatcher
+    @UserControlled(name="private modifier: " , templatePart = "Matcher")
     public Existence isPrivate = DO_NOT_CARE;
-    @UserControlledMatcher
+    @UserControlled(name="static modifier: " , templatePart = "Matcher")
     public Existence isStatic = DO_NOT_CARE;
-    @UserControlledMatcher
+    @UserControlled(name="abstract modifier: " , templatePart = "Matcher")
     public Existence isAbstract = DO_NOT_CARE;
-    @UserControlledMatcher
+    @UserControlled(name="final modifier: " , templatePart = "Matcher")
     public Existence isFinal = DO_NOT_CARE;
 
     String name = "";

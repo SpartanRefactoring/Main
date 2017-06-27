@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
@@ -19,9 +20,9 @@ import java.util.*;
  */
 public class Method extends ModifiableElement {
     private static final String TEMPLATE = "method";
-    @UserControlledMatcher
+    @UserControlled(name="must contain: " , templatePart = "Matcher")
     public List<String> containsList = new LinkedList<>();
-    @UserControlledMatcher
+    @UserControlled(name="must not contain: " , templatePart = "Matcher")
     public List<String> notContainsList = new LinkedList<>();
     private Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
     private Replacer replacerReturnType, replacerParameters, replacerCodeBlock;
