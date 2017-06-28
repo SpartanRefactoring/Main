@@ -1,20 +1,11 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import java.io.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.internal.core.*;
 
 import fluent.ly.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.library.*;
-import il.org.spartan.utils.*;
-import lombok.*;
 
 /** This is a command line program, which can be thought of as a spartan
  * compiler. For each {@code .java} file it find, it encounters, it creates a
@@ -24,10 +15,6 @@ import lombok.*;
  * @author Matteo Orru'
  * @since 2017-06-25 */
 public class spartanize extends ASTInFilesVisitor {
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
-  protected static final String[] defaultArguments = as.array("..");
-  private static final InteractiveSpartanizer is = new InteractiveSpartanizer();
   
   public static void main(final String[] args) throws SecurityException, IllegalArgumentException {
     visit(args.length != 0 ? args : defaultArguments);
