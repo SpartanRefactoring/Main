@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.library.*;
 import il.org.spartan.utils.*;
+import lombok.*;
 
 /** This is a command line program, which can be thought of as a spartan
  * compiler. For each {@code .java} file it find, it encounters, it creates a
@@ -33,10 +34,8 @@ public class spartanize extends ASTInFilesVisitor {
   }
   public static void visit(final String... args) {
     for (final String ¢ : External.Introspector.extract(args != null && 
-                  args.length != 0 ? args : defaultArguments, spartanize.class)){
-      // TBD 
+                  args.length != 0 ? args : defaultArguments, spartanize.class))
       matteo(¢);
-    }
   }
   private static void matteo(String ¢) {
     forget.it(¢);
