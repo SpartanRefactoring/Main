@@ -89,7 +89,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
       final WidgetOperationEntry e = operations.get(¢);
       final WidgetOperation o = e.getWidgetOp();
       o.configure(e.getConfigurationMap());
-      setControl(createButton(shell, circles[¢], o, e.getName()), setSolid, setTransparent);
+      setControl(createButton(shell, circles[mapButtonToPoint(¢,operations.size())], o, e.getName()), setSolid, setTransparent);
     }
     shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
     shell.open();
@@ -279,5 +279,25 @@ public class SpartanWidgetHandler extends AbstractHandler {
     $.addListener(SWT.MouseUp, l);
     $.addListener(SWT.MouseDoubleClick, l);
     return $;
+  }
+  
+  private static int mapButtonToPoint(int index, int total) {
+    switch(total) {
+      case 1:
+        return 3;
+      case 2:
+        return 2 * (2 * index - 1) + 3;
+      case 3:
+        return 2 * (index - 1) + 3;
+      case 4:
+        return 2 * index;
+      case 5:
+        return index < 2 ? index : index != 2 ? index + 2 : 3;
+      case 6:
+        return index <= 2 ? index : index + 1;
+      case 7:
+        return index;
+    }
+    return index;
   }
 }
