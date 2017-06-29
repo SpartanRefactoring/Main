@@ -6,25 +6,25 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** unit tests for {@link ParameterAbbreviate}
- * @author Yossi Gil
- * @since 2016 */
+/**
+ * unit tests for  {@link ParameterAbbreviate}
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0141 {
   @Test public void b$01() {
     trimmingOf("public static void go(final Object os[], final String... ss) {  \nfor (final String saa : ss) \nout(saa);  \n"
-        + "out(\"elements\", os);   \n}")//
-            .stays();
+        + "out(\"elements\", os);   \n}").stays();
   }
   @Test public void b$02() {
     trimmingOf("public static void go(final List<Object> os, final String... ss) {  \nfor (final String saa : ss) \nout(saa);  \n"
-        + "out(\"elements\", os);   \n}")//
-            .stays();
+        + "out(\"elements\", os);   \n}").stays();
   }
   @Test public void b$03() {
     trimmingOf("public static void go(final String ss[],String abracadabra) {  \nfor (final String a : ss) \nout(a);  \n"
-        + "out(\"elements\",abracadabra);   \n}")//
-            .stays();
+        + "out(\"elements\",abracadabra);   \n}").stays();
   }
   @Test public void b$04() {
     trimmingOf("public static void go(final String ss[]) {  \nfor (final String a : ss) \nout(a);  \nout(\"elements\");   \n}").stays();
