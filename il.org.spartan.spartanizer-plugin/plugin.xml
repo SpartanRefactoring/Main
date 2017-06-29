@@ -465,7 +465,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        <command 
        tooltip="Spartanize"
          commandId="il.org.spartan.SpartanGlobal" 
-         icon="src/main/icons/spartan-warrior.gif" 
+         icon="plugin/pictures/spartan-warrior.png" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
        </command>
        <!--<command

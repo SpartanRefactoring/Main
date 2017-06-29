@@ -4,6 +4,8 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import java.util.stream.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -32,11 +34,9 @@ public final class ReturnDeadAssignment extends ReturnValue implements Category.
     ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
     ).andAlso("Variable is a local variable, declared in current scope or is enclosing method argument", //
-        () -> (
-          step.statements(enclosingBlock(current)).stream().filter(iz::variableDeclarationStatement)
-            .map(az::variableDeclarationStatement).flatMap(λ->step.fragments(λ).stream().map(¢->¢.getName().getIdentifier()))
-            .anyMatch(λ->λ.equals(to.getIdentifier()))
-            || parameters(methodDeclaration).stream().map(λ->λ.getName().getIdentifier()).anyMatch(λ->λ.equals(to.getIdentifier()))
+        () -> (declarationsInAncestorBlocks(current).anyMatch(λ->λ.equals(to.getIdentifier()))
+            || declarationsInAncestorFors(current).anyMatch(λ->λ.equals(to.getIdentifier()))
+            || methodParameters(methodDeclaration).anyMatch(λ->λ.equals(to.getIdentifier()))
            )//
     ).notNil("Extract from", //
         () -> from = from(assignment) //
@@ -58,10 +58,17 @@ public final class ReturnDeadAssignment extends ReturnValue implements Category.
     r.replace(assignment, operator == ASSIGN ? copy.of(from) : subject.pair(to, from).to(op.assign2infix(operator)), g);
     return r;
   }
-  static Block enclosingBlock(ASTNode n) {
-    Block $ = null;
-    for(ASTNode a = n; n != null && $ == null; a = a.getParent())
-      $ = az.block(a);
-    return $;
+  private static Stream<String> declarationsInAncestorBlocks(ASTNode n) {
+    return ancestors.until(iz::methodDeclaration).from(n).stream().filter(iz::block).flatMap(λ->statements(λ).stream())
+    .filter(iz::variableDeclarationStatement).map(az::variableDeclarationStatement)
+    .flatMap(λ->fragments(λ).stream()).map(λ->λ.getName().getIdentifier());
+  }
+  private static Stream<String> declarationsInAncestorFors(ASTNode n) {
+    return ancestors.until(iz::methodDeclaration).from(n).stream().filter(iz::forStatement).map(az::forStatement)
+        .flatMap(λ->initializers(λ).stream()).filter(iz::variableDeclarationExpression).map(az::variableDeclarationExpression)
+        .flatMap(λ->fragments(λ).stream()).map(λ->λ.getName().getIdentifier());
+  }
+  private static Stream<String> methodParameters(MethodDeclaration n) {
+    return parameters(n).stream().map(λ->λ.getName().getIdentifier());
   }
 }
