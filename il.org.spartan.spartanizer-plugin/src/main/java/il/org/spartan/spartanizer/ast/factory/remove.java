@@ -27,7 +27,7 @@ public enum remove {
    * @param g */
   public static void deadFragment(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = fragments(parent).stream().filter(λ->λ!=f).map(λ->copy.of(λ)).collect(Collectors.toList()); //wizard.live(f, fragments(parent));
+    final List<VariableDeclarationFragment> live = fragments(parent).stream().filter(λ->λ!=f).map(λ->copy.of(λ)).collect(Collectors.toList());
     if (live.isEmpty()) {
       r.remove(parent, g);
       return;
