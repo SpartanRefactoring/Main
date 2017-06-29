@@ -51,6 +51,16 @@ public class OperationListEditor extends ListEditor {
     configureButton.setText("Configure operation");
     configureButton.setEnabled(false);
   }
+  
+  private int getRealChosenOpIndex(final int i, final List<WidgetOperationEntry> l) {
+    WidgetOperationEntry chosen = l.get(0);
+    for (final WidgetOperationEntry ¢ : l)
+      if (¢.getName().equals(getList().getItem(i)))
+        chosen = ¢;
+    final int realIndex = l.indexOf(chosen);
+    return realIndex;
+  }
+  
   public void addDefaultButtonsConfig() {
     getDownButton().addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
@@ -64,11 +74,7 @@ public class OperationListEditor extends ListEditor {
         if (i < 0)
           return;
         final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        WidgetOperationEntry chosen = l.get(0);
-        for (final WidgetOperationEntry ¢ : l)
-          if (¢.getName().equals(getList().getItem(i)))
-            chosen = ¢;
-        final int realIndex = l.indexOf(chosen);
+        final int realIndex = getRealChosenOpIndex(i, l);
         if (l.size() - realIndex <= 1)
           return;
         // else
@@ -76,6 +82,7 @@ public class OperationListEditor extends ListEditor {
         WidgetPreferences.storeEntries(l);
         resLE.loadDefault();
       }
+      
     });
     getUpButton().addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
@@ -142,8 +149,10 @@ public class OperationListEditor extends ListEditor {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
-        onAble.accept(elements_list.get(i).getValue());
-        if (isAble.apply(elements_list.get(i).getValue()).booleanValue()) {
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        int realIndex = getRealChosenOpIndex(i, l);
+        onAble.accept(l.get(realIndex));
+        if (isAble.apply(l.get(realIndex)).booleanValue()) {
           ableButton.setText("Disable operation");
           configureButton.setEnabled(true);
         } else {
@@ -166,6 +175,7 @@ public class OperationListEditor extends ListEditor {
           onConfigure.accept(elements_list.get(i).getValue()); // perform the on
                                                                // configure on
                                                                // widget op
+        loadDefault();
       }
     });
     parent.addDisposeListener(λ -> {
@@ -175,8 +185,10 @@ public class OperationListEditor extends ListEditor {
     getList().addSelectionListener(new SelectionListener() {
       @Override @SuppressWarnings("synthetic-access") public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         final int i = getList().getSelectionIndex();
+        final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+        int realIndex = getRealChosenOpIndex(i, l);
         if (i >= 0)
-          if (isAble.apply(elements_list.get(i).getValue()).booleanValue()) {
+          if (isAble.apply(l.get(realIndex)).booleanValue()) {
             ableButton.setText("Disable operations");
             configureButton.setEnabled(true);
           } else {
@@ -201,7 +213,7 @@ public class OperationListEditor extends ListEditor {
       if (¢ != null)
         $.add(¢.getKey());
     // when you want to initialize all preferences - uncomment the next line:
-    // return $.toArray(new String[$.size()]);
+     //return $.toArray(new String[$.size()]);
     return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : $.toArray(new String[$.size()]);
   }
   @Override protected String getNewInputObject() {
