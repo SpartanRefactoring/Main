@@ -108,7 +108,7 @@ public class Toolbox {
           new ModifierFinalTryResourceRedundant(), //
           null)//
       .add(SingleVariableDeclaration.class, //
-          new ParameterAbbreviate(), //
+          // new ParameterAbbreviate(), //
           new ParameterAnonymize(), //
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
           new ForParameterRenameToIt(), null)//
