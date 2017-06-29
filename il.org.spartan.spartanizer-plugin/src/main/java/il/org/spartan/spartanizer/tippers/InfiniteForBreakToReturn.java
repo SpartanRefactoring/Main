@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -20,47 +22,6 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
     implements Category.Shortcircuit {
   private static final long serialVersionUID = -0x7074B13F7F9E2909L;
 
-  private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
-    return handleIf(then(s), elze(s), nextReturn);
-  }
-  private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
-    if (iz.breakStatement(then))
-      return then;
-    if (iz.block(then)) {
-      final Statement $ = handleBlock(az.block(then), nextReturn);
-      if ($ != null)
-        return $;
-    }
-    if (iz.ifStatement(then))
-      return handleIf(then, nextReturn);
-    if (elze == null)
-      return null;
-    if (iz.breakStatement(elze))
-      return elze;
-    if (!iz.block(elze))
-      return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
-    final Statement $ = handleBlock(az.block(elze), nextReturn);
-    return $ != null ? $ : iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
-  }
-  private static Statement make(final Statement s, final ReturnStatement nextReturn) {
-    return iz.breakStatement(s) ? s //
-        : iz.ifStatement(s) ? handleIf(s, nextReturn) //
-            : iz.block(s) ? handleBlock(az.block(s), nextReturn) //
-                : null;
-  }
-  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
-    Statement $ = null;
-    for (final Statement ¢ : statements(b)) {
-      if (iz.ifStatement(¢))
-        $ = handleIf(az.ifStatement(¢), nextReturn);
-      if (iz.breakStatement(¢))
-        return ¢;
-    }
-    return $;
-  }
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    return handleIf(az.ifStatement(s), nextReturn);
-  }
   @Override public String description() {
     return "Convert the break inside 'for(;;)' to 'return'";
   }
@@ -68,10 +29,10 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
   private Tip make(final ForStatement s, final ReturnStatement nextReturn) {
-    final Statement $ = make(body(s), nextReturn);
-    return $ == null ? null : new Tip(description(), getClass(), s) {
+    final List<BreakStatement> $ = allLoopBreaks(body(s));
+    return $.isEmpty() ? null : new Tip(description(), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, nextReturn, g);
+        $.forEach(λ->r.replace(λ, nextReturn, g));
         r.remove(nextReturn, g);
       }
     }.spanning(nextReturn);
@@ -84,5 +45,26 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
       return null;
     final ReturnStatement $ = extract.nextReturn(vor);
     return $ == null ? null : make(vor, $);
+  }
+  static List<BreakStatement> allLoopBreaks(Statement s) {
+    List<BreakStatement> $ = an.empty.list();
+    s.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") ForStatement node) {
+        return false;
+      }
+      @Override public boolean visit(@SuppressWarnings("unused") DoStatement node) {
+        return false;
+      }
+      @Override public boolean visit(@SuppressWarnings("unused") WhileStatement node) {
+        return false;
+      }
+      @Override public boolean visit(@SuppressWarnings("unused") EnhancedForStatement node) {
+        return false;
+      }
+      @Override public boolean visit(BreakStatement node) {
+        return $.add(node);
+      }
+    });
+    return $;
   }
 }
