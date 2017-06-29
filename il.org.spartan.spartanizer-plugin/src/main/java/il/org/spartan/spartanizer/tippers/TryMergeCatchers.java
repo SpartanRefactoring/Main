@@ -24,9 +24,7 @@ public class TryMergeCatchers extends ReplaceCurrentNode<TryStatement>//
     for (int i = 0; i < cs.size(); ++i)
       for (int j = i + 1; j < cs.size(); ++j)
         if (wizard.eq(cs.get(i).getBody(), cs.get(j).getBody())
-            && (!"Throwable".equals(cs.get(i).getException().getType() + "") || !"RuntimeException".equals(cs.get(j).getException().getType() + ""))
-            && (!"Throwable".equals(cs.get(j).getException().getType() + "")
-                || !"RuntimeException".equals(cs.get(i).getException().getType() + ""))) {
+            && !"Throwable".equals(cs.get(i).getException().getType() + "") && !"Throwable".equals(cs.get(j).getException().getType() + "")) {
           final TryStatement $ = copy.of(s);
           final CatchClause mergedCatch = copy.of(cs.get(i));
           $.catchClauses().remove(i);
