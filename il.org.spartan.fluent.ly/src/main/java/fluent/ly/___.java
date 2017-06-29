@@ -23,7 +23,7 @@ import fluent.ly.___.Bug.Contract.*;
 public abstract class ___ {
   /** Exercise the {@link Invariantable#check()}
    * @param v a Invariantable object whose invariant should be checked */
-  public static void check(final ___.Invariantable ¢) {
+  public static void check(final Invariantable ¢) {
     ¢.check();
   }
   /** A possibly non-returning method to be used for checking postconditions.
@@ -796,267 +796,267 @@ public abstract class ___ {
         }
       }
     }
-  }
 
-  /** An interface representing a class with an invariant.
-   * @author Yossi Gil
-   * @since 11/04/2006 */
-  public interface Invariantable {
-    /** This function represents the invariant of the implementing class. It
-     * returns nothing. However, if the invariant is violated, a runtime
-     * exception aborts execution. */
-    void check();
-  }
-
-  @SuppressWarnings("static-method")
-  public static class TEST {
-    @Test public void ensure() {
-      ___.ensure(true);
-      try {
-        ___.ensure(false);
-      } catch (final Postcondition e) {
-        assertEquals("", e.getMessage());
-      }
-      try {
-        ___.ensure(false, "ensure");
-      } catch (final Postcondition e) {
-        assertEquals("ensure", e.getMessage());
-      }
-      try {
-        ___.ensure(false, "ensure %s message %s", "this", "now");
-      } catch (final Postcondition e) {
-        assertEquals("ensure this message now", e.getMessage());
-      }
+    /** An interface representing a class with an invariant.
+     * @author Yossi Gil
+     * @since 11/04/2006 */
+    public interface Invariantable {
+      /** This function represents the invariant of the implementing class. It
+       * returns nothing. However, if the invariant is violated, a runtime
+       * exception aborts execution. */
+      void check();
     }
-    @Test public void negative() {
-      ___.negative(-1);
-      ___.negative(-2);
-      ___.negative(-0.3);
-      try {
-        ___.negative(0);
-      } catch (final Negative ¢) {
-        assertEquals("Found 0 while expecting a negative integer.", ¢.getMessage());
+
+    @SuppressWarnings("static-method")
+    public static class TEST {
+      @Test public void ensure() {
+        ___.ensure(true);
+        try {
+          ___.ensure(false);
+        } catch (final Postcondition e) {
+          assertEquals("", e.getMessage());
+        }
+        try {
+          ___.ensure(false, "ensure");
+        } catch (final Postcondition e) {
+          assertEquals("ensure", e.getMessage());
+        }
+        try {
+          ___.ensure(false, "ensure %s message %s", "this", "now");
+        } catch (final Postcondition e) {
+          assertEquals("ensure this message now", e.getMessage());
+        }
       }
-      try {
-        ___.negative(0.0);
-      } catch (final Negative ¢) {
-        assertEquals("Found 0.00000 while expecting a negative number.", ¢.getMessage());
-      }
-      try {
+      @Test public void negative() {
         ___.negative(-1);
-      } catch (final Negative ¢) {
-        assertEquals("Found -1 while expecting a negative integer.", ¢.getMessage());
+        ___.negative(-2);
+        ___.negative(-0.3);
+        try {
+          ___.negative(0);
+        } catch (final Negative ¢) {
+          assertEquals("Found 0 while expecting a negative integer.", ¢.getMessage());
+        }
+        try {
+          ___.negative(0.0);
+        } catch (final Negative ¢) {
+          assertEquals("Found 0.00000 while expecting a negative number.", ¢.getMessage());
+        }
+        try {
+          ___.negative(-1);
+        } catch (final Negative ¢) {
+          assertEquals("Found -1 while expecting a negative integer.", ¢.getMessage());
+        }
+        try {
+          ___.negative(-1.0);
+        } catch (final Negative ¢) {
+          assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
+        }
       }
-      try {
-        ___.negative(-1.0);
-      } catch (final Negative ¢) {
-        assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
-      }
-    }
-    @Test public void nonnegative() {
-      ___.nonnegative(1);
-      ___.nonnegative(2);
-      ___.nonnegative(0);
-      ___.nonnegative(0.3);
-      ___.nonnegative(0.0);
-      try {
+      @Test public void nonnegative() {
         ___.nonnegative(1);
-      } catch (final NonNegative ¢) {
-        assertEquals("Found -1 while expecting a negative integer.", ¢.getMessage());
+        ___.nonnegative(2);
+        ___.nonnegative(0);
+        ___.nonnegative(0.3);
+        ___.nonnegative(0.0);
+        try {
+          ___.nonnegative(1);
+        } catch (final NonNegative ¢) {
+          assertEquals("Found -1 while expecting a negative integer.", ¢.getMessage());
+        }
+        try {
+          ___.nonnegative(1.0);
+        } catch (final NonNegative ¢) {
+          assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
+        }
       }
-      try {
-        ___.nonnegative(1.0);
-      } catch (final NonNegative ¢) {
-        assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
+      @Test public void NonNull() {
+        assert new Object() != null;
+        try {
+          assert null != null;
+        } catch (final AssertionError ¢) {
+          assertEquals(null, ¢.getMessage());
+        }
+        try {
+          assert "NonNull" != null : null;
+        } catch (final NonNull e) {
+          assertEquals("NonNull", e.getMessage());
+        }
+        try {
+          ___.nonNull(null, "NonNull %s message %s", "this", "now");
+        } catch (final NonNull e) {
+          assertEquals("NonNull this message now", e.getMessage());
+        }
       }
-    }
-    @Test public void NonNull() {
-      assert new Object() != null;
-      try {
-        assert null != null;
-      } catch (final AssertionError ¢) {
-        assertEquals(null, ¢.getMessage());
-      }
-      try {
-        assert "NonNull" != null : null;
-      } catch (final NonNull e) {
-        assertEquals("NonNull", e.getMessage());
-      }
-      try {
-        ___.nonNull(null, "NonNull %s message %s", "this", "now");
-      } catch (final NonNull e) {
-        assertEquals("NonNull this message now", e.getMessage());
-      }
-    }
-    @Test public void nonpositive() {
-      ___.nonpositive(-1);
-      ___.nonpositive(-2);
-      ___.nonpositive(-0.3);
-      ___.nonpositive(0);
-      ___.nonpositive(0.0);
-      try {
+      @Test public void nonpositive() {
         ___.nonpositive(-1);
-      } catch (final NonPositive ¢) {
-        assertEquals("Found -1 while expecting a nonpositive integer.", ¢.getMessage());
+        ___.nonpositive(-2);
+        ___.nonpositive(-0.3);
+        ___.nonpositive(0);
+        ___.nonpositive(0.0);
+        try {
+          ___.nonpositive(-1);
+        } catch (final NonPositive ¢) {
+          assertEquals("Found -1 while expecting a nonpositive integer.", ¢.getMessage());
+        }
+        try {
+          ___.nonpositive(-1.0);
+        } catch (final NonPositive ¢) {
+          assertEquals("Found -1.00000 while expecting a nonpositive number.", ¢.getMessage());
+        }
       }
-      try {
-        ___.nonpositive(-1.0);
-      } catch (final NonPositive ¢) {
-        assertEquals("Found -1.00000 while expecting a nonpositive number.", ¢.getMessage());
+      @Test public void positive() {
+        ___.positive(1);
+        ___.positive(2);
+        ___.positive(0.3);
+        try {
+          ___.positive(0);
+        } catch (final Positive ¢) {
+          assertEquals("Found 0 while expecting a positive integer.", ¢.getMessage());
+        }
+        try {
+          ___.positive(0.0);
+        } catch (final Positive ¢) {
+          assertEquals("Found 0.00000 while expecting a positive number.", ¢.getMessage());
+        }
+        try {
+          ___.positive(-1);
+        } catch (final Positive ¢) {
+          assertEquals("Found -1 while expecting a positive integer.", ¢.getMessage());
+        }
+        try {
+          ___.positive(-1.0);
+        } catch (final Positive ¢) {
+          assertEquals("Found -1.00000 while expecting a positive number.", ¢.getMessage());
+        }
       }
-    }
-    @Test public void positive() {
-      ___.positive(1);
-      ___.positive(2);
-      ___.positive(0.3);
-      try {
-        ___.positive(0);
-      } catch (final Positive ¢) {
-        assertEquals("Found 0 while expecting a positive integer.", ¢.getMessage());
+      @Test public void require() {
+        ___.require(true);
+        try {
+          ___.require(false);
+        } catch (final Precondition ¢) {
+          assertEquals("", ¢.getMessage());
+        }
+        try {
+          ___.require(false, "requireMessage");
+        } catch (final Precondition ¢) {
+          assertEquals("requireMessage", ¢.getMessage());
+        }
+        try {
+          ___.require(false, "require %s message %s", "this", "now");
+        } catch (final Precondition ¢) {
+          assertEquals("require this message now", ¢.getMessage());
+        }
       }
-      try {
-        ___.positive(0.0);
-      } catch (final Positive ¢) {
-        assertEquals("Found 0.00000 while expecting a positive number.", ¢.getMessage());
-      }
-      try {
-        ___.positive(-1);
-      } catch (final Positive ¢) {
-        assertEquals("Found -1 while expecting a positive integer.", ¢.getMessage());
-      }
-      try {
-        ___.positive(-1.0);
-      } catch (final Positive ¢) {
-        assertEquals("Found -1.00000 while expecting a positive number.", ¢.getMessage());
-      }
-    }
-    @Test public void require() {
-      ___.require(true);
-      try {
+      @Test(expected = ___.Bug.class) public void requireBug() {
         ___.require(false);
-      } catch (final Precondition ¢) {
-        assertEquals("", ¢.getMessage());
       }
-      try {
-        ___.require(false, "requireMessage");
-      } catch (final Precondition ¢) {
-        assertEquals("requireMessage", ¢.getMessage());
+      @Test(expected = Precondition.class) public void requirePrecondition() {
+        ___.require(false);
       }
-      try {
-        ___.require(false, "require %s message %s", "this", "now");
-      } catch (final Precondition ¢) {
-        assertEquals("require this message now", ¢.getMessage());
+      @Test public void sure() {
+        ___.sure(true);
+        try {
+          ___.sure(false);
+        } catch (final Invariant e) {
+          assertEquals("", e.getMessage());
+        }
+        try {
+          ___.sure(false, "sure");
+        } catch (final Invariant e) {
+          assertEquals("sure", e.getMessage());
+        }
+        try {
+          ___.sure(false, "sure %s message %s", "this", "now");
+        } catch (final Invariant e) {
+          assertEquals("sure this message now", e.getMessage());
+        }
       }
-    }
-    @Test(expected = ___.Bug.class) public void requireBug() {
-      ___.require(false);
-    }
-    @Test(expected = Precondition.class) public void requirePrecondition() {
-      ___.require(false);
-    }
-    @Test public void sure() {
-      ___.sure(true);
-      try {
-        ___.sure(false);
-      } catch (final Invariant e) {
-        assertEquals("", e.getMessage());
+      @Test public void unreachable() {
+        try {
+          ___.unreachable();
+        } catch (final Reachability ¢) {
+          assertEquals("", ¢.getMessage());
+        }
+        try {
+          ___.unreachable("unreachable message");
+        } catch (final Reachability ¢) {
+          assertEquals("unreachable message", ¢.getMessage());
+        }
+        try {
+          ___.unreachable("unreachable %s message %s", "this", "now");
+        } catch (final Reachability ¢) {
+          assertEquals("unreachable this message now", ¢.getMessage());
+        }
       }
-      try {
-        ___.sure(false, "sure");
-      } catch (final Invariant e) {
-        assertEquals("sure", e.getMessage());
-      }
-      try {
-        ___.sure(false, "sure %s message %s", "this", "now");
-      } catch (final Invariant e) {
-        assertEquals("sure this message now", e.getMessage());
-      }
-    }
-    @Test public void unreachable() {
-      try {
-        ___.unreachable();
-      } catch (final Reachability ¢) {
-        assertEquals("", ¢.getMessage());
-      }
-      try {
-        ___.unreachable("unreachable message");
-      } catch (final Reachability ¢) {
-        assertEquals("unreachable message", ¢.getMessage());
-      }
-      try {
-        ___.unreachable("unreachable %s message %s", "this", "now");
-      } catch (final Reachability ¢) {
-        assertEquals("unreachable this message now", ¢.getMessage());
-      }
-    }
-    @Test public void variant() {
-      {
-        final Variant v = new Variant(10);
-        assertEquals(10, v.value());
-        v.check(9);
-        v.check(8);
-        v.check(4);
-        v.check(2);
-        v.check(1);
-        v.check(0);
-        assertEquals(0, v.value());
-      }
-      try {
-        forget.it(new Variant(-1));
-      } catch (final Initial e) {
-        assertEquals("Initial variant value (-1) is negative", e.getMessage());
-      }
-      try {
-        final Variant v = new Variant(10);
-        v.check(8);
-        v.check(9);
-      } catch (final Nondecreasing ¢) {
-        assertEquals("New variant value (9) should be less than previous value (8)", ¢.getMessage());
-      }
-      try {
-        final Variant v = new Variant(10);
-        v.check(8);
-        v.check(-2);
-      } catch (final Underflow ¢) {
-        assertEquals("New variant value (-2) is negative", ¢.getMessage());
+      @Test public void variant() {
+        {
+          final Variant v = new Variant(10);
+          assertEquals(10, v.value());
+          v.check(9);
+          v.check(8);
+          v.check(4);
+          v.check(2);
+          v.check(1);
+          v.check(0);
+          assertEquals(0, v.value());
+        }
+        try {
+          forget.it(new Variant(-1));
+        } catch (final Initial e) {
+          assertEquals("Initial variant value (-1) is negative", e.getMessage());
+        }
+        try {
+          final Variant v = new Variant(10);
+          v.check(8);
+          v.check(9);
+        } catch (final Nondecreasing ¢) {
+          assertEquals("New variant value (9) should be less than previous value (8)", ¢.getMessage());
+        }
+        try {
+          final Variant v = new Variant(10);
+          v.check(8);
+          v.check(-2);
+        } catch (final Underflow ¢) {
+          assertEquals("New variant value (-2) is negative", ¢.getMessage());
+        }
       }
     }
-  }
 
-  /** A class to emulate Eiffel's <code>variant</code> construct. To use, create
-   * an object of this type, initializing it with the variant's first value ,
-   * and then call function {@link #check(int)} successively.
-   * @author Yossi Gil
-   * @since 05/06/2007 */
-  public static final class Variant {
-    private int value;
+    /** A class to emulate Eiffel's <code>variant</code> construct. To use,
+     * create an object of this type, initializing it with the variant's first
+     * value , and then call function {@link #check(int)} successively.
+     * @author Yossi Gil
+     * @since 05/06/2007 */
+    public static final class Variant {
+      private int value;
 
-    /** Initialize a variant, with a specified value
-     * @param value a non-negative value
-     * @throws Bug.Assertion.Variant.Initial in case initial value is
-     *         negative */
-    public Variant(final int value) throws Bug.Assertion.Variant.Initial {
-      if (value < 0)
-        throw new Assertion.Variant.Initial(value);
-      this.value = value;
-    }
-    /** reset the variant value to a new, smaller value value; abort if the new
-     * value is negative or no lesser than the previous value.
-     * @param newValue the next value of this variant.
-     * @throws Nondecreasing in case the variant's value did not decrease
-     * @throws Underflow in case the variant's value went negative */
-    public void check(final int newValue) throws Nondecreasing, Underflow {
-      if (newValue >= value)
-        throw new Nondecreasing(newValue, value);
-      if (newValue < 0)
-        throw new Underflow(newValue);
-      value = newValue;
-    }
-    /** inspect the variant's value.
-     * @return a non-negative integer which is the current value of this
-     *         object */
-    public int value() {
-      return value;
+      /** Initialize a variant, with a specified value
+       * @param value a non-negative value
+       * @throws Bug.Assertion.Variant.Initial in case initial value is
+       *         negative */
+      public Variant(final int value) throws Bug.Assertion.Variant.Initial {
+        if (value < 0)
+          throw new Assertion.Variant.Initial(value);
+        this.value = value;
+      }
+      /** reset the variant value to a new, smaller value value; abort if the
+       * new value is negative or no lesser than the previous value.
+       * @param newValue the next value of this variant.
+       * @throws Nondecreasing in case the variant's value did not decrease
+       * @throws Underflow in case the variant's value went negative */
+      public void check(final int newValue) throws Nondecreasing, Underflow {
+        if (newValue >= value)
+          throw new Nondecreasing(newValue, value);
+        if (newValue < 0)
+          throw new Underflow(newValue);
+        value = newValue;
+      }
+      /** inspect the variant's value.
+       * @return a non-negative integer which is the current value of this
+       *         object */
+      public int value() {
+        return value;
+      }
     }
   }
 }
