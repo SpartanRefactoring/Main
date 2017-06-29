@@ -84,6 +84,13 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
       MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
       return;
     }
+    final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+    for (final WidgetOperationEntry ¢ : l)
+      if (¢.getName().equals(retName)) {
+        MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Invalid name", "Operation name can not be empty");
+        return;    
+      }
+   
     for (final Button ¢ : radioButtons)
       if (¢.getSelection()) {
         for (final WidgetOperation w : widgetOps)

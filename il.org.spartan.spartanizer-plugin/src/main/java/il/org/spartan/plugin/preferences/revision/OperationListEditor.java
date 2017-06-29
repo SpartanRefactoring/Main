@@ -3,7 +3,7 @@ package il.org.spartan.plugin.preferences.revision;
 import java.io.*;
 import java.util.*;
 import java.util.List;
-import java.util.Map.*;
+
 import java.util.function.*;
 
 import org.eclipse.jface.dialogs.*;

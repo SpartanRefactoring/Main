@@ -44,8 +44,17 @@ public class InflateHandler extends AbstractHandler {
       return goWheelAction();
     }
     final Selection $ = Selection.Util.current().setUseBinding();
-    return $.isTextSelection ? null : goAggressiveAction($);
+    return $.isTextSelection ? doSingle() : goAggressiveAction($);
   }
+  
+  public static Void doSingle() {
+    final WrappedCompilationUnit wcu = the.firstOf(Selection.Util.current().inner).build();
+    SingleFlater.commitChanges(
+        SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(Selection.Util.current().textSelection),
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, null, null, null, false);
+    return null;
+  }
+  
   public static Void goWheelAction() {
     final IPartService s = getPartService();
     if (s == null)
