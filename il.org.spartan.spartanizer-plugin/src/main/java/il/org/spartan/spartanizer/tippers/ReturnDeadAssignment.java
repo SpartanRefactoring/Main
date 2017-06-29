@@ -12,7 +12,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
 
@@ -33,7 +32,12 @@ public final class ReturnDeadAssignment extends ReturnValue implements Category.
     ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
     ).andAlso("Variable is a local variable, didn't declared up", //
-        () -> Environment.declaresUp(methodDeclaration).stream().noneMatch(λ -> λ.getKey().equals(to + ""))//
+        () -> (
+          step.statements(enclosingBlock(current)).stream().filter(iz::variableDeclarationStatement)
+            .map(az::variableDeclarationStatement).flatMap(λ->step.fragments(λ).stream().map(¢->¢.getName().getIdentifier()))
+            .anyMatch(λ->λ.equals(to.getIdentifier()))
+            || parameters(methodDeclaration).stream().map(λ->λ.getName().getIdentifier()).anyMatch(λ->λ.equals(to.getIdentifier()))
+           )//
     ).notNil("Extract from", //
         () -> from = from(assignment) //
     ).notNil("Extract operator", //
@@ -53,5 +57,11 @@ public final class ReturnDeadAssignment extends ReturnValue implements Category.
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(assignment, operator == ASSIGN ? copy.of(from) : subject.pair(to, from).to(op.assign2infix(operator)), g);
     return r;
+  }
+  static Block enclosingBlock(ASTNode n) {
+    Block $ = null;
+    for(ASTNode a = n; n != null && $ == null; a = a.getParent())
+      $ = az.block(a);
+    return $;
   }
 }
