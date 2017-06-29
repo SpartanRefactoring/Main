@@ -186,8 +186,7 @@ public class OperandBloating extends TestOperand {
       note.bug(this, ¢);
     }
   }
-  public void stayWithBinding(final String $, final String f) {
-    assert $ != null;
+  public void staysWithBinding(final String f) {
     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());

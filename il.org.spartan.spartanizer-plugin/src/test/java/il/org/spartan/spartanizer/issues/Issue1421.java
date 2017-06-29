@@ -32,13 +32,13 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
             , "from0")//
         .staysWithBinding();
   }
-  @Ignore("issue 1453") @Test public void test01() {
-    bloatingOf(new testUtils())// from1
-        .staysWithBinding();
+  @Test public void test01() {
+    bloatingOf(new testUtils())
+        .staysWithBinding("from1");
   }
-  @Ignore("issue 1453") @Test public void test02() {
-    bloatingOf(new testUtils())// from2
-        .staysWithBinding();
+  @Test public void test02() {
+    bloatingOf(new testUtils())
+        .staysWithBinding("from2");
   }
   @Test public void test03() {
     bloatingOf(new testUtils())//
