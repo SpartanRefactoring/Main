@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * for more info
  * @author Niv Shalmon
  * @since 2017-05-30 */
-@Ignore
 public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
   @Override public Tipper<VariableDeclarationFragment> bloater() {
     return new LocalInitializedCollection();
@@ -63,19 +62,23 @@ public class Issue1421 extends BloaterTest<VariableDeclarationFragment> {
     }
     /** [[SuppressWarningsSpartan]] */
     public void from0() {
-      new ArrayList<>(ys);
+      /** [[SuppressWarningsSpartan]] */
+      List<Integer> x = new ArrayList<>(ys);
     }
     /** [[SuppressWarningsSpartan]] */
     public void from1() {
-      new testUtils(ys);
+      /** [[SuppressWarningsSpartan]] */
+      testUtils t = new testUtils(ys);
     }
     /** [[SuppressWarningsSpartan]] */
     public void from2() {
-      new HashSet<>(zs);
+      /** [[SuppressWarningsSpartan]] */
+      Object x = new HashSet<Integer>(zs);
     }
     /** [[SuppressWarningsSpartan]] */
     public void from3() {
-      new HashSet<>(zs);
+      /** [[SuppressWarningsSpartan]] */
+      HashSet<Integer> x = new HashSet<>(zs);
     }
     public void f(final Integer x) {
       //
