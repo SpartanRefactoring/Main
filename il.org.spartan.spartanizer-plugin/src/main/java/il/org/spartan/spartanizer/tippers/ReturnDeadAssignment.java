@@ -31,7 +31,7 @@ public final class ReturnDeadAssignment extends ReturnValue implements Category.
         () -> assignment = az.assignment(value) //
     ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
-    ).andAlso("Variable is a local variable, didn't declared up", //
+    ).andAlso("Variable is a local variable, declared in current scope or is enclosing method argument", //
         () -> (
           step.statements(enclosingBlock(current)).stream().filter(iz::variableDeclarationStatement)
             .map(az::variableDeclarationStatement).flatMap(λ->step.fragments(λ).stream().map(¢->¢.getName().getIdentifier()))
