@@ -56,10 +56,10 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   public static void onConfigure(final WidgetOperationEntry ¢, final ListEditor resLE) {
     if (¢.getWidgetOp() != null)
-      //MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Not available yey",
-       //   "will be available in later releases");
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Not available yey",
+         "will be available in later releases");
       //remove upper command and uncomment the next to make configuring available
-      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢, store()).open();
+      //new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢, store()).open();
     resLE.loadDefault();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
