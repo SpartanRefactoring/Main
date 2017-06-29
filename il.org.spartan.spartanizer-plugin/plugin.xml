@@ -476,7 +476,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        </command>-->
        <command
        tooltip="Athenize"
-         commandId="il.org.spartan.AthensInflate" 
+         commandId="il.org.spartan.ZoomSelection" 
          icon="plugin/pictures/athenizeicon.png"
          id="il.org.spartan.plugin.toolbars.InflateButton" >
        </command>
@@ -602,9 +602,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+5"
 		commandId="il.org.spartan.SpartanGlobal"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<!--<key sequence="Ctrl+6"
-		commandId="il.org.spartan.AthensCollateral"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
+	<key sequence="Ctrl+6"
+		commandId="il.org.spartan.ZoomSelection"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+S"
 		commandId="il.org.spartan.SpartanGlobal"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -617,9 +617,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+D"
 		commandId="il.org.spartan.AthensToggle"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<key sequence="Ctrl+Alt+A"
+	<!--<key sequence="Ctrl+Alt+A"
 		commandId="il.org.spartan.AthensInflate"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
 	<key sequence="Ctrl+Alt+C"
 		commandId="il.org.spartan.ItShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
