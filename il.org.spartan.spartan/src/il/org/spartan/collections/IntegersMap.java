@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.*;
 import java.util.*;
 
 import fluent.ly.*;
-import fluent.ly.___.*;
+import fluent.ly.___.Bug.*;
 
 /** An unsorted map of integers.
  * <p>
