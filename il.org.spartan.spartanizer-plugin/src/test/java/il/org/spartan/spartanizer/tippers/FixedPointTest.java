@@ -72,7 +72,7 @@ public final class FixedPointTest {
     assert has.nil(new Object(), new Object(), new Object(), new Object(), null);
   }
   @Test(timeout = 4000) public void inlineInitializers() {
-    assertConvertsTo("int b,a = 2; return 3 * a * b; ", "return 6 * b;");
+    assertConvertsTo("int b,a = 2; return 3 * a * b; ", "int b; return 6 * b;");
   }
   @Test(timeout = 2000) public void issue37() {
     assertConvertsTo(" int result = mockedType.hashCode(); result = 31 * result + types.hashCode(); return result;\n",

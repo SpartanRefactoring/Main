@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -24,7 +25,9 @@ public final class LocalUninitializedDead extends LocalUninitialized implements 
   @Override public Examples examples() {
     return //
     convert("int c; int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);")//
-        .to("int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);");
+        .to("int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);")
+    .convert("int i1, i2; i2 = fibonacci(param - 1);")
+        .to("int i2; i2 = fibonacci(param - 1);");
   }
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     il.org.spartan.spartanizer.ast.factory.remove.deadFragment(current(), r, g);

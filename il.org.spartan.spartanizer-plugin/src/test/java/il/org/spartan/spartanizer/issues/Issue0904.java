@@ -41,6 +41,7 @@ public class Issue0904 {
         .gives("if(!b){}else{int i,j; g();}") //
         .gives("if(b){int i,j;g();}") //
         .gives("if(!b)return;int i,j;g();") //
+        .gives("if(!b)return;int i;g();") //
         .gives("if(!b)return;g();") //
         .gives("if(!b);else g();") //
         .gives("if(b)g();") //

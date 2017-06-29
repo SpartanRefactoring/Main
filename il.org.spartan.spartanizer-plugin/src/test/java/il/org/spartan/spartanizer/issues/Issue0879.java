@@ -15,6 +15,7 @@ public class Issue0879 {
   @Test public void a() {
     trimmingOf("void f(){int x; int y;return;}")//
         .gives("void f(){int x,y;}")//
+        .gives("void f(){int x;}")//
         .gives("void f(){}")//
         .stays();
   }

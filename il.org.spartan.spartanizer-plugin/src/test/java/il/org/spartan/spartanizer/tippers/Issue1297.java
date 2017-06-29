@@ -42,7 +42,7 @@ public class Issue1297 {
     trimmingOf("int a=2, b;a +=b;")//
         .stays();
     trimmingOf("int a=2, b;return a + 3 * b;")//
-        .gives("return 2 + 3*b;");
+        .gives("int b; return 2 + 3*b;");
     trimmingOf("int a=2;if(x)a=3*a;")//
         .gives("int a=x?3*2:2;");
     trimmingOf("int a=2;return 3 * a * a;")//
@@ -58,7 +58,7 @@ public class Issue1297 {
     trimmingOf("int b=5,a=2,c=4;return 3 * a * b * c;")//
         .gives("int a=2,c=4;return 3*a*5*c;");
     trimmingOf("int b=5,a=2,c;return 3 * a * b * c;")//
-        .gives("int a=2;return 3 * a * 5 * c;");
+        .gives("int a=2, c;return 3 * a * 5 * c;");
   }
   @Test public void t3() {
     trimmingOf("int a, b = 2; a = b;") //
