@@ -375,13 +375,13 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testFinalMember() throws Exception {
-        assert iz.final¢(createTestFieldDeclarationFromString("final private int x"));
-        assert !iz.final¢(createTestFieldDeclarationFromString("private int x"));
+        assert iz.final¢((PsiMember) createTestFieldDeclarationFromString("final private int x"));
+        assert !iz.final¢((PsiMember) createTestFieldDeclarationFromString("private int x"));
     }
 
     public void testFinalVariable() throws Exception {
-        assert iz.final¢(createTestFieldDeclarationFromString("final private int x"));
-        assert !iz.final¢(createTestFieldDeclarationFromString("private int x"));
+        assert iz.final¢((PsiVariable) createTestFieldDeclarationFromString("final private int x"));
+        assert !iz.final¢((PsiVariable) createTestFieldDeclarationFromString("private int x"));
     }
 
     public void testDefault() throws Exception {

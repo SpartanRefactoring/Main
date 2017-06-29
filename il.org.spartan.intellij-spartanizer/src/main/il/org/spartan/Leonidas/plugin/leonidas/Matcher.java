@@ -28,6 +28,10 @@ public class Matcher {
     private final Map<Integer, List<StructuralConstraint>> constrains = new HashMap<>();
     private List<Encapsulator> roots;
 
+    Matcher() {
+        roots = null;
+    }
+
     public Matcher(List<Encapsulator> r, Map<Integer, List<Constraint>> map) {
         roots = r;
         buildMatcherTree(this, map);

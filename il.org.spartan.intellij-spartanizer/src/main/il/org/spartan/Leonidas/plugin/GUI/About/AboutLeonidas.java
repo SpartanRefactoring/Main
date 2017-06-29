@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -15,12 +16,8 @@ import javax.swing.JTextPane;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-<<<<<<< Updated upstream
-=======
-import il.org.spartan.Leonidas.plugin.GUI.JPanelWithBackground;
-import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
->>>>>>> Stashed changes
 
+import il.org.spartan.Leonidas.plugin.GUI.JPanelWithBackground;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 
 
