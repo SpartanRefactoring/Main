@@ -44,7 +44,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   public static void onAble(final WidgetOperationEntry e, final boolean valueNow, final ListEditor resLE) {
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-    if (!canAddMoreOps(l, WIDGET_MAX_OPS) && !valueNow)
+    if (!valueNow &&!canAddMoreOps(l, WIDGET_MAX_OPS))
       return;
     l.get(l.indexOf(e)).setEnabled(!valueNow);
     e.setEnabled(!valueNow);
