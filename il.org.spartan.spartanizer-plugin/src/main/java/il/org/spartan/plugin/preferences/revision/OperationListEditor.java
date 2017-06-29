@@ -132,6 +132,8 @@ public class OperationListEditor extends ListEditor {
         resLE.loadDefault();
       }
     });
+    //comment out next command in order to get remove functionality:
+    getRemoveButton().setEnabled(false); 
   }
   public OperationListEditor lazyConstruct(final Composite parent, final List<Map.Entry<String, Object>> elements, final Consumer<Object> onConfigure,
       final Function<Object, Boolean> isAble, final Consumer<Object> onAble, final ListEditor e) {
@@ -209,12 +211,13 @@ public class OperationListEditor extends ListEditor {
   }
   @Override protected String[] parseString(final String stringList) {
     final List<String> $ = new ArrayList<>();
-    for (final Entry<String, Object> ¢ : elements_list)
+    final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+    for (final WidgetOperationEntry ¢ : l)
       if (¢ != null)
-        $.add(¢.getKey());
+        $.add(¢.getName());
     // when you want to initialize all preferences - uncomment the next line:
-     //return $.toArray(new String[$.size()]);
-    return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : $.toArray(new String[$.size()]);
+     return $.toArray(new String[$.size()]);
+    //return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : $.toArray(new String[$.size()]);
   }
   @Override protected String getNewInputObject() {
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
