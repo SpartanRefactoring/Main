@@ -4,7 +4,7 @@ package il.org.spartan.collections;
 import static org.hamcrest.Matchers.*;
 
 import fluent.ly.*;
-import fluent.ly.___.*;
+import fluent.ly.___.Bug.*;
 
 /** An unsorted set of integers supporting the basic set operations:
  * {@link #add} , {@link #contains} and {@link #remove}.
