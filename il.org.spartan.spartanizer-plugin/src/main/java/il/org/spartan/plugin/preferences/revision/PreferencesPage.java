@@ -100,7 +100,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //
     ));
     // GUI for renaming single parameter
-    final String[][] parameterRenameOptions = new String[][] { { "cent", "cent" }, { "it", "it" }, { "param", "param" } };
+    final String[][] parameterRenameOptions = new String[][] { { "¢", "cent" }, { "it", "it" }, { "param", "param" } };
     singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3, parameterRenameOptions, getFieldEditorParent());
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());

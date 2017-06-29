@@ -533,7 +533,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	  <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
     <command commandId="il.org.spartan.LambdaShortcut" style="push" mnemonic="L" label="λ" />
     </menu>
-    <command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />
     <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences"/>
   </menu>
 </menuContribution>
