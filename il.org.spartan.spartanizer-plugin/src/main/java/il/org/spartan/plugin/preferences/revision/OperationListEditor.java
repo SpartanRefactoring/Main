@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map.*;
 import java.util.function.*;
 
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
@@ -116,7 +117,14 @@ public class OperationListEditor extends ListEditor {
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
-      @SuppressWarnings("synthetic-access") void onSelection() {
+      void onSelection() {
+        MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Not available yet",
+            "will be available in later releases");
+      //comment out next command in order to get remove functionality:
+        //removeFunctionality();
+      }
+      @SuppressWarnings({ "unused", "synthetic-access" })
+      private void removeFunctionality() {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
@@ -132,8 +140,9 @@ public class OperationListEditor extends ListEditor {
         resLE.loadDefault();
       }
     });
-    //comment out next command in order to get remove functionality:
-    getRemoveButton().setEnabled(false); 
+    //comment out next 2 commands in order to get remove functionality:
+    getRemoveButton().setEnabled(false);
+    getRemoveButton().setVisible(false);
   }
   public OperationListEditor lazyConstruct(final Composite parent, final List<Map.Entry<String, Object>> elements, final Consumer<Object> onConfigure,
       final Function<Object, Boolean> isAble, final Consumer<Object> onAble, final ListEditor e) {
@@ -209,7 +218,7 @@ public class OperationListEditor extends ListEditor {
     // getButtonBoxControl(parent).dispose(); // removing this will add the
     // ADD,REMOVE,DOWN,UP buttons
   }
-  @Override protected String[] parseString(final String stringList) {
+  @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
     final List<String> $ = new ArrayList<>();
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     for (final WidgetOperationEntry ¢ : l)

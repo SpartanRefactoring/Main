@@ -56,7 +56,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   public static void onConfigure(final WidgetOperationEntry ¢, final ListEditor resLE) {
     if (¢.getWidgetOp() != null)
-      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Not available yey",
+      MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Not available yet",
          "will be available in later releases");
       //remove upper command and uncomment the next to make configuring available
       //new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢, store()).open();
