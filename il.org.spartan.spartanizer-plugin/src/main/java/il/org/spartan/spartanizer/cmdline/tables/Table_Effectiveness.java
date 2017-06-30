@@ -43,9 +43,9 @@ class Table_Effectiveness extends NanoTable {
     RIndicesVisitor.clear();
   }
   public static void main(final String[] args) {
-    new GrandVisitor(args) {
+    new ASTInFilesVisitor(args) {
       {
-        listen(new Tapper() {
+        listen(new Listener() {
           @Override public void endLocation() {
             done(getCurrentLocation());
           }
