@@ -68,8 +68,9 @@ public class Toolbox {
   /** The default instance of this class; tippers not found here, do not exist!
    * if you need to disable tippers, or update this, make a copy using
    * {@link Toolboxes#allClone()} */
-  public static final lazy<Toolbox> all = lazy.get(() -> new Toolbox()//
+  public static final lazy<Toolbox> full = lazy.get(() -> new Toolbox()//
       .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
+      //.add(EmptyStatement.class, new EmptyStatementRemove()) //
       .add(Initializer.class, new InitializerEmptyRemove()) //
       .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
       .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()) //
@@ -379,11 +380,15 @@ public class Toolbox {
     Stream.of(implementation).filter(Objects::nonNull).forEach(List::clear);
     return this;
   }
-  public static Toolbox all() {
-    return all.get();
+  public static void main(final String[] args) {
+    final Toolbox t = full();
+    System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
   }
-  public static Stream<Tipper<? extends ASTNode>> allTippers() {
-    return Stream.of(all().implementation)//
+  public static Toolbox full() {
+    return full.get();
+  }
+  public static Stream<Tipper<? extends ASTNode>> fullStream() {
+    return Stream.of(full().implementation)//
         .filter(λ -> λ != null && !λ.isEmpty())//
         .flatMap(Collection::stream) //
     ;

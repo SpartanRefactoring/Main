@@ -19,7 +19,7 @@ public interface Toolboxes {
     return new Toolbox();
   }
   static Toolbox allClone() {
-    return Toolbox.all().clone();
+    return Toolbox.full().clone();
   }
   static List<String> get(final Taxon ¢) {
     final List<String> $ = an.empty.list();
@@ -35,11 +35,7 @@ public interface Toolboxes {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }
   static long hooksCount() {
-    return Toolbox.allTippers().count();
-  }
-  static void main(final String[] args) {
-    final Toolbox t = Toolbox.all();
-    System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
+    return Toolbox.fullStream().count();
   }
   /** Make a for a specific kind of tippers
    * @param clazz JD
@@ -53,12 +49,12 @@ public interface Toolboxes {
     return ¢.getSimpleName();
   }
 
-  @SuppressWarnings("rawtypes") Map<Class<? extends Tipper>, Taxon> categoryMap = new HashMap<Class<? extends Tipper>, Taxon>() {
-    static final long serialVersionUID = -0x185C3A40849E91FAL;
-    {
-      Stream.of(allClone().implementation).filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
-    }
-  };
+
+  @SuppressWarnings("rawtypes") Map<Class<? extends Tipper>, Taxon> categoryMap = anonymous.ly(()->{
+    HashMap<Class<? extends Tipper>, Taxon>  $ = new HashMap<>() ;
+      Toolbox.fullStream().forEach(λ -> $.put(λ.getClass(), λ.tipperGroup()));
+      return $;
+  });
 
   static Taxon groupOf(final Tip ¢) {
     return groupOf(¢.tipperClass);
