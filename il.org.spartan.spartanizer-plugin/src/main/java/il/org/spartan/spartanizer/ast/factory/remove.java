@@ -59,8 +59,9 @@ public enum remove {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
-  public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
+  public static ASTRewrite statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
     misc.statementRewriter(r, s).remove(s, g);
+    return r;
   }
   private static List<Statement> breakSequencer(final Iterable<Statement> ss) {
     final List<Statement> $ = an.empty.list();
