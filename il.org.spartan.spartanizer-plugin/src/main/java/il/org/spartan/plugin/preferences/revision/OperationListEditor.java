@@ -53,12 +53,12 @@ public class OperationListEditor extends ListEditor {
     configureButton.setEnabled(false);
   }
   
-  private int getRealChosenOpIndex(final int i, final List<WidgetOperationEntry> l) {
-    WidgetOperationEntry chosen = l.get(0);
-    for (final WidgetOperationEntry ¢ : l)
+  private int getRealChosenOpIndex(final int i, final List<WidgetOperationEntry> es) {
+    WidgetOperationEntry chosen = es.get(0);
+    for (final WidgetOperationEntry ¢ : es)
       if (¢.getName().equals(getList().getItem(i)))
         chosen = ¢;
-    final int realIndex = l.indexOf(chosen);
+    final int realIndex = es.indexOf(chosen);
     return realIndex;
   }
   
@@ -123,8 +123,7 @@ public class OperationListEditor extends ListEditor {
       //comment out next command in order to get remove functionality:
         //removeFunctionality();
       }
-      @SuppressWarnings({ "unused", "synthetic-access" })
-      private void removeFunctionality() {
+      @SuppressWarnings({ "unused", "synthetic-access" }) void removeFunctionality() {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
@@ -197,9 +196,8 @@ public class OperationListEditor extends ListEditor {
       @Override @SuppressWarnings("synthetic-access") public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         final int i = getList().getSelectionIndex();
         final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
-        int realIndex = getRealChosenOpIndex(i, l);
         if (i >= 0)
-          if (isAble.apply(l.get(realIndex)).booleanValue()) {
+          if (isAble.apply(l.get(getRealChosenOpIndex(i, l))).booleanValue()) {
             ableButton.setText("Disable operations");
             configureButton.setEnabled(true);
           } else {

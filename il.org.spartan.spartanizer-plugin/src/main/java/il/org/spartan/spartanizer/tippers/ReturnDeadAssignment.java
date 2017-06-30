@@ -68,7 +68,7 @@ public final class ReturnDeadAssignment extends ReturnValue implements Category.
         .flatMap(λ->initializers(λ).stream()).filter(iz::variableDeclarationExpression).map(az::variableDeclarationExpression)
         .flatMap(λ->fragments(λ).stream()).map(λ->λ.getName().getIdentifier());
   }
-  private static Stream<String> methodParameters(MethodDeclaration n) {
-    return parameters(n).stream().map(λ->λ.getName().getIdentifier());
+  private static Stream<String> methodParameters(MethodDeclaration d) {
+    return parameters(d).stream().map(λ->λ.getName().getIdentifier());
   }
 }

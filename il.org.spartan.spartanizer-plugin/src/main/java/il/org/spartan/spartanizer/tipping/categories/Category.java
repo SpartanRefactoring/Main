@@ -149,7 +149,7 @@ public interface Category {
   }
 
   /** Generate marker declarations for plugin.xml. */
-  public static void main(String[] args) {
+  static void main(String[] args) {
     Set<Taxon> seen = an.empty.set();
     System.out.println("<!-- Marker types -->");
     System.out.println("" //
