@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.traversal.*;
 @SuppressWarnings("static-method")
 public class Issue1153 {
   @Test public void a() {
-    Toolbox.all();
+    Toolbox.full();
   }
   @Test public void b() {
     Toolboxes.allClone();

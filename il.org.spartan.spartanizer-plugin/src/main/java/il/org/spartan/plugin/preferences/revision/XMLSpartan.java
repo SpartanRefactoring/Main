@@ -69,7 +69,7 @@ public class XMLSpartan {
    * @return enabled tippers for project */
   public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = //
-        Toolbox.allTippers()//
+        Toolbox.fullStream()//
             .map(λ -> λ.getClass())//
             .map(XMLSpartan::unchecked)//
             .collect(toSet());
@@ -346,7 +346,7 @@ public class XMLSpartan {
     final Element e = $.createElement("spartan"), t = $.createElement("tippers"), n = $.createElement("notations");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
-    Toolbox.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
+    Toolbox.fullStream().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
     createNotationChild($, "Cent", "cent", seen, n);
     e.appendChild(n);
     createNotationChild($, "Dollar", "$", seen, n);

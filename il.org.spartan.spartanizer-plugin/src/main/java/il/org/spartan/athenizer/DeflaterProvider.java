@@ -18,7 +18,7 @@ public class DeflaterProvider extends OperationsProvider {
   private Toolbox toolbox;
 
   public DeflaterProvider() {
-    toolbox = Toolbox.all();
+    toolbox = Toolbox.full();
     if (toolbox == null)
       toolbox = Toolboxes.allClone();
   }

@@ -71,7 +71,7 @@ public class ExamplesTests {
    * @return
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {
-    return Toolbox.all()//
+    return Toolbox.full()//
         .getAllTippers() //
         .stream()//
         .collect(toMap(Tipper::getClass, λ -> λ, (t1, t2) -> t1))//

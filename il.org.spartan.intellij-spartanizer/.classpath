@@ -10,6 +10,11 @@
 			<attribute name="FROM_GRADLE_MODEL" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="testResources">
+		<attributes>
+			<attribute name="FROM_GRADLE_MODEL" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src/test">
 		<attributes>
 			<attribute name="FROM_GRADLE_MODEL" value="true"/>
