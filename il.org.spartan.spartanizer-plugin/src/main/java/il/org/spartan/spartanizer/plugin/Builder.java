@@ -75,10 +75,8 @@ public final class Builder extends IncrementalProjectBuilder {
     final Traversal s = new TraversalImplementation();
     s.useProjectPreferences();
     for (final Tip ¢ : s.collectTips(u)) // NANO
-      if (¢ != null) {
-        System.out.println(groupName(Toolboxes.groupOf(¢)));
+      if (¢ != null)
         ¢.intoMarker(f.createMarker(groupName(Toolboxes.groupOf(¢))));
-      }
   }
   private static String groupName(final Taxon ¢) {
     return ¢ == null || ¢.label() == null ? MARKER_TYPE : MARKER_TYPE + "." + ¢.label();
