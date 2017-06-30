@@ -75,11 +75,13 @@ public final class Builder extends IncrementalProjectBuilder {
     final Traversal s = new TraversalImplementation();
     s.useProjectPreferences();
     for (final Tip ¢ : s.collectTips(u)) // NANO
-      if (¢ != null)
+      if (¢ != null) {
+        System.out.println(groupName(Toolboxes.groupOf(¢)));
         ¢.intoMarker(f.createMarker(groupName(Toolboxes.groupOf(¢))));
+      }
   }
   private static String groupName(final Taxon ¢) {
-    return ¢ == null || ¢.id == null ? MARKER_TYPE : MARKER_TYPE + "." + ¢.label();
+    return ¢ == null || ¢.label() == null ? MARKER_TYPE : MARKER_TYPE + "." + ¢.label();
   }
   public static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;

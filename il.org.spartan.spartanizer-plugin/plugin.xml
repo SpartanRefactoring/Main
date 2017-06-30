@@ -215,7 +215,21 @@ https://goo.gl/OI2pBd -->
   <super type="il.org.spartan.tip"/>
 </extension>
 <extension 
+  id="il.org.spartan.tip.Sort"
+  name="Sorting"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
   id="il.org.spartan.tip.Sorting"
+  name="Sorting"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Strings"
   name="Sorting"
   point="org.eclipse.core.resources.markers" 
 >
@@ -330,7 +344,19 @@ Java class which generates several quick fix for tips. -->
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Sort"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Sorting"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Strings"
    class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
@@ -605,9 +631,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+6"
 		commandId="il.org.spartan.ZoomSelection"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<!--<key sequence="Ctrl+Alt+S"
+	<key sequence="Ctrl+Alt+S"
 		commandId="il.org.spartan.SpartanGlobal"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<!-- TODO: dormaayan <key sequence="Ctrl+Alt+E"
 		commandId="il.org.spartan.CentToIt"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
