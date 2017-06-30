@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.tipping.categories.*;
  * a ? b : c
  * } is the same as {@code
  * (a && b) || (!a && c)
- * } if b is false than: {@code
+ * } if b is false then: {@code
  * (a && false) || (!a && c) == (!a && c)
- * } if b is true than: {@code
+ * } if b is true then: {@code
  * (a && true) || (!a && c) == a || (!a && c) == a || c
- * } if c is false than: {@code
+ * } if c is false then: {@code
  * (a && b) || (!a && false) == (!a && c)
- * } if c is true than {@code
+ * } if c is true then {@code
  * (a && b) || (!a && true) == (a && b) || (!a) == !a || b
  * } keywords <code>
  * <b>this</b>
