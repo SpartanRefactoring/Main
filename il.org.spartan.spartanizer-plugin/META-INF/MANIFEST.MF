@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Spartan Refactoring
 Bundle-SymbolicName: il.org.spartan.plugin;singleton:=true
-Bundle-Version: 2.12.1
+Bundle-Version: 2.13.0
 Bundle-Activator: il.org.spartan.spartanizer.plugin.Plugin
 Bundle-Vendor: Technion--Israel Institute of Technology
 Require-Bundle: org.eclipse.ui;bundle-version="[3.108.0,4.0.0]",
@@ -56,7 +56,7 @@ Export-Package: .,
  il.org.spartan.spartanizer.leonidas,
  il.org.spartan.spartanizer.meta,
  il.org.spartan.spartanizer.plugin,
- il.org.spartan.spartanizer.plugin.widget;version="2.12.1";
+ il.org.spartan.spartanizer.plugin.widget;version="2.13.0";
   uses:="org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
    org.eclipse.ltk.core.refactoring,
