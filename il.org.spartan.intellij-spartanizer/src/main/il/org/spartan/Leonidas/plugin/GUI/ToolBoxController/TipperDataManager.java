@@ -6,7 +6,7 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import il.org.spartan.Leonidas.plugin.Toolbox;
-import il.org.spartan.Leonidas.plugin.UserControlled;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.UserControlled;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import org.jetbrains.annotations.Nullable;

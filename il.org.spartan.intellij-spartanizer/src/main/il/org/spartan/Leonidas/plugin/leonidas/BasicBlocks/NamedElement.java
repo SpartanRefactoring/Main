@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.plugin.UserControlled;
 
 /**
  * A base class for all basic blocks represented by their name.

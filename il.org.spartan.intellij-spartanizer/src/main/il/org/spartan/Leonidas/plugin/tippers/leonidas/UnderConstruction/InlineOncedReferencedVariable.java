@@ -1,6 +1,9 @@
-package il.org.spartan.Leonidas.plugin.tippers.leonidas;
+package il.org.spartan.Leonidas.plugin.tippers.leonidas.UnderConstruction;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason;
 
 import java.util.Map;
 
@@ -13,6 +16,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author Oren Afek, Michal Cohen
  * @since 20/06/17
  */
+@TipperUnderConstruction(UnderConstructionReason.INCOMPLETE)
 public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
 
     @Override
@@ -54,7 +58,7 @@ public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-//                .put("int x = 3;\nf(9,x);", "f(9,3);")
+                .put("int x = 3;\nf(9,x);", "f(9,3);")
                 .put("int x = 3;\nx++;\nf(9,x);", null)
 //                .put("int y = 2;\nfor (int i = a; ; ) ;\na = y * 2;", "for (int i = a; ; ) ;\na = 2 * 2;")
                 .put("int y = 2;\nfor (int i = a; ; ) ;\ny = y * 2;", null)
