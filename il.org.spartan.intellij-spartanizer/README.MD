@@ -18,7 +18,7 @@ See https://github.com/SpartanRefactoring/Spartanizer
 
 ## Installation And Tutorials
 Please visit our wiki pages for installation and guidence.
-All can be found [Here](https://github.com/TechnionYP5777/Leonidas-FTW/wiki)
+All can be found [Here](https://github.com/SpartanRefactoring/Main/wiki/IntelliJ-Leonidas-Home)
 
 
 
