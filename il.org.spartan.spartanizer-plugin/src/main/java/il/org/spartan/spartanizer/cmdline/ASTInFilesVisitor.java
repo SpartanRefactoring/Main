@@ -32,10 +32,10 @@ public class ASTInFilesVisitor {
   protected static final String[] defaultArguments = as.array("..");
   protected static BufferedWriter out;
   protected String absolutePath;
-  private ASTVisitor astVisitor;
+  protected ASTVisitor astVisitor;
   protected File currentFile;
   private static String currentLocation;
-  private final List<String> locations;
+  protected final List<String> locations;
   protected String presentSourceName;
   protected String presentSourcePath;
   protected String relativePath;

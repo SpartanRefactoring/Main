@@ -45,7 +45,7 @@ public class ASTTrotter extends ASTVisitor {
   public ASTTrotter() {
     super(true);
   }
-  @Override public final boolean preVisit2(final ASTNode ¢) {
+  @Override public boolean preVisit2(final ASTNode ¢) {
     return !isFolding() && go(¢) != null;
   }
   @SuppressWarnings("unchecked") private <N extends ASTNode, T> T go(final N n) {

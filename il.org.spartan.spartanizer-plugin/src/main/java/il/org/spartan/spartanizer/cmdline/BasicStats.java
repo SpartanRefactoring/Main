@@ -1,14 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
 
 /** TODO Matteo Orru': document class 
  * 
@@ -24,6 +20,7 @@ public class BasicStats extends ASTInFilesVisitor{
     super(args);
   }
 
+  @SuppressWarnings("static-method")
   private void intialize() {
     classNum = 0;
     methodNum = 0;
@@ -37,26 +34,8 @@ public class BasicStats extends ASTInFilesVisitor{
       x1.printStackTrace();
     }
     BasicStats a = new BasicStats(args);
-//      {
-//       private ASTVisitor astVisitor;
-//       public void visitAll(final ASTVisitor ¢) {
-//         //notify.beginBatch();
-//         astVisitor = ¢;
-//         locations.forEach(
-//             λ -> {
-//               setCurrentLocation(λ);
-//               visitLocation();
-//               try {
-//                 out.write(getCurrentLocation() + classNum + methodNum);
-//               } catch (IOException x) {
-//                 x.printStackTrace();
-//               }
-//             }
-//           );
-//         }
-//      };
-      
-      a.visitAll(new ASTTrotter() {
+
+    a.visitAll(new ASTTrotter() {
       @Override public boolean visit(final TypeDeclaration ¢) {
         ++classNum;
         System.err.printf(getCurrentLocation() + " Visiting Type: %s\t(%d)\n",¢.getName(),classNum);
@@ -87,45 +66,21 @@ public class BasicStats extends ASTInFilesVisitor{
      System.err.printf("Num Classes: %d\t Num Methods: %d\n", classNum, methodNum);
   }
   
-public void visitAll(final ASTVisitor ¢) {
-//notify.beginBatch();
-astVisitor = ¢;
-locations.forEach(
-    λ -> {
-      setCurrentLocation(λ);
-      intialize();
-      visitLocation();
-      try {
-        out.write(getCurrentLocation() + "\t" + classNum + "\t" + methodNum + "\n");
-      } catch (IOException x) {
-        x.printStackTrace();
+  public void visitAll(final ASTVisitor ¢) {
+  notify.beginBatch();
+  astVisitor = ¢;
+  locations.forEach(
+      λ -> {
+        setCurrentLocation(λ);
+        intialize();
+        visitLocation();
+        try {
+          out.write(getCurrentLocation() + "\t" + classNum + "\t" + methodNum + "\n");
+        } catch (IOException x) {
+          x.printStackTrace();
+        }
       }
-    }
-  );
-}
-
-  
-  
-//  public static void main(final String[] args) {
-//    out = system.callingClassUniqueWriter();
-//    new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
-//      
-//      @Override boolean interesting(final MethodDeclaration ¢) {
-//        return !¢.isConstructor();
-//      }
-//      
-////      @Override boolean interesting(final MethodDeclaration ¢) {
-////        return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
-////      }
-//      
-////      @Override protected void record(final String summary) {
-////        try {
-////          GrandVisitor.out.write(summary);
-////        } catch (final IOException ¢) {
-////          note.bug(¢);
-////        }
-////        super.record(summary);
-////      }
-//    });
-//  }
+    );
+  }
+ 
 }
