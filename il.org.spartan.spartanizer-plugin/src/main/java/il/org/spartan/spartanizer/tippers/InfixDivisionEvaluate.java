@@ -26,54 +26,54 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   private static final long serialVersionUID = 0x314CE58426F66520L;
 
   @Override double evaluateDouble(final List<Expression> xs) throws IllegalArgumentException {
-    double $ = 0;
+    double ret = 0;
     try {
-      $ = az.throwing.double¢(the.firstOf(xs));
+      ret = az.throwing.double¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (az.throwing.double¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
-        $ /= az.throwing.double¢(¢);
+        ret /= az.throwing.double¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override int evaluateInt(final List<Expression> xs) throws IllegalArgumentException {
-    int $ = 0;
+    int ret = 0;
     try {
       if (type.of(the.firstOf(xs)) == Certain.DOUBLE || type.of(the.firstOf(xs)) == Certain.LONG)
         throw new NumberFormatException();
-      $ = az.throwing.int¢(the.firstOf(xs));
+      ret = az.throwing.int¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         if (az.throwing.int¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
-        $ /= az.throwing.int¢(¢);
+        ret /= az.throwing.int¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
-    long $ = 0;
+    long ret = 0;
     try {
       if (type.of(the.firstOf(xs)) == Certain.DOUBLE)
         throw new NumberFormatException();
-      $ = az.throwing.long¢(the.firstOf(xs));
+      ret = az.throwing.long¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
         if (az.throwing.long¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
-        $ /= az.throwing.long¢(¢);
+        ret /= az.throwing.long¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override String operation() {
     return "division";

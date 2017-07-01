@@ -54,12 +54,12 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized {
   @Override protected ASTNode[] span() {
     return as.array(current, nextStatement);
   }
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
     final VariableDeclarationFragment $ = copy.of(current());
     $.setInitializer(subject.operands(subject.operand(initializer).parenthesis(), //
         subject.operand(rightHandSide).parenthesis()).to(op.assign2infix(o)));
-    r.replace(current(), $, g);
-    r.remove(nextStatement, g);
-    return r;
+    ret.replace(current(), $, g);
+    ret.remove(nextStatement, g);
+    return ret;
   }
 }

@@ -24,16 +24,16 @@ public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     if (¢.getOperator() != Operator.PLUS || ¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null
         || extract.allOperands(¢).size() != 2)
       return null;
-    final MethodInvocation $ = ¢.getAST().newMethodInvocation();
+    final MethodInvocation ret = ¢.getAST().newMethodInvocation();
     if ("\"\"".equals(¢.getRightOperand() + "") && !¢.getLeftOperand().resolveTypeBinding().isPrimitive())
-      $.setExpression(copy.of(¢.getLeftOperand()));
+      ret.setExpression(copy.of(¢.getLeftOperand()));
     else {
       if (!"\"\"".equals(¢.getLeftOperand() + "") || ¢.getRightOperand().resolveTypeBinding().isPrimitive())
         return null;
-      $.setExpression(copy.of(¢.getRightOperand()));
+      ret.setExpression(copy.of(¢.getRightOperand()));
     }
-    $.setName(¢.getAST().newSimpleName("toString"));
-    return $;
+    ret.setName(¢.getAST().newSimpleName("toString"));
+    return ret;
   }
   @Override @SuppressWarnings("unused") public String description(final InfixExpression __) {
     return null;

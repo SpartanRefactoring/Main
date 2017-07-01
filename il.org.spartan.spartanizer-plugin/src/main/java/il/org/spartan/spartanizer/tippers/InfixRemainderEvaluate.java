@@ -27,41 +27,41 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
     throw new IllegalArgumentException("no remainder among doubles" + ¢);
   }
   @Override int evaluateInt(final List<Expression> xs) throws IllegalArgumentException {
-    int $ = 0;
+    int ret = 0;
     try {
       if (type.of(the.firstOf(xs)) == Certain.DOUBLE || type.of(the.firstOf(xs)) == Certain.LONG)
         throw new NumberFormatException();
-      $ = az.throwing.int¢(the.firstOf(xs));
+      ret = az.throwing.int¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         final int int¢ = az.throwing.int¢(¢);
         if (int¢ == 0)
           throw new IllegalArgumentException("remainder in division by zero is undefined");
-        $ %= int¢;
+        ret %= int¢;
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
     for (final Expression ¢ : xs)
       if (type.of(¢) == Certain.DOUBLE)
         throw new NumberFormatException("Expected long or int in " + xs + " but found: " + ¢);
-    long $ = 0;
+    long ret = 0;
     try {
-      $ = az.throwing.long¢(the.firstOf(xs));
+      ret = az.throwing.long¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         final long long¢ = az.throwing.long¢(¢);
         if (long¢ == 0)
           throw new IllegalArgumentException("Remainder in division by zero is undefined");
-        $ %= long¢;
+        ret %= long¢;
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override String operation() {
     return "remainder";

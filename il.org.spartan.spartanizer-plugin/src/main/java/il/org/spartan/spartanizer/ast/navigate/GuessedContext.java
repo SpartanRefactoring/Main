@@ -78,16 +78,16 @@ public enum GuessedContext {
       return BLOCK_LOOK_ALIKE;
     if (methodInvocationLookAlike(codeFragment))
       return EXPRESSION_LOOK_ALIKE;
-    final GuessedContext $ = qfind(codeFragment);
-    if ($ == null)
+    final GuessedContext ret = qfind(codeFragment);
+    if (ret == null)
       throw new AssertionError(
           "GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n\n" + enumerateFailingAttempts(codeFragment));
-    return $;
+    return ret;
   }
   public static GuessedContext qfind(final String codeFragment) {
-    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
-      if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
-        return $;
+    for (final GuessedContext ret : alternativeContextsToConsiderInThisOrder)
+      if (ret.contains(ret.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper(ret, codeFragment))
+        return ret;
     return Stream.of(alternativeContextsToConsiderInThisOrder)
         .filter(λ -> λ.accurateContains(λ.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper(λ, codeFragment))
         .findFirst().orElse(null);
@@ -99,24 +99,24 @@ public enum GuessedContext {
     return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
   static String enumerateFailingAttempts(final String codeFragment) {
-    final StringBuilder $ = new StringBuilder();
+    final StringBuilder ret = new StringBuilder();
     int i = 0;
     for (final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
       final String on = w.on(codeFragment);
-      $.append("\n\nAttempt #").append(++i).append(" (of ").append(GuessedContext.alternativeContextsToConsiderInThisOrder.length).append("):");
-      $.append("\n\t\t Is it a ").append(w).append("?");
-      $.append("\n\t Let's see...");
-      $.append("\n\t\t What I tried as input was (essentially) this literal:");
-      $.append("\n\t```").append(Trivia.essence(on)).append("'''");
+      ret.append("\n\nAttempt #").append(++i).append(" (of ").append(GuessedContext.alternativeContextsToConsiderInThisOrder.length).append("):");
+      ret.append("\n\t\t Is it a ").append(w).append("?");
+      ret.append("\n\t Let's see...");
+      ret.append("\n\t\t What I tried as input was (essentially) this literal:");
+      ret.append("\n\t```").append(Trivia.essence(on)).append("'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-      $.append("\n\t\t Alas, what the parser generated ").append(u.getProblems().length).append(" problems on (essentially) this bit of code");
-      $.append("\n\t\t\t```").append(Trivia.essence(u + "")).append("'''");
-      $.append("\n\t\t Properly formatted, this bit should look like so: ");
-      $.append("\n\t\t\t```").append(u).append("'''");
-      $.append("\n\t\t And the full list of problems was: ");
-      $.append("\n\t\t\t```").append(wizard.problems(u)).append("'''");
+      ret.append("\n\t\t Alas, what the parser generated ").append(u.getProblems().length).append(" problems on (essentially) this bit of code");
+      ret.append("\n\t\t\t```").append(Trivia.essence(u + "")).append("'''");
+      ret.append("\n\t\t Properly formatted, this bit should look like so: ");
+      ret.append("\n\t\t\t```").append(u).append("'''");
+      ret.append("\n\t\t And the full list of problems was: ");
+      ret.append("\n\t\t\t```").append(wizard.problems(u)).append("'''");
     }
-    return $ + "";
+    return ret + "";
   }
 
   private final String before;

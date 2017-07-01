@@ -299,9 +299,9 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
   public static Collection<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
-    final Collection<IExtendedModifier> $ = an.empty.list();
-    copy.modifiers(extendedModifiers(¢), $);
-    return $;
+    final Collection<IExtendedModifier> ret = an.empty.list();
+    copy.modifiers(extendedModifiers(¢), ret);
+    return ret;
   }
   public static Name name(final ASTNode ¢) {
     return ¢ instanceof Name ? (Name) ¢ : null;

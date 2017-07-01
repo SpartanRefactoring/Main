@@ -30,20 +30,20 @@ public class VolatileCFG extends CFG<VolatileCFG> {
     roots.add(¢);
   }
   @Override public String toString() {
-    final StringBuilder $ = new StringBuilder();
+    final StringBuilder ret = new StringBuilder();
     final Comparator<ASTNode> c = (o1, o2) -> o1.getStartPosition() - o2.getStartPosition();
     final SortedMap<ASTNode, List<ASTNode>> sins = new TreeMap<>(c), souts = new TreeMap<>(c);
     sins.putAll(ins);
     souts.putAll(outs);
-    $.append("* Roots *\n");
-    $.append(shorten(roots) + "\n");
-    $.append("* In *\n");
-    for (final ASTNode n : sins.keySet())
-      $.append(shorten(n) + " <-\n\t" + shorten(sins.get(n)) + "\n");
-    $.append("* Out *\n");
-    for (final ASTNode n : souts.keySet())
-      $.append(shorten(n) + " ->\n\t" + shorten(souts.get(n)) + "\n");
-    return $ + "";
+    ret.append("* Roots *\n");
+    ret.append(shorten(roots) + "\n");
+    ret.append("* In *\n");
+    for (final ASTNode ¢ : sins.keySet())
+      ret.append(shorten(¢) + " <-\n\t" + shorten(sins.get(¢)) + "\n");
+    ret.append("* Out *\n");
+    for (final ASTNode ¢ : souts.keySet())
+      ret.append(shorten(¢) + " ->\n\t" + shorten(souts.get(¢)) + "\n");
+    return ret + "";
   }
   private static String shorten(final ASTNode ¢) {
     return ¢ == null ? String.valueOf(null) : English.trimAbsolute((¢ + "").replaceAll("\\s+", " "), PRINT_THRESHOLD, "...");

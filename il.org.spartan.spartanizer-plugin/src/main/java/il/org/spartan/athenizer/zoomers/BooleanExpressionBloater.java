@@ -34,13 +34,13 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
         && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand())) && !iz.lambdaExpression(¢.getParent());
   }
   @Override public Tip tip(final InfixExpression ¢) {
-    final VariableDeclarationStatement $ = getSeperate(¢.getLeftOperand()), v2 = getSeperate(¢.getRightOperand());
-    final InfixExpression i = subject.pair(step.fragments($).get(0).getName(), step.fragments(v2).get(0).getName()).to(¢.getOperator());
+    final VariableDeclarationStatement ret = getSeperate(¢.getLeftOperand()), v2 = getSeperate(¢.getRightOperand());
+    final InfixExpression i = subject.pair(step.fragments(ret).get(0).getName(), step.fragments(v2).get(0).getName()).to(¢.getOperator());
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(yieldAncestors.untilContainingBlock().from(¢), Block.STATEMENTS_PROPERTY);
-        l.insertBefore($, yieldAncestors.untilClass(Statement.class).from(¢), g);
-        l.insertAfter(v2, $, g);
+        l.insertBefore(ret, yieldAncestors.untilClass(Statement.class).from(¢), g);
+        l.insertAfter(v2, ret, g);
         r.replace(¢, i, g);
       }
     };
@@ -50,9 +50,9 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     f.setInitializer(copy.of(x));
     final PrimitiveType t = x.getAST().newPrimitiveType(PrimitiveType.BOOLEAN);
     f.setName(make.from(x).identifier(scope.newName(x, t)));
-    final VariableDeclarationStatement $ = x.getAST().newVariableDeclarationStatement(f);
-    $.setType(t);
-    return $;
+    final VariableDeclarationStatement ret = x.getAST().newVariableDeclarationStatement(f);
+    ret.setType(t);
+    return ret;
   }
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Expand boolean expression";

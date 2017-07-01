@@ -93,25 +93,25 @@ public class Spartanizer$Applicator extends GenericApplicator {
     ReportGenerator.nl("metrics");
   }
   private String fixedPoint(final String from) {
-    for (final IDocument $ = new Document(from);;) {
-      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+    for (final IDocument ret = new Document(from);;) {
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from(ret.get())).rewriteAST(ret, null);
       try {
-        e.apply($);
+        e.apply(ret);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         note.bug(this, ¢);
         throw new AssertionError(¢);
       }
       if (!e.hasChildren())
-        return $.get();
+        return ret.get();
     }
   }
   /** Rewrite CompilationUnit
    * @param ¢
    * @return */
   public ASTRewrite createRewrite(final CompilationUnit ¢) {
-    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
-    consolidateTips($, ¢);
-    return $;
+    final ASTRewrite ret = ASTRewrite.create(¢.getAST());
+    consolidateTips(ret, ¢);
+    return ret;
   }
   /** ConsolidateTips on CompilationUnit
    * @param r

@@ -23,22 +23,22 @@ public class AddModifiersToMethodDeclaration extends CarefulTipper<MethodDeclara
     final BodyDeclaration wrap = az.bodyDeclaration(d.getParent());
     if (wrap == null)
       return null;
-    final MethodDeclaration $ = copy.of(d);
+    final MethodDeclaration ret = copy.of(d);
     if (iz.interface¢(wrap)) {
       if (!wrap.modifiers().contains(Modifier.ABSTRACT))
-        $.modifiers().add(Modifier.ABSTRACT);
+        ret.modifiers().add(Modifier.ABSTRACT);
       if (!wrap.modifiers().contains(Modifier.PUBLIC))
-        $.modifiers().add(Modifier.PUBLIC);
+        ret.modifiers().add(Modifier.PUBLIC);
     } else {
       if (iz.constructor(d) && iz.typeDeclaration(wrap) && !wrap.modifiers().contains(Modifier.PUBLIC) && !d.modifiers().contains(Modifier.PUBLIC))
-        $.modifiers().add(Modifier.PUBLIC);
+        ret.modifiers().add(Modifier.PUBLIC);
       if (iz.final¢(wrap) && !d.modifiers().contains(Modifier.FINAL) && !iz.constructor(d))
-        $.modifiers().add($.getAST().newModifier(Modifier.ModifierKeyword.FINAL_KEYWORD));
+        ret.modifiers().add(ret.getAST().newModifier(Modifier.ModifierKeyword.FINAL_KEYWORD));
     }
     return new Tip(description(d), getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        if (d.modifiers().size() != $.modifiers().size())
-          r.replace(d, $, g);
+        if (d.modifiers().size() != ret.modifiers().size())
+          r.replace(d, ret, g);
       }
     };
   }

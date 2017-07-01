@@ -83,8 +83,8 @@ public enum abbreviate {
       return it(the.firstOf(typeArguments(¢))) + "s";
     if (assuming.contains(¢))
       return it(¢.getType());
-    final String $ = it(typeArguments(¢));
-    return $ != null ? $ : it(¢.getType());
+    final String ret = it(typeArguments(¢));
+    return ret != null ? ret : it(¢.getType());
   }
   static String it(final PrimitiveType ¢) {
     return (¢.getPrimitiveTypeCode() + "").substring(0, 1);
@@ -117,9 +117,9 @@ public enum abbreviate {
   }
   public static String variableName(final SimpleType t) {
     final List<String> ss = as.list(abbreviate.components(t));
-    String $ = the.firstOf(ss).toLowerCase();
+    String ret = the.firstOf(ss).toLowerCase();
     for (final String ¢ : the.tailOf(ss))
-      $ += ¢;
-    return $;
+      ret += ¢;
+    return ret;
   }
 }

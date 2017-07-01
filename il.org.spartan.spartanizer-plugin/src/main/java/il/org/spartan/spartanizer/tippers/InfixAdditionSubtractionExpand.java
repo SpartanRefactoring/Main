@@ -19,8 +19,8 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
   @Override public Expression replacement(final InfixExpression ¢) {
     if (TermsCollector.isLeafTerm(¢))
       return null;
-    final Expression $ = TermsExpander.simplify(¢);
-    return !wizard.eq2($, ¢) ? $ : null;
+    final Expression ret = TermsExpander.simplify(¢);
+    return !wizard.eq2(ret, ¢) ? ret : null;
   }
   @Override @SuppressWarnings("unused") protected boolean prerequisite(final InfixExpression __) {
     return true;

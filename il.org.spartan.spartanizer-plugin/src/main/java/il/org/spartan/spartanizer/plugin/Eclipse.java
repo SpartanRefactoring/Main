@@ -116,15 +116,15 @@ public class Eclipse {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return null;
-    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
+    final IWorkbenchWindow ret = w.getActiveWorkbenchWindow();
     final IWorkbenchWindow[] wds = w.getWorkbenchWindows();
-    return $ != null ? $.getActivePage() : wds != null && wds.length > 0 ? wds[0].getActivePage() : null;
+    return ret != null ? ret.getActivePage() : wds != null && wds.length > 0 ? wds[0].getActivePage() : null;
   }
   /** @return opened text editors */
   public static Iterable<ITextEditor> openedTextEditors() {
-    final IWorkbenchPage $ = getPage();
-    return $ == null ? an.empty.list()
-        : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
+    final IWorkbenchPage ret = getPage();
+    return ret == null ? an.empty.list()
+        : Stream.of(ret.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
             .collect(toList());
   }
   /** @return document for editor */
@@ -174,8 +174,8 @@ public class Eclipse {
     return Arrays.stream(ResourcesPlugin.getWorkspace().getRoot().getProjects()).filter(p -> {
       try {
         return p.isOpen() && p.getNature(Nature.NATURE_ID) != null;
-      } catch (final CoreException $) {
-        note.bug($);
+      } catch (final CoreException ret) {
+        note.bug(ret);
         return false;
       }
     }).collect(Collectors.toList());

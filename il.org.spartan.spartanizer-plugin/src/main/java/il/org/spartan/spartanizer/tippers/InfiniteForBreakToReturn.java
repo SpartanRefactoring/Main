@@ -29,10 +29,10 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
   private Tip make(final ForStatement s, final ReturnStatement nextReturn) {
-    final List<BreakStatement> $ = allLoopBreaks(body(s));
-    return $.isEmpty() ? null : new Tip(description(), getClass(), s) {
+    final List<BreakStatement> ret = allLoopBreaks(body(s));
+    return ret.isEmpty() ? null : new Tip(description(), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        $.forEach(λ->r.replace(λ, nextReturn, g));
+        ret.forEach(λ->r.replace(λ, nextReturn, g));
         r.remove(nextReturn, g);
       }
     }.spanning(nextReturn);
@@ -43,11 +43,11 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
   @Override public Tip tip(final ForStatement vor) {
     if (vor == null || iz.finiteLoop(vor))
       return null;
-    final ReturnStatement $ = extract.nextReturn(vor);
-    return $ == null ? null : make(vor, $);
+    final ReturnStatement ret = extract.nextReturn(vor);
+    return ret == null ? null : make(vor, ret);
   }
   static List<BreakStatement> allLoopBreaks(Statement s) {
-    List<BreakStatement> $ = an.empty.list();
+    List<BreakStatement> ret = an.empty.list();
     s.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") ForStatement node) {
         return false;
@@ -62,9 +62,9 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
         return false;
       }
       @Override public boolean visit(BreakStatement node) {
-        return $.add(node);
+        return ret.add(node);
       }
     });
-    return $;
+    return ret;
   }
 }

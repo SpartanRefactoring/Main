@@ -110,9 +110,9 @@ public class TraversalImplementation extends Traversal {
   }
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
     return robust.lyNull(() -> {
-      final Tipper<N> $ = toolbox.firstTipper(¢);
-      setTipper($);
-      return $;
+      final Tipper<N> ret = toolbox.firstTipper(¢);
+      setTipper(ret);
+      return ret;
     }, (Consumer<Exception>) note::bug);
   }
   @Override protected ASTVisitor tipsCollector() {

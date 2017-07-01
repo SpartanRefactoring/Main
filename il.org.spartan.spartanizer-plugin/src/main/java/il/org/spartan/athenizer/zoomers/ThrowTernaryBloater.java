@@ -21,20 +21,20 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     final ConditionalExpression ¢ = az.conditionalExpression(extract.core(x));
     if (¢ == null)
       return null;
-    final IfStatement $ = s.getAST().newIfStatement();
-    $.setExpression(copy.of(expression(¢)));
+    final IfStatement ret = s.getAST().newIfStatement();
+    ret.setExpression(copy.of(expression(¢)));
     final ThrowStatement then = ¢.getAST().newThrowStatement();
     then.setExpression(copy.of(¢.getThenExpression()));
-    $.setThenStatement(copy.of(az.statement(then)));
+    ret.setThenStatement(copy.of(az.statement(then)));
     final ThrowStatement elze = ¢.getAST().newThrowStatement();
     elze.setExpression(copy.of(¢.getElseExpression()));
-    $.setElseStatement(copy.of(az.statement(elze)));
-    return $;
+    ret.setElseStatement(copy.of(az.statement(elze)));
+    return ret;
   }
   private static ASTNode replaceReturn(final Statement ¢) {
-    final ThrowStatement $ = az.throwStatement(¢);
-    return $ == null || !(expression($) instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
-        : innerThrowReplacement(expression($), ¢);
+    final ThrowStatement ret = az.throwStatement(¢);
+    return ret == null || !(expression(ret) instanceof ConditionalExpression) && !(expression(ret) instanceof ParenthesizedExpression) ? null
+        : innerThrowReplacement(expression(ret), ¢);
   }
   @Override public ASTNode replacement(final ThrowStatement ¢) {
     return replaceReturn(¢);

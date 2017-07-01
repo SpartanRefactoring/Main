@@ -35,8 +35,8 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
         return null;
       right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.PLUS);
     }
-    final InfixExpression res = subject.pair($, right).to(operator(x));
-    return prerequisite(res) ? res : null;
+    final InfixExpression ret = subject.pair($, right).to(operator(x));
+    return prerequisite(ret) ? ret : null;
   }
   private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);

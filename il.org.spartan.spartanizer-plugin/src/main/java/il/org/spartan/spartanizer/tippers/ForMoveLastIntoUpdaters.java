@@ -25,9 +25,9 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> {
     return validUpdater() && notClaimedByOthers(¢);
   }
   @Override public ForStatement replacement(final ForStatement ¢) {
-    final ForStatement $ = copy.of(¢);
-    step.updaters($).add(0, copy.of(updater));
-    $.setBody(eliminate.lastStatement(copy.of(body)));
-    return $;
+    final ForStatement ret = copy.of(¢);
+    step.updaters(ret).add(0, copy.of(updater));
+    ret.setBody(eliminate.lastStatement(copy.of(body)));
+    return ret;
   }
 }

@@ -37,9 +37,9 @@ public enum guessName {
   public static guessName of(final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
-    for (final guessName $ : guessName.values())
-      if ($.special(nameOfSomething))
-        return $;
+    for (final guessName ret : guessName.values())
+      if (ret.special(nameOfSomething))
+        return ret;
     if (nameOfSomething.matches("[_]+")) //
       return guessName.ANONYMOUS;
     if (nameOfSomething.matches("[$]*")) //

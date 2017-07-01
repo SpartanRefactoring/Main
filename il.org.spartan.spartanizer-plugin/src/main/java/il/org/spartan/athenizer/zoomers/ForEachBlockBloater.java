@@ -40,13 +40,13 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
       return $.isEmpty();
     });
   }
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
     final EnhancedForStatement $ = copy.of(current);
     final Block b = current.getAST().newBlock();
     statements(b).add(copy.of(body(current)));
     $.setBody(b);
-    r.replace(current, $, g);
-    return r;
+    ret.replace(current, $, g);
+    return ret;
   }
   @Override public String description() {
     return "expand the single statement in the foreach to a block";

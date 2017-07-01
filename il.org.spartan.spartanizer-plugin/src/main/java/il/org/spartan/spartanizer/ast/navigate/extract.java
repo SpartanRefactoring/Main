@@ -35,9 +35,9 @@ public enum extract {
   }
   public static Collection<InfixExpression.Operator> allOperators(final InfixExpression ¢) {
     assert ¢ != null;
-    final List<InfixExpression.Operator> $ = an.empty.list();
-    extract.findOperators(¢, $);
-    return $;
+    final List<InfixExpression.Operator> ret = an.empty.list();
+    extract.findOperators(¢, ret);
+    return ret;
   }
   public static List<Annotation> annotations(final BodyDeclaration ¢) {
     return annotations(extendedModifiers(¢));
@@ -75,18 +75,18 @@ public enum extract {
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
   public static Assignment assignment(final ASTNode ¢) {
-    final ExpressionStatement $ = extract.expressionStatement(¢);
-    return $ == null ? null : az.assignment($.getExpression());
+    final ExpressionStatement ret = extract.expressionStatement(¢);
+    return ret == null ? null : az.assignment(ret.getExpression());
   }
   public static Collection<ConditionalExpression> branches(final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     ConditionalExpression s = ¢;
-    final Collection<ConditionalExpression> $ = an.empty.list();
-    $.add(s);
+    final Collection<ConditionalExpression> ret = an.empty.list();
+    ret.add(s);
     while (iz.conditionalExpression(elze(s)))
-      $.add(s = az.conditionalExpression(elze(s)));
-    return $;
+      ret.add(s = az.conditionalExpression(elze(s)));
+    return ret;
   }
   /** Given an IfStatement of the form: <br>
    * if(a) <br>
@@ -105,27 +105,27 @@ public enum extract {
     if (¢ == null)
       return null;
     IfStatement s = ¢;
-    final Collection<IfStatement> $ = an.empty.list();
-    $.add(s);
+    final Collection<IfStatement> ret = an.empty.list();
+    ret.add(s);
     while (iz.ifStatement(elze(s)))
-      $.add(s = az.ifStatement(elze(s)));
-    return $;
+      ret.add(s = az.ifStatement(elze(s)));
+    return ret;
   }
   public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
     final List<Statement> ll = step.statements(s);
     final int ind = indexOf(ll, c);
     if (ind < 0)
       return null;
-    final List<SwitchCase> $ = an.empty.list();
-    $.add(c);
+    final List<SwitchCase> ret = an.empty.list();
+    ret.add(c);
     for (int ¢ = ind + 1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
-      $.add(az.switchCase(ll.get(¢)));
+      ret.add(az.switchCase(ll.get(¢)));
     for (int ¢ = ind - 1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)
-      $.add(az.switchCase(ll.get(¢)));
-    return $;
+      ret.add(az.switchCase(ll.get(¢)));
+    return ret;
   }
-  public static String category(final ASTNode $) {
-    switch ($.getNodeType()) {
+  public static String category(final ASTNode ret) {
+    switch (ret.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
         return "@interface";
       case ANNOTATION_TYPE_MEMBER_DECLARATION:
@@ -137,11 +137,11 @@ public enum extract {
       case FIELD_DECLARATION:
         return "field";
       case INITIALIZER:
-        if (Modifier.isStatic(((BodyDeclaration) $).getModifiers()))
+        if (Modifier.isStatic(((BodyDeclaration) ret).getModifiers()))
           return "static __ initializer";
         return "__ initializer";
       case METHOD_DECLARATION:
-        final Statement body = body(az.methodDeclaration($));
+        final Statement body = body(az.methodDeclaration(ret));
         if (body == null)
           return "abstract";
         final List<Statement> ss = extract.statements(body);
@@ -151,20 +151,20 @@ public enum extract {
           return "singleton method";
         return "method";
       case TYPE_DECLARATION:
-        return category((TypeDeclaration) $);
+        return category((TypeDeclaration) ret);
       default:
-        assert fault.unreachable() : fault.dump() + "\n d = " + $ + "\n d.getClass() = " + $.getClass() + "\n d.getNodeType() = " + $.getNodeType()
+        assert fault.unreachable() : fault.dump() + "\n d = " + ret + "\n d.getClass() = " + ret.getClass() + "\n d.getNodeType() = " + ret.getNodeType()
             + fault.done();
-        return wizard.nodeName($);
+        return wizard.nodeName(ret);
     }
   }
   private static String category(final TypeDeclaration ¢) {
-    final StringBuilder $ = new StringBuilder();
-    $.append(!¢.isPackageMemberTypeDeclaration() ? "internal " //
+    final StringBuilder ret = new StringBuilder();
+    ret.append(!¢.isPackageMemberTypeDeclaration() ? "internal " //
         : ¢.isMemberTypeDeclaration() ? "member " //
             : !¢.isLocalTypeDeclaration() ? "" : "local ");
-    $.append(!¢.isInterface() ? "class" : "interface");
-    return $ + "";
+    ret.append(!¢.isInterface() ? "class" : "interface");
+    return ret + "";
   }
   /** Peels any parenthesis that may wrap an {@Link Expression}
    * @param $ JD
@@ -189,12 +189,12 @@ public enum extract {
    *         are multiple non-empty sideEffects inside the parameter then the
    *         parameter itself is returned. */
   public static Statement core(final Statement ¢) {
-    final List<Statement> $ = extract.statements(¢);
-    switch ($.size()) {
+    final List<Statement> ret = extract.statements(¢);
+    switch (ret.size()) {
       case 0:
         return null;
       case 1:
-        return the.firstOf($);
+        return the.firstOf(ret);
       default:
         return ¢;
     }
@@ -226,15 +226,15 @@ public enum extract {
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static List<VariableDeclarationFragment> fragments(final Statement ¢) {
-    final List<VariableDeclarationFragment> $ = an.empty.list();
+    final List<VariableDeclarationFragment> ret = an.empty.list();
     switch (¢.getNodeType()) {
       case BLOCK:
-        return fragmentsInto((Block) ¢, $);
+        return fragmentsInto((Block) ¢, ret);
       case VARIABLE_DECLARATION_STATEMENT:
-        $.addAll(step.fragments(az.variableDeclrationStatement(¢)));
-        return $;
+        ret.addAll(step.fragments(az.variableDeclrationStatement(¢)));
+        return ret;
       default:
-        return $;
+        return ret;
     }
   }
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
@@ -271,15 +271,15 @@ public enum extract {
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static Collection<IfStatement> ifStatements(final Statement ¢) {
-    final List<IfStatement> $ = an.empty.list();
+    final List<IfStatement> ret = an.empty.list();
     switch (¢.getNodeType()) {
       case BLOCK:
-        return ifsInto((Block) ¢, $);
+        return ifsInto((Block) ¢, ret);
       case IF_STATEMENT:
-        $.add((IfStatement) ¢);
-        return $;
+        ret.add((IfStatement) ¢);
+        return ret;
       default:
-        return $;
+        return ret;
     }
   }
   /** @param ss list of statements
@@ -289,16 +289,16 @@ public enum extract {
     return IntStream.range(0, ss.size()).filter(λ -> wizard.eq(s, ss.get(λ))).findFirst().orElse(-1);
   }
   public static InfixExpression infixExpression(final ASTNode ¢) {
-    final ExpressionStatement $ = expressionStatement(¢);
-    return ¢ == null || $ == null ? null : az.infixExpression($.getExpression());
+    final ExpressionStatement ret = expressionStatement(¢);
+    return ¢ == null || ret == null ? null : az.infixExpression(ret.getExpression());
   }
   public static Expression lastElse(final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
-    ConditionalExpression $ = ¢;
-    while (iz.conditionalExpression(elze($)))
-      $ = az.conditionalExpression(elze($));
-    return elze($);
+    ConditionalExpression ret = ¢;
+    while (iz.conditionalExpression(elze(ret)))
+      ret = az.conditionalExpression(elze(ret));
+    return elze(ret);
   }
   /** returns the else statement of the last if in an if else if else if else
    * sequence
@@ -307,10 +307,10 @@ public enum extract {
   public static Statement lastElse(final IfStatement ¢) {
     if (¢ == null)
       return null;
-    IfStatement $ = ¢;
-    while (iz.ifStatement(elze($)))
-      $ = az.ifStatement(elze($));
-    return elze($);
+    IfStatement ret = ¢;
+    while (iz.ifStatement(elze(ret)))
+      ret = az.ifStatement(elze(ret));
+    return elze(ret);
   }
   public static Statement lastStatement(final EnhancedForStatement ¢) {
     return lastStatement(body(¢));
@@ -420,9 +420,9 @@ public enum extract {
     return assignment(extract.nextStatement(¢));
   }
   public static Collection<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
-    final List<VariableDeclarationFragment> $ = an.empty.list();
-    copy.into(fragments(¢), $);
-    return chop($);
+    final List<VariableDeclarationFragment> ret = an.empty.list();
+    copy.into(fragments(¢), ret);
+    return chop(ret);
   }
   /** extract the {@link IfStatement} that immediately follows a given node
    * @param pattern JD
@@ -459,8 +459,8 @@ public enum extract {
   private static Statement nextStatement(final Statement ¢) {
     if (¢ == null)
       return null;
-    final Block $ = az.block(¢.getParent());
-    return $ == null ? null : next(¢, extract.statements($));
+    final Block ret = az.block(¢.getParent());
+    return ret == null ? null : next(¢, extract.statements(ret));
   }
   /** extract the {@link Statement} that immediately follows a given SwitchCase
    * statement, inside the switch statement
@@ -487,8 +487,8 @@ public enum extract {
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
   public static Expression returnExpression(final ASTNode ¢) {
-    final ReturnStatement $ = returnStatement(¢);
-    return $ == null ? null : $.getExpression();
+    final ReturnStatement ret = returnStatement(¢);
+    return ret == null ? null : ret.getExpression();
   }
   /** extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
@@ -531,9 +531,9 @@ public enum extract {
    * @param pattern JD
    * @return list of such sideEffects. */
   public static List<Statement> statements(final ASTNode ¢) {
-    final List<Statement> $ = an.empty.list();
-    return !(¢ instanceof Statement) ? $ : //
-        extract.statementsInto((Statement) ¢, $);
+    final List<Statement> ret = an.empty.list();
+    return !(¢ instanceof Statement) ? ret : //
+        extract.statementsInto((Statement) ¢, ret);
   }
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     step.statements(b).forEach(λ -> statementsInto(λ, $));
@@ -557,8 +557,8 @@ public enum extract {
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
   public static Expression throwExpression(final ASTNode ¢) {
-    final ThrowStatement $ = az.throwStatement(extract.singleStatement(¢));
-    return $ == null ? null : $.getExpression();
+    final ThrowStatement ret = az.throwStatement(extract.singleStatement(¢));
+    return ret == null ? null : ret.getExpression();
   }
   /** extract the single {@link ThrowStatement} embedded in a node.
    * @param n JD
@@ -572,10 +572,10 @@ public enum extract {
       return an.empty.list();
     if (iz.simpleName(n))
       return as.list(az.simpleName(n));
-    final List<SimpleName> $ = new LinkedList<>();
+    final List<SimpleName> ret = new LinkedList<>();
     for (Name q = n; q != null; q = !iz.qualifiedName(q) ? null : az.qualifiedName(q).getQualifier())
-      $.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
-    return $;
+      ret.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
+    return ret;
   }
   public static List<String> identifiers(final Name ¢) {
     return names(¢).stream().map(SimpleName::getIdentifier).collect(toList());
@@ -588,7 +588,7 @@ public enum extract {
   public static Type type(final VariableDeclarationFragment ¢) {
     if (¢ == null || ¢.getParent() == null)
       return null;
-    final Type $ = step.type(az.variableDeclarationStatement(¢.getParent()));
-    return ¢.getExtraDimensions() <= 0 ? $ : ¢.getAST().newArrayType(copy.of($), ¢.getExtraDimensions());
+    final Type ret = step.type(az.variableDeclarationStatement(¢.getParent()));
+    return ¢.getExtraDimensions() <= 0 ? ret : ¢.getAST().newArrayType(copy.of(ret), ¢.getExtraDimensions());
   }
 }

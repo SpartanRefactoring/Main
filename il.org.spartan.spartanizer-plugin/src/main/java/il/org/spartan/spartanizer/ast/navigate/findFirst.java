@@ -43,17 +43,17 @@ public interface findFirst {
    *         the parameter given node, or {@code null if no such
    *         value could be found. */
   static ConditionalExpression conditionalExpression(final ASTNode n) {
-    final Wrapper<ConditionalExpression> $ = new Wrapper<>();
+    final Wrapper<ConditionalExpression> ret = new Wrapper<>();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final ConditionalExpression ¢) {
-        if ($.get() != null)
+        if (ret.get() != null)
           return false;
-        $.set(¢);
+        ret.set(¢);
         return false;
       }
     });
-    return $.get();
+    return ret.get();
   }
   /** @param ¢ JD
    * @return */
@@ -90,18 +90,18 @@ public interface findFirst {
    *         parameter given node, or {@code null if no such value
    *         could be found. */
   static InfixExpression infixPlus(final ASTNode n) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>();
+    final Wrapper<InfixExpression> ret = new Wrapper<>();
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final InfixExpression ¢) {
-        if ($.get() != null)
+        if (ret.get() != null)
           return false;
         if (¢.getOperator() != op.PLUS2)
           return true;
-        $.set(¢);
+        ret.set(¢);
         return false;
       }
     });
-    return $.get();
+    return ret.get();
   }
 
   @FunctionalInterface
@@ -113,19 +113,19 @@ public interface findFirst {
     return n -> {
       if (n == null)
         return null;
-      final Wrapper<N> $ = new Wrapper<>();
+      final Wrapper<N> ret = new Wrapper<>();
       n.accept(new ASTVisitor(true) {
         @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
-          if ($.get() != null)
+          if (ret.get() != null)
             return false;
           if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
             return true;
-          $.set((N) ¢);
-          assert $.get() == ¢;
+          ret.set((N) ¢);
+          assert ret.get() == ¢;
           return false;
         }
       });
-      return $.get();
+      return ret.get();
     };
   }
   /** @param ¢ JD

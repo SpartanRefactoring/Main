@@ -30,12 +30,12 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     ;
   }
   static Statement reorganizeNestedStatement(final Statement ¢) {
-    final List<Statement> $ = extract.statements(¢);
-    switch ($.size()) {
+    final List<Statement> ret = extract.statements(¢);
+    switch (ret.size()) {
       case 0:
         return make.emptyStatement(¢);
       case 1:
-        return copy.of(the.firstOf($));
+        return copy.of(the.firstOf(ret));
       default:
         return reorganizeStatement(¢);
     }
@@ -45,9 +45,9 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
   }
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
-    final Block $ = s.getAST().newBlock();
-    copy.into(ss, statements($));
-    return $;
+    final Block ret = s.getAST().newBlock();
+    copy.into(ss, statements(ret));
+    return ret;
   }
   @Override public String description(final Block ¢) {
     return "Simplify block with  " + extract.statements(¢).size() + " statements";
@@ -65,10 +65,10 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
       case 0:
         return make.emptyStatement(b);
       case 1:
-        final Statement $ = the.firstOf(ss);
-        if (iz.blockEssential($))
-          return subject.statement($).toBlock();
-        return copy.of($);
+        final Statement ret = the.firstOf(ss);
+        if (iz.blockEssential(ret))
+          return subject.statement(ret).toBlock();
+        return copy.of(ret);
       default:
         return reorganizeNestedStatement(b);
     }

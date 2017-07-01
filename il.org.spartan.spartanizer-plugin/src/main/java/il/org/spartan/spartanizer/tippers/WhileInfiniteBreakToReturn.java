@@ -34,15 +34,15 @@ public final class WhileInfiniteBreakToReturn extends CarefulTipper<WhileStateme
     return ¢ != null && extract.nextReturn(¢) != null && !iz.finiteLoop(¢);
   }
   @Override public Tip tip(final WhileStatement s) {
-    final ReturnStatement nextReturn = extract.nextReturn(s);
-    if (s == null || iz.finiteLoop(s) || nextReturn == null)
+    final ReturnStatement ret = extract.nextReturn(s);
+    if (s == null || iz.finiteLoop(s) || ret == null)
       return null;
     final List<BreakStatement> $ = allLoopBreaks(body(s));
     return $.isEmpty() ? null : new Tip(description(s), getClass(), s.getExpression()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        $.forEach(λ->r.replace(λ, nextReturn, g));
-        remove.statement(nextReturn, r, g);
+        $.forEach(λ->r.replace(λ, ret, g));
+        remove.statement(ret, r, g);
       }
-    }.spanning(nextReturn);
+    }.spanning(ret);
   }
 }

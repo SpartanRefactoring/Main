@@ -128,27 +128,27 @@ public class CommandLine$Applicator extends GenericApplicator {
     return fixedPoint(¢ + "");
   }
   private String fixedPoint(final String from) {
-    for (final IDocument $ = new Document(from);;) {
-      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+    for (final IDocument ret = new Document(from);;) {
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from(ret.get())).rewriteAST(ret, null);
       try {
-        e.apply($);
+        e.apply(ret);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         note.bug(this, ¢);
         throw new AssertionError(¢);
       }
       if (!e.hasChildren())
-        return $.get();
+        return ret.get();
     }
   }
   /** createRewrite on CompilationUnit
    * @param ¢
    * @return */
   private ASTRewrite createRewrite(final CompilationUnit ¢) {
-    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    final ASTRewrite ret = ASTRewrite.create(¢.getAST());
     lastTime = new Date().getTime();
-    consolidateTips($, ¢);
+    consolidateTips(ret, ¢);
     ReportGenerator.report("metrics").put("# Tippers", tippersAppliedOnCurrentObject);
-    return $;
+    return ret;
   }
   /** consolidate tips on CompilationUnit
    * @param r

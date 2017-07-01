@@ -23,23 +23,23 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
   @Override public ASTNode replacement(final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
-    final InfixExpression $ = az.infixExpression(¢.getExpression());
-    final IfStatement newThen = subject.pair(then(¢), null).toIf(!$.hasExtendedOperands() ? $.getRightOperand() : getReducedIEFromIEWithExtOp($));
+    final InfixExpression ret = az.infixExpression(¢.getExpression());
+    final IfStatement newThen = subject.pair(then(¢), null).toIf(!ret.hasExtendedOperands() ? ret.getRightOperand() : getReducedIEFromIEWithExtOp(ret));
     final Statement oldElse = ¢.getElseStatement();
     if (oldElse == null)
-      return subject.pair(newThen, null).toIf($.getLeftOperand());
+      return subject.pair(newThen, null).toIf(ret.getLeftOperand());
     newThen.setElseStatement(copy.of(oldElse));
-    return subject.pair(newThen, copy.of(oldElse)).toIf($.getLeftOperand());
+    return subject.pair(newThen, copy.of(oldElse)).toIf(ret.getLeftOperand());
   }
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
   private static Expression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
-    final InfixExpression $ = subject.pair(¢.getRightOperand(), the.firstOf(extendedOperands(¢))).to(¢.getOperator());
-    subject.append($, step.extendedOperands(¢));
-    if (!$.extendedOperands().isEmpty())
-      $.extendedOperands().remove(0);
-    return $;
+    final InfixExpression ret = subject.pair(¢.getRightOperand(), the.firstOf(extendedOperands(¢))).to(¢.getOperator());
+    subject.append(ret, step.extendedOperands(¢));
+    if (!ret.extendedOperands().isEmpty())
+      ret.extendedOperands().remove(0);
+    return ret;
   }
   private static boolean shouldTip(final IfStatement ¢) {
     return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd(az.infixExpression(¢.getExpression())) && !tooComplicated(¢);

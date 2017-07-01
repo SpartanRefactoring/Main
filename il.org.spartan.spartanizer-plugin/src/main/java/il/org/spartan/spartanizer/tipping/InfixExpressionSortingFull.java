@@ -33,7 +33,7 @@ public abstract class InfixExpressionSortingFull extends InfixExpressionSorting 
         || iz.infixExpression(¢) && extract.allOperands(az.infixExpression(¢)).stream().allMatch(InfixExpressionSortingFull::literalsExpression);
   }
   @Override public Expression replacement(final InfixExpression ¢) {
-    final List<Expression> $ = extract.allOperands(¢);
-    return !sort($) ? null : subject.operands($).to(¢.getOperator());
+    final List<Expression> ret = extract.allOperands(¢);
+    return !sort(ret) ? null : subject.operands(ret).to(¢.getOperator());
   }
 }

@@ -21,14 +21,14 @@ enum ContinueInConditionalEliminateAux {
   public static <N extends ASTNode> Tip actualReplacement(final Block b, final Statement s, final Class<Tipper<N>> c) {
     if (b == null || statements(b).size() < 2)
       return null;
-    final List<Statement> $ = statements(b);
-    final IfStatement continueStatement = az.ifStatement($.get($.size() - 2));
+    final List<Statement> ret = statements(b);
+    final IfStatement continueStatement = az.ifStatement(ret.get(ret.size() - 2));
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
-    final IfStatement replacementIf = subject.pair(the.lastOf($), null).toNot(continueStatement.getExpression());
+    final IfStatement replacementIf = subject.pair(the.lastOf(ret), null).toNot(continueStatement.getExpression());
     return new Tip("Eliminate conditional continue before last statement in the for loop", c, s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(the.lastOf($), g);
+        r.remove(the.lastOf(ret), g);
         r.replace(continueStatement, replacementIf, g);
       }
     };

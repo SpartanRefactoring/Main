@@ -33,10 +33,10 @@ public final class SingleTipperApplicator {
       final Tipper<?> w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m, t, w);
+    final ASTRewrite ret = ASTRewrite.create(u.getAST());
+    fillRewrite(ret, u, m, t, w);
     pm.done();
-    return $;
+    return ret;
   }
   private static ASTRewrite createRewrite(//
       final IProgressMonitor pm, //
@@ -51,12 +51,12 @@ public final class SingleTipperApplicator {
       final IMarker m, //
       final Type t, //
       final Tipper<?> w) {
-    final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
+    final TipperApplyVisitor ret = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
-      u.accept(v);
+      u.accept(ret);
     else
-      v.applyLocal(w, u);
-    return v.tipper;
+      ret.applyLocal(w, u);
+    return ret.tipper;
   }
   @SuppressWarnings("deprecation") public void go(final IProgressMonitor pm, final IMarker m, final Type t)
       throws IllegalArgumentException, CoreException {

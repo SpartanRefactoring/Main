@@ -18,12 +18,12 @@ import il.org.spartan.utils.*;
 public enum analyze {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static Collection<String> dependencies(final ASTNode n) {
-    final Collection<String> $ = new HashSet<>();
+    final Collection<String> ret = new HashSet<>();
     // noinspection SameReturnValue,SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName node) {
         if (notMethodName(node))
-          $.add(identifier(node));
+          ret.add(identifier(node));
         return true;
       }
       boolean notMethodName(final Name ¢) {
@@ -32,51 +32,51 @@ public enum analyze {
       }
       @Override public boolean visit(final QualifiedName node) {
         if (notMethodName(node))
-          $.add(identifier(node));
+          ret.add(identifier(node));
         return true;
       }
     });
-    return $;
+    return ret;
   }
   public static Collection<String> dependencies(final Iterable<Expression> arguments) {
-    final Set<String> $ = new HashSet<>();
+    final Set<String> ret = new HashSet<>();
     for (final Expression ¢ : arguments) {
-      $.addAll(analyze.dependencies(¢));
+      ret.addAll(analyze.dependencies(¢));
       if (iz.name(¢))
-        $.add(az.name(¢) + "");
+        ret.add(az.name(¢) + "");
     }
-    return $;
+    return ret;
   }
   public static String type(final Name n) {
     final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
-    final String $ = m == null ? null : findDeclarationInMethod(n, m);
-    return $ != null ? $ : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));
+    final String ret = m == null ? null : findDeclarationInMethod(n, m);
+    return ret != null ? ret : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));
   }
   private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration d) {
     if (!iz.typeDeclaration(d)) // TODO Marco support all types of types
       return null;
-    for (final FieldDeclaration $ : fieldDeclarations(az.typeDeclaration(d)))
-      for (final VariableDeclarationFragment ¢ : fragments($))
+    for (final FieldDeclaration ret : fieldDeclarations(az.typeDeclaration(d)))
+      for (final VariableDeclarationFragment ¢ : fragments(ret))
         if (identifier(¢).equals(n + ""))
-          return step.type($) + "";
+          return step.type(ret) + "";
     return null;
   }
   private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
-    final Str $ = new Str();
+    final Str ret = new Str();
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
-        if ($.notEmpty() || !identifier(¢).equals(n + ""))
+        if (ret.notEmpty() || !identifier(¢).equals(n + ""))
           return true;
-        $.set(step.type(¢));
+        ret.set(step.type(¢));
         return false;
       }
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        if ($.notEmpty() || !(step.name(¢) + "").equals(n + ""))
+        if (ret.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;
-        $.set(step.type(¢));
+        ret.set(step.type(¢));
         return false;
       }
     });
-    return $.inner();
+    return ret.inner();
   }
 }

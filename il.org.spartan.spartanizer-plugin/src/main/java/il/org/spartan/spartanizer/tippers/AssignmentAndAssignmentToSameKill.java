@@ -38,7 +38,7 @@ public class AssignmentAndAssignmentToSameKill extends GoToNextStatement<Assignm
         .ignores("x = 1; x += 2;") //
     ;
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(az::expressionStatement) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);
@@ -53,7 +53,7 @@ public class AssignmentAndAssignmentToSameKill extends GoToNextStatement<Assignm
         || !left1.getFullyQualifiedName().equals(left2.getFullyQualifiedName()) //
         || !sideEffects.sink(right1))
       return null;
-    $.remove(a.getParent(), g);
-    return $;
+    ret.remove(a.getParent(), g);
+    return ret;
   }
 }

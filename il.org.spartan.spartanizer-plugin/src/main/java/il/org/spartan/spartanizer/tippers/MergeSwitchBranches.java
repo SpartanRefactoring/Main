@@ -19,15 +19,15 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
   private static final long serialVersionUID = 0x6463F526A06F20A9L;
 
   @Override public ASTNode replacement(final SwitchStatement s) {
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
-    if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
+    final List<switchBranch> ret = switchBranch.intoBranches(s);
+    if (ret.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
-    for (int i = 0; i < $.size(); ++i)
-      for (int j = i + 1; j < $.size(); ++j)
-        if ($.get(i).hasSameBody($.get(j))) {
-          $.get(i).cases.addAll($.get(j).cases);
-          $.remove(j);
-          return switchBranch.makeSwitchStatement($, step.expression(s), s.getAST());
+    for (int i = 0; i < ret.size(); ++i)
+      for (int j = i + 1; j < ret.size(); ++j)
+        if (ret.get(i).hasSameBody(ret.get(j))) {
+          ret.get(i).cases.addAll(ret.get(j).cases);
+          ret.remove(j);
+          return switchBranch.makeSwitchStatement(ret, step.expression(s), s.getAST());
         }
     return null;
   }

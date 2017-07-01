@@ -22,8 +22,8 @@ public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<N
   @Override public ASTNode replacement(final NormalAnnotation ¢) {
     if (!values(¢).isEmpty())
       return null;
-    final MarkerAnnotation $ = ¢.getAST().newMarkerAnnotation();
-    $.setTypeName(copy.of(¢.getTypeName()));
-    return $;
+    final MarkerAnnotation ret = ¢.getAST().newMarkerAnnotation();
+    ret.setTypeName(copy.of(¢.getTypeName()));
+    return ret;
   }
 }

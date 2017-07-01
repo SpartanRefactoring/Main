@@ -35,12 +35,12 @@ public enum TestsUtilsSpartanizer {
       assert wrapIntoComilationUnit != null;
       final CompilationUnit u = wrapIntoComilationUnit.intoCompilationUnit(get());
       assert u != null;
-      final N $ = firstInstance(u);
-      assert $ != null;
-      return $;
+      final N ret = firstInstance(u);
+      assert ret != null;
+      return ret;
     }
     private N firstInstance(final CompilationUnit u) {
-      final Wrapper<N> $ = new Wrapper<>();
+      final Wrapper<N> ret = new Wrapper<>();
       u.accept(new ASTVisitor(true) {
         /** The implementation of the visitation procedure in the JDT seems to
          * be buggy. Each time we find a node which is an instance of the sought
@@ -51,15 +51,15 @@ public enum TestsUtilsSpartanizer {
          * @param pattern the node currently being visited.
          * @return whether the sought node is found. */
         @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
-          if ($.get() != null)
+          if (ret.get() != null)
             return false;
           if (!clazz.isAssignableFrom(¢.getClass()))
             return true;
-          $.set((N) ¢);
+          ret.set((N) ¢);
           return false;
         }
       });
-      return $.get();
+      return ret.get();
     }
     public OperandToTipper<N> in(final Rule<N, Tip> ¢) {
       assert ¢.check(findNode(¢));

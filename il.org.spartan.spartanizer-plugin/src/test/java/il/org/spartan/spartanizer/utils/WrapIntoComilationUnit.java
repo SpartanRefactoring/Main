@@ -37,30 +37,30 @@ public enum WrapIntoComilationUnit {
    * @return most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
   public static WrapIntoComilationUnit find(final String codeFragment) {
-    for (final WrapIntoComilationUnit $ : WRAPS) // NANO
-      if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
-        return $;
+    for (final WrapIntoComilationUnit ret : WRAPS) // NANO
+      if (ret.contains(ret.intoCompilationUnit(codeFragment) + "", codeFragment))
+        return ret;
     if (!system.isBalanced(codeFragment))
       azzert.fail("Input \n'" + codeFragment + "'\n is not parenthesis balanced; cannot compile it");
     azzert.fail("Cannot parse '\n" + codeFragment + "\n W********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
   }
   private static String options(final String codeFragment) {
-    final StringBuilder $ = new StringBuilder();
+    final StringBuilder ret = new StringBuilder();
     int i = 0;
     for (final WrapIntoComilationUnit w : WrapIntoComilationUnit.WRAPS) {
       final String on = w.on(codeFragment);
       final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
-      $.append("\n* Attempt ").append(++i).append(": ").append(w);
-      $.append("\n* I = <").append(Trivia.essence(on)).append(">;");
-      $.append("\n* O = <").append(Trivia.essence(n + "")).append(">;");
-      $.append("\n**** PARSED=\n").append(w.intoCompilationUnit(codeFragment)).append("");
-      $.append("\n* AST=").append(Trivia.essence(n.getAST() + ""));
-      $.append("\n**** INPUT=\n").append(on);
-      $.append("\n**** OUTPUT=\n").append(n);
-      $.append("\n**** PROBLEMS=\n").append(wizard.problems(n));
+      ret.append("\n* Attempt ").append(++i).append(": ").append(w);
+      ret.append("\n* I = <").append(Trivia.essence(on)).append(">;");
+      ret.append("\n* O = <").append(Trivia.essence(n + "")).append(">;");
+      ret.append("\n**** PARSED=\n").append(w.intoCompilationUnit(codeFragment)).append("");
+      ret.append("\n* AST=").append(Trivia.essence(n.getAST() + ""));
+      ret.append("\n**** INPUT=\n").append(on);
+      ret.append("\n**** OUTPUT=\n").append(n);
+      ret.append("\n**** PROBLEMS=\n").append(wizard.problems(n));
     }
-    return $ + "";
+    return ret + "";
   }
 
   private final String before;

@@ -28,38 +28,38 @@ public final class Recurser<T> {
     final InfixExpression ¢ = az.infixExpression(n);
     if (¢ == null)
       return march(n);
-    final List<ASTNode> $ = an.empty.list();
-    $.add(left(¢));
-    $.add(right(¢));
-    $.addAll(extendedOperands(¢));
-    return $;
+    final List<ASTNode> ret = an.empty.list();
+    ret.add(left(¢));
+    ret.add(right(¢));
+    ret.addAll(extendedOperands(¢));
+    return ret;
   }
   /** Operators cannot be retrieved because they are not nodes...
    * @param ¢
    * @return */
   @SuppressWarnings("unchecked") public static List<ASTNode> allChildren(final ASTNode ¢) {
-    final List<ASTNode> $ = (List<ASTNode>) children(¢);
+    final List<ASTNode> ret = (List<ASTNode>) children(¢);
     if (iz.methodInvocation(¢)) {
-      $.addAll(arguments(az.methodInvocation(¢)));
+      ret.addAll(arguments(az.methodInvocation(¢)));
       if (haz.expression(az.methodInvocation(¢)))
-        $.add(expression(az.methodInvocation(¢)));
+        ret.add(expression(az.methodInvocation(¢)));
     }
     if (iz.forStatement(¢)) {
-      $.addAll(initializers(az.forStatement(¢)));
-      $.add(condition(az.forStatement(¢)));
-      $.addAll(updaters(az.forStatement(¢)));
+      ret.addAll(initializers(az.forStatement(¢)));
+      ret.add(condition(az.forStatement(¢)));
+      ret.addAll(updaters(az.forStatement(¢)));
     }
     if (iz.tryStatement(¢))
-      $.addAll(az.tryStatement(¢).catchClauses());
+      ret.addAll(az.tryStatement(¢).catchClauses());
     if (iz.variableDeclarationExpression(¢))
-      $.addAll(fragments(az.variableDeclarationExpression(¢)));
-    return $;
+      ret.addAll(fragments(az.variableDeclarationExpression(¢)));
+    return ret;
   }
   private static List<? extends ASTNode> march(final ASTNode $) {
     try {
       return marchingList($);
-    } catch (final NullPointerException ¢) {
-      return note.bug(¢);
+    } catch (final NullPointerException ret) {
+      return note.bug(ret);
     }
   }
 
@@ -129,13 +129,13 @@ public final class Recurser<T> {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current;
-    final List<Recurser<T>> $ = an.empty.list();
-    children.forEach(λ -> $.add(new Recurser<>(λ)));
+    final List<Recurser<T>> ret = an.empty.list();
+    children.forEach(λ -> ret.add(new Recurser<>(λ)));
     int index = 0;
-    for (final Recurser<T> ¢ : $) {
-      current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(f);
+    for (final Recurser<T> ¢ : ret) {
+      current = ¢.from(index == 0 ? current : ret.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }
-    return $.isEmpty() ? current : $.get(index - 1).getCurrent();
+    return ret.isEmpty() ? current : ret.get(index - 1).getCurrent();
   }
 }

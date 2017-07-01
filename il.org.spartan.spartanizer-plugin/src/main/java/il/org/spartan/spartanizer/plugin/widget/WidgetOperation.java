@@ -75,14 +75,14 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
    * @see #scale() */
   public Image image() {
     String s;
-    Image $;
+    Image ret;
     if ((s = imageKey()) != null)
-      $ = Dialogs.image(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(s), s, scale());
+      ret = Dialogs.image(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(s), s, scale());
     else {
       s = imageURL();
-      $ = Dialogs.image(s, s, scale());
+      ret = Dialogs.image(s, s, scale());
     }
-    return $ != null ? $ : Dialogs.image("file:/plugin/pictures/athenizer.png", "defualt widget", λ -> λ);
+    return ret != null ? ret : Dialogs.image("file:/plugin/pictures/athenizer.png", "defualt widget", λ -> λ);
   }
   /** Scaling the image of the operation, does nothing by default.
    * @return scaler for SWT image of this operation. */

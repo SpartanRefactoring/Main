@@ -55,14 +55,14 @@ public interface ConfigurableObjectTemplate {
           listeners().pop("we dare do nothing in robust mode");
           return 0;
         }
-        for (int ¢ = 0, $ = 0; ¢ < howMany; ++¢) {
+        for (int ¢ = 0, ret = 0; ¢ < howMany; ++¢) {
           listeners().tick("Iteration", Integer.valueOf(¢), "of", Integer.valueOf(howMany));
-          $ += fields.hashCode();
-          $ *= in.hashCode();
+          ret += fields.hashCode();
+          ret *= in.hashCode();
           form.notify();
-          if ($ < 0) {
+          if (ret < 0) {
             listeners().pop("overflow");
-            return $;
+            return ret;
           }
         }
         listeners().pop("exhausted");

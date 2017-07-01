@@ -46,11 +46,11 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return rankAnnotation(identifier(typeName(az.annotation(¢))));
   }
   private static int rankAnnotation(final String annotationName) {
-    int $ = 0;
+    int ret = 0;
     for (final HashSet<String> ¢ : rankTable) {
-      ++$;
+      ++ret;
       if (¢.contains(annotationName))
-        return $;
+        return ret;
     }
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
   }
@@ -63,19 +63,19 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
   public static <T> Predicate<T> distinctByKey(final Function<? super T, Object> keyExtractor) {
-    final Map<Object, Boolean> $ = new ConcurrentHashMap<>();
-    return λ -> $.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
+    final Map<Object, Boolean> ret = new ConcurrentHashMap<>();
+    return λ -> ret.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
   }
   private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
     return ¢.stream().filter(distinctByKey(λ -> identifier(typeName(az.annotation(λ))))).sorted(comp).collect(toList());
   }
   @Override public ASTNode replacement(final N d) {
-    final N $ = copy.of(d);
-    final List<IExtendedModifier> ies = as.list(sort(extract.annotations($))), ms = as.list(extract.modifiers($));
-    extendedModifiers($).clear();
-    extendedModifiers($).addAll(ies);
-    extendedModifiers($).addAll(ms);
-    return !wizard.eq($, d) ? $ : null;
+    final N ret = copy.of(d);
+    final List<IExtendedModifier> ies = as.list(sort(extract.annotations(ret))), ms = as.list(extract.modifiers(ret));
+    extendedModifiers(ret).clear();
+    extendedModifiers(ret).addAll(ies);
+    extendedModifiers(ret).addAll(ms);
+    return !wizard.eq(ret, d) ? ret : null;
   }
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.traversal.*;
  * @since 2017-03-08 */
 public interface theSpartanizer {
   static Tipper<?> firstTipper(final String from) {
-    final Wrapper<Tipper<?>> $ = new Wrapper<>();
+    final Wrapper<Tipper<?>> ret = new Wrapper<>();
     final ASTNode n = make.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
@@ -29,13 +29,13 @@ public interface theSpartanizer {
         <N extends ASTNode> boolean go(final Tipper<N> ¢) {
           if (¢ == null)
             return true;
-          $.set(¢);
+          ret.set(¢);
           return false;
         }
 
         boolean searching = true;
       });
-    return $.get();
+    return ret.get();
   }
   /** Apply trimming once
    * @param from what to process
@@ -43,7 +43,7 @@ public interface theSpartanizer {
    *         tippers */
   @SuppressWarnings("hiding") static String once(final String from) {
     final Traversal traversal = new TraversalImplementation();
-    final IDocument $ = new Document(from);
+    final IDocument ret = new Document(from);
     final ASTNode root = make.ast(from);
     if (root != null)
       root.accept(new DispatchingVisitor() {
@@ -62,9 +62,9 @@ public interface theSpartanizer {
         <N extends ASTNode> void apply(final Tip t, final N n) {
           final ASTRewrite r = ASTRewrite.create(n.getAST());
           t.go(r, null);
-          final TextEdit e = r.rewriteAST($, null);
+          final TextEdit e = r.rewriteAST(ret, null);
           try {
-            e.apply($);
+            e.apply(ret);
           } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
             note.bug(traversal, ¢);
           }
@@ -72,14 +72,14 @@ public interface theSpartanizer {
 
         boolean searching = true;
       });
-    return $.get();
+    return ret.get();
   }
   static String repetitively(final String from) {
     int n = 0;
-    for (String $ = from, next;; $ = next) {
-      next = once($);
-      if (Trivia.same($, next) || ++n > 20)
-        return $;
+    for (String ret = from, next;; ret = next) {
+      next = once(ret);
+      if (Trivia.same(ret, next) || ++n > 20)
+        return ret;
     }
   }
 
@@ -88,8 +88,8 @@ public interface theSpartanizer {
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
       return traversal.toolbox.firstTipper($);
-    } catch (final Exception ¢) {
-      return note.bug(¢);
+    } catch (final Exception ret) {
+      return note.bug(ret);
     }
   }
   static String thrice(final String javaCode) {

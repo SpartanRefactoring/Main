@@ -27,8 +27,8 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     return (value == null ? 0 : value.hashCode()) + 31 * ((key == null ? 0 : key.hashCode()) + 31);
   }
   @Override public V setValue(final V value) {
-    final V $ = this.value;
+    final V ret = this.value;
     this.value = value;
-    return $;
+    return ret;
   }
 }

@@ -17,8 +17,8 @@ public interface Utils {
   static int digits(final double ¢) {
     if (¢ == 0)
       return -1;
-    final double $ = Math.log10(¢);
-    return $ < 0 ? 0 : (int) $ + 1;
+    final double ret = Math.log10(¢);
+    return ret < 0 ? 0 : (int) ret + 1;
   }
   /** [[SuppressWarningsSpartan]] - see #1246 */
   static String format2(final double ¢) {

@@ -30,17 +30,17 @@ public enum getAll {
   public static Set<String> invocations(final MethodInvocation ¢) {
     if (¢ == null)
       return null;
-    final Set<String> $ = new TreeSet<>();
+    final Set<String> ret = new TreeSet<>();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢¢) {
         if ((!iz.methodInvocation(parent(¢¢)) || !(step.name(az.methodInvocation(parent(¢¢))) + "").equals(¢¢ + ""))
             && (!iz.methodDeclaration(parent(¢¢)) || !(step.name(az.methodDeclaration(parent(¢¢))) + "").equals(¢¢ + "")))
-          $.add(¢¢ + "");
+          ret.add(¢¢ + "");
         return true;
       }
     });
-    return $;
+    return ret;
   }
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
@@ -49,17 +49,17 @@ public enum getAll {
   public static Set<String> invocations(final MethodDeclaration ¢) {
     if (¢ == null)
       return null;
-    final Set<String> $ = new TreeSet<>();
+    final Set<String> ret = new TreeSet<>();
     if (statements(body(¢)).isEmpty())
-      return $;
+      return ret;
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodInvocation ¢¢) {
-        $.add(¢¢.getName() + "");
+        ret.add(¢¢.getName() + "");
         return true;
       }
     });
-    return $;
+    return ret;
   }
   /** Get list of names in a Block
    * @author Raviv Rachmiel
@@ -69,28 +69,28 @@ public enum getAll {
   public static List<Name> names(final Block b) {
     if (b == null)
       return null;
-    final List<Name> $ = an.empty.list();
+    final List<Name> ret = an.empty.list();
     // noinspection SameReturnValue
     b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {
-        $.add(¢);
+        ret.add(¢);
         return true;
       }
     });
-    return $;
+    return ret;
   }
   public static List<SimpleName> names(final MethodDeclaration b) {
     if (b == null)
       return null;
-    final List<SimpleName> $ = an.empty.list();
+    final List<SimpleName> ret = an.empty.list();
     // noinspection SameReturnValue
     b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {
-        $.add(¢);
+        ret.add(¢);
         return true;
       }
     });
-    return $;
+    return ret;
   }
   /** returns a list of all instances of expressions at given method
    * @author Koby Ben Shimol
@@ -99,15 +99,15 @@ public enum getAll {
   public static List<InstanceofExpression> instanceofs(final MethodDeclaration d) {
     if (d == null)
       return null;
-    final List<InstanceofExpression> $ = an.empty.list();
+    final List<InstanceofExpression> ret = an.empty.list();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final InstanceofExpression node) {
-        $.add(node);
+        ret.add(node);
         return true;
       }
     });
-    return $;
+    return ret;
   }
   /** Takes a single parameter d, which is a MethodDeclaration. Returns a a
    * {@Link List} of {@link CastExpression} which is all casts in d.
@@ -118,15 +118,15 @@ public enum getAll {
   public static Collection<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
-    final Collection<CastExpression> $ = an.empty.list();
+    final Collection<CastExpression> ret = an.empty.list();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final CastExpression node) {
-        $.add(node);
+        ret.add(node);
         return true;
       }
     });
-    return $;
+    return ret;
   }
   /** Takes a single parameter, which is an MethodDeclaration return a
    * List<VariableDeclaration> which is all String variable declarations in m
@@ -136,15 +136,15 @@ public enum getAll {
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
     if (d == null)
       return null;
-    final List<VariableDeclaration> $ = an.empty.list();
+    final List<VariableDeclaration> ret = an.empty.list();
     d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
-          $.add((VariableDeclaration) ¢);
+          ret.add((VariableDeclaration) ¢);
         super.preVisit(¢);
       }
     });
-    return $;
+    return ret;
   }
   /** Takes a single parameter, which is a TypeDecleration returns a list of
    * public fields for this class (by fields' names)
@@ -154,9 +154,9 @@ public enum getAll {
   public static List<String> publicFields(final TypeDeclaration ¢) {
     if (¢ == null)
       return null;
-    final List<String> $ = an.empty.list();
-    ¢.accept(publicFieldsCollector($));
-    return $;
+    final List<String> ret = an.empty.list();
+    ¢.accept(publicFieldsCollector(ret));
+    return ret;
   }
   private static ASTVisitor publicFieldsCollector(final Collection<String> $) {
     // noinspection SameReturnValue
@@ -176,14 +176,14 @@ public enum getAll {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<MethodDeclaration> $ = an.empty.list();
+    final List<MethodDeclaration> ret = an.empty.list();
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
-        $.add(¢);
+        ret.add(¢);
         return super.visit(¢);
       }
     });
-    return $;
+    return ret;
   }
   /** takes a single parameter, which is a TypeDeclaration. returns a list of
    * private fields for this class (by fields' names)
@@ -192,17 +192,17 @@ public enum getAll {
    * @author rodedzats
    * @author zivizhar */
   public static List<String> privateFields(final TypeDeclaration d) {
-    final List<String> $ = an.empty.list();
+    final List<String> ret = an.empty.list();
     if (d == null)
-      return $;
+      return ret;
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) { // traverse all FieldDeclaration
       @Override public boolean visit(final FieldDeclaration current) {
         if (current.getModifiers() == Modifier.PRIVATE)
-          $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
+          ret.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         return true;
       }
     });
-    return $;
+    return ret;
   }
 }

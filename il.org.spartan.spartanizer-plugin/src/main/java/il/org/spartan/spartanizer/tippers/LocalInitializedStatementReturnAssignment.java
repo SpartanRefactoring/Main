@@ -26,7 +26,7 @@ public final class LocalInitializedStatementReturnAssignment extends $FragmentAn
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
@@ -34,12 +34,12 @@ public final class LocalInitializedStatementReturnAssignment extends $FragmentAn
     if (a == null || !wizard.eq(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = copy.of(from(a));
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, ret, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
-    $.replace(a, newReturnValue, g);
+    ret.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);
-    remove.deadFragment(f, $, g);
-    return $;
+    remove.deadFragment(f, ret, g);
+    return ret;
   }
 }

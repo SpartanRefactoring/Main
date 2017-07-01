@@ -53,13 +53,13 @@ public enum WidgetPreferences {
   @SuppressWarnings("unchecked") public static List<WidgetOperationEntry> readEntries() {
     final byte[] theOutBarr = Base64.getDecoder().decode(store().getString(PreferencesResources.WIDGET_OPERATION_CONFIGURATION));
     final ByteArrayInputStream in = new ByteArrayInputStream(theOutBarr);
-    List<WidgetOperationEntry> $ = an.empty.list();
+    List<WidgetOperationEntry> ret = an.empty.list();
     try {
-      $ = (List<WidgetOperationEntry>) new ObjectInputStream(in).readObject();
+      ret = (List<WidgetOperationEntry>) new ObjectInputStream(in).readObject();
     } catch (final IOException | ClassNotFoundException ¢) {
       note.bug(¢);
     }
-    return $;
+    return ret;
   }
   public static void setDefaults() {
     store().setDefault(PreferencesResources.WIDGET_SIZE, defaultWidgetSize);

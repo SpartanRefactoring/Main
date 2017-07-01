@@ -80,10 +80,10 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return new RefactoringStatus();
   }
   @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
-    final RefactoringStatus $ = new RefactoringStatus();
+    final RefactoringStatus ret = new RefactoringStatus();
     if (iCompilationUnit == null && marker == null)
-      $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to do."));
-    return $;
+      ret.merge(RefactoringStatus.createFatalErrorStatus("Nothing to do."));
+    return ret;
   }
   public Tips collectTips(final CompilationUnit ¢) {
     return traversal.collectTips(¢);
@@ -157,14 +157,14 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     assert u != null;
     try {
       textChange.setEdit(go(u).rewriteAST());
-    } catch (JavaModelException | IllegalArgumentException $) {
-      return zero.forgetting(note.bug($));
+    } catch (JavaModelException | IllegalArgumentException ret) {
+      return zero.forgetting(note.bug(ret));
     }
     if (textChange.getEdit().getLength() != 0)
       try {
         textChange.perform(newSubProgressMonitor());
-      } catch (final CoreException $) {
-        return zero.forgetting(note.bug($));
+      } catch (final CoreException ret) {
+        return zero.forgetting(note.bug(ret));
       }
     getProgressMonitor().done();
     return traversal.rewriteCount();
@@ -253,9 +253,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private ASTRewrite computeRewrite(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
-    final ASTRewrite $ = traversal.go(¢);
+    final ASTRewrite ret = traversal.go(¢);
     getProgressMonitor().done();
-    return $;
+    return ret;
   }
   /** @param s Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the tipper */
@@ -284,9 +284,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private TextFileChange init(final WrappedCompilationUnit ¢) {
     iCompilationUnit(¢.descriptor);
     getProgressMonitor().beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
-    $.setTextType("java");
-    return $;
+    final TextFileChange ret = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
+    ret.setTextType("java");
+    return ret;
   }
   private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     marker = m;
@@ -299,9 +299,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private ASTRewrite go(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
-    final ASTRewrite $ = traversal.go(¢);
+    final ASTRewrite ret = traversal.go(¢);
     getProgressMonitor().done();
-    return $;
+    return ret;
   }
   /** @param u JD
    * @throws CoreException */
@@ -346,9 +346,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     getProgressMonitor().done();
   }
   private TextFileChange textFileChange() {
-    final TextFileChange $ = new TextFileChange(compilationUnitName(), compilationUnitIFile());
-    $.setTextType("java");
-    return $;
+    final TextFileChange ret = new TextFileChange(compilationUnitName(), compilationUnitIFile());
+    ret.setTextType("java");
+    return ret;
   }
   protected String compilationUnitName() {
     return iCompilationUnit.getElementName();

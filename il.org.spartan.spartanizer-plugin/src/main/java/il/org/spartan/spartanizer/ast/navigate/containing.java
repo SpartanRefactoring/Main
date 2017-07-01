@@ -26,9 +26,9 @@ public interface containing {
    *         nested, or {@code null, if no such statement
    *         exists. */
   static MethodDeclaration methodDeclaration(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = parent($))
-      if (iz.methodDeclaration($))
-        return az.methodDeclaration($);
+    for (ASTNode ret = ¢; ret != null; ret = parent(ret))
+      if (iz.methodDeclaration(ret))
+        return az.methodDeclaration(ret);
     return null;
   }
   static String package¢(final CastExpression ¢) {
@@ -39,9 +39,9 @@ public interface containing {
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         {@code null, if no such statement exists. */
   static Statement statement(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = parent($))
-      if (iz.statement($))
-        return az.statement($);
+    for (ASTNode ret = ¢; ret != null; ret = parent(ret))
+      if (iz.statement(ret))
+        return az.statement(ret);
     return null;
   }
   /** @param ¢ JD

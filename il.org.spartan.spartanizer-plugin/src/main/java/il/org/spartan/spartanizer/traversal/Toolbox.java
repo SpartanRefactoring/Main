@@ -21,11 +21,11 @@ import il.org.spartan.utils.*;
  * @since 2015-08-22 */
 public class Toolbox {
   @Override public Toolbox clone() {
-    final Toolbox $ = new Toolbox();
+    final Toolbox ret = new Toolbox();
     int i = 0;
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
-      $.implementation[i++] = ¢ == null ? null : new ArrayList<>(¢);
-    return $;
+      ret.implementation[i++] = ¢ == null ? null : new ArrayList<>(¢);
+    return ret;
   }
   /** Generate an {@link ASTRewrite} that contains the changes proposed by the
    * first tipper that applies to a node in the usual scan.
@@ -34,7 +34,7 @@ public class Toolbox {
   public ASTRewrite pickFirstTip(final ASTNode root) {
     disabling.scan(root);
     final Bool done = new Bool();
-    final ASTRewrite $ = ASTRewrite.create(root.getAST());
+    final ASTRewrite ret = ASTRewrite.create(root.getAST());
     root.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode n) {
         if (done.get())
@@ -45,11 +45,11 @@ public class Toolbox {
         if (t == null)
           return true;
         done.set();
-        Tippers.extractTip(t, n).go($, null);
+        Tippers.extractTip(t, n).go(ret, null);
         return false;
       }
     });
-    return $;
+    return ret;
   }
   private static void disable(final Class<? extends Category> c, final List<Tipper<? extends ASTNode>> ts) {
     ts.removeIf(λ -> c.isAssignableFrom(λ.getClass()));
@@ -340,10 +340,10 @@ public class Toolbox {
     return this;
   }
   public Collection<Tipper<? extends ASTNode>> getAllTippers() {
-    final Collection<Tipper<? extends ASTNode>> $ = an.empty.list();
+    final Collection<Tipper<? extends ASTNode>> ret = an.empty.list();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
-      $.addAll(get(¢));
-    return $;
+      ret.addAll(get(¢));
+    return ret;
   }
   public void disable(final Class<? extends Category> c) {
     Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> disable(c, λ));

@@ -64,8 +64,8 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
   public Class<N> myActualOperandsClass() {
-    final Class<N> $ = getAbstractOperandClass();
-    return !isAbstract($.getModifiers()) ? $ : null;
+    final Class<N> ret = getAbstractOperandClass();
+    return !isAbstract(ret.getModifiers()) ? ret : null;
   }
   @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
     return (Class<Tipper<N>>) getClass();
@@ -86,11 +86,11 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return (Class<N>) c2;
   }
   private Class<N> initializeMyOperandsClass() {
-    Class<N> $ = null;
+    Class<N> ret = null;
     for (final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
-        $ = lowest($, ¢.getParameterTypes()[0]);
-    return $ != null ? $ : castClass(ASTNode.class);
+        ret = lowest(ret, ¢.getParameterTypes()[0]);
+    return ret != null ? ret : castClass(ASTNode.class);
   }
   private boolean isDefinedHere(final Method ¢) {
     return ¢.getDeclaringClass() == getClass();
@@ -106,21 +106,21 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
       return nil.forgetting(note.bug("Missing attribute"));
     if (!(o instanceof Class))
       return nil.forgetting(note.bug("Attribute of wrong __"));
-    @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) (Class<?>) o;
-    return Tipper.instantiate(tipperClass);
+    @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> ret = (Class<? extends Tipper<N>>) (Class<?>) o;
+    return Tipper.instantiate(ret);
   }
   private static Object getKey(final IMarker $) {
     try {
       return $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
-    } catch (final CoreException ¢) {
-      return note.bug(¢);
+    } catch (final CoreException ret) {
+      return note.bug(ret);
     }
   }
   public static <X extends ASTNode, T extends Tipper<X>> Tipper<X> instantiate(final Class<T> $) {
     try {
       return $.newInstance();
-    } catch (InstantiationException | IllegalAccessException ¢) {
-      return note.bug(¢);
+    } catch (InstantiationException | IllegalAccessException ret) {
+      return note.bug(ret);
     }
   }
 

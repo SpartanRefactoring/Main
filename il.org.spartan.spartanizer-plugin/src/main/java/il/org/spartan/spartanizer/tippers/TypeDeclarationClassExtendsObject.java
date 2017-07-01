@@ -17,9 +17,9 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
   @Override public ASTNode replacement(final TypeDeclaration ¢) {
     if (¢.isInterface() || !type.isObject(¢.getSuperclassType()))
       return null;
-    final TypeDeclaration $ = copy.of(¢);
-    $.setSuperclassType(null);
-    return $;
+    final TypeDeclaration ret = copy.of(¢);
+    ret.setSuperclassType(null);
+    return ret;
   }
   @Override public String description(final TypeDeclaration ¢) {
     return "Trim implicit extends " + ¢.getSuperclassType();

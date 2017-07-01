@@ -48,10 +48,10 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
   static Expression fix(final InfixExpression x, final ITypeBinding b) {
     if (!"byte".equals(b.getName()))
       return x;
-    final CastExpression $ = x.getAST().newCastExpression();
-    $.setType(x.getAST().newPrimitiveType(PrimitiveType.BYTE));
-    $.setExpression(make.parethesized(x));
-    return $;
+    final CastExpression ret = x.getAST().newCastExpression();
+    ret.setType(x.getAST().newPrimitiveType(PrimitiveType.BYTE));
+    ret.setExpression(make.parethesized(x));
+    return ret;
   }
   private static boolean validTypes(final Assignment ¢) {
     final ITypeBinding $ = left(¢).resolveTypeBinding(), br = right(¢).resolveTypeBinding();

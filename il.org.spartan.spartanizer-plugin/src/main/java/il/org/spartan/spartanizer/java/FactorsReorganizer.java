@@ -31,11 +31,11 @@ interface FactorsReorganizer {
     return subject.operands(rest).to(DIVIDE);
   }
   static Expression buildDividers(final List<Expression> ¢) {
-    final Expression $ = subject.pair(the.firstOf(¢).getAST().newNumberLiteral("1"), the.firstOf(¢)).to(DIVIDE);
+    final Expression ret = subject.pair(the.firstOf(¢).getAST().newNumberLiteral("1"), the.firstOf(¢)).to(DIVIDE);
     if (¢.size() == 1)
-      return $;
+      return ret;
     ¢.remove(0);
-    ¢.add(0, $);
+    ¢.add(0, ret);
     return subject.operands(¢).to(DIVIDE);
   }
   static Expression buildMultipliers(final List<Expression> ¢) {

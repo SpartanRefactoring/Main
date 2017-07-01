@@ -36,21 +36,21 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     }
   }
   static String getPackageNameFromSource(final String source) {
-    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
-    $.setResolveBindings(true);
-    $.setSource(source.toCharArray());
-    return getPackageNameFromSource($.createAST(null));
+    final ASTParser ret = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    ret.setResolveBindings(true);
+    ret.setSource(source.toCharArray());
+    return getPackageNameFromSource(ret.createAST(null));
   }
   private static String getPackageNameFromSource(final ASTNode n) {
-    final Wrapper<String> $ = new Wrapper<>("");
+    final Wrapper<String> ret = new Wrapper<>("");
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final PackageDeclaration ¢) {
-        $.set(¢.getName() + "");
+        ret.set(¢.getName() + "");
         return false;
       }
     });
-    return $.get();
+    return ret.get();
   }
 
   IJavaProject javaProject;
@@ -79,9 +79,9 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     }
   }
   ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
-    final String $ = FileUtils.read(¢);
-    setPackage(getPackageNameFromSource($));
-    return pack.createCompilationUnit(¢.getName(), $, false, null);
+    final String ret = FileUtils.read(¢);
+    setPackage(getPackageNameFromSource(ret));
+    return pack.createCompilationUnit(¢.getName(), ret, false, null);
   }
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("tempP");

@@ -45,8 +45,8 @@ public abstract class MetaFixture {
    * @param n AST node
    * @return a string as described */
   public static String ancestry(final ASTNode n) {
-    final Int $ = new Int();
-    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + Trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
+    final Int ret = new Int();
+    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + ret.next() + ": " + Trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
   /** Looks for all the annotees of annotationName in all the metafixtures in fs
@@ -57,24 +57,24 @@ public abstract class MetaFixture {
    * @param fs the metafixtures to search
    * @return a collection of arrays as described */
   protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
-    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = an.empty.list();
+    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> ret = an.empty.list();
     for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
         for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))
             for (@knows({ "t", "a", "s" }) final String s : values(a))
               for (@knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
-                $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
-    return $;
+                ret.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
+    return ret;
   }
   /** Returns the path of ¢'s src directory.
    * @param ¢ a File
    * @return the path of its source directory */
   private static IPath getSrcPath(final File ¢) {
-    IPath $ = new Path(¢.getAbsolutePath());
-    while (!$.isEmpty() && !"src".equals($.lastSegment()))
-      $ = $.removeLastSegments(1);
-    return $;
+    IPath ret = new Path(¢.getAbsolutePath());
+    while (!ret.isEmpty() && !"src".equals(ret.lastSegment()))
+      ret = ret.removeLastSegments(1);
+    return ret;
   }
   /** Finds the wanted file in current directory and creates a cu out of its
    * content
@@ -83,11 +83,11 @@ public abstract class MetaFixture {
   private static CompilationUnit loadAST(final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
-        final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
-        p.setResolveBindings(true);
-        p.setUnitName(fileName);
-        p.setEnvironment(new String[] { JAVA_HOME + "/lib/rt.jar" }, new String[] { getSrcPath($) + "" }, new String[] { "UTF-8" }, true);
-        return (CompilationUnit) p.createAST(null);
+        final ASTParser ret = make.COMPILATION_UNIT.parser(makeAST.string($));
+        ret.setResolveBindings(true);
+        ret.setUnitName(fileName);
+        ret.setEnvironment(new String[] { JAVA_HOME + "/lib/rt.jar" }, new String[] { getSrcPath($) + "" }, new String[] { "UTF-8" }, true);
+        return (CompilationUnit) ret.createAST(null);
       }
     return null;
   }
@@ -96,9 +96,9 @@ public abstract class MetaFixture {
    * @param fileName the wanted file
    * @return a string of this file's content */
   private static String loadText(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
-      if ($.getAbsolutePath().endsWith(fileName))
-        return makeAST.string($);
+    for (final File ret : new FilesGenerator(".java").from("."))
+      if (ret.getAbsolutePath().endsWith(fileName))
+        return makeAST.string(ret);
     return null;
   }
   /** Gets the value of the parameter in the annotation ¢ as an integer
@@ -156,12 +156,12 @@ public abstract class MetaFixture {
    * @return a vocabulary as described */
   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
-    final Vocabulary $ = new Vocabulary();
+    final Vocabulary ret = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
       assert ¢ instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(¢), ¢);
-      $.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);
+      ret.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);
     }
-    return $;
+    return ret;
   }
   /** Finds the first element of __ ¢ in current runtime class's cu
    * @param ¢ the wanted class
@@ -178,24 +178,24 @@ public abstract class MetaFixture {
    * adds a mapping to cu of this class or of its containing class if exists
    * @return the new cu or the existing mapping */
   public final CompilationUnit reflectedCompilationUnit() {
-    final Class<? extends MetaFixture> c = getClass();
-    final CompilationUnit $ = classToASTCompilationUnit.get(c);
+    final Class<? extends MetaFixture> ret = getClass();
+    final CompilationUnit $ = classToASTCompilationUnit.get(ret);
     if ($ != null)
       return $;
-    classToASTCompilationUnit.put(c, loadAST((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
-    return classToASTCompilationUnit.get(c);
+    classToASTCompilationUnit.put(ret, loadAST((ret.getDeclaringClass() == null ? ret : ret.getDeclaringClass()).getSimpleName() + ".java"));
+    return classToASTCompilationUnit.get(ret);
   }
   /** If a mapping of this runtime class to a string exists returns it,
    * otherwise adds a mapping to a string of this class or of its containing
    * class if exists
    * @return the new string or the existing mapping */
   public final String reflectedCompilationUnitText() {
-    final Class<? extends MetaFixture> c = getClass();
-    final String $ = classToText.get(c);
+    final Class<? extends MetaFixture> ret = getClass();
+    final String $ = classToText.get(ret);
     if ($ != null)
       return $;
-    classToText.put(c, loadText((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
-    return classToText.get(c);
+    classToText.put(ret, loadText((ret.getDeclaringClass() == null ? ret : ret.getDeclaringClass()).getSimpleName() + ".java"));
+    return classToText.get(ret);
   }
   /** Gets all the single member annotations from current runtime class's cu
    * @return an iterable of these annotations */

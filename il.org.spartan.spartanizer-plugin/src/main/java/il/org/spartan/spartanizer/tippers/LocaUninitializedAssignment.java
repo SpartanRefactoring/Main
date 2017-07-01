@@ -47,9 +47,9 @@ public final class LocaUninitializedAssignment extends LocalUninitialized implem
     ;
   }
   private VariableDeclarationFragment replacement() {
-    final VariableDeclarationFragment $ = copy.of(current);
-    $.setInitializer(copy.of(from));
-    return $;
+    final VariableDeclarationFragment ret = copy.of(current);
+    ret.setInitializer(copy.of(from));
+    return ret;
   }
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.replace(initializer, replacement(), g);

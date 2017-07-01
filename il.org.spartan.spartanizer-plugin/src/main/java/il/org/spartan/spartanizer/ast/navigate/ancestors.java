@@ -12,11 +12,11 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-12-23 */
 public interface ancestors {
   static List<ASTNode> path(final ASTNode n) {
-    final List<ASTNode> $ = an.empty.list();
+    final List<ASTNode> ret = an.empty.list();
     for (ASTNode parent = n; parent != null; parent = n.getParent())
-      $.add(parent);
-    Collections.reverse($);
-    return $;
+      ret.add(parent);
+    Collections.reverse(ret);
+    return ret;
   }
   static Iterable<ASTNode> of(final ASTNode n) {
     return () -> new Iterator<ASTNode>() {
@@ -26,9 +26,9 @@ public interface ancestors {
         return next != null;
       }
       @Override public ASTNode next() {
-        final ASTNode $ = next;
-        next = parent($);
-        return $;
+        final ASTNode ret = next;
+        next = parent(ret);
+        return ret;
       }
     };
   }
@@ -56,10 +56,10 @@ public interface ancestors {
       this.bipredicate = bipredicate;
     }
     public List<ASTNode> from(final ASTNode n) {
-      final List<ASTNode> $ = an.empty.list();
+      final List<ASTNode> ret = an.empty.list();
       for (ASTNode current = n, previous = null; current != null && !test(previous, current); previous = current, current = current.getParent())
-        $.add(current);
-      return $;
+        ret.add(current);
+      return ret;
     }
     private boolean test(final ASTNode previous, final ASTNode current) {
       return predicate != null ? predicate.test(current) : bipredicate != null && bipredicate.test(previous, current);

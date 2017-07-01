@@ -26,14 +26,14 @@ public enum getAll2 {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<MethodDeclaration> $ = an.empty.list();
+    final List<MethodDeclaration> ret = an.empty.list();
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
-        $.add(¢);
+        ret.add(¢);
         return super.visit(¢);
       }
     });
-    return $;
+    return ret;
   }
   /** Takes Block b and returns list of names in it
    * @param b
@@ -43,14 +43,14 @@ public enum getAll2 {
   public static List<Name> names(final Block b) {
     if (b == null)
       return null;
-    final List<Name> $ = an.empty.list();
+    final List<Name> ret = an.empty.list();
     b.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode an) {
         if (iz.name(an))
-          $.add(az.name(an));
+          ret.add(az.name(an));
       }
     });
-    return $;
+    return ret;
   }
   /** @author Shimon Azulay
    * @author Idan Atias
@@ -58,16 +58,16 @@ public enum getAll2 {
    *        list of it's public fields names.
    * @param d - the TypeDeclaration argument */
   public static List<String> publicFields(final TypeDeclaration d) {
-    final List<String> $ = an.empty.list();
+    final List<String> ret = an.empty.list();
     if (d == null)
-      return $;
+      return ret;
     for (final FieldDeclaration fd : d.getFields()) // TOUGH
       if (iz.public¢(fd)) {
         final String[] field_splitted_to_words = (fd + "").trim().split(" ");
         if (field_splitted_to_words.length >= 1)
-          $.add(field_splitted_to_words[field_splitted_to_words.length - 1].replace(";", "").trim());
+          ret.add(field_splitted_to_words[field_splitted_to_words.length - 1].replace(";", "").trim());
       }
-    return $;
+    return ret;
   }
   /** @author Sapir Bismot
    * @author Yaniv Levinsky
@@ -75,17 +75,17 @@ public enum getAll2 {
    *        list of it's all String variable declarations.
    * @param ¢ - the MethodDeclaration argument */
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
-    final List<VariableDeclaration> $ = an.empty.list();
+    final List<VariableDeclaration> ret = an.empty.list();
     if (¢ == null)
-      return $;
+      return ret;
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration node) {
         if ("String".equals(node.getType() + ""))
-          $.add(node);
+          ret.add(node);
         return true;
       }
     });
-    return $;
+    return ret;
   }
 }

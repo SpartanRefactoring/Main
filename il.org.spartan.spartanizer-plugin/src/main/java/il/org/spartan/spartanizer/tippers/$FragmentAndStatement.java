@@ -27,16 +27,16 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
   static int eliminationSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = wizard.live(f, fragments(parent));
-    final int $ = metrics.size(parent);
+    final int ret = metrics.size(parent);
     if (live.isEmpty())
-      return $;
+      return ret;
     final VariableDeclarationStatement newParent = copy.of(parent);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
-    return $ - metrics.size(newParent);
+    return ret - metrics.size(newParent);
   }
   public static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-    final Collection<VariableDeclarationFragment> $ = an.empty.list();
+    final Collection<VariableDeclarationFragment> ret = an.empty.list();
     boolean collecting = false;
     for (final VariableDeclarationFragment sibling : fragments((VariableDeclarationStatement) f.getParent())) {
       if (sibling == f) {
@@ -44,18 +44,18 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
         continue;
       }
       if (collecting)
-        $.add(sibling);
+        ret.add(sibling);
     }
-    return $;
+    return ret;
   }
   public static int removalSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final int $ = metrics.size(parent);
+    final int ret = metrics.size(parent);
     if (parent.fragments().size() <= 1)
-      return $;
+      return ret;
     final VariableDeclarationStatement newParent = copy.of(parent);
     newParent.fragments().remove(parent.fragments().indexOf(f));
-    return $ - metrics.size(newParent);
+    return ret - metrics.size(newParent);
   }
   static boolean usedInSubsequentInitializers(final VariableDeclarationFragment f, final SimpleName n) {
     boolean searching = true;

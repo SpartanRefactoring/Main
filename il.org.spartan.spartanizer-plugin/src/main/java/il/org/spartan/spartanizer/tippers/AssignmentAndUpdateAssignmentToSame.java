@@ -37,7 +37,7 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
   @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
     final Assignment a2 = extract.assignment(nextStatement);
@@ -47,8 +47,8 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
     final Expression to = to(a1);
     if (!wizard.eq(to, to(a2)) || !sideEffects.free(to))
       return null;
-    $.replace(from(a1), subject.operands(from(a1), from(a2)).to(op.assign2infix(o)), g);
-    $.remove(nextStatement, g);
-    return $;
+    ret.replace(from(a1), subject.operands(from(a1), from(a2)).to(op.assign2infix(o)), g);
+    ret.remove(nextStatement, g);
+    return ret;
   }
 }

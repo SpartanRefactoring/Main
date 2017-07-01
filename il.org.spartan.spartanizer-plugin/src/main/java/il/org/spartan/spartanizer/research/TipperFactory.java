@@ -26,28 +26,28 @@ public enum TipperFactory {
   }
   private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description,
       final Option... os) {
-    final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
+    final Matcher ret = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
       static final long serialVersionUID = 0x428682F150219098L;
 
       @Override public Tip tip(final Block n) {
-        return new Tip(description(n), myClass(), n, $.getMatchedNodes(az.block(n))) {
+        return new Tip(description(n), myClass(), n, ret.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            r.replace(n, $.blockReplacement(n), g);
+            r.replace(n, ret.blockReplacement(n), g);
           }
         };
       }
       @Override protected boolean prerequisite(final Block ¢) {
-        return $.blockMatches(¢);
+        return ret.blockMatches(¢);
       }
       @Override public String description(@SuppressWarnings("unused") final Block __) {
         return description;
       }
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
-        return $.getMatching(n, s);
+        return ret.getMatching(n, s);
       }
       @Override public ASTNode getMatching(final ASTNode ¢) {
-        return $.replacement(¢);
+        return ret.replacement(¢);
       }
       @Override public String pattern() {
         return pattern;
@@ -70,7 +70,7 @@ public enum TipperFactory {
    * @param description Description of the tipper
    * @return {@link UserDefinedTipper} */
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement, final String description) {
-    final Matcher $ = Matcher.patternMatcher(pattern, replacement);
+    final Matcher ret = Matcher.patternMatcher(pattern, replacement);
     return new UserDefinedTipper<N>() {
       static final long serialVersionUID = 0x22BF0E55D353CA68L;
 
@@ -80,18 +80,18 @@ public enum TipperFactory {
       @Override public Tip tip(final N n) {
         return new Tip(description(n), getClass(), n) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            r.replace(n, $.replacement(n), g);
+            r.replace(n, ret.replacement(n), g);
           }
         };
       }
       @Override protected boolean prerequisite(final N ¢) {
-        return $.matches(¢);
+        return ret.matches(¢);
       }
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
-        return $.getMatching(n, s);
+        return ret.getMatching(n, s);
       }
       @Override public ASTNode getMatching(final ASTNode ¢) {
-        return $.replacement(¢);
+        return ret.replacement(¢);
       }
       @Override public String pattern() {
         return pattern;

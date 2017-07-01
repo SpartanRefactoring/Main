@@ -21,8 +21,8 @@ public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
   @Override public ASTNode replacement(final WhileStatement s) {
     if (s == null)
       return null;
-    final WhileStatement $ = copy.of(s);
-    final Block b = $.getAST().newBlock();
+    final WhileStatement ret = copy.of(s);
+    final Block b = ret.getAST().newBlock();
     statements(b).add(copy.of(body(s)));
     final Collection<Boolean> cc = an.empty.list();
     // noinspection SameReturnValue
@@ -34,8 +34,8 @@ public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     });
     if (!cc.isEmpty())
       return null;
-    $.setBody(b);
-    return $;
+    ret.setBody(b);
+    return ret;
   }
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "expand to block";

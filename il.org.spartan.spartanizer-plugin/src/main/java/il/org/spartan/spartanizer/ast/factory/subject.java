@@ -21,14 +21,14 @@ import il.org.spartan.spartanizer.java.*;
 public enum subject {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static InfixExpression append(final InfixExpression base, final Expression add) {
-    final InfixExpression $ = copy.of(base);
-    extendedOperands($).add(make.plant(copy.of(add)).into($));
-    return $;
+    final InfixExpression ret = copy.of(base);
+    extendedOperands(ret).add(make.plant(copy.of(add)).into(ret));
+    return ret;
   }
   public static InfixExpression append(final InfixExpression base, final Iterable<Expression> adds) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>(base);
-    adds.forEach(λ -> $.set(append($.get(), λ)));
-    return $.get();
+    final Wrapper<InfixExpression> ret = new Wrapper<>(base);
+    adds.forEach(λ -> ret.set(append(ret.get(), λ)));
+    return ret.get();
   }
   /** Create a new Operand
    * @param inner the expression of the operand
@@ -108,8 +108,8 @@ public enum subject {
      * @see rebase
      * @see copy */
     Statement claim(final Statement ¢) {
-      final Statement $ = extract.core(¢);
-      return $ == null ? null : misc.rebase(copy.of($), ast);
+      final Statement ret = extract.core(¢);
+      return ret == null ? null : misc.rebase(copy.of(ret), ast);
     }
   }
 
@@ -128,17 +128,17 @@ public enum subject {
      * @param text the number of the literal node
      * @return the number literal node with text as a number */
     public NumberLiteral literal(final String text) {
-      final NumberLiteral $ = ast.newNumberLiteral();
-      $.setToken(text);
-      return $;
+      final NumberLiteral ret = ast.newNumberLiteral();
+      ret.setToken(text);
+      return ret;
     }
     /** Create a new parenthesis expression owned by ast and put the expression
      * inner (a field of Operand) between the parenthesis of the new expression
      * @return the expression inner between parenthesis */
     public ParenthesizedExpression parenthesis() {
-      final ParenthesizedExpression $ = ast.newParenthesizedExpression();
-      $.setExpression(inner);
-      return $;
+      final ParenthesizedExpression ret = ast.newParenthesizedExpression();
+      ret.setExpression(inner);
+      return ret;
     }
     /** Create a new expression with postfix operator owned by this ast, the
      * expression is a combination of the expression inner with a postfix
@@ -146,10 +146,10 @@ public enum subject {
      * @param o a postfix operator
      * @return the expression inner together with the postfix operator o */
     public Expression to(final PostfixExpression.Operator ¢) {
-      final PostfixExpression $ = ast.newPostfixExpression();
-      $.setOperator(¢);
-      $.setOperand(make.plant(inner).into($));
-      return $;
+      final PostfixExpression ret = ast.newPostfixExpression();
+      ret.setOperator(¢);
+      ret.setOperand(make.plant(inner).into(ret));
+      return ret;
     }
     /** Create a new expression with prefix operator owned by this ast, the
      * expression is a combination of the expression inner with a prefix
@@ -157,10 +157,10 @@ public enum subject {
      * @param o a prefix operator
      * @return the expression inner together with the prefix operator o */
     public PrefixExpression to(final PrefixExpression.Operator ¢) {
-      final PrefixExpression $ = ast.newPrefixExpression();
-      $.setOperator(¢);
-      $.setOperand(make.plant(inner).into($));
-      return $;
+      final PrefixExpression ret = ast.newPrefixExpression();
+      ret.setOperator(¢);
+      ret.setOperand(make.plant(inner).into(ret));
+      return ret;
     }
     /** Create a new expression of method invocation owned by this AST
      * @param methodName a string contains the method name
@@ -168,10 +168,10 @@ public enum subject {
      *         inner as an expression */
     public MethodInvocation toMethod(final String methodName) {
       assert ast != null : "Cannot find ast for method: " + methodName + ". RangeIterator = " + inner;
-      final MethodInvocation $ = ast.newMethodInvocation();
-      $.setExpression(inner);
-      $.setName(make.from(ast).identifier(methodName));
-      return $;
+      final MethodInvocation ret = ast.newMethodInvocation();
+      ret.setExpression(inner);
+      ret.setName(make.from(ast).identifier(methodName));
+      return ret;
     }
     /** Creates and returns a new qualified name node for inner.
      * @param name a string of the name to be qualified
@@ -182,9 +182,9 @@ public enum subject {
     /** Create a new {@link ReturnStatement} which returns our operand
      * @return new return statement */
     public ReturnStatement toReturn() {
-      final ReturnStatement $ = ast.newReturnStatement();
-      $.setExpression(inner);
-      return $;
+      final ReturnStatement ret = ast.newReturnStatement();
+      ret.setExpression(inner);
+      return ret;
     }
     /** convert the expression inner into statement
      * @return an ExpressionStatement of inner */
@@ -194,14 +194,14 @@ public enum subject {
     /** Create a new throw statement owned by this ast
      * @return a throw statement of the expression inner */
     public ThrowStatement toThrow() {
-      final ThrowStatement $ = ast.newThrowStatement();
-      $.setExpression(inner);
-      return $;
+      final ThrowStatement ret = ast.newThrowStatement();
+      ret.setExpression(inner);
+      return ret;
     }
     public AssertStatement toAssert() {
-      final AssertStatement $ = ast.newAssertStatement();
-      $.setExpression(inner);
-      return $;
+      final AssertStatement ret = ast.newAssertStatement();
+      ret.setExpression(inner);
+      return ret;
     }
   }
 
@@ -225,11 +225,11 @@ public enum subject {
      * @return an assignment expression with operator o */
     public Assignment to(final Assignment.Operator ¢) {
       assert ¢ != null;
-      final Assignment $ = ast.newAssignment();
-      $.setOperator(¢);
-      $.setLeftHandSide(make.plant(left).into($));
-      $.setRightHandSide(make.plant(right).into($));
-      return $;
+      final Assignment ret = ast.newAssignment();
+      ret.setOperator(¢);
+      ret.setLeftHandSide(make.plant(left).into(ret));
+      ret.setRightHandSide(make.plant(right).into(ret));
+      return ret;
     }
     /** Create a new infix expression owned by ast the left/right hand side of
      * the assignment expression is the field left/right respectively, and the
@@ -237,14 +237,14 @@ public enum subject {
      * @param o
      * @return an expression with the parameter o as an operator */
     public InfixExpression to(final InfixExpression.Operator ¢) {
-      final InfixExpression $ = ast.newInfixExpression();
-      $.setOperator(¢);
-      $.setLeftOperand(make.plant(left).intoLeft($));
-      $.setRightOperand(¢ != op.PLUS2 ? make.plant(right).into($)
-          : !precedence.greater($, right)
-              && (!precedence.equal($, right) || !type.isNotString(left) && !make.PlantingExpression.isStringConactingSafe(right))
+      final InfixExpression ret = ast.newInfixExpression();
+      ret.setOperator(¢);
+      ret.setLeftOperand(make.plant(left).intoLeft(ret));
+      ret.setRightOperand(¢ != op.PLUS2 ? make.plant(right).into(ret)
+          : !precedence.greater(ret, right)
+              && (!precedence.equal(ret, right) || !type.isNotString(left) && !make.PlantingExpression.isStringConactingSafe(right))
               && !iz.simple(right) ? subject.operand(right).parenthesis() : right);
-      return $;
+      return ret;
     }
     /** Create a new conditional expression owned by ast the condition is given
      * as a parameter, the true path is the left field and the false is the
@@ -253,12 +253,12 @@ public enum subject {
      * @return a conditional expression with the parameter condition as a
      *         condition */
     public ConditionalExpression toCondition(final Expression condition) {
-      final ConditionalExpression $ = ast.newConditionalExpression();
-      $.setExpression(make.plant(claim(condition)).into($));
-      $.setThenExpression(make.plant(left).into($));
-      assert make.plant(right).into($) != null : "Planting " + right + " into " + $ + "/" + parent($) + "returned null";
-      $.setElseExpression(make.plant(right).into($));
-      return $;
+      final ConditionalExpression ret = ast.newConditionalExpression();
+      ret.setExpression(make.plant(claim(condition)).into(ret));
+      ret.setThenExpression(make.plant(left).into(ret));
+      assert make.plant(right).into(ret) != null : "Planting " + right + " into " + ret + "/" + parent(ret) + "returned null";
+      ret.setElseExpression(make.plant(right).into(ret));
+      return ret;
     }
     /** Convert the assignment operator into a statement
      * @param o JD
@@ -287,10 +287,10 @@ public enum subject {
       assert !operands.isEmpty();
       assert operands.size() != 1;
       assert operands.size() >= 2;
-      final InfixExpression $ = subject.pair(the.firstOf(operands), the.secondOf(operands)).to(o);
-      for (int ¢ = 2;; extendedOperands($).add(make.plant(operands.get(¢++)).into($))) // NANO
+      final InfixExpression ret = subject.pair(the.firstOf(operands), the.secondOf(operands)).to(o);
+      for (int ¢ = 2;; extendedOperands(ret).add(make.plant(operands.get(¢++)).into(ret))) // NANO
         if (¢ >= operands.size())
-          return $;
+          return ret;
     }
   }
 
@@ -312,9 +312,9 @@ public enum subject {
     /** Transform the inner into a block
      * @return a Block statement */
     public Block toBlock() {
-      final Block $ = ast.newBlock();
-      step.statements($).addAll(inner);
-      return $;
+      final Block ret = ast.newBlock();
+      step.statements(ret).addAll(inner);
+      return ret;
     }
     /** Transform the inner into a block if it's possible
      * @return a Block statement {@code or} a {@code null} */
@@ -372,13 +372,13 @@ public enum subject {
      * @param condition the condition of the if statement
      * @return an If statement with the given condition */
     public IfStatement toIf(final Expression condition) {
-      final IfStatement $ = ast.newIfStatement();
-      $.setExpression(claim(condition));
+      final IfStatement ret = ast.newIfStatement();
+      ret.setExpression(claim(condition));
       if (then != null)
-        make.plant(then).intoThen($);
+        make.plant(then).intoThen(ret);
       if (elze != null)
-        $.setElseStatement(elze);
-      return $;
+        ret.setElseStatement(elze);
+      return ret;
     }
     /** Create a new if statement owned by ast the if statement contains the
      * logical not of the given condition and uses the class parameters (then,

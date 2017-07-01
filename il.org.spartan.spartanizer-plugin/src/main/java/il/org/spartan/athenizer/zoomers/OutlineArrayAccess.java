@@ -33,19 +33,19 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     return null;
   }
   @Override public Tip tip(final ArrayAccess a) {
-    final Expression $ = copy.of(a.getIndex());
+    final Expression ret = copy.of(a.getIndex());
     final Statement s = containing.statement(a);
     final AST t = s.getAST();
     return new Tip(description(a), getClass(), a) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
         final ArrayAccess newa = copy.of(a);
-        if (iz.postfixExpression($)) {
-          newa.setIndex(make.from(a).identifier(az.simpleName(operand(az.postfixExpression($)))));
-          l.insertAfter(t.newExpressionStatement($), s, g);
+        if (iz.postfixExpression(ret)) {
+          newa.setIndex(make.from(a).identifier(az.simpleName(operand(az.postfixExpression(ret)))));
+          l.insertAfter(t.newExpressionStatement(ret), s, g);
         } else {
-          newa.setIndex(make.from(a).identifier(az.simpleName(operand(az.prefixExpression($)))));
-          l.insertBefore(t.newExpressionStatement($), s, g);
+          newa.setIndex(make.from(a).identifier(az.simpleName(operand(az.prefixExpression(ret)))));
+          l.insertBefore(t.newExpressionStatement(ret), s, g);
         }
         r.replace(a, newa, g);
       }

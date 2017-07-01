@@ -82,14 +82,14 @@ public class MethodRecord {
   }
   static String findTypeAncestor(final ASTNode ¢) {
     ASTNode n = ¢;
-    String $ = "";
+    String ret = "";
     for (; n != null; n = parent(n)) {
       while (!iz.abstractTypeDeclaration(n) && n != null)
         n = parent(n);
       if (n == null)
         break;
-      $ += "." + az.abstractTypeDeclaration(n).getName();
+      ret += "." + az.abstractTypeDeclaration(n).getName();
     }
-    return $.substring(1);
+    return ret.substring(1);
   }
 }

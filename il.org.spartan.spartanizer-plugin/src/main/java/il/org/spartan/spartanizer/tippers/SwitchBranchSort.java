@@ -22,15 +22,15 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
   private static final long serialVersionUID = -0x311B60D4CCA079DFL;
 
   @Override public ASTNode replacement(final SwitchStatement s) {
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
-    if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
+    final List<switchBranch> ret = switchBranch.intoBranches(s);
+    if (ret.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
-    for (int ¢ = 0; ¢ < $.size() - 1; ++¢)
-      if (!$.get(¢).compareTo($.get(¢ + 1))) {
-        final switchBranch tmp = $.get(¢ + 1);
-        $.set(¢ + 1, $.get(¢));
-        $.set(¢, tmp);
-        return switchBranch.makeSwitchStatement($, expression(s), s.getAST());
+    for (int ¢ = 0; ¢ < ret.size() - 1; ++¢)
+      if (!ret.get(¢).compareTo(ret.get(¢ + 1))) {
+        final switchBranch tmp = ret.get(¢ + 1);
+        ret.set(¢ + 1, ret.get(¢));
+        ret.set(¢, tmp);
+        return switchBranch.makeSwitchStatement(ret, expression(s), s.getAST());
       }
     return null;
   }

@@ -35,7 +35,7 @@ public final class LocalInitializedIfAssignment extends $FragmentAndStatement//
   @Override public Examples examples() {
     return convert("int a = 2;if (b)a = 3;").to("int a = b ? 3 : 2;");
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -49,15 +49,15 @@ public final class LocalInitializedIfAssignment extends $FragmentAndStatement//
     final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.eq(to(a), n) || a.getOperator() != ASSIGN || $FragmentAndStatement.doesUseForbiddenSiblings(f, condition, from(a)))
       return null;
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, ret, g).byValue(initializer);
     if (!i.canInlineinto(condition, from(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer).toCondition(condition);
     if (i.replacedSize(newInitializer) > metrics.size(nextStatement, initializer))
       return null;
-    $.replace(initializer, newInitializer, g);
+    ret.replace(initializer, newInitializer, g);
     i.inlineInto(then(newInitializer), newInitializer.getExpression());
-    $.remove(nextStatement, g);
-    return $;
+    ret.remove(nextStatement, g);
+    return ret;
   }
 }

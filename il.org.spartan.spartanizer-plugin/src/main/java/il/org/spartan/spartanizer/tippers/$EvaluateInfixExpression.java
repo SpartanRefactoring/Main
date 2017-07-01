@@ -24,19 +24,19 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   private static final long serialVersionUID = 0x11707396245C068EL;
 
   private static int indexForLeftEvaluation(final InfixExpression x) {
-    int $ = 0;
+    int ret = 0;
     for (final Expression ¢ : extract.allOperands(x)) {
       if (!iz.number(¢))
-        return $ > 1 ? $ : 0;
-      ++$;
+        return ret <= 1 ? 0 : ret;
+      ++ret;
     }
     return 0;
   }
   private static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
-    for (int $ = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++$)
+    for (int ret = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++ret)
       if (!iz.number(es.get(¢)))
-        return $ > 1 ? $ : 0;
+        return ret <= 1 ? 0 : ret;
     return -1;
   }
   @Override public final String description() {
@@ -51,9 +51,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   @Override public final ASTNode replacement(final InfixExpression x) {
     try {
       if (iz.validForEvaluation(x)) {
-        final String $ = opportunisticReplacement(x);
-        if ($ != null && $.length() < (x + "").length())
-          return x.getAST().newNumberLiteral($);
+        final String ret = opportunisticReplacement(x);
+        if (ret != null && ret.length() < (x + "").length())
+          return x.getAST().newNumberLiteral(ret);
       }
       if (indexForLeftEvaluation(x) > 1) {
         final int index = indexForLeftEvaluation(x);

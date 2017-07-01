@@ -22,29 +22,29 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
   private static final long serialVersionUID = -0x76A72FCF26B6A18L;
 
   private static Expression collapse(final ConditionalExpression ¢) {
-    Expression $;
-    return ($ = collapseOnElse(¢)) != null || ($ = collaspeOnThen(¢)) != null ? $ : null;
+    Expression ret;
+    return (ret = collapseOnElse(¢)) != null || (ret = collaspeOnThen(¢)) != null ? ret : null;
   }
   private static Expression collapseOnElse(final ConditionalExpression x) {
-    final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
-    if ($ == null)
+    final ConditionalExpression ret = az.conditionalExpression(core(x.getElseExpression()));
+    if (ret == null)
       return null;
-    final Expression then = core(x.getThenExpression()), elseThen = core(then($)), elseElse = core(elze($));
+    final Expression then = core(x.getThenExpression()), elseThen = core(then(ret)), elseElse = core(elze(ret));
     return !wizard.eq(then, elseElse) && !wizard.eq(then, elseThen) ? null
         : wizard.eq(then, elseElse)
-            ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), $.getExpression()).to(CONDITIONAL_AND))
+            ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), ret.getExpression()).to(CONDITIONAL_AND))
             : subject.pair(elseElse, then)
-                .toCondition(subject.pair(make.notOf(x.getExpression()), make.notOf($.getExpression())).to(CONDITIONAL_AND));
+                .toCondition(subject.pair(make.notOf(x.getExpression()), make.notOf(ret.getExpression())).to(CONDITIONAL_AND));
   }
   private static Expression collaspeOnThen(final ConditionalExpression x) {
-    final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
-    if ($ == null)
+    final ConditionalExpression ret = az.conditionalExpression(core(x.getThenExpression()));
+    if (ret == null)
       return null;
-    final Expression elze = core(x.getElseExpression()), thenThen = core(then($)), thenElse = core(elze($));
+    final Expression elze = core(x.getElseExpression()), thenThen = core(then(ret)), thenElse = core(elze(ret));
     return wizard.eq(thenElse, elze)
-        ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), $.getExpression()).to(CONDITIONAL_AND))
+        ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), ret.getExpression()).to(CONDITIONAL_AND))
         : wizard.eq(thenThen, elze)
-            ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf($.getExpression())).to(CONDITIONAL_AND)) : null;
+            ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(ret.getExpression())).to(CONDITIONAL_AND)) : null;
   }
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";

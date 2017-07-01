@@ -65,8 +65,8 @@ public interface idiomatic {
   static <T> T katching(final Producer<T> $) {
     try {
       return $.λ();
-    } catch (final Exception ¢) {
-      return note.bug(¢);
+    } catch (final Exception ret) {
+      return note.bug(ret);
     }
   }
   /** Quote a given {@link String}
@@ -343,8 +343,8 @@ public interface idiomatic {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (final Exception $) {
-          return note.bug($);
+        } catch (final Exception ret) {
+          return note.bug(ret);
         }
       };
     }

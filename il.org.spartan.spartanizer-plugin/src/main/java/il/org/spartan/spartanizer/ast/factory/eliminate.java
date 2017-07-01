@@ -29,15 +29,15 @@ public enum eliminate {
    * @param ¢ JD {@code null if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  public static Statement lastStatement(final Statement $) {
-    final Block b = az.block($);
+  public static Statement lastStatement(final Statement ret) {
+    final Block b = az.block(ret);
     if (b == null)
-      return make.emptyStatement($);
+      return make.emptyStatement(ret);
     final List<Statement> ss = step.statements(b);
     if (ss.isEmpty())
-      return make.emptyStatement($);
+      return make.emptyStatement(ret);
     ss.remove(ss.size() - 1);
-    return $;
+    return ret;
   }
   @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
     return xs.stream().map(eliminate::level).reduce((x, y) -> x + y).get();

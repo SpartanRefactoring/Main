@@ -35,7 +35,7 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends R
     final Expression elze = expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
-    final Expression $ = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
-    return $ == null ? null : subject.operand($).toStatement();
+    final Expression ret = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
+    return ret == null ? null : subject.operand(ret).toStatement();
   }
 }

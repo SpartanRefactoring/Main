@@ -18,11 +18,11 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
   private static final long serialVersionUID = -0x550143DCF3BD3B9L;
 
   private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
-    final ForStatement $ = ¢.getAST().newForStatement();
-    $.setExpression(copy.of(¢.getExpression()));
-    updaters($).add(copy.of(az.expressionStatement(hop.lastStatement(body(¢))).getExpression()));
-    $.setBody(minus.lastStatement(copy.of(body(¢))));
-    return $;
+    final ForStatement ret = ¢.getAST().newForStatement();
+    ret.setExpression(copy.of(¢.getExpression()));
+    updaters(ret).add(copy.of(az.expressionStatement(hop.lastStatement(body(¢))).getExpression()));
+    ret.setBody(minus.lastStatement(copy.of(body(¢))));
+    return ret;
   }
   private static boolean fitting(final WhileStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)

@@ -29,14 +29,14 @@ public class KeyboardShortcuts extends AbstractHandler {
   @Override public Object execute(final ExecutionEvent e) {
     if (e == null || !(e.getTrigger() instanceof Event))
       return null;
-    final ISelection $ = Selection.Util.getSelection();
+    final ISelection ret = Selection.Util.getSelection();
     final Selection s = Selection.Util.getCurrentCompilationUnit();
-    return !($ instanceof ITextSelection) || s == null || s.isEmpty() ? null
-        : insertCharacter(shortcutsMap.get(getCharacter(e)), s.setTextSelection((ITextSelection) $));
+    return !(ret instanceof ITextSelection) || s == null || s.isEmpty() ? null
+        : insertCharacter(shortcutsMap.get(getCharacter(e)), s.setTextSelection((ITextSelection) ret));
   }
-  private static String getCharacter(final ExecutionEvent $) {
+  private static String getCharacter(final ExecutionEvent ret) {
     try {
-      return $.getCommand().getName();
+      return ret.getCommand().getName();
     } catch (@SuppressWarnings("unused") final NotDefinedException x) {
       return null;
     }

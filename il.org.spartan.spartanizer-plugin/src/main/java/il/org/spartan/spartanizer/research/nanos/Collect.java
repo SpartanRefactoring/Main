@@ -59,11 +59,11 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(blockTippers, az.block(parent(¢)))//
         || anyTips(tippers, ¢);
   }
-  @Override public Tip pattern(final EnhancedForStatement $) {
+  @Override public Tip pattern(final EnhancedForStatement ret) {
     try {
-      return firstTip(blockTippers, az.block(parent($)));
+      return firstTip(blockTippers, az.block(parent(ret)));
     } catch (@SuppressWarnings("unused") final NoSuchElementException __) {
-      return firstTip(tippers, $);
+      return firstTip(tippers, ret);
     }
   }
   @Override public Category category() {

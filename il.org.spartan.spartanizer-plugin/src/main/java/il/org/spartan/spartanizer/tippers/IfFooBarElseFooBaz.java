@@ -33,28 +33,28 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
   private static final long serialVersionUID = -0x4A8DBCAB922657DBL;
 
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
-    final List<Statement> $ = an.empty.list();
+    final List<Statement> ret = an.empty.list();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
       final Statement s1 = the.firstOf(ss1);
       if (!wizard.eq(s1, the.firstOf(ss2)))
         break;
-      $.add(s1);
+      ret.add(s1);
       ss1.remove(0);
     }
-    return $;
+    return ret;
   }
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Extract commmon prefix of then and else branches to just before if statement";
   }
   @Override public Tip tip(final IfStatement s) {
-    final List<Statement> $ = extract.statements(then(s));
-    if ($.isEmpty())
+    final List<Statement> ret = extract.statements(then(s));
+    if (ret.isEmpty())
       return null;
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final int thenSize = $.size(), elzeSize = elze.size();
-    final List<Statement> commonPrefix = commonPrefix($, elze);
+    final int thenSize = ret.size(), elzeSize = elze.size();
+    final List<Statement> commonPrefix = commonPrefix(ret, elze);
     return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
         : new Tip(description(s), getClass(), s) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -71,7 +71,7 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
             }
           }
           IfStatement replacement() {
-            return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
+            return replacement(s.getExpression(), subject.ss(ret).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
           }
           IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
             return trimmedThen == null && trimmedElse == null ? null

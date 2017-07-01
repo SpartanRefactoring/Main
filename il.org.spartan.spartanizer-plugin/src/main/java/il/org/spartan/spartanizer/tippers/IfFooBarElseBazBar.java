@@ -32,34 +32,34 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
   private static final long serialVersionUID = -0x333F3DD43690324EL;
 
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
-    final List<Statement> $ = an.empty.list();
+    final List<Statement> ret = an.empty.list();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = the.lastOf(ss1);
       if (!wizard.eq(s1, the.lastOf(ss2)))
         break;
-      $.add(s1);
+      ret.add(s1);
       ss1.remove(ss1.size() - 1);
     }
-    return $;
+    return ret;
   }
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Extract commmon suffix of then and else branches to just after if statement";
   }
   @Override public Tip tip(final IfStatement s) {
-    final List<Statement> $ = extract.statements(then(s));
-    if ($.isEmpty())
+    final List<Statement> ret = extract.statements(then(s));
+    if (ret.isEmpty())
       return null;
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final List<Statement> commmonSuffix = commmonSuffix($, elze);
+    final List<Statement> commmonSuffix = commmonSuffix(ret, elze);
     for (final Statement st : commmonSuffix) {
-      final DefinitionsCollector c = new DefinitionsCollector($);
+      final DefinitionsCollector c = new DefinitionsCollector(ret);
       st.accept(c);
       if (c.notAllDefined())
         return null;
     }
-    return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), getClass(), s) {
+    return ret.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
@@ -73,7 +73,7 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
         }
       }
       IfStatement replacement() {
-        return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
+        return replacement(s.getExpression(), subject.ss(ret).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null

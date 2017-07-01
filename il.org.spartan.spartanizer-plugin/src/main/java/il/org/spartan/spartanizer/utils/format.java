@@ -16,14 +16,14 @@ public enum format {
   ;
   public static String code(final String code) {
     final TextEdit textEdit = ToolFactory.createCodeFormatter(null).format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
-    final IDocument $ = new Document(code);
+    final IDocument ret = new Document(code);
     try {
       if (textEdit != null)
-        textEdit.apply($);
+        textEdit.apply(ret);
     } catch (final BadLocationException | MalformedTreeException ¢) {
       note.bug(¢);
     }
-    return $.get();
+    return ret.get();
   }
 
   private static final NumberFormat numberFormatter = new DecimalFormat("#0.00");

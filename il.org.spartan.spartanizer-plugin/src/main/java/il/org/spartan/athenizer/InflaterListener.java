@@ -163,10 +163,10 @@ public class InflaterListener implements KeyListener, Listener {
       deactivate();
   }
   public Listener find(final Iterable<Listener> ls) {
-    TypedListener $ = null;
+    TypedListener ret = null;
     for (final Listener ¢ : ls)
       if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
-        $ = (TypedListener) ¢;
-    return $;
+        ret = (TypedListener) ¢;
+    return ret;
   }
 }

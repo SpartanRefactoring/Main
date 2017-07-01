@@ -32,11 +32,11 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   @Override public List<ASTNode> go(final ASTRewrite r, final MethodDeclaration d, @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
-    final MethodVariablesScanner $ = new MethodVariablesScanner(d);
-    for (final Statement ¢ : $.statements()) {
-      $.update();
-      if ($.isOptionalForkPoint())
-        return splitMethod(r, d, $.usedVariables(), ¢, sameParameters(d, $.usedVariables()));
+    final MethodVariablesScanner ret = new MethodVariablesScanner(d);
+    for (final Statement ¢ : ret.statements()) {
+      ret.update();
+      if (ret.isOptionalForkPoint())
+        return splitMethod(r, d, ret.usedVariables(), ¢, sameParameters(d, ret.usedVariables()));
     }
     return null;
   }
@@ -73,16 +73,16 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       s.setExpression(i);
       statements(d1).add(s);
     }
-    final List<ASTNode> $ = an.empty.list();
-    $.add(d1);
+    final List<ASTNode> ret = an.empty.list();
+    ret.add(d1);
     final MethodDeclaration d2 = copy.of(d);
     fixStatements(d, d2, r);
     statements(d2).subList(0, statements(d).indexOf(forkPoint) + 1).clear();
     fixName(d2, equalParams);
     fixParameters(d, d2, ds);
     fixJavadoc(d2, ds);
-    $.add(d2);
-    return $;
+    ret.add(d2);
+    return ret;
   }
   private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
     statements(body(dx)).clear();

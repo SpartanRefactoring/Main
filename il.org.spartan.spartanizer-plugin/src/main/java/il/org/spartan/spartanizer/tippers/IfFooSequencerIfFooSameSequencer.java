@@ -38,14 +38,14 @@ public final class IfFooSequencerIfFooSameSequencer extends GoToNextStatement<If
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-    final IfStatement $ = az.ifStatement(nextStatement);
-    if ($ == null || !iz.vacuousElse($))
+    final IfStatement ret = az.ifStatement(nextStatement);
+    if (ret == null || !iz.vacuousElse(ret))
       return null;
     final Statement then = then(s);
     final List<Statement> ss1 = extract.statements(then);
-    return !wizard.eq(ss1, extract.statements(then($))) || !iz.sequencer(last(ss1)) ? null
+    return !wizard.eq(ss1, extract.statements(then(ret))) || !iz.sequencer(last(ss1)) ? null
         : misc.replaceTwoStatements(r, s,
-            make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), $.getExpression()).to(CONDITIONAL_OR)),
+            make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), ret.getExpression()).to(CONDITIONAL_OR)),
             g);
   }
 }

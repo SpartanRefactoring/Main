@@ -87,9 +87,9 @@ public enum make {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !op.nonAssociative(host);
     }
     private ParenthesizedExpression parenthesize(final Expression ¢) {
-      final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
-      $.setExpression(copy.of(¢));
-      return $;
+      final ParenthesizedExpression ret = inner.getAST().newParenthesizedExpression();
+      ret.setExpression(copy.of(¢));
+      return ret;
     }
     /** Determines whether inner can be added to host without parenthesis
      * because host is a String concating InfixExpression and host is an infix
@@ -117,8 +117,8 @@ public enum make {
   }
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
-    final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(op.assign2infix($));
+    final Operator ret = ¢.getOperator();
+    return ret == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(op.assign2infix(ret));
   }
   /** Converts a string into an AST, depending on it's form, as determined
    * by @link{GuessedContext.find}.
@@ -144,9 +144,9 @@ public enum make {
             ASTParser.K_COMPILATION_UNIT)) {
           final ASTParser p = wizard.parser(guess);
           p.setSource(javaSnippet.toCharArray());
-          final ASTNode $ = p.createAST(wizard.nullProgressMonitor);
-          if (wizard.valid($))
-            return $;
+          final ASTNode ret = p.createAST(wizard.nullProgressMonitor);
+          if (wizard.valid(ret))
+            return ret;
         }
         assert fault.unreachable() : fault.specifically("Snippet cannot be parsed", javaSnippet);
         return null;
@@ -155,9 +155,9 @@ public enum make {
   public static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
-    final Block $ = subject.statement(s).toBlock();
-    r.replace(s, $, g);
-    return (IfStatement) the.firstOf(statements($));
+    final Block ret = subject.statement(s).toBlock();
+    r.replace(s, ret, g);
+    return (IfStatement) the.firstOf(statements(ret));
   }
   /** Swap the order of the left and right operands to an expression, changing
    * the operator if necessary.
@@ -177,16 +177,16 @@ public enum make {
     return make.from(¢).literal("");
   }
   public static ForStatement forStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    final ForStatement $ = ¢.getAST().newForStatement();
-    $.setBody(copy.of(body(¢)));
-    $.setExpression(misc.pullInitializersFromExpression(copy.ofWhileExpression(¢), LocalInitializedStatementWhile.parent(f)));
-    initializers($).add(LocalInitializedStatementWhile.Initializers(f));
-    return $;
+    final ForStatement ret = ¢.getAST().newForStatement();
+    ret.setBody(copy.of(body(¢)));
+    ret.setExpression(misc.pullInitializersFromExpression(copy.ofWhileExpression(¢), LocalInitializedStatementWhile.parent(f)));
+    initializers(ret).add(LocalInitializedStatementWhile.Initializers(f));
+    return ret;
   }
   public static VariableDeclarationFragment fragment(final VariableDeclarationFragment f, final Expression x) {
-    final VariableDeclarationFragment $ = copy.of(f);
-    $.setInitializer(copy.of(x));
-    return $;
+    final VariableDeclarationFragment ret = copy.of(f);
+    ret.setInitializer(copy.of(x));
+    return ret;
   }
   public static make.FromAST from(final AST t) {
     return new make.FromAST() {
@@ -197,9 +197,9 @@ public enum make {
         return t.newNumberLiteral(¢ + "");
       }
       @Override public StringLiteral literal(final String ¢) {
-        final StringLiteral $ = t.newStringLiteral();
-        $.setLiteralValue(¢);
-        return $;
+        final StringLiteral ret = t.newStringLiteral();
+        ret.setLiteralValue(¢);
+        return ret;
       }
     };
   }
@@ -224,22 +224,22 @@ public enum make {
     }
   }
   public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
-    final IfStatement $ = condition.getAST().newIfStatement();
-    $.setExpression(condition);
-    $.setThenStatement(s);
-    $.setElseStatement(null);
-    return $;
+    final IfStatement ret = condition.getAST().newIfStatement();
+    ret.setExpression(condition);
+    ret.setThenStatement(s);
+    ret.setElseStatement(null);
+    return ret;
   }
   static Expression infix(final List<Expression> xs, final AST t) {
     if (xs.size() == 1)
       return the.firstOf(xs);
-    final InfixExpression $ = t.newInfixExpression();
-    $.setOperator(op.PLUS2);
-    $.setLeftOperand(copy.of(the.firstOf(xs)));
-    $.setRightOperand(copy.of(the.secondOf(xs)));
-    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢)))) // NANO
+    final InfixExpression ret = t.newInfixExpression();
+    ret.setOperator(op.PLUS2);
+    ret.setLeftOperand(copy.of(the.firstOf(xs)));
+    ret.setRightOperand(copy.of(the.secondOf(xs)));
+    for (int ¢ = 2;; ++¢, extendedOperands(ret).add(copy.of(xs.get(¢)))) // NANO
       if (¢ >= xs.size())
-        return $;
+        return ret;
   }
   public static IfStatement invert(final IfStatement ¢) {
     return az.ifStatement(newSafeIf(null, elze(¢), then(¢), make.notOf(¢.getExpression())));
@@ -248,10 +248,10 @@ public enum make {
     return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
   }
   public static Expression minus(final Expression ¢) {
-    final PrefixExpression $ = az.prefixExpression(¢);
-    return $ == null ? make.minus(¢, az.numberLiteral(¢))
-        : $.getOperator() == op.MINUS1 ? $.getOperand() //
-            : $.getOperator() == op.PLUS1 ? subject.operand($.getOperand()).to(op.MINUS1)//
+    final PrefixExpression ret = az.prefixExpression(¢);
+    return ret == null ? make.minus(¢, az.numberLiteral(¢))
+        : ret.getOperator() == op.MINUS1 ? ret.getOperand() //
+            : ret.getOperator() == op.PLUS1 ? subject.operand(ret.getOperand()).to(op.MINUS1)//
                 : ¢;
   }
   public static Expression minus(final Expression x, final NumberLiteral l) {
@@ -260,10 +260,10 @@ public enum make {
     ;
   }
   static List<Expression> minus(final List<Expression> ¢) {
-    final List<Expression> $ = an.empty.list();
-    $.add(the.firstOf(¢));
-    $.addAll(az.stream(the.tailOf(¢)).map(make::minusOf).collect(toList()));
-    return $;
+    final List<Expression> ret = an.empty.list();
+    ret.add(the.firstOf(¢));
+    ret.addAll(az.stream(the.tailOf(¢)).map(make::minusOf).collect(toList()));
+    return ret;
   }
   static Expression minusOf(final Expression ¢) {
     return iz.literal0(¢) ? ¢ : subject.operand(¢).to(op.MINUS1);
@@ -284,26 +284,26 @@ public enum make {
     return false;
   }
   static NumberLiteral newLiteral(final ASTNode n, final String token) {
-    final NumberLiteral $ = n.getAST().newNumberLiteral();
-    $.setToken(token);
-    return $;
+    final NumberLiteral ret = n.getAST().newNumberLiteral();
+    ret.setToken(token);
+    return ret;
   }
   /** @param ¢ JD
    * @return parameter, but logically negated and simplified */
   public static Expression notOf(final Expression ¢) {
     assert ¢ != null;
-    final PrefixExpression $ = subject.operand(copy.of(¢)).to(NOT);
-    assert $ != null;
-    final Expression $$ = PrefixNotPushdown.simplifyNot($);
-    return $$ == null ? $ : $$;
+    final PrefixExpression ret = subject.operand(copy.of(¢)).to(NOT);
+    assert ret != null;
+    final Expression $$ = PrefixNotPushdown.simplifyNot(ret);
+    return $$ != null ? $$ : ret;
   }
   public static NullLiteral nullLiteral(final ASTNode ¢) {
     return ¢.getAST().newNullLiteral();
   }
   public static ParenthesizedExpression parethesized(final Expression ¢) {
-    final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
-    $.setExpression(parent(¢) == null ? ¢ : copy.of(¢));
-    return $;
+    final ParenthesizedExpression ret = ¢.getAST().newParenthesizedExpression();
+    ret.setExpression(parent(¢) == null ? ¢ : copy.of(¢));
+    return ret;
   }
   /** A fluent API method that wraps an {@link Expression} with parenthesis, if
    * the location in which this expression occurs requires such wrapping.
@@ -324,14 +324,14 @@ public enum make {
   }
   public static IfStatement shorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
-    final IfStatement $ = make.invert(s);
+    final IfStatement ret = make.invert(s);
     if (then.isEmpty())
-      return $;
+      return ret;
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
     final int rankThen = wizard.sequencerRank(the.lastOf(then)), rankElse = wizard.sequencerRank(the.lastOf(elze));
-    return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? $ : main;
+    return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? ret : main;
   }
   public static boolean thenIsShorter(final IfStatement s) {
     final Statement then = then(s), elze = elze(s);
@@ -360,20 +360,20 @@ public enum make {
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
-    final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(the.firstOf(fragments(copy.of(¢)))));
-    fragments($).addAll(extract.nextFragmentsOf(¢));
-    $.setType(copy.of(step.type(¢)));
-    extendedModifiers($).addAll(az.modifiersOf(¢));
-    return $;
+    final VariableDeclarationExpression ret = ¢.getAST().newVariableDeclarationExpression(copy.of(the.firstOf(fragments(copy.of(¢)))));
+    fragments(ret).addAll(extract.nextFragmentsOf(¢));
+    ret.setType(copy.of(step.type(¢)));
+    extendedModifiers(ret).addAll(az.modifiersOf(¢));
+    return ret;
   }
   public static VariableDeclarationStatement variableDeclarationStatement(final Type t, final String name, final Expression x) {
     final AST create = x.getAST();
     final VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
     fragment.setName(create.newSimpleName(name));
     fragment.setInitializer(x);
-    final VariableDeclarationStatement $ = create.newVariableDeclarationStatement(fragment);
-    $.setType(t);
-    return $;
+    final VariableDeclarationStatement ret = create.newVariableDeclarationStatement(fragment);
+    ret.setType(t);
+    return ret;
   }
 
   private final int kind;
@@ -385,25 +385,25 @@ public enum make {
    * @param text what to parse
    * @return a newly created parser for the parameter */
   @SuppressWarnings("MethodCanBeVariableArityMethod") public ASTParser parser(final char[] text) {
-    final ASTParser $ = wizard.parser(kind);
-    $.setSource(text);
-    return $;
+    final ASTParser ret = wizard.parser(kind);
+    ret.setSource(text);
+    return ret;
   }
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
   public ASTParser parser(final ICompilationUnit ¢) {
-    final ASTParser $ = wizard.parser(kind);
-    $.setSource(¢);
-    return $;
+    final ASTParser ret = wizard.parser(kind);
+    ret.setSource(¢);
+    return ret;
   }
   /** Creates a parser for a given {@link Document}
    * @param d JD
    * @return created parser */
   public ASTParser parser(final IDocument ¢) {
-    final ASTParser $ = wizard.parser(kind);
-    $.setSource(¢.get().toCharArray());
-    return $;
+    final ASTParser ret = wizard.parser(kind);
+    ret.setSource(¢.get().toCharArray());
+    return ret;
   }
   /** Creates a parser for a given {@link IFile}
    * @param f JD
@@ -427,10 +427,10 @@ public enum make {
    * @param u what to parse
    * @return a newly created parser for the parameter */
   public ASTParser parserWithBinding(final ICompilationUnit ¢) {
-    final ASTParser $ = wizard.parser(kind);
-    $.setSource(¢);
-    $.setResolveBindings(true);
-    return $;
+    final ASTParser ret = wizard.parser(kind);
+    ret.setSource(¢);
+    ret.setResolveBindings(true);
+    return ret;
   }
   public ASTParser parserWithBinding(final IFile ¢) {
     return parserWithBinding(makeAST.iCompilationUnit(¢));
@@ -445,12 +445,12 @@ public enum make {
     return from(old).identifier(s.substring(0, 1).toLowerCase() + s.substring(1));
   }
   public static Statement newSafeIf(final Statement parent, final Statement then, final Statement elze, final Expression x) {
-    final IfStatement $ = then.getAST().newIfStatement();
-    $.setExpression(copy.of(x));
-    $.setThenStatement(fixedThen(then, elze));
+    final IfStatement ret = then.getAST().newIfStatement();
+    ret.setExpression(copy.of(x));
+    ret.setThenStatement(fixedThen(then, elze));
     if (elze != null)
-      $.setElseStatement(copy.of(elze));
-    return !needsBlock(parent, elze) ? $ : subject.statements($).toBlock();
+      ret.setElseStatement(copy.of(elze));
+    return !needsBlock(parent, elze) ? ret : subject.statements(ret).toBlock();
   }
   /** Puts then statement in block if needed. For example when the then is an if
    * statement need to enclose it in a block so that the else won't be related

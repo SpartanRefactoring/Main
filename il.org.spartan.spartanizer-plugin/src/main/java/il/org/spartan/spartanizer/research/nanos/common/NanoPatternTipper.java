@@ -45,11 +45,11 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return yieldAncestors.untilContainingBlock().from(¢);
   }
   @Override public final Tip tip(final N ¢) {
-    final Tip $ = pattern(¢);
-    return new Tip($.description, myClass(), ¢) {
+    final Tip ret = pattern(¢);
+    return new Tip(ret.description, myClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Logger.logNP(¢, tipperName());
-        $.go(r, g);
+        ret.go(r, g);
       }
     };
   }

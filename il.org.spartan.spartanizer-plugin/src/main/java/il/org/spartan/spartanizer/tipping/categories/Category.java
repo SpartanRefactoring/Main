@@ -13,11 +13,11 @@ public interface Category {
     return Taxon.of(this).description();
   }
   default Class<? extends Category> lowestCategory() {
-    Class<? extends Category> $ = Category.class;
+    Class<? extends Category> ret = Category.class;
     for (final Taxon ¢ : Taxa.hierarchy.nodes())
-      if (¢.get().isInstance(this) && ¢.get() != getClass() && $.isAssignableFrom(¢.get()))
-        $ = ¢.get();
-    return $;
+      if (¢.get().isInstance(this) && ¢.get() != getClass() && ret.isAssignableFrom(¢.get()))
+        ret = ¢.get();
+    return ret;
   }
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
@@ -152,44 +152,33 @@ public interface Category {
   static void main(String[] args) {
     Set<Taxon> seen = an.empty.set();
     System.out.println("<!-- Marker types -->");
-    System.out.println("" //
-        + "<extension\n" //
-        + "    id=\"" + Builder.MARKER_TYPE + "\"\n" //
+    System.out.println("<extension\n    id=\"" + Builder.MARKER_TYPE + "\"\n" //
         + "    name=\"Spartanize\"\n" //
         + "    point=\"org.eclipse.core.resources.markers\">\n" //
         + "  <super type=\"org.eclipse.core.resources.problemmarker\"/>\n" //
         + "</extension>");
-    for (final Taxon t : Toolboxes.categoryMap.values()) {
-      if (seen.contains(t))
+    for (final Taxon ¢ : Toolboxes.categoryMap.values()) {
+      if (seen.contains(¢))
         continue;
-      seen.add(t);
-      System.out.println("" //
-          + "<extension\n" //
-          + "    id=\"" + Builder.MARKER_TYPE + "." + t.label() + "\"\n" //
-          + "    name=\"" + t.label() + "\"\n" //
+      seen.add(¢);
+      System.out.println("<extension\n    id=\"" + Builder.MARKER_TYPE + "." + ¢.label() + "\"\n" //
+          + "    name=\"" + ¢.label() + "\"\n" //
           + "    point=\"org.eclipse.core.resources.markers\">\n" //
           + "  <super type=\"" + Builder.MARKER_TYPE + "\"/>\n" //
           + "</extension>");
     }
-    System.out.println("" //
-        + "<!-- Marker resolution: this is where the quick fixg menus gets bound to the\n" //
+    System.out.println("<!-- Marker resolution: this is where the quick fixg menus gets bound to the\n"
         + "     Java class which generates several quick fix for tips. -->");
-    System.out.println("" //
-        + "<extension point=\"org.eclipse.ui.ide.markerResolution\">\n" //
-        + "  <markerResolutionGenerator\n" //
-        + "      markerType=\"" + Builder.MARKER_TYPE + "\"\n" //
+    System.out.println("<extension point=\"org.eclipse.ui.ide.markerResolution\">\n  <markerResolutionGenerator\n      markerType=\"" + Builder.MARKER_TYPE + "\"\n" //
         + "      class=\"il.org.spartan.spartanizer.plugin.QuickFixer\"\n" //
         + "  />\n" //
         + "</extension>");
     seen.clear();
-    for (final Taxon t : Toolboxes.categoryMap.values()) {
-      if (seen.contains(t))
+    for (final Taxon ¢ : Toolboxes.categoryMap.values()) {
+      if (seen.contains(¢))
         continue;
-      seen.add(t);
-      System.out.println("" //
-          + "<extension point=\"org.eclipse.ui.ide.markerResolution\">\n" //
-          + "  <markerResolutionGenerator\n" //
-          + "      markerType=\"" + Builder.MARKER_TYPE + "." + t.label() + "\"\n" //
+      seen.add(¢);
+      System.out.println("<extension point=\"org.eclipse.ui.ide.markerResolution\">\n  <markerResolutionGenerator\n      markerType=\"" + Builder.MARKER_TYPE + "." + ¢.label() + "\"\n" //
           // TODO Roth: reference qf id
           + "      class=\"il.org.spartan.spartanizer.plugin.QuickFixer\"\n" //
           + "  />\n" //

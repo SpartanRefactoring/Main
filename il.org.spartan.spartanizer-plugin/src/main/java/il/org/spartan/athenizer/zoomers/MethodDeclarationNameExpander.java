@@ -38,12 +38,12 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
-    final List<SingleVariableDeclaration> $ = parameters(d).stream().filter(λ -> λ.getName().getIdentifier().length() <= 2)
+    final List<SingleVariableDeclaration> ret = parameters(d).stream().filter(λ -> λ.getName().getIdentifier().length() <= 2)
         .collect(Collectors.toList());
-    return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
+    return ret.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int i = 0;
-        for (final SingleVariableDeclaration ¢ : $) {
+        for (final SingleVariableDeclaration ¢ : ret) {
           final SimpleName n = d.getAST().newSimpleName((¢.getType() + "").split("<")[0].toLowerCase() + i++);
           while (checkContains(getAll.names(d), n))
             n.setIdentifier(¢.getType() + "" + i++);

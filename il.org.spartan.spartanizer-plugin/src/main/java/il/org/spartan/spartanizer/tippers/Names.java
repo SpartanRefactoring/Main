@@ -57,7 +57,7 @@ public final class Names {
       return az.nameQualifiedType(¢).getName().getIdentifier();
     if (!¢.isSimpleType())
       return null;
-    final Name $ = az.simpleType(¢).getName();
-    return (!$.isQualifiedName() ? az.simpleName($) : az.qualifiedName($).getName()).getIdentifier();
+    final Name ret = az.simpleType(¢).getName();
+    return (!ret.isQualifiedName() ? az.simpleName(ret) : az.qualifiedName(ret).getName()).getIdentifier();
   }
 }

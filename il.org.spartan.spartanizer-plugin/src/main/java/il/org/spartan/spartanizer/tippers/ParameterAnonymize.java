@@ -43,25 +43,25 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
     return false;
   }
   @Override protected ASTNode[] span() {
-    final List<SingleVariableDeclaration> $ = step.parameters(getMethod(current));
-    return new ASTNode[] { the.firstOf($), the.lastOf($) };
+    final List<SingleVariableDeclaration> ret = step.parameters(getMethod(current));
+    return new ASTNode[] { the.firstOf(ret), the.lastOf(ret) };
   }
   static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {
-    final ASTNode $ = ¢.getParent();
-    return !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
+    final ASTNode ret = ¢.getParent();
+    return !(ret instanceof MethodDeclaration) ? null : (MethodDeclaration) ret;
   }
   private static boolean isUnused(final Expression ¢) {
     return iz.literal("unused", ¢);
   }
   private static ASTNode replace(final SingleVariableDeclaration ¢) {
-    final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
-    $.setName(¢.getAST().newSimpleName(notation.anonymous));
-    $.setFlags($.getFlags());
-    $.setInitializer($.getInitializer());
-    $.setType(copy.of(¢.getType()));
-    $.setVarargs(¢.isVarargs());
-    copy.modifiers(extendedModifiers(¢), extendedModifiers($));
-    return $;
+    final SingleVariableDeclaration ret = ¢.getAST().newSingleVariableDeclaration();
+    ret.setName(¢.getAST().newSimpleName(notation.anonymous));
+    ret.setFlags(ret.getFlags());
+    ret.setInitializer(ret.getInitializer());
+    ret.setType(copy.of(¢.getType()));
+    ret.setVarargs(¢.isVarargs());
+    copy.modifiers(extendedModifiers(¢), extendedModifiers(ret));
+    return ret;
   }
   private static boolean suppressing(final ArrayInitializer ¢) {
     return expressions(¢).stream().anyMatch(ParameterAnonymize::isUnused);
@@ -79,12 +79,12 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
     return "Anonymize parameter " + ¢.getName().getIdentifier();
   }
   @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $) {
-    final MethodDeclaration method = getMethod($);
-    if (method == null || body(method) == null)
+    final MethodDeclaration ret = getMethod($);
+    if (ret == null || body(ret) == null)
       return null;
-    for (final SingleVariableDeclaration ¢ : parameters(method))
+    for (final SingleVariableDeclaration ¢ : parameters(ret))
       if (notation.anonymous.equals(¢.getName().getIdentifier()))
         return null;
-    return BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()) ? null : replace($);
+    return BY_ANNOTATION && !suppressing($) || isUsed(ret, $.getName()) || !JohnDoe.property($.getType(), $.getName()) ? null : replace($);
   }
 }

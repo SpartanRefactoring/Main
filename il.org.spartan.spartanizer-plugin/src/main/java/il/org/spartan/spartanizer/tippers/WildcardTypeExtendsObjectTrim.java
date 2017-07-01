@@ -21,8 +21,8 @@ public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<Wild
   @Override public WildcardType replacement(final WildcardType ¢) {
     if (!¢.isUpperBound() || !type.isObject(¢.getBound()))
       return null;
-    final WildcardType $ = copy.of(¢);
-    $.setBound(null);
-    return $;
+    final WildcardType ret = copy.of(¢);
+    ret.setBound(null);
+    return ret;
   }
 }

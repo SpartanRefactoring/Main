@@ -58,7 +58,7 @@ public class TestOperand extends Wrapper<String> {
   String apply() {
     return trim.apply(traversal, WrapIntoComilationUnit.find(get()).on(get()));
   }
-  public TestOperand gives(final String $) {
+  public TestOperand gives(final String ret) {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(traversal, wrap);
     if (wrap.equals(unpeeled))
@@ -68,12 +68,12 @@ public class TestOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    if ($.equals(peeled) || Trivia.essence(peeled).equals(Trivia.essence($)))
-      return new TestOperand($);
+    if (ret.equals(peeled) || Trivia.essence(peeled).equals(Trivia.essence(ret)))
+      return new TestOperand(ret);
     copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", Trivia.escapeQuotes(Trivia.essence(peeled)),
-        Trivia.escapeQuotes(Trivia.essence($)));
-    azzert.that(Trivia.essence(peeled), is(Trivia.essence($)));
-    return new TestOperand($);
+        Trivia.escapeQuotes(Trivia.essence(ret)));
+    azzert.that(Trivia.essence(peeled), is(Trivia.essence(ret)));
+    return new TestOperand(ret);
   }
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
@@ -96,9 +96,9 @@ public class TestOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    for (final String $ : options)
-      if (Trivia.essence($).equals(Trivia.essence(peeled)))
-        return new TestOperand($);
+    for (final String ret : options)
+      if (Trivia.essence(ret).equals(Trivia.essence(peeled)))
+        return new TestOperand(ret);
     azzert.fail("Expects: " + peeled + " But none of the given options match");
     return null;
   }

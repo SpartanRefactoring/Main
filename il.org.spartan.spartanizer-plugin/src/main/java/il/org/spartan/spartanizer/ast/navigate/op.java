@@ -97,9 +97,9 @@ public enum op {
   }
   public static Assignment.Operator infix2assign(final InfixExpression.Operator ¢) {
     assert ¢ != null;
-    final Assignment.Operator $ = infix2assign.get(¢);
-    assert $ != null : "No assignment equivalent to " + ¢;
-    return $;
+    final Assignment.Operator ret = infix2assign.get(¢);
+    assert ret != null : "No assignment equivalent to " + ¢;
+    return ret;
   }
   /** @param o JD
    * @return whether one of {@link #InfixExpression.Operator.XOR},

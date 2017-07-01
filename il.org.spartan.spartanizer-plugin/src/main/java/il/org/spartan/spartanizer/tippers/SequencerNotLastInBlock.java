@@ -27,11 +27,11 @@ public final class SequencerNotLastInBlock<S extends Statement> extends GoToNext
         .to("{throw new Exception();}") //
     ;
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final S s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final S s, final Statement nextStatement, final TextEditGroup g) {
     final Block b = az.block(parent(s));
     if (b == null)
       return null;
-    $.getListRewrite(b, Block.STATEMENTS_PROPERTY).remove(nextStatement, g);
-    return $;
+    ret.getListRewrite(b, Block.STATEMENTS_PROPERTY).remove(nextStatement, g);
+    return ret;
   }
 }

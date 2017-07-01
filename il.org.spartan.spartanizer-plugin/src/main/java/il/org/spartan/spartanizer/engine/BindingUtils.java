@@ -18,8 +18,8 @@ public enum BindingUtils {
   /** @param pattern an {@link ASTNode}
    * @return __ in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {
-    final ASTNode $ = containing.typeDeclaration(¢);
-    return eval(((AbstractTypeDeclaration) $)::resolveBinding).when($ instanceof TypeDeclaration);
+    final ASTNode ret = containing.typeDeclaration(¢);
+    return eval(((AbstractTypeDeclaration) ret)::resolveBinding).when(ret instanceof TypeDeclaration);
   }
   /** @param compilationUnit current compilation unit
    * @return current package */
@@ -38,8 +38,8 @@ public enum BindingUtils {
       final CompilationUnit u) {
     if (b == null)
       return null;
-    final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);
-    return take($).when(isVisible($, n, u));
+    final IMethodBinding ret = Bindings.findMethodInHierarchy(b, methodName, bs);
+    return take(ret).when(isVisible(ret, n, u));
   }
   /** Determines whether an invocation of a method is legal in a specific
    * context.

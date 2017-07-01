@@ -37,15 +37,15 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     confMap = new HashMap<>();
   }
   @Override protected Control createDialogArea(final Composite parent) {
-    final Composite $ = (Composite) super.createDialogArea(parent);
-    resName = createString($, "Widget Name", widgetName);
+    final Composite ret = (Composite) super.createDialogArea(parent);
+    resName = createString(ret, "Widget Name", widgetName);
     for (final String[] comp : configurations) {
       if ("String".equals(comp[1]))
-        confMap.put(comp[0], createString($, comp[2], woe.getConfiguration().get(comp[0])).getText());
+        confMap.put(comp[0], createString(ret, comp[2], woe.getConfiguration().get(comp[0])).getText());
       if ("Boolean".equals(comp[1]))
-        confMap.put(comp[0], createBoolean($, comp[2], woe.getConfiguration().get(comp[0])));
+        confMap.put(comp[0], createBoolean(ret, comp[2], woe.getConfiguration().get(comp[0])));
       else { // if("List".equals(comp[1]))
-        final Button[] res = createList($, Arrays.copyOfRange(comp, 2, comp.length - 1), woe.getConfiguration().get(comp[0]));
+        final Button[] res = createList(ret, Arrays.copyOfRange(comp, 2, comp.length - 1), woe.getConfiguration().get(comp[0]));
         int count = 2;
         for (final Button ¢ : res) {
           if (¢.getSelection()) {
@@ -56,7 +56,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
         }
       }
     }
-    return $;
+    return ret;
   }
   // overriding this methods allows you to set the
   // title of the custom dialog
@@ -72,39 +72,39 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    final Text $ = new Text(container, SWT.BORDER);
+    final Text ret = new Text(container, SWT.BORDER);
     if (defaultValue != null)
-      $.setText(defaultValue);
-    $.setLayoutData(dataRes);
-    return $;
+      ret.setText(defaultValue);
+    ret.setLayoutData(dataRes);
+    return ret;
   }
   private static String createBoolean(final Composite container, final String name, final String defaultValue) {
     new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    final Button $ = new Button(container, SWT.CHECK);
-    $.setLayoutData(dataRes);
+    final Button ret = new Button(container, SWT.CHECK);
+    ret.setLayoutData(dataRes);
     if (defaultValue != null)
-      $.setSelection("true".equals(defaultValue.toLowerCase()));
-    return $.getSelection() ? "true" : "false";
+      ret.setSelection("true".equals(defaultValue.toLowerCase()));
+    return ret.getSelection() ? "true" : "false";
   }
   private static Button[] createList(final Composite container, final String[] options, final String defaultValue) {
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    final Button[] $ = new Button[options.length];
+    final Button[] ret = new Button[options.length];
     int count = 0;
     for (final String ¢ : options) {
-      $[count] = new Button(container, SWT.RADIO);
-      $[count].setSelection(false);
+      ret[count] = new Button(container, SWT.RADIO);
+      ret[count].setSelection(false);
       if (defaultValue != null && ¢.equals(defaultValue))
-        $[count].setSelection(true);
-      $[count].setText(¢);
-      $[count].setBounds(10, 25 * count + 5, 75, 30);
+        ret[count].setSelection(true);
+      ret[count].setText(¢);
+      ret[count].setBounds(10, 25 * count + 5, 75, 30);
       ++count;
     }
-    return $;
+    return ret;
   }
   @Override protected void okPressed() {
     if ("".equals(resName.getText())) {

@@ -35,8 +35,8 @@ public final class ClassInstanceCreationBoxedValueTypes extends ReplaceCurrentNo
     final Type t = c.getType();
     if (!type.isValueType(t))
       return null;
-    final MethodInvocation $ = subject.operand(copy.of(hop.simpleName(t))).toMethod("valueOf");
-    arguments($).add(copy.of(e));
-    return $;
+    final MethodInvocation ret = subject.operand(copy.of(hop.simpleName(t))).toMethod("valueOf");
+    arguments(ret).add(copy.of(e));
+    return ret;
   }
 }

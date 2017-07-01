@@ -45,10 +45,10 @@ public class TrackerSelection extends Selection {
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
   private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
-    final List<WrappedCompilationUnit> $ = an.empty.list();
+    final List<WrappedCompilationUnit> ret = an.empty.list();
     if (¢ != null)
-      $.add(¢);
-    return $;
+      ret.add(¢);
+    return ret;
   }
   private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
     return yieldAncestors.untilNodeType(nodeType).from(coveredNode);

@@ -29,27 +29,27 @@ public abstract class Local extends FragmentAmongFragments {
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this
    * containing node is eliminated as well.
    * @return */
-  protected final ASTRewrite eliminateFragment(final ASTRewrite $, final TextEditGroup g) {
+  protected final ASTRewrite eliminateFragment(final ASTRewrite ret, final TextEditGroup g) {
     final List<VariableDeclarationFragment> live = remainingSiblings();
     if (live.isEmpty())
-      $.remove(declaration, g);
+      ret.remove(declaration, g);
     else {
       final VariableDeclarationStatement newParent = copy.of(declaration);
       fragments(newParent).clear();
       fragments(newParent).addAll(live.stream().map(copy::of).collect(Collectors.toList()));
-      $.replace(declaration, newParent, g);
+      ret.replace(declaration, newParent, g);
     }
-    return $;
+    return ret;
   }
   protected int eliminationSaving() {
     final List<VariableDeclarationFragment> live = remainingSiblings();
-    final int $ = metrics.size(declaration);
+    final int ret = metrics.size(declaration);
     if (live.isEmpty())
-      return $;
+      return ret;
     final VariableDeclarationStatement newParent = copy.of(declaration);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
-    return $ - metrics.size(newParent);
+    return ret - metrics.size(newParent);
   }
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .

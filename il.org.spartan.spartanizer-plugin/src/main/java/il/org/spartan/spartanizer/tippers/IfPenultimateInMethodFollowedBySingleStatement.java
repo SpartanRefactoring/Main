@@ -25,15 +25,15 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
   @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
     final Statement then = then(s);
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
-    $.replace(deleteMe, make.emptyStatement(deleteMe), g);
-    remove.statement(nextStatement, $, g);
+    ret.replace(deleteMe, make.emptyStatement(deleteMe), g);
+    remove.statement(nextStatement, ret, g);
     final IfStatement newIf = copy.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
@@ -41,8 +41,8 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
     else
       newIf.setThenStatement(make.emptyStatement(newIf));
     newIf.setElseStatement(copy.of(nextStatement));
-    $.replace(s, newIf, g);
-    remove.statement(nextStatement, $, g);
-    return $;
+    ret.replace(s, newIf, g);
+    remove.statement(nextStatement, ret, g);
+    return ret;
   }
 }

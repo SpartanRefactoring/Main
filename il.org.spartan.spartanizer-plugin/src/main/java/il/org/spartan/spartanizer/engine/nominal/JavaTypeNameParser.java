@@ -38,10 +38,10 @@ public final class JavaTypeNameParser {
   }
   /** @return an abbreviation of the __ name */
   public String abbreviate() {
-    String $ = "";
-    for (final Matcher ¢ = Pattern.compile("[A-Z]").matcher(typeName);; $ += ¢.group())
+    String ret = "";
+    for (final Matcher ¢ = Pattern.compile("[A-Z]").matcher(typeName);; ret += ¢.group())
       if (!¢.find())
-        return $.toLowerCase();
+        return ret.toLowerCase();
   }
   public boolean isGenericVariation(final SingleVariableDeclaration ¢) {
     return isGenericVariation(¢.getName());
@@ -75,11 +75,11 @@ public final class JavaTypeNameParser {
   int lastNameIndex() {
     if (isUpper(typeName.length() - 1))
       return typeName.length() - 1;
-    for (int $ = typeName.length() - 1; $ > 0; --$) {
-      if (isLower($) && isUpper($ - 1))
-        return $ - 1;
-      if (isUpper($) && isLower($ - 1))
-        return $;
+    for (int ret = typeName.length() - 1; ret > 0; --ret) {
+      if (isLower(ret) && isUpper(ret - 1))
+        return ret - 1;
+      if (isUpper(ret) && isLower(ret - 1))
+        return ret;
     }
     return 0;
   }

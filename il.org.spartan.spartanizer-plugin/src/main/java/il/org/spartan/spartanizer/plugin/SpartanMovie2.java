@@ -96,9 +96,9 @@ public class SpartanMovie2 extends AbstractHandler {
   public static void mightNotBeSlick(final IWorkbenchPage ¢) {
     close(¢);
   }
-  private static IMarker[] getMarkers(final IResource $) {
+  private static IMarker[] getMarkers(final IResource ret) {
     try {
-      return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_ONE);
+      return ret.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_ONE);
     } catch (final CoreException m) {
       note.bug(m);
       return new IMarker[0];
@@ -144,15 +144,15 @@ public class SpartanMovie2 extends AbstractHandler {
    * well maintained marker attribute.
    * @author Ori Roth */
   @SuppressWarnings("boxing") static IMarker getFirstMarker(final IMarker[] ms) {
-    int $ = 0;
+    int ret = 0;
     for (final Integer i : range.from(0).to(ms.length))
       try {
-        if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[$].getAttribute(IMarker.CHAR_START)).intValue())
-          $ = i;
+        if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[ret].getAttribute(IMarker.CHAR_START)).intValue())
+          ret = i;
       } catch (final CoreException ¢) {
         note.bug(¢);
         break;
       }
-    return ms[$];
+    return ms[ret];
   }
 }

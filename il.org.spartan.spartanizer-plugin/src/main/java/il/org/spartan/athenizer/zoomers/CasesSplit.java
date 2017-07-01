@@ -32,15 +32,15 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     return "split cases within switch";
   }
   @Override public Tip tip(final SwitchStatement s) {
-    final SwitchCase n = caseWithNoSequencer(s);
-    final List<Statement> $ = getAdditionalStatements(statements(s), n);
+    final SwitchCase ret = caseWithNoSequencer(s);
+    final List<Statement> $ = getAdditionalStatements(statements(s), ret);
     return new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Map<String, String> mapNames = getMapOldToNewNames($);
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
-        $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), n, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), n, g));
+        $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), ret, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), ret, g));
         if (!iz.sequencerComplex(the.lastOf($)))
-          l.insertBefore(s.getAST().newBreakStatement(), n, g);
+          l.insertBefore(s.getAST().newBreakStatement(), ret, g);
       }
     };
   }
@@ -49,37 +49,37 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
-    for (final Statement ¢ : statements(x)) // TOUGH
-      if (iz.sequencerComplex(¢))
+    for (final Statement ret : statements(x)) // TOUGH
+      if (iz.sequencerComplex(ret))
         $ = null;
-      else if (¢ instanceof SwitchCase) {
+      else if (ret instanceof SwitchCase) {
         if ($ != null)
-          return (SwitchCase) ¢;
-        $ = az.switchCase(¢);
+          return (SwitchCase) ret;
+        $ = az.switchCase(ret);
       }
     return null;
   }
   private static List<Statement> getAdditionalStatements(final List<Statement> ss, final SwitchCase c) {
-    final List<Statement> $ = an.empty.list();
+    final List<Statement> ret = an.empty.list();
     boolean additionalStatements = false;
     for (final Statement ¢ : ss.subList(ss.indexOf(c), ss.size())) {
       if (¢ instanceof SwitchCase)
         additionalStatements = true;
       else if (additionalStatements)
-        $.add(¢);
+        ret.add(¢);
       if (iz.sequencerComplex(¢))
-        return $;
+        return ret;
     }
-    return $;
+    return ret;
   }
   static Map<String, String> getMapOldToNewNames(final List<Statement> ss) {
-    final Map<String, String> $ = new HashMap<>();
+    final Map<String, String> ret = new HashMap<>();
     ss.forEach(n -> {
       if (iz.variableDeclarationStatement(n))
         extract.fragments(n).forEach(
-            λ -> $.put(λ.getName().getIdentifier(), scope.newName(λ, az.variableDeclarationStatement(n).getType(), λ.getName().getIdentifier())));
+            λ -> ret.put(λ.getName().getIdentifier(), scope.newName(λ, az.variableDeclarationStatement(n).getType(), λ.getName().getIdentifier())));
     });
-    return $;
+    return ret;
   }
   static Statement replaceNames(final Statement target, final Map<String, String> m) {
     target.accept(new ASTVisitor() {

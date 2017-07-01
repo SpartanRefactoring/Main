@@ -17,9 +17,9 @@ public class EnhancedForEmptyBlock extends ReplaceCurrentNode<EnhancedForStateme
   private static final long serialVersionUID = 0x3334D7407180AA10L;
 
   @Override public ASTNode replacement(final EnhancedForStatement ¢) {
-    final EnhancedForStatement $ = copy.of(¢);
-    $.setBody($.getAST().newEmptyStatement());
-    return $;
+    final EnhancedForStatement ret = copy.of(¢);
+    ret.setBody(ret.getAST().newEmptyStatement());
+    return ret;
   }
   @Override protected boolean prerequisite(final EnhancedForStatement ¢) {
     final Block $ = az.block(¢.getBody());

@@ -24,8 +24,8 @@ abstract class Analyzer<T> {
    * @param ¢
    * @return */
   static String tidy(final double ¢) {
-    final double $ = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
-    return $ != Math.floor($) ? $ + "" : asInt($);
+    final double ret = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
+    return ret != Math.floor(ret) ? ret + "" : asInt(ret);
   }
   private static String asInt(final double $) {
     return (int) $ + "";

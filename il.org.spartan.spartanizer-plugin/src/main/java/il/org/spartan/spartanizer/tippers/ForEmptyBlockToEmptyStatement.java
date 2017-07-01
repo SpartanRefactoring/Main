@@ -17,9 +17,9 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
   private static final long serialVersionUID = 0x3BE3B45933C5D9B6L;
 
   @Override public ASTNode replacement(final ForStatement ¢) {
-    final ForStatement $ = copy.of(¢);
-    $.setBody($.getAST().newEmptyStatement());
-    return $;
+    final ForStatement ret = copy.of(¢);
+    ret.setBody(ret.getAST().newEmptyStatement());
+    return ret;
   }
   @Override protected boolean prerequisite(final ForStatement ¢) {
     final Statement $ = ¢.getBody();

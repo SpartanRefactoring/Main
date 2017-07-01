@@ -63,20 +63,20 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
         convert("if (a) {f(); g(); continue ;} a++; b++; continue ;}")//
         .to("if (a) {f(); g(); } else {a++; b++;}  continue ;}");//
   }
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);
-    r.replace(current, $, g);
-    r.getListRewrite(az.block(then($)), Block.STATEMENTS_PROPERTY).remove(the.lastOf(statements(az.block(then($)))), g);
+    ret.replace(current, $, g);
+    ret.getListRewrite(az.block(then($)), Block.STATEMENTS_PROPERTY).remove(the.lastOf(statements(az.block(then($)))), g);
     final Block newBlock = $.getAST().newBlock();
     $.setElseStatement(newBlock);
-    final ListRewrite listRewrite2 = r.getListRewrite(newBlock, Block.STATEMENTS_PROPERTY);
+    final ListRewrite listRewrite2 = ret.getListRewrite(newBlock, Block.STATEMENTS_PROPERTY);
     final List<Statement> move = lisp.chopLast(subsequentStatements);
     for (final Statement x : move)
       listRewrite2.insertLast(copy.of(x), g);
-    final ListRewrite listRewrite3 = misc.statementRewriter(r, current);
+    final ListRewrite listRewrite3 = misc.statementRewriter(ret, current);
     for (final Statement x : move)
       listRewrite3.remove(x, g);
-    return r;
+    return ret;
   }
   private static boolean declaredVarAppearsInSequencer(final List<Statement> subsequentStatements) {
     final Statement ret = az.returnStatement(the.lastOf(subsequentStatements));
@@ -92,11 +92,11 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     return false;
   }
   @Override protected ASTNode[] span() {
-    final ASTNode[] $ = new ASTNode[subsequentStatements.size() + 1];
-    $[0] = current;
+    final ASTNode[] ret = new ASTNode[subsequentStatements.size() + 1];
+    ret[0] = current;
     int i = 1;
-    for (final Statement s : subsequentStatements)
-      $[i++] = s;
-    return $;
+    for (final Statement ¢ : subsequentStatements)
+      ret[i++] = ¢;
+    return ret;
   }
 }

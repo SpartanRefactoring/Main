@@ -19,9 +19,9 @@ public class CFGToolbox {
     add(¢, METHOD_DECLARATION, new MethodBuilder());
   }
   public static CFGToolbox all(final CFG<?> ¢) {
-    final CFGToolbox $ = new CFGToolbox();
-    $.initialize(¢);
-    return $;
+    final CFGToolbox ret = new CFGToolbox();
+    ret.initialize(¢);
+    return ret;
   }
   public boolean build(final ASTNode n) {
     return implementation[n.getNodeType()].stream().anyMatch(λ -> λ.accept(n));

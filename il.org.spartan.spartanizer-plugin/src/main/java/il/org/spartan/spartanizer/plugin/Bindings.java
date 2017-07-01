@@ -11,50 +11,50 @@ import org.eclipse.jdt.core.dom.*;
 @SuppressWarnings("restriction")
 public class Bindings {
   public static List<ITypeBinding> getAllFrom(final ITypeBinding b) {
-    final List<ITypeBinding> $ = an.empty.list();
+    final List<ITypeBinding> ret = an.empty.list();
     if (b == null)
-      return $;
+      return ret;
     if (b.isArray())
-      $.addAll(getAllFrom(b.getElementType()));
+      ret.addAll(getAllFrom(b.getElementType()));
     else {
       if (b.isCapture()) {
         if (!b.isUpperbound())
-          $.addAll(getAllFrom(b.getWildcard()));
+          ret.addAll(getAllFrom(b.getWildcard()));
         else
           for (final ITypeBinding ¢ : b.getTypeBounds())
-            $.addAll(getAllFrom(¢));
-        return $;
+            ret.addAll(getAllFrom(¢));
+        return ret;
       }
       if (!b.isParameterizedType()) {
-        $.add(b);
-        return $;
+        ret.add(b);
+        return ret;
       }
-      $.add(b.getTypeDeclaration());
+      ret.add(b.getTypeDeclaration());
       for (final ITypeBinding ¢ : b.getTypeArguments())
-        $.addAll(getAllFrom(¢));
+        ret.addAll(getAllFrom(¢));
     }
     if (b.isCapture())
       if (!b.isUpperbound())
-        $.addAll(getAllFrom(b.getWildcard()));
+        ret.addAll(getAllFrom(b.getWildcard()));
       else
         for (final ITypeBinding ¢ : b.getTypeBounds())
-          $.addAll(getAllFrom(¢));
+          ret.addAll(getAllFrom(¢));
     else {
       if (!b.isParameterizedType()) {
-        $.add(b);
-        return $;
+        ret.add(b);
+        return ret;
       }
-      $.add(b.getTypeDeclaration());
+      ret.add(b.getTypeDeclaration());
       for (final ITypeBinding ¢ : b.getTypeArguments())
-        $.addAll(getAllFrom(¢));
+        ret.addAll(getAllFrom(¢));
     }
     if (!b.isParameterizedType())
-      $.add(b);
+      ret.add(b);
     else {
-      $.add(b.getTypeDeclaration());
+      ret.add(b.getTypeDeclaration());
       for (final ITypeBinding ¢ : b.getTypeArguments())
-        $.addAll(getAllFrom(¢));
+        ret.addAll(getAllFrom(¢));
     }
-    return $;
+    return ret;
   }
 }

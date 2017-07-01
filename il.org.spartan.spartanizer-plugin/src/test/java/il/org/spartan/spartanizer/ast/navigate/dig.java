@@ -9,16 +9,16 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-10-07 */
 public interface dig {
   static List<String> stringLiterals(final ASTNode n) {
-    final List<String> $ = an.empty.list();
+    final List<String> ret = an.empty.list();
     if (n == null)
-      return $;
+      return ret;
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final StringLiteral ¢) {
-        $.add(¢.getLiteralValue());
+        ret.add(¢.getLiteralValue());
         return true;
       }
     });
-    return $;
+    return ret;
   }
 }

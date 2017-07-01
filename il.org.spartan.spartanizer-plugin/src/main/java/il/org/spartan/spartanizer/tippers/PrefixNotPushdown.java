@@ -35,21 +35,21 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return pushdownNot(az.not(core(¢)));
   }
   static Expression notOfLiteral(final BooleanLiteral ¢) {
-    final BooleanLiteral $ = copy.of(¢);
-    $.setBooleanValue(!¢.booleanValue());
-    return $;
+    final BooleanLiteral ret = copy.of(¢);
+    ret.setBooleanValue(!¢.booleanValue());
+    return ret;
   }
   static Expression perhapsNotOfLiteral(final Expression ¢) {
     return !iz.booleanLiteral(¢) ? null : notOfLiteral(az.booleanLiteral(¢));
   }
   static Expression pushdownNot(final Expression ¢) {
-    Expression $;
-    return ($ = perhapsNotOfLiteral(¢)) != null//
-        || ($ = perhapsDoubleNegation(¢)) != null//
-        || ($ = perhapsDeMorgan(¢)) != null//
-        || ($ = perhapsComparison(¢)) != null //
-        || ($ = perhapsTernary(¢)) != null //
-            ? $ : null;
+    Expression ret;
+    return (ret = perhapsNotOfLiteral(¢)) != null//
+        || (ret = perhapsDoubleNegation(¢)) != null//
+        || (ret = perhapsDeMorgan(¢)) != null//
+        || (ret = perhapsComparison(¢)) != null //
+        || (ret = perhapsTernary(¢)) != null //
+            ? ret : null;
   }
   static Expression perhapsTernary(final Expression ¢) {
     return perhapsTernary(az.conditionalExpression(core(¢)));
@@ -58,9 +58,9 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     if (¢ == null)
       return null;
     final Expression expression = ¢.getExpression(), then = ¢.getThenExpression(), elze = ¢.getElseExpression(),
-        $ = pushdownNot(pair(pair(expression, then).to(CONDITIONAL_AND), elze).to(CONDITIONAL_OR)),
+        ret = pushdownNot(pair(pair(expression, then).to(CONDITIONAL_AND), elze).to(CONDITIONAL_OR)),
         $2 = pair(notOf(then), notOf(elze)).toCondition(expression);
-    return countOf.nodes($) < countOf.nodes($2) ? $ : $2;
+    return countOf.nodes(ret) < countOf.nodes($2) ? ret : $2;
   }
   private static Expression comparison(final InfixExpression ¢) {
     return pair(left(¢), right(¢)).to(op.negate(¢.getOperator()));
@@ -94,8 +94,8 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return ¢ == null ? null : pushdownNot(operand(¢));
   }
   private static Expression tryToSimplify(final Expression ¢) {
-    final Expression $ = pushdownNot(az.not(¢));
-    return $ != null ? $ : ¢;
+    final Expression ret = pushdownNot(az.not(¢));
+    return ret == null ? ¢ : ret;
   }
   @Override public String description(@SuppressWarnings("unused") final PrefixExpression __) {
     return "Pushdown logical negation ('!')";

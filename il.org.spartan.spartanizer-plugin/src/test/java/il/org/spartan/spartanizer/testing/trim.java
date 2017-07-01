@@ -34,14 +34,14 @@ public interface trim {
     assert t != null;
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    final Document $ = trim.rewrite(t, u, new Document(from));
-    assert $ != null;
-    return $.get();
+    final Document ret = trim.rewrite(t, u, new Document(from));
+    assert ret != null;
+    return ret.get();
   }
-  static Document rewrite(final Traversal t, final CompilationUnit u, final Document $) {
+  static Document rewrite(final Traversal t, final CompilationUnit u, final Document ret) {
     try {
-      t.go(u).rewriteAST($, null).apply($);
-      return $;
+      t.go(u).rewriteAST(ret, null).apply(ret);
+      return ret;
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }

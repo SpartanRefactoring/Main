@@ -146,8 +146,8 @@ public class SingleFlaterMonitor extends SingleFlater.With implements SingleFlat
     logger.log(FINE, "Rewrite {0}", current().rewrite());
   }
   private String node() {
-    final ASTNode $ = current().node();
-    return String.format("%s(%s)", English.name($), Trivia.gist($));
+    final ASTNode ret = current().node();
+    return String.format("%s(%s)", English.name(ret), Trivia.gist(ret));
   }
   private Tip tip() {
     return current().tip();

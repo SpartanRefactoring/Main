@@ -32,11 +32,11 @@ class Factor {
   Expression asExpression() {
     if (!divider)
       return expression;
-    final InfixExpression $ = expression.getAST().newInfixExpression();
-    $.setOperator(DIVIDE);
-    $.setLeftOperand(expression.getAST().newNumberLiteral("1"));
-    $.setRightOperand(!iz.infixExpression(expression) ? copy.of(expression) : make.parethesized(copy.of(expression)));
-    return $;
+    final InfixExpression ret = expression.getAST().newInfixExpression();
+    ret.setOperator(DIVIDE);
+    ret.setLeftOperand(expression.getAST().newNumberLiteral("1"));
+    ret.setRightOperand(!iz.infixExpression(expression) ? copy.of(expression) : make.parethesized(copy.of(expression)));
+    return ret;
   }
   boolean divider() {
     return divider;

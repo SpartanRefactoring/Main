@@ -31,23 +31,23 @@ public interface Environment {
   boolean empty();
   List<Entry<String, Binding>> entries();
   default Collection<Entry<String, Binding>> fullEntries() {
-    final Collection<Entry<String, Binding>> $ = as.list(entries());
+    final Collection<Entry<String, Binding>> ret = as.list(entries());
     if (nest() != null)
-      $.addAll(nest().fullEntries());
-    return $;
+      ret.addAll(nest().fullEntries());
+    return ret;
   }
   /** Get full path of the current this instance (all scope hierarchy). Used for
    * full names of the variables. */
   default String fullName() {
-    final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
-    return ($ == null ? "" : $ + ".") + name().replaceAll("  .*$", "");
+    final String ret = nest() == null || nest() == NULL ? null : nest().fullName();
+    return (ret == null ? "" : ret + ".") + name().replaceAll("  .*$", "");
   }
   /** @return all the full names of the this instance. */
   default Collection<String> fullNames() {
-    final Collection<String> $ = new LinkedHashSet<>(keys());
+    final Collection<String> ret = new LinkedHashSet<>(keys());
     if (nest() != null)
-      $.addAll(nest().fullNames());
-    return $;
+      ret.addAll(nest().fullNames());
+    return ret;
   }
   default int fullSize() {
     return size() + (nest() == null ? 0 : nest().fullSize());
@@ -121,25 +121,25 @@ public interface Environment {
    *         {@link Block}, (also IfStatement, ForStatement and so on...) return
    *         empty Collection. */
   static Collection<Entry<String, Binding>> declarationsOf(final Statement ¢) {
-    final Collection<Entry<String, Binding>> $ = an.empty.list();
+    final Collection<Entry<String, Binding>> ret = an.empty.list();
     if (¢.getNodeType() != VARIABLE_DECLARATION_STATEMENT)
-      return $;
-    $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
-    return $;
+      return ret;
+    ret.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
+    return ret;
   }
   static Collection<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
-    final Collection<Entry<String, Binding>> $ = an.empty.list();
+    final Collection<Entry<String, Binding>> ret = an.empty.list();
     final type t = type.baptize(Trivia.condense(type(s)));
     final String path = fullName(s);
-    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(toList()));
-    return $;
+    ret.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(toList()));
+    return ret;
   }
   /** @return set of entries declared in the node, including all hiding. */
   static Set<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
     // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Binding>> $ = new LinkedHashSet<>();
-    ¢.accept(new EnvironmentVisitor($));
-    return $;
+    final LinkedHashSet<Entry<String, Binding>> ret = new LinkedHashSet<>();
+    ¢.accept(new EnvironmentVisitor(ret));
+    return ret;
   }
   /** Gets declarations made in ASTNode's Ancestors */
   static LinkedHashSet<Entry<String, Binding>> declaresUp(final ASTNode n) {
@@ -160,9 +160,9 @@ public interface Environment {
   }
   static Binding getHidden(final String s) {
     for (String ¢ = parentNameScope(s); ¢ != null && !¢.isEmpty(); ¢ = parentNameScope(¢)) {
-      final Binding $ = get(upEnv, ¢ + "." + s.substring(s.lastIndexOf(".") + 1));
-      if ($ != null)
-        return $;
+      final Binding ret = get(upEnv, ¢ + "." + s.substring(s.lastIndexOf(".") + 1));
+      if (ret != null)
+        return ret;
     }
     return null;
   }
@@ -182,9 +182,9 @@ public interface Environment {
     if (n == null)
       return null;
     for (final ASTNode ¢ : ancestors.of(n)) {
-      final Namespace $ = property.obtain(Namespace.class).from(¢);
-      if ($ != null)
-        return $;
+      final Namespace ret = property.obtain(Namespace.class).from(¢);
+      if (ret != null)
+        return ret;
     }
     Environment.NULL.spawn().fillScope(n.getRoot());
     for (final ASTNode ¢ : ancestors.of(n)) {

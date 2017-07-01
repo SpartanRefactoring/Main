@@ -38,8 +38,8 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
             || collect.usesOf(the.firstOf(fragments(¢)).getName()).in(¢.getParent()).stream().noneMatch(λ -> iz.switchCase(λ.getParent())));
   }
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
-    final VariableDeclarationStatement $ = copy.of(¢);
-    ((VariableDeclaration) the.firstOf(fragments($))).setInitializer(null);
+    final VariableDeclarationStatement ret = copy.of(¢);
+    ((VariableDeclaration) the.firstOf(fragments(ret))).setInitializer(null);
     final VariableDeclarationFragment f2 = the.firstOf(fragments(¢));
     final Assignment a = subject.pair(copy.of(az.expression(f2.getName())), copy.of(az.expression(f2.getInitializer())))
         .to(Assignment.Operator.ASSIGN);
@@ -48,7 +48,7 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
         final ListRewrite l = r.getListRewrite(¢.getParent(), !SwitchStatement.STATEMENTS_PROPERTY.getNodeClass().isInstance(¢.getParent())
             ? Block.STATEMENTS_PROPERTY : SwitchStatement.STATEMENTS_PROPERTY);
         l.insertAfter(¢.getAST().newExpressionStatement(a), ¢, g);
-        l.insertAfter($, ¢, g);
+        l.insertAfter(ret, ¢, g);
         l.remove(¢, g);
       }
     };

@@ -38,16 +38,16 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     final SingleVariableDeclaration parameter = c.getException();
     if (!JohnDoe.property(parameter))
       return null;
-    final SimpleName $ = parameter.getName();
-    if (notation.isSpecial($))
+    final SimpleName ret = parameter.getName();
+    if (notation.isSpecial(ret))
       return null;
     final Block b = body(c);
-    if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
+    if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf(ret).in(b).isEmpty())
       return null;
     final SimpleName ¢ = make.newCent(c);
     return new Tip(description(c), getClass(), c.getException().getName()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        misc.rename($, ¢, c, r, g);
+        misc.rename(ret, ¢, c, r, g);
       }
     }.spanning(c);
   }

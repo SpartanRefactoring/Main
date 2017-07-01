@@ -34,13 +34,13 @@ public final class IfReturnNoElseReturn extends GoToNextStatement<IfStatement>//
     final ReturnStatement r1 = extract.returnStatement(then(s));
     if (r1 == null)
       return null;
-    final Expression $ = extract.core(r1.getExpression());
-    if ($ == null)
+    final Expression ret = extract.core(r1.getExpression());
+    if (ret == null)
       return null;
     final ReturnStatement r2 = extract.returnStatement(nextStatement);
     if (r2 == null)
       return null;
     final Expression e2 = extract.core(r2.getExpression());
-    return e2 == null ? null : misc.replaceTwoStatements(r, s, subject.operand(subject.pair($, e2).toCondition(s.getExpression())).toReturn(), g);
+    return e2 == null ? null : misc.replaceTwoStatements(r, s, subject.operand(subject.pair(ret, e2).toCondition(s.getExpression())).toReturn(), g);
   }
 }

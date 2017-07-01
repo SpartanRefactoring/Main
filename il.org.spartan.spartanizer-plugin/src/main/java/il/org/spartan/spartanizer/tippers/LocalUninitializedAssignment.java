@@ -28,9 +28,9 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
   private VariableDeclarationStatement makeVariableDeclarationFragement() {
     final VariableDeclarationFragment f = copy.of(current);
     f.setInitializer(copy.of(from));
-    final VariableDeclarationStatement $ = current.getAST().newVariableDeclarationStatement(f);
-    $.setType(copy.of(declaration.getType()));
-    return $;
+    final VariableDeclarationStatement ret = current.getAST().newVariableDeclarationStatement(f);
+    ret.setType(copy.of(declaration.getType()));
+    return ret;
   }
 
   private Assignment assignment;

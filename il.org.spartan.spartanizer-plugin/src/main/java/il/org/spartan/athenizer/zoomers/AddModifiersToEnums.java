@@ -17,9 +17,9 @@ public class AddModifiersToEnums extends ReplaceCurrentNode<EnumDeclaration> imp
     return "add all the unecessary modifiers to the enum";
   }
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final EnumDeclaration ¢) {
-    final EnumDeclaration $ = copy.of(¢);
+    final EnumDeclaration ret = copy.of(¢);
     if (!extract.modifiers(¢).contains(¢.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD)))
-      $.modifiers().add(¢.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD));
-    return $;
+      ret.modifiers().add(¢.getAST().newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD));
+    return ret;
   }
 }

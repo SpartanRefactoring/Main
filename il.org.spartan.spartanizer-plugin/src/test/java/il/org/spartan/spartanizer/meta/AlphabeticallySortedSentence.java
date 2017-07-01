@@ -39,7 +39,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
   };
 
   public static Vocabulary reify(final AnonymousClassDeclaration cd) {
-    final Vocabulary $ = new Vocabulary();
+    final Vocabulary ret = new Vocabulary();
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
       final MethodDeclaration md = (MethodDeclaration) bd;
@@ -54,13 +54,13 @@ public class AlphabeticallySortedSentence extends MetaFixture {
       else
         assert !disabling.specificallyDisabled(md) //
         : fault.specifically("Method " + mangle + " must not " + javaDoc, md, stencil);
-      $.put(mangle, md);
+      ret.put(mangle, md);
     }
-    return $;
+    return ret;
   }
   public static Vocabulary reify(final ClassInstanceCreation ¢) {
-    final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
-    return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
+    final AnonymousClassDeclaration ret = ¢.getAnonymousClassDeclaration();
+    return ret == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify(ret);
   }
   public AlphabeticallySortedSentence() {
     forbidden();

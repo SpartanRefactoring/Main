@@ -33,12 +33,12 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
     if (the.onlyOneOf(statements(body(x))) == null)
       return null;
     final Statement s = the.firstOf(statements(x));
-    final LambdaExpression $ = x.getAST().newLambdaExpression();
-    parameters(x).forEach(λ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(λ, g));
-    r.replace(body($), iz.expressionStatement(s) ? expression(s)
+    final LambdaExpression ret = x.getAST().newLambdaExpression();
+    parameters(x).forEach(λ -> r.getListRewrite(ret, LambdaExpression.PARAMETERS_PROPERTY).insertLast(λ, g));
+    r.replace(body(ret), iz.expressionStatement(s) ? expression(s)
         : expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : expression(az.returnStatement(s)), g);
-    $.setParentheses(x.hasParentheses());
-    return $;
+    ret.setParentheses(x.hasParentheses());
+    return ret;
   }
   @Override public String description(final LambdaExpression ¢) {
     return "Remove curly braces from " + Trivia.gist(¢);

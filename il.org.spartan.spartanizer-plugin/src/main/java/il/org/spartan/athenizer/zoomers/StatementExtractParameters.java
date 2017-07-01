@@ -50,10 +50,10 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if (!s.getAST().hasResolvedBindings() || !(root instanceof CompilationUnit)
         || !(((CompilationUnit) root).getTypeRoot() instanceof ICompilationUnit))
       return null;
-    final Expression $ = choose(candidates(s));
-    if ($ == null || iz.assignment($))
+    final Expression ret = choose(candidates(s));
+    if (ret == null || iz.assignment(ret))
       return null;
-    final ITypeBinding binding = $.resolveTypeBinding();
+    final ITypeBinding binding = ret.resolveTypeBinding();
     if (binding == null)
       return null;
     final List<ITypeBinding> allBindings = Bindings.getAllFrom(binding);
@@ -98,11 +98,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
                 final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
                 final String nn = scope.newName(s, tt);
                 f.setName(make.from(s).identifier(nn));
-                f.setInitializer(copy.of($));
+                f.setInitializer(copy.of(ret));
                 final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
                 v.setType(tt);
                 final Statement ns = copy.of(s);
-                s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
+                s.subtreeMatch(new ASTMatcherSpecific(ret, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
                 if (!(s.getParent() instanceof Block))
                   goNonBlockParent(s.getParent(), v, ns, r, g);
                 else
@@ -125,19 +125,19 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             };
   }
   // TODO Ori Roth: extend (?)
-  @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
+   private static List<Expression> candidates(final Statement s) {
     final Collection<ASTNode> excludedParents = an.empty.list();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
-    final List<Expression> $ = an.empty.list();
+    final List<Expression> ret = an.empty.list();
     s.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression) {
           final InfixExpression p = az.infixExpression(¢.getParent());
           if (p != null && (iz.conditionalAnd(p) || iz.conditionalOr(p)) && ¢ == p.getRightOperand())
             return false;
-          consider($, (Expression) ¢);
+          consider(ret, (Expression) ¢);
         }
         switch (¢.getNodeType()) {
           case ANONYMOUS_CLASS_DECLARATION:
@@ -151,11 +151,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             return false;
           case ENHANCED_FOR_STATEMENT:
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;
-            consider($, efs.getExpression());
+            consider(ret, efs.getExpression());
             return false;
           case FOR_STATEMENT:
             final ForStatement fs = (ForStatement) ¢;
-            consider($, fs.initializers());
+            consider(ret, fs.initializers());
             return false;
           case EXPRESSION_STATEMENT:
             if (((ExpressionStatement) ¢).getExpression() instanceof Assignment)
@@ -174,7 +174,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         xs.forEach(λ -> consider($, λ));
       }
     });
-    return $;
+    return ret;
   }
   /** Manual addition of imports recorded in the {@link ImportRewrite}
    * object. */
@@ -213,22 +213,22 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * {@link ArrayType} rather than {@link WildcardType}!
    * @param tipper
    * @return */
-  static Type fixWildCardType(final Type $) {
-    if ($ == null)
+  static Type fixWildCardType(final Type ret) {
+    if (ret == null)
       return null;
-    if ($ instanceof WildcardType)
-      return copy.of(((WildcardType) $).getBound());
+    if (ret instanceof WildcardType)
+      return copy.of(((WildcardType) ret).getBound());
     // here is the manual work...
-    final String s = $ + "";
+    final String s = ret + "";
     if (!s.startsWith("? extends "))
-      return $;
-    $.accept(new ASTVisitor(true) {
+      return ret;
+    ret.accept(new ASTVisitor(true) {
       boolean stop;
 
       @Override public boolean preVisit2(final ASTNode ¢) {
         return super.preVisit2(¢) && !stop;
       }
-      @Override public boolean visit(@SuppressWarnings("hiding") final WildcardType $) {
+      @Override public boolean visit( final WildcardType $) {
         if (s.indexOf($ + "") != 0)
           return super.visit($);
         stop = true;
@@ -243,7 +243,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         return false;
       }
     });
-    return $;
+    return ret;
   }
   static boolean isComplicated(final Expression ¢) {
     return iz.nodeTypeIn(¢, CLASS_INSTANCE_CREATION, METHOD_INVOCATION, INFIX_EXPRESSION, ASSIGNMENT, CONDITIONAL_EXPRESSION, LAMBDA_EXPRESSION);
@@ -270,20 +270,20 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return (¢ + "").contains("<?>");
   }
   private static List<String> getCreatedImports(final ImportRewrite ¢) {
-    final List<String> $ = an.empty.list();
+    final List<String> ret = an.empty.list();
     if (¢.getCreatedImports() != null)
-      $.addAll(as.list(¢.getCreatedImports()));
+      ret.addAll(as.list(¢.getCreatedImports()));
     if (¢.getCreatedStaticImports() != null)
-      $.addAll(as.list(¢.getCreatedStaticImports()));
-    return $;
+      ret.addAll(as.list(¢.getCreatedStaticImports()));
+    return ret;
   }
   private static Collection<String> getSameFile(final Collection<String> createdImports, final IType[] ts) {
     return createdImports.stream().filter(Arrays.stream(ts).map(IType::getFullyQualifiedName).collect(Collectors.toList())::contains)
         .collect(Collectors.toList());
   }
   private static Collection<String> getSamePackage(final Collection<String> createdImports, final IType rep) {
-    final String $ = rep.getPackageFragment().getElementName();
-    return createdImports.stream().filter(λ -> λ.startsWith($)).collect(Collectors.toList());
+    final String ret = rep.getPackageFragment().getElementName();
+    return createdImports.stream().filter(λ -> λ.startsWith(ret)).collect(Collectors.toList());
   }
   private static Collection<String> getTopLevel(final Collection<String> createdImports, final IType[] ts) {
     return createdImports.stream().filter(Arrays.stream(ts).map(IType::getFullyQualifiedName).collect(Collectors.toList())::contains)

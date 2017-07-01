@@ -41,16 +41,16 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       case "java.lang.Void":
         return null;
     }
-    final String name = Names.methodReturnName.apply(t, d);
-    if (name == null || scope.hasInScope(d.getBody(), name))
+    final String ret = Names.methodReturnName.apply(t, d);
+    if (ret == null || scope.hasInScope(d.getBody(), ret))
       return null;
-    final SimpleName $ = new Conservative(d).selectReturnVariable(name);
-    return $ == null ? null : new Tip(description(d, name, $), myClass(), $) {
+    final SimpleName $ = new Conservative(d).selectReturnVariable(ret);
+    return $ == null ? null : new Tip(description(d, ret, $), myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename($, $(), d, r, g);
       }
       SimpleName $() {
-        return make.from(d).identifier(name);
+        return make.from(d).identifier(ret);
       }
     }.spanning(d);
   }
@@ -60,10 +60,10 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
 }
 
 abstract class AbstractRenamePolicy {
-  private static List<ReturnStatement> prune(final List<ReturnStatement> $) {
-    if ($.isEmpty())
+  private static List<ReturnStatement> prune(final List<ReturnStatement> ret) {
+    if (ret.isEmpty())
       return null;
-    for (final Iterator<ReturnStatement> i = $.iterator(); i.hasNext();) {
+    for (final Iterator<ReturnStatement> i = ret.iterator(); i.hasNext();) {
       final ReturnStatement r = i.next();
       // Empty returns stop the search. Something wrong is going on.
       if (r.getExpression() == null)
@@ -71,7 +71,7 @@ abstract class AbstractRenamePolicy {
       if (iz.literal(r))
         i.remove();
     }
-    return $;
+    return ret;
   }
 
   private final MethodDeclaration inner;
@@ -94,14 +94,14 @@ abstract class AbstractRenamePolicy {
 
 class Aggressive extends AbstractRenamePolicy {
   private static SimpleName bestCandidate(final Collection<SimpleName> ns, final Collection<ReturnStatement> ss) {
-    final int $ = bestScore(ns, ss);
-    return $ <= 0 ? null : ns.stream().filter(λ -> $ == score(λ, ss)).findFirst().filter(λ -> noRivals(λ, ns, ss)).orElse(null);
+    final int ret = bestScore(ns, ss);
+    return ret <= 0 ? null : ns.stream().filter(λ -> ret == score(λ, ss)).findFirst().filter(λ -> noRivals(λ, ns, ss)).orElse(null);
   }
   private static int bestScore(final Iterable<SimpleName> ns, final Collection<ReturnStatement> ss) {
-    int $ = 0;
+    int ret = 0;
     for (final SimpleName ¢ : ns)
-      $ = Math.max($, score(¢, ss));
-    return $;
+      ret = Math.max(ret, score(¢, ss));
+    return ret;
   }
   private static boolean noRivals(final SimpleName candidate, final Collection<SimpleName> ns, final Collection<ReturnStatement> ss) {
     return ns.stream().allMatch(λ -> λ == candidate || score(λ, ss) < score(candidate, ss));

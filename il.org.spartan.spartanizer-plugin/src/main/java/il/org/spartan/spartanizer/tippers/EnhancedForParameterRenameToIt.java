@@ -37,16 +37,16 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     if (sn == null || in(sn.getIdentifier(), notation.cent))
       return null;
     final SingleVariableDeclaration d = s.getParameter();
-    final SimpleName $ = d.getName();
-    if (notation.isSpecial($) || !JohnDoe.property(d))
+    final SimpleName ret = d.getName();
+    if (notation.isSpecial(ret) || !JohnDoe.property(d))
       return null;
     final Statement body = body(s);
-    if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
+    if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf(ret).in(body).isEmpty())
       return null;
     final SimpleName ¢ = newCurrent(s);
-    return new Tip(description(s), myClass(), $) {
+    return new Tip(description(s), myClass(), ret) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        misc.rename($, ¢, s, r, g);
+        misc.rename(ret, ¢, s, r, g);
       }
     }.spanning(s);
   }

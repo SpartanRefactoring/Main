@@ -36,8 +36,8 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
     final Block commonBody = step.catchClauses(s).get(i).getBody();
     final SimpleName commonName = multiTypeCatch.getException().getName();
-    final TryStatement $ = copy.of(s);
-    step.catchClauses($).remove(i);
+    final TryStatement ret = copy.of(s);
+    step.catchClauses(ret).remove(i);
     for (final Type t : types) {
       final CatchClause c = s.getAST().newCatchClause();
       c.setBody(copy.of(commonBody));
@@ -45,10 +45,10 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
       e.setName(copy.of(commonName));
       e.setType(copy.of(t));
       c.setException(e);
-      step.catchClauses($).add(i, c);
+      step.catchClauses(ret).add(i, c);
       ++i;
     }
-    return $;
+    return ret;
   }
   @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
     return null;

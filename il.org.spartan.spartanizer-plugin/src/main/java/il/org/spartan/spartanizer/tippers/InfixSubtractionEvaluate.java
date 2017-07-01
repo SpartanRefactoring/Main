@@ -24,41 +24,41 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   private static final long serialVersionUID = 0x5D0DBA6EE527B4BL;
 
   @Override double evaluateDouble(final List<Expression> xs) {
-    double $ = 0;
+    double ret = 0;
     try {
-      $ = az.throwing.double¢(the.firstOf(xs)) - az.stream(the.tailOf(xs)).mapToDouble(az.throwing::double¢).sum();
+      ret = az.throwing.double¢(the.firstOf(xs)) - az.stream(the.tailOf(xs)).mapToDouble(az.throwing::double¢).sum();
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override int evaluateInt(final List<Expression> xs) {
-    int $ = 0;
+    int ret = 0;
     try {
-      $ = az.throwing.int¢(the.firstOf(xs));
+      ret = az.throwing.int¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
-        $ -= az.throwing.int¢(¢);
+        ret -= az.throwing.int¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override long evaluateLong(final List<Expression> xs) {
-    long $ = 0;
+    long ret = 0;
     try {
-      $ = az.throwing.long¢(the.firstOf(xs));
+      ret = az.throwing.long¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
-        $ -= az.throwing.long¢(¢);
+        ret -= az.throwing.long¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return $;
+    return ret;
   }
   @Override String operation() {
     return "subtraction";

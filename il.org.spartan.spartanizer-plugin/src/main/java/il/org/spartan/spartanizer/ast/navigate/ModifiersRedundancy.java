@@ -25,68 +25,68 @@ public enum ModifiersRedundancy {
   public static final Predicate<Modifier> isStatic = Modifier::isStatic;
   public static final List<Predicate<Modifier>> visibilityModifiers = as.list(isPublic, isPrivate, isProtected);
 
-  public static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
-    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
+  public static BodyDeclaration prune(final BodyDeclaration ret, final Set<Predicate<Modifier>> ms) {
+    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers(ret).iterator(); ¢.hasNext();)
       if (test(¢.next(), ms))
         ¢.remove();
-    return $;
+    return ret;
   }
   public static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
-    final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
+    final Set<Predicate<Modifier>> ret = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
-      return $;
+      return ret;
     if (iz.enumDeclaration(¢))
-      $.addAll(as.list(isStatic, isAbstract, isFinal));
+      ret.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.enumConstantDeclaration(¢)) {
-      $.addAll(visibilityModifiers);
+      ret.addAll(visibilityModifiers);
       if (iz.isMethodDeclaration(¢))
-        $.addAll(as.list(isFinal, isStatic, isAbstract));
+        ret.addAll(as.list(isFinal, isStatic, isAbstract));
     }
     if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration)
-      $.addAll(as.list(isStatic, isAbstract, isFinal));
+      ret.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.isMethodDeclaration(¢) && (iz.private¢(¢) || iz.static¢(¢)))
-      $.add(isFinal);
+      ret.add(isFinal);
     if (iz.methodDeclaration(¢) && haz.hasSafeVarags(az.methodDeclaration(¢)))
-      $.remove(isFinal);
+      ret.remove(isFinal);
     final ASTNode container = containing.typeDeclaration(¢);
     if (container == null)
-      return $;
+      return ret;
     if (iz.annotationTypeDeclaration(container))
-      $.add(isFinal);
+      ret.add(isFinal);
     if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
-      $.add(isFinal);
+      ret.add(isFinal);
     if (iz.enumDeclaration(container)) {
-      $.add(isProtected);
+      ret.add(isProtected);
       if (iz.constructor(¢))
-        $.addAll(visibilityModifiers);
+        ret.addAll(visibilityModifiers);
       if (iz.isMethodDeclaration(¢))
-        $.add(isFinal);
+        ret.add(isFinal);
     }
     if (iz.interface¢(container)) {
-      $.addAll(visibilityModifiers);
+      ret.addAll(visibilityModifiers);
       if (iz.isMethodDeclaration(¢)) {
-        $.add(isAbstract);
-        $.add(isFinal);
+        ret.add(isAbstract);
+        ret.add(isFinal);
       }
       if (iz.fieldDeclaration(¢)) {
-        $.add(isStatic);
-        $.add(isFinal);
+        ret.add(isStatic);
+        ret.add(isFinal);
       }
       if (iz.abstractTypeDeclaration(¢))
-        $.add(isStatic);
+        ret.add(isStatic);
     }
     if (iz.anonymousClassDeclaration(container)) {
       if (iz.fieldDeclaration(¢))
-        $.addAll(visibilityModifiers);
-      $.add(isPrivate);
+        ret.addAll(visibilityModifiers);
+      ret.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
-        $.add(isFinal);
+        ret.add(isFinal);
       if (iz.enumConstantDeclaration(containing.typeDeclaration(container)))
-        $.add(isProtected);
+        ret.add(isProtected);
     }
     if (iz.methodDeclaration(¢) && haz.hasSafeVarags(az.methodDeclaration(¢)))
-      $.remove(isFinal);
-    return $;
+      ret.remove(isFinal);
+    return ret;
   }
   public static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return ModifierRedundant.matches(¢, redundancies(¢));

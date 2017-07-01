@@ -12,13 +12,13 @@ import il.org.spartan.*;
  * @since 2017-06-10 */
 public final class Taxon extends Wrapper<Class<? extends Category>> implements Selfie<Taxon> {
   public static Taxon of(final Class<? extends Category> ¢) {
-    Taxon $ = Taxon.instances.get(¢);
-    if ($ != null)
-      return $;
-    $ = new Taxon(¢);
-    Taxon.instances.put(¢, $);
-    Taxa.hierarchy.add($);
-    return $;
+    Taxon ret = Taxon.instances.get(¢);
+    if (ret != null)
+      return ret;
+    ret = new Taxon(¢);
+    Taxon.instances.put(¢, ret);
+    Taxa.hierarchy.add(ret);
+    return ret;
   }
 
   public final String id;
@@ -51,11 +51,11 @@ public final class Taxon extends Wrapper<Class<? extends Category>> implements S
     return parents(get());
   }
   @SuppressWarnings("unchecked") public static Taxa parents(final Class<? extends Category> c) {
-    final Taxa $ = new Taxa();
+    final Taxa ret = new Taxa();
     for (final Class<?> x : c.getInterfaces())
       if (Taxa.isTaxon(x))
-        $.add(Taxon.of((Class<? extends Category>) x));
-    return $;
+        ret.add(Taxon.of((Class<? extends Category>) x));
+    return ret;
   }
   public static Taxon of(final Category ¢) {
     return Taxon.of(Taxa.isTaxon(¢.getClass()) ? ¢.getClass() : ¢.lowestCategory());

@@ -23,9 +23,9 @@ public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<Condi
   private static final long serialVersionUID = -0x7FD835D63A83948AL;
 
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
-    final Expression $ = ¢.getElseExpression(), then = ¢.getThenExpression();
-    return wizard.eq($, truee) && wizard.eq(then, falsee) ? make.notOf(copy.of(¢.getExpression()))
-        : wizard.eq($, falsee) && wizard.eq(then, truee) ? copy.of(¢.getExpression()) : null;
+    final Expression ret = ¢.getElseExpression(), then = ¢.getThenExpression();
+    return wizard.eq(ret, truee) && wizard.eq(then, falsee) ? make.notOf(copy.of(¢.getExpression()))
+        : wizard.eq(ret, falsee) && wizard.eq(then, truee) ? copy.of(¢.getExpression()) : null;
   }
 
   public static final ASTNode truee = make.ast("Boolean.TRUE"), falsee = make.ast("Boolean.FALSE");

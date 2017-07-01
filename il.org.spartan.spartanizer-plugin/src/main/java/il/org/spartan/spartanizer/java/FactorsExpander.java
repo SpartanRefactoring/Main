@@ -26,8 +26,8 @@ enum FactorsExpander {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
   }
   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
-    final Expression ¢ = copy.of(f.expression);
-    return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
+    final Expression ret = copy.of(f.expression);
+    return f.multiplier() ? subject.append($, ret) : subject.pair($, ret).to(DIVIDE);
   }
   private static InfixExpression base(final Factor t1, final Factor t2) {
     if (t1.multiplier())
@@ -51,9 +51,9 @@ enum FactorsExpander {
     assert first != null;
     final Factor second = the.secondOf(fs);
     assert second != null;
-    final Expression $ = base(first, second);
-    assert $ != null;
-    return step($, chop(chop(fs)));
+    final Expression ret = base(first, second);
+    assert ret != null;
+    return step(ret, chop(chop(fs)));
   }
   /** @param $ The accumulator, to which one more {@link Factor} should be added
    *        optimally
@@ -73,12 +73,12 @@ enum FactorsExpander {
       return $;
     assert fs != null;
     assert !fs.isEmpty();
-    final Operator o = $.getOperator();
-    assert o != null;
-    assert o == TIMES || o == DIVIDE;
+    final Operator ret = $.getOperator();
+    assert ret != null;
+    assert ret == TIMES || ret == DIVIDE;
     final Factor first = the.firstOf(fs);
     assert first != null;
-    return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
+    return recurse(ret == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
   }
   private static Expression step(final Expression $, final List<Factor> ¢) {
     assert ¢ != null;

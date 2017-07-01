@@ -33,8 +33,8 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
     final Expression x = the.onlyOneOf(expressions(az.arrayInitializer(a.getValue())));
     if (x == null)
       return null;
-    final SingleMemberAnnotation $ = copy.of(a);
-    $.setValue(copy.of(x));
-    return $;
+    final SingleMemberAnnotation ret = copy.of(a);
+    ret.setValue(copy.of(x));
+    return ret;
   }
 }

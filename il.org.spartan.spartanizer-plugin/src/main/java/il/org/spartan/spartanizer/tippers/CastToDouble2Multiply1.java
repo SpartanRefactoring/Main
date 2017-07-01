@@ -20,9 +20,9 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
   private static final long serialVersionUID = -0x159736130C9F5D80L;
 
   private static NumberLiteral literal(final Expression ¢) {
-    final NumberLiteral $ = ¢.getAST().newNumberLiteral();
-    $.setToken("1.");
-    return $;
+    final NumberLiteral ret = ¢.getAST().newNumberLiteral();
+    ret.setToken("1.");
+    return ret;
   }
   private static InfixExpression replacement(final Expression $) {
     return subject.pair(literal($), $).to(TIMES);

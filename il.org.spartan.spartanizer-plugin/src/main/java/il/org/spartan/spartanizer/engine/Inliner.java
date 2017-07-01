@@ -63,19 +63,19 @@ public final class Inliner {
     final Type et = ((ArrayType) t).getElementType();
     if (!(et instanceof SimpleType))
       return null;
-    final Name $ = ((SimpleType) et).getName();
-    return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
+    final Name ret = ((SimpleType) et).getName();
+    return !(ret instanceof SimpleName) ? null : ((SimpleName) ret).getIdentifier();
   }
   public static Expression protect(final Expression initializer) {
     if (!iz.arrayInitializer(initializer))
       return copy.of(initializer);
     final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(parent(initializer)));
     assert parent != null;
-    final ArrayCreation $ = initializer.getAST().newArrayCreation();
-    $.setType(az.arrayType(copy.of(extract.type(az.variableDeclrationFragment(parent(initializer))))));
-    $.setInitializer(copy.of(az.arrayInitializer(initializer)));
+    final ArrayCreation ret = initializer.getAST().newArrayCreation();
+    ret.setType(az.arrayType(copy.of(extract.type(az.variableDeclrationFragment(parent(initializer))))));
+    ret.setInitializer(copy.of(az.arrayInitializer(initializer)));
     // TODO // causes // IllegalArgumentException // (--om)
-    return $;
+    return ret;
   }
   /** Determines whether a specific SimpleName was used in a
    * {@link ForStatement}.

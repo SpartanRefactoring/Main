@@ -38,8 +38,8 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
   @Override public Statement replacement(final IfStatement ¢) {
-    final IfStatement $ = copy.of(¢);
-    $.setElseStatement(null);
-    return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
+    final IfStatement ret = copy.of(¢);
+    ret.setElseStatement(null);
+    return !iz.blockRequiredInReplacement(¢, ret) ? ret : subject.statement(ret).toBlock();
   }
 }

@@ -41,11 +41,11 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
     return pruneDuplicates(¢.stream().sorted(comp).collect(toList()));
   }
-  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> $) {
-    for (int ¢ = 0; ¢ < $.size(); ++¢)
-      while (¢ < $.size() - 1 && comp.compare($.get(¢), $.get(¢ + 1)) == 0)
-        $.remove(¢ + 1);
-    return $;
+  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ret) {
+    for (int ¢ = 0; ¢ < ret.size(); ++¢)
+      while (¢ < ret.size() - 1 && comp.compare(ret.get(¢), ret.get(¢ + 1)) == 0)
+        ret.remove(¢ + 1);
+    return ret;
   }
   @Override public String description(final N ¢) {
     return "Sort modifiers of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.modifiers(¢) + "->" + sort(extract.modifiers(¢)) + ")";
@@ -56,12 +56,12 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   @Override protected boolean prerequisite(final N ¢) {
     return !extendedModifiers(¢).isEmpty() && !isSortedAndDistinct(extract.modifiers(¢));
   }
-  private N go(final N $) {
-    final Collection<IExtendedModifier> ies = as.list(extract.annotations($)), ms = as.list(sortedModifiers($));
-    extendedModifiers($).clear();
-    extendedModifiers($).addAll(ies);
-    extendedModifiers($).addAll(ms);
-    return $;
+  private N go(final N ret) {
+    final Collection<IExtendedModifier> ies = as.list(extract.annotations(ret)), ms = as.list(sortedModifiers(ret));
+    extendedModifiers(ret).clear();
+    extendedModifiers(ret).addAll(ies);
+    extendedModifiers(ret).addAll(ms);
+    return ret;
   }
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(extract.modifiers($));

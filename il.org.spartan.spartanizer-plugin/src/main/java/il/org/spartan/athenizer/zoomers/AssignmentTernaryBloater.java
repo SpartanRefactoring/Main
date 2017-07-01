@@ -33,23 +33,23 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     ;
   }
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
-    final ConditionalExpression $ = az.conditionalExpression(core(x));
-    if ($ == null)
+    final ConditionalExpression ret = az.conditionalExpression(core(x));
+    if (ret == null)
       return null;
-    final ExpressionStatement e1 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o)));
-    ExpressionStatement e2 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)));
-    if (wizard.eq(left, then($)))
-      return pair(e2, null).toIf(make.notOf($.getExpression()));
-    if (wizard.eq(left, elze($)))
+    final ExpressionStatement e1 = az.expressionStatement(ret.getAST().newExpressionStatement(pair(left, then(ret)).to(o)));
+    ExpressionStatement e2 = az.expressionStatement(ret.getAST().newExpressionStatement(pair(left, elze(ret)).to(o)));
+    if (wizard.eq(left, then(ret)))
+      return pair(e2, null).toIf(make.notOf(ret.getExpression()));
+    if (wizard.eq(left, elze(ret)))
       e2 = null;
-    return pair(e1, e2).toIf($.getExpression());
+    return pair(e1, e2).toIf(ret.getExpression());
   }
   private static ASTNode replaceAssignment(final Statement ¢) {
     final ExpressionStatement expressionStatement = az.expressionStatement(¢);
     if (expressionStatement == null)
       return null;
-    final Assignment $ = az.assignment(expressionStatement.getExpression());
-    return $ == null ? null : innerAssignReplacement(right($), left($), $.getOperator());
+    final Assignment ret = az.assignment(expressionStatement.getExpression());
+    return ret == null ? null : innerAssignReplacement(right(ret), left(ret), ret.getOperator());
   }
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replaceAssignment(¢);

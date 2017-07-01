@@ -19,10 +19,10 @@ import il.org.spartan.utils.*;
  * @since Dec 14, 2016 */
 public interface hIndex {
   static int hindex(final List<Pair<String, Int>> ¢) {
-    for (int $ = 0; $ < ¢.size(); ++$) {
-      if ($ > ¢.get($).second.inner)
-        return $;
-      System.out.println(¢.get($).first + " : " + ¢.get($).second.inner);
+    for (int ret = 0; ret < ¢.size(); ++ret) {
+      if (ret > ¢.get(ret).second.inner)
+        return ret;
+      System.out.println(¢.get(ret).first + " : " + ¢.get(ret).second.inner);
     }
     return ¢.size();
   }

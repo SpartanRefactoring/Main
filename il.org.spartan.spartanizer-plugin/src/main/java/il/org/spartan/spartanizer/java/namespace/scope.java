@@ -11,20 +11,20 @@ import il.org.spartan.utils.*;
  * @since 2016-12 */
 public interface scope {
   static List<ASTNode> of(final SingleVariableDeclaration x) {
-    final List<ASTNode> $ = an.empty.list();
-    $.add(x);
-    return $;
+    final List<ASTNode> ret = an.empty.list();
+    ret.add(x);
+    return ret;
   }
   static List<? extends ASTNode> of(final VariableDeclarationFragment ¢) {
     return scope.of(¢.getName());
   }
   static List<? extends ASTNode> of(final SimpleName ¢) {
-    final List<? extends ASTNode> $ = definition.scope(¢);
-    assert $ != null : fault.dump() + //
+    final List<? extends ASTNode> ret = definition.scope(¢);
+    assert ret != null : fault.dump() + //
         "\n\t n=" + ¢ + //
         "\n\t definition.kind() = " + definition.kind(¢) + //
         fault.done();
-    return $;
+    return ret;
   }
   static void initializeNamespaces(final ASTNode ¢) {
     final ASTNode root = ¢.getRoot();
@@ -35,24 +35,24 @@ public interface scope {
       $ = new Namespace($);
   }
   static Namespace getScopeNamespace(final ASTNode ¢) {
-    Namespace $ = Environment.of(¢);
-    if ($ != null || ($ = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
-      return $;
-    $ = new Namespace(null);
-    ¢.getRoot().setProperty("Namspace", $);
-    return $;
+    Namespace ret = Environment.of(¢);
+    if (ret != null || (ret = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
+      return ret;
+    ret = new Namespace(null);
+    ¢.getRoot().setProperty("Namspace", ret);
+    return ret;
   }
   static String newName(final ASTNode ¢, final Type t) {
     final Namespace n = getScopeNamespace(¢);
-    final String $ = n.generateName(t);
-    n.addNewName($, t);
-    return $;
+    final String ret = n.generateName(t);
+    n.addNewName(ret, t);
+    return ret;
   }
   static String newName(final ASTNode ¢, final Type t, final String s) {
     final Namespace n = getScopeNamespace(¢);
-    final String $ = n.generateName(s);
-    n.addNewName($, t);
-    return $;
+    final String ret = n.generateName(s);
+    n.addNewName(ret, t);
+    return ret;
   }
   /** returns whether identifier exists in the environment (does not include
    * nested scopes) */

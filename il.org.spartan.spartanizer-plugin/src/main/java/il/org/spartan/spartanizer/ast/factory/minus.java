@@ -31,13 +31,13 @@ public enum minus {
    * @param ¢ JD {@code null if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  public static Statement lastStatement(final Statement $) {
-    if (!iz.block($))
-      return make.emptyStatement($);
-    final List<Statement> ss = step.statements(az.block($));
+  public static Statement lastStatement(final Statement ret) {
+    if (!iz.block(ret))
+      return make.emptyStatement(ret);
+    final List<Statement> ss = step.statements(az.block(ret));
     if (!ss.isEmpty())
       ss.remove(ss.size() - 1);
-    return $;
+    return ret;
   }
   public static int level(final Expression ¢) {
     return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)

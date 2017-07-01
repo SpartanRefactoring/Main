@@ -99,13 +99,13 @@ public enum LogToTest {
         + ").doesNotCrash();\n}";
   }
   private static String wrap(final Iterable<String> ss, final String fileName) {
-    final StringBuilder $ = new StringBuilder(
+    final StringBuilder ret = new StringBuilder(
         "package il.org.spartan.automatic;\n\nimport static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
             + "import org.junit.*;\n\n/** @author Ori Roth\n* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
             + "@SuppressWarnings(\"static-method\")\n" //
             + "@forget\n" //
             + "public class " + fileName + " {\n");
-    ss.forEach(λ -> $.append(λ).append("\n"));
-    return format.code($.append("}\n") + "");
+    ss.forEach(λ -> ret.append(λ).append("\n"));
+    return format.code(ret.append("}\n") + "");
   }
 }

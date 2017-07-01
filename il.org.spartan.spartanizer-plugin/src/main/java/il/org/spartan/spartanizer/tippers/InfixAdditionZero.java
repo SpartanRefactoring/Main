@@ -69,14 +69,14 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return "Remove noop of adding 0 in " + Trivia.gist(¢);
   }
   @Override public Tip tip(final InfixExpression x) {
-    final List<Expression> $ = gather(x);
-    if ($.size() < 2)
+    final List<Expression> ret = gather(x);
+    if (ret.size() < 2)
       return null;
-    final int n = minus.level($);
-    return n == 0 || n == 1 && minus.level(the.firstOf($)) == 1 ? null : new Tip(description(x), getClass(), x) {
+    final int n = minus.level(ret);
+    return n == 0 || n == 1 && minus.level(the.firstOf(ret)) == 1 ? null : new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = n % 2 == 0 ? null : the.firstOf($);
-        $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
+        final Expression first = n % 2 == 0 ? null : the.firstOf(ret);
+        ret.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)
           r.replace(first, make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);

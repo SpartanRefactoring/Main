@@ -55,8 +55,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
-    return $ == null ? null : commit(p, $);
+    final Set<String> ret = getPreferencesChanges(d, toEnabledSet(m));
+    return ret == null ? null : commit(p, ret);
   }
   /** Initiates configuration change for the project. This includes one dialog
    * opening. This method does not open the XML file, but uses given enabled
@@ -70,8 +70,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
-    return $ == null ? null : commit.apply(p, $);
+    final Set<String> ret = getPreferencesChanges(d, toEnabledSet(m));
+    return ret == null ? null : commit.apply(p, ret);
   }
   /** Commits enabled tippers for the project, see
    * {@link XMLSpartan#updateEnabledTippers}.
@@ -96,13 +96,13 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   public static Set<String> getPreferencesChanges(final SpartanPreferencesDialog ¢, final Set<String> initialPreferences) {
     ¢.open();
     final Object[] changes = ¢.getResult();
-    final Set<String> $ = changes == null || ¢.getReturnCode() != Window.OK ? null
+    final Set<String> ret = changes == null || ¢.getReturnCode() != Window.OK ? null
         : Stream.of(changes)//
             .filter(SpartanTipper.class::isInstance)//
             .map(SpartanTipper.class::cast)//
             .map(SpartanTipper::name)//
             .collect(toSet());
-    return $ == null || $.containsAll(initialPreferences) && initialPreferences.containsAll($) ? null : $;
+    return ret == null || ret.containsAll(initialPreferences) && initialPreferences.containsAll(ret) ? null : ret;
   }
   /** @param m enabled tippers collection
    * @return preferences configuration dialog for project, using given enabled
@@ -114,7 +114,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         .filter(λ -> λ.parent == null && λ.categoryClass() != il.org.spartan.spartanizer.tipping.categories.Category.class)
         .collect(Collectors.toList());
     final SpartanElement[] es = _es.toArray(new SpartanElement[_es.size()]);
-    final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
+    final SpartanPreferencesDialog ret = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
       @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
@@ -147,18 +147,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         return !(parentElement instanceof SpartanCategory) ? null : ((SpartanCategory) parentElement).getChildren();
       }
     });
-    $.setTitle("Spartanization Preferences");
-    $.setMessage("Choose the tippers you would like to use:\n(Tip: double click a tipper to see usage examples)");
-    $.setEmptyListMessage("No tippers available... something went totally wrong!");
-    $.setContainerMode(true);
-    $.setInput(new Object()); // vio: very important object
+    ret.setTitle("Spartanization Preferences");
+    ret.setMessage("Choose the tippers you would like to use:\n(Tip: double click a tipper to see usage examples)");
+    ret.setEmptyListMessage("No tippers available... something went totally wrong!");
+    ret.setContainerMode(true);
+    ret.setInput(new Object()); // vio: very important object
     final Collection<SpartanElement> et = an.empty.list();
     for (final SpartanCategory ¢ : m.keySet())
       collectEnabledTippersInto(¢, et);
-    $.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
-    $.setHelpAvailable(false);
-    $.setComparator(new ViewerComparator(String::compareToIgnoreCase));
-    return $;
+    ret.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
+    ret.setHelpAvailable(false);
+    ret.setComparator(new ViewerComparator(String::compareToIgnoreCase));
+    return ret;
   }
 
   /** Dialog used for the plugin's preferences change by the user.
@@ -174,11 +174,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
      * org.eclipse.ui.dialogs.CheckedTreeSelectionDialog#createTreeViewer(org.
      * eclipse.swt.widgets.Composite) */
     @Override protected CheckboxTreeViewer createTreeViewer(final Composite parent) {
-      final CheckboxTreeViewer $ = super.createTreeViewer(parent);
+      final CheckboxTreeViewer ret = super.createTreeViewer(parent);
       // addSelectionListener($); // deprecated method- by click
       final Map<SpartanElement, ToolTip> tooltips = new HashMap<>();
       final Map<ToolTip, Rectangle> bounds = new HashMap<>();
-      $.getTree().addListener(SWT.MouseHover, new Listener() {
+      ret.getTree().addListener(SWT.MouseHover, new Listener() {
         @Override public void handleEvent(final Event e) {
           if (e == null)
             return;
@@ -201,7 +201,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             tt.setAutoHide(true);
             tooltips.put(e, tt);
           }
-          final Rectangle tp = $.getTree().getBounds();
+          final Rectangle tp = ret.getTree().getBounds();
           final Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
           final Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
           final ToolTip tt = tooltips.get(e);
@@ -210,17 +210,17 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           tt.setVisible(true);
         }
       });
-      $.getTree().addListener(SWT.MouseMove, e -> {
+      ret.getTree().addListener(SWT.MouseMove, e -> {
         for (final ToolTip ¢ : tooltips.values())
           if (¢.isVisible()) {
-            final Rectangle tp = $.getTree().getBounds();
+            final Rectangle tp = ret.getTree().getBounds();
             if (!bounds.get(¢).contains(Display.getCurrent().getActiveShell().toDisplay(tp.x + e.x, tp.y + e.y)))
               ¢.setVisible(false);
             break;
           }
       });
-      $.getTree().addListener(SWT.MouseWheel, e -> tooltips.values().forEach(λ -> λ.setVisible(false)));
-      $.addDoubleClickListener(new IDoubleClickListener() {
+      ret.getTree().addListener(SWT.MouseWheel, e -> tooltips.values().forEach(λ -> λ.setVisible(false)));
+      ret.addDoubleClickListener(new IDoubleClickListener() {
         @Override public void doubleClick(final DoubleClickEvent e) {
           final ISelection s = e.getSelection();
           if (s == null || s.isEmpty() || !(s instanceof TreeSelection))
@@ -238,7 +238,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
                 return st.name();
               }
               @Override public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
-                @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
+                 final DocumentChange $ = new DocumentChange(st.name(), d);
                 $.setEdit(new ReplaceEdit(0, before.length(), after));
                 return $;
               }
@@ -251,13 +251,13 @@ public class ProjectPreferencesHandler extends AbstractHandler {
                 return new RefactoringStatus();
               }
             })).run(Display.getCurrent().getActiveShell(), "Tipper Preview") == Window.OK)
-              $.setChecked(st, true);
+              ret.setChecked(st, true);
           } catch (final InterruptedException ¢¢) {
             note.cancel(this, ¢¢);
           }
         }
       });
-      return $;
+      return ret;
     }
   }
 
@@ -269,24 +269,24 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   static String getPreviewString(final Examples preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
     if (preview == null || StreamSupport.stream(preview.spliterator(), false).filter(λ -> filter.apply(λ).booleanValue()).count() == 0)
       return "[no available examples]";
-    final StringBuilder $ = new StringBuilder();
+    final StringBuilder ret = new StringBuilder();
     int c = 1;
     for (final Example ¢ : preview)
       if (filter.apply(¢).booleanValue())
-        $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
-    return ($ + "").trim();
+        ret.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
+    return (ret + "").trim();
   }
   static String prettify(final String code) {
     final TextEdit e = formatter.get().format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
       return code;
-    final IDocument $ = new Document(code);
+    final IDocument ret = new Document(code);
     try {
-      e.apply($);
+      e.apply(ret);
     } catch (MalformedTreeException | BadLocationException ¢) {
       note.bug(¢);
     }
-    return $.get();
+    return ret.get();
   }
   private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanElement[]> m) {
     return m.values().stream().reduce(new HashSet<String>(), (s, a) -> {

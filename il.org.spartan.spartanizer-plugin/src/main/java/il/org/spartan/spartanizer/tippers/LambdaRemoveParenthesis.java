@@ -23,8 +23,8 @@ public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpr
     return "Remove parenthesis around " + the.onlyOneOf(parameters(¢)) + " paramter";
   }
   @Override public LambdaExpression replacement(final LambdaExpression ¢) {
-    final LambdaExpression $ = copy.of(¢);
-    $.setParentheses(false);
-    return $;
+    final LambdaExpression ret = copy.of(¢);
+    ret.setParentheses(false);
+    return ret;
   }
 }

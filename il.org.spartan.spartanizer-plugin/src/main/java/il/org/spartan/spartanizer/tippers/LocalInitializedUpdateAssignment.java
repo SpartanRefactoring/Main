@@ -33,7 +33,7 @@ public final class LocalInitializedUpdateAssignment extends $FragmentAndStatemen
   @Override public String description() {
     return "Consolidate declaration of variable with its subsequent initialization";
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -44,12 +44,12 @@ public final class LocalInitializedUpdateAssignment extends $FragmentAndStatemen
     if (o == ASSIGN)
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(op.assign2infix(o));
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, ret, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
-    $.replace(initializer, newInitializer, g);
+    ret.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);
-    $.remove(nextStatement, g);
-    return $;
+    ret.remove(nextStatement, g);
+    return ret;
   }
 }
