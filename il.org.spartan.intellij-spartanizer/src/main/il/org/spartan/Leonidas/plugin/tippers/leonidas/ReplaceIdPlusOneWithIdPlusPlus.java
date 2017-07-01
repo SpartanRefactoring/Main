@@ -39,7 +39,7 @@ public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition 
                 .put("x+=2;", null)
                 .put("/*incrementing*/\nx+=1;", "/*incrementing*/\nx++;")
                 .put("x+=1", "x++")
-//                .put("for(int i=0; i<5; i+=1){;}", "for(int i=0; i<5; i++){;}")
+                .put("for(int i=0; i<5; i+=1){;}", "for(int i=0; i<5; i++){;}")
                 .map();
     }
 }

@@ -52,7 +52,7 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("int x=5;\nObject a,b;\nwhile(a.hashCode()!=x){\n\tx = b.hashCode();\n}", "int x=5;\nObject a,b;\nwhile(a.hashCode()!=x)\n\tx = b.hashCode();")
-//                .put("while(true)\n\twhile(true){\nSystem.out.println();\n}", "while(true)\n\twhile(true)\nSystem.out.println();\n")
+                .put("while(true)\n\twhile(true){\nSystem.out.println();\n}", "while(true)\n\twhile(true)\nSystem.out.println();\n")
                 .put("while(true){\n\twhile(true){\nSystem.out.println();\n}}", "while(true){\n\twhile(true)\nSystem.out.println();\n}")
                 .put("while(true)\n\tSystem.out.println();", null)
                 .put("while(true)\n\twhile(true)\n\t\tSystem.out.println();", null)

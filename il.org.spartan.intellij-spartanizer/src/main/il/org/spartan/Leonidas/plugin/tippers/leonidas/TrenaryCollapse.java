@@ -35,7 +35,7 @@ public class TrenaryCollapse implements LeonidasTipperDefinition {
         return new ExampleMapFactory()
                 .put("x == 9 ? y == 8? 5:9:9", "(x==9 && y == 8) ? 5 : 9")
                 .put("true ? false? true: false : false", "(true && false) ? true : false")
-//                .put("if((x == x ? y == y? a:b:b) == b){}", "if (((x == x && y == y) ? a : b) == b) {}")
+                .put("if((x == x ? y == y? a:b:b) == b){}", "if (((x == x && y == y) ? a : b) == b) {}")
                 .put("true? false? 5:9:7", null)
                 .put("return x ? y ? z : x : x;", "return (x && y) ? z : x;")
                 .put("return x ? y ? z : a : b;", null)
