@@ -42,14 +42,14 @@ final class BatchSpartanizerApplication implements IApplication {
     return IApplication.EXIT_OK;
   }
   ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
-    final String ret = FileUtils.read(¢);
-    setPackage(getPackageNameFromSource(ret));
-    return pack.createCompilationUnit(¢.getName(), ret, false, null);
+    final String $ = FileUtils.read(¢);
+    setPackage(getPackageNameFromSource($));
+    return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
   private static String getPackageNameFromSource(final String source) {
-    final ASTParser ret = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
-    ret.setSource(source.toCharArray());
-    return getPackageNameFromSource(new Wrapper<>(""), ret.createAST(null));
+    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    $.setSource(source.toCharArray());
+    return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     // noinspection SameReturnValue
@@ -126,10 +126,10 @@ final class BatchSpartanizerApplication implements IApplication {
   // }
   // }
   public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder ret = system.runScript();
-    ret.redirectErrorStream(true);
-    ret.command(script, pathname);
-    return ret;
+    final ProcessBuilder $ = system.runScript();
+    $.redirectErrorStream(true);
+    $.command(script, pathname);
+    return $;
   }
   static void printHelpPrompt() {
     System.out.println(system.myShortClassName());

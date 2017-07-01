@@ -100,15 +100,15 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return (getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : !API_LEVEL_TYPE.equals(getProperty(API_LEVEL)) ? "" : "az")
         + (step.type(¢) + "").replaceAll("//.", "•");
   }
-  private static AbstractTypeDeclaration containingType(final CastExpression ret) {
+  private static AbstractTypeDeclaration containingType(final CastExpression $) {
     final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
       case API_LEVEL_FILE:
         return getType(prepareFile(fileAzFile()));
       case API_LEVEL_PACKAGE:
-        return getType(prepareFile(packageAzFile(ret)));
+        return getType(prepareFile(packageAzFile($)));
       case API_LEVEL_TYPE:
-        return yieldAncestors.untilContainingType().from(ret);
+        return yieldAncestors.untilContainingType().from($);
       default:
         assert false : "illegal apiLevel [" + s + "]";
         return null;
@@ -133,14 +133,14 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static File updatePackage(final File ¢) {
     return ¢;
   }
-  private static File createFileFromTemplate(final File ret) {
+  private static File createFileFromTemplate(final File $) {
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
-          ret.toPath(), StandardCopyOption.REPLACE_EXISTING);
+          $.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (final IOException ¢) {
       note.io(¢, "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template");
     }
-    return ret;
+    return $;
   }
   @Override public String description(@SuppressWarnings("unused") final CastExpression __) {
     return "replace coercion with az()";

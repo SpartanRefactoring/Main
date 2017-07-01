@@ -23,13 +23,13 @@ public class WidgetContext {
   /** @return a WidgetContext representing the current context of the
    *         workspace */
   public static WidgetContext generateContext() {
-    final WidgetContext ret = new WidgetContext();
-    ret.project = Selection.Util.project();
-    ret.javaProject = Selection.Util.getJavaProject();
-    ret.allProjects = Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects());
-    ret.currentSelecetion = Selection.Util.current();
-    ret.currentCompilationUnit = Selection.Util.getCurrentCompilationUnit();
-    ret.allCompilationUnits = Selection.Util.getAllCompilationUnits();
-    return ret;
+    final WidgetContext $ = new WidgetContext();
+    $.project = Selection.Util.project();
+    $.javaProject = Selection.Util.getJavaProject();
+    $.allProjects = Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects());
+    $.currentSelecetion = Selection.Util.current();
+    $.currentCompilationUnit = Selection.Util.getCurrentCompilationUnit();
+    $.allCompilationUnits = Selection.Util.getAllCompilationUnits();
+    return $;
   }
 }

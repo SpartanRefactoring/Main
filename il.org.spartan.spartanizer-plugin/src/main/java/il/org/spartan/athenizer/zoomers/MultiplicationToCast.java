@@ -30,31 +30,31 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
       return null;
     int i = 0;
     boolean found = false;
-    final CastExpression ret = x.getAST().newCastExpression();
+    final CastExpression $ = x.getAST().newCastExpression();
     for (final Expression e : extract.allOperands(x)) {
       if (iz.hexaDecimal(e))
         continue;
       if (iz.literal(e, 1.)) {
-        ret.setType(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE));
+        $.setType(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE));
         found = true;
       }
       if (iz.literal(e, 1L)) {
-        ret.setType(x.getAST().newPrimitiveType(PrimitiveType.LONG));
+        $.setType(x.getAST().newPrimitiveType(PrimitiveType.LONG));
         found = true;
       }
       if (found) {
         if (x.hasExtendedOperands()) {
           final List<Expression> xs = extract.allOperands(x);
           xs.remove(i);
-          ret.setExpression(subject.operands(xs).to(x.getOperator()));
+          $.setExpression(subject.operands(xs).to(x.getOperator()));
         } else {
           if (i == 0) {
-            ret.setExpression(copy.of(x.getRightOperand()));
-            return ret;
+            $.setExpression(copy.of(x.getRightOperand()));
+            return $;
           }
-          ret.setExpression(copy.of(x.getLeftOperand()));
+          $.setExpression(copy.of(x.getLeftOperand()));
         }
-        return ret;
+        return $;
       }
       ++i;
     }

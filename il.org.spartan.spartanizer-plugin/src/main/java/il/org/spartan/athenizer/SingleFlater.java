@@ -39,9 +39,9 @@ public final class SingleFlater {
    * @param ¢ JD
    * @return new */
   public static SingleFlater in(final ASTNode ¢) {
-    final SingleFlater ret = new SingleFlater();
-    ret.root = ¢;
-    return ret;
+    final SingleFlater $ = new SingleFlater();
+    $.root = ¢;
+    return $;
   }
   /** Sets {@link OperationProvider} for this flater.
    * @param ¢ JD
@@ -72,9 +72,9 @@ public final class SingleFlater {
   }
   protected <N extends ASTNode> Tipper<N> getTipper(final N n) {
     return robust.lyNull(() -> {
-      final Tipper<N> ret = operationsProvider.getTipper(n);
-      setTipper(ret);
-      return ret;
+      final Tipper<N> $ = operationsProvider.getTipper(n);
+      setTipper($);
+      return $;
     }, λ -> note.bug(this, λ));
   }
   /** Main operation. Commit a single change to the {@link CompilationUnit}.
@@ -219,7 +219,7 @@ public final class SingleFlater {
     public int startLine;
     public int endLine;
 
-    @Deprecated @SuppressWarnings("restriction") private WindowInformation(final ITextEditor e) {
+    @Deprecated  private WindowInformation(final ITextEditor e) {
       if (!(e instanceof CompilationUnitEditor)) {
         invalidate();
         return;

@@ -34,11 +34,11 @@ public enum into {
    *        "conditional" (also known as "ternary") expression.
    * @return an {@link Statement} data structure representing the parameter. */
   public static ConditionalExpression c(final String conditionalExpression) {
-    final Expression ret = e(conditionalExpression);
+    final Expression $ = e(conditionalExpression);
     assert conditionalExpression != null;
-    assert ret != null;
-    azzert.that(conditionalExpression, ret, instanceOf(ConditionalExpression.class));
-    return (ConditionalExpression) ret;
+    assert $ != null;
+    azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));
+    return (ConditionalExpression) $;
   }
   /** @param p a {@link String} that represents a Java Compilation unit
    * @return {@link CompilationUnit} data structure representing the
@@ -106,11 +106,11 @@ public enum into {
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement s(final String statement) {
     assert statement != null;
-    final ASTNode ret = makeAST.STATEMENTS.from(statement);
+    final ASTNode $ = makeAST.STATEMENTS.from(statement);
     assert statement != null;
-    assert ret != null;
-    azzert.that(statement, ret, instanceOf(Statement.class));
-    return (Statement) ret;
+    assert $ != null;
+    azzert.that(statement, $, instanceOf(Statement.class));
+    return (Statement) $;
   }
   public static Type t(final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));

@@ -29,13 +29,13 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Categ
     andAlso("Exists updated variable not declared in for initalizers list", () -> !updatedNotDeclared.isEmpty());
   }
   private static List<SimpleName> updatedVars(final Expression u) {
-    final List<SimpleName> ret = an.empty.list();
+    final List<SimpleName> $ = an.empty.list();
     final Expression e = extract.core(u);
     Expression d;
     if ((d = step.operand(az.postfixExpression(e))) != null || (d = step.operand(az.prefixExpression(e))) != null
         || (d = step.left(az.assignment(e))) != null)
-      ret.add(az.simpleName(d));
-    return ret;
+      $.add(az.simpleName(d));
+    return $;
   }
   @Override protected ASTRewrite go(@SuppressWarnings("unused") final ASTRewrite __, @SuppressWarnings("unused") final TextEditGroup g) {
     return null;

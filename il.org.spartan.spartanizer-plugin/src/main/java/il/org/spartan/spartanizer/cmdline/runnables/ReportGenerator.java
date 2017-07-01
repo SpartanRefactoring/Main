@@ -51,9 +51,9 @@ public class ReportGenerator implements ConfigurableReport {
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
-      final HashMap<String, NamedFunction[]> ret = new HashMap<>();
-      ret.put("metrics", functions(""));
-      ret.put("methods",
+      final HashMap<String, NamedFunction[]> $ = new HashMap<>();
+      $.put("metrics", functions(""));
+      $.put("methods",
           as.array(m("N. of Nodes", countOf::nodes), //
               m("Average Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
                                               // "").length()), //
@@ -63,7 +63,7 @@ public class ReportGenerator implements ConfigurableReport {
                                                 // "").length()) //
           // Report Halstead Metrics
           )); //
-      return ret;
+      return $;
     }
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);

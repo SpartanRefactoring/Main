@@ -25,26 +25,26 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
                                 : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) : reduce();
   }
   protected R composite(final List<? extends ASTNode> ns) {
-    R ret = reduce();
+    R $ = reduce();
     for (final ASTNode ¢ : ns)
-      ret = reduce(ret, map(¢));
-    return ret;
+      $ = reduce($, map(¢));
+    return $;
   }
   protected R compound(final Expression... ¢) {
     return foldl(as.list(¢).stream().filter(λ -> λ != null).collect(Collectors.toList()));
   }
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
-    R ret = reduce();
+    R $ = reduce();
     if (ns != null)
       for (final ASTNode ¢ : ns)
-        ret = reduce(ret, map(¢));
-    return ret;
+        $ = reduce($, map(¢));
+    return $;
   }
   protected R foldListModifiers(final List<IExtendedModifier> ms) {
-    R ret = reduce();
+    R $ = reduce();
     for (final IExtendedModifier ¢ : ms)
-      ret = reduce(ret, map(¢));
-    return ret;
+      $ = reduce($, map(¢));
+    return $;
   }
   @SuppressWarnings("static-method") protected int[] protect() {
     return new int[] {};

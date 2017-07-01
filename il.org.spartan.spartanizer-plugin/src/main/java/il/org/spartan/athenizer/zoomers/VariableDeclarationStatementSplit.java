@@ -31,15 +31,15 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     return fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).count() >= 2;
   }
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
-    final VariableDeclarationStatement ret = copy.of(¢), first = copy.of(¢);
-    final VariableDeclarationFragment fs = getFirstAssignment(ret), ff = fragments(first).get(fragments(ret).indexOf(fs));
-    fragments(ret).remove(fs);
+    final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
+    final VariableDeclarationFragment fs = getFirstAssignment($), ff = fragments(first).get(fragments($).indexOf(fs));
+    fragments($).remove(fs);
     fragments(first).clear();
     fragments(first).add(ff);
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(parent(¢), Block.STATEMENTS_PROPERTY);
-        l.insertAfter(ret, ¢, g);
+        l.insertAfter($, ¢, g);
         l.insertAfter(first, ¢, g);
         l.remove(¢, g);
       }

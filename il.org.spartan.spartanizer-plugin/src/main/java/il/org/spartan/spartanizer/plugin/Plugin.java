@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+
 
 import java.util.concurrent.atomic.*;
 import java.util.function.Consumer;
@@ -12,13 +12,13 @@ import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
-import org.w3c.dom.*;
+
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
-import il.org.spartan.spartanizer.research.analyses.*;
+
 
 /** TODO Artium Nihamkin please add a description
  * @author Artium Nihamkin

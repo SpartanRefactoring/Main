@@ -411,13 +411,13 @@ public enum step {
     return ¢ == null ? null : ¢.getLeftOperand();
   }
   public static List<ASTNode> marchingList(final ASTNode ¢) {
-    final List<ASTNode> ret = an.empty.list();
+    final List<ASTNode> $ = an.empty.list();
     for (final Object s : ¢.structuralPropertiesForType()) {
       final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
       if (iz.astNode(child))
-        ret.add(az.astNode(child));
+        $.add(az.astNode(child));
     }
-    return ret;
+    return $;
   }
   /** @param ¢ JD
    * @return */
@@ -427,9 +427,9 @@ public enum step {
   public static Collection<String> methodNames(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<String> ret = an.empty.list();
-    types(u).forEach(λ -> ret.addAll(methodNames(λ)));
-    return ret;
+    final List<String> $ = an.empty.list();
+    types(u).forEach(λ -> $.addAll(methodNames(λ)));
+    return $;
   }
   /** @param ¢ JD
    * @return */
@@ -450,9 +450,9 @@ public enum step {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<MethodDeclaration> ret = an.empty.list();
-    types(u).forEach(λ -> ret.addAll(methods(λ)));
-    return ret;
+    final List<MethodDeclaration> $ = an.empty.list();
+    types(u).forEach(λ -> $.addAll(methods(λ)));
+    return $;
   }
   public static Collection<?> modifiers(final FieldDeclaration ¢) {
     return ¢ == null ? null : ¢.modifiers();
@@ -660,30 +660,30 @@ public enum step {
     String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
     if (!(d + "").contains(typeType) && iz.typeDeclaration(d))
       typeType = "interface";
-    String ret = (d + "").substring((d + "").indexOf(typeType));
-    ret = ret.substring(ret.indexOf(typeType) + typeType.length(), ret.indexOf("{"));
-    while (ret.contains("extends") && !balanced(ret.substring(0, ret.indexOf("extends"))))
-      for (int i = ret.indexOf("extends"), openers = 0, ¢ = i + 7;; ++¢) {
-        if (ret.charAt(¢) == ',' && openers <= 0) {
-          ret = ret.substring(0, i) + ret.substring(¢);
+    String $ = (d + "").substring((d + "").indexOf(typeType));
+    $ = $.substring($.indexOf(typeType) + typeType.length(), $.indexOf("{"));
+    while ($.contains("extends") && !balanced($.substring(0, $.indexOf("extends"))))
+      for (int i = $.indexOf("extends"), openers = 0, ¢ = i + 7;; ++¢) {
+        if ($.charAt(¢) == ',' && openers <= 0) {
+          $ = $.substring(0, i) + $.substring(¢);
           break;
         }
-        if (ret.charAt(¢) == '<')
+        if ($.charAt(¢) == '<')
           ++openers;
-        else if (ret.charAt(¢) == '>') {
+        else if ($.charAt(¢) == '>') {
           --openers;
           if (openers == 0) {
-            ret = ret.substring(0, i) + ret.substring(¢ + 1);
+            $ = $.substring(0, i) + $.substring(¢ + 1);
             break;
           }
           if (openers < 0) {
-            ret = ret.substring(0, i) + ret.substring(¢);
+            $ = $.substring(0, i) + $.substring(¢);
             break;
           }
         }
       }
-    ret = ret.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
-    return findFirst.instanceOf(Type.class).in(make.ast("class d{" + ret.replaceAll("extends .+", "") + " x; }"));
+    $ = $.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
+    return findFirst.instanceOf(Type.class).in(make.ast("class d{" + $.replaceAll("extends .+", "") + " x; }"));
   }
   /** Shorthand for {@link CastExpression#getType()}
    * @param ¢ JD

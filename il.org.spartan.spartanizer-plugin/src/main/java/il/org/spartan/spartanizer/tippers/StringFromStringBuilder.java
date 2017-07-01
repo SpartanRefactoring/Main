@@ -71,17 +71,17 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
     return invocations.isEmpty() ? current : the.lastOf(invocations);
   }
   private Expression simplification() {
-    final List<Expression> ret = arguments(current.arguments());
-    ret.addAll(invocations.stream().reduce(an.empty.list(), (l, i) -> {
+    final List<Expression> $ = arguments(current.arguments());
+    $.addAll(invocations.stream().reduce(an.empty.list(), (l, i) -> {
       l.addAll(arguments(i.arguments()));
       return l;
     }, (l1, l2) -> {
       l1.addAll(l2);
       return l1;
     }));
-    if (needPreliminaryStringSafe(ret))
-      ret.add(0, make.emptyString(current));
-    return ret.isEmpty() ? make.emptyString(current) : ret.size() == 1 ? copy.of(the.firstOf(ret)) : subject.operands(ret).to(Operator.PLUS);
+    if (needPreliminaryStringSafe($))
+      $.add(0, make.emptyString(current));
+    return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(Operator.PLUS);
   }
   public static boolean needPreliminaryStringUnsafe(final List<Expression> ¢) {
     return ¢.isEmpty() || !iz.stringLiteral(the.firstOf(¢)) && !iz.name(the.firstOf(¢)) && !iz.methodInvocation(the.firstOf(¢));

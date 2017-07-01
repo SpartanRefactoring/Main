@@ -17,9 +17,9 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
   private static final long serialVersionUID = 0x1BF0F6E7B9886371L;
 
   @Override public ASTNode replacement(final WhileStatement ¢) {
-    final WhileStatement ret = copy.of(¢);
-    ret.setBody(ret.getAST().newEmptyStatement());
-    return ret;
+    final WhileStatement $ = copy.of(¢);
+    $.setBody($.getAST().newEmptyStatement());
+    return $;
   }
   @Override protected boolean prerequisite(final WhileStatement ¢) {
     final Block $ = az.block(¢.getBody());

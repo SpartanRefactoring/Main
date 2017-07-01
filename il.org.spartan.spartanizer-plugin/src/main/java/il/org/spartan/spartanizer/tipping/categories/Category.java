@@ -13,11 +13,11 @@ public interface Category {
     return Taxon.of(this).description();
   }
   default Class<? extends Category> lowestCategory() {
-    Class<? extends Category> ret = Category.class;
+    Class<? extends Category> $ = Category.class;
     for (final Taxon ¢ : Taxa.hierarchy.nodes())
-      if (¢.get().isInstance(this) && ¢.get() != getClass() && ret.isAssignableFrom(¢.get()))
-        ret = ¢.get();
-    return ret;
+      if (¢.get().isInstance(this) && ¢.get() != getClass() && $.isAssignableFrom(¢.get()))
+        $ = ¢.get();
+    return $;
   }
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of

@@ -99,23 +99,23 @@ public class Table_ReusabilityIndices {
   }
   static int[] ranks(final Map<?, Integer> m) {
     final Int n = new Int();
-    final int[] ret = new int[m.size()];
-    m.values().forEach(λ -> ret[n.inner++] = λ.intValue());
-    return ret;
+    final int[] $ = new int[m.size()];
+    m.values().forEach(λ -> $[n.inner++] = λ.intValue());
+    return $;
   }
   public static int rindex(final int... ranks) {
     Arrays.sort(ranks);
-    int ret = 0;
+    int $ = 0;
     for (int ¢ = 0; ¢ < ranks.length; ++¢)
-      ret = Math.max(ret, Math.min(ranks[¢], ranks.length - ¢));
-    return ret;
+      $ = Math.max($, Math.min(ranks[¢], ranks.length - ¢));
+    return $;
   }
   public static Map<String, Integer> addIfNecessary(final String category, final String key) {
     usage.putIfAbsent(category, new LinkedHashMap<>());
-    final Map<String, Integer> ret = usage.get(category);
-    assert ret != null;
-    ret.putIfAbsent(key, Integer.valueOf(0));
-    return ret;
+    final Map<String, Integer> $ = usage.get(category);
+    assert $ != null;
+    $.putIfAbsent(key, Integer.valueOf(0));
+    return $;
   }
   static void addLineToGlobalStatistcs(final String path) {
     writer.col("Project", getProjectName(path));
@@ -151,14 +151,14 @@ public class Table_ReusabilityIndices {
     return Vocabulary.mangle(¢.getOperator(), arity);
   }
   protected static int rExternal() {
-    final Map<String, Integer> ret = new LinkedHashMap<>(usage.get("METHOD"));
-    defined.forEach(ret::remove);
-    return rindex(ranks(ret));
+    final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+    defined.forEach($::remove);
+    return rindex(ranks($));
   }
   protected static int rInternal() {
-    final Map<String, Integer> ret = new LinkedHashMap<>(usage.get("METHOD"));
-    ret.keySet().stream().filter(λ -> !defined.contains(λ)).forEach(ret::remove);
-    return rindex(ranks(ret));
+    final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+    $.keySet().stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
+    return rindex(ranks($));
   }
   protected static int rMethod() {
     return rindex(ranks(usage.get("METHOD")));

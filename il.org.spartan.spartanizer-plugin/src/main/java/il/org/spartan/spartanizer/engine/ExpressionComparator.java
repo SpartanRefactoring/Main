@@ -24,9 +24,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @since 2015-07-19 */
   ADDITION {
     @Override public int compare(final Expression e1, final Expression e2) {
-      int ret;
-      return (ret = literalCompare(e1, e2)) == 0 && (ret = nodesCompare(e1, e2)) == 0 && (ret = characterCompare(e1, e2)) == 0
-          && (ret = alphabeticalCompare(e1, e2)) == 0 ? 0 : ret;
+      int $;
+      return ($ = literalCompare(e1, e2)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0
+          && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
     }
   },
   /** Order on terms in addition: except that we do not sort alphabetically
@@ -34,8 +34,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @since 2015-07-19 */
   PRUDENT {
     @Override public int compare(final Expression e1, final Expression e2) {
-      int ret;
-      return (ret = literalCompare(e1, e2)) == 0 && (ret = nodesCompare(e1, e2)) == 0 && (ret = characterCompare(e1, e2)) == 0 ? 0 : ret;
+      int $;
+      return ($ = literalCompare(e1, e2)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0 ? 0 : $;
     }
   },
   /** Order on terms in multiplication: literals must be last. Sort literals by
@@ -44,9 +44,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @since 2015-07-19 */
   MULTIPLICATION {
     @Override public int compare(final Expression e1, final Expression e2) {
-      int ret;
-      return (ret = literalCompare(e2, e1)) == 0 && (ret = nodesCompare(e1, e2)) == 0 && (ret = characterCompare(e1, e2)) == 0
-          && (ret = alphabeticalCompare(e1, e2)) == 0 ? 0 : ret;
+      int $;
+      return ($ = literalCompare(e2, e1)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0
+          && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
     }
   };
   private static final Comparator<Expression> specificity = new specificity();

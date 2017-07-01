@@ -103,9 +103,9 @@ public final class specificity implements Comparator<Expression> {
       return ofCore(extract.core(¢));
     }
     private static int ofCore(final Expression ¢) {
-      for (final Level ret : values())
-        if (ret.includes(¢))
-          return ret.ordinal();
+      for (final Level $ : values())
+        if ($.includes(¢))
+          return $.ordinal();
       return values().length;
     }
     abstract boolean includes(ASTNode ¢);

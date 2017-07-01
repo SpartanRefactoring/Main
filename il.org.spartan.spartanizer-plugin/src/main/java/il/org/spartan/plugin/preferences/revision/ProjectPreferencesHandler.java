@@ -55,8 +55,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    final Set<String> ret = getPreferencesChanges(d, toEnabledSet(m));
-    return ret == null ? null : commit(p, ret);
+    final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
+    return $ == null ? null : commit(p, $);
   }
   /** Initiates configuration change for the project. This includes one dialog
    * opening. This method does not open the XML file, but uses given enabled
@@ -70,8 +70,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    final Set<String> ret = getPreferencesChanges(d, toEnabledSet(m));
-    return ret == null ? null : commit.apply(p, ret);
+    final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
+    return $ == null ? null : commit.apply(p, $);
   }
   /** Commits enabled tippers for the project, see
    * {@link XMLSpartan#updateEnabledTippers}.
@@ -96,13 +96,13 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   public static Set<String> getPreferencesChanges(final SpartanPreferencesDialog ¢, final Set<String> initialPreferences) {
     ¢.open();
     final Object[] changes = ¢.getResult();
-    final Set<String> ret = changes == null || ¢.getReturnCode() != Window.OK ? null
+    final Set<String> $ = changes == null || ¢.getReturnCode() != Window.OK ? null
         : Stream.of(changes)//
             .filter(SpartanTipper.class::isInstance)//
             .map(SpartanTipper.class::cast)//
             .map(SpartanTipper::name)//
             .collect(toSet());
-    return ret == null || ret.containsAll(initialPreferences) && initialPreferences.containsAll(ret) ? null : ret;
+    return $ == null || $.containsAll(initialPreferences) && initialPreferences.containsAll($) ? null : $;
   }
   /** @param m enabled tippers collection
    * @return preferences configuration dialog for project, using given enabled
@@ -114,7 +114,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         .filter(λ -> λ.parent == null && λ.categoryClass() != il.org.spartan.spartanizer.tipping.categories.Category.class)
         .collect(Collectors.toList());
     final SpartanElement[] es = _es.toArray(new SpartanElement[_es.size()]);
-    final SpartanPreferencesDialog ret = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
+    final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
       @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
@@ -147,18 +147,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         return !(parentElement instanceof SpartanCategory) ? null : ((SpartanCategory) parentElement).getChildren();
       }
     });
-    ret.setTitle("Spartanization Preferences");
-    ret.setMessage("Choose the tippers you would like to use:\n(Tip: double click a tipper to see usage examples)");
-    ret.setEmptyListMessage("No tippers available... something went totally wrong!");
-    ret.setContainerMode(true);
-    ret.setInput(new Object()); // vio: very important object
+    $.setTitle("Spartanization Preferences");
+    $.setMessage("Choose the tippers you would like to use:\n(Tip: double click a tipper to see usage examples)");
+    $.setEmptyListMessage("No tippers available... something went totally wrong!");
+    $.setContainerMode(true);
+    $.setInput(new Object()); // vio: very important object
     final Collection<SpartanElement> et = an.empty.list();
     for (final SpartanCategory ¢ : m.keySet())
       collectEnabledTippersInto(¢, et);
-    ret.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
-    ret.setHelpAvailable(false);
-    ret.setComparator(new ViewerComparator(String::compareToIgnoreCase));
-    return ret;
+    $.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
+    $.setHelpAvailable(false);
+    $.setComparator(new ViewerComparator(String::compareToIgnoreCase));
+    return $;
   }
 
   /** Dialog used for the plugin's preferences change by the user.
@@ -269,24 +269,24 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   static String getPreviewString(final Examples preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
     if (preview == null || StreamSupport.stream(preview.spliterator(), false).filter(λ -> filter.apply(λ).booleanValue()).count() == 0)
       return "[no available examples]";
-    final StringBuilder ret = new StringBuilder();
+    final StringBuilder $ = new StringBuilder();
     int c = 1;
     for (final Example ¢ : preview)
       if (filter.apply(¢).booleanValue())
-        ret.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
-    return (ret + "").trim();
+        $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
+    return ($ + "").trim();
   }
   static String prettify(final String code) {
     final TextEdit e = formatter.get().format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
       return code;
-    final IDocument ret = new Document(code);
+    final IDocument $ = new Document(code);
     try {
-      e.apply(ret);
+      e.apply($);
     } catch (MalformedTreeException | BadLocationException ¢) {
       note.bug(¢);
     }
-    return ret.get();
+    return $.get();
   }
   private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanElement[]> m) {
     return m.values().stream().reduce(new HashSet<String>(), (s, a) -> {

@@ -17,9 +17,9 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
   private static final long serialVersionUID = -0x226190FC35C78670L;
 
   @Override public ASTNode replacement(final DoStatement ¢) {
-    final DoStatement ret = copy.of(¢);
-    ret.setBody(ret.getAST().newEmptyStatement());
-    return ret;
+    final DoStatement $ = copy.of(¢);
+    $.setBody($.getAST().newEmptyStatement());
+    return $;
   }
   @Override protected boolean prerequisite(final DoStatement ¢) {
     final Statement $ = ¢.getBody();

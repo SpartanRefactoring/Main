@@ -18,8 +18,8 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
   private static final long serialVersionUID = 0x5DE07AE5A0DF8047L;
 
   @Override public String description(final MethodInvocation ¢) {
-    final Expression ret = receiver(¢);
-    return "Prepend \"\" instead of calling toString(). Rewrite as \"\" +" + (ret != null ? ret : "x");
+    final Expression $ = receiver(¢);
+    return "Prepend \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(name(i).getIdentifier()) || !arguments(i).isEmpty() || iz.expressionStatement(parent(i)))
@@ -27,7 +27,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
-    final InfixExpression ret = subject.pair(make.emptyString(i), receiver).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
-    return !iz.methodInvocation(parent(i)) ? ret : make.parethesized(ret);
+    final InfixExpression $ = subject.pair(make.emptyString(i), receiver).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
+    return !iz.methodInvocation(parent(i)) ? $ : make.parethesized($);
   }
 }

@@ -33,8 +33,8 @@ public class ASTTrotter extends ASTVisitor {
     return folding;
   }
   @SuppressWarnings("unchecked") private <N extends ASTNode, T> Collection<Rule<N, T>> get(final N ¢) {
-    @SuppressWarnings("rawtypes") final Collection ret = get(¢.getNodeType());
-    return ret;
+    @SuppressWarnings("rawtypes") final Collection $ = get(¢.getNodeType());
+    return $;
   }
   private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
     return dispatch[¢] = dispatch[¢] != null ? dispatch[¢] : empty.list();

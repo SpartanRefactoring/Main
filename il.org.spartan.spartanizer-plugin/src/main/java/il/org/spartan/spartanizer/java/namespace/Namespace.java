@@ -65,9 +65,9 @@ public final class Namespace implements Environment {
         return next != null;
       }
       @Override public Environment next() {
-        final Environment ret = next;
+        final Environment $ = next;
         next = next.nest();
-        return ret;
+        return $;
       }
     };
   }
@@ -91,8 +91,8 @@ public final class Namespace implements Environment {
   }
   /** @return The information about the name in current {@link Environment} */
   @Override public Binding get(final String identifier) {
-    final Binding ret = flat.get(identifier);
-    return ret != null ? ret : nest.get(identifier);
+    final Binding $ = flat.get(identifier);
+    return $ != null ? $ : nest.get(identifier);
   }
   /** Check whether the {@link Environment} already has the name. */
   @Override public boolean has(final String identifier) {
@@ -237,11 +237,11 @@ public final class Namespace implements Environment {
       return n;
     catchClauses(s).forEach(λ -> n.spawn(catch¢).put(exception(λ)).fillScope(λ));
     n.fillScope(s.getFinally());
-    final Namespace ret = n.spawn(try¢);
-    resources(s).forEach(ret::put);
-    ret.fillScope(body(s));
-    resources(s).forEach(ret::fillScope);
-    return ret;
+    final Namespace $ = n.spawn(try¢);
+    resources(s).forEach($::put);
+    $.fillScope(body(s));
+    resources(s).forEach($::fillScope);
+    return $;
   }
   /** @return names used the {@link Environment} . */
   @Override public LinkedHashSet<String> keys() {
@@ -362,10 +362,10 @@ public final class Namespace implements Environment {
   }
   public String generateName(final String ¢) {
     int postface = 0;
-    String ret = ¢ + ++postface;
-    while (hasComplex(ret))
-      ret = ¢ + ++postface;
-    return ret;
+    String $ = ¢ + ++postface;
+    while (hasComplex($))
+      $ = ¢ + ++postface;
+    return $;
   }
   // Add new Name to the namespace
   public Namespace addNewName(final String s, final Type t) {

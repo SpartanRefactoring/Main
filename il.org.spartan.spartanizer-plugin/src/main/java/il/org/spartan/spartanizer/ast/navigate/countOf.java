@@ -18,21 +18,21 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public interface countOf {
   static int imports(final CompilationUnit u) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(ImportDeclaration.class))
-          ret.step();
+          $.step();
       }
     });
-    return ret.get();
+    return $.get();
   }
   static int lines(final ASTNode n) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
-          addWeight(ret, child);
+          addWeight($, child);
       }
       /** @param a Accumulator
        * @param ¢ Node to check */
@@ -52,52 +52,52 @@ public interface countOf {
           }
       }
     });
-    return ret.inner;
+    return $.inner;
   }
   /** Counts the number of nodes in a tree rooted at a given node
    * @param nodeTypeHolder JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nodes(final ASTNode root) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
-        ret.step();
+        $.step();
       }
     });
-    return ret.get();
+    return $.get();
   }
   static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> c) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(c))
-          ret.step();
+          $.step();
       }
     });
-    return ret.get();
+    return $.get();
   }
   static int noimports(final CompilationUnit root) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class))
-          ret.step();
+          $.step();
       }
     });
-    return ret.get();
+    return $.get();
   }
   /** Exclude comments and import package statement from the content.
    * @param root
    * @return */
   static int noImportsNoComments(final ASTNode root) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
-          ret.step();
+          $.step();
       }
     });
-    return ret.get();
+    return $.get();
   }
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param pattern JD
@@ -109,12 +109,12 @@ public interface countOf {
    * @param nodeTypeHolder JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int statements(final ASTNode root) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
-        ret.add(as.bit(iz.statement(¢)));
+        $.add(as.bit(iz.statement(¢)));
       }
     });
-    return ret.get();
+    return $.get();
   }
 }

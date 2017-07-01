@@ -61,13 +61,13 @@ public class fluentTraversalApplication extends TraversalImplementation {
     assert s2 != null;
     if (s1.equals(s2)) // Highly unlikely, but what the heck
       return null;
-    final String ret = tide.clean(s1);
-    assert ret != null;
+    final String $ = tide.clean(s1);
+    assert $ != null;
     final String g2a = guessedContext.off(s2);
     assert g2a != null;
     final String g2b = tide.clean(g2a);
     assert g2b != null;
-    return tide.eq(ret, g2b) || tide.eq(s1, g2b) || tide.eq(ret, g2a) ? g2b : null;
+    return tide.eq($, g2b) || tide.eq(s1, g2b) || tide.eq($, g2a) ? g2b : null;
   }
   String common(final String expected) {
     return aboutTheSame(expected, document.get());
@@ -83,10 +83,10 @@ public class fluentTraversalApplication extends TraversalImplementation {
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final IProgressMonitor ¢) {
     ¢.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite ret = ASTRewrite.create(compilationUnit.getAST());
-    fillRewrite(ret);
+    final ASTRewrite $ = ASTRewrite.create(compilationUnit.getAST());
+    fillRewrite($);
     ¢.done();
-    return ret;
+    return $;
   }
   protected final void fillRewrite(final ASTRewrite r) {
     compilationUnit.accept(new DispatchingVisitor() {
@@ -103,12 +103,12 @@ public class fluentTraversalApplication extends TraversalImplementation {
   }
   <N extends ASTNode> N findNode(final Class<N> clazz) {
     assert GuessedContext.find(codeFragment) != null;
-    final N ret = firstInstance(clazz);
-    assert ret != null;
-    return ret;
+    final N $ = firstInstance(clazz);
+    assert $ != null;
+    return $;
   }
   <N extends ASTNode> N firstInstance(final Class<N> clazz) {
-    final Wrapper<N> ret = new Wrapper<>();
+    final Wrapper<N> $ = new Wrapper<>();
     compilationUnit.accept(new ASTVisitor(true) {
       /** The implementation of the visitation procedure in the JDT seems to be
        * buggy. Each time we find a node which is an instance of the sought
@@ -119,15 +119,15 @@ public class fluentTraversalApplication extends TraversalImplementation {
        * @param pattern the node currently being visited.
        * @return whether the sought node is found. */
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
-        if (ret.get() != null)
+        if ($.get() != null)
           return false;
         if (!clazz.isAssignableFrom(¢.getClass()))
           return true;
-        ret.set((N) ¢);
+        $.set((N) ¢);
         return false;
       }
     });
-    return ret.get();
+    return $.get();
   }
   public fluentTraversalApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {

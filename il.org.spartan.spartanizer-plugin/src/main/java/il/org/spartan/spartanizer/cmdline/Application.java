@@ -26,9 +26,9 @@ public final class Application implements IApplication {
    * @return
    * @throws IOException */
   static int countLines(final File ¢) throws IOException {
-    try (LineNumberReader ret = new LineNumberReader(new FileReader(¢))) {
-      ret.skip(Long.MAX_VALUE);
-      return ret.getLineNumber();
+    try (LineNumberReader $ = new LineNumberReader(new FileReader(¢))) {
+      $.skip(Long.MAX_VALUE);
+      return $.getLineNumber();
     }
   }
   /** Count the number of lines in File named filename
@@ -39,20 +39,20 @@ public final class Application implements IApplication {
     return countLines(new File(fileName));
   }
   static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
-    final Wrapper<MethodInvocation> ret = new Wrapper<>();
+    final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodInvocation ¢) {
         if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
-          ret.set(¢);
+          $.set(¢);
         return super.visit(¢);
       }
     });
-    return ret.get() == null ? i : ret.get();
+    return $.get() == null ? i : $.get();
   }
   private static String getPackageNameFromSource(final String source) {
-    final ASTParser ret = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
-    ret.setSource(source.toCharArray());
-    return getPackageNameFromSource(new Wrapper<>(""), ret.createAST(null));
+    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    $.setSource(source.toCharArray());
+    return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
   private static void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
@@ -98,7 +98,7 @@ public final class Application implements IApplication {
   private String optPath;
 
   @Override public Object start(final IApplicationContext arg0) {
-    final Object ret = startInner(arg0);
+    final Object $ = startInner(arg0);
     try (Scanner s = new Scanner(System.in)) {
       try {
         s.nextLine();
@@ -106,7 +106,7 @@ public final class Application implements IApplication {
         note.bug(¢);
       }
     }
-    return ret;
+    return $;
   }
   @SuppressWarnings("OverlyComplexMethod") public Object startInner(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
@@ -146,14 +146,14 @@ public final class Application implements IApplication {
     return IApplication.EXIT_OK;
   }
   private FileStats process(final File f, final ICompilationUnit u) throws IOException, JavaModelException {
-    final FileStats ret = new FileStats(f);
+    final FileStats $ = new FileStats(f);
     final GUITraversal t = new GUITraversal();
     IntStream.range(0, optRounds).forEach(λ -> t.apply(u));
     FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
     if (optVerbose)
       System.out.println("Spartanized file " + f.getAbsolutePath());
-    ret.countLinesAfter();
-    return ret;
+    $.countLinesAfter();
+    return $;
   }
   @Override public void stop() {
     ___.nothing();
@@ -180,9 +180,9 @@ public final class Application implements IApplication {
     }
   }
   private ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
-    final String ret = FileUtils.read(¢);
-    setPackage(getPackageNameFromSource(ret));
-    return pack.createCompilationUnit(¢.getName(), ret, false, null);
+    final String $ = FileUtils.read(¢);
+    setPackage(getPackageNameFromSource($));
+    return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
   private boolean parseArguments(final Collection<String> args) {
     if (args == null || args.isEmpty()) {
@@ -287,9 +287,9 @@ public final class Application implements IApplication {
     public int getLinesBefore() {
       return linesBefore;
     }
-    public int getRoundStat(final int ret) {
+    public int getRoundStat(final int $) {
       try {
-        return roundStats.get(ret).intValue();
+        return roundStats.get($).intValue();
       } catch (final IndexOutOfBoundsException ¢) {
         note.bug(¢);
         return 0;

@@ -24,39 +24,39 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
   private static final long serialVersionUID = 0x95F6C4DCCBB43E4L;
 
   @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> xs) {
-    double ret = 0;
+    double $ = 0;
     try {
-      ret = xs.stream().map(az.throwing::double¢).reduce((x, y) -> x + y).get();
+      $ = xs.stream().map(az.throwing::double¢).reduce((x, y) -> x + y).get();
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return ret;
+    return $;
   }
   @Override int evaluateInt(final List<Expression> xs) {
-    int ret = 0;
+    int $ = 0;
     try {
       for (final Expression ¢ : xs) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
-        ret += az.throwing.int¢(¢);
+        $ += az.throwing.int¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return ret;
+    return $;
   }
   @Override long evaluateLong(final List<Expression> xs) {
-    long ret = 0;
+    long $ = 0;
     try {
       for (final Expression ¢ : xs) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
-        ret += az.throwing.long¢(¢);
+        $ += az.throwing.long¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return ret;
+    return $;
   }
   @Override String operation() {
     return "addition";

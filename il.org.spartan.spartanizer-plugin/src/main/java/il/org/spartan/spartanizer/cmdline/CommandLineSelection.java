@@ -83,15 +83,15 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
           .collect(toList()), "selection");
     }
     public static Collection<CompilationUnit> getAllCompilationUnits(final String path) {
-      final Collection<CompilationUnit> ret = an.empty.list();
+      final Collection<CompilationUnit> $ = an.empty.list();
       for (final File ¢ : new FilesGenerator(".java").from(path)) {
         System.out.println(¢.getName());
         // System.out.println("Free memory (bytes): " +
         // Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
         if (!Utils.isTestFile(¢))
-          getCompilationUnit(¢, ret);
+          getCompilationUnit(¢, $);
       }
-      return ret;
+      return $;
     }
     public static void getCompilationUnit(final File f, final Collection<CompilationUnit> $) {
       try {

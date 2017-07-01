@@ -29,7 +29,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     assert f != null;
     if (iz.loop(nextStatement) && !iz.simple(f.getInitializer())) {
@@ -69,13 +69,13 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
       if (Inliner.never(use, nextStatement) || Inliner.isPresentOnAnonymous(use, nextStatement))
         return null;
     final Expression v = Inliner.protect(initializer);
-    final InlinerWithValue i = new Inliner(n, ret, g).byValue(v);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)
       return null;
-    ret.replace(nextStatement, newStatement, g);
+    $.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);
-    remove.local(f, ret, g);
-    return ret;
+    remove.local(f, $, g);
+    return $;
   }
 }

@@ -799,12 +799,12 @@ public interface iz {
     return iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION);
   }
   static int parseInt(final String token) {
-    final String ret = token.replaceAll("[\\s_]", "");
-    return Integer.parseInt(ret.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix(ret));
+    final String $ = token.replaceAll("[\\s_]", "");
+    return Integer.parseInt($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
   }
   static long parseLong(final String token) {
-    final String ret = token.replaceAll("[\\s_Ll]", "");
-    return Long.parseLong(ret.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix(ret));
+    final String $ = token.replaceAll("[\\s_Ll]", "");
+    return Long.parseLong($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
   }
   /** @param a the assignment who's operator we want to check
    * @return true is the assignment's operator is assign */

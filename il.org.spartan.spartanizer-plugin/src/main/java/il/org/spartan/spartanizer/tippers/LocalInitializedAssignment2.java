@@ -28,17 +28,17 @@ public final class LocalInitializedAssignment2 extends LocalInitializedStatement
     convert("int a; a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);}")//
         .to("int a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);");
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.eq(name, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
-    final InlinerWithValue i = new Inliner(name, ret, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
-    ret.replace(initializer, newInitializer, g);
+    $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);
-    ret.remove(nextStatement, g);
-    return ret;
+    $.remove(nextStatement, g);
+    return $;
   }
 }

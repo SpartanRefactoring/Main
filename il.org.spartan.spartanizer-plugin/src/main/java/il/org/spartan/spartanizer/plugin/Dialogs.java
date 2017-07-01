@@ -45,34 +45,34 @@ public enum Dialogs {
   }
   /** Lazy, dynamic loading of an image.
    * @return {@link SWT} image */
-  public static Image image(final String url, final String ret, final Function<ImageData, ImageData> scale) {
-    if (!images.containsKey(ret))
+  public static Image image(final String url, final String $, final Function<ImageData, ImageData> scale) {
+    if (!images.containsKey($))
       try {
         final ImageData d = ImageDescriptor.createFromURL(getURL(url)).getImageData();
-        images.put(ret, d == null ? null : new Image(null, scale.apply(d)));
+        images.put($, d == null ? null : new Image(null, scale.apply(d)));
       } catch (final MalformedURLException ¢) {
         note.bug(¢);
-        images.put(ret, null);
+        images.put($, null);
       }
-    return images.get(ret);
+    return images.get($);
   }
-  public static Image image(final ImageDescriptor id, final String ret, final Function<ImageData, ImageData> scale) {
-    if (images.containsKey(ret))
-      return images.get(ret);
+  public static Image image(final ImageDescriptor id, final String $, final Function<ImageData, ImageData> scale) {
+    if (images.containsKey($))
+      return images.get($);
     final ImageData d = id.getImageData();
-    images.put(ret, d == null ? null : new Image(null, scale.apply(d)));
-    return images.get(ret);
+    images.put($, d == null ? null : new Image(null, scale.apply(d)));
+    return images.get($);
   }
   private static URL getURL(final String url) throws MalformedURLException {
-    final URL ret = new URL(url);
-    switch (ret.getProtocol()) {
+    final URL $ = new URL(url);
+    switch ($.getProtocol()) {
       case "file":
-        return FileLocator.find(Platform.getBundle(Plugin.ID), new Path(ret.getPath()), null);
+        return FileLocator.find(Platform.getBundle(Plugin.ID), new Path($.getPath()), null);
       default:
-        note.bug("Dialogs#getURL: URL protocol " + ret.getProtocol() + " not supported");
+        note.bug("Dialogs#getURL: URL protocol " + $.getProtocol() + " not supported");
         //$FALL-THROUGH$
       case "platform":
-        return ret;
+        return $;
     }
   }
   /** Simple dialog, waits for user operation. Does not trim the received
@@ -104,15 +104,15 @@ public enum Dialogs {
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog messageOnTheRun(final String message) {
-    final MessageDialog ret = message(message);
-    ret.setBlockOnOpen(false);
-    return ret;
+    final MessageDialog $ = message(message);
+    $.setBlockOnOpen(false);
+    return $;
   }
   /** @param openOnRun whether this dialog should be open on run
    * @return dialog with progress bar, connected to a
    *         {@link IProgressMonitor} */
   public static ProgressMonitorDialog progress(final boolean openOnRun) {
-    final ProgressMonitorDialog ret = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
+    final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }
@@ -131,10 +131,10 @@ public enum Dialogs {
         return image(LOGO);
       }
     };
-    ret.setBlockOnOpen(false);
-    ret.setCancelable(true);
-    ret.setOpenOnRun(openOnRun);
-    return ret;
+    $.setBlockOnOpen(false);
+    $.setCancelable(true);
+    $.setOpenOnRun(openOnRun);
+    return $;
   }
   /** @param ¢ JD
    * @return whether the user pressed any button except close button. */

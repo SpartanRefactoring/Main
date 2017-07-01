@@ -26,9 +26,9 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     if (!isMyCase(xs))
       return null;
     final AST create = ¢.getAST();
-    final SwitchStatement ret = create.newSwitchStatement();
-    ret.setExpression(copy.of(az.simpleName(left(az.comparison(the.firstOf(xs))))));
-    final List<Statement> ss = statements(ret);
+    final SwitchStatement $ = create.newSwitchStatement();
+    $.setExpression(copy.of(az.simpleName(left(az.comparison(the.firstOf(xs))))));
+    final List<Statement> ss = statements($);
     final List<Block> bs = getAllBlocks(¢);
     int i = 0;
     for (final Expression x : xs) {
@@ -40,13 +40,13 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       ++i;
     }
     if (xs.size() == bs.size())
-      return ret;
+      return $;
     final SwitchCase sc = create.newSwitchCase();
     sc.setExpression(null);
     ss.add(sc);
     statements(bs.get(i)).forEach(λ -> ss.add(copy.of(λ)));
     ss.add(create.newBreakStatement());
-    return ret;
+    return $;
   }
   private static boolean isMyCase(final List<Expression> xs) {
     if (xs == null || xs.isEmpty() || !iz.infixEquals(the.firstOf(xs)))
@@ -68,29 +68,29 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return true;
   }
   private static List<Expression> getAllExpressions(final IfStatement s) {
-    final List<Expression> ret = an.empty.list();
+    final List<Expression> $ = an.empty.list();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
-      ret.add(expression(az.ifStatement(p)));
-    return ret;
+      $.add(expression(az.ifStatement(p)));
+    return $;
   }
   private static List<Block> getAllBlocks(final IfStatement s) {
-    final List<Block> ret = an.empty.list();
-    final Statement p = addAllBlocks(s, ret);
+    final List<Block> $ = an.empty.list();
+    final Statement p = addAllBlocks(s, $);
     if (p == null)
-      return ret;
+      return $;
     if (iz.block(p))
-      ret.add(az.block(p));
+      $.add(az.block(p));
     else {
       final Block b = s.getAST().newBlock();
       statements(b).add(copy.of(p));
-      ret.add(b);
+      $.add(b);
     }
-    return ret;
+    return $;
   }
   private static Statement addAllBlocks(final IfStatement s, final Collection<Block> collectInto) {
-    Statement ret = s;
-    for (; iz.ifStatement(ret); ret = az.ifStatement(ret).getElseStatement()) {
-      final Statement then = copy.of(then(az.ifStatement(ret)));
+    Statement $ = s;
+    for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
+      final Statement then = copy.of(then(az.ifStatement($)));
       Block b = az.block(then);
       if (b == null) {
         b = s.getAST().newBlock();
@@ -98,7 +98,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       }
       collectInto.add(b);
     }
-    return ret;
+    return $;
   }
   @Override public String description(final IfStatement __) {
     return "Replace if-else statement with one parameter into switch-case";

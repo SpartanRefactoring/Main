@@ -34,18 +34,18 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
     if (parameter == null || !JohnDoe.property(parameter) && !"param".equals(parameter.getName() + "") && !"it".equals(parameter.getName() + "")
         && !"¢".equals(parameter.getName() + ""))
       return null;
-    final SimpleName ret = parameter.getName();
-    assert ret != null;
-    if (notation.isSpecial(ret))
+    final SimpleName $ = parameter.getName();
+    assert $ != null;
+    if (notation.isSpecial($))
       return null;
     final Block b = body(d);
-    if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf(ret).in(b).isEmpty())
+    if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     final SimpleName ¢ = make.newCent(d);
-    return new Tip("Rename Single paraemter " + ret + " to the chosen prefrence", getClass(), ret) {
+    return new Tip("Rename Single paraemter " + $ + " to the chosen prefrence", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        misc.rename(ret, ¢, d, r, g);
-        ParameterAbbreviate.fixJavadoc(d, ret, ¢ + "", r, g);
+        misc.rename($, ¢, d, r, g);
+        ParameterAbbreviate.fixJavadoc(d, $, ¢ + "", r, g);
       }
     }.spanning(d);
   }

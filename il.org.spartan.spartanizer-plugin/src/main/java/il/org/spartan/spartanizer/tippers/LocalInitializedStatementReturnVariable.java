@@ -27,7 +27,7 @@ public final class LocalInitializedStatementReturnVariable extends $FragmentAndS
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
@@ -37,8 +37,8 @@ public final class LocalInitializedStatementReturnVariable extends $FragmentAndS
     final Expression returnValue = expression(s);
     if (returnValue == null || !wizard.eq(n, returnValue))
       return null;
-    remove.deadFragment(f, ret, g);
-    ret.replace(s, subject.operand(initializer).toReturn(), g);
-    return ret;
+    remove.deadFragment(f, $, g);
+    $.replace(s, subject.operand(initializer).toReturn(), g);
+    return $;
   }
 }

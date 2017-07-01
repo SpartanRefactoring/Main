@@ -30,10 +30,10 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<I
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !is.lastIn(s, statements(b)))
       return null;
-    final ReturnStatement ret = az.returnStatement(hop.lastStatement(elze(s)));
-    return ret == null || ret.getExpression() != null ? null : new Tip(description(s), getClass(), s) {
+    final ReturnStatement $ = az.returnStatement(hop.lastStatement(elze(s)));
+    return $ == null || $.getExpression() != null ? null : new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(ret, make.emptyStatement(s), g);
+        r.replace($, make.emptyStatement(s), g);
       }
     };
   }

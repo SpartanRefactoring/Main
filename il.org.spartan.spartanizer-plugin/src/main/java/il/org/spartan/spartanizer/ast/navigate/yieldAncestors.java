@@ -21,9 +21,9 @@ public abstract class yieldAncestors<N extends ASTNode> {
     }
     @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
-        for (ASTNode ret = ¢.getParent(); ret != null; ret = ret.getParent())
-          if (ret.getClass().equals(clazz) || clazz.isAssignableFrom(ret.getClass()))
-            return (N) ret;
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
+            return (N) $;
       return null;
     }
     @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
@@ -39,9 +39,9 @@ public abstract class yieldAncestors<N extends ASTNode> {
     }
     @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
-        for (ASTNode ret = ¢.getParent(); ret != null; ret = ret.getParent())
-          if (instances.contains(ret))
-            return (N) ret;
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if (instances.contains($))
+            return (N) $;
       return null;
     }
     @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
@@ -57,9 +57,9 @@ public abstract class yieldAncestors<N extends ASTNode> {
     }
     @Override public ASTNode from(final ASTNode ¢) {
       if (¢ != null)
-        for (ASTNode ret = ¢.getParent(); ret != null; ret = ret.getParent())
-          if (type == ret.getNodeType())
-            return ret;
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if (type == $.getNodeType())
+            return $;
       return null;
     }
     @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
@@ -81,9 +81,9 @@ public abstract class yieldAncestors<N extends ASTNode> {
           return next != null;
         }
         @Override public ASTNode next() {
-          final ASTNode ret = next;
+          final ASTNode $ = next;
           next = eval(() -> next.getParent()).unless(next == until);
-          return ret;
+          return $;
         }
       };
     }
@@ -143,18 +143,18 @@ public abstract class yieldAncestors<N extends ASTNode> {
   /** @param ¢ JD
    * @return furtherest ancestor whose __ matches the given __. */
   public ASTNode inclusiveLastFrom(final ASTNode ¢) {
-    for (ASTNode ret = inclusiveFrom(¢), p = ret;; ret = p, p = from(p.getParent()))
+    for (ASTNode $ = inclusiveFrom(¢), p = $;; $ = p, p = from(p.getParent()))
       if (p == null)
-        return ret;
+        return $;
   }
   /** @param n JD
    * @return furtherest ancestor whose __ matches the given __. */
   public ASTNode lastFrom(final ASTNode n) {
     // TODO Alex: Polish this loop manually and add a test case for future
     // generations
-    ASTNode ret = from(n);
-    for (ASTNode p = ret; p != null; p = from(p))
-      ret = p;
-    return ret;
+    ASTNode $ = from(n);
+    for (ASTNode p = $; p != null; p = from(p))
+      $ = p;
+    return $;
   }
 }

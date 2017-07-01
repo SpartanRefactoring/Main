@@ -24,10 +24,10 @@ public class TextualTraversals {
 
   public String fixed(final String from) {
     int n = 0;
-    for (IDocument ret = new Document(from), to;; ret = to) {
-      to = once(ret);
+    for (IDocument $ = new Document(from), to;; $ = to) {
+      to = once($);
       if (to == null || ++n > 20)
-        return ret.get();
+        return $.get();
     }
   }
   public String once(final ASTNode ¢) {
@@ -39,9 +39,9 @@ public class TextualTraversals {
    * @throws AssertionError */
   public IDocument once(final IDocument d) throws AssertionError {
     try {
-      final TextEdit ret = traversal.go((CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get())).rewriteAST(d, null);
-      ret.apply(d);
-      return ret.getChildren().length != 0 ? d : null;
+      final TextEdit $ = traversal.go((CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get())).rewriteAST(d, null);
+      $.apply(d);
+      return $.getChildren().length != 0 ? d : null;
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       return note.bug(this, ¢);
     }

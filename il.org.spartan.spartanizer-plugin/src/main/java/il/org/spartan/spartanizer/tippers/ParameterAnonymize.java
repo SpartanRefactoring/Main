@@ -43,25 +43,25 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
     return false;
   }
   @Override protected ASTNode[] span() {
-    final List<SingleVariableDeclaration> ret = step.parameters(getMethod(current));
-    return new ASTNode[] { the.firstOf(ret), the.lastOf(ret) };
+    final List<SingleVariableDeclaration> $ = step.parameters(getMethod(current));
+    return new ASTNode[] { the.firstOf($), the.lastOf($) };
   }
   static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {
-    final ASTNode ret = ¢.getParent();
-    return !(ret instanceof MethodDeclaration) ? null : (MethodDeclaration) ret;
+    final ASTNode $ = ¢.getParent();
+    return !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
   private static boolean isUnused(final Expression ¢) {
     return iz.literal("unused", ¢);
   }
   private static ASTNode replace(final SingleVariableDeclaration ¢) {
-    final SingleVariableDeclaration ret = ¢.getAST().newSingleVariableDeclaration();
-    ret.setName(¢.getAST().newSimpleName(notation.anonymous));
-    ret.setFlags(ret.getFlags());
-    ret.setInitializer(ret.getInitializer());
-    ret.setType(copy.of(¢.getType()));
-    ret.setVarargs(¢.isVarargs());
-    copy.modifiers(extendedModifiers(¢), extendedModifiers(ret));
-    return ret;
+    final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
+    $.setName(¢.getAST().newSimpleName(notation.anonymous));
+    $.setFlags($.getFlags());
+    $.setInitializer($.getInitializer());
+    $.setType(copy.of(¢.getType()));
+    $.setVarargs(¢.isVarargs());
+    copy.modifiers(extendedModifiers(¢), extendedModifiers($));
+    return $;
   }
   private static boolean suppressing(final ArrayInitializer ¢) {
     return expressions(¢).stream().anyMatch(ParameterAnonymize::isUnused);

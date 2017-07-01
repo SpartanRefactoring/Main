@@ -30,21 +30,21 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return cons(make.minus(the.firstOf(prune)), chop(prune));
   }
   private static List<Expression> prune(final Collection<Expression> ¢) {
-    final List<Expression> ret = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
-    return ret.size() != ¢.size() ? ret : null;
+    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
+    return $.size() != ¢.size() ? $ : null;
   }
   private static ASTNode replacement(final List<Expression> xs) {
-    final List<Expression> ret = prune(xs);
-    if (ret == null)
+    final List<Expression> $ = prune(xs);
+    if ($ == null)
       return null;
     final Expression first = the.firstOf(xs);
-    if (ret.isEmpty())
+    if ($.isEmpty())
       return make.from(first).literal(0);
-    assert !ret.isEmpty();
-    if (ret.size() == 1)
-      return !iz.literal0(first) ? first : make.minus(the.firstOf(ret));
-    assert ret.size() >= 2;
-    return subject.operands(!iz.literal0(first) ? ret : minusFirst(ret)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
+    assert !$.isEmpty();
+    if ($.size() == 1)
+      return !iz.literal0(first) ? first : make.minus(the.firstOf($));
+    assert $.size() >= 2;
+    return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
   @Override public String description(final InfixExpression ¢) {
     return "Remove subtraction of 0 in " + ¢;

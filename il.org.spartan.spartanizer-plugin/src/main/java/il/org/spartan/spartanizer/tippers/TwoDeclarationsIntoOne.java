@@ -30,14 +30,14 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
     implements Category.CommonFactorOut {
   private static final long serialVersionUID = -0x591B454B69ADD31L;
 
-  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!canTip(s, nextStatement))
       return null;
     final VariableDeclarationStatement sc = copy.of(s);
     fragments(az.variableDeclarationStatement(nextStatement)).forEach(λ -> fragments(sc).add(copy.of(λ)));
-    ret.replace(s, sc, g);
-    ret.remove(nextStatement, g);
-    return ret;
+    $.replace(s, sc, g);
+    $.remove(nextStatement, g);
+    return $;
   }
   @Override public String description(final VariableDeclarationStatement ¢) {
     return "Unify two variable declarations of type " + ¢.getType() + " into one";

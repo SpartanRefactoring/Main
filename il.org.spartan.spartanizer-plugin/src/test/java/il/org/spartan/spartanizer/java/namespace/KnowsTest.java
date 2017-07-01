@@ -22,22 +22,22 @@ public class KnowsTest extends MetaFixture {
     return collect(KNOWN, fixtures);
   }
   public static Double g(final double y) {
-    final DoubleFunction<Double> ret = ¢ -> Double.valueOf(Math.sin(¢ * new Object() {
+    final DoubleFunction<Double> $ = ¢ -> Double.valueOf(Math.sin(¢ * new Object() {
       @Override @knows({ "$", "g/1", "f/1", "y" }) public int hashCode() {
         return g(y).hashCode();
       }
     }.hashCode()));
-    return ret.apply(y);
+    return $.apply(y);
   }
   public static int g(final int x, final int y) {
-    @knows({ "x", "y", "$" }) final int ret = x * y;
-    @knows({ "x", "y", "z", "$" }) final int z = ret * (x + y);
-    return y + ret + x * z;
+    @knows({ "x", "y", "$" }) final int $ = x * y;
+    @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
+    return $ + y + x * z;
   }
   public static int h(final int x, final int y) {
-    @knows({ "x", "y", "$" }) final int ret = x * y;
-    @knows({ "x", "y", "z", "$" }) final int z = ret * (x + y);
-    return y + ret + x * z;
+    @knows({ "x", "y", "$" }) final int $ = x * y;
+    @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
+    return $ + y + x * z;
   }
 
   final String repository;
@@ -50,8 +50,8 @@ public class KnowsTest extends MetaFixture {
     this.repository = repository;
   }
   public int f(final int parameter) {
-    @knows("parameter") final int ret = parameter * hashCode();
-    return ret >>> ret * parameter;
+    @knows("parameter") final int $ = parameter * hashCode();
+    return $ >>> $ * parameter;
   }
   @Test public void knows() {
     assert Environment.of(name).has(shouldKnow) : //

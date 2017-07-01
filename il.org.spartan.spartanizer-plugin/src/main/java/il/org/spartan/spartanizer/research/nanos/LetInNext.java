@@ -39,17 +39,17 @@ public final class LetInNext extends NanoPatternTipper<VariableDeclarationFragme
       return preDelegation(f, nextStatement) && $ != null && fragments($).size() == 1 && noFurtherUsage(name(f), nextStatement)
           && initializer(f) != null;
     }
-    @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
       final Expression initializer = initializer(f);
       final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e);
-      ret.remove(parent, g);
-      ret.replace(nextStatement, make.ast((!iz.returnStatement(nextStatement) ? "" : "return ") + "let(()->" + initializer + ").in(" + name(f) + "->"
+      $.remove(parent, g);
+      $.replace(nextStatement, make.ast((!iz.returnStatement(nextStatement) ? "" : "return ") + "let(()->" + initializer + ").in(" + name(f) + "->"
           + expression(nextStatement) + ");"), g);
-      return ret;
+      return $;
     }
     private static boolean noFurtherUsage(final SimpleName n, final Statement nextStatement) {
       final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));

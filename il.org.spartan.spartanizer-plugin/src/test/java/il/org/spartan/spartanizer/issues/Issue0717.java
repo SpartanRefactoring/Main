@@ -33,12 +33,12 @@ public class Issue0717 {
     assert !determineIf.hasBigBlock(fourStatMethod);
   }
   private String generateRandomString() {
-    final StringBuilder ret = new StringBuilder();
+    final StringBuilder $ = new StringBuilder();
     final Random randomGenerator = new Random();
     final int len = Math.max(1, randomGenerator.nextInt(Issue0717.MAX_NAME_SIZE));
-    ret.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
-    range.from(1).to(len).forEach(λ -> ret.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
-    return ret + "";
+    $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
+    range.from(1).to(len).forEach(λ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
+    return $ + "";
   }
   @Test public void isCompiled() {
     assert true;

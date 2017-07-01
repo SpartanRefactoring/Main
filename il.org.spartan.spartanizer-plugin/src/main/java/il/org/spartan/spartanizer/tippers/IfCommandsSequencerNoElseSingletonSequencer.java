@@ -27,7 +27,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and use next statement";
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement))
       return null;
     final Statement thenS = then(s);
@@ -37,8 +37,8 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     if (asVirtualIf == null)
       return null;
     if (wizard.eq(then(asVirtualIf), elze(asVirtualIf))) {
-      ret.replace(s, then(asVirtualIf), g);
-      ret.remove(nextStatement, g);
+      $.replace(s, then(asVirtualIf), g);
+      $.remove(nextStatement, g);
     } else {
       if (!wizard.shoudlInvert(asVirtualIf))
         return null;
@@ -49,15 +49,15 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
         ss.remove(ss.size() - 1);
       if (!iz.block(s.getParent())) {
         ss.add(0, canonicalIf);
-        ret.replace(s, subject.ss(ss).toBlock(), g);
-        ret.remove(nextStatement, g);
+        $.replace(s, subject.ss(ss).toBlock(), g);
+        $.remove(nextStatement, g);
       } else {
-        final ListRewrite lr = insertAfter(s, ss, ret, g);
+        final ListRewrite lr = insertAfter(s, ss, $, g);
         lr.replace(s, canonicalIf, g);
         lr.remove(nextStatement, g);
       }
     }
-    return ret;
+    return $;
   }
   private static IfStatement normalized(final Statement $, final Statement nextStatement, final Expression x) {
     if (!iz.block($) || wizard.endsWithSequencer($))

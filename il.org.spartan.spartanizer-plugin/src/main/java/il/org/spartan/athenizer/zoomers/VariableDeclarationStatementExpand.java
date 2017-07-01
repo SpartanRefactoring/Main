@@ -39,13 +39,13 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     assert s != null;
     if (s.getParent() == null)
       return null;
-    final List<VariableDeclarationFragment> ret = step.fragments(s).stream()
+    final List<VariableDeclarationFragment> $ = step.fragments(s).stream()
         .filter(λ -> (!is.in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(s, "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    return ret.isEmpty() ? null : new Tip("Verbosify parameter names", getClass(), s) {
+    return $.isEmpty() ? null : new Tip("Verbosify parameter names", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final VariableDeclarationFragment ss : ret)
+        for (final VariableDeclarationFragment ss : $)
           misc.rename(ss.getName(),
               make.from(s).identifier(is.in(ss.getName().getIdentifier(), "$") ? "result" : scope.newName(s, step.type(s), prefix(step.type(s)))),
               s.getParent(), r, g);

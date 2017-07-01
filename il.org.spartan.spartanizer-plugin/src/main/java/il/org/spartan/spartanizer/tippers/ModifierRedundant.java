@@ -52,67 +52,67 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     return matches(¢, redundancies(¢));
   }
   public static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
-    final Set<Predicate<Modifier>> ret = new LinkedHashSet<>();
+    final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
-      return ret;
+      return $;
     if (iz.enumDeclaration(¢))
-      ret.addAll(as.list(isStatic, isAbstract, isFinal));
+      $.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.enumConstantDeclaration(¢)) {
-      ret.addAll(ModifiersRedundancy.visibilityModifiers);
+      $.addAll(ModifiersRedundancy.visibilityModifiers);
       if (iz.isMethodDeclaration(¢))
-        ret.addAll(as.list(isFinal, isStatic, isAbstract));
+        $.addAll(as.list(isFinal, isStatic, isAbstract));
     }
     if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration)
-      ret.addAll(as.list(isStatic, isAbstract, isFinal));
+      $.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.isMethodDeclaration(¢) && (iz.private¢(¢) || iz.static¢(¢)))
-      ret.add(isFinal);
+      $.add(isFinal);
     if (iz.methodDeclaration(¢) && haz.hasSafeVarags(az.methodDeclaration(¢)))
-      ret.remove(isFinal);
+      $.remove(isFinal);
     final ASTNode container = containing.typeDeclaration(¢);
     if (container == null)
-      return ret;
+      return $;
     if (iz.annotationTypeDeclaration(container))
-      ret.add(isFinal);
+      $.add(isFinal);
     if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
-      ret.add(isFinal);
+      $.add(isFinal);
     if (iz.enumDeclaration(container)) {
-      ret.add(isProtected);
+      $.add(isProtected);
       if (iz.constructor(¢))
-        ret.addAll(ModifiersRedundancy.visibilityModifiers);
+        $.addAll(ModifiersRedundancy.visibilityModifiers);
       if (iz.isMethodDeclaration(¢))
-        ret.add(isFinal);
+        $.add(isFinal);
     }
     if (iz.interface¢(container)) {
-      ret.addAll(ModifiersRedundancy.visibilityModifiers);
+      $.addAll(ModifiersRedundancy.visibilityModifiers);
       if (iz.isMethodDeclaration(¢)) {
-        ret.add(isAbstract);
-        ret.add(isFinal);
+        $.add(isAbstract);
+        $.add(isFinal);
       }
       if (iz.fieldDeclaration(¢)) {
-        ret.add(isStatic);
-        ret.add(isFinal);
+        $.add(isStatic);
+        $.add(isFinal);
       }
       if (iz.abstractTypeDeclaration(¢))
-        ret.add(isStatic);
+        $.add(isStatic);
     }
     if (iz.anonymousClassDeclaration(container)) {
       if (iz.fieldDeclaration(¢))
-        ret.addAll(ModifiersRedundancy.visibilityModifiers);
-      ret.add(isPrivate);
+        $.addAll(ModifiersRedundancy.visibilityModifiers);
+      $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
-        ret.add(isFinal);
+        $.add(isFinal);
       if (iz.enumConstantDeclaration(containing.typeDeclaration(container)))
-        ret.add(isProtected);
+        $.add(isProtected);
     }
     if (iz.methodDeclaration(¢) && haz.hasSafeVarags(az.methodDeclaration(¢)))
-      ret.remove(isFinal);
-    return ret;
+      $.remove(isFinal);
+    return $;
   }
-  public static BodyDeclaration prune(final BodyDeclaration ret, final Set<Predicate<Modifier>> ms) {
-    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers(ret).iterator(); ¢.hasNext();)
+  public static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
+    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (ModifiersRedundancy.test(¢.next(), ms))
         ¢.remove();
-    return ret;
+    return $;
   }
   public static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     return matches(extendedModifiers(¢), ms);

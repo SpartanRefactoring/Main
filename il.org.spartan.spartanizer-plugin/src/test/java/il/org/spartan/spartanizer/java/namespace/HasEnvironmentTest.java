@@ -25,13 +25,13 @@ public class HasEnvironmentTest extends MetaFixture {
 
   private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
-    final Collection<Object[]> ret = an.empty.list();
+    final Collection<Object[]> $ = an.empty.list();
     as.list(fs).forEach(t -> descendants.whoseClassIs(ASTNode.class).from(t.reflectedCompilationUnit()).stream()
         .filter(λ -> !signature.contains(signature(λ))).forEach(λ -> {
           signature.add(signature(λ));
-          ret.add(as.array(λ, signature(λ)));
+          $.add(as.array(λ, signature(λ)));
         }));
-    return ret;
+    return $;
   }
   @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
     return collect(new NamespaceTest(), new definitionTest());

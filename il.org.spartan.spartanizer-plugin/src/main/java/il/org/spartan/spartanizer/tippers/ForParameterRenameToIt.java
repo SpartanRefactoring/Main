@@ -35,10 +35,10 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
     return ¢ + "";
   }
   @Override public Tip tip(final SingleVariableDeclaration d) {
-    final EnhancedForStatement ret = az.enhancedFor(parent(d));
-    if (ret == null)
+    final EnhancedForStatement $ = az.enhancedFor(parent(d));
+    if ($ == null)
       return null;
-    final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from(ret);
+    final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from($);
     if (p1 instanceof MethodDeclaration)
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
@@ -46,7 +46,7 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
         if (is.in(sn.getIdentifier(), notation.cent))
           return null;
       }
-    final Statement body = ret.getBody();
+    final Statement body = $.getBody();
     if (body == null || !JohnDoe.property(d))
       return null;
     final SimpleName n = d.getName();
@@ -58,9 +58,9 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
     if (uses.isEmpty())
       return null;
     final SimpleName ¢ = make.newCent(d);
-    return isNameDefined(ret, ¢) ? null : new Tip("Rename iterator '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
+    return isNameDefined($, ¢) ? null : new Tip("Rename iterator '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        misc.rename(n, ¢, ret, r, g);
+        misc.rename(n, ¢, $, r, g);
       }
     }.spanning(body);
   }

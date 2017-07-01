@@ -80,37 +80,37 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $.inner;
   }
   static Collection<String> getInfluenced(final MethodDeclaration root, final Collection<String> ps) {
-    final Collection<String> ret = new HashSet<>(ps);
+    final Collection<String> $ = new HashSet<>(ps);
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     body(root).accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
-        if (containsParameter(right(¢), ret))
-          ret.add(extractName(left(¢)));
+        if (containsParameter(right(¢), $))
+          $.add(extractName(left(¢)));
         return true;
       }
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        if (containsParameter(initializer(¢), ret))
-          ret.add(extractName(name(¢)));
+        if (containsParameter(initializer(¢), $))
+          $.add(extractName(name(¢)));
         return true;
       }
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
-        if (containsParameter(initializer(¢), ret))
-          ret.add(extractName(initializer(¢)));
+        if (containsParameter(initializer(¢), $))
+          $.add(extractName(initializer(¢)));
         return true;
       }
     });
-    return ret;
+    return $;
   }
   protected static String extractName(final Expression root) {
-    final StringBuilder ret = new StringBuilder();
+    final StringBuilder $ = new StringBuilder();
     // noinspection SameReturnValue
     root.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {
-        ret.append(¢);
+        $.append(¢);
         return false;
       }
     });
-    return ret + "";
+    return $ + "";
   }
   static boolean nullCheckExpression(final Expression ¢) {
     return anyTips(tippers, ¢);

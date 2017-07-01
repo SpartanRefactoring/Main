@@ -50,10 +50,10 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if (!s.getAST().hasResolvedBindings() || !(root instanceof CompilationUnit)
         || !(((CompilationUnit) root).getTypeRoot() instanceof ICompilationUnit))
       return null;
-    final Expression ret = choose(candidates(s));
-    if (ret == null || iz.assignment(ret))
+    final Expression $ = choose(candidates(s));
+    if ($ == null || iz.assignment($))
       return null;
-    final ITypeBinding binding = ret.resolveTypeBinding();
+    final ITypeBinding binding = $.resolveTypeBinding();
     if (binding == null)
       return null;
     final List<ITypeBinding> allBindings = Bindings.getAllFrom(binding);
@@ -98,11 +98,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
                 final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
                 final String nn = scope.newName(s, tt);
                 f.setName(make.from(s).identifier(nn));
-                f.setInitializer(copy.of(ret));
+                f.setInitializer(copy.of($));
                 final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
                 v.setType(tt);
                 final Statement ns = copy.of(s);
-                s.subtreeMatch(new ASTMatcherSpecific(ret, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
+                s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
                 if (!(s.getParent() instanceof Block))
                   goNonBlockParent(s.getParent(), v, ns, r, g);
                 else
@@ -270,20 +270,20 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return (¢ + "").contains("<?>");
   }
   private static List<String> getCreatedImports(final ImportRewrite ¢) {
-    final List<String> ret = an.empty.list();
+    final List<String> $ = an.empty.list();
     if (¢.getCreatedImports() != null)
-      ret.addAll(as.list(¢.getCreatedImports()));
+      $.addAll(as.list(¢.getCreatedImports()));
     if (¢.getCreatedStaticImports() != null)
-      ret.addAll(as.list(¢.getCreatedStaticImports()));
-    return ret;
+      $.addAll(as.list(¢.getCreatedStaticImports()));
+    return $;
   }
   private static Collection<String> getSameFile(final Collection<String> createdImports, final IType[] ts) {
     return createdImports.stream().filter(Arrays.stream(ts).map(IType::getFullyQualifiedName).collect(Collectors.toList())::contains)
         .collect(Collectors.toList());
   }
   private static Collection<String> getSamePackage(final Collection<String> createdImports, final IType rep) {
-    final String ret = rep.getPackageFragment().getElementName();
-    return createdImports.stream().filter(λ -> λ.startsWith(ret)).collect(Collectors.toList());
+    final String $ = rep.getPackageFragment().getElementName();
+    return createdImports.stream().filter(λ -> λ.startsWith($)).collect(Collectors.toList());
   }
   private static Collection<String> getTopLevel(final Collection<String> createdImports, final IType[] ts) {
     return createdImports.stream().filter(Arrays.stream(ts).map(IType::getFullyQualifiedName).collect(Collectors.toList())::contains)

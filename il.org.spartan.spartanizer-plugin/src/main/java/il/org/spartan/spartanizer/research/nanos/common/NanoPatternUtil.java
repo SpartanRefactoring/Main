@@ -50,10 +50,10 @@ public interface NanoPatternUtil {
   }
   static Iterable<String> nullCheckees(final IfStatement ¢) {
     Expression e = expression(¢);
-    final Collection<String> ret = an.empty.list();
+    final Collection<String> $ = an.empty.list();
     for (; nullComparisonIncremental(e); e = right(az.infixExpression(e)))
-      ret.add(left(az.infixExpression(left(az.infixExpression(e)))) + "");
-    ret.add(left(az.infixExpression(e)) + "");
-    return ret;
+      $.add(left(az.infixExpression(left(az.infixExpression(e)))) + "");
+    $.add(left(az.infixExpression(e)) + "");
+    return $;
   }
 }

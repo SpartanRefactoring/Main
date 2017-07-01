@@ -23,15 +23,15 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)
       return null;
-    final ConditionalExpression ret = findFirst.conditionalArgument(i);
-    if (ret == null || iz.nullLiteral(then(ret)) && !iz.nullLiteral(elze(ret)) || iz.nullLiteral(elze(ret)) && !iz.nullLiteral(then(ret)))
+    final ConditionalExpression $ = findFirst.conditionalArgument(i);
+    if ($ == null || iz.nullLiteral(then($)) && !iz.nullLiteral(elze($)) || iz.nullLiteral(elze($)) && !iz.nullLiteral(then($)))
       return null;
     final MethodInvocation mThen = copy.of(i);
     final int ci = mThen.arguments().indexOf(findFirst.conditionalArgument(mThen));
-    arguments(mThen).set(ci, copy.of(then(ret)));
+    arguments(mThen).set(ci, copy.of(then($)));
     final MethodInvocation mElse = copy.of(i);
-    arguments(mElse).set(ci, copy.of(elze(ret)));
-    return subject.pair(subject.operand(mThen).toStatement(), subject.operand(mElse).toStatement()).toIf(copy.of(ret.getExpression()));
+    arguments(mElse).set(ci, copy.of(elze($)));
+    return subject.pair(subject.operand(mThen).toStatement(), subject.operand(mElse).toStatement()).toIf(copy.of($.getExpression()));
   }
   @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";

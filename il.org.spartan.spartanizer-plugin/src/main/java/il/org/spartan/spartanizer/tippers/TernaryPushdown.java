@@ -31,8 +31,8 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   static Expression pushdown(final ConditionalExpression x) {
     if (x == null)
       return null;
-    final Expression ret = core(then(x)), elze = core(elze(x));
-    return eq(ret, elze) ? null : pushdown(x, ret, elze);
+    final Expression $ = core(then(x)), elze = core(elze(x));
+    return eq($, elze) ? null : pushdown(x, $, elze);
   }
   static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
     return operator(a1) != operator(a2) || !eq(to(a1), to(a2)) ? null
@@ -50,10 +50,10 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final ClassInstanceCreation ret = copy.of(e1);
-    arguments(ret).remove(i);
-    arguments(ret).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
-    return ret;
+    final ClassInstanceCreation $ = copy.of(e1);
+    arguments($).remove(i);
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
+    return $;
   }
   private static Expression pushdown(final ConditionalExpression x, final Expression e1, final Expression e2) {
     if (e1.getNodeType() != e2.getNodeType())
@@ -78,9 +78,9 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final FieldAccess e1, final FieldAccess e2) {
     if (!eq(name(e1), name(e2)))
       return null;
-    final FieldAccess ret = copy.of(e1);
-    ret.setExpression(misc.parenthesize(subject.pair(expression(e1), expression(e2)).toCondition(expression(x))));
-    return ret;
+    final FieldAccess $ = copy.of(e1);
+    $.setExpression(misc.parenthesize(subject.pair(expression(e1), expression(e2)).toCondition(expression(x))));
+    return $;
   }
   private static Expression pushdown(final ConditionalExpression x, final InfixExpression e1, final InfixExpression e2) {
     if (operator(e1) != operator(e2))
@@ -91,33 +91,33 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final InfixExpression ret = copy.of(e1);
-    final List<Expression> operands = hop.operands(ret);
+    final InfixExpression $ = copy.of(e1);
+    final List<Expression> operands = hop.operands($);
     operands.remove(i);
-    operands.add(i, p(ret, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x))));
-    return p(x, subject.operands(operands).to(ret.getOperator()));
+    operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x))));
+    return p(x, subject.operands(operands).to($.getOperator()));
   }
   private static Expression pushdown(final ConditionalExpression x, final MethodInvocation e1, final MethodInvocation e2) {
     if (!eq(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
     final Expression receiver1 = expression(e1), receiver2 = expression(e2);
-    final MethodInvocation ret = copy.of(e1);
+    final MethodInvocation $ = copy.of(e1);
     if (!eq(receiver1, receiver2)) {
       if (receiver1 == null || receiver2 == null || !eq(es1, es2) || guessName.isClassName(receiver1) || guessName.isClassName(receiver2))
         return null;
-      assert ret != null;
-      ret.setExpression(misc.parenthesize(subject.pair(receiver1, receiver2).toCondition(expression(x))));
+      assert $ != null;
+      $.setExpression(misc.parenthesize(subject.pair(receiver1, receiver2).toCondition(expression(x))));
     } else {
       if (es1.size() != es2.size())
         return null;
       final int i = findSingleDifference(es1, es2);
       if (i < 0)
         return null;
-      arguments(ret).remove(i);
-      arguments(ret).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
+      arguments($).remove(i);
+      arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
     }
-    return ret;
+    return $;
   }
   private static Expression pushdown(final ConditionalExpression x, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
     if (!eq(e1.getName(), e2.getName()))
@@ -128,10 +128,10 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final SuperMethodInvocation ret = copy.of(e1);
-    arguments(ret).remove(i);
-    arguments(ret).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
-    return ret;
+    final SuperMethodInvocation $ = copy.of(e1);
+    arguments($).remove(i);
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
+    return $;
   }
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Pushdown ?: into expression";

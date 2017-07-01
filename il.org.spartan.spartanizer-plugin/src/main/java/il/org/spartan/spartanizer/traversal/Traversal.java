@@ -185,8 +185,8 @@ public abstract class Traversal implements Selfie<Traversal> {
     protected Tip tip() { return getTip(); }
     // @formatter:on
     protected String node() {
-      final ASTNode ret = self().getNode();
-      return String.format("%s(%s)", English.name(ret), Trivia.gist(ret));
+      final ASTNode $ = self().getNode();
+      return String.format("%s(%s)", English.name($), Trivia.gist($));
     }
   }
 

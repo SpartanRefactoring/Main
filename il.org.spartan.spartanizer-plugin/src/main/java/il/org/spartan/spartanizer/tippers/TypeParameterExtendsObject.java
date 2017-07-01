@@ -24,13 +24,13 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
     return "Trim implicit extends " + Trivia.gist(¢);
   }
   @Override public TypeParameter replacement(final TypeParameter p) {
-    final TypeParameter ret = copy.of(p);
-    final List<Type> ts = typeBounds(ret);
+    final TypeParameter $ = copy.of(p);
+    final List<Type> ts = typeBounds($);
     if (!haz.hasObject(ts))
       return null;
     for (final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
       if (type.isObject(¢.next()))
         ¢.remove();
-    return ret;
+    return $;
   }
 }

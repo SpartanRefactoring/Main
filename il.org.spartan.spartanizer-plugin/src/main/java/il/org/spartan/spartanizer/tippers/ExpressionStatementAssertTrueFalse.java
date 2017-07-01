@@ -30,8 +30,8 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
   private static ASTNode replacement(final MethodInvocation ¢) {
     if (¢ == null)
       return null;
-    final List<Expression> ret = arguments(¢);
-    return replacement(¢, the.firstOf(ret), the.secondOf(ret));
+    final List<Expression> $ = arguments(¢);
+    return replacement(¢, the.firstOf($), the.secondOf($));
   }
   public static ASTNode replacement(final MethodInvocation i, final Expression first, final Expression second) {
     final Expression message = second == null ? null : first, ret = second == null ? first : second;

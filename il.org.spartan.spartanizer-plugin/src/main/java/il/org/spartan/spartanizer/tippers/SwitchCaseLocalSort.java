@@ -25,13 +25,13 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
   private static final long serialVersionUID = 0x3FBC0D3028B5DF0L;
 
   @Override public Tip tip(final SwitchCase n) {
-    final SwitchCase ret = az.switchCase(extract.nextStatementInBlock(n));
+    final SwitchCase $ = az.switchCase(extract.nextStatementInBlock(n));
     return new Tip(description(n), getClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(n, copy.of(ret), g);
-        r.replace(ret, copy.of(n), g);
+        r.replace(n, copy.of($), g);
+        r.replace($, copy.of(n), g);
       }
-    }.spanning(ret);
+    }.spanning($);
   }
   @Override protected boolean prerequisite(final SwitchCase n) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInBlock(n));

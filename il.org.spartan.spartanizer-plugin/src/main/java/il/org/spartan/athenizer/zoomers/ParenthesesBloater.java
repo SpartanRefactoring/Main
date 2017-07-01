@@ -22,9 +22,9 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
   @Override public ASTNode replacement(final InfixExpression ¢) {
     if (iz.parenthesizedExpression(¢) || !iz.infixExpression(¢.getParent()))
       return null;
-    final ParenthesizedExpression ret = ¢.getAST().newParenthesizedExpression();
-    ret.setExpression(copy.of(¢));
-    return ret;
+    final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
+    $.setExpression(copy.of(¢));
+    return $;
   }
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Add parentheses to InfixExpression who's parent is also InfixExpression";

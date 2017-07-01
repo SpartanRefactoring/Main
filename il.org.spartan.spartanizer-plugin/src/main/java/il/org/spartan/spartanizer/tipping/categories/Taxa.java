@@ -19,19 +19,19 @@ public class Taxa extends LinkedHashSet<Taxon> {
   }
 
   @SuppressWarnings("unchecked") private static Taxa categories(final Tipper<? extends ASTNode> t) {
-    final Taxa ret = new Taxa();
+    final Taxa $ = new Taxa();
     for (final Class<?> ¢ : t.getClass().getInterfaces())
       if (isTaxon(¢))
-        ret.add(Taxon.of((Class<? extends Category>) ¢));
-    return ret;
+        $.add(Taxon.of((Class<? extends Category>) ¢));
+    return $;
   }
-  static Taxa categories(final Taxa ret, final Taxon t) {
+  static Taxa categories(final Taxa $, final Taxon t) {
     for (final Taxon ¢ : t.parents())
-      if (!ret.contains(¢)) {
-        ret.add(¢);
-        categories(ret, ¢);
+      if (!$.contains(¢)) {
+        $.add(¢);
+        categories($, ¢);
       }
-    return ret;
+    return $;
   }
   public static Stream<Taxon> categories(final Class<? extends Category> ¢) {
     return categories(new Taxa(), Taxon.of(¢)).stream();

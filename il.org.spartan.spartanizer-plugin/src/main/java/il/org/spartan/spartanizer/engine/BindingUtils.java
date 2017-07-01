@@ -12,14 +12,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
-@SuppressWarnings("restriction")
+
 public enum BindingUtils {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** @param pattern an {@link ASTNode}
    * @return __ in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {
-    final ASTNode ret = containing.typeDeclaration(¢);
-    return eval(((AbstractTypeDeclaration) ret)::resolveBinding).when(ret instanceof TypeDeclaration);
+    final ASTNode $ = containing.typeDeclaration(¢);
+    return eval(((AbstractTypeDeclaration) $)::resolveBinding).when($ instanceof TypeDeclaration);
   }
   /** @param compilationUnit current compilation unit
    * @return current package */
@@ -38,8 +38,8 @@ public enum BindingUtils {
       final CompilationUnit u) {
     if (b == null)
       return null;
-    final IMethodBinding ret = Bindings.findMethodInHierarchy(b, methodName, bs);
-    return take(ret).when(isVisible(ret, n, u));
+    final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);
+    return take($).when(isVisible($, n, u));
   }
   /** Determines whether an invocation of a method is legal in a specific
    * context.

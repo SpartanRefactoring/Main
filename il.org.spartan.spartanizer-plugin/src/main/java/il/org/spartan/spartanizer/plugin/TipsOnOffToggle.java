@@ -57,7 +57,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
     return null;
   }
   private static IProject getProject() {
-    final IProject ret = Selection.Util.project();
-    return ret != null ? ret : null;
+    final IProject $ = Selection.Util.project();
+    return $ != null ? $ : null;
   }
 }

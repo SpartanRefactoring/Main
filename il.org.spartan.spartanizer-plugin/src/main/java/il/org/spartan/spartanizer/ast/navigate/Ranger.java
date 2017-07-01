@@ -14,15 +14,15 @@ import il.org.spartan.utils.*;
  * @since 2017-04-19 */
 public interface Ranger {
   static Range make(final ASTNode ¢) {
-    final int ret = ¢.getStartPosition();
-    return new Range(ret, ret + ¢.getLength());
+    final int $ = ¢.getStartPosition();
+    return new Range($, $ + ¢.getLength());
   }
   static int to(final ASTNode ¢) {
     return ¢.getLength() + from(¢);
   }
-  static int to(final IMarker ret) {
+  static int to(final IMarker $) {
     try {
-      return ((Integer) ret.getAttribute(IMarker.CHAR_END)).intValue();
+      return ((Integer) $.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (CoreException | ClassCastException ¢) {
       note.bug(¢);
       return Integer.MAX_VALUE;
@@ -52,9 +52,9 @@ public interface Ranger {
   static int from(final ASTNode ¢) {
     return ¢.getStartPosition();
   }
-  static int from(final IMarker ret) {
+  static int from(final IMarker $) {
     try {
-      return ((Integer) ret.getAttribute(IMarker.CHAR_START)).intValue();
+      return ((Integer) $.getAttribute(IMarker.CHAR_START)).intValue();
     } catch (CoreException | ClassCastException ¢) {
       note.bug(¢);
       return Integer.MIN_VALUE;

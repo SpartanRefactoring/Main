@@ -52,7 +52,7 @@ public class Augmenter implements Application {
   /** @param u JD
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
-    final List<List<Statement>> ret = an.empty.list();
+    final List<List<Statement>> $ = an.empty.list();
     final Range r = Ranger.make(s);
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
@@ -60,16 +60,16 @@ public class Augmenter implements Application {
         if (discardOptimization(b))
           return false;
         if (Ranger.contained(b, r))
-          ret.add(statements(b));
+          $.add(statements(b));
         else {
           final List<Statement> ss = as.list(statements(b).stream().filter(λ -> Ranger.contained(λ, r)).collect(toList()));
           if (!discardOptimization(ss))
-            ret.add(ss);
+            $.add(ss);
         }
         return false;
       }
     });
-    return ret;
+    return $;
   }
   // TODO Ori Roth Ori Roth clear and complete
   /** Main function of the application.

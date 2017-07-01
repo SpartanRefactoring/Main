@@ -19,13 +19,13 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
     return $ != null && go(ASTRewrite.create(¢.getAST()), ¢, $, null) != null;
   }
   @Override public Tip tip(final N n) {
-    final Statement ret = extract.nextStatement(n);
-    assert ret != null;
-    return new Tip(description(n), myClass(), n, ret) {
+    final Statement $ = extract.nextStatement(n);
+    assert $ != null;
+    return new Tip(description(n), myClass(), n, $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        ReplaceToNextStatementExclude.this.go(r, n, ret, g);
+        ReplaceToNextStatementExclude.this.go(r, n, $, g);
       }
-    }.spanning(ret);
+    }.spanning($);
   }
   protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

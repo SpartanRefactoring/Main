@@ -244,8 +244,8 @@ public interface type {
       return $ < Short.MAX_VALUE && $ > Short.MIN_VALUE;
     }
     private static implementation lookDown(final Assignment x) {
-      final implementation ret = get(to(x));
-      return !ret.isNoInfo() ? ret : get(from(x)).isNumeric() ? NUMERIC : get(from(x));
+      final implementation $ = get(to(x));
+      return !$.isNoInfo() ? $ : get(from(x)).isNumeric() ? NUMERIC : get(from(x));
     }
     private static implementation lookDown(final CastExpression ¢) {
       return get(expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
@@ -254,10 +254,10 @@ public interface type {
       return baptize(step.type(¢) + "");
     }
     private static implementation lookDown(final ConditionalExpression x) {
-      final implementation ret = get(then(x)), ¢ = get(elze(x));
-      return ret == ¢ ? ret
-          : isCastedToShort(ret, ¢, elze(x)) || isCastedToShort(¢, ret, then(x)) ? SHORT
-              : !ret.isNumeric() || !¢.isNumeric() ? NOTHING : ret.underNumericOnlyOperator(¢);
+      final implementation $ = get(then(x)), ¢ = get(elze(x));
+      return $ == ¢ ? $
+          : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
+              : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
     private static implementation lookDown(final SimpleName ¢) {
       final Namespace $ = Environment.of(¢);
@@ -323,10 +323,10 @@ public interface type {
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
-      implementation ret = get(the.firstOf(es));
+      implementation $ = get(the.firstOf(es));
       for (final Expression ¢ : the.tailOf(es))
-        ret = ret.underBinaryOperator(o, get(¢));
-      return ret;
+        $ = $.underBinaryOperator(o, get(¢));
+      return $;
     }
     private static implementation lookDown(final MethodInvocation ¢) {
       return "toString".equals(step.name(¢) + "") && arguments(¢).isEmpty() ? STRING : NOTHING;
@@ -349,13 +349,13 @@ public interface type {
     }
     /** performs the lookup process for InfixExpressions. */
     private static implementation lookup(final InfixExpression x, final implementation i, final InfixExpression.Operator o) {
-      final implementation ret = i.aboveBinaryOperator(o);
+      final implementation $ = i.aboveBinaryOperator(o);
       if (o != op.PLUS2)
-        return ret;
+        return $;
       ASTNode context = x.getParent();
       while (context != null && iz.parenthesizedExpression(context))
         context = context.getParent();
-      return context == null || !iz.infixExpression(context) ? ret : lookup(az.infixExpression(context), ret, az.infixExpression(context).getOperator());
+      return context == null || !iz.infixExpression(context) ? $ : lookup(az.infixExpression(context), $, az.infixExpression(context).getOperator());
     }
     /** @param x JD
      * @param i most specific type information already known, usually from
@@ -365,8 +365,8 @@ public interface type {
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
-      for (final ASTNode ret : hop.ancestors(x)) {
-        final ASTNode context = ret.getParent();
+      for (final ASTNode $ : hop.ancestors(x)) {
+        final ASTNode context = $.getParent();
         if (context != null)
           switch (context.getNodeType()) {
             case IF_STATEMENT:
@@ -380,9 +380,9 @@ public interface type {
             case PREFIX_EXPRESSION:
               return i.above(az.prefixExpression(context).getOperator());
             case ASSERT_STATEMENT:
-              return ret.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
+              return $.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             case FOR_STATEMENT:
-              return ret.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
+              return $.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             case PARENTHESIZED_EXPRESSION:
               continue;
             case VARIABLE_DECLARATION_FRAGMENT:
@@ -500,8 +500,8 @@ public interface type {
         return this == BOOLEAN ? BOOLEAN : !isIntegral() ? BOOLEANINTEGRAL : this == LONG ? LONG : INTEGRAL;
       }
       default implementation underIntegersOnlyOperator(final implementation k) {
-        final implementation ret = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
-        return is.in(LONG, ret, ¢2) ? LONG : !is.in(INTEGRAL, ret, ¢2) ? INT : INTEGRAL;
+        final implementation $ = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
+        return is.in(LONG, $, ¢2) ? LONG : !is.in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
       }
       /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
        *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot
@@ -512,15 +512,15 @@ public interface type {
         assert k != null;
         assert this != ALPHANUMERIC : "Don'tipper confuse " + NUMERIC + " with " + ALPHANUMERIC;
         assert isNumeric() : this + ": is for some reason not numeric ";
-        final implementation ret = k.asNumericUnderOperation();
-        assert ret != null;
-        assert ret.isNumeric() : this + ": is for some reason not numeric ";
-        return is.in(DOUBLE, ret, this) ? DOUBLE // Double contaminates Numeric
-            : is.in(NUMERIC, ret, this) ? NUMERIC // Numeric contaminates Float
-                : is.in(FLOAT, ret, this) ? FLOAT // FLOAT contaminates Integral
-                    : is.in(LONG, ret, this) ? LONG : // LONG contaminates
+        final implementation $ = k.asNumericUnderOperation();
+        assert $ != null;
+        assert $.isNumeric() : this + ": is for some reason not numeric ";
+        return is.in(DOUBLE, $, this) ? DOUBLE // Double contaminates Numeric
+            : is.in(NUMERIC, $, this) ? NUMERIC // Numeric contaminates Float
+                : is.in(FLOAT, $, this) ? FLOAT // FLOAT contaminates Integral
+                    : is.in(LONG, $, this) ? LONG : // LONG contaminates
                                                     // INTEGRAL
-                        !is.in(INTEGRAL, ret, this) ? INT : INTEGRAL;// INTEGRAL
+                        !is.in(INTEGRAL, $, this) ? INT : INTEGRAL;// INTEGRAL
         // contaminates
         // INT
       }

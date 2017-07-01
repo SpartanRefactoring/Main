@@ -43,8 +43,8 @@ public class InflateHandler extends AbstractHandler {
       HandlerUtil.toggleCommandState(¢.getCommand());
       return goWheelAction();
     }
-    final Selection ret = Selection.Util.current().setUseBinding();
-    return ret.isTextSelection ? doSingle() : goAggressiveAction(ret);
+    final Selection $ = Selection.Util.current().setUseBinding();
+    return $.isTextSelection ? doSingle() : goAggressiveAction($);
   }
   
   public static Void doSingle() {
@@ -74,21 +74,21 @@ public class InflateHandler extends AbstractHandler {
     return null;
   }
   private static List<Listener> getListeners(final StyledText t) {
-    final List<Listener> ret = an.empty.list();
+    final List<Listener> $ = an.empty.list();
     if (t == null)
-      return ret;
+      return $;
     final List<Listener> ls = as.list(t.getListeners(SWT.KeyDown));
     if (ls == null)
-      return ret;
-    ret.addAll(
+      return $;
+    $.addAll(
         ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).collect(toList()));
-    return ret;
+    return $;
   }
   private static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
-    final Control ret = ¢.getAdapter(Control.class);
-    return !(ret instanceof StyledText) ? null : (StyledText) ret;
+    final Control $ = ¢.getAdapter(Control.class);
+    return !($ instanceof StyledText) ? null : (StyledText) $;
   }
   public static GUIApplicator applicator() {
     return (GUIApplicator) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
@@ -104,9 +104,9 @@ public class InflateHandler extends AbstractHandler {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return null;
-    final IWorkbenchWindow ret = w.getActiveWorkbenchWindow();
+    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
     final IWorkbenchWindow[] wds = w.getWorkbenchWindows();
-    return ret != null ? ret.getPartService() : wds != null && wds.length != 0 ? wds[0].getPartService() : null;
+    return $ != null ? $.getPartService() : wds != null && wds.length != 0 ? wds[0].getPartService() : null;
   }
   @SuppressWarnings("unused") private static IPartListener pageListener() {
     return new IPartListener() {

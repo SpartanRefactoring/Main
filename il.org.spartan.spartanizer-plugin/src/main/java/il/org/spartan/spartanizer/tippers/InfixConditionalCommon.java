@@ -32,18 +32,18 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
   private static final long serialVersionUID = -0x756F9C11630A8B48L;
 
   private static Expression chopHead(final InfixExpression ¢) {
-    final List<Expression> ret = allOperands(¢);
-    ret.remove(0);
-    return ret.size() < 2 ? copy.of(the.firstOf(ret)) : subject.operands(ret).to(¢.getOperator());
+    final List<Expression> $ = allOperands(¢);
+    $.remove(0);
+    return $.size() < 2 ? copy.of(the.firstOf($)) : subject.operands($).to(¢.getOperator());
   }
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
   }
   @Override public Expression replacement(final InfixExpression x) {
-    final Operator ret = x.getOperator();
-    if (!in(ret, CONDITIONAL_AND, CONDITIONAL_OR))
+    final Operator $ = x.getOperator();
+    if (!in($, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
-    final Operator conjugate = op.conjugate(ret);
+    final Operator conjugate = op.conjugate($);
     final InfixExpression left = az.infixExpression(core(left(x)));
     if (left == null || left.getOperator() != conjugate)
       return null;
@@ -52,6 +52,6 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
       return null;
     final Expression leftLeft = left(left);
     return !sideEffects.free(leftLeft) || !wizard.eq(leftLeft, left(right)) ? null
-        : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(ret)).to(conjugate);
+        : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to($)).to(conjugate);
   }
 }

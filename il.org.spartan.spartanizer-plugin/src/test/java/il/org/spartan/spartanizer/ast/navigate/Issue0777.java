@@ -22,12 +22,12 @@ public class Issue0777 {
     azzertEquals("class C{void foo(){}}", addMethodToType("class C{}", "void foo(){}"));
   }
   private String addMethodToType(final String type, final String method) throws BadLocationException {
-    final IDocument ret = new Document(type);
-    final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from(ret));
+    final IDocument $ = new Document(type);
+    final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
     misc.addMethodToType(d, az.methodDeclaration(make.ast(method)), r, null);
-    r.rewriteAST(ret, null).apply(ret);
-    return ret.get();
+    r.rewriteAST($, null).apply($);
+    return $.get();
   }
   private void azzertEquals(final String expected, final String actual) {
     azzert.that(actual.replaceAll("[\n\t\r ]", ""), is(expected.replaceAll("[\n\t\r ]", "")));

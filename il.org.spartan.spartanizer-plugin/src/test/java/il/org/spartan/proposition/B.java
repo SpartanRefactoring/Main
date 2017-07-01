@@ -32,14 +32,14 @@ public class B {
   B left, right;
 
   static List<B> enumerate(final int n) {
-    final List<B> ret = an.empty.list();
+    final List<B> $ = an.empty.list();
     if (n <= 0)
-      ret.add(null);
+      $.add(null);
     else
       for (int i = 0; i < n; ++i)
         for (final B left : enumerate(i))
-          ret.addAll(enumerate(n - i - 1).stream().map(λ -> new B(left, λ)).collect(Collectors.toList()));
-    return ret;
+          $.addAll(enumerate(n - i - 1).stream().map(λ -> new B(left, λ)).collect(Collectors.toList()));
+    return $;
   }
   public static void main(final String[] args) {
     System.out.println(enumerate(0).size());

@@ -30,11 +30,11 @@ public enum TermsReorganizer {
     return subject.operands(rest).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
   private static Expression buildMinus(final List<Expression> ¢) {
-    final Expression ret = subject.operand(the.firstOf(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
+    final Expression $ = subject.operand(the.firstOf(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
     if (¢.size() == 1)
-      return ret;
+      return $;
     ¢.remove(0);
-    ¢.add(0, ret);
+    ¢.add(0, $);
     return subject.operands(¢).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
   private static Expression buildPlus(final List<Expression> ¢) {

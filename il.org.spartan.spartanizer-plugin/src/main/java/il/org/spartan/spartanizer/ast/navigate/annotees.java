@@ -19,30 +19,30 @@ public interface annotees {
     return ¢.stream().map(VariableDeclaration::getName).collect(toList());
   }
   @SuppressWarnings("OverlyComplexMethod") static List<SimpleName> of(final Annotation ¢) {
-    final ASTNode ret = parent(¢);
-    switch (ret.getNodeType()) {
+    final ASTNode $ = parent(¢);
+    switch ($.getNodeType()) {
       case ASTNode.ANNOTATION_TYPE_DECLARATION:
-        return of((AnnotationTypeDeclaration) ret);
+        return of((AnnotationTypeDeclaration) $);
       case ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION:
-        return of((AnnotationTypeMemberDeclaration) ret);
+        return of((AnnotationTypeMemberDeclaration) $);
       case ASTNode.ENUM_CONSTANT_DECLARATION:
-        return of((EnumConstantDeclaration) ret);
+        return of((EnumConstantDeclaration) $);
       case ASTNode.ENUM_DECLARATION:
-        return of((EnumDeclaration) ret);
+        return of((EnumDeclaration) $);
       case ASTNode.FIELD_DECLARATION:
-        return of((FieldDeclaration) ret);
+        return of((FieldDeclaration) $);
       case ASTNode.METHOD_DECLARATION:
-        return of((MethodDeclaration) ret);
+        return of((MethodDeclaration) $);
       case ASTNode.SINGLE_VARIABLE_DECLARATION:
-        return of((SingleVariableDeclaration) ret);
+        return of((SingleVariableDeclaration) $);
       case ASTNode.TYPE_DECLARATION:
-        return of((TypeDeclaration) ret);
+        return of((TypeDeclaration) $);
       case ASTNode.VARIABLE_DECLARATION_EXPRESSION:
-        return of((VariableDeclarationExpression) ret);
+        return of((VariableDeclarationExpression) $);
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
-        return of((VariableDeclarationStatement) ret);
+        return of((VariableDeclarationStatement) $);
       default:
-        assert fault.unreachable() : fault.specifically("Unexpected __", wizard.nodeName(ret));
+        assert fault.unreachable() : fault.specifically("Unexpected __", wizard.nodeName($));
         return null;
     }
   }

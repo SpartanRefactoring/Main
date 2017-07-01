@@ -54,11 +54,11 @@ public class OperationListEditor extends ListEditor {
   }
   
   private int getRealChosenOpIndex(final int i, final List<WidgetOperationEntry> es) {
-    WidgetOperationEntry ret = es.get(0);
+    WidgetOperationEntry $ = es.get(0);
     for (final WidgetOperationEntry ¢ : es)
       if (¢.getName().equals(getList().getItem(i)))
-        ret = ¢;
-    return es.indexOf(ret);
+        $ = ¢;
+    return es.indexOf($);
   }
   
   public void addDefaultButtonsConfig() {
@@ -216,13 +216,13 @@ public class OperationListEditor extends ListEditor {
     // ADD,REMOVE,DOWN,UP buttons
   }
   @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
-    final List<String> ret = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     for (final WidgetOperationEntry ¢ : l)
       if (¢ != null)
-        ret.add(¢.getName());
+        $.add(¢.getName());
     // when you want to initialize all preferences - uncomment the next line:
-     return ret.toArray(new String[ret.size()]);
+     return $.toArray(new String[$.size()]);
     //return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : $.toArray(new String[$.size()]);
   }
   @Override protected String getNewInputObject() {

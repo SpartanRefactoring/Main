@@ -27,11 +27,11 @@ public class FileTestUtils {
    * @param name the canonical name of some class
    * @return object representing this class
    * @since 2014/05/23 */
-  private static Class<?> asClass(final String ret) {
+  private static Class<?> asClass(final String $) {
     try {
-      return Class.forName(ret);
+      return Class.forName($);
     } catch (final ClassNotFoundException ¢) {
-      azzert.fail(ret + ": class not found. " + ¢.getMessage());
+      azzert.fail($ + ": class not found. " + ¢.getMessage());
       return null;
     }
   }
@@ -43,22 +43,22 @@ public class FileTestUtils {
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
-  private static File createTempFile(final TestDirection ret, final File f) {
+  private static File createTempFile(final TestDirection $, final File f) {
     try {
-      return File.createTempFile(f.getName().replace(".", ""), "." + (ret == TestDirection.In ? "in" : "out"));
+      return File.createTempFile(f.getName().replace(".", ""), "." + ($ == TestDirection.In ? "in" : "out"));
     } catch (final IOException e) {
       return null; // Failed to create temporary file
     }
   }
-  private static File createTemporaryRandomAccessFile(final File ret, final String s) {
-    try (RandomAccessFile fh = new RandomAccessFile(ret, "rw")) {
+  private static File createTemporaryRandomAccessFile(final File $, final String s) {
+    try (RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
-      if (ret != null)
-        ret.deleteOnExit();
+      if ($ != null)
+        $.deleteOnExit();
     } catch (final IOException ¢) {
       note.bug(¢); // Probably permissions problem
     }
-    return ret;
+    return $;
   }
   private static StringBuilder deleteTestKeyword(final StringBuilder $) {
     if ($.indexOf(testKeyword) > 0)
@@ -73,17 +73,17 @@ public class FileTestUtils {
    * assertion fault
    * @param commandLineApplicator an arbitrary class object
    * @return an instance of the parameter */
-  public static Object getInstance(final Class<?> ret) {
+  public static Object getInstance(final Class<?> $) {
     try {
-      return ret.newInstance();
+      return $.newInstance();
     } catch (final SecurityException ¢) {
-      error("Security exception in instantiating ", ret, ¢);
+      error("Security exception in instantiating ", $, ¢);
     } catch (final ExceptionInInitializerError ¢) {
-      error("Error in instantiating class", ret, ¢);
+      error("Error in instantiating class", $, ¢);
     } catch (final InstantiationException ¢) {
-      error("Nullary constructor threw an exception in class", ret, ¢);
+      error("Nullary constructor threw an exception in class", $, ¢);
     } catch (final IllegalAccessException ¢) {
-      error("Missing public constructor (probably) in class", ret, ¢);
+      error("Missing public constructor (probably) in class", $, ¢);
     }
     return null;
   }
@@ -97,16 +97,16 @@ public class FileTestUtils {
   static GUITraversal makeApplicator(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
-    final Object ret = getInstance(c);
-    assert ret != null;
-    return (GUITraversal) ret;
+    final Object $ = getInstance(c);
+    assert $ != null;
+    return (GUITraversal) $;
   }
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File ¢) {
-    final StringBuilder ret = makeAST.COMPILATION_UNIT.builder(¢);
-    if (ret.indexOf(testKeyword) > 0)
-      ret.delete(0, ret.indexOf(testKeyword) + testKeyword.length() + (ret.indexOf("\r\n") > 0 ? 2 : 1));
-    return createTempFile(ret, TestDirection.Out, ¢);
+    final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
+    if ($.indexOf(testKeyword) > 0)
+      $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
+    return createTempFile($, TestDirection.Out, ¢);
   }
 
   /** An abstract class to be extended and implemented by client, while
@@ -162,12 +162,12 @@ public class FileTestUtils {
     public final Collection<Object[]> go() {
       assert location != null;
       assert location.listFiles() != null;
-      final List<Object[]> ret = an.empty.list();
+      final List<Object[]> $ = an.empty.list();
       for (final File ¢ : location.listFiles()) {
         assert ¢ != null;
-        go(ret, ¢);
+        go($, ¢);
       }
-      return ret;
+      return $;
     }
     /** Collect test cases from each file in {@link #location}
      * @param $ where to save the collected test cases

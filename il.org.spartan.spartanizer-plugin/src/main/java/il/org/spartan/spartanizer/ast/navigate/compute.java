@@ -66,8 +66,8 @@ public enum compute {
         return ss1;
       }
       @Override protected List<ASTNode> map(final SimpleName ¢) {
-        final String ret = ¢.getIdentifier();
-        return guessName.of(ret) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list(¢);
+        final String $ = ¢.getIdentifier();
+        return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list(¢);
       }
       @Override protected List<ASTNode> map(@SuppressWarnings("unused") final ThisExpression ¢) {
         return reduce();
@@ -93,8 +93,8 @@ public enum compute {
         return ss1;
       }
       @Override protected List<String> map(final SimpleName ¢) {
-        final String ret = ¢.getIdentifier();
-        return guessName.of(ret) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list(ret);
+        final String $ = ¢.getIdentifier();
+        return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list($);
       }
       @Override protected List<String> map(@SuppressWarnings("unused") final ThisExpression ¢) {
         return reduce();
@@ -105,7 +105,7 @@ public enum compute {
     return Stream.of(¢).map(compute::updateSpots).flatMap(List<ASTNode>::stream).collect(toList());
   }
   public static List<ASTNode> updateSpots(final ASTNode x) {
-    final List<ASTNode> ret = new ASTMapReducer<List<ASTNode>>() {
+    final List<ASTNode> $ = new ASTMapReducer<List<ASTNode>>() {
       @Override public List<ASTNode> reduce() {
         return an.empty.list();
       }
@@ -135,7 +135,7 @@ public enum compute {
         return reduce(!iz.updating(¢) ? reduce() : as.list(¢.getOperand()), super.map(¢));
       }
     }.map(x);
-    return ret != null ? ret : an.empty.list();
+    return $ != null ? $ : an.empty.list();
   }
   public static List<Statement> decompose(final Expression x) {
     return new ASTMapReducer<List<Statement>>() {

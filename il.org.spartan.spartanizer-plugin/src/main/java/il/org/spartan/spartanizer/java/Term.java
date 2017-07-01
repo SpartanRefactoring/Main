@@ -26,10 +26,10 @@ class Term {
   Expression asExpression() {
     if (!negative)
       return expression;
-    final PrefixExpression ret = expression.getAST().newPrefixExpression();
-    ret.setOperand(expression);
-    ret.setOperator(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
-    return ret;
+    final PrefixExpression $ = expression.getAST().newPrefixExpression();
+    $.setOperand(expression);
+    $.setOperator(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
+    return $;
   }
   boolean negative() {
     return negative;

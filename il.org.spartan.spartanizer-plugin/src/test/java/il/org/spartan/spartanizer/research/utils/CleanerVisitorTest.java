@@ -25,14 +25,14 @@ public class CleanerVisitorTest {
     return Javadoc.class::isInstance;
   }
   @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
-    final ASTNodeWrapper ret = new ASTNodeWrapper();
+    final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (p.test(¢))
-          ret.inner.add(¢);
+          $.inner.add(¢);
       }
     });
-    return ret;
+    return $;
   }
   @Test public void test1() {
     new CleanerVisitor().visit((Javadoc) the.firstOf(getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner));

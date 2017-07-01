@@ -55,24 +55,24 @@ public final class WhenHoldsOn<N extends ASTNode> extends NanoPatternTipper<N> {
   }
   String createExpressionOns(final List<Expression> diffs, final List<N> branches) {
     assert diffs.size() == branches.size();
-    String ret = "";
+    String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
-      ret += ".on(() ->" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
-    return ret;
+      $ += ".on(() ->" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
+    return $;
   }
   private static String extractSemicolonIfNeeded(final String ¢) {
-    final String ret = ¢.replaceAll("\n", "");
-    return ret == null || !ret.endsWith(";") ? ret : ret.substring(0, ret.length() - 1);
+    final String $ = ¢.replaceAll("\n", "");
+    return $ == null || !$.endsWith(";") ? $ : $.substring(0, $.length() - 1);
   }
   String elseString(final N ¢) {
     return lastElseWrapper(¢) == null ? "" : ".elze(() -> " + extractSemicolonIfNeeded(lastElseWrapper(¢)) + ")" + (iz.ifStatement(¢) ? ";" : "");
   }
   String createOns(final List<String> diffs, final List<? extends N> branches) {
     assert diffs.size() == branches.size();
-    String ret = "";
+    String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
-      ret += ".on(" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
-    return ret;
+      $ += ".on(" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
+    return $;
   }
   /** [[SuppressWarningsSpartan]] */
   Collection<? extends ASTNode> branchesWrapper(final N ¢) {
@@ -87,10 +87,10 @@ public final class WhenHoldsOn<N extends ASTNode> extends NanoPatternTipper<N> {
     return (!iz.conditionalExpression(¢) ? then(az.ifStatement(¢)) : then(az.conditionalExpression(¢))) + "";
   }
   static String replaceAll(final String target, final CharSequence oldString, final CharSequence newString) {
-    String ret = target;
-    while (!ret.replace(oldString, newString).equals(ret))
-      ret = ret.replace(oldString, newString);
-    return ret;
+    String $ = target;
+    while (!$.replace(oldString, newString).equals($))
+      $ = $.replace(oldString, newString);
+    return $;
   }
   @Override public Category category() {
     return Category.Conditional;

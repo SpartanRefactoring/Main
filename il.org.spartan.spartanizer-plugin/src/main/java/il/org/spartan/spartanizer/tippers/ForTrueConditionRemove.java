@@ -26,8 +26,8 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     return iz.literal.true¢(step.expression(¢));
   }
   @Override public ASTNode replacement(final ForStatement ¢) {
-    final ForStatement ret = copy.of(¢);
-    ret.setExpression(null);
-    return ret;
+    final ForStatement $ = copy.of(¢);
+    $.setExpression(null);
+    return $;
   }
 }

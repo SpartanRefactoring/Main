@@ -24,10 +24,10 @@ public final class InitializationListRemoveComma extends ReplaceCurrentNode<Arra
   @Override public String description(@SuppressWarnings("unused") final ArrayInitializer __) {
     return "Remove Unecessary ','";
   }
-  @Override public ASTNode replacement(final ArrayInitializer ret) {
-    final List<?> expressions = ret.expressions();
+  @Override public ASTNode replacement(final ArrayInitializer $) {
+    final List<?> expressions = $.expressions();
     if (!expressions.isEmpty())
       expressions.remove(expressions.size() - 1);
-    return ret;
+    return $;
   }
 }

@@ -37,9 +37,9 @@ public enum TermsExpander {
     assert first != null;
     final Term second = the.secondOf(ts);
     assert second != null;
-    final Expression ret = base(first, second);
-    assert ret != null;
-    return step(chop(chop(ts)), ret);
+    final Expression $ = base(first, second);
+    assert $ != null;
+    return step(chop(chop(ts)), $);
   }
   private static InfixExpression base(final Term t1, final Term t2) {
     if (t1.positive())

@@ -31,11 +31,11 @@ public class MethodDeclarationNameShorter extends EagerTipper<MethodDeclaration>
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
-    final List<SingleVariableDeclaration> ret = parameters(d).stream().collect(Collectors.toList());
-    return ret.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
+    final List<SingleVariableDeclaration> $ = parameters(d).stream().collect(Collectors.toList());
+    return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int i = 0;
-        for (final SingleVariableDeclaration ¢ : ret) {
+        for (final SingleVariableDeclaration ¢ : $) {
           final SimpleName n = d.getAST().newSimpleName((¢.getType() + "").split("<")[0].toLowerCase().charAt(0) + "" + i++);
           while (checkContains(getAll.names(d), n))
             n.setIdentifier(¢.getType() + "" + i++);

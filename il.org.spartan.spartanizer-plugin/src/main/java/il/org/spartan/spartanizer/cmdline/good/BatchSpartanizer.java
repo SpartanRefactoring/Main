@@ -76,10 +76,10 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       }
   }
   public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder ret = system.runScript();
-    ret.redirectErrorStream(true);
-    ret.command(script, pathname);
-    return ret;
+    final ProcessBuilder $ = system.runScript();
+    $.redirectErrorStream(true);
+    $.command(script, pathname);
+    return $;
   }
   private static void printHelpPrompt() {
     System.out.println("Batch" + system.myFullClassName());

@@ -29,14 +29,14 @@ public class PrefixToInfix extends Prefix implements Category.Bloater {
   @Override public Examples examples() {
     return convert("++i;").to("i += 1;").convert("--i;").to("i-=1;");
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final NumberLiteral one = current.getAST().newNumberLiteral();
     one.setToken("1");
     if (operator == PrefixExpression.Operator.INCREMENT)
-      ret.replace(current, subject.pair(operand, one).to(Assignment.Operator.PLUS_ASSIGN), g);
+      $.replace(current, subject.pair(operand, one).to(Assignment.Operator.PLUS_ASSIGN), g);
     if (operator == PrefixExpression.Operator.DECREMENT)
-      ret.replace(current, subject.pair(operand, one).to(Assignment.Operator.MINUS_ASSIGN), g);
-    return ret;
+      $.replace(current, subject.pair(operand, one).to(Assignment.Operator.MINUS_ASSIGN), g);
+    return $;
   }
   @Override public String description() {
     return "Convert PrefixExpression to Infix Expreesion";

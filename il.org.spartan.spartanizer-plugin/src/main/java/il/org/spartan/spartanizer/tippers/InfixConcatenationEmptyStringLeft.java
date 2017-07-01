@@ -23,9 +23,9 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
   private static final long serialVersionUID = -0xABED385B90F4612L;
 
   private static InfixExpression replace(final InfixExpression ¢) {
-    final List<Expression> ret = extract.allOperands(¢);
-    lisp.swap(ret, 0, 1);
-    return subject.operands(ret).to(op.PLUS2);
+    final List<Expression> $ = extract.allOperands(¢);
+    lisp.swap($, 0, 1);
+    return subject.operands($).to(op.PLUS2);
   }
   @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);

@@ -25,13 +25,13 @@ public class InteractiveSpartanizer {
     }
   }
   static String read() {
-    String ret = "";
+    String $ = "";
     try (Scanner s = new Scanner(System.in)) {
-      for (s.useDelimiter("\n"); s.hasNext(); ret += s.next() + "\n")
+      for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
-          return ret;
+          return $;
     }
-    return ret;
+    return $;
   }
   public InteractiveSpartanizer disable(final Class<? extends Category> ¢) {
     traversals.traversal.toolbox.disable(¢);

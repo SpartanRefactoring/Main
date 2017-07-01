@@ -33,10 +33,10 @@ public final class SingleTipperApplicator {
       final Tipper<?> w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite ret = ASTRewrite.create(u.getAST());
-    fillRewrite(ret, u, m, t, w);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewrite($, u, m, t, w);
     pm.done();
-    return ret;
+    return $;
   }
   private static ASTRewrite createRewrite(//
       final IProgressMonitor pm, //

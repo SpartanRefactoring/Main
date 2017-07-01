@@ -28,11 +28,11 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   private static final long serialVersionUID = -0x5517BB99E5F22453L;
 
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
-    final List<Expression> ret = as.list(xs);
+    final List<Expression> $ = as.list(xs);
     for (final Expression ¢ : xs)
       if (eq(¢, left)) {
-        ret.remove(¢);
-        return ret;
+        $.remove(¢);
+        return $;
       }
     return null;
   }
@@ -40,14 +40,14 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     return !eq(¢, the.firstOf(xs)) ? null : chop(new ArrayList<>(xs));
   }
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
-    final List<Expression> es = hop.operands(x), ret = !op.nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
-    return ret == null ? null : ret.size() == 1 ? copy.of(the.firstOf(ret)) : subject.operands(ret).to(operator(x));
+    final List<Expression> es = hop.operands(x), $ = !op.nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
+    return $ == null ? null : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(operator(x));
   }
   private static ASTNode replacement(final Expression to, final InfixExpression from) {
     if (iz.arrayAccess(to) || !sideEffects.free(to))
       return null;
-    final Expression ret = reduce(from, to);
-    return ret == null ? null : subject.pair(to, ret).to(op.infix2assign(operator(from)));
+    final Expression $ = reduce(from, to);
+    return $ == null ? null : subject.pair(to, $).to(op.infix2assign(operator(from)));
   }
   @Override public String description(final Assignment ¢) {
     return "Replace " + to(¢) + " = + with " + to(¢) + "  =? ";

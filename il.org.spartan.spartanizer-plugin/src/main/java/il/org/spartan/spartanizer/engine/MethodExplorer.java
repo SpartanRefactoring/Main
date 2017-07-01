@@ -27,7 +27,7 @@ public final class MethodExplorer {
    * just as local variables defined within a try and catch clauses.
    * @return a list of {@link SimpleName} from the given method. */
   public List<SimpleName> localVariables() {
-    final List<SimpleName> ret = an.empty.list();
+    final List<SimpleName> $ = an.empty.list();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final CatchClause ¢) {
@@ -51,14 +51,14 @@ public final class MethodExplorer {
         return true;
       }
       boolean add(final SingleVariableDeclaration ¢) {
-        ret.add(¢.getName());
+        $.add(¢.getName());
         return true;
       }
       void addFragments(final Iterable<VariableDeclarationFragment> fs) {
-        fs.forEach(λ -> ret.add(λ.getName()));
+        fs.forEach(λ -> $.add(λ.getName()));
       }
     });
-    return ret;
+    return $;
   }
   /** Computes the list of all return sideEffects found in a
    * {@link MethodDeclaration}.
@@ -66,15 +66,15 @@ public final class MethodExplorer {
    * This method correctly ignores return sideEffects found within nested types.
    * @return a list of {@link ReturnStatement} from the given method. */
   public List<ReturnStatement> returnStatements() {
-    final List<ReturnStatement> ret = an.empty.list();
+    final List<ReturnStatement> $ = an.empty.list();
     // noinspection SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final ReturnStatement ¢) {
-        ret.add(¢);
+        $.add(¢);
         return true;
       }
     });
-    return ret;
+    return $;
   }
 
   @SuppressWarnings("unused")

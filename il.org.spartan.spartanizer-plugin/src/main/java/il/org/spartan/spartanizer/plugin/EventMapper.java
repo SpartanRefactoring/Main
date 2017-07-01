@@ -106,15 +106,15 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     Object initializeValue() {
       assert !initialized;
       initialized = true;
-      final Object ret;
+      final Object $;
       if (initializationSupplier == null) {
-        ret = initialization;
+        $ = initialization;
         initialization = null;
       } else {
-        ret = initializationSupplier.get();
+        $ = initializationSupplier.get();
         initializationSupplier = null;
       }
-      return ret;
+      return $;
     }
     /** Update the map. Empty implementation.
      * @param __ JD */
@@ -216,20 +216,20 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
      * @param ¢ JD
      * @return {@code this} functor. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWith(final X ¢) {
-      final EventMapperFunctor<E, X, O> ret = (EventMapperFunctor<E, X, O>) this;
-      ret.initialized = false;
-      ret.initialization = ¢;
-      return ret;
+      final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
+      $.initialized = false;
+      $.initialization = ¢;
+      return $;
     }
     /** Determines initialization value for this functor using a supplier.
      * Conducts casting.
      * @param ¢ JD
      * @return {@code this} functor. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWithSupplyOf(final Supplier<X> ¢) {
-      final EventMapperFunctor<E, X, O> ret = (EventMapperFunctor<E, X, O>) this;
-      ret.initialized = false;
-      ret.initializationSupplier = ¢;
-      return ret;
+      final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
+      $.initialized = false;
+      $.initializationSupplier = ¢;
+      return $;
     }
     /** Updates the map using {@link EventMapperFunctor#consumer} or
      * {@link EventMapperFunctor#function} */

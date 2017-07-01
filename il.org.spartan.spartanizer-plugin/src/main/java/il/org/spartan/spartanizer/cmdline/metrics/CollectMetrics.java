@@ -31,10 +31,10 @@ enum CollectMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
   //
-  public static Document rewrite(final Traversal t, final CompilationUnit u, final Document ret) {
+  public static Document rewrite(final Traversal t, final CompilationUnit u, final Document $) {
     try {
-      t.go(u).rewriteAST(ret, null).apply(ret);
-      return ret;
+      t.go(u).rewriteAST($, null).apply($);
+      return $;
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
@@ -102,8 +102,8 @@ enum CollectMetrics {
     }
   }
   private static CompilationUnit spartanize(final String javaCode) {
-    final String ret = new TextualTraversals().fixed(javaCode);
-    output.put("Characters", ret.length());
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(ret);
+    final String $ = new TextualTraversals().fixed(javaCode);
+    output.put("Characters", $.length());
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);
   }
 }

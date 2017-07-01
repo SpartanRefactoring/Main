@@ -186,15 +186,15 @@ public class SpartanWidgetHandler extends AbstractHandler {
     source.addListener(SWT.MouseMove, l);
   }
   static int[] circle(@SuppressWarnings("hiding") final int r, final int offsetX, final int offsetY) {
-    final int[] ret = new int[8 * r + 4];
+    final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
-      ret[2 * i] = x + offsetX;
-      ret[2 * i + 1] = y + offsetY;
-      ret[8 * r - 2 * i - 2] = x + offsetX;
-      ret[8 * r - 2 * i - 1] = offsetY - y;
+      $[2 * i] = x + offsetX;
+      $[2 * i + 1] = y + offsetY;
+      $[8 * r - 2 * i - 2] = x + offsetX;
+      $[8 * r - 2 * i - 1] = offsetY - y;
     }
-    return ret;
+    return $;
   }
   static void expandControl(final Control c, final Point minimalButtonSize) {
     if (c == null)
@@ -205,14 +205,14 @@ public class SpartanWidgetHandler extends AbstractHandler {
   static Canvas createImage(final Shell s) {
     final int w = R, h = R;
     final Image i = Dialogs.image("file:/plugin/pictures/athenizerBig.png", IMAGE_ID + R, λ -> λ.scaledTo(w, h));
-    final Canvas ret = new Canvas(s, SWT.NO_REDRAW_RESIZE);
-    ret.addPaintListener((final PaintEvent ¢) -> {
+    final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
+    $.addPaintListener((final PaintEvent ¢) -> {
       ¢.gc.drawImage(i, 0, 0);
-      ret.setSize(w, h);
+      $.setSize(w, h);
     });
-    ret.setLocation(r + R / 2, r + R / 2);
-    ret.pack();
-    return ret;
+    $.setLocation(r + R / 2, r + R / 2);
+    $.pack();
+    return $;
   }
   /** creates a new {@link Canvas} which acts as a circular button in the
    * widget. Adds the shape of the button to the region of s and sets up the
@@ -225,21 +225,21 @@ public class SpartanWidgetHandler extends AbstractHandler {
    *        creates an empty button that does nothing when pressed.
    * @return the canvas created. */
   private static Canvas createButton(final Shell s, final Point p, final WidgetOperation o, final String tooltip) {
-    final Canvas ret = new Canvas(s, SWT.NO_REDRAW_RESIZE);
+    final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     final Image i = o == null ? null : o.image();
-    ret.addPaintListener((final PaintEvent ¢) -> {
+    $.addPaintListener((final PaintEvent ¢) -> {
       if (i != null)
         ¢.gc.drawImage(i, r / 2, r / 2);
-      ret.setSize(2 * r, 2 * r);
+      $.setSize(2 * r, 2 * r);
     });
-    ret.setLocation(p.x - r, p.y - r);
-    ret.pack();
+    $.setLocation(p.x - r, p.y - r);
+    $.pack();
     final Region rg = s.getRegion();
     rg.add(circle(r, p.x, p.y));
     s.setRegion(rg);
-    ret.setToolTipText(o != null ? tooltip : "No operation provided");
+    $.setToolTipText(o != null ? tooltip : "No operation provided");
     if (o == null)
-      return ret;
+      return $;
     final Listener l = new Listener() {
       Timer t = new Timer(true);
 
@@ -275,10 +275,10 @@ public class SpartanWidgetHandler extends AbstractHandler {
         }
       }
     };
-    ret.addListener(SWT.MouseDown, l);
-    ret.addListener(SWT.MouseUp, l);
-    ret.addListener(SWT.MouseDoubleClick, l);
-    return ret;
+    $.addListener(SWT.MouseDown, l);
+    $.addListener(SWT.MouseUp, l);
+    $.addListener(SWT.MouseDoubleClick, l);
+    return $;
   }
   
   private static int mapButtonToPoint(int index, int total) {

@@ -22,13 +22,13 @@ import il.org.spartan.spartanizer.meta.*;
 @RunWith(Parameterized.class)
 public class SingleMarkerTest extends MetaFixture {
   @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
-    final List<Object[]> ret = an.empty.list();
+    final List<Object[]> $ = an.empty.list();
     for (final MarkerAnnotation a : new definitionTest().markers()) {
       final String key = (a + "").substring(1);
       if (definition.Kind.has(key))
-        annotees.of(a).forEach(λ -> ret.add(as.array(definition.Kind.valueOf(key), λ)));
+        annotees.of(a).forEach(λ -> $.add(as.array(definition.Kind.valueOf(key), λ)));
     }
-    return ret;
+    return $;
   }
 
   private final SimpleName name;

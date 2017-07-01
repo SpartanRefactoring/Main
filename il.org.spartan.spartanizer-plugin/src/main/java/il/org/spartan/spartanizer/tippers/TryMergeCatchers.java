@@ -25,16 +25,16 @@ public class TryMergeCatchers extends ReplaceCurrentNode<TryStatement>//
       for (int j = i + 1; j < cs.size(); ++j)
         if (wizard.eq(cs.get(i).getBody(), cs.get(j).getBody())
             && !"Throwable".equals(cs.get(i).getException().getType() + "") && !"Throwable".equals(cs.get(j).getException().getType() + "")) {
-          final TryStatement ret = copy.of(s);
+          final TryStatement $ = copy.of(s);
           final CatchClause mergedCatch = copy.of(cs.get(i));
-          ret.catchClauses().remove(i);
-          ret.catchClauses().remove(j - 1);
+          $.catchClauses().remove(i);
+          $.catchClauses().remove(j - 1);
           final UnionType ut = s.getAST().newUnionType();
           ut.types().add(0, copy.of(cs.get(i).getException().getType()));
           ut.types().add(0, copy.of(cs.get(j).getException().getType()));
           mergedCatch.getException().setType(ut);
-          ret.catchClauses().add(j - 1, mergedCatch);
-          return ret;
+          $.catchClauses().add(j - 1, mergedCatch);
+          return $;
         }
     return null;
   }

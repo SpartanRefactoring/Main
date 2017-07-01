@@ -451,14 +451,14 @@ class ZZZ___Fixture_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-            @local final Function<Object, String> ret = (@ScopeSize(1) @lambda final Object ¢) -> ¢ + "",
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object ¢) -> ¢ + "",
                 something = (@ScopeSize(1) @lambda final Object ¢) -> {
                   ¢.getClass();
                   return ¢ + "";
                 };
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
-              return sum(super.hashCode(), ¢ + hashCode() * ret.hashCode());
-            return sum(super.hashCode(), hashCode() * ret.hashCode()) + something.hashCode();
+              return sum(super.hashCode(), ¢ + hashCode() * $.hashCode());
+            return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();
           }
           @ScopeSize(4) @method int sum(@ScopeSize(1) @parameter final int a, @ScopeSize(1) @parameter final int b) {
             return z + a + b + fieldInAnonymousClass + anotherFieldInAnonymousClass;

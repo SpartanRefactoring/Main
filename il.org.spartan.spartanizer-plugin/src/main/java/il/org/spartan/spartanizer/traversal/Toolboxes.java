@@ -22,14 +22,14 @@ public interface Toolboxes {
     return Toolbox.full().clone();
   }
   static List<String> get(final Taxon ¢) {
-    final List<String> ret = an.empty.list();
+    final List<String> $ = an.empty.list();
     if (¢ == null)
-      return ret;
+      return $;
     final Toolbox t = allClone();
     assert t.implementation != null;
     Stream.of(t.implementation).filter(Objects::nonNull)
-        .forEach(element -> ret.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::technicalName).collect(toList())));
-    return ret;
+        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::technicalName).collect(toList())));
+    return $;
   }
   static Taxon groupOf(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);

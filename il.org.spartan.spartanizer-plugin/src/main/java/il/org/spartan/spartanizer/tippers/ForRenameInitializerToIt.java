@@ -36,20 +36,20 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     return "Rename iteration variable '" + extract.onlyName(¢) + "' to '¢'";
   }
   @Override public Tip tip(final VariableDeclarationExpression x) {
-    final ForStatement ret = az.forStatement(parent(x));
-    if (ret == null)
+    final ForStatement $ = az.forStatement(parent(x));
+    if ($ == null)
       return null;
     final SimpleName n = extract.onlyName(x);
     if (n == null || notation.isSpecial(n) || !JohnDoe.property(x.getType(), n))
       return null;
-    final Statement body = ret.getBody();
-    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor(ret, n))
+    final Statement body = $.getBody();
+    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor($, n))
       return null;
     final SimpleName ¢ = make.newCent(x);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        misc.rename(n, ¢, ret, r, g);
+        misc.rename(n, ¢, $, r, g);
       }
-    }.spanning(ret);
+    }.spanning($);
   }
 }

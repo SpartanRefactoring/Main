@@ -32,7 +32,7 @@ public final class LocalInitializedAssignment extends $FragmentAndStatement//
         .ignores("int a, b = 2; a = b;") //
     ;
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -42,12 +42,12 @@ public final class LocalInitializedAssignment extends $FragmentAndStatement//
     final Expression newInitializer = copy.of(from(a));
     if ($FragmentAndStatement.doesUseForbiddenSiblings(f, newInitializer))
       return null;
-    final InlinerWithValue i = new Inliner(n, ret, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
-    ret.replace(initializer, newInitializer, g);
+    $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);
-    ret.remove(nextStatement, g);
-    return ret;
+    $.remove(nextStatement, g);
+    return $;
   }
 }

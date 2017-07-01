@@ -31,14 +31,14 @@ public class ForRedundantContinue extends NonEmptyForLoop//
   @Override public String description() {
     return "Prune redundant " + extract.lastStatement(current);
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Block b = az.block(body);
     if (b == null)
-      ret.replace(body, copy.of(ret.getAST().newEmptyStatement()), g);
+      $.replace(body, copy.of($.getAST().newEmptyStatement()), g);
     else {
       statements(b).remove(lastStatement);
-      ret.replace(az.block(body), copy.of(b), g);
+      $.replace(az.block(body), copy.of(b), g);
     }
-    return ret;
+    return $;
   }
 }

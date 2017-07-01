@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.traversal.*;
  * @since 2017-03-08 */
 public interface theSpartanizer {
   static Tipper<?> firstTipper(final String from) {
-    final Wrapper<Tipper<?>> ret = new Wrapper<>();
+    final Wrapper<Tipper<?>> $ = new Wrapper<>();
     final ASTNode n = make.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
@@ -29,13 +29,13 @@ public interface theSpartanizer {
         <N extends ASTNode> boolean go(final Tipper<N> ¢) {
           if (¢ == null)
             return true;
-          ret.set(¢);
+          $.set(¢);
           return false;
         }
 
         boolean searching = true;
       });
-    return ret.get();
+    return $.get();
   }
   /** Apply trimming once
    * @param from what to process
@@ -76,10 +76,10 @@ public interface theSpartanizer {
   }
   static String repetitively(final String from) {
     int n = 0;
-    for (String ret = from, next;; ret = next) {
-      next = once(ret);
-      if (Trivia.same(ret, next) || ++n > 20)
-        return ret;
+    for (String $ = from, next;; $ = next) {
+      next = once($);
+      if (Trivia.same($, next) || ++n > 20)
+        return $;
     }
   }
 

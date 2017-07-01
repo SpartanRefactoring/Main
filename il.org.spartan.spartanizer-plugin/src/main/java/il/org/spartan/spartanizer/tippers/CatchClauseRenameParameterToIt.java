@@ -43,14 +43,14 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     final SingleVariableDeclaration d = c.getException();
     if (!JohnDoe.property(d))
       return null;
-    final SimpleName ret = d.getName();
-    if (notation.isSpecial(ret))
+    final SimpleName $ = d.getName();
+    if (notation.isSpecial($))
       return null;
     final Block b = body(c);
-    return b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf(ret).in(b).isEmpty() ? null
+    return b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty() ? null
         : new Tip(description(c), myClass(), c.getException().getName(), c) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            misc.rename(ret, make.newCent(ret), c, r, g);
+            misc.rename($, make.newCent($), c, r, g);
           }
         };
   }

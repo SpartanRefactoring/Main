@@ -70,7 +70,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     final OperationListEditor ole = new OperationListEditor("ListOps", "Configure operations for widget:", getFieldEditorParent());
     final ListEditor resLE = new ListEditor("EnabledOps", "enabled operations:", getFieldEditorParent()) {
       @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
-        final String[] ret = new String[7];
+        final String[] $ = new String[7];
         int count = 0;
         for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries()) // store
           if (¢.isEnabled()) {
@@ -78,11 +78,11 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
               ¢.disable();
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", "Cannot enable more than "
                   + WIDGET_MAX_OPS + " widget operations. \n Taking the " + WIDGET_MAX_OPS + " first enabled widget operations ");
-              return ret;
+              return $;
             }
-            ret[count++] = ¢.getName();
+            $[count++] = ¢.getName();
           }
-        return Arrays.copyOfRange(ret, 0, count);
+        return Arrays.copyOfRange($, 0, count);
       }
       @Override protected String getNewInputObject() {
         return null;
@@ -102,9 +102,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   /** @return all plugin widget operations */
   private static List<Entry<String, Object>> getWidgetOperations() {
-    final List<Entry<String, Object>> ret = an.empty.list();
+    final List<Entry<String, Object>> $ = an.empty.list();
     for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries())
-      ret.add(new AbstractMap.SimpleEntry<>(¢.getName(), ¢));
-    return ret;
+      $.add(new AbstractMap.SimpleEntry<>(¢.getName(), ¢));
+    return $;
   }
 }

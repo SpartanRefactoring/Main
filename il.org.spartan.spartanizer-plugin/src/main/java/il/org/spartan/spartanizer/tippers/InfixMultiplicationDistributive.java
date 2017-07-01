@@ -62,23 +62,23 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert es1 != null;
     final List<Expression> es2 = extract.allOperands(e2);
     assert es2 != null;
-    final List<Expression> ret = an.empty.list(), different = an.empty.list();
+    final List<Expression> $ = an.empty.list(), different = an.empty.list();
     for (final Expression ¢ : es1) {
       assert ¢ != null;
-      (isIn(¢, es2) ? ret : different).add(¢);
+      (isIn(¢, es2) ? $ : different).add(¢);
     }
     for (final Expression ¢ : es2) { // [a c]
       assert ¢ != null;
-      if (!isIn(¢, ret))
+      if (!isIn(¢, $))
         different.add(¢);
     }
-    assert ret != null;
-    if (!ret.isEmpty())
-      different.removeAll(ret);
-    assert the.firstOf(ret) != null;
+    assert $ != null;
+    if (!$.isEmpty())
+      different.removeAll($);
+    assert the.firstOf($) != null;
     assert the.firstOf(different) != null;
     assert the.secondOf(different) != null;
-    return subject.pair(the.firstOf(ret), //
+    return subject.pair(the.firstOf($), //
         subject.pair(//
             the.firstOf(different), the.secondOf(different)//
         ).to(//
@@ -92,34 +92,34 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return az.infixExpression(the.firstOf(xs)).getOperator() != TIMES ? null : the.firstOf(xs);
     if (xs.size() == 2)
       return replacement(az.infixExpression(the.firstOf(xs)), az.infixExpression(the.secondOf(xs)));
-    final List<Expression> ret = an.empty.list(), different = an.empty.list();
+    final List<Expression> $ = an.empty.list(), different = an.empty.list();
     List<Expression> temp = as.list(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
       temp = the.tailOf(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
-            addCommon(op, ret);
+            addCommon(op, $);
           else
             addDifferent(op, different);
         if (temp.size() == 1)
-          extract.allOperands(az.infixExpression(the.firstOf(temp))).stream().filter(λ -> !isIn(λ, ret)).forEach(λ -> addDifferent(λ, different));
-        lisp.removeFromList(different, ret);
+          extract.allOperands(az.infixExpression(the.firstOf(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
+        lisp.removeFromList(different, $);
       }
     }
     Expression addition = null;
     for (final Integer ¢ : range.from(0).to(different.size() - 1))
       addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(op.PLUS2);
-    if (ret.isEmpty())
+    if ($.isEmpty())
       return addition;
-    if (ret.size() == 1)
-      return subject.pair(the.firstOf(ret), addition).to(TIMES);
-    if (ret.size() <= 1)
+    if ($.size() == 1)
+      return subject.pair(the.firstOf($), addition).to(TIMES);
+    if ($.size() <= 1)
       return null;
     Expression multiplication = null;
-    for (int ¢ = 0; ¢ < ret.size() - 1;) {
+    for (int ¢ = 0; ¢ < $.size() - 1;) {
       ++¢;
-      multiplication = (multiplication == null ? subject.pair(ret.get(¢), ret.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1))).to(TIMES);
+      multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1))).to(TIMES);
     }
     return subject.pair(multiplication, addition).to(TIMES);
   }

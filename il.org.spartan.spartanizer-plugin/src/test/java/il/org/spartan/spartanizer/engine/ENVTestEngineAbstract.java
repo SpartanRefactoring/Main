@@ -93,9 +93,9 @@ public abstract class ENVTestEngineAbstract {
     final File f = new File(rOOT + from);
     assert f != null;
     assert f.exists() : f;
-    final ASTNode ret = makeAST.COMPILATION_UNIT.from(f);
-    assert ret != null;
-    return ret;
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
+    assert $ != null;
+    return $;
   }
   /** Determines that we have got to the correct Annotation
    * @param n1

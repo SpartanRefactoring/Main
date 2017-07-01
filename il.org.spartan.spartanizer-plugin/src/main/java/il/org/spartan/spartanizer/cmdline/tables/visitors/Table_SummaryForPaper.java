@@ -47,10 +47,10 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     return true;
   }
   private CompilationUnitRecord foo(final CompilationUnit ¢) {
-    final CompilationUnitRecord ret = new CompilationUnitRecord(¢);
-    ret.setPath(absolutePath);
-    ret.setRelativePath(relativePath);
-    return ret;
+    final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
+    $.setPath(absolutePath);
+    $.setRelativePath(relativePath);
+    return $;
   }
   @Override public boolean visit(final PackageDeclaration ¢) {
     packages.add(¢.getName().getFullyQualifiedName());

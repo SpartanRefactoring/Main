@@ -343,8 +343,8 @@ public interface idiomatic {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (final Exception ret) {
-          return note.bug(ret);
+        } catch (final Exception $) {
+          return note.bug($);
         }
       };
     }

@@ -32,7 +32,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable " + name(¢) + " into next statement";
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
         || wizard.forbiddenOpOnPrimitive(f, nextStatement))
       return null;
@@ -71,7 +71,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
       e = Inliner.protect(e);
     if (pp == null//
         || fragments(pp).size() <= 1)
-      ret.remove(parent, g);
+      $.remove(parent, g);
     else {
       if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
         return null;
@@ -85,10 +85,10 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
         if (iz.containsName(name(f), initializer(l.get(¢))))
           return null;
       }
-      ret.replace(parent, pn, g);
+      $.replace(parent, pn, g);
     }
-    ret.replace(n, e, g);
-    return ret;
+    $.replace(n, e, g);
+    return $;
   }
   private static boolean containsLambda(final Statement nextStatement) {
     return !descendants.whoseClassIs(LambdaExpression.class).from(nextStatement).isEmpty();
@@ -119,8 +119,8 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
     return $.inner;
   }
   private static SimpleName peelIdentifier(final Statement s, final String id) {
-    final List<SimpleName> ret = occurencesOf(s, id);
-    return ret.size() != 1 ? null : the.firstOf(ret);
+    final List<SimpleName> $ = occurencesOf(s, id);
+    return $.size() != 1 ? null : the.firstOf($);
   }
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);

@@ -46,9 +46,9 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     };
   }
   static String statementsToString(final Iterable<Statement> ¢) {
-    final StringBuilder ret = new StringBuilder();
-    ¢.forEach(ret::append);
-    return ret + "";
+    final StringBuilder $ = new StringBuilder();
+    ¢.forEach($::append);
+    return $ + "";
   }
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     final List<SwitchCase> $ = extract.switchCases(¢);

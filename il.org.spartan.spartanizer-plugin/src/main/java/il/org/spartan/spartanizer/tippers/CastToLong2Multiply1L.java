@@ -22,9 +22,9 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
   private static final long serialVersionUID = -0x6ACC6AD3D77236F4L;
 
   private static NumberLiteral literal(final Expression ¢) {
-    final NumberLiteral ret = ¢.getAST().newNumberLiteral();
-    ret.setToken("1L");
-    return ret;
+    final NumberLiteral $ = ¢.getAST().newNumberLiteral();
+    $.setToken("1L");
+    return $;
   }
   private static InfixExpression replacement(final Expression $) {
     return subject.pair(literal($), $).to(TIMES);

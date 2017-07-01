@@ -34,18 +34,18 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    final Text ret = new Text(container, SWT.BORDER);
-    ret.setText(defaultValue);
-    ret.setLayoutData(dataRes);
-    return ret;
+    final Text $ = new Text(container, SWT.BORDER);
+    $.setText(defaultValue);
+    $.setLayoutData(dataRes);
+    return $;
   }
   @Override protected Control createDialogArea(final Composite parent) {
-    final Composite ret = (Composite) super.createDialogArea(parent);
+    final Composite $ = (Composite) super.createDialogArea(parent);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    retNameText = createString(ret, "Widget Name", "");
-    final ScrolledComposite sc = new ScrolledComposite(ret, SWT.H_SCROLL | SWT.V_SCROLL);
+    retNameText = createString($, "Widget Name", "");
+    final ScrolledComposite sc = new ScrolledComposite($, SWT.H_SCROLL | SWT.V_SCROLL);
     final Composite composite = new Composite(sc, SWT.NONE);
     composite.setLayout(new FillLayout(SWT.VERTICAL));
     radioButtons = new Button[widgetOps.size()];
@@ -61,7 +61,7 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
     sc.setExpandHorizontal(true);
     sc.setExpandVertical(true);
     sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-    return ret;
+    return $;
   }
   // overriding this methods allows you to set the
   // title of the custom dialog

@@ -38,15 +38,15 @@ public enum remove {
     r.replace(parent, newParent, g);
   }
   public static Expression literal(final InfixExpression x, final boolean b) {
-    final List<Expression> ret = extract.allOperands(x);
-    remove.removeAll(b, ret);
-    switch (ret.size()) {
+    final List<Expression> $ = extract.allOperands(x);
+    remove.removeAll(b, $);
+    switch ($.size()) {
       case 1:
-        return copy.of(the.firstOf(ret));
+        return copy.of(the.firstOf($));
       case 0:
         return x.getAST().newBooleanLiteral(b);
       default:
-        return subject.operands(ret).to(x.getOperator());
+        return subject.operands($).to(x.getOperator());
     }
   }
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
@@ -64,13 +64,13 @@ public enum remove {
     return r;
   }
   private static List<Statement> breakSequencer(final Iterable<Statement> ss) {
-    final List<Statement> ret = an.empty.list();
+    final List<Statement> $ = an.empty.list();
     for (final Statement ¢ : ss) {
       final Statement s = remove.breakSequencer(¢);
       if (s != null)
-        ret.add(s);
+        $.add(s);
     }
-    return ret;
+    return $;
   }
   private static Statement breakSequencer(final Statement s) {
     if (s == null)
@@ -78,19 +78,19 @@ public enum remove {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST a = s.getAST();
-    Statement ret = null;
+    Statement $ = null;
     if (iz.ifStatement(s)) {
       final IfStatement t = az.ifStatement(s);
-      ret = subject.pair(breakSequencer(then(t)), breakSequencer(elze(t))).toIf(copy.of(expression(t)));
+      $ = subject.pair(breakSequencer(then(t)), breakSequencer(elze(t))).toIf(copy.of(expression(t)));
     } else if (!iz.block(s)) {
       if (iz.breakStatement(s) && iz.block(s.getParent()))
-        ret = a.newEmptyStatement();
+        $ = a.newEmptyStatement();
     } else {
       final Block b = subject.ss(breakSequencer(statements(az.block(s)))).toBlock();
       statements(b).addAll(breakSequencer(statements(az.block(s))));
-      ret = b;
+      $ = b;
     }
-    return ret;
+    return $;
   }
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
@@ -107,13 +107,13 @@ public enum remove {
     }
   }
   private static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
-    final List<Statement> ret = an.empty.list();
+    final List<Statement> $ = an.empty.list();
     for (final Statement ¢ : ss) {
       final Statement s = removeBreakSequencer(¢);
       if (s != null)
-        ret.add(s);
+        $.add(s);
     }
-    return ret;
+    return $;
   }
   private static Statement removeBreakSequencer(final Statement s) {
     if (s == null)
@@ -121,18 +121,18 @@ public enum remove {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST a = s.getAST();
-    Statement ret = null;
+    Statement $ = null;
     if (iz.ifStatement(s)) {
       final IfStatement t = az.ifStatement(s);
-      ret = subject.pair(removeBreakSequencer(then(t)), removeBreakSequencer(elze(t))).toIf(copy.of(expression(t)));
+      $ = subject.pair(removeBreakSequencer(then(t)), removeBreakSequencer(elze(t))).toIf(copy.of(expression(t)));
     } else if (!iz.block(s)) {
       if (iz.breakStatement(s) && iz.block(s.getParent()))
-        ret = a.newEmptyStatement();
+        $ = a.newEmptyStatement();
     } else {
       final Block b = subject.ss(remove.removeBreakSequencer(statements(az.block(s)))).toBlock();
       statements(b).addAll(remove.removeBreakSequencer(statements(az.block(s))));
-      ret = b;
+      $ = b;
     }
-    return ret;
+    return $;
   }
 }

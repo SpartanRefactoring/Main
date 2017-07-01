@@ -87,20 +87,20 @@ public enum misc {
   public static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
-    final Block ret = subject.statement(s).toBlock();
-    r.replace(s, ret, g);
-    return (IfStatement) the.firstOf(statements(ret));
+    final Block $ = subject.statement(s).toBlock();
+    r.replace(s, $, g);
+    return (IfStatement) the.firstOf(statements($));
   }
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
-    final ListRewrite ret = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
-    for (int ¢ = what.size() - 1;; ret.insertAfter(what.get(¢--), where, g))
+    final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
+    for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
       if (¢ < 0)
-        return ret;
+        return $;
   }
   public static ListRewrite insertBefore(final Statement where, final Iterable<Statement> what, final ASTRewrite r, final TextEditGroup g) {
-    final ListRewrite ret = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
-    what.forEach(λ -> ret.insertBefore(λ, where, g));
-    return ret;
+    final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
+    what.forEach(λ -> $.insertBefore(λ, where, g));
+    return $;
   }
   public static IfStatement invert(final IfStatement ¢) {
     return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
@@ -120,14 +120,14 @@ public enum misc {
   }
   public static IfStatement makeShorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
-    final IfStatement ret = misc.invert(s);
+    final IfStatement $ = misc.invert(s);
     if (then.isEmpty())
-      return ret;
+      return $;
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
     final int rankThen = misc.sequencerRank(the.lastOf(then)), rankElse = misc.sequencerRank(the.lastOf(elze));
-    return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? ret : main;
+    return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? $ : main;
   }
   public static boolean mixedLiteralKind(final Collection<Expression> xs) {
     if (xs.size() <= 2)
@@ -152,17 +152,17 @@ public enum misc {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
   public static SimpleName peelIdentifier(final Statement s, final String id) {
-    final List<SimpleName> ret = find.occurencesOf(s, id);
-    return ret.size() != 1 ? null : the.firstOf(ret);
+    final List<SimpleName> $ = find.occurencesOf(s, id);
+    return $.size() != 1 ? null : the.firstOf($);
   }
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
    * in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */
   public static Statement recursiveElse(final IfStatement ¢) {
-    for (Statement ret = ¢.getElseStatement();; ret = ((IfStatement) ret).getElseStatement())
-      if (!(ret instanceof IfStatement))
-        return ret;
+    for (Statement $ = ¢.getElseStatement();; $ = ((IfStatement) $).getElseStatement())
+      if (!($ instanceof IfStatement))
+        return $;
   }
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
     new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));

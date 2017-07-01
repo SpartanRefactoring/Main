@@ -48,8 +48,8 @@ public interface Tippers {
   }
 
   static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
-    @SuppressWarnings("unchecked") final Tipper<ASTNode> ret = (Tipper<ASTNode>) t;
-    return ret.tip(n);
+    @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
+    return $.tip(n);
   }
   static long find(final Tipper<? extends ASTNode> ¢) {
     return ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID();

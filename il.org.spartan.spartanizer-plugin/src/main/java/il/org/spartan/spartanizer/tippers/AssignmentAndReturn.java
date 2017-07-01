@@ -29,15 +29,15 @@ public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
   @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
-  @Override public ASTRewrite go(final ASTRewrite ret, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override public ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(parent(a));
     if (parent == null || iz.forStatement(parent))
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.eq(to(a), core(expression(s))))
       return null;
-    ret.remove(parent, g);
-    ret.replace(s, subject.operand(a).toReturn(), g);
-    return ret;
+    $.remove(parent, g);
+    $.replace(s, subject.operand(a).toReturn(), g);
+    return $;
   }
 }

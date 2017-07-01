@@ -26,18 +26,18 @@ public class ForAndReturnToFor extends GoToNextStatement<ForStatement>//
     implements Category.Loops {
   private static final long serialVersionUID = 0x371CFCE1FF133A1AL;
 
-  @Override protected ASTRewrite go(final ASTRewrite ret, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (s == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
     final Expression expression = expression(f);
     if (expression == null)
       return null;
-    ret.replace(s, f, g);
+    $.replace(s, f, g);
     f.setBody(subject.pair(nextStatement, null).toIf(make.notOf(expression)));
     f.setExpression(null);
-    ret.remove(nextStatement, g);
-    return ret;
+    $.remove(nextStatement, g);
+    return $;
   }
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "combine the for and return statements to a single statement";

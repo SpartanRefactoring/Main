@@ -57,10 +57,10 @@ public final class Inliner2 {
     final ASTNode $ = parent(¢);
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
   }
-  public ASTRewrite fire(final ASTRewrite ret, final TextEditGroup g) {
+  public ASTRewrite fire(final ASTRewrite $, final TextEditGroup g) {
     for (final SimpleName ¢ : spots)
-      ret.replace(¢, copy.of(replacement), g);
-    return ret;
+      $.replace(¢, copy.of(replacement), g);
+    return $;
   }
   private Inliner2(final SimpleName what, final Expression replacement, final List<? extends ASTNode> where) {
     this.replacement = protect(replacement);
@@ -91,11 +91,11 @@ public final class Inliner2 {
   public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
-    final ArrayCreation ret = initializer.getAST().newArrayCreation();
-    ret.setType(az.arrayType(copy.of(type(currentStatement))));
+    final ArrayCreation $ = initializer.getAST().newArrayCreation();
+    $.setType(az.arrayType(copy.of(type(currentStatement))));
     // TODO causes IllsegalArgumentException (--om)
-    ret.setInitializer(copy.of(az.arrayInitializer(initializer)));
-    return ret;
+    $.setInitializer(copy.of(az.arrayInitializer(initializer)));
+    return $;
   }
   public static Expression protect(final Expression ¢) {
     switch (¢.getNodeType()) {
@@ -140,10 +140,10 @@ public final class Inliner2 {
       return new Inner().with(¢);
     }
     static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
-      @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] ret = new Wrapper[ns.length];
+      @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
       final Int i = new Int();
-      as.list(ns).forEach(λ -> ret[i.next()] = new Wrapper<>(λ));
-      return ret;
+      as.list(ns).forEach(λ -> $[i.next()] = new Wrapper<>(λ));
+      return $;
     }
 
     class Inner extends Wrapper<Expression> {

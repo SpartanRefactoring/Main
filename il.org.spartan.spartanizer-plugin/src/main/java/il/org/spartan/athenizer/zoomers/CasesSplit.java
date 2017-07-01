@@ -60,26 +60,26 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     return null;
   }
   private static List<Statement> getAdditionalStatements(final List<Statement> ss, final SwitchCase c) {
-    final List<Statement> ret = an.empty.list();
+    final List<Statement> $ = an.empty.list();
     boolean additionalStatements = false;
     for (final Statement ¢ : ss.subList(ss.indexOf(c), ss.size())) {
       if (¢ instanceof SwitchCase)
         additionalStatements = true;
       else if (additionalStatements)
-        ret.add(¢);
+        $.add(¢);
       if (iz.sequencerComplex(¢))
-        return ret;
+        return $;
     }
-    return ret;
+    return $;
   }
   static Map<String, String> getMapOldToNewNames(final List<Statement> ss) {
-    final Map<String, String> ret = new HashMap<>();
+    final Map<String, String> $ = new HashMap<>();
     ss.forEach(n -> {
       if (iz.variableDeclarationStatement(n))
         extract.fragments(n).forEach(
-            λ -> ret.put(λ.getName().getIdentifier(), scope.newName(λ, az.variableDeclarationStatement(n).getType(), λ.getName().getIdentifier())));
+            λ -> $.put(λ.getName().getIdentifier(), scope.newName(λ, az.variableDeclarationStatement(n).getType(), λ.getName().getIdentifier())));
     });
-    return ret;
+    return $;
   }
   static Statement replaceNames(final Statement target, final Map<String, String> m) {
     target.accept(new ASTVisitor() {

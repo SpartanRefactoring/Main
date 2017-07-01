@@ -93,12 +93,12 @@ public enum SuppressWarningsOnOff {
   /** @param j a {@link JavaDoc}
    * @return comment's text, without eneblers identifiers. */
   static String enablersRemoved(final Javadoc j) {
-    String ret = j == null ? "/***/" : (j + "").trim();
-    for (final String e : getEnablers(ret)) {
+    String $ = j == null ? "/***/" : (j + "").trim();
+    for (final String e : getEnablers($)) {
       final String qe = Pattern.quote(e);
-      ret = ret.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
+      $ = $.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
     }
-    return ret;
+    return $;
   }
   static Collection<String> getDisablers(final String ¢) {
     return getKeywords(¢, disabling.ByComment.disablers);
@@ -123,10 +123,10 @@ public enum SuppressWarningsOnOff {
   private ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite ret = ASTRewrite.create(u.getAST());
-    fillRewrite(ret, u, m, t);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewrite($, u, m, t);
     pm.done();
-    return ret;
+    return $;
   }
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
     return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);

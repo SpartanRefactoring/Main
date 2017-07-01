@@ -20,23 +20,23 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
   private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
-    final MethodInvocation ret = n.getAST().newMethodInvocation();
-    ret.setExpression(copy.of(¢));
-    ret.setName(copy.of(n));
-    arguments(ret).add(copy.of(x));
-    return ret;
+    final MethodInvocation $ = n.getAST().newMethodInvocation();
+    $.setExpression(copy.of(¢));
+    $.setName(copy.of(n));
+    arguments($).add(copy.of(x));
+    return $;
   }
   @Override public String description(final MethodInvocation ¢) {
     return "Write " + the.firstOf(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
   @Override public ASTNode replacement(final MethodInvocation i) {
-    final SimpleName ret = name(i);
-    if (!mns.contains(ret + ""))
+    final SimpleName $ = name(i);
+    if (!mns.contains($ + ""))
       return null;
     final Expression ¢ = the.onlyOneOf(arguments(i));
     if (!(¢ instanceof StringLiteral))
       return null;
     final Expression e = receiver(i);
-    return e == null || e instanceof StringLiteral ? null : replacement(ret, ¢, e);
+    return e == null || e instanceof StringLiteral ? null : replacement($, ¢, e);
   }
 }

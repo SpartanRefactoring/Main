@@ -32,10 +32,10 @@ import il.org.spartan.spartanizer.utils.*;
 public enum JUnitTestMethodFacotry {
   ;
   static String signature(final String code) {
-    String ret = code;
+    String $ = code;
     for (final String keyword : wizard.keywords)
-      ret = ret.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
-    return English.lowerFirstLetter(ret.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+      $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
+    return English.lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
   static String from(final String name, final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
@@ -73,18 +73,18 @@ public enum JUnitTestMethodFacotry {
    * @param ¢ string to linify
    * @return */
   private static String linify(final String ¢) {
-    String ret = "";
+    String $ = "";
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine())
-        ret += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//\n";
+        $ += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//\n";
     }
-    return ret;
+    return $;
   }
   public static String shortenIdentifiers(final String javaFragment) {
     final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-    final IDocument ret = new Document(ASTutils.wrapCode(javaFragment));
+    final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
-    parser.setSource(ret.get().toCharArray());
+    parser.setSource($.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
@@ -108,8 +108,8 @@ public enum JUnitTestMethodFacotry {
         r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
       }
     });
-    applyChanges(ret, r);
-    return ASTutils.extractCode(javaFragment, ret);
+    applyChanges($, r);
+    return ASTutils.extractCode(javaFragment, $);
   }
   private static void applyChanges(final IDocument d, final ASTRewrite r) {
     try {
@@ -193,12 +193,12 @@ public enum JUnitTestMethodFacotry {
     display.dispose();
   }
   public static String makeTipperUnitTest(final String codeFragment) {
-    final String ret = squeeze(removeComments(code(essence(codeFragment))));
-    return comment() + format("  @Test public void %s() {\n %s\n}\n", signature(ret), tipperBody(ret));
+    final String $ = squeeze(removeComments(code(essence(codeFragment))));
+    return comment() + format("  @Test public void %s() {\n %s\n}\n", signature($), tipperBody($));
   }
   public static String makeBloaterUnitTest(final String codeFragment) {
-    final String ret = squeeze(removeComments(code(essence(codeFragment))));
-    return comment() + format("@Test public void %s() {\n %s\n}\n", signature(ret), bloaterBody(ret));
+    final String $ = squeeze(removeComments(code(essence(codeFragment))));
+    return comment() + format("@Test public void %s() {\n %s\n}\n", signature($), bloaterBody($));
   }
   static String comment() {
     return format(
@@ -209,17 +209,17 @@ public enum JUnitTestMethodFacotry {
         system.myShortClassName());
   }
   static String tipperBody(final String input) {
-    for (String ret = format("    trimmingOf(\"%s\") //\n", input), from = input;;) {
+    for (String $ = format("    trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (to.trim().length() == 0)
-        return ret + "         .gives(\"\") //\n  ;";
+        return $ + "         .gives(\"\") //\n  ;";
       if (Trivia.same(to, from))
-        return ret + "         .stays() //\n  ;";
+        return $ + "         .stays() //\n  ;";
       note.logger.severe("Input was " + from);
       note.logger.severe("Output was " + to);
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      ret += //
+      $ += //
           format("") + // Stub for alignment of strings below
               format(//
                   "         .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t))
@@ -230,11 +230,11 @@ public enum JUnitTestMethodFacotry {
     }
   }
   static String bloaterBody(final String input) {
-    for (String ret = format("  bloatingOf(\"%s\") //\n", input), from = input;;) {
+    for (String $ = format("  bloatingOf(\"%s\") //\n", input), from = input;;) {
       final String to = OperandBloating.bloat(from);
       if (to.equals(from))
-        return ret + "  .stays() //\n  ;";
-      ret += format(" .gives(\"%s\") //\n", escapeQuotes(Trivia.essence(to)));
+        return $ + "  .stays() //\n  ;";
+      $ += format(" .gives(\"%s\") //\n", escapeQuotes(Trivia.essence(to)));
       from = to;
     }
   }

@@ -149,10 +149,10 @@ class CompilationUnitRecord {
       markContainedInMethod($, n, np);
   }
   private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
-    for (ASTNode ret = ¢; ret != null; ret = parent(ret)) {
-      if (iz.methodDeclaration(ret))
-        return az.methodDeclaration(ret);
-      if (iz.typeDeclaration(ret))
+    for (ASTNode $ = ¢; $ != null; $ = parent($)) {
+      if (iz.methodDeclaration($))
+        return az.methodDeclaration($);
+      if (iz.typeDeclaration($))
         break;
     }
     return null;
@@ -224,9 +224,9 @@ class LightWeightMethodRecord {
       total = num;
     }
     public int inc(final int amount) {
-      final int ret = Math.min(amount, total - np);
-      np += ret;
-      return ret;
+      final int $ = Math.min(amount, total - np);
+      np += $;
+      return $;
     }
   }
 }

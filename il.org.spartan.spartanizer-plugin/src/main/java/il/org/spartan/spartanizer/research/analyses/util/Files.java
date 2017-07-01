@@ -100,15 +100,15 @@ public enum Files {
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
   private static Collection<File> getJavaFiles(final File directory) {
-    final Collection<File> ret = new HashSet<>();
+    final Collection<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
-      return ret;
+      return $;
     for (final File entry : directory.listFiles())
       if (javaFile(entry) && notTest(entry))
-        ret.add(entry);
+        $.add(entry);
       else
-        ret.addAll(getJavaFiles(entry));
-    return ret;
+        $.addAll(getJavaFiles(entry));
+    return $;
   }
   private static boolean javaFile(final File entry) {
     return entry.isFile() && entry.getPath().endsWith(".java");

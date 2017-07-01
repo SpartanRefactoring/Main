@@ -8,53 +8,52 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ori Roth
  * @since 2017-05-21
  * @see org.eclipse.jdt.internal.corext.dom.Bindings */
-@SuppressWarnings("restriction")
 public class Bindings {
   public static List<ITypeBinding> getAllFrom(final ITypeBinding b) {
-    final List<ITypeBinding> ret = an.empty.list();
+    final List<ITypeBinding> $ = an.empty.list();
     if (b == null)
-      return ret;
+      return $;
     if (b.isArray())
-      ret.addAll(getAllFrom(b.getElementType()));
+      $.addAll(getAllFrom(b.getElementType()));
     else {
       if (b.isCapture()) {
         if (!b.isUpperbound())
-          ret.addAll(getAllFrom(b.getWildcard()));
+          $.addAll(getAllFrom(b.getWildcard()));
         else
           for (final ITypeBinding ¢ : b.getTypeBounds())
-            ret.addAll(getAllFrom(¢));
-        return ret;
+            $.addAll(getAllFrom(¢));
+        return $;
       }
       if (!b.isParameterizedType()) {
-        ret.add(b);
-        return ret;
+        $.add(b);
+        return $;
       }
-      ret.add(b.getTypeDeclaration());
+      $.add(b.getTypeDeclaration());
       for (final ITypeBinding ¢ : b.getTypeArguments())
-        ret.addAll(getAllFrom(¢));
+        $.addAll(getAllFrom(¢));
     }
     if (b.isCapture())
       if (!b.isUpperbound())
-        ret.addAll(getAllFrom(b.getWildcard()));
+        $.addAll(getAllFrom(b.getWildcard()));
       else
         for (final ITypeBinding ¢ : b.getTypeBounds())
-          ret.addAll(getAllFrom(¢));
+          $.addAll(getAllFrom(¢));
     else {
       if (!b.isParameterizedType()) {
-        ret.add(b);
-        return ret;
+        $.add(b);
+        return $;
       }
-      ret.add(b.getTypeDeclaration());
+      $.add(b.getTypeDeclaration());
       for (final ITypeBinding ¢ : b.getTypeArguments())
-        ret.addAll(getAllFrom(¢));
+        $.addAll(getAllFrom(¢));
     }
     if (!b.isParameterizedType())
-      ret.add(b);
+      $.add(b);
     else {
-      ret.add(b.getTypeDeclaration());
+      $.add(b.getTypeDeclaration());
       for (final ITypeBinding ¢ : b.getTypeArguments())
-        ret.addAll(getAllFrom(¢));
+        $.addAll(getAllFrom(¢));
     }
-    return ret;
+    return $;
   }
 }

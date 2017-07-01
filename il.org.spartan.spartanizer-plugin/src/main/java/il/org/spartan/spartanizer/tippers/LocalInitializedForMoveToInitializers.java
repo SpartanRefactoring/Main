@@ -49,9 +49,9 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
     return copy.of(left(from));
   }
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
-    final Assignment ret = az.assignment(from.getExpression());
+    final Assignment $ = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(extract.core(from));
-    return ret != null ? handleAssignmentCondition(ret, s) : e != null ? wizard.goInfix(e, s) : from;
+    return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
   }
   /** @param t JD
    * @param from JD (already duplicated)
@@ -81,8 +81,8 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Move into initializers list of loop " + Trivia.gist(¢);
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-    if (f == null || ret == null || nextStatement == null)
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    if (f == null || $ == null || nextStatement == null)
       return null;
     final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
     if (declarationStatement == null)
@@ -90,15 +90,15 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
     final ForStatement forStatement = az.forStatement(nextStatement);
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
-    ret.remove(declarationStatement, g);
+    $.remove(declarationStatement, g);
     // TODO Ori Roth: use list rewriter; talk to Ori Roth
-    ret.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
-    return ret;
+    $.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
+    return $;
   }
   static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
-    final ForStatement ret = copy.of(¢);
-    ret.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
-    LocalInitializedForMoveToInitializers.setInitializers(ret, copy.of(s));
-    return ret;
+    final ForStatement $ = copy.of(¢);
+    $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
+    LocalInitializedForMoveToInitializers.setInitializers($, copy.of(s));
+    return $;
   }
 }

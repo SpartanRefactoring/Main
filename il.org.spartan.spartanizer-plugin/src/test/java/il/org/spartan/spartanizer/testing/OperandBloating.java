@@ -151,8 +151,8 @@ public class OperandBloating extends TestOperand {
     if (u == null)
       return null;
     TestUtilsBloating.counter = 0;
-    final CompilationUnit ret = copy.of(u);
-    ret.accept(new ASTVisitor(true) {
+    final CompilationUnit $ = copy.of(u);
+    $.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode an) {
         if (!iz.simpleName(an))
           return;
@@ -160,18 +160,18 @@ public class OperandBloating extends TestOperand {
         ++TestUtilsBloating.counter;
       }
     });
-    return ret;
+    return $;
   }
   private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-    final List<MethodDeclaration> ret = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
-    if (ret.isEmpty())
+    final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
+    if ($.isEmpty())
       azzert.fail("No such method Exists");
-    return the.firstOf(ret);
+    return the.firstOf($);
   }
   private static CompilationUnit createCUWithBinding(final String text) {
-    final ASTParser ret = make.COMPILATION_UNIT.parser(text);
-    ret.setResolveBindings(true);
-    return az.compilationUnit(ret.createAST(null));
+    final ASTParser $ = make.COMPILATION_UNIT.parser(text);
+    $.setResolveBindings(true);
+    return az.compilationUnit($.createAST(null));
   }
   public void staysWithBinding() {
     final String wrap = get();

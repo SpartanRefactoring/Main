@@ -42,14 +42,14 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
                 + "}") //
     ;
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Block b = az.block(declaration.getParent());
     if (b == null)
-      return ret;
-    final ListRewrite l = ret.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+      return $;
+    final ListRewrite l = $.getListRewrite(b, Block.STATEMENTS_PROPERTY);
     for (final Statement ¢ : compute.decompose(initializer()))
       l.insertBefore(copy.of(¢), declaration, g);
-    il.org.spartan.spartanizer.ast.factory.remove.deadFragment(current(), ret, g);
-    return ret;
+    il.org.spartan.spartanizer.ast.factory.remove.deadFragment(current(), $, g);
+    return $;
   }
 }

@@ -38,11 +38,11 @@ public final class AnnotationDiscardValueName extends NodeMatcher<NormalAnnotati
         .to("@SuppressWarnings(\"unchecked\") void f();") //
     ;
   }
-  @Override public ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
+  @Override public ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final SingleMemberAnnotation a = current.getAST().newSingleMemberAnnotation();
     a.setTypeName(copy.of(current.getTypeName()));
     a.setValue(copy.of(member.getValue()));
-    ret.replace(current, a, g);
-    return ret;
+    $.replace(current, a, g);
+    return $;
   }
 }

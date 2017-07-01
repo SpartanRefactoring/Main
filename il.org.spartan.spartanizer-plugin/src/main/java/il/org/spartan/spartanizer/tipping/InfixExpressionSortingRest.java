@@ -21,12 +21,12 @@ public abstract class InfixExpressionSortingRest extends InfixExpressionSorting 
     final List<Expression> $ = extract.allOperands(¢);
     return $.size() > 2 && !misc.mixedLiteralKind($) && sort(chop($));
   }
-  @Override public final Expression replacement(final InfixExpression ret) {
-    final List<Expression> operands = extract.allOperands(ret);
+  @Override public final Expression replacement(final InfixExpression $) {
+    final List<Expression> operands = extract.allOperands($);
     final Expression first = operands.remove(0);
     if (!sort(operands))
       return null;
     operands.add(0, first);
-    return subject.operands(operands).to(ret.getOperator());
+    return subject.operands(operands).to($.getOperator());
   }
 }

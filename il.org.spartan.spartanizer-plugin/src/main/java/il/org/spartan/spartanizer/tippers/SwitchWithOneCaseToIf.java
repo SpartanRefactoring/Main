@@ -38,7 +38,7 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
       return statements.subList(statements.indexOf(cases.get(0)), statements.indexOf(cases.get(1))).stream().anyMatch(iz::sequencerComplex);
     }));
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final boolean firstDefault = the.firstOf(cases()).isDefault();
     final SwitchCase thenCase = firstDefault ? the.lastOf(cases()) : the.firstOf(cases());
     List<Statement> l1 = removeBreaks(statements.subList(1, statements.indexOf(the.lastOf(cases())))),
@@ -49,16 +49,16 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
       l2 = tmp;
     }
     if (l1.isEmpty() && l2.isEmpty())
-      ret.remove(current, g);
+      $.remove(current, g);
     else
-      ret.replace(current,
+      $.replace(current,
           l1.isEmpty()
               ? subject.pair(subject.ss(l2).toBlock(), null)
                   .toIf(subject.operand(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)).to(Operator.NOT))
               : subject.pair(subject.ss(l1).toBlock(), l2.isEmpty() ? null : subject.ss(l2).toBlock())
                   .toIf(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)),
           g);
-    return ret;
+    return $;
   }
   private static List<Statement> removeBreaks(final List<Statement> src) {
     return src.stream().map(SwitchWithOneCaseToIf::cleanBreaks).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
@@ -73,10 +73,10 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
       case BLOCK:
         return subject.ss(statements(az.block(¢)).stream().map(SwitchWithOneCaseToIf::cleanBreaks).collect(Collectors.toList())).toBlock();
       case IF_STATEMENT:
-        final IfStatement ret = copy.of(az.ifStatement(¢));
-        ret.setThenStatement(cleanBreaks(then(ret)));
-        ret.setElseStatement(cleanBreaks(elze(ret)));
-        return ret;
+        final IfStatement $ = copy.of(az.ifStatement(¢));
+        $.setThenStatement(cleanBreaks(then($)));
+        $.setElseStatement(cleanBreaks(elze($)));
+        return $;
       default:
         return copy.of(¢);
     }

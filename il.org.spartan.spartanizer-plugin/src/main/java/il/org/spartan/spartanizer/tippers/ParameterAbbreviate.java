@@ -45,10 +45,10 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
               r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
   }
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
-    String ret = "";
+    String $ = "";
     for (String ¢ = d + ""; ¢.endsWith("[]"); ¢ = ¢.substring(0, ¢.length() - 2))
-      ret += "s";
-    return ret;
+      $ += "s";
+    return $;
   }
   private static boolean isShort(final SingleVariableDeclaration ¢) {
     final String identifier = ¢.getName().getIdentifier();
@@ -74,25 +74,25 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     return ¢.getName() + "";
   }
   @Override public Tip tip(final SingleVariableDeclaration d) {
-    final MethodDeclaration ret = az.methodDeclaration(parent(d));
-    if (ret == null || ret.isConstructor() || !suitable(d) || isShort(d) || !legal(d, ret))
+    final MethodDeclaration $ = az.methodDeclaration(parent(d));
+    if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
     final SimpleName oldName = d.getName();
     final String newName = abbreviate.it(d.getType()) + pluralVariadic(d);
     if (!iz.methodDeclaration(d.getParent()))
-      return new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + ret.getName().getIdentifier(), getClass(), d.getName()) {
+      return new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d.getName()) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          rename(oldName, make.from(d).identifier(newName), ret, r, g);
-          fixJavadoc(ret, oldName, newName, r, g);
+          rename(oldName, make.from(d).identifier(newName), $, r, g);
+          fixJavadoc($, oldName, newName, r, g);
         }
-      }.spanning(ret);
+      }.spanning($);
     final Block b = az.methodDeclaration(d.getParent()).getBody();
     return b != null && (getAll.names(b).stream().map(λ -> λ + "").collect(toList()).contains(newName) || Environment.of(b).has(newName)) ? null
-        : new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + ret.getName().getIdentifier(), getClass(), d.getName()) {
+        : new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d.getName()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            rename(oldName, make.from(d).identifier(newName), ret, r, g);
-            fixJavadoc(ret, oldName, newName, r, g);
+            rename(oldName, make.from(d).identifier(newName), $, r, g);
+            fixJavadoc($, oldName, newName, r, g);
           }
-        }.spanning(ret);
+        }.spanning($);
   }
 }

@@ -26,12 +26,12 @@ public class SwitchMissingDefaultAdd extends Switch implements Category.Bloater 
     andAlso("Does not have default case", //
         () -> cases().stream().noneMatch(SwitchCase::isDefault));
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
-    final ListRewrite l = ret.getListRewrite(current, SwitchStatement.STATEMENTS_PROPERTY);
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+    final ListRewrite l = $.getListRewrite(current, SwitchStatement.STATEMENTS_PROPERTY);
     final SwitchCase ss = current.getAST().newSwitchCase();
     ss.setExpression(null);
     l.insertLast(ss, g);
-    return ret;
+    return $;
   }
   @Override public String description() {
     return "Add default case to switch statement";

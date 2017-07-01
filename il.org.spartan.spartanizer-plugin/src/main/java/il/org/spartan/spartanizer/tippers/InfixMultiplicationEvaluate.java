@@ -26,39 +26,39 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
   private static final long serialVersionUID = 0x6F3A1F81DB470569L;
 
-  @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> ret) {
+  @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> $) {
     try {
-      return ret.stream().map(az.throwing::double¢).reduce(1.0, (x, y) -> x * y);
+      return $.stream().map(az.throwing::double¢).reduce(1.0, (x, y) -> x * y);
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
     return 1;
   }
   @Override int evaluateInt(final List<Expression> xs) {
-    int ret = 1;
+    int $ = 1;
     try {
       for (final Expression ¢ : xs) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
-        ret *= az.throwing.int¢(¢);
+        $ *= az.throwing.int¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return ret;
+    return $;
   }
   @Override long evaluateLong(final List<Expression> xs) {
-    long ret = 1;
+    long $ = 1;
     try {
       for (final Expression ¢ : xs) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
-        ret *= az.throwing.long¢(¢);
+        $ *= az.throwing.long¢(¢);
       }
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
-    return ret;
+    return $;
   }
   @Override String operation() {
     return "multiplication";

@@ -44,8 +44,8 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
   @Override public Expression replacement(final InfixExpression x) {
-    final BooleanLiteral ret = literal(x);
+    final BooleanLiteral $ = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
-    return make.plant(!negating(x, ret) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
+    return make.plant(!negating(x, $) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
   }
 }

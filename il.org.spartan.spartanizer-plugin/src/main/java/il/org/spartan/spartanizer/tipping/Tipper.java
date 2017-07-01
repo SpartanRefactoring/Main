@@ -64,8 +64,8 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
   public Class<N> myActualOperandsClass() {
-    final Class<N> ret = getAbstractOperandClass();
-    return !isAbstract(ret.getModifiers()) ? ret : null;
+    final Class<N> $ = getAbstractOperandClass();
+    return !isAbstract($.getModifiers()) ? $ : null;
   }
   @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
     return (Class<Tipper<N>>) getClass();
@@ -86,11 +86,11 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return (Class<N>) c2;
   }
   private Class<N> initializeMyOperandsClass() {
-    Class<N> ret = null;
+    Class<N> $ = null;
     for (final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
-        ret = lowest(ret, ¢.getParameterTypes()[0]);
-    return ret != null ? ret : castClass(ASTNode.class);
+        $ = lowest($, ¢.getParameterTypes()[0]);
+    return $ != null ? $ : castClass(ASTNode.class);
   }
   private boolean isDefinedHere(final Method ¢) {
     return ¢.getDeclaringClass() == getClass();

@@ -61,9 +61,9 @@ public class LocalInitializedCollection extends LocalInitialized {
     // new List<>(); x.addAll(ys);");
     return null;
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     if (!iz.block(declaration.getParent()))
-      return ret;
+      return $;
     final ClassInstanceCreation e = copy.of(newExpression);
     e.arguments().remove(0);
     final AST ast = current.getAST();
@@ -71,8 +71,8 @@ public class LocalInitializedCollection extends LocalInitialized {
     mi.setName(ast.newSimpleName("addAll"));
     step.arguments(mi).add(copy.of(argument));
     mi.setExpression(copy.of(name));
-    ret.replace(newExpression, e, g);
-    ret.getListRewrite(declaration.getParent(), Block.STATEMENTS_PROPERTY).insertAfter(ast.newExpressionStatement(mi), declaration, g);
-    return ret;
+    $.replace(newExpression, e, g);
+    $.getListRewrite(declaration.getParent(), Block.STATEMENTS_PROPERTY).insertAfter(ast.newExpressionStatement(mi), declaration, g);
+    return $;
   }
 }

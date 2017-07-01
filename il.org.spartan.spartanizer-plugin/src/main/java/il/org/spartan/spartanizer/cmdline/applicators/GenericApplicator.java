@@ -22,14 +22,14 @@ public class GenericApplicator {
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
   @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
-    final Collection<Class<? extends ASTNode>> ret = an.empty.list();
+    final Collection<Class<? extends ASTNode>> $ = an.empty.list();
     try {
       for (final String ¢ : ss) // NANO - but throws...
-        ret.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
+        $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
     } catch (final ClassNotFoundException ¢) {
       note.bug(¢);
     }
-    return as.list(ret); // useless?
+    return as.list($); // useless?
   }
   public GenericApplicator() {
     selectedNodeTypes = setAllNodeTypes();
@@ -89,12 +89,12 @@ public class GenericApplicator {
     setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
   private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
-    final Collection<String> ret = an.empty.list();
-    Collections.addAll(ret, ¢);
-    return ret;
+    final Collection<String> $ = an.empty.list();
+    Collections.addAll($, ¢);
+    return $;
   }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    final Tipper<N> ret = toolbox.firstTipper(¢);
-    return selectedTipperGroups.contains(ret.tipperGroup().label()) ? ret : null;
+    final Tipper<N> $ = toolbox.firstTipper(¢);
+    return selectedTipperGroups.contains($.tipperGroup().label()) ? $ : null;
   }
 }

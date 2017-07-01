@@ -17,10 +17,10 @@ import il.org.spartan.utils.*;
  * @since 2015-08-28 */
 public abstract class Tip {
   private static Range range(final Range r, final ASTNode... ns) {
-    Range ret = r;
+    Range $ = r;
     for (final ASTNode ¢ : ns)
-      ret = ret.merge(il.org.spartan.spartanizer.ast.navigate.Ranger.make(¢));
-    return ret;
+      $ = $.merge(il.org.spartan.spartanizer.ast.navigate.Ranger.make(¢));
+    return $;
   }
   public <N1 extends ASTNode, N2 extends ASTNode> Tip(//
       final String description, //

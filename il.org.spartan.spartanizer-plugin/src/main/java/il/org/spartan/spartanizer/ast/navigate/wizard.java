@@ -145,9 +145,9 @@ public interface wizard {
             ASTParser.K_COMPILATION_UNIT)) {
           final ASTParser p = wizard.parser(guess);
           p.setSource(javaSnippet.toCharArray());
-          final ASTNode ret = p.createAST(wizard.nullProgressMonitor);
-          if (valid(ret))
-            return ret;
+          final ASTNode $ = p.createAST(wizard.nullProgressMonitor);
+          if (valid($))
+            return $;
         }
         assert fault.unreachable() : fault.specifically("Snippet cannot be parsed", javaSnippet);
         return null;
@@ -167,11 +167,11 @@ public interface wizard {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
   static <T> String completionIndex(final List<T> ts, final T t) {
-    final String ret = ts.size() + "";
+    final String $ = ts.size() + "";
     String i = ts.indexOf(t) + 1 + "";
-    while (i.length() < ret.length())
+    while (i.length() < $.length())
       i = " " + i;
-    return i + "/" + ret;
+    return i + "/" + $;
   }
   /** @param ns unknown number of nodes to check
    * @return whether one of the nodes is an Expression Statement of __ Post or
@@ -270,14 +270,14 @@ public interface wizard {
    * @param es2
    * @return */
   @SuppressWarnings("boxing") static int findSingleDifference(final List<? extends ASTNode> es1, final List<? extends ASTNode> es2) {
-    int ret = -1;
+    int $ = -1;
     for (final Integer ¢ : range.from(0).to(es1.size()))
       if (!wizard.eq(es1.get(¢), es2.get(¢))) {
-        if (ret >= 0)
+        if ($ >= 0)
           return -1;
-        ret = ¢;
+        $ = ¢;
       }
-    return ret;
+    return $;
   }
   static boolean forbiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
@@ -293,31 +293,31 @@ public interface wizard {
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
-    final Collection<MethodDeclaration> ret = an.empty.list();
+    final Collection<MethodDeclaration> $ = an.empty.list();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
-        ret.add(¢);
+        $.add(¢);
         return false;
       }
     });
-    return (List<MethodDeclaration>) ret.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
+    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
         || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
   static Message[] getProblems(final ASTNode $) {
     return !($ instanceof CompilationUnit) ? null : ((CompilationUnit) $).getMessages();
   }
   static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
-    final List<Expression> ret = hop.operands(from);
-    ret.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(extract.core(λ))).forEachOrdered(x -> {
+    final List<Expression> $ = hop.operands(from);
+    $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(extract.core(λ))).forEachOrdered(x -> {
       final Assignment a = az.assignment(extract.core(x));
       final SimpleName var = az.simpleName(left(a));
       fragments(s).stream().filter(λ -> (name(λ) + "").equals(var + "")).forEach(λ -> {
         λ.setInitializer(copy.of(right(a)));
-        ret.set(ret.indexOf(x), x.getAST().newSimpleName(var + ""));
+        $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
       });
     });
-    return subject.append(subject.pair(the.firstOf(ret), ret.get(1)).to(from.getOperator()), chop(chop(ret)));
+    return subject.append(subject.pair(the.firstOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
   static String intToClassName(final int $) {
     try {
@@ -340,9 +340,9 @@ public interface wizard {
     return a.singleton.list(¢.getAST().newExpressionStatement(copy.of(¢)));
   }
   static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {
-    final List<VariableDeclarationFragment> ret = an.empty.list();
-    fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> ret.add(copy.of(λ)));
-    return ret;
+    final List<VariableDeclarationFragment> $ = an.empty.list();
+    fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
+    return $;
   }
   static MethodDeclaration methodWithBinding(final String m) {
     return findFirst.instanceOf(MethodDeclaration.class).in(makeAST.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
@@ -354,8 +354,8 @@ public interface wizard {
     return English.name(¢);
   }
   static <N extends ASTNode> int nodeType(final Class<N> ¢) {
-    final Integer ret = il.org.spartan.spartanizer.ast.navigate.wizard.classToNodeType.get(¢);
-    return ret != null ? ret.intValue()
+    final Integer $ = il.org.spartan.spartanizer.ast.navigate.wizard.classToNodeType.get(¢);
+    return $ != null ? $.intValue()
         : zero.forgetting(note.bug(fault.dump() + //
             "\n c = " + ¢ + //
             "\n c.getSimpleName() = " + ¢.getSimpleName() + //
@@ -377,13 +377,13 @@ public interface wizard {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
   static ASTParser parser(final int kind) {
-    final ASTParser ret = ASTParser.newParser(AST.JLS8);
-    setBinding(ret);
-    ret.setKind(kind);
+    final ASTParser $ = ASTParser.newParser(AST.JLS8);
+    setBinding($);
+    $.setKind(kind);
     final Map<String, String> options = JavaCore.getOptions();
     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
-    ret.setCompilerOptions(options);
-    return ret;
+    $.setCompilerOptions(options);
+    return $;
   }
   static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));

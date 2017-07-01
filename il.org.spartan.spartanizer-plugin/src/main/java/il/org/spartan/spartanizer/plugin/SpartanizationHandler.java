@@ -42,9 +42,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   public static GUIApplicator applicator(final English.Inflection activityNamer) {
-    final GUIApplicator ret = new GUIApplicator();
+    final GUIApplicator $ = new GUIApplicator();
     final ProgressMonitorDialog d = Dialogs.progress(false);
-    ret.setContext(r -> {
+    $.setContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
@@ -53,8 +53,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         note.cancel(¢);
       }
     });
-    ret.defaultRunAction();
-    ret.listener(new Listener() {
+    $.defaultRunAction();
+    $.listener(new Listener() {
       static final int DIALOG_CREATION = 1;
       static final int DIALOG_PROCESSING = 2;
       int level;
@@ -68,7 +68,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           d.getProgressMonitor().subTask(English.trim(separate.these(¢).by(English.SEPARATOR)));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
-            ret.stop();
+            $.stop();
         });
         if (passes == 1)
           ++compilationUnitCount;
@@ -76,9 +76,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       @Override public void push(final Object... ¢) {
         switch (++level) {
           case DIALOG_CREATION:
-            if (ret.selection().size() >= DIALOG_THRESHOLD)
+            if ($.selection().size() >= DIALOG_THRESHOLD)
               if (!Dialogs.ok(Dialogs.messageUnsafe(separate.these(¢).by(English.SEPARATOR))))
-                ret.stop();
+                $.stop();
               else {
                 dialogOpen = true;
                 runAsynchronouslyInUIThread(d::open);
@@ -88,9 +88,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           case DIALOG_PROCESSING:
             if (dialogOpen)
               runAsynchronouslyInUIThread(() -> {
-                d.getProgressMonitor().beginTask(English.trim(ret.name()) + " : " + separate.these(¢).by(English.SEPARATOR), ret.selection().size());
+                d.getProgressMonitor().beginTask(English.trim($.name()) + " : " + separate.these(¢).by(English.SEPARATOR), $.selection().size());
                 if (d.getProgressMonitor().isCanceled())
-                  ret.stop();
+                  $.stop();
               });
             ++passes;
             break;
@@ -106,36 +106,36 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
               message.time.get(English.time(System.nanoTime() - startTime))).by("\n")).open();
       }
     });
-    ret.operationName(OPERATION_ACTIVITY);
-    return ret;
+    $.operationName(OPERATION_ACTIVITY);
+    return $;
   }
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   @Deprecated @SuppressWarnings("deprecation") public static GUIApplicator applicatorMapper() {
-    final GUIApplicator ret = new GUIApplicator();
+    final GUIApplicator $ = new GUIApplicator();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Bool openDialog = new Bool();
-    ret.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
+    $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {
-          d.getProgressMonitor().subTask(English.trim(the.nth(ret.selection().inner.indexOf(¢), ret.selection().size()) + "\tSpartanizing " + ¢.name()));
+          d.getProgressMonitor().subTask(English.trim(the.nth($.selection().inner.indexOf(¢), $.selection().size()) + "\tSpartanizing " + ¢.name()));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
-            ret.stop();
+            $.stop();
         });
     })).expand(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class))
         .expand(EventMapper.recorderOf(event.visit_root).rememberLast(String.class))
         .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
           if (openDialog.get())
             runAsynchronouslyInUIThread(() -> {
-              d.getProgressMonitor().beginTask(English.trim(ret.name()), ret.selection().size());
+              d.getProgressMonitor().beginTask(English.trim($.name()), $.selection().size());
               if (d.getProgressMonitor().isCanceled())
-                ret.stop();
+                $.stop();
             });
         })).expand(EventMapper.inspectorOf(event.run_start).does(λ -> {
-          if (ret.selection().size() >= DIALOG_THRESHOLD)
+          if ($.selection().size() >= DIALOG_THRESHOLD)
             if (!Dialogs.ok(Dialogs.message("Spartanizing " + English.unknownIfNull(λ.get(event.visit_root)))))
-              ret.stop();
+              $.stop();
             else {
               runAsynchronouslyInUIThread(d::open);
               openDialog.set();
@@ -150,7 +150,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 + English.unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files in "
                 + English.plurales("pass", (Int) ¢.get(event.run_pass))).open();
         })));
-    ret.setContext(r -> {
+    $.setContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
@@ -159,7 +159,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         note.cancel(¢);
       }
     });
-    return ret;
+    return $;
   }
 
   /** Printing definition.

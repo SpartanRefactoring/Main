@@ -17,57 +17,57 @@ public enum measure {
   public static int allExpressions(final CompilationUnit u) {
     if (u == null)
       return 0;
-    final Int ret = new Int();
+    final Int $ = new Int();
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
-          ret.step();
+          $.step();
       }
     });
-    return ret.inner;
+    return $.inner;
   }
   public static int expressions(final ASTNode n) {
     if (iz.compilationUnit(n))
       return allExpressions(az.compilationUnit(n));
     if (n == null)
       return 0;
-    final Int ret = new Int();
+    final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
-          ret.step();
+          $.step();
         return !iz.classInstanceCreation(¢);
       }
     });
-    return ret.inner;
+    return $.inner;
   }
   public static int allCommands(final CompilationUnit u) {
-    final Int ret = new Int();
+    final Int $ = new Int();
     if (u == null)
       return 0;
     u.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.statement(¢) && !excluded(az.statement(¢)))
-          ret.step();
+          $.step();
         return super.preVisit2(¢);
       }
     });
-    return ret.inner;
+    return $.inner;
   }
   public static int commands(final ASTNode n) {
     if (iz.compilationUnit(n))
       return allCommands(az.compilationUnit(n));
-    final Int ret = new Int();
+    final Int $ = new Int();
     if (n == null)
       return 0;
     n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.statement(¢) && !excluded(az.statement(¢)))
-          ret.step();
+          $.step();
         return !iz.classInstanceCreation(¢);
       }
     });
-    return ret.inner;
+    return $.inner;
   }
   static boolean excluded(final Statement ¢) {
     return as.list(//

@@ -45,8 +45,8 @@ public abstract class MetaFixture {
    * @param n AST node
    * @return a string as described */
   public static String ancestry(final ASTNode n) {
-    final Int ret = new Int();
-    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + ret.next() + ": " + Trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
+    final Int $ = new Int();
+    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + Trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
   /** Looks for all the annotees of annotationName in all the metafixtures in fs
@@ -57,24 +57,24 @@ public abstract class MetaFixture {
    * @param fs the metafixtures to search
    * @return a collection of arrays as described */
   protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
-    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> ret = an.empty.list();
+    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = an.empty.list();
     for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
         for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))
             for (@knows({ "t", "a", "s" }) final String s : values(a))
               for (@knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
-                ret.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
-    return ret;
+                $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
+    return $;
   }
   /** Returns the path of ¢'s src directory.
    * @param ¢ a File
    * @return the path of its source directory */
   private static IPath getSrcPath(final File ¢) {
-    IPath ret = new Path(¢.getAbsolutePath());
-    while (!ret.isEmpty() && !"src".equals(ret.lastSegment()))
-      ret = ret.removeLastSegments(1);
-    return ret;
+    IPath $ = new Path(¢.getAbsolutePath());
+    while (!$.isEmpty() && !"src".equals($.lastSegment()))
+      $ = $.removeLastSegments(1);
+    return $;
   }
   /** Finds the wanted file in current directory and creates a cu out of its
    * content
@@ -96,9 +96,9 @@ public abstract class MetaFixture {
    * @param fileName the wanted file
    * @return a string of this file's content */
   private static String loadText(final String fileName) {
-    for (final File ret : new FilesGenerator(".java").from("."))
-      if (ret.getAbsolutePath().endsWith(fileName))
-        return makeAST.string(ret);
+    for (final File $ : new FilesGenerator(".java").from("."))
+      if ($.getAbsolutePath().endsWith(fileName))
+        return makeAST.string($);
     return null;
   }
   /** Gets the value of the parameter in the annotation ¢ as an integer
@@ -156,12 +156,12 @@ public abstract class MetaFixture {
    * @return a vocabulary as described */
   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
-    final Vocabulary ret = new Vocabulary();
+    final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
       assert ¢ instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(¢), ¢);
-      ret.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);
+      $.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);
     }
-    return ret;
+    return $;
   }
   /** Finds the first element of __ ¢ in current runtime class's cu
    * @param ¢ the wanted class

@@ -34,9 +34,9 @@ public interface hop {
         return current != null;
       }
       @Override public ASTNode next() {
-        final ASTNode ret = current;
+        final ASTNode $ = current;
         current = current.getParent();
-        return ret;
+        return $;
       }
     };
   }
@@ -51,18 +51,18 @@ public interface hop {
   static List<ASTNode> descendants(final ASTNode root) {
     if (root == null)
       return null;
-    final List<ASTNode> ret = an.empty.list();
+    final List<ASTNode> $ = an.empty.list();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
-        ret.add(¢);
+        $.add(¢);
       }
     });
-    ret.remove(0);
-    return ret;
+    $.remove(0);
+    return $;
   }
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    final MethodDeclaration ret = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
-    return ret == null ? null : ret.getName() + "";
+    final MethodDeclaration $ = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
+    return $ == null ? null : $.getName() + "";
   }
   static SimpleName lastName(final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
@@ -85,17 +85,17 @@ public interface hop {
   static List<Expression> operands(final InfixExpression ¢) {
     if (¢ == null)
       return null;
-    final List<Expression> ret = as.list(left(¢), right(¢));
+    final List<Expression> $ = as.list(left(¢), right(¢));
     if (¢.hasExtendedOperands())
-      ret.addAll(extendedOperands(¢));
-    return ret;
+      $.addAll(extendedOperands(¢));
+    return $;
   }
   static Expression origin(final Assignment a) {
     Assignment ¢ = a;
-    for (Expression ret = ¢;; ret = from(¢)) {
-      ¢ = az.assignment(ret);
+    for (Expression $ = ¢;; $ = from(¢)) {
+      ¢ = az.assignment($);
       if (¢ == null || ¢.getOperator() != ASSIGN)
-        return ret;
+        return $;
     }
   }
   /** [[SuppressWarningsSpartan]] - see #1246 */

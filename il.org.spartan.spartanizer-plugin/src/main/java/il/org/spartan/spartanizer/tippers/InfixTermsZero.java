@@ -27,9 +27,9 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
   private static final long serialVersionUID = 0x4FC12AA812633EA3L;
 
   private static ASTNode replacement(final List<Expression> ¢) {
-    final List<Expression> ret = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
-    return ret.size() == ¢.size() ? null
-        : ret.isEmpty() ? copy.of(the.firstOf(¢)) : ret.size() == 1 ? copy.of(the.firstOf(ret)) : subject.operands(ret).to(PLUS);
+    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
+    return $.size() == ¢.size() ? null
+        : $.isEmpty() ? copy.of(the.firstOf(¢)) : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(PLUS);
   }
   @Override public String description(final InfixExpression ¢) {
     return "Remove all additions and substructions of 0 to and from " + ¢;

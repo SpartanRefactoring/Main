@@ -76,9 +76,9 @@ public enum makeAST {
    * @return entire contents of this file, as one string */
   public static String string(final File f) {
     try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
-      for (String ret = "", ¢ = r.readLine();; ret += ¢ + System.lineSeparator(), ¢ = r.readLine())
+      for (String $ = "", ¢ = r.readLine();; $ += ¢ + System.lineSeparator(), ¢ = r.readLine())
         if (¢ == null)
-          return ret;
+          return $;
     } catch (final IOException ¢) {
       return note.io(¢, f + "");
     }
@@ -96,8 +96,8 @@ public enum makeAST {
   public StringBuilder builder(final File f) {
     if (f == null)
       return new StringBuilder();
-    try (Scanner ret = new Scanner(f)) {
-      return new StringBuilder(ret.useDelimiter("\\Z").next());
+    try (Scanner $ = new Scanner(f)) {
+      return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception ¢) {
       note.bug(this, ¢);
       return new StringBuilder();
@@ -142,17 +142,17 @@ public enum makeAST {
    * @param text what to parse
    * @return a newly created parser for the parameter */
   public ASTParser makeParser(final char[] text) {
-    final ASTParser ret = wizard.parser(kind);
-    ret.setSource(text);
-    return ret;
+    final ASTParser $ = wizard.parser(kind);
+    $.setSource(text);
+    return $;
   }
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
   public ASTParser makeParser(final ICompilationUnit ¢) {
-    final ASTParser ret = wizard.parser(kind);
-    ret.setSource(¢);
-    return ret;
+    final ASTParser $ = wizard.parser(kind);
+    $.setSource(¢);
+    return $;
   }
   /** Creates a no-binding parser for a given text
    * @param text what to parse
@@ -164,9 +164,9 @@ public enum makeAST {
    * @param text what to parse
    * @return a newly created parser for the parameter */
   public ASTParser makeParserWithBinding(final String text) {
-    final ASTParser ret = makeParser(text.toCharArray());
-    ret.setResolveBindings(true);
-    return ret;
+    final ASTParser $ = makeParser(text.toCharArray());
+    $.setResolveBindings(true);
+    return $;
   }
   public ASTParser makeParserWithBinding(final File ¢) {
     return makeParserWithBinding(string(¢));

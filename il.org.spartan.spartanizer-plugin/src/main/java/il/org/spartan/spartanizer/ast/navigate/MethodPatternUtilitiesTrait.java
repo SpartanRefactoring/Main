@@ -119,9 +119,9 @@ public interface MethodPatternUtilitiesTrait {
     return iz.literal($) || paramNames.contains(identifier(az.name($)));
   }
   default MethodDeclaration withoutLast(final MethodDeclaration ¢) {
-    final MethodDeclaration ret = copy.of(¢);
-    statements(ret).remove(statements(ret).size() - 1);
-    return ret;
+    final MethodDeclaration $ = copy.of(¢);
+    statements($).remove(statements($).size() - 1);
+    return $;
   }
   default boolean getter(final MethodDeclaration ¢) {
     return getterTippers.canTip(onlyStatement(¢));

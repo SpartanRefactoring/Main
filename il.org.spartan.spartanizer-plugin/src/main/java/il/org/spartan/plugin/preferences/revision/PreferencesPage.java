@@ -123,16 +123,16 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   }
   /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
-    final List<Entry<String, Object>> ret = an.empty.list();
+    final List<Entry<String, Object>> $ = an.empty.list();
     final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
     for (final IProject p : workspaceRoot.getProjects())
       try {
         if (p.isOpen() && p.hasNature(JavaCore.NATURE_ID))
-          ret.add(new AbstractMap.SimpleEntry<>(p.getName(), p));
+          $.add(new AbstractMap.SimpleEntry<>(p.getName(), p));
       } catch (final CoreException ¢) {
         note.bug(¢);
       }
-    return ret;
+    return $;
   }
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(PreferencesResources.store());
@@ -295,25 +295,25 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     }
     @Override @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException") protected Changes clone() {
-      final Changes ret = new Changes();
-      ret.preferences1.putAll(preferences1);
-      ret.preferences2.putAll(preferences2);
-      ret.enabled.putAll(enabled);
-      return ret;
+      final Changes $ = new Changes();
+      $.preferences1.putAll(preferences1);
+      $.preferences2.putAll(preferences2);
+      $.enabled.putAll(enabled);
+      return $;
     }
     public Map<SpartanCategory, SpartanElement[]> getPreference(final IProject ¢) {
       return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getElementsByCategories(¢));
     }
     public Boolean isEnabled(final IProject p) {
-      final Boolean ret = enabled.get(p);
-      if (ret == null)
+      final Boolean $ = enabled.get(p);
+      if ($ == null)
         try {
           return Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
         } catch (final CoreException ¢) {
           note.bug(¢);
           return Boolean.FALSE;
         }
-      return ret;
+      return $;
     }
     public void update(final IProject p, final Boolean able) {
       enabled.put(p, able);

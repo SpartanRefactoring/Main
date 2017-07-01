@@ -59,7 +59,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
         replace(es, ¢, ii);
       }
     }
-    final Expression ret = subject.operands(es).to(op.PLUS2);
-    return !wizard.eq(ret, x) ? ret : null;
+    final Expression $ = subject.operands(es).to(op.PLUS2);
+    return !wizard.eq($, x) ? $ : null;
   }
 }

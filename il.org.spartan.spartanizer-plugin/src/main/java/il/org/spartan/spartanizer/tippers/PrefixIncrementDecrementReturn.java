@@ -30,7 +30,7 @@ public final class PrefixIncrementDecrementReturn extends GoToNextStatement<Pref
   @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
-  @Override protected ASTRewrite go(final ASTRewrite ret, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
     final Statement parent = az.statement(x.getParent());
@@ -39,8 +39,8 @@ public final class PrefixIncrementDecrementReturn extends GoToNextStatement<Pref
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.eq(operand(x), expression(s)))
       return null;
-    ret.remove(parent, g);
-    ret.replace(s, subject.operand(x).toReturn(), g);
-    return ret;
+    $.remove(parent, g);
+    $.replace(s, subject.operand(x).toReturn(), g);
+    return $;
   }
 }

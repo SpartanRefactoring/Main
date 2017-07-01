@@ -51,9 +51,9 @@ enum FactorsExpander {
     assert first != null;
     final Factor second = the.secondOf(fs);
     assert second != null;
-    final Expression ret = base(first, second);
-    assert ret != null;
-    return step(ret, chop(chop(fs)));
+    final Expression $ = base(first, second);
+    assert $ != null;
+    return step($, chop(chop(fs)));
   }
   /** @param $ The accumulator, to which one more {@link Factor} should be added
    *        optimally

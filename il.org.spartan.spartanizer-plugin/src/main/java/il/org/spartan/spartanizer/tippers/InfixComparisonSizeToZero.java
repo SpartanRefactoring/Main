@@ -38,9 +38,9 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         "\n receiver ='" + receiver + //
         "\n operator ='" + o + //
         fault.done();
-    final MethodInvocation ret = subject.operand(receiver).toMethod("isEmpty");
-    assert ret != null : "All I know is that threshould=" + threshold + ", receiver = " + ret + ", and o=" + o;
-    return replacement(o, threshold, ret);
+    final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
+    assert $ != null : "All I know is that threshould=" + threshold + ", receiver = " + $ + ", and o=" + o;
+    return replacement(o, threshold, $);
   }
   private static ASTNode replacement(final Operator o, final int threshold, final MethodInvocation $) {
     if (o == GREATER_EQUALS)
@@ -68,19 +68,19 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
     if (!"size".equals(name(i).getIdentifier()))
       return null;
-    int ret = -1;
+    int $ = -1;
     NumberLiteral l = az.throwing.negativeLiteral(x);
     if (l == null) {
       l = az.numberLiteral(x);
       if (l == null)
         return null;
-      ret = 1;
+      $ = 1;
     }
     final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
     if (!i.getAST().hasResolvedBindings())
-      return replacement(o, ret, l, receiver);
+      return replacement(o, $, l, receiver);
     final CompilationUnit u = containing.compilationUnit(x);
     if (u == null)
       return null;
@@ -88,23 +88,23 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (b == null)
       return null;
     final ITypeBinding t = b.getReturnType();
-    return !"boolean".equals(t + "") && !"java.lang.Boolean".equals(t.getBinaryName()) ? null : replacement(o, ret, l, receiver);
+    return !"boolean".equals(t + "") && !"java.lang.Boolean".equals(t.getBinaryName()) ? null : replacement(o, $, l, receiver);
   }
   private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
     return iz.pseudoNumber(¢1) && iz.methodInvocation(¢2) //
         || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }
   @Override public String description(final InfixExpression ¢) {
-    final Expression ret = left(¢);
-    return description(expression(ret instanceof MethodInvocation ? ret : right(¢)));
+    final Expression $ = left(¢);
+    return description(expression($ instanceof MethodInvocation ? $ : right(¢)));
   }
   @Override public ASTNode replacement(final InfixExpression x) {
-    final Operator ret = x.getOperator();
-    if (!iz.comparison(ret))
+    final Operator $ = x.getOperator();
+    if (!iz.comparison($))
       return null;
     final Expression right = right(x), left = left(x);
     return !validTypes(right, left) ? null
-        : iz.methodInvocation(left) ? replacement(ret, az.methodInvocation(left), right)
-            : replacement(op.conjugate(ret), az.methodInvocation(right), left);
+        : iz.methodInvocation(left) ? replacement($, az.methodInvocation(left), right)
+            : replacement(op.conjugate($), az.methodInvocation(right), left);
   }
 }

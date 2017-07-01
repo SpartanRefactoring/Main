@@ -45,37 +45,37 @@ public abstract class descendants<N extends ASTNode> {
       return this;
     }
     @Override public List<N> from(final ASTNode n) {
-      final List<N> ret = an.empty.list();
+      final List<N> $ = an.empty.list();
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode ¢) {
           if (n != ¢ && clazz.isAssignableFrom(¢.getClass()) && p.test(clazz.cast(¢)))
-            ret.add(clazz.cast(¢));
+            $.add(clazz.cast(¢));
         }
       });
-      return ret;
+      return $;
     }
     @Override public List<N> inclusiveFrom(final ASTNode n) {
-      final List<N> ret = an.empty.list();
+      final List<N> $ = an.empty.list();
       if (n == null)
-        return ret;
+        return $;
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode ¢) {
           if (clazz.isAssignableFrom(¢.getClass()) && p.test(clazz.cast(¢)))
-            ret.add(clazz.cast(¢));
+            $.add(clazz.cast(¢));
         }
       });
-      return ret;
+      return $;
     }
   }
 
   public static List<ASTNode> of(final ASTNode n) {
-    final List<ASTNode> ret = an.empty.list();
+    final List<ASTNode> $ = an.empty.list();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
-        ret.add(¢);
+        $.add(¢);
       }
     });
-    return ret;
+    return $;
   }
   public static Stream<ASTNode> streamOf(final ASTNode ¢) {
     return descendants.of(¢).stream();

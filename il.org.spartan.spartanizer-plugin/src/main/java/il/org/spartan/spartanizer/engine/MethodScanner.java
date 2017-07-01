@@ -42,9 +42,9 @@ public abstract class MethodScanner {
         return i.hasNext();
       }
       @Override public Statement next() {
-        final Statement ret = i.next();
+        final Statement $ = i.next();
         ++currentIndex;
-        return ret;
+        return $;
       }
     };
   }

@@ -31,12 +31,12 @@ public class AnonymizeAllParameters extends EagerTipper<MethodDeclaration> imple
     return "Anonyze all the relevant parameters in the method declaration";
   }
   @Override public Tip tip(final MethodDeclaration d) {
-    final List<SingleVariableDeclaration> ret = extract.methodArguments(d);
+    final List<SingleVariableDeclaration> $ = extract.methodArguments(d);
     final List<Name> lst = getAll.names(d.getBody());
     return new Tip(description(d), getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int i = 1;
-        for (final SingleVariableDeclaration arg : ret)
+        for (final SingleVariableDeclaration arg : $)
           if (!lst.contains(arg.getName()))
             rename(arg.getName(), d.getAST().newSimpleName("_" + i++), d, r, g);
       }

@@ -44,9 +44,9 @@ public class WidgetOperationEntry implements Serializable {
     configuration = ¢;
   }
   public WidgetOperation getWidgetOp() {
-    for (final WidgetOperation ret : WidgetOperationPoint.allOperations)
-      if (widgetSUID == ObjectStreamClass.lookup(ret.getClass()).getSerialVersionUID())
-        return ret.clone();
+    for (final WidgetOperation $ : WidgetOperationPoint.allOperations)
+      if (widgetSUID == ObjectStreamClass.lookup($.getClass()).getSerialVersionUID())
+        return $.clone();
     return null;
   }
   public ConfigurationsMap getConfigurationMap() {
