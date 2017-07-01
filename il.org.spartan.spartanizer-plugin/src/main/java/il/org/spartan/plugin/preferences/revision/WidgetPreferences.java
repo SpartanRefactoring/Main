@@ -53,7 +53,7 @@ public enum WidgetPreferences {
   @SuppressWarnings("unchecked") public static List<WidgetOperationEntry> readEntries() {
     final byte[] theOutBarr = Base64.getDecoder().decode(store().getString(PreferencesResources.WIDGET_OPERATION_CONFIGURATION));
     final ByteArrayInputStream in = new ByteArrayInputStream(theOutBarr);
-    List<WidgetOperationEntry> $ = null;
+    List<WidgetOperationEntry> $ = an.empty.list();
     try {
       $ = (List<WidgetOperationEntry>) new ObjectInputStream(in).readObject();
     } catch (final IOException | ClassNotFoundException ¢) {
