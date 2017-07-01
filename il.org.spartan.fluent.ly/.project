@@ -24,7 +24,7 @@
 		<link>
 			<name>bin-fluent.ly</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/il.org.spartan.spartanizer-plugin/lib/fulent.ly.jar</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/il.org.spartan.spartanizer-plugin/lib/fluent.ly.jar</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
