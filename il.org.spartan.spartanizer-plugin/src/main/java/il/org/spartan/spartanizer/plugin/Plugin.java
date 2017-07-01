@@ -57,6 +57,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       addPartListener();
       WidgetOperationPoint.load();
       loadPreferences();
+      WidgetPreferences.setDefaults();
     } catch (final IllegalStateException ¢) {
       note.bug(¢);
     }
@@ -137,7 +138,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
           : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
       notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
-      WidgetPreferences.setDefaults();
     }, (Consumer<Exception>) note::bug);
   }
 }
