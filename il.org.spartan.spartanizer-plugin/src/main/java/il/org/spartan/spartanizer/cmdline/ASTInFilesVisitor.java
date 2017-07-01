@@ -34,7 +34,7 @@ public class ASTInFilesVisitor {
   protected String absolutePath;
   private ASTVisitor astVisitor;
   protected File currentFile;
-  private String currentLocation;
+  private static String currentLocation;
   private final List<String> locations;
   protected String presentSourceName;
   protected String presentSourcePath;
@@ -249,7 +249,7 @@ public class ASTInFilesVisitor {
   collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
  }
 
-  public String getCurrentLocation() {
+  public static String getCurrentLocation() {
     return currentLocation;
   }
 
