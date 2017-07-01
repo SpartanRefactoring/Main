@@ -7,13 +7,20 @@ import java.util.HashMap;
 /**
  * @author Sharon LK
  */
-public class IdentifierTest extends PsiTypeHelper {
-    Identifier id;
+public class IdentifiableTest extends PsiTypeHelper {
+    Identifiable id;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         id = new Identifier();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        id = null;
+        super.tearDown();
     }
 
     public void testConforms() {

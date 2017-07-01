@@ -48,11 +48,10 @@ public class MatchingResult {
     }
 
     public MatchingResult combineWith(MatchingResult r) {
-        if (!r.b) {
+        if (!r.b)
             b = false;
-            return this;
-        }
-        r.m.forEach((k, v) -> m.put(k, v));
+        else
+            r.m.forEach((k, v) -> m.put(k, v));
         return this;
     }
 

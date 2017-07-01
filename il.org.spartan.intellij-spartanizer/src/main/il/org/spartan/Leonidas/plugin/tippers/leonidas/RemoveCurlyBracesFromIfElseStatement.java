@@ -12,7 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  *
  * @author Oren Afek
  * @since 14/06/17
- * /
+ *
  */
 @SuppressWarnings("ConstantConditions")
 public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefinition {
@@ -25,22 +25,24 @@ public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefin
     public void matcher() {
         new Template(() -> {
             /* start */
-            if (booleanExpression(0))
-				statement(1);
-			else
-				statement(2);
+            if (booleanExpression(0)) {
+                statement(1);
+            } else {
+                statement(2);
+            }
+            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
+            /* start */
             if (booleanExpression(0))
                 statement(1);
             else
                 statement(2);
-            /** end */
+            /* end */
         });
     }
 
@@ -49,6 +51,12 @@ public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefin
         return new ExampleMapFactory()
                 .put("int x=5;\nObject a,b;\nif(a.hashCode()!=x){\n\tx = b.hashCode();\n} else {\nx=b.hashCode()+4;}",
                         "int x=5;\nObject a,b;\nif(a.hashCode()!=x)\n\tx = b.hashCode();\nelse\nx=b.hashCode()+4;")
+                .put("if(true){\n\tSystem.out.println();\n} else {\n\tSystem.out.println();\n}", "if(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();\n")
+                .put("if(true)\n\tSystem.out.println();\n else {\n\tSystem.out.println();\n}", null)
+                .put("if(true){\n\tSystem.out.println();\n} else\n\tSystem.out.println();", null)
+                .put("if(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();", null)
+                .put("if(true){\nif(true){\n\tSystem.out.println();\n} else{\n\tSystem.out.println();\n}\n}", "if(true){\nif(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();\n}")
+                .put("if(true)\nif(true){\n\tSystem.out.println();\n} else{\n\tSystem.out.println();\n}", "if(true)\nif(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();")
                 .map();
     }
 }

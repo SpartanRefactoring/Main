@@ -27,10 +27,10 @@ public class GridBagTable extends JPanel {
         add(makeHeaderLabel(rightLabel), makeHeaderConstraints(1));
 
         // add tippers
-        IntStream.range(0, components.size()).forEach(λ -> {
-            add(new JLabel(components.get(λ).getName()), makeContentConstraints(0, 2 * λ + 2, 50));
-            add(components.get(λ), makeContentConstraints(1, 2 * λ + 2, 50));
-            add(new JSeparator(JSeparator.HORIZONTAL), makeSeparatorConstraints(2 * λ + 1));
+        IntStream.range(0, components.size()).forEach(i -> {
+            add(new JLabel(components.get(i).getName()), makeContentConstraints(0, 2 * i + 2, 50));
+            add(components.get(i), makeContentConstraints(1, 2 * i + 2, 50));
+            add(new JSeparator(JSeparator.HORIZONTAL), makeSeparatorConstraints(2 * i + 1));
         });
     }
 
@@ -56,43 +56,43 @@ public class GridBagTable extends JPanel {
     }
 
     private JLabel makeHeaderLabel(String label) {
-        JLabel $ = new JLabel(label);
-        $.setHorizontalAlignment(JLabel.CENTER);
-        $.setFont(new Font(Font.DIALOG, Font.BOLD, 14));
-        return $;
+        JLabel labelPropertyId = new JLabel(label);
+        labelPropertyId.setHorizontalAlignment(JLabel.CENTER);
+        labelPropertyId.setFont(new Font(Font.DIALOG, Font.BOLD, 14));
+        return labelPropertyId;
     }
 
     private GridBagConstraints makeHeaderConstraints(int gridx) {
         final int headerGridY = 0;
-        GridBagConstraints $ = new GridBagConstraints();
-        $.gridx = gridx;
-        $.gridy = headerGridY;
-        $.weightx = 50;
-        $.fill = GridBagConstraints.HORIZONTAL;
-        $.insets = new Insets(5, 5, 5, 5);
-        return $;
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = gridx;
+        gc.gridy = headerGridY;
+        gc.weightx = 50;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.insets = new Insets(5, 5, 5, 5);
+        return gc;
     }
 
     private GridBagConstraints makeContentConstraints(int gridx, int gridy, int weightx) {
-        GridBagConstraints $ = new GridBagConstraints();
-        $.gridx = gridx;
-        $.gridy = gridy;
-        $.weightx = weightx;
-        $.anchor = GridBagConstraints.FIRST_LINE_START;
-        $.fill = GridBagConstraints.HORIZONTAL;
-        $.insets = new Insets(5, 5, 5, 5);
-        return $;
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = gridx;
+        gc.gridy = gridy;
+        gc.weightx = weightx;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.insets = new Insets(5, 5, 5, 5);
+        return gc;
     }
 
     private GridBagConstraints makeSeparatorConstraints(int gridy) {
-        GridBagConstraints $ = new GridBagConstraints();
-        $.gridx = 0;
-        $.gridy = gridy;
-        $.weightx = 1;
-        $.fill = GridBagConstraints.HORIZONTAL;
-        $.anchor = GridBagConstraints.FIRST_LINE_START;
-        $.gridwidth = 2;
-        return $;
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = 0;
+        gc.gridy = gridy;
+        gc.weightx = 1;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.gridwidth = 2;
+        return gc;
     }
 }
 

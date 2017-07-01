@@ -26,18 +26,20 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     public void matcher() {
         new Template(() -> {
             /* start */
-            if (booleanExpression(0))
-				statement(1);
+            if (booleanExpression(0)) {
+                statement(1);
+            }
+            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
+            /* start */
             if (booleanExpression(0))
                 statement(1);
-            /** end */
+            /* end */
         });
     }
 
@@ -45,6 +47,11 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("int x=5;\nObject a,b;\na = new Object();\nb = new Object();\nif(a.hashCode()!=x){\n\tx = b.hashCode();\n}", "int x=5;\nObject a,b;\n a = new Object();\nb = new Object();\nif(a.hashCode()!=x)\n\tx = b.hashCode();")
+//                .put("if(true)\n\tif(true){\nSystem.out.println();\n}", "if(true)\n\tif(true)\nSystem.out.println();\n")
+                .put("if(true){\n\tif(true){\nSystem.out.println();\n}}", "if(true){\n\tif(true)\nSystem.out.println();\n}")
+                .put("if(true)\n\tSystem.out.println();", null)
+                .put("if(true)\n\tif(true)\n\t\tSystem.out.println();", null)
+                .put("if(true){\n\tif(true){\nSystem.out.println();\n}}else{\nSystem.out.println();\n}", "if(true){\n\tif(true)\nSystem.out.println();\n}else{\nSystem.out.println();\n}")
                 .map();
 
     }

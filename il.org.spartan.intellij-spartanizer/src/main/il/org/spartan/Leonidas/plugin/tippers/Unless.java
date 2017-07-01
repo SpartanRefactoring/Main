@@ -18,12 +18,12 @@ import java.util.Map;
 public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     /**
-     * @param ¢ JD
+     * @param e JD
      * @return true iff e is in the form: <boolean expression> ? null : <expression>
      */
     @Override
-    public boolean canTip(PsiElement ¢) {
-        return (iz.conditionalExpression(¢) && (iz.nullExpression(az.conditionalExpression(¢).getThenExpression())));
+    public boolean canTip(PsiElement e) {
+        return (iz.conditionalExpression(e) && (iz.nullExpression(az.conditionalExpression(e).getThenExpression())));
     }
 
     @Override
@@ -32,20 +32,20 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
     }
 
     @Override
-    public String description(PsiConditionalExpression ¢) {
-        return "Change " + ¢.getText() + " to fluent eval().unless()";
+    public String description(PsiConditionalExpression x) {
+        return "Change " + x.getText() + " to fluent eval().unless()";
     }
 
     /**
-	 * @param ¢  - the element to be replaced
-	 * @return  a method invocation to unless function.
+     * @param x  - the element to be replaced
+     * @return  a method invocation to unless function.
 	 */
 	@Override
 	@SuppressWarnings("ConstantConditions")
-	public PsiElement createReplacement(PsiConditionalExpression ¢) {
-		return JavaPsiFacade.getElementFactory(¢.getProject()).createExpressionFromText(
-				"eval(" + ¢.getElseExpression().getText() + ").unless( " + ¢.getCondition().getText() + ")", ¢);
-	}
+    public PsiElement createReplacement(PsiConditionalExpression x) {
+        return JavaPsiFacade.getElementFactory(x.getProject()).createExpressionFromText(
+                "eval(" + x.getElseExpression().getText() + ").unless( " + x.getCondition().getText() + ")", x);
+    }
 
     @Override
     public Class<? extends PsiConditionalExpression> getOperableType() {
@@ -64,10 +64,10 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public Map<String,String> getExamples(){
-        Map<String,String> $ = new HashMap<>();
-        $.put("x>6 ? null : x;","eval(x).unless(x>6);");
-        $.put("x>6 ? x : null",null);
-        $.put("6==6 ? null : x","eval(x).unless(6==6);");
-        return $;
+        Map<String, String> examples = new HashMap<>();
+        examples.put("x>6 ? null : x;", "eval(x).unless(x>6);");
+        examples.put("x>6 ? x : null", null);
+        examples.put("6==6 ? null : x", "eval(x).unless(6==6)");
+        return examples;
     }
 }

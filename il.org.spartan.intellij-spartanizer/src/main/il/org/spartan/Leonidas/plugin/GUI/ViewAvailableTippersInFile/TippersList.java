@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -38,9 +39,8 @@ class TippersList extends JList {
 										.getSelectedTextEditor());
 								editor.getCaretModel().moveToOffset(editor.logicalPositionToOffset(
 										new LogicalPosition(Integer.parseInt(tipperLine) - 1, 0)));
-								Point caretLocation = editor
-										.visualPositionToXY(editor.getCaretModel().getVisualPosition());
-								editor.getScrollingModel().disableAnimation();
+                                 editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+                                 editor.getScrollingModel().disableAnimation();
 								editor.getScrollingModel().scrollVertically(editor.logicalPositionToOffset(
 										new LogicalPosition(Integer.parseInt(tipperLine) - 1, 0)));
 								editor.getScrollingModel().enableAnimation();
@@ -61,8 +61,8 @@ class TippersList extends JList {
         ++numOfElements;
         ListModel currentList = this.getModel();
         JLabel[] newList = new JLabel[currentList.getSize() + 1];
-        for (int ¢ = 0; ¢ < currentList.getSize(); ++¢)
-			newList[¢] = (JLabel) currentList.getElementAt(¢);
+        for (int i = 0; i < currentList.getSize(); ++i)
+            newList[i] = (JLabel) currentList.getElementAt(i);
         newList[newList.length - 1] = l;
         setListData(newList);
     }
@@ -70,13 +70,13 @@ class TippersList extends JList {
 
     protected class CellRenderer implements ListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel $ = (JLabel) value;
-            $.setBackground(getBackground());
-            $.setForeground(getForeground());
-            $.setEnabled(isEnabled());
-            $.setFont(getFont());
-            $.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
-            return $;
+            JLabel label = (JLabel) value;
+            label.setBackground(getBackground());
+            label.setForeground(getForeground());
+            label.setEnabled(isEnabled());
+            label.setFont(getFont());
+            label.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+            return label;
         }
     }
 

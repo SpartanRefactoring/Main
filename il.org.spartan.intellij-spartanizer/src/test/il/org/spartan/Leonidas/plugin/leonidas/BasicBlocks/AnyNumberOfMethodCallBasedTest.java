@@ -24,7 +24,7 @@ public class AnyNumberOfMethodCallBasedTest extends PsiTypeHelper {
         AnyNumberOfMethodCallBased ano = az.anyNumberOf(Pruning.prune(n, new HashMap<>()));
         EncapsulatorIterator it = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}")).iterator();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 1);
-        for (int ¢ = 0; ¢ < 13; ++¢) it.next();
+        for (int i = 0; i < 13; ++i) it.next();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 4);
     }
 

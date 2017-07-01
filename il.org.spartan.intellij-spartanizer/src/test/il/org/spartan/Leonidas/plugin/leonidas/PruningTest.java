@@ -12,16 +12,16 @@ import java.util.HashMap;
  */
 public class PruningTest extends PsiTypeHelper {
     public void testPruneExpression() throws Exception {
-        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "expression(0);"));
-        Encapsulator pruned = Pruning.prune(root, new HashMap<>());
+        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "expression(0);")),
+                pruned = Pruning.prune(root, new HashMap<>());
         assertEquals(pruned.getChildren().size(), 7);
         assert iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1).getChildren().get(0));
         assert !iz.generic(pruned.getChildren().get(3));
     }
 
     public void testPruneStatement() throws Exception {
-        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "statement(0);"));
-        Encapsulator pruned = Pruning.prune(root, new HashMap<>());
+        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "statement(0);")),
+                pruned = Pruning.prune(root, new HashMap<>());
         assertEquals(pruned.getChildren().size(), 7);
         assert iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1));
         assert !iz.generic(pruned.getChildren().get(3));

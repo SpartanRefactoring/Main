@@ -30,23 +30,26 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
     @Override
     public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
         if (i.value().getParent() == null) return 1;
-        Wrapper<Integer> $ = new Wrapper<>(0);
+        Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
-        i.value().getParent().accept(λ -> {
-            if (generalizes(λ, m).matches()) $.set($.get() + 1);
+        i.value().getParent().accept(n -> {
+            if (generalizes(n, m).matches()) count.set(count.get() + 1);
         });
-        return $.get();
+        return count.get();
     }
 
     @Override
-    public AnyNumberOfMethodCallBased create(Encapsulator $, Map<Integer, List<Matcher.Constraint>> m) {
-       PsiElement p = step.firstParameterExpression(az.methodCallExpression($.getInner()));
-       return new AnyNumberOfMethodCallBased($.getInner(), internalEncapsulator($));
+    public AnyNumberOfMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
+        step.firstParameterExpression(az.methodCallExpression(e.getInner()));
+        return new AnyNumberOfMethodCallBased(e.getInner(), internalEncapsulator(e));
     }
 
-    private Encapsulator internalEncapsulator(Encapsulator ¢) {
-        if (!¢.getText().contains("anyNumberOf"))
-			return ¢;
-        return ¢.getActualChildren().get(1).getActualChildren().get(1);
+    private Encapsulator internalEncapsulator(Encapsulator e) {
+        return !e.getText().contains("anyNumberOf") ? e : e.getActualChildren().get(1).getActualChildren().get(1);
+    }
+
+    @Override
+    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> m) {
+        return new QuantifierIterator(0, getNumberOfOccurrences(bgCursor, m));
     }
 }

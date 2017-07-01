@@ -19,6 +19,13 @@ public class MethodTest extends PsiTypeHelper {
         method = new Method();
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        method = null;
+        super.tearDown();
+    }
+
     public void testConformsMethods() {
         assert method.conforms(createTestMethodFromString("void method0(){}"));
         assert method.conforms(createTestMethodFromString("void method192(){}"));
@@ -61,10 +68,10 @@ public class MethodTest extends PsiTypeHelper {
 
 
     public void testGoUpwards() {
-        Encapsulator e1 = buildTreeFromPsi(createTestMethodFromString("public void m() {}"));
-        Encapsulator e2 = buildTreeFromPsi(createTestMethodFromString("public void m(int i) {}"));
-        Encapsulator e3 = buildTreeFromPsi(createTestMethodFromString("public void m(String s) {}"));
-        Encapsulator e4 = buildTreeFromPsi(createTestMethodFromString("public int m() {return 123}"));
+        Encapsulator e1 = buildTreeFromPsi(createTestMethodFromString("public void m() {}")),
+                e2 = buildTreeFromPsi(createTestMethodFromString("public void m(int i) {}")),
+                e3 = buildTreeFromPsi(createTestMethodFromString("public void m(String s) {}")),
+                e4 = buildTreeFromPsi(createTestMethodFromString("public int m() {return 123}"));
         assert !method.goUpwards(e1, e1.getParent());
         assert !method.goUpwards(e2, e2.getParent());
         assert !method.goUpwards(e3, e3.getParent());

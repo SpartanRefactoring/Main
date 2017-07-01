@@ -30,18 +30,31 @@ public class EncapsulatorTest extends PsiTypeHelper {
 
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        ifStatement1Psi = null;
+        node = null;
+        mockPsiRewrite = null;
+        super.tearDown();
+    }
+
     private boolean matchNodeTreeAndPsiTreeByReference(Encapsulator node, PsiElement e) {
-        if (node == null && e == null) return true;
-        if (e == null ^ node == null) return false;
-        if (node.getInner() != e || node.getChildren().size() != e.getChildren().length)
+        if (node == null && e == null)
+            return true;
+        if (e == null ^ node == null || node.getInner() != e || node.getChildren().size() != e.getChildren().length)
             return false;
-        for (int ¢ = 0; ¢ < node.getChildren().size(); ++¢)
-            if (!matchNodeTreeAndPsiTreeByReference(node.getChildren().get(¢), e.getChildren()[¢])) return false;
+        for (int i = 0; i < node.getChildren().size(); ++i)
+            if (!matchNodeTreeAndPsiTreeByReference(node.getChildren().get(i), e.getChildren()[i]))
+                return false;
         return true;
     }
 
     public void testRootEncapsulatingNodeIsOrphan() throws Exception {
-        Assert.assertNull(Encapsulator.buildTreeFromPsi(createTestStatementFromString("if (booleanExpression(0)) {   statement(1);}")).getParent());
+        Assert.assertNull(Encapsulator
+                .buildTreeFromPsi(
+                        createTestStatementFromString("if (booleanExpression(0)) {   statement(1);}"))
+                .getParent());
     }
 
     public void testTreeBuiltFromPsiElementConformsToPsiElement() {
@@ -65,9 +78,9 @@ public class EncapsulatorTest extends PsiTypeHelper {
 
     public void testAccept() throws Exception {
         List<Integer> ids = new LinkedList<>();
-        node.accept(λ -> {
-            if (iz.literal(λ.getInner()))
-				ids.add(Integer.parseInt(az.literal(λ.getInner()).getText()));
+        node.accept(n -> {
+            if (iz.literal(n.getInner()))
+                ids.add(Integer.parseInt(az.literal(n.getInner()).getText()));
         });
         assert ids.contains(0);
         assert ids.contains(1);
@@ -82,7 +95,7 @@ public class EncapsulatorTest extends PsiTypeHelper {
     }
 
     public void testToString() {
-        assertEquals("PsiIfStatement", node + "");
+        assertEquals("PsiIfStatement", node.toString());
     }
 
     public void testGetText() {

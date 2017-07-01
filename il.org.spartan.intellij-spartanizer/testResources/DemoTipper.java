@@ -12,6 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.the;
  * @author michalcohen
  * @since 29-04-2017.
  */
+@DisableSpartanization
 public class DemoTipper implements LeonidasTipperDefinition {
 
     @Override

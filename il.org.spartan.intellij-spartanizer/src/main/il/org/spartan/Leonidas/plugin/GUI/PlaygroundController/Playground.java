@@ -13,6 +13,8 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Theme;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -43,6 +45,7 @@ public class Playground extends JFrame {
     private JScrollPane outputScroll;
     private JButton RecursiveJavaButton = new JButton();
     private JButton step = new JButton();
+    private boolean stepInit = true;
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
     private String[] after = {"\n}", "\n}}", ");\n}}"};
@@ -66,9 +69,9 @@ public class Playground extends JFrame {
 				Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
 				theme.apply(inputArea);
 				theme.apply(outputArea);
-			} catch (IOException ¢) {
-				¢.printStackTrace();
-			}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         LeonidasIcon.apply(this);
         setContentPane(mainPanel);
@@ -76,9 +79,10 @@ public class Playground extends JFrame {
         pack();
         setVisible(true);
         outputArea.setEditable(false);
-        spartanizeButton.addActionListener(λ -> spartanizeButtonClicked(false));
-       clearButton.addActionListener(λ -> clearButtonClicked());
-        closeButton.addActionListener(λ -> closeButtonClicked());
+        inputArea.getDocument().addDocumentListener(new MyDocumentListener());
+        spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
+        clearButton.addActionListener(e -> clearButtonClicked());
+        closeButton.addActionListener(e -> closeButtonClicked());
         this.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
@@ -88,8 +92,8 @@ public class Playground extends JFrame {
         });
         RecursiveJavaButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent ¢) {
-                super.mouseClicked(¢);
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
                 spartanizeRecursivelyButtonClicked();
             }
         });
@@ -106,24 +110,28 @@ public class Playground extends JFrame {
     }
 
     private void spartanizationStep() {
+        if (!stepInit)
+            inputArea.setText(outputArea.getText());
         spartanizeButtonClicked(false);
-        inputArea.setText(outputArea.getText());
-        outputArea.setText("");
+        stepInit = false;
     }
 
     private void spartanizeButtonClicked(boolean recursive) {
         if (inputArea.getText().trim().isEmpty())
 			return;
         Toolbox.getInstance().playground = true;
-        PsiFileCenter.PsiFileWrapper pfw = new PsiFileCenter().createFileFromString(inputArea.getText());
-        if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL)
-			outputArea.setText("Input didn't contain legal java code!");
-		else{
+        PsiFileCenter pfc = new PsiFileCenter();
+        PsiFileCenter.PsiFileWrapper pfw = pfc.createFileFromString(inputArea.getText());
+        if (pfw.getCodeType() == PsiFileCenter.CodeType.ILLEGAL) {
+            outputArea.setText("Input didn't contain legal java code!");
+            stepInit = true;
+        } else {
+            pfw = pfc.createFileFromString(pfw.extractCanonicalSubtreeString());
             if (!recursive)
 				Spartanizer.spartanizeFileOnePass(pfw.getFile());
 			else
 				Spartanizer.spartanizeFileRecursively(pfw.getFile());
-            outputArea.setText(pfw.extractCanonicalSubtreeString());
+            outputArea.setText(pfw.extractRelevantSubtreeString());
         }
         Toolbox.getInstance().playground = false;
         inputArea.setCaretPosition(0);
@@ -131,9 +139,9 @@ public class Playground extends JFrame {
     }
 
     private String fixString(String outputStr, int i) {
-        String $ = outputStr.substring(before[i].length());
-        return (new ArrayList<>(Arrays.asList($.substring(0, $.length() - after[i].length()).split("\n"))))
-				.stream().map(line -> line.replaceFirst(" {4}", "")).collect(Collectors.joining("\n"));
+        String temp = outputStr.substring(before[i].length());
+        return (new ArrayList<>(Arrays.asList(temp.substring(0, temp.length() - after[i].length()).split("\n"))))
+                .stream().map(line -> line.replaceFirst(" {4}", "")).collect(Collectors.joining("\n"));
     }
 
     private void clearButtonClicked() {
@@ -184,10 +192,8 @@ public class Playground extends JFrame {
         mainPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         textPanel = new JPanel();
         textPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        GridBagConstraints gbc;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridy = gbc.gridx = 0;
         gbc.gridheight = 5;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
@@ -258,5 +264,22 @@ public class Playground extends JFrame {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+    class MyDocumentListener implements DocumentListener {
+        String newline = "\n";
+
+        public void insertUpdate(DocumentEvent e) {
+            stepInit = true;
+        }
+
+        public void removeUpdate(DocumentEvent e) {
+            stepInit = true;
+        }
+
+        public void changedUpdate(DocumentEvent e) {
+            stepInit = true;
+        }
+
     }
 }

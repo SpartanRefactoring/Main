@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
@@ -12,12 +13,12 @@ import java.util.Map;
 
 /**
  * A basic block representing an expression ("expression(2)").
+ *
  * @author Oren Afek
  * @since 5/3/2017.
  */
 public class Expression extends GenericMethodCallBasedBlock {
 
-    //FIXME @michalcohen @orenafek change to expression
     private static final String TEMPLATE = "expression";
     PsiType type;
 
@@ -70,5 +71,18 @@ public class Expression extends GenericMethodCallBasedBlock {
 
     public void mustBeArithmetic() {
         addConstraint((e, m) -> iz.expression(e.inner) && iz.arithmetic(az.expression(e.inner)));
+    }
+
+    public void mustNotRefer(Integer id) {
+        addConstraint((e, m) -> countReferences(e, id, m) == 0);
+    }
+
+    private int countReferences(Encapsulator e, Integer id, Map<Integer, List<PsiElement>> m) {
+        Wrapper<Integer> wi = new Wrapper<>(0);
+        e.accept(n -> {
+            if (iz.identifier(n.getInner()) && az.identifier(n.getInner()).getText().equals(m.get(id).get(0).getText()))
+                wi.set(wi.get() + 1);
+        });
+        return wi.get();
     }
 }

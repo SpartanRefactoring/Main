@@ -11,10 +11,22 @@ public class LeonidasTipperTest extends PsiTypeHelper {
 
     private LeonidasTipper $;
 
+    public LeonidasTipperTest() {
+
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        $ = null;
+        super.tearDown();
+    }
+
     public void testOrenPleaseFixMe(){
     }
-    private PsiMethod test(String ¢) {
-        return createTestMethodFromString(¢);
+
+    private PsiMethod test(String s) {
+        return createTestMethodFromString(s);
     }
 /*
     public void testCanTip() throws Exception {

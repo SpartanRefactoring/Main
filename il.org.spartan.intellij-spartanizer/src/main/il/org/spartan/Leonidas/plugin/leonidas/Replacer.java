@@ -39,7 +39,7 @@ public class Replacer {
      * @param dst destination replacer
      */
     private static void putReplacingRulesRecursively(GenericEncapsulator src, GenericEncapsulator dst){
-        dst.getReplacingRules().addAll(src.getReplacingRules());
+        src.copyTo(dst);
         dst.getGenericElements().forEach((id, element) -> putReplacingRulesRecursively(src.getGenericElements().get(id), element));
     }
 
@@ -53,10 +53,13 @@ public class Replacer {
      */
     public void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, Integer numberOfRoots, PsiRewrite r) {
         List<PsiElement> elements = getReplacingForest(roots, m, r);
-        PsiElement prev = treeToReplace.getPrevSibling();
-        PsiElement last = treeToReplace;
-        for (int ¢ = 1; ¢ < numberOfRoots; ++¢)
-			last = Utils.getNextActualSibling(last);
+        if (elements.size() == 1 && numberOfRoots == 1) {
+            r.replace(treeToReplace, elements.get(0));
+            return;
+        }
+        PsiElement prev = treeToReplace.getPrevSibling(), last = treeToReplace;
+        for (int i = 1; i < numberOfRoots; ++i)
+            last = Utils.getNextActualSibling(last);
         PsiElement parent = treeToReplace.getParent();
         if (iz.declarationStatement(parent))
             return;
@@ -72,8 +75,8 @@ public class Replacer {
 		}
         if (iz.methodCallExpression(parent.getParent()))
             treeToReplace = treeToReplace.getPrevSibling().getPrevSibling();
-        if (parent.getChildren().length > 1)
-			r.deleteByRange(parent, treeToReplace, last);
+        if (parent.getChildren().length > 1 && parent == treeToReplace.getParent())
+            r.deleteByRange(parent, treeToReplace, last);
     }
 
     /**

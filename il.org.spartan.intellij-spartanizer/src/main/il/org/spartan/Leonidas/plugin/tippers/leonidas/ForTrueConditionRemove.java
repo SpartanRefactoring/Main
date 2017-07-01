@@ -25,8 +25,10 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
     public void matcher() {
         new Template(() -> {
             /* start */
-            for (statement(0); true; statement(1))
-				anyNumberOf(statement(2));
+            for (statement(0); true; statement(1)) {
+                anyNumberOf(statement(2));
+            }
+            /* end */
         });
     }
 
@@ -34,21 +36,20 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /* start */
-            for (statement(0); ; statement(1))
-				anyNumberOf(statement(2));
+            for (statement(0); ; statement(1)) {
+                anyNumberOf(statement(2));
+            }
+            /* end */
         });
     }
 
-    /**
-     * Defines code examples and results after applying the tipper.
-     * This is used to test the tipper.
-     * example:
-     * examples.put("!(!(x > 4))", "x > 4");
-     */
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("for(int i = 0; true; ++i){\n\tSystem.out.println(i);\n}", "for(int i = 0;; ++i){\n\tSystem.out.println(i);\n}")
+                .put("for(int i = 0; x == x; ++i){\n\tSystem.out.println(i);\n}", null)
+                .put("for(;true;){\n\t;\n}", null)
+                .put("for(int i = 0; true; ++i)\n\tSystem.out.println(i);\n", null)
                 .map();
     }
 }

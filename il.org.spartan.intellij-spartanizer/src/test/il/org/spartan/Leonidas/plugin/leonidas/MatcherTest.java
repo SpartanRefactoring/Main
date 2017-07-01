@@ -51,11 +51,10 @@ public class MatcherTest extends PsiTypeHelper {
         constrains.putIfAbsent(1, new LinkedList<>());
         constrains.putIfAbsent(2, new LinkedList<>());
         constrains.putIfAbsent(3, new LinkedList<>());
-        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
-        Encapsulator secondConstraint = buildTemplate(createTestReturnStatement("null"));
-        Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
-        Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
-
+        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);")),
+                secondConstraint = buildTemplate(createTestReturnStatement("null")),
+                thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)")),
+                forthConstraint = buildTemplate(createTestReturnStatement("null"));
         constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(firstConstraint)));
         constrains.get(2).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.IS, Utils.wrapWithList(secondConstraint)));
         constrains.get(3).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(thirdConstraint)));
@@ -76,11 +75,10 @@ public class MatcherTest extends PsiTypeHelper {
         constrains.putIfAbsent(1, new LinkedList<>());
         constrains.putIfAbsent(2, new LinkedList<>());
         constrains.putIfAbsent(3, new LinkedList<>());
-        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
-        Encapsulator secondConstraint = buildTemplate(createTestReturnStatement("null"));
-        Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
-        Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
-
+        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);")),
+                secondConstraint = buildTemplate(createTestReturnStatement("null")),
+                thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)")),
+                forthConstraint = buildTemplate(createTestReturnStatement("null"));
         constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(firstConstraint)));
         constrains.get(2).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.IS, Utils.wrapWithList(secondConstraint)));
         constrains.get(3).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(thirdConstraint)));
@@ -121,13 +119,13 @@ public class MatcherTest extends PsiTypeHelper {
             @Override
             public void visitElement(PsiElement e) {
                 super.visitElement(e);
-                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(λ -> λ.conforms(e)).findFirst().ifPresent(λ -> e.putUserData(KeyDescriptionParameters.ID, λ.extractId(e)));
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(g -> g.conforms(e)).findFirst().ifPresent(g -> e.putUserData(KeyDescriptionParameters.ID, g.extractId(e)));
             }
         });
     }
 
-    private Encapsulator buildTemplate(PsiElement ¢) {
-        giveIdToStubMethodCalls(¢);
-        return Pruning.prune(Encapsulator.buildTreeFromPsi(¢), new HashMap<>());
+    private Encapsulator buildTemplate(PsiElement e) {
+        giveIdToStubMethodCalls(e);
+        return Pruning.prune(Encapsulator.buildTreeFromPsi(e), new HashMap<>());
     }
 }

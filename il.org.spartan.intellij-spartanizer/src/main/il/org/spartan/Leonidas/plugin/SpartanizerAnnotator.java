@@ -66,8 +66,8 @@ public class SpartanizerAnnotator implements Annotator {
 				annotation.setEnforcedTextAttributes(
 						new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0));
 			});
-        } catch (Throwable ¢) {
-            new Logger(this.getClass()).error("", ¢);
+        } catch (Throwable t) {
+            (new Logger(this.getClass())).error("", t);
         }
     }
 }

@@ -13,7 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @since 30-04-2017
  */
 @SuppressWarnings("DoubleNegation")
-public class IfDoubleNot implements LeonidasTipperDefinition {
+public class DoubleNot implements LeonidasTipperDefinition {
 
     /**
      * Write here additional constraints on the matcher tree.
@@ -26,7 +26,7 @@ public class IfDoubleNot implements LeonidasTipperDefinition {
 
     @Override
     public void matcher() {
-        new Template(() -> booleanExpression(0));
+        new Template(() -> /* start */ !(!(booleanExpression(0))) /* end */);
     }
 
     @Override
@@ -37,9 +37,9 @@ public class IfDoubleNot implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                //.put("if(!(!(5==5))){\n\tSystem.out.Println(\"ok\");\n}", "if(5==5){\n\tSystem.out.Println(\"ok\");\n}")
-                //.put("boolean b = !(!(true));", "boolean b = true;")
-                //.put("for(int i = 0; !(!(i< 20)) ; ++i){\n\ti+=1;\n}", "for(int i = 0; i< 20 ; ++i){\n\ti+=1;\n}")
+                .put("if(!(!(5==5))){\n\tSystem.out.println(\"ok\");\n}", "if(5==5){\n\tSystem.out.println(\"ok\");\n}")
+                .put("boolean b = !(!(true));", "boolean b = true;")
+                .put("for(int i = 0; !(!(i< 20)) ; ++i){\n\ti+=1;\n}", "for(int i = 0; i< 20 ; ++i){\n\ti+=1;\n}")
                 .map();
 
     }

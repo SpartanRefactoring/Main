@@ -34,10 +34,10 @@ class LogFileUtils {
      * @return The path of the logfile to be used.
      */
     private static String getPath() {
-        IdeaPluginDescriptor $ = PluginManager.getPlugin(PluginId.getId(PluginDescriptorReader.getPluginId()));
-        if ($ == null)
-			throw new RuntimeException("Cannot retrieve plugin descriptor");
-        return $.getPath().getPath() + SLASH + RELATIVE_LOG_PATH + BASE_LOG_NAME + DOT + LOG_EXT;
+        IdeaPluginDescriptor ourPlugin = PluginManager.getPlugin(PluginId.getId(PluginDescriptorReader.getPluginId()));
+        if (ourPlugin == null)
+            throw new RuntimeException("Cannot retrieve plugin descriptor");
+        return ourPlugin.getPath().getPath() + SLASH + RELATIVE_LOG_PATH + BASE_LOG_NAME + DOT + LOG_EXT;
     }
 
     /**
@@ -51,9 +51,9 @@ class LogFileUtils {
 			try {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
-			} catch (IOException ¢) {
-				¢.printStackTrace();
-			}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
     /**
@@ -64,8 +64,8 @@ class LogFileUtils {
 		try {
             ensureLogExistence();
             new FileWriter(getPath(), true).append(s).flush();
-		} catch (IOException ¢) {
-			¢.printStackTrace();
-		}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 }

@@ -21,14 +21,18 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
     @Override
     public void matcher() {
         new Template(() ->
-                identifier0 + ""
+                /* start */
+                identifier0.toString()
+                /* end */
         );
     }
 
     @Override
     public void replacer() {
         new Template(() ->
-                identifier0 + ""
+                /* start */
+                "" + identifier0
+                /* end */
         );
     }
 
@@ -37,6 +41,10 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("donald.toString()", "\"\" + donald")
+                .put("donald.toString();", "\"\" + donald;")
+                .put("donald.string()", null)
+                .put("donald.string().equals()", null)
+                .put("String str2 = i.toString() + \"whwh\";", "String str2 = \"\" + i + \"whwh\";")
                 .map();
     }
 }

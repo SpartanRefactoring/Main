@@ -45,11 +45,9 @@ public class ComponentJList extends JList {
         ++numOfElements;
         ListModel currentList = this.getModel();
         Component[] newList = new Component[currentList.getSize() + 1];
-        for (int ¢ = 0; ¢ < currentList.getSize(); ++¢)
-			if (currentList.getElementAt(¢) instanceof JCheckBox)
-				newList[¢] = (JCheckBox) currentList.getElementAt(¢);
-			else
-				newList[¢] = (TextFieldComponent) currentList.getElementAt(¢);
+        for (int i = 0; i < currentList.getSize(); ++i)
+            newList[i] = currentList.getElementAt(i) instanceof JCheckBox ? (JCheckBox) currentList.getElementAt(i)
+                    : (TextFieldComponent) currentList.getElementAt(i);
         newList[newList.length - 1] = c;
         setListData(newList);
     }
@@ -64,16 +62,15 @@ public class ComponentJList extends JList {
             ((Component) value).setEnabled(isEnabled());
             ((Component) value).setFont(getFont());
             if (!(value instanceof JCheckBox)) {
-				TextFieldComponent $ = (TextFieldComponent) value;
-				$.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
-				return $;
-			} else {
-				JCheckBox checkbox = (JCheckBox) value;
-				checkbox.setFocusPainted(false);
-				checkbox.setBorderPainted(true);
-				checkbox.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
-				return checkbox;
-			}
+                TextFieldComponent field = (TextFieldComponent) value;
+                field.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+                return field;
+            }
+            JCheckBox checkbox = (JCheckBox) value;
+            checkbox.setFocusPainted(false);
+            checkbox.setBorderPainted(true);
+            checkbox.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+            return checkbox;
         }
     }
 

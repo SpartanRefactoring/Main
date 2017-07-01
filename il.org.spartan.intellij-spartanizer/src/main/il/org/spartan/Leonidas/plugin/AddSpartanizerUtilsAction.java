@@ -1,6 +1,9 @@
 package il.org.spartan.Leonidas.plugin;
 
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileType;
@@ -25,11 +28,11 @@ import java.util.Arrays;
  */
 public class AddSpartanizerUtilsAction extends AnAction {
     @Override
-    public void actionPerformed(AnActionEvent ¢) {
-        new WriteCommandAction.Simple(¢.getProject()) {
+    public void actionPerformed(AnActionEvent e) {
+        new WriteCommandAction.Simple(e.getProject()) {
             @Override
             protected void run() throws Throwable {
-                createEnvironment(¢);
+                createEnvironment(e);
             }
         }.execute();
 
@@ -48,11 +51,11 @@ public class AddSpartanizerUtilsAction extends AnAction {
             srcDir.checkCreateSubdirectory("spartanizer");
             pf = createUtilsFile(srcDir.createSubdirectory("spartanizer"));
         } catch (IncorrectOperationException x) {
-            PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(λ -> "spartanizer".equals(λ.getName())).findAny().get();
+            PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(d -> "spartanizer".equals(d.getName())).findAny().get();
             try {
-                pf = Arrays.stream(pd.getFiles()).noneMatch(λ -> "SpartanizerUtils.java".equals(λ.getName()))
+                pf = Arrays.stream(pd.getFiles()).noneMatch(f -> "SpartanizerUtils.java".equals(f.getName()))
                         ? createUtilsFile(pd)
-                        : Arrays.stream(pd.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst()
+                        : Arrays.stream(pd.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst()
                         .get();
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -71,9 +74,9 @@ public class AddSpartanizerUtilsAction extends AnAction {
 
     @Nullable
     private PsiElement getPsiElementFromContext(AnActionEvent e) {
-        PsiFile $ = e.getData(LangDataKeys.PSI_FILE);
+        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        return $ == null || editor == null ? null : $.findElementAt(editor.getCaretModel().getOffset());
+        return psiFile == null || editor == null ? null : psiFile.findElementAt(editor.getCaretModel().getOffset());
     }
 
     @SuppressWarnings({"OptionalGetWithoutIsPresent", "ResultOfMethodCallIgnored"})
@@ -82,11 +85,11 @@ public class AddSpartanizerUtilsAction extends AnAction {
         File file = new File(is.getPath());
         FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
         file.setReadable(true, false);
-        PsiFile $ = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText("SpartanizerUtils.java", type, IOUtils.toString(new BufferedReader(
-				new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
-        d.add($);
-        Arrays.stream(d.getFiles()).filter(λ -> "SpartanizerUtils.java".equals(λ.getName())).findFirst().get().getVirtualFile().setWritable(false);
-        Toolbox.getInstance().excludeFile($);
-        return $;
+        PsiFile pf = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText("SpartanizerUtils.java", type, IOUtils.toString(new BufferedReader(
+                new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
+        d.add(pf);
+        Arrays.stream(d.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst().get().getVirtualFile().setWritable(false);
+        Toolbox.getInstance().excludeFile(pf);
+        return pf;
     }
 }

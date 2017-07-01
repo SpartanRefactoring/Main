@@ -1,6 +1,5 @@
 package il.org.spartan.Leonidas.plugin;
 
-import fluent.ly.note;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -36,16 +35,15 @@ public class PluginDescriptorReader {
         try {
             document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 					.parse(new InputSource(pluginXmlBuffer));
-        } catch (ParserConfigurationException | SAXException | IOException ¢) {
-note.bug(¢);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
         }
     }
 
     public static String getPluginId() {
-        NodeList $ = document.getElementsByTagName(ID_ELEMENT_NAME);
-        for (int ¢ = 0; ¢ < $.getLength(); ++¢)
-			if (ROOT_ELEMENT_NAME.equals($.item(¢).getParentNode().getNodeName()))
-				return $.item(¢).getTextContent();
+        NodeList nodeList = document.getElementsByTagName(ID_ELEMENT_NAME);
+        for (int i = 0; i < nodeList.getLength(); ++i)
+            if (ROOT_ELEMENT_NAME.equals(nodeList.item(i).getParentNode().getNodeName()))
+                return nodeList.item(i).getTextContent();
         throw new RuntimeException("ID element wasn't found in plugin.xml");
     }
 }

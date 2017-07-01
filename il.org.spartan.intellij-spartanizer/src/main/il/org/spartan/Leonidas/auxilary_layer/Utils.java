@@ -36,11 +36,11 @@ public enum Utils {
     }
 
     /**
-     * @param ¢ the current project
+     * @param p the current project
      * @return the PsiManager of the project.
      */
-    public static PsiManager getPsiManager(Project ¢) {
-        return PsiManager.getInstance(¢);
+    public static PsiManager getPsiManager(Project p) {
+        return PsiManager.getInstance(p);
     }
 
     /**
@@ -49,7 +49,7 @@ public enum Utils {
      * @return list of all the appearance of the identifier.
      */
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier id) {
-        List<PsiIdentifier> $ = new ArrayList<>();
+        List<PsiIdentifier> identifiers = new ArrayList<>();
         if (root != null && id != null)
             root.accept(new JavaRecursiveElementVisitor() {
                 @Override
@@ -59,19 +59,19 @@ public enum Utils {
                         return;
                     PsiElement context = i.getContext();
                     if (iz.variable(context) || iz.referenceExpression(context))
-                        $.add(i);
+                        identifiers.add(i);
                 }
             });
-        return $;
+        return identifiers;
     }
 
     /**
-     * @param ¢ JD
+     * @param e JD
      * @return the document in which e is.
      */
-    public static Document getDocumentFromPsiElement(PsiElement ¢) {
-        PsiFile $ = ¢.getContainingFile();
-        return PsiDocumentManager.getInstance($.getProject()).getDocument($);
+    public static Document getDocumentFromPsiElement(PsiElement e) {
+        PsiFile associatedFile = e.getContainingFile();
+        return PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
     }
 
     /**
@@ -88,18 +88,18 @@ public enum Utils {
      * @return lists of all the children of the type T of e.
      */
     public static <T extends PsiElement> List<T> getChildrenOfType(@Nullable PsiElement e, @NotNull Class<T> aClass) {
-        Wrapper<List<T>> $ = new Wrapper<>(new LinkedList<T>());
+        Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
         assert e != null;
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
 			@SuppressWarnings("unchecked")
-			public void visitElement(PsiElement ¢) {
-				super.visitElement(¢);
-				if (aClass.isInstance(¢))
-					$.get().add((T) ¢);
-			}
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                if (aClass.isInstance(e))
+                    w.get().add((T) e);
+            }
         });
-        return $.get();
+        return w.get();
     }
 
     /**
@@ -108,10 +108,10 @@ public enum Utils {
      */
     public static String getSourceCode(Class<?> c) {
         try {
-            InputStream $ = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
-            return $ == null ? "" : IOUtils.toString(new BufferedReader(new InputStreamReader($)));
-        } catch (IOException ¢) {
-            logger.error("could not read file", ¢);
+            InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
+            return is == null ? "" : IOUtils.toString(new BufferedReader(new InputStreamReader(is)));
+        } catch (IOException e) {
+            logger.error("could not read file", e);
         }
         return "";
     }
@@ -123,9 +123,9 @@ public enum Utils {
      * @param path the path to be fixed
      * @return fixed path. on error, returns null
      */
-    public static String fixSpacesProblemOnPath(String $) {
+    public static String fixSpacesProblemOnPath(String path) {
         try {
-            return URLDecoder.decode($, "UTF-8");
+            return URLDecoder.decode(path, "UTF-8");
         } catch (UnsupportedEncodingException ignore) {
             return "";
         }
@@ -138,70 +138,69 @@ public enum Utils {
      */
     @SuppressWarnings("StatementWithEmptyBody")
     public static PsiElement getFirstElementInsideBody(PsiCodeBlock cb) {
-        PsiElement $;
-        for ($ = cb.getFirstBodyElement(); $ != null && iz.whiteSpace($); $ = $.getNextSibling()) ;
-        return $;
+        PsiElement c;
+        for (c = cb.getFirstBodyElement(); ; c = c.getNextSibling())
+            if (c == null || !iz.whiteSpace(c))
+                return c;
     }
 
-    public static List<Encapsulator> wrapWithList(Encapsulator ¢) {
-        List<Encapsulator> $ = new LinkedList<>();
-        $.add(¢);
-        return $;
+    public static List<Encapsulator> wrapWithList(Encapsulator e) {
+        List<Encapsulator> l = new LinkedList<>();
+        l.add(e);
+        return l;
     }
 
-    public static List<PsiElement> wrapWithList(PsiElement ¢) {
-        List<PsiElement> $ = new LinkedList<>();
-        $.add(¢);
-        return $;
+    public static List<PsiElement> wrapWithList(PsiElement e) {
+        List<PsiElement> l = new LinkedList<>();
+        l.add(e);
+        return l;
     }
 
-    public static PsiElement getNextActualSibling(PsiElement ¢) {
-        if (¢ == null) return null;
-        PsiElement $ = ¢.getNextSibling();
-        while ($ != null && (iz.whiteSpace($) || iz.comment($)))
-			$ = $.getNextSibling();
-        return $;
+    public static PsiElement getNextActualSibling(PsiElement e) {
+        if (e == null) return null;
+        PsiElement current = e.getNextSibling();
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
+            current = current.getNextSibling();
+        return current;
     }
 
-    public static PsiElement getPrevActualSibling(PsiElement ¢) {
-        if (¢ == null) return null;
-        PsiElement $ = ¢.getPrevSibling();
-        while ($ != null && (iz.whiteSpace($) || iz.comment($)))
-			$ = $.getPrevSibling();
-        return $;
+    public static PsiElement getPrevActualSibling(PsiElement e) {
+        if (e == null) return null;
+        PsiElement current = e.getPrevSibling();
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
+            current = current.getPrevSibling();
+        return current;
     }
 
-    public static PsiElement getNextActualSiblingWithComments(PsiElement ¢) {
-        if (¢ == null) return null;
-        PsiElement $ = ¢.getNextSibling();
-        while ($ != null && iz.whiteSpace($))
-			$ = $.getNextSibling();
-        return $;
+    public static PsiElement getNextActualSiblingWithComments(PsiElement e) {
+        if (e == null) return null;
+        PsiElement current = e.getNextSibling();
+        while (current != null && iz.whiteSpace(current))
+            current = current.getNextSibling();
+        return current;
     }
 
     public static int getNumberOfRootsPossible(PsiElement e) {
-        int $ = 0;
+        int i = 0;
         PsiElement current = e;
         if (e == null || iz.whiteSpace(current) || iz.comment(current)) return 0;
-        while (current != null) {
-            ++$;
-            current = getNextActualSibling(current);
-        }
-        return $;
+        for (; current != null; current = getNextActualSibling(current))
+            ++i;
+        return i;
     }
 
-    public static Method getDeclaredMethod(Class<?> $, String name, Class<?>... parameterTypes) throws NoSuchMethodException {
-        if ($.equals(Object.class)) throw new NoSuchMethodException();
+    public static Method getDeclaredMethod(Class<?> c, String name, Class<?>... parameterTypes) throws NoSuchMethodException {
+        if (c.equals(Object.class)) throw new NoSuchMethodException();
         try {
-            return $.getDeclaredMethod(name, parameterTypes);
+            return c.getDeclaredMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
         }
-        return getDeclaredMethod($.getSuperclass(), name, parameterTypes);
+        return getDeclaredMethod(c.getSuperclass(), name, parameterTypes);
     }
 
-    public static Optional<Method> getPublicMethod(Class<?> $, String name, Class<?>... parameterTypes) {
+    public static Optional<Method> getPublicMethod(Class<?> c, String name, Class<?>... parameterTypes) {
         try {
-            return Optional.of($.getMethod(name, parameterTypes));
+            return Optional.of(c.getMethod(name, parameterTypes));
         } catch (NoSuchMethodException e) {
             return Optional.empty();
         }

@@ -2,10 +2,6 @@ package il.org.spartan.Leonidas.plugin.GUI.About;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import il.org.spartan.Leonidas.plugin.GUI.JPanelWithBackground;
-
-import javax.swing.*;
-import java.io.IOException;
 
 /**
  * @author Amir Sagiv

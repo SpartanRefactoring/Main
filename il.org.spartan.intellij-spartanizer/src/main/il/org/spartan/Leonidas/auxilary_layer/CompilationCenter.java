@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.PsiFile;
-import fluent.ly.note;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -47,15 +46,15 @@ public class CompilationCenter {
 
 	/**
 	 * Checks whether or not the given PsiFile has any compilation errors
-	 * 
-	 * @param ¢
-	 *            - JD
+	 *
+     * @param f
+     *            - JD
 	 * @return has any compilation errors
 	 */
-	public static boolean hasCompilationErrors(PsiFile ¢) {
-		compile(¢);
-		return (errors + "").length() != 0;
-	}
+    public static boolean hasCompilationErrors(PsiFile f) {
+        compile(f);
+        return errors.toString().length() != 0;
+    }
 
 	/**
 	 * Compile the given PsiFile and update the output buffers accordingly
@@ -69,9 +68,8 @@ public class CompilationCenter {
 		String source = f.getText();
 		try {
 			Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
-		} catch (IOException ¢) {
-			note.bug(¢);
-		}
+        } catch (IOException e) {
+        }
 		output.reset();
 		errors.reset();
 		compiler.run(null, output, errors, dummyCompilationTestFile.getPath());
@@ -85,8 +83,8 @@ public class CompilationCenter {
 	public static String getLatestCompilationErrors() {
 		if (!initialized)
 			initialize();
-		return errors + "";
-	}
+        return errors.toString();
+    }
 
 	/**
 	 *
@@ -96,7 +94,7 @@ public class CompilationCenter {
 	public static String getLatestCompilationOutput() {
 		if (!initialized)
 			initialize();
-		return output + "";
-	}
+        return output.toString();
+    }
 
 }

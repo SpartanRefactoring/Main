@@ -31,7 +31,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
 
     private void initializeElements(Encapsulator e, List<Encapsulator> es) {
         if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) es.add(e);
-        e.getActualChildren().forEach(λ -> initializeElements(λ, es));
+        e.getActualChildren().forEach(c -> initializeElements(c, es));
     }
 
     @Override
@@ -56,13 +56,13 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     @Override
     public EncapsulatorIterator clone() {
         try {
-            EncapsulatorIterator $ = (EncapsulatorIterator) super.clone();
-            $.elements = new LinkedList<>(elements);
-            $.cursor = cursor;
-            $.shouldSkip = shouldSkip;
-            $.skipCounter = skipCounter;
-            $.skipOverall = skipOverall;
-            return $;
+            EncapsulatorIterator cloned = (EncapsulatorIterator) super.clone();
+            cloned.elements = new LinkedList<>(elements);
+            cloned.cursor = cursor;
+            cloned.shouldSkip = shouldSkip;
+            cloned.skipCounter = skipCounter;
+            cloned.skipOverall = skipOverall;
+            return cloned;
         } catch (CloneNotSupportedException e) {
             return this;
         }
@@ -72,9 +72,9 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
         return skipOverall;
     }
 
-    public EncapsulatorIterator setNumberOfOccurrences(int ¢) {
+    public EncapsulatorIterator setNumberOfOccurrences(int i) {
         shouldSkip = true;
-        skipOverall = ¢;
+        skipOverall = i;
         return this;
     }
 
@@ -84,9 +84,9 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
      */
     public void matchedWithGeneric() {
         Encapsulator current = elements.get(cursor);
-        current.accept(λ -> {
-            if (λ != current)
-                elements.remove(λ);
+        current.accept(n -> {
+            if (n != current)
+                elements.remove(n);
         });
     }
 }

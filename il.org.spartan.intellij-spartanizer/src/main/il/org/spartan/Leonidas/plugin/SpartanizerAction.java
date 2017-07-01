@@ -12,6 +12,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import icons.Icons;
+import il.org.spartan.Leonidas.plugin.GUI.LoadingIndicator.LoadingIndicator;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,31 +39,30 @@ public class SpartanizerAction extends AnAction {
             PsiDirectory srcDir = psiClass.getContainingFile().getContainingDirectory();
             try {
                 srcDir.checkCreateSubdirectory("spartanizer");
-                Object[] options = {"Accept",
-                        "Cancel"};
-
+                Object[] options = {"Accept", "Cancel"};
                 if (JOptionPane.showOptionDialog(new JFrame(),
-						"You might be about to apply nano patterns.\n" + "Please notice that nano pattern tippers are "
-								+ "code transformations that require adding a '.java' file "
+                        "You might be about to apply nano patterns.\nPlease notice that nano pattern tippers are "
+                                + "code transformations that require adding a '.java' file "
 								+ "to your project directory.\n"
 								+ "To apply these tippers, please press the Accept button.",
 						"SpartanizerUtils", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, Icons.Leonidas,
-						options, options[1]) != 1)
-					new WriteCommandAction.Simple(e.getProject()) {
-						@Override
-						protected void run() throws Throwable {
-							new AddSpartanizerUtilsAction().createEnvironment(e);
-						}
-					}.execute();
-				else {
-					Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
-					Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
-					return;
-				}
-            } catch (Exception ex) {}
-
+                        options, options[1]) == 1) {
+                    Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
+                    Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
+                    return;
+                }
+                new WriteCommandAction.Simple(e.getProject()) {
+                    @Override
+                    protected void run() throws Throwable {
+                        new AddSpartanizerUtilsAction().createEnvironment(e);
+                    }
+                }.execute();
+            } catch (Exception ex) {
+            }
+            LoadingIndicator li = new LoadingIndicator("Spartanizing current file");
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());
+            li.dispose();
 
 		}
     }
@@ -73,9 +73,9 @@ public class SpartanizerAction extends AnAction {
      **/
     @Nullable
     private PsiElement getPsiElementFromContext(AnActionEvent e) {
-        PsiFile $ = e.getData(LangDataKeys.PSI_FILE);
+        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        return $ == null || editor == null ? null : $.findElementAt(editor.getCaretModel().getOffset());
+        return psiFile == null || editor == null ? null : psiFile.findElementAt(editor.getCaretModel().getOffset());
     }
 
     /**

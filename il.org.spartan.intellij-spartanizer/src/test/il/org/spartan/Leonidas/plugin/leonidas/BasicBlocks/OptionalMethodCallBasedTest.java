@@ -22,7 +22,7 @@ public class OptionalMethodCallBasedTest extends PsiTypeHelper {
         OptionalMethodCallBased ano = new OptionalMethodCallBased().create(n.getChildren().get(0), new HashMap<>());
         EncapsulatorIterator it = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x--;}")).iterator();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 1);
-        for (int ¢ = 0; ¢ < 10; ++¢) it.next();
+        for (int i = 0; i < 10; ++i) it.next();
         assertEquals(ano.getNumberOfOccurrences(it, new HashMap<>()), 0);
     }
 

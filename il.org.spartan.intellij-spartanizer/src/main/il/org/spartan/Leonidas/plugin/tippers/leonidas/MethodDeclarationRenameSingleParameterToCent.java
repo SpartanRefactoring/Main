@@ -20,13 +20,6 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
 
     Class2 identifier3;
 
-    /**
-     * Write here additional constraints on the matcher tree.
-     * The structural constraint are of the form:
-     * element(<id>).{is/isNot}(() - > <template>)[.ofType(Psi class)];
-     * There are non structural that you can apply, for example
-     * element(<id>).asMethod.startsWith("set);
-     */
     @Override
     public void constraints() {
         element(1).asMethod.notContains("main");
@@ -72,23 +65,17 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
         element(3).asIdentifier.changeName("cent");
     }
 
-    /**
-     * Defines code examples and results after applying the tipper.
-     * This is used to test the tipper.
-     * example:
-     * examples.put("!(!(x > 4))", "x > 4");
-     */
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("void foo(int x){}", "void foo(int cent){}")
+                //.put("void foo(int x){}", "void foo(int cent){}")
                 .put("void foo(int x){\n\tSystem.out.println(x);\n}", "void foo(int cent){\n\tSystem.out.println(cent);\n}")
                 .put("private static void foo(int x){\n\tSystem.out.println(x);\n}", "private static void foo(int cent){\n\tSystem.out.println(cent);\n}")
                 .put("private static void foo(int cent){\n\tSystem.out.println(\"\");\n}", null)
                 .put("private static void foo(int x){\n\tint cent = 0;\n\tSystem.out.println(cent);\n}", null)
                 .put("private static void foo(int x,int y){\n\tSystem.out.println(x);\n}", null)
                 .map();
-        
+
     }
 
     class Class0 {
