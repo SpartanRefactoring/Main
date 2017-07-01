@@ -6,10 +6,7 @@ import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Block;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Expression;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Statement;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 
 import java.util.HashMap;
 
@@ -495,16 +492,34 @@ public class izTest extends PsiTypeHelper {
         assert !iz.thisExpression(null);
     }
 
-
-    public void testExpressionList() {
+    public void testReferenceParameterList() {
         assert iz.thisExpression(createTestExpression("this"));
         assert !iz.thisExpression(createTestExpression("true"));
         assert !iz.thisExpression(null);
     }
 
-    public void testReferenceParameterList() {
-        assert iz.thisExpression(createTestExpression("this"));
-        assert !iz.thisExpression(createTestExpression("true"));
-        assert !iz.thisExpression(null);
+    public void testInnerElementOfClass() {
+        assert iz.innerElementOfClass(createTestMethodFromString("void foo() {}"));
+        assert iz.innerElementOfClass(createTestFieldDeclarationFromString("int a;"));
+        assert iz.innerElementOfClass(createTestClassFromString("public class A{}"));
+
+        assert !iz.innerElementOfClass(null);
+        assert !iz.innerElementOfClass(createTestStatementFromString("x++;"));
+        assert !iz.innerElementOfClass(createTestExpression("x++"));
+    }
+
+    public void testExpressionList() {
+        assert iz.expressionList(createTestMethodCallExpression("foo", "x", "y", "z").getArgumentList());
+        assert iz.expressionList(createTestMethodCallExpression("foo").getArgumentList());
+
+        assert !iz.expressionList(createTestStatementFromString("x++;"));
+        assert !iz.expressionList(createTestExpression("x++"));
+        assert !iz.expressionList(null);
+    }
+
+    public void testOptional() {
+        assert iz.optional(new OptionalMethodCallBased());
+
+        assert !iz.optional(null);
     }
 }
