@@ -20,6 +20,13 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-spartan</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/il.org.spartan.spartanizer-plugin/lib/spartan.jar</locationURI>
+		</link>
+	</linkedResources>
 	<variableList>
 		<variable>
 			<name>copy_PARENT</name>
