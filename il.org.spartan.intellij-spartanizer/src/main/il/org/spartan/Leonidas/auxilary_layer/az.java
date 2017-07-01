@@ -1,10 +1,7 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.*;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.AnyNumberOfMethodCallBased;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.OptionalMethodCallBased;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 
 /**
  * Utils class that helps converting Psi element to a specific Psi type
