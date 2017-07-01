@@ -492,12 +492,6 @@ public class izTest extends PsiTypeHelper {
         assert !iz.thisExpression(null);
     }
 
-    public void testReferenceParameterList() {
-        assert iz.thisExpression(createTestExpression("this"));
-        assert !iz.thisExpression(createTestExpression("true"));
-        assert !iz.thisExpression(null);
-    }
-
     public void testInnerElementOfClass() {
         assert iz.innerElementOfClass(createTestMethodFromString("void foo() {}"));
         assert iz.innerElementOfClass(createTestFieldDeclarationFromString("int a;"));
@@ -521,5 +515,42 @@ public class izTest extends PsiTypeHelper {
         assert iz.optional(new OptionalMethodCallBased());
 
         assert !iz.optional(null);
+    }
+
+    public void testGenericBooleanLiteral() {
+        assert iz.genericBooleanLiteral(new BooleanLiteral(new Encapsulator(createTestExpression("true"))));
+
+        assert !iz.genericBooleanLiteral(null);
+    }
+
+    public void testGenericMethod() {
+        assert iz.genericMethod(new Method());
+
+        assert !iz.genericMethod(null);
+    }
+
+    public void testAnyNumberOf() {
+        assert iz.anyNumberOf(new AnyNumberOfMethodCallBased());
+
+        assert !iz.anyNumberOf(null);
+    }
+
+    public void testCodeBlock() {
+        assert iz.codeBlock(createTestCodeBlockFromString("{int a;}"));
+        assert iz.codeBlock(createTestCodeBlockFromString("{int a; int b;}"));
+
+        assert !iz.codeBlock(null);
+        assert !iz.codeBlock(createTestStatementFromString("int x;"));
+    }
+
+    public void testReferenceParameterList() {
+        assert !iz.referenceParameterList(null);
+    }
+
+    public void testAnonymousClassDeclaration() {
+        assert iz.anonymousClassDeclaration(az.newExpression(createTestExpression("new List() {}")).getAnonymousClass());
+
+        assert !iz.anonymousClassDeclaration(createTestClassFromString("public class A {}"));
+        assert !iz.anonymousClassDeclaration(null);
     }
 }
