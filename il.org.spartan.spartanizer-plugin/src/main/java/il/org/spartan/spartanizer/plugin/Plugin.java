@@ -133,11 +133,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
       ZOOMER_AUTO_ACTIVISION_VALUE.set(store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
       Eclipse.commandSetToggle("il.org.spartan.AthensToggle", store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
-      final Document doc = XMLSpartan.getXML(Eclipse.getAllSpartanizerProjects().get(0));
-      doc.getDocumentElement().normalize();
-      notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
-          : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
-      notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
+//      final Document doc = XMLSpartan.getXML(Eclipse.getAllSpartanizerProjects().get(0));
+//      doc.getDocumentElement().normalize();
+//      notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
+//          : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
+//      notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
     }, (Consumer<Exception>) note::bug);
   }
 }
