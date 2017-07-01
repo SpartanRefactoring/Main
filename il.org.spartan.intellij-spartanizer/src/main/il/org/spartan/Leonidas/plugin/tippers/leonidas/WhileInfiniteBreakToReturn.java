@@ -96,11 +96,5 @@ public class WhileInfiniteBreakToReturn implements LeonidasTipperDefinition {
     }
 
     class Class0 {
-
     }
-
-    class Class2<T> {
-    }
-
-
 }

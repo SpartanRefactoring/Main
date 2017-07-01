@@ -37,7 +37,7 @@ public class StringLiteralEqualsChangeOrder implements LeonidasTipperDefinition 
                 .put("\"Hello\".equals(\"World\")", null)
                 .put("\"Hello\".equals(x)", null)
                 .put("if(s.equals(\"Bye\")){\nSystem.out.println();\n}", "if(\"Bye\".equals(s)){\nSystem.out.println();\n}")
-//                .put("boolean b = s.equals(\"Bye\");", "boolean b = \"Bye\".equals(s);")
+                .put("boolean b = s.equals(\"Bye\");", "boolean b = \"Bye\".equals(s);")
                 .map();
     }
 }

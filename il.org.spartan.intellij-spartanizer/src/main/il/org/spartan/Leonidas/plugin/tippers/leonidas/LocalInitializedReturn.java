@@ -14,7 +14,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  */
 public class LocalInitializedReturn implements LeonidasTipperDefinition {
 
-
     @Override
     public void constraints() {
     }

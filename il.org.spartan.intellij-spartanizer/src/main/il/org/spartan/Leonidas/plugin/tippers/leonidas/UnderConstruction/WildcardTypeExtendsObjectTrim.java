@@ -1,6 +1,7 @@
-package il.org.spartan.Leonidas.plugin.tippers.leonidas;
+package il.org.spartan.Leonidas.plugin.tippers.leonidas.UnderConstruction;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 
 import java.util.Map;
 
@@ -18,7 +19,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @since 29/06/2017
  */
 @TipperUnderConstruction(INCOMPLETE)
-public class WildcardTypeExtendsObjectTrim implements LeonidasTipperDefinition{
+public class WildcardTypeExtendsObjectTrim implements LeonidasTipperDefinition {
 
     Object identifier3;
 

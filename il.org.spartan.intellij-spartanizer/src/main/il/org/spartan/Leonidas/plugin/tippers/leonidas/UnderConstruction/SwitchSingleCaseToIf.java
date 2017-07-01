@@ -1,6 +1,7 @@
-package il.org.spartan.Leonidas.plugin.tippers.leonidas;
+package il.org.spartan.Leonidas.plugin.tippers.leonidas.UnderConstruction;
 
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @since 29/06/2017
  */
 @TipperUnderConstruction(INCOMPLETE)
-public class SwitchSingleCaseToIf implements LeonidasTipperDefinition{
+public class SwitchSingleCaseToIf implements LeonidasTipperDefinition {
 
     int identifier0;
     private final static int expression(int d){return 5;}
