@@ -1,5 +1,6 @@
-package il.org.spartan.Leonidas.plugin.tippers.leonidas;
+package il.org.spartan.Leonidas.plugin.tippers.leonidas.UnderConstruction;
 
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;

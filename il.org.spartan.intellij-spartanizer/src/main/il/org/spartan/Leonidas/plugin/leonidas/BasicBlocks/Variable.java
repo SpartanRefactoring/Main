@@ -1,15 +1,11 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
-import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
