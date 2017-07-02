@@ -217,4 +217,15 @@ public enum Utils {
 
         return present.get();
     }
+
+    public static boolean inExpressionStatement(Encapsulator e){
+        PsiElement pe = e.getInner().getParent().getParent().getParent();
+        while (pe != null){
+            if(pe.getText().equals(";")){
+                return true;
+            }
+            pe = pe.getNextSibling();
+        }
+        return false;
+    }
 }
