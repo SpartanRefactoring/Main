@@ -23,10 +23,10 @@ public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
   }
   @Override public Tip tip(final FieldDeclaration d) {
     assert d != null;
-    final TypeDeclaration wrapper = az.typeDeclaration(d.getParent());
-    if (wrapper == null || !iz.private¢(d) && !iz.private¢(wrapper) || d.fragments().size() != 1 || iz.primitiveType(d.getType()))
+    final TypeDeclaration ret = az.typeDeclaration(d.getParent());
+    if (ret == null || !iz.private¢(d) && !iz.private¢(ret) || d.fragments().size() != 1 || iz.primitiveType(d.getType()))
       return null;
-    final FieldDeclaration[] fields = wrapper.getFields();
+    final FieldDeclaration[] fields = ret.getFields();
     final Type t = d.getType();
     int count = 0;
     for (final FieldDeclaration ¢ : fields)
@@ -39,7 +39,7 @@ public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
     final SimpleName ¢ = make.newLowerCamelCase($, (d.getType() + "").split("<")[0]);
     return ¢.getIdentifier().equals($.getIdentifier()) ? null : new Tip("Rename paraemter " + $ + " to  " + ¢, getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        misc.rename($, ¢, wrapper, r, g);
+        misc.rename($, ¢, ret, r, g);
       }
     }.spanning(d);
   }

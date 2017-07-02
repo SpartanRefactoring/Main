@@ -154,10 +154,10 @@ public interface wizard {
     }
   }
   static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
-    final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
-    for (int $ = 0; $ < Math.min(ns1.size(), ns2.size()); ++$)
-      if (ns1.get($) == ns2.get($))
-        return ns1.get($);
+    final List<ASTNode> ret = ancestors.path(n1), ns2 = ancestors.path(n2);
+    for (int $ = 0; $ < Math.min(ret.size(), ns2.size()); ++$)
+      if (ret.get($) == ns2.get($))
+        return ret.get($);
     return null;
   }
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
@@ -322,8 +322,8 @@ public interface wizard {
   static String intToClassName(final int $) {
     try {
       return ASTNode.nodeClassForType($).getSimpleName();
-    } catch (final IllegalArgumentException ¢) {
-      return note.bug(¢);
+    } catch (final IllegalArgumentException ret) {
+      return note.bug(ret);
     }
   }
   /** Checks if an expression need parenthesis in order to be interpreted
@@ -392,11 +392,11 @@ public interface wizard {
     return !(¢ instanceof CompilationUnit) ? "???" : problems((CompilationUnit) ¢);
   }
   static String problems(final CompilationUnit u) {
-    final IProblem[] v = u.getProblems();
-    if (v.length == 0)
+    final IProblem[] ret = u.getProblems();
+    if (ret.length == 0)
       return "???";
     final Int $ = new Int();
-    return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
+    return Stream.of(ret).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
   /** replaces an ASTNode with another
    * @param n

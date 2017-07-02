@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author Oren Afek && Michal Cohen
  * @since 03-05-2017
  */
-public abstract class GenericEncapsulator extends Encapsulator {
+public abstract class GenericEncapsulator extends Encapsulator implements Cloneable {
     protected String template;
     protected String description = "";
     private List<BiConstraint> constraints = new ArrayList<>();
@@ -76,13 +76,13 @@ public abstract class GenericEncapsulator extends Encapsulator {
      */
     public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        Encapsulator $ = getConcreteParent(e);
-        GenericEncapsulator ge = create($, m);
+        Encapsulator upperElement = getConcreteParent(e);
+        GenericEncapsulator ge = create(upperElement, m);
         if (!isGeneric())
-			return $.getParent() == null ? ge : $.generalizeWith(ge);
-		ge.putId(ge.extractId(e.getInner()));
+            return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
+        ge.putId(ge.extractId(e.getInner()));
 		ge.extractAndAssignDescription(e.getInner());
-		return $.getParent() == null ? ge : $.generalizeWith(ge);
+        return upperElement.getParent() == null ? ge : upperElement.generalizeWith(ge);
     }
 
     /**
@@ -118,7 +118,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @SuppressWarnings("InfiniteRecursion")
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         return new MatchingResult(constraints.stream()
-                .allMatch(λ -> λ.accept(e, m)));
+                .allMatch(c -> c.accept(e, m)));
     }
 
     /**
@@ -128,29 +128,28 @@ public abstract class GenericEncapsulator extends Encapsulator {
      */
     protected List<PsiElement> applyReplacingRules(List<PsiElement> es, Map<Integer, List<PsiElement>> m){
         return es.stream().map(e -> {
-            PsiElement $ = e;
+            PsiElement temp = e;
             for (ReplacingRule rr : replacingRules)
-				$ = rr.replace($, m);
-            return $;
+                temp = rr.replace(temp, m);
+            return temp;
         }).collect(Collectors.toList());
     }
 
     /**
-     * @param elements the matching elements of this generic basic block of the user.
+     * @param es the matching elements of this generic basic block of the user.
      * @param m the mapping between ids of generic elements and their concrete corresponding elements.
      * @param r PsiRewrite
      * @return the concrete replacer of this generic basic block.
      */
-    public List<PsiElement> replaceByRange(List<PsiElement> $, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        $ = applyReplacingRules($, m);
-        if (parent == null) return $;
-        if ($.size() <= 1)
-			return Utils.wrapWithList(r.replace(inner, $.get(0)));
-		List<PsiElement> l = Lists.reverse($);
-		l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
-		r.deleteByRange(inner.getParent(), inner, inner);
-		return $;
-
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        es = applyReplacingRules(es, m);
+        if (parent == null) return es;
+        if (es.size() <= 1)
+            return Utils.wrapWithList(r.replace(inner, es.get(0)));
+        List<PsiElement> l = Lists.reverse(es);
+        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+        r.deleteByRange(inner.getParent(), inner, inner);
+        return es;
     }
 
     /**
@@ -159,12 +158,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
      */
     public Encapsulator getConcreteParent(Encapsulator e) {
         if (e.parent == null) return e;
-        Encapsulator $ = e, next = e.getParent();
-        while (goUpwards($, next)) {
-            $ = next;
-            next = next.getParent();
-        }
-        return $;
+        Encapsulator prev = e, next = e.getParent();
+        for (; goUpwards(prev, next); next = next.getParent())
+            prev = next;
+        return prev;
     }
 
     /**
@@ -190,19 +187,19 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     /**
-     * @param ¢ constraint
+     * @param c constraint
      * When building the matcher, adds a constraint that uses the map to the list of constraints.
      */
-    protected void addConstraint(BiConstraint ¢) {
-        constraints.add(¢);
+    protected void addConstraint(BiConstraint c) {
+        constraints.add(c);
     }
 
     /**
-     * @param ¢ replacing rule.
+     * @param r replacing rule.
      * When building the replacer, adds a replacing rule to the basic block.
      */
-    protected void addReplacingRule(ReplacingRule ¢){
-        replacingRules.add(¢);
+    protected void addReplacingRule(ReplacingRule r) {
+        replacingRules.add(r);
     }
 
     /**
@@ -214,6 +211,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
 
     public List<BiConstraint> getConstraints() {
         return constraints;
+    }
+
+    public void copyTo(GenericEncapsulator dst) {
+        dst.replacingRules.addAll(replacingRules);
     }
 
     public interface Constraint {

@@ -12,7 +12,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 20-06-2017
  */
-
 public class ForRedundantContinue implements LeonidasTipperDefinition {
 
 
@@ -40,8 +39,10 @@ public class ForRedundantContinue implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /* start */
-            for (statement(0); booleanExpression(1); statement(2))
-				anyNumberOf(statement(3));
+            for (statement(0); booleanExpression(1); statement(2)) {
+                anyNumberOf(statement(3));
+            }
+            /* end */
         });
     }
 
@@ -49,7 +50,10 @@ public class ForRedundantContinue implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\ncontinue;\n}", "for(int i = 0; i < 10; i++){\nSystem.out.println(i);\n}")
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n continue;\n}", "for(int i = 0; i < 10; i++){\nSystem.out.println(i);\n}")
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n continue;\n System.out.println(i);\n}", null)
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n if(true)\n\tcontinue;\n}", null)
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n System.out.println(i);\n System.out.println(i);\ncontinue;\n}", "for(int i = 0; i < 10; i++){\nSystem.out.println(i);\n System.out.println(i);\n System.out.println(i);\n}")
                 .map();
     }
 }

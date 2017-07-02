@@ -6,10 +6,7 @@ import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Block;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Expression;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Statement;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 
 import java.util.HashMap;
 
@@ -25,6 +22,7 @@ public class izTest extends PsiTypeHelper {
 
     public void testNull$() throws Exception {
         assert iz.null$(createTestNullExpression());
+        assert !iz.null$(null);
     }
 
     public void testNotNull() throws Exception {
@@ -61,6 +59,7 @@ public class izTest extends PsiTypeHelper {
         assert iz.equalsOperator(((PsiBinaryExpression) createTestExpression("x == y")).getOperationSign().getTokenType());
         assert !iz.equalsOperator(((PsiBinaryExpression) createTestExpression("x != y")).getOperationSign().getTokenType());
         assert !iz.equalsOperator(((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign().getTokenType());
+        assert !iz.equalsOperator(null);
         assert !iz.equalsOperator(
                 ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
     }
@@ -69,6 +68,7 @@ public class izTest extends PsiTypeHelper {
         assert iz.notEqualsOperator(((PsiBinaryExpression) createTestExpression("x != y")).getOperationSign().getTokenType());
         assert !iz.notEqualsOperator(((PsiBinaryExpression) createTestExpression("x == y")).getOperationSign().getTokenType());
         assert !iz.notEqualsOperator(((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign().getTokenType());
+        assert !iz.notEqualsOperator(null);
         assert !iz.notEqualsOperator(
                 ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
     }
@@ -195,6 +195,7 @@ public class izTest extends PsiTypeHelper {
         assert iz.public$(createTestMethodFromString("public static void method(int x){}"));
         assert !iz.public$(createTestMethodFromString("protected void method(){}"));
         assert !iz.public$(createTestMethodFromString("private static boolean method(){return true;}"));
+        assert !iz.public$(null);
         assert !iz.public$(createTestMethodFromString("void method(){}"));
     }
 
@@ -248,9 +249,9 @@ public class izTest extends PsiTypeHelper {
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitConditionalExpression(PsiConditionalExpression ¢) {
-                super.visitConditionalExpression(¢);
-                w.inner = ¢;
+            public void visitConditionalExpression(PsiConditionalExpression x) {
+                super.visitConditionalExpression(x);
+                w.inner = x;
             }
         });
         assert (iz.conditionalExpression(w.inner));
@@ -276,14 +277,14 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testDocumentedElement() throws Exception {
-        assert iz.documentedElement(createTestClassFromString("/**\n" + " * This is a main class JavaDoc\n" + " */\n", "Main", "", "public"));
+        assert iz.documentedElement(createTestClassFromString("/**\n * This is a main class JavaDoc\n */\n", "Main", "", "public"));
         assert iz.documentedElement(createTestClassFromString("", "Main", "", "public"));
         assert iz.documentedElement(createTestMethodFromString("public int getX(){return x;}"));
         assert !iz.documentedElement(createTestMethodCallExpression("foo", "a"));
     }
 
     public void testJavaDoc() throws Exception {
-        assert iz.javadoc(createTestDocCommentFromString("/**\n" + " * This is a main class JavaDoc\n" + " */\n"));
+        assert iz.javadoc(createTestDocCommentFromString("/**\n * This is a main class JavaDoc\n */\n"));
         assert !iz.javadoc(createTestCommentFromString("//comment"));
         assert !iz.javadoc(createTestCommentFromString("/*comment*/"));
     }
@@ -375,13 +376,15 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testFinalMember() throws Exception {
-        assert iz.final¢((PsiMember) createTestFieldDeclarationFromString("final private int x"));
-        assert !iz.final¢((PsiMember) createTestFieldDeclarationFromString("private int x"));
+        assert iz.final¢(createTestFieldDeclarationFromString("final private int x"));
+        assert !iz.final¢((PsiMember) null);
+        assert !iz.final¢(createTestFieldDeclarationFromString("private int x"));
     }
 
     public void testFinalVariable() throws Exception {
-        assert iz.final¢((PsiVariable) createTestFieldDeclarationFromString("final private int x"));
-        assert !iz.final¢((PsiVariable) createTestFieldDeclarationFromString("private int x"));
+        assert iz.final¢(createTestFieldDeclarationFromString("final private int x"));
+        assert !iz.final¢((PsiVariable) null);
+        assert !iz.final¢(createTestFieldDeclarationFromString("private int x"));
     }
 
     public void testDefault() throws Exception {
@@ -431,6 +434,7 @@ public class izTest extends PsiTypeHelper {
 
     public void testBooleanType() throws Exception {
         assert iz.booleanType(createTestTypeFromString("boolean"));
+        assert !iz.booleanType(null);
         assert !iz.booleanType(createTestTypeFromString("int"));
     }
 
@@ -451,11 +455,13 @@ public class izTest extends PsiTypeHelper {
 
     public void testEnumDeclaration() throws Exception {
         assert iz.enumDeclaration(createEnumClassFromString("Day"));
+        assert !iz.enumDeclaration(null);
         assert !iz.enumDeclaration(createTestClassFromString("", "Day", "", "public"));
     }
 
     public void testInterface() throws Exception {
         assert iz.interface¢(createInterfaceClassFromString("A"));
+        assert !iz.interface¢(null);
         assert !iz.interface¢(createEnumClassFromString("A"));
     }
 
@@ -471,11 +477,80 @@ public class izTest extends PsiTypeHelper {
 
     public void testArithmetic() {
         assert iz.arithmetic(createTestExpression("3"));
+        assert iz.arithmetic(createTestExpression("3.0"));
         assert iz.arithmetic(createTestExpression("3 + 5"));
         assert iz.arithmetic(createTestExpression("3 + 5 * 8"));
 
         assert !iz.arithmetic(createTestExpression("true"));
         assert !iz.arithmetic(createTestExpression("x && y"));
         assert !iz.arithmetic(createTestExpression("3 + i"));
+    }
+
+    public void testThisExpression() {
+        assert iz.thisExpression(createTestExpression("this"));
+        assert !iz.thisExpression(createTestExpression("true"));
+        assert !iz.thisExpression(null);
+    }
+
+    public void testInnerElementOfClass() {
+        assert iz.innerElementOfClass(createTestMethodFromString("void foo() {}"));
+        assert iz.innerElementOfClass(createTestFieldDeclarationFromString("int a;"));
+        assert iz.innerElementOfClass(createTestClassFromString("public class A{}"));
+
+        assert !iz.innerElementOfClass(null);
+        assert !iz.innerElementOfClass(createTestStatementFromString("x++;"));
+        assert !iz.innerElementOfClass(createTestExpression("x++"));
+    }
+
+    public void testExpressionList() {
+        assert iz.expressionList(createTestMethodCallExpression("foo", "x", "y", "z").getArgumentList());
+        assert iz.expressionList(createTestMethodCallExpression("foo").getArgumentList());
+
+        assert !iz.expressionList(createTestStatementFromString("x++;"));
+        assert !iz.expressionList(createTestExpression("x++"));
+        assert !iz.expressionList(null);
+    }
+
+    public void testOptional() {
+        assert iz.optional(new OptionalMethodCallBased());
+
+        assert !iz.optional(null);
+    }
+
+    public void testGenericBooleanLiteral() {
+        assert iz.genericBooleanLiteral(new BooleanLiteral(new Encapsulator(createTestExpression("true"))));
+
+        assert !iz.genericBooleanLiteral(null);
+    }
+
+    public void testGenericMethod() {
+        assert iz.genericMethod(new Method());
+
+        assert !iz.genericMethod(null);
+    }
+
+    public void testAnyNumberOf() {
+        assert iz.anyNumberOf(new AnyNumberOfMethodCallBased());
+
+        assert !iz.anyNumberOf(null);
+    }
+
+    public void testCodeBlock() {
+        assert iz.codeBlock(createTestCodeBlockFromString("{int a;}"));
+        assert iz.codeBlock(createTestCodeBlockFromString("{int a; int b;}"));
+
+        assert !iz.codeBlock(null);
+        assert !iz.codeBlock(createTestStatementFromString("int x;"));
+    }
+
+    public void testReferenceParameterList() {
+        assert !iz.referenceParameterList(null);
+    }
+
+    public void testAnonymousClassDeclaration() {
+        assert iz.anonymousClassDeclaration(az.newExpression(createTestExpression("new List() {}")).getAnonymousClass());
+
+        assert !iz.anonymousClassDeclaration(createTestClassFromString("public class A {}"));
+        assert !iz.anonymousClassDeclaration(null);
     }
 }

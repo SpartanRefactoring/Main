@@ -38,4 +38,9 @@ public class OptionalMethodCallBased extends QuantifierMethodCallBased {
     public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
         return iz.conforms(i.value(), internal, m).matches() ? 1 : 0;
     }
+
+    @Override
+    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> m) {
+        return new QuantifierIterator(0, getNumberOfOccurrences(bgCursor, m));
+    }
 }

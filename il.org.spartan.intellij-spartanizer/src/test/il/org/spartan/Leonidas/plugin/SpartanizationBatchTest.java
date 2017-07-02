@@ -1,6 +1,10 @@
 package il.org.spartan.Leonidas.plugin;
 
+import com.intellij.openapi.progress.ProgressManager;
 import il.org.spartan.Leonidas.PsiTypeHelper;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * @author RoeiRaz
@@ -8,10 +12,10 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  */
 public class SpartanizationBatchTest extends PsiTypeHelper {
 
-    // TODO put in a resource file @RoeiRaz
     String file0 = "class A { void foo() { if (true) { System.out.println('hi'); } } }";
 
     public void testSpartanizationOfOneElementNotThrowingException() throws InterruptedException {
-        // TODO
+        ProgressManager.getInstance().run(
+                new SpartanizationBatch(getProject(), new HashSet<>(Arrays.asList(createTestFileFromString(file0)))));
     }
 }

@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.GridBagLayout ) {
 			"$columnSpecs": "0:1.0, 0:1.0"
-			"$rowSpecs": "0, 0, 0:1.0, 0"
+			"$rowSpecs": "0, 0, 0:1.0, 0, 0"
 			"$alignLeft": true
 			"$alignTop": true
 		} ) {
@@ -113,7 +113,35 @@ new FormModel {
 				"gridy": 2
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-				"$columnSpecs": "150, 150"
+				"$columnSpecs": "0"
+				"$rowSpecs": "0, 80"
+				"$hGap": 5
+				"$vGap": 5
+				"$alignLeft": true
+				"$alignTop": true
+			} ) {
+				name: "panel5"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label5"
+					"text": "Constraints:"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane3"
+					add( new FormComponent( "org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" ) {
+						name: "constraintsTextArea"
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridy": 1
+					"weightx": 1.0
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 3
+				"weightx": 1.0
+				"gridwidth": 2
+				"insets": new java.awt.Insets( 5, 5, 5, 5 )
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "150, 150, 0, 0"
 				"$rowSpecs": "0"
 				"$hGap": 5
 				"$vGap": 5
@@ -136,8 +164,24 @@ new FormModel {
 					"gridx": 1
 					"insets": new java.awt.Insets( 2, 2, 2, 2 )
 				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer1"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridx": 2
+					"weightx": 1.0
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "labelHelp"
+					"text": "help"
+					"foreground": new java.awt.Color( 0, 204, 255, 255 )
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "labelHelpMouseClicked", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridx": 3
+					"insets": new java.awt.Insets( 2, 2, 2, 2 )
+				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridy": 3
+				"gridy": 4
 				"gridwidth": 2
 			} )
 		}, new FormLayoutConstraints( null ) {

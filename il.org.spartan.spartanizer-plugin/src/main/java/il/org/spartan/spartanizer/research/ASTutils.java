@@ -76,7 +76,7 @@ public enum ASTutils {
         return true;
       }
     });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
-    return $$;
+    @SuppressWarnings("unchecked") final N ret = (N) $.get();
+    return ret;
   }
 }

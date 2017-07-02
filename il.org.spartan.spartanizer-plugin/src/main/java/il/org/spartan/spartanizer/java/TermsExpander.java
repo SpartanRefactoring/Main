@@ -72,12 +72,12 @@ public enum TermsExpander {
       return $;
     assert ts != null;
     assert !ts.isEmpty();
-    final Operator o = operator($);
-    assert o != null;
-    assert o == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 || o == il.org.spartan.spartanizer.ast.navigate.op.MINUS2;
+    final Operator ret = operator($);
+    assert ret != null;
+    assert ret == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 || ret == il.org.spartan.spartanizer.ast.navigate.op.MINUS2;
     final Term first = the.firstOf(ts);
     assert first != null;
-    return recurse(chop(ts), o == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
+    return recurse(chop(ts), ret == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
   }
   private static Expression step(final List<Term> ¢, final Expression $) {
     assert ¢ != null;

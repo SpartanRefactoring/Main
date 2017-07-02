@@ -12,7 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * FluentSetter
  *
  * @author michalcohen, amirsagiv83
- * @since 29/5/17
+ * @since 29-05-17
  */
 public class FluentSetter implements LeonidasTipperDefinition {
 
@@ -20,33 +20,37 @@ public class FluentSetter implements LeonidasTipperDefinition {
     public void constraints() {
         element(1).asMethod.startsWith("set");
         element(4).isNot(() -> {
-		});
+            return;
+        });
     }
 
     @Override
     public void matcher() {
         new Template(() -> {
-            /* start */
             class Class0 {
+                /* start */
+
                 void method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                 }
+                /* end */
             }
-            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /* start */
+
             class Class0 {
+                /* start */
+
                 Class0 method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                     return this;
                 }
+                /* end */
             }
-            /* end */
         });
     }
 
@@ -60,10 +64,14 @@ public class FluentSetter implements LeonidasTipperDefinition {
                         "public class A{\n\tint x;\n\tdouble y;\n\n\tdouble getY(){\n\t\treturn y;\n\t}\n\n\tA setX(int x){\n\t\tthis.x = x;\n\t\treturn this;\n\t}\n}")
                 .put("public class A{\n\tint x;\n\n\tvoid foo(int x){\n\t\tthis.x = x;\n\t}\n}",
                         null)
-                .put("public class A{\n\tvoid setX(int x){\n\t\t;\n\t}\n}",
-                        "public class A{\n\tA setX(int x){\n\t\t;\n\t\treturn this;\n\t}\n}")
+                .put("public class A{\n\tvoid setX(){\n\t\t;\n\t}\n}", null)
                 .map();
 
+    }
+
+    @Override
+    public void replacingRules() {
+        element(0).asType.setAsOuterClass();
     }
 
     class Class2 {

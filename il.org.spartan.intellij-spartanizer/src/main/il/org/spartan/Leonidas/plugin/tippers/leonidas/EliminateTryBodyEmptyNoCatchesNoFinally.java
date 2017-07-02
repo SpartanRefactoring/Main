@@ -9,6 +9,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 
 /**
  * Eliminate redundant try-finally : try{x;} finally {} => x;
+ *
  * @author Oren Afek
  * @since 29/5/2017.
  */
@@ -16,7 +17,14 @@ public class EliminateTryBodyEmptyNoCatchesNoFinally implements LeonidasTipperDe
 
     @Override
     public void matcher() {
-        new Template(() -> anyNumberOf(statement(0)));
+        new Template(() -> {
+            /* start */
+            try {
+                anyNumberOf(statement(0));
+            } finally {
+            }
+            /* end */
+        });
     }
 
     @Override
@@ -32,6 +40,10 @@ public class EliminateTryBodyEmptyNoCatchesNoFinally implements LeonidasTipperDe
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("try { \n\tSystem.out.println(69);\n} finally {}", "System.out.println(69);")
+                .put("try { \n\tSystem.out.println(69);\n} catch(Exception e){}\nfinally {}", null)
+                .put("try { \n\tSystem.out.println(69);\n} finally { \n\tSystem.out.println(70);\n}", null)
+                .put("try { \n\tSystem.out.println(69);\n\n\tSystem.out.println(70);\n\n\tSystem.out.println(71);\n} finally {}", "System.out.println(69);\n\n\tSystem.out.println(70);\n\n\tSystem.out.println(71);")
+                .put("try { \n\tSystem.out.println(69);\n} catch(Exception e){}", null)
                 .map();
     }
 }

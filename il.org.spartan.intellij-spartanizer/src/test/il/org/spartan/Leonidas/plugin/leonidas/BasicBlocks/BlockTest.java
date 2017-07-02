@@ -21,6 +21,14 @@ public class BlockTest extends PsiTypeHelper {
         block = new Block(psiElement);
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        block = null;
+        psiElement = null;
+        super.tearDown();
+    }
+
     public void testGeneralizes() throws Exception {
         PsiElement e = createTestBlockStatementFromString("{int x=0;}");
         assert block.generalizes(Encapsulator.buildTreeFromPsi(e), new HashMap<>()).matches();

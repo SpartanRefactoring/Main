@@ -71,9 +71,9 @@ public class PreferencesResources {
             return null;
         }
 
-        private Object getLabel(final Class<? extends TipperCategory> $) {
+        private Object getLabel(final Class<? extends TipperCategory> k) {
             try {
-                return $.getField("label").get(null);
+                return k.getField("label").get(null);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ¢) {
                 return null;
             }

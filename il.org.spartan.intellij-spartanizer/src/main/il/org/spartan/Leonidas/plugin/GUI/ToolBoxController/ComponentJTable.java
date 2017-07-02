@@ -8,14 +8,14 @@ import java.awt.*;
 
 /**
  * @author Amir Sagiv
- * @since 14/05/2017
+ * @since 14-05-2017
  */
 public class ComponentJTable extends JTable {
 
     public ComponentJTable() {
 
         DefaultTableModel model = new DefaultTableModel() {
-            static final long serialVersionUID = 1;
+            private static final long serialVersionUID = 1;
 
             @Override
 			@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -35,10 +35,10 @@ public class ComponentJTable extends JTable {
         model.setColumnCount(2);
         model.setColumnIdentifiers(new Object[] { "ID", "Value" });
         this.setRowHeight(30);
-        for (int ¢ = 0; ¢ < 2; ++¢) {
-            this.getColumnModel().getColumn(¢).setCellRenderer(new CellRenderer());
-            this.getColumnModel().getColumn(¢).setMinWidth(150);
-            this.getColumnModel().getColumn(¢).setCellEditor(new CellEditor());
+        for (int i = 0; i < 2; ++i) {
+            this.getColumnModel().getColumn(i).setCellRenderer(new CellRenderer());
+            this.getColumnModel().getColumn(i).setMinWidth(150);
+            this.getColumnModel().getColumn(i).setCellEditor(new CellEditor());
         }
     }
 
@@ -53,54 +53,49 @@ public class ComponentJTable extends JTable {
                                                        boolean isSelected, boolean hasFocus,
                                                        int row, int column) {
             if (value instanceof JCheckBox) {
-
-                JCheckBox $ = (JCheckBox) value;
-                $.setBackground(getBackground());
-                $.setForeground(getForeground());
-                $.setEnabled(isEnabled());
-                $.setFont(getFont());
-                $.setFocusPainted(false);
-                $.setBorderPainted(true);
-                $.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
-                return $;
+                JCheckBox checkbox = (JCheckBox) value;
+                checkbox.setBackground(getBackground());
+                checkbox.setForeground(getForeground());
+                checkbox.setEnabled(isEnabled());
+                checkbox.setFont(getFont());
+                checkbox.setFocusPainted(false);
+                checkbox.setBorderPainted(true);
+                checkbox.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+                return checkbox;
             }
+            Component text = (Component) value;
             if (value instanceof JTextField) {
-                JTextField text = (JTextField) value;
                 text.setBackground(getBackground());
                 text.setForeground(getForeground());
                 text.setEnabled(isEnabled());
                 text.setFont(getFont());
-                return text;
+            } else {
+                if (value instanceof JList) {
+                    JList list = (JList) value;
+                    list.setBackground(getBackground());
+                    list.setForeground(getForeground());
+                    list.setEnabled(isEnabled());
+                    list.setFont(getFont());
+                    return list;
+                }
+                if (value instanceof JComboBox) {
+                    JComboBox box = (JComboBox) value;
+                    box.setBackground(getBackground());
+                    box.setForeground(getForeground());
+                    box.setEnabled(isEnabled());
+                    box.setFont(getFont());
+                    box.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+                    return box;
+                }
+                if (!(value instanceof JLabel))
+                    return this;
+                text = (JLabel) value;
+                text.setBackground(getBackground());
+                text.setForeground(getForeground());
+                text.setEnabled(isEnabled());
+                text.setFont(getFont());
             }
-
-            if (value instanceof JList) {
-                JList list = (JList) value;
-                list.setBackground(getBackground());
-                list.setForeground(getForeground());
-                list.setEnabled(isEnabled());
-                list.setFont(getFont());
-                return list;
-            }
-
-            if (value instanceof JComboBox) {
-                JComboBox box = (JComboBox) value;
-                box.setBackground(getBackground());
-                box.setForeground(getForeground());
-                box.setEnabled(isEnabled());
-                box.setFont(getFont());
-                box.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
-                return box;
-            }
-
-
-            if (!(value instanceof JLabel))
-				return this;
-			JLabel text = (JLabel) value;
-			text.setBackground(getBackground());
-			text.setForeground(getForeground());
-			text.setEnabled(isEnabled());
-			text.setFont(getFont());
-			return text;
+            return text;
         }
     }
 
@@ -114,9 +109,9 @@ public class ComponentJTable extends JTable {
 
             if (value instanceof JCheckBox) {
 
-                JCheckBox $ = (JCheckBox) value;
-                c = $;
-                return $;
+                JCheckBox checkbox = (JCheckBox) value;
+                c = checkbox;
+                return checkbox;
             }
 
             if (value instanceof JTextField) {

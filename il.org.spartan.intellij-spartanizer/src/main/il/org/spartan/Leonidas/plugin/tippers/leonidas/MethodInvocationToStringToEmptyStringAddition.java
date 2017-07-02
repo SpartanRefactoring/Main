@@ -4,6 +4,8 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 
 import java.util.Map;
 
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
+
 /**
  * s.toString() => "" + x
  *
@@ -16,19 +18,25 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
 
     @Override
     public void constraints() {
+        element(0).asIdentifier.notExpressionStatement();
+        element(0).asIdentifier.noMoreMethodsApply();
     }
 
     @Override
     public void matcher() {
         new Template(() ->
-                identifier0 + ""
+                /* start */
+                identifier0.toString()
+                /* end */
         );
     }
 
     @Override
     public void replacer() {
         new Template(() ->
-                identifier0 + ""
+                /* start */
+                "" + identifier0
+                /* end */
         );
     }
 
@@ -37,6 +45,10 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("donald.toString()", "\"\" + donald")
+                .put("donald.toString();", null)
+                .put("donald.string()", null)
+                .put("donald.string().equals()", null)
+                .put("String str2 = i.toString() + \"whwh\";", "String str2 = \"\" + i + \"whwh\";")
                 .map();
     }
 }

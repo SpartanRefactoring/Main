@@ -5,7 +5,6 @@ import com.intellij.psi.PsiModifierListOwner;
 import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
-import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
@@ -55,13 +54,26 @@ public abstract class ModifiableElement extends NamedElement {
     @Override
     public MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m) {
         if (super.generalizes(e, m).notMatches()) return new MatchingResult(false);
-        PsiModifierListOwner $ = az.modifierListOwner(e.inner);
-        return new MatchingResult(checkConstraint(isPublic, $, haz::publicModifier) &&
-                checkConstraint(isPrivate, $, haz::privateModifier) &&
-                checkConstraint(isProtected, $, haz::protectedModifier) &&
-                checkConstraint(isStatic, $, haz::staticModifier) &&
-                checkConstraint(isFinal, $, haz::finalModifier) &&
-                checkConstraint(isAbstract, $, haz::abstractModifier));
+        PsiModifierListOwner mlo = az.modifierListOwner(e.inner);
+        return new MatchingResult(checkConstraint(isPublic, mlo, haz::publicModifier) &&
+                checkConstraint(isPrivate, mlo, haz::privateModifier) &&
+                checkConstraint(isProtected, mlo, haz::protectedModifier) &&
+                checkConstraint(isStatic, mlo, haz::staticModifier) &&
+                checkConstraint(isFinal, mlo, haz::finalModifier) &&
+                checkConstraint(isAbstract, mlo, haz::abstractModifier));
+    }
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        if (!(dst instanceof ModifiableElement)) return;
+        super.copyTo(dst);
+        ModifiableElement castDst = (ModifiableElement) dst;
+        castDst.isAbstract = isAbstract;
+        castDst.isFinal = isFinal;
+        castDst.isPrivate = isPrivate;
+        castDst.isProtected = isProtected;
+        castDst.isPublic = isPublic;
+        castDst.isStatic = isStatic;
     }
 
     /* Constraints Methods */

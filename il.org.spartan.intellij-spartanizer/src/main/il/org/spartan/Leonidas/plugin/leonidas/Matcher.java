@@ -8,6 +8,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Quantifier;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -62,20 +63,19 @@ public class Matcher {
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (!iz.quantifier(bgNeedle.value()))
 			return r.setNotMatches();
-		int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, r.getMap());
-		for (int i = 0; i <= n; ++i) {
-			r.setMatches();
+        Quantifier q = az.quantifier(bgNeedle.value());
+        for (Quantifier.QuantifierIterator it = q.quantifierIterator(bgCursor, r.getMap()); it.hasNext(); it.next()) {
+            r.setMatches();
 			varNeedle = bgNeedle.clone();
 			varCursor = bgCursor.clone();
-			varNeedle.setNumberOfOccurrences(i);
-			MatchingResult $ = matchQuantifier(varNeedle, varCursor, r);
-			if ($.notMatches())
-				continue;
+            varNeedle.setNumberOfOccurrences(it.value());
+            MatchingResult mq = matchQuantifier(varNeedle, varCursor, r);
+            if (mq.notMatches())
+                continue;
 			MatchingResult sr = matchingRecursion(varNeedle, varCursor, r);
 			if (!sr.notMatches())
-				return r.combineWith($).combineWith(sr);
-			continue;
-		}
+                return r.combineWith(mq).combineWith(sr);
+        }
 		return r.setNotMatches();
     }
 
@@ -86,22 +86,22 @@ public class Matcher {
      * of generic elements in this section to its instances if the sections match.
      */
     @UpdatesIterator
-    private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor, MatchingResult $) {
+    private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor, MatchingResult r) {
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), $.getMap());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), r.getMap());
             if (ic.notMatches() || (needle.hasNext() != cursor.hasNext()))
-                return $.setNotMatches();
-            $.combineWith(ic);
+                return r.setNotMatches();
+            r.combineWith(ic);
             if (needle.value().isGeneric()) {
-                if (!$.getMap().containsKey(az.generic(needle.value()).getId()))
-					$.put(az.generic(needle.value()).getId(), cursor.value().getInner());
-				else if ($.getMap().get(az.generic(needle.value()).getId()).stream()
-						.noneMatch(λ -> λ.getText().equals(cursor.value().getText())))
-					return $.setNotMatches();
+                if (!r.getMap().containsKey(az.generic(needle.value()).getId()))
+                    r.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+                else if (r.getMap().get(az.generic(needle.value()).getId()).stream()
+                        .noneMatch(e -> e.getText().equals(cursor.value().getText())))
+                    return r.setNotMatches();
                 cursor.matchedWithGeneric();
             }
         }
-        return $;
+        return r;
     }
 
     /**
@@ -112,25 +112,27 @@ public class Matcher {
      */
     @UpdatesIterator
     private MatchingResult matchQuantifier(EncapsulatorIterator needle, EncapsulatorIterator cursor
-    ,MatchingResult $) {
+            , MatchingResult r) {
        // MatchingResult m = new MatchingResult(true);
         int n = needle.getNumberOfOccurrences();
         if (n == 0) {
             needle.next();
-            return $.setMatches();
+            return r.setMatches();
         }
+        Quantifier q = az.quantifier(needle.value());
         for (int i = 0; i < n; needle.next(), cursor.next(), ++i) {
-            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), $.getMap());
+            MatchingResult ic = iz.conforms(cursor.value(), needle.value(), r.getMap());
             if (ic.notMatches() || (cursor.hasNext() ^ needle.hasNext()))
-				return $.setNotMatches();
-            $.combineWith(ic);
+                return r.setNotMatches();
+            r.combineWith(ic);
             if (needle.value().isGeneric()) {
-                $.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+                r.put(az.generic(needle.value()).getId(), cursor.value().getInner());
                 cursor.matchedWithGeneric();
             }
         }
-        needle.next();
-        return $;
+        while (needle.value() == q && needle.hasNext())
+            needle.next();
+        return r;
     }
 
     /**
@@ -156,8 +158,8 @@ public class Matcher {
         m.getConstraintsMatchers().forEach(im -> buildMatcherTree(im, map));
     }
 
-    private void setRoots(List<Encapsulator> ¢) {
-        roots = ¢;
+    private void setRoots(List<Encapsulator> es) {
+        roots = es;
     }
 
     /**
@@ -189,7 +191,7 @@ public class Matcher {
      * generic element to the element of the user.
      */
     public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
-        MatchingResult $ = new MatchingResult(false);
+        MatchingResult mr = new MatchingResult(false);
         List<Encapsulator> potentialRoots = new ArrayList<>();
         PsiElement ce = treeToMatch;
         for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); ++i){
@@ -199,33 +201,26 @@ public class Matcher {
             m.combineWith(matchingRecursion(
                     new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots),m));
             if (m.matches()){
-                $.combineWith(m);
-                $.setMatches();
+                mr.combineWith(m);
+                mr.setMatches();
                 numberOfNeighbors.set(i);
                 break;
             }
         }
-        if ($.notMatches()) return $;
+        if (mr.notMatches()) return mr;
 
-        Map<Integer, List<PsiElement>> info = $.getMap();
+        Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
                 .allMatch(id -> {
-                    boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c ->
-                            info.get(id).stream()
-                                    .peek(λ->{}) // Do not remove, magic happen here :(
-                                    .allMatch(
-                                            c::match
-                                    )
-                    );
+                    Boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream()
+                            .allMatch(c -> info.get(id).stream().peek(x -> {
+                            }).allMatch(c::match)), b2 = getGenericElements().get(id) == null
+                            || getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id)
+                            .stream().allMatch(e -> c.accept(new Encapsulator(e), mr.getMap())));
 
-                    boolean b2 = getGenericElements().get(id) == null || getGenericElements().get(id).getConstraints().stream().allMatch(c ->
-                            info.get(id).stream().allMatch(λ ->
-                                    c.accept(new Encapsulator(λ), $.getMap())
-                            )
-                    );
                     return b1 && b2;
                 })
-                ? $ : $.setNotMatches();
+                ? mr : mr.setNotMatches();
     }
 
     /**
@@ -240,26 +235,26 @@ public class Matcher {
      * @return list of Ids of all the generic elements in the tipper.
      */
     private Map<Integer, GenericEncapsulator> getGenericElements() {
-        final Map<Integer, GenericEncapsulator> $ = new HashMap<>();
-        roots.forEach(root -> root.accept(λ -> {
-            if (λ.isGeneric()) {
-                $.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
-                $.putAll(az.generic(λ).getGenericElements());
+        final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
+        roots.forEach(root -> root.accept(e -> {
+            if (e.isGeneric()) {
+                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
+                tmp.putAll(az.generic(e).getGenericElements());
             }
         }));
-        return $;
+        return tmp;
     }
 
     /**
      * @return list of Ids of all the generic elements in the tipper.
      */
     private Map<Integer, GenericEncapsulator> getGenericElementsWithNoFields() {
-        final Map<Integer, GenericEncapsulator> $ = new HashMap<>();
-        roots.forEach(root -> root.accept(λ -> {
-            if (λ.isGeneric())
-				$.put(az.generic(λ).getId(), (GenericEncapsulator) λ);
+        final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
+        roots.forEach(root -> root.accept(e -> {
+            if (e.isGeneric())
+                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
         }));
-        return $;
+        return tmp;
     }
 
     public List<Encapsulator> getAllRoots() {
@@ -299,11 +294,11 @@ public class Matcher {
         }
 
         /**
-         * @param ¢ the users tree to match.
+         * @param e the users tree to match.
          * @return indication of e being matched recursively to the matcher, when taking in consideration the type of the constraint.
          */
-        boolean match(PsiElement ¢) {
-            return (type == ConstraintType.IS && matcher.match(¢)) || (type == ConstraintType.ISNOT && !matcher.match(¢));
+        boolean match(PsiElement e) {
+            return (type == ConstraintType.IS && matcher.match(e)) || (type == ConstraintType.ISNOT && !matcher.match(e));
         }
     }
 
@@ -318,8 +313,8 @@ public class Matcher {
             objects = o;
         }
 
-        public void setElement(Encapsulator ¢) {
-            element = ¢;
+        public void setElement(Encapsulator e) {
+            element = e;
         }
     }
 }

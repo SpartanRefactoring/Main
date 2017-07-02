@@ -33,8 +33,8 @@ public enum makeAST {
       final char[] charArray = ¢.toCharArray();
       final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
       $.setSource(charArray);
-      final ASTNode createAST = $.createAST(wizard.nullProgressMonitor);
-      return (CompilationUnit) createAST;
+      final ASTNode ret = $.createAST(wizard.nullProgressMonitor);
+      return (CompilationUnit) ret;
     }
   },
   /** Converts file, string or marker to expression. */

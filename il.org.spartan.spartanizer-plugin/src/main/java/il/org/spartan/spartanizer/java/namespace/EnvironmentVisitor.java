@@ -38,35 +38,35 @@ final class EnvironmentVisitor extends ASTVisitor {
   /** As of JSL3, AnonymousClassDeclaration's parent can be either
    * ClassInstanceCreation or EnumConstantDeclaration */
   static String anonymousClassDeclarationParentName(final AnonymousClassDeclaration ¢) {
-    final ASTNode $ = ¢.getParent();
-    if ($ instanceof ClassInstanceCreation)
-      return az.classInstanceCreation($).getType() + "";
-    assert $ instanceof EnumConstantDeclaration;
-    return az.enumConstantDeclaration($).getName() + "";
+    final ASTNode ret = ¢.getParent();
+    if (ret instanceof ClassInstanceCreation)
+      return az.classInstanceCreation(ret).getType() + "";
+    assert ret instanceof EnumConstantDeclaration;
+    return az.enumConstantDeclaration(ret).getName() + "";
   }
   Entry<String, Binding> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
-  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
-    final Collection<Entry<String, Binding>> $ = an.empty.list();
+   Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
+    final Collection<Entry<String, Binding>> ret = an.empty.list();
     final type t = type.baptize(Trivia.condense(d.getType()));
-    $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
-    return $;
+    ret.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
+    return ret;
   }
   Entry<String, Binding> convertToEntry(final SingleVariableDeclaration ¢) {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
-  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
-    final Collection<Entry<String, Binding>> $ = an.empty.list();
+   Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
+    final Collection<Entry<String, Binding>> ret = an.empty.list();
     final type t = type.baptize(Trivia.condense(x.getType()));
-    $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
-    return $;
+    ret.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
+    return ret;
   }
-  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
-    final Collection<Entry<String, Binding>> $ = an.empty.list();
+   Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
+    final Collection<Entry<String, Binding>> ret = an.empty.list();
     final type t = type.baptize(Trivia.condense(s.getType()));
-    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
-    return $;
+    ret.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
+    return ret;
   }
   Binding createInformation(final AnnotationTypeMemberDeclaration ¢) {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(Trivia.condense(¢.getType())));
@@ -155,22 +155,22 @@ final class EnvironmentVisitor extends ASTVisitor {
    * If no match is found, return null. */
   Binding getHidden(final String ¢) {
     for (String s = parentNameScope(¢); s != null && !s.isEmpty(); s = parentNameScope(s)) {
-      final Binding i = get($, s + "." + ¢.substring(¢.lastIndexOf(".") + 1));
-      if (i != null)
-        return i;
+      final Binding ret = get($, s + "." + ¢.substring(¢.lastIndexOf(".") + 1));
+      if (ret != null)
+        return ret;
     }
     return null;
   }
   /** Similar to statementOrderAmongTypeInParent, {@link CatchClause}s only */
   static int orderOfCatchInTryParent(final CatchClause c) {
     assert c.getParent() instanceof TryStatement;
-    int $ = 0;
+    int ret = 0;
     for (final CatchClause ¢ : catchClauses((TryStatement) c.getParent())) {
       if (¢ == c)
         break;
-      ++$;
+      ++ret;
     }
-    return $;
+    return ret;
   }
   static String parentNameScope(final String ¢) {
     return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));

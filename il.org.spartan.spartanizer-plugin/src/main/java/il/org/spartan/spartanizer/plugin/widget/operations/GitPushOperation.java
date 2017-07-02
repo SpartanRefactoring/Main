@@ -24,8 +24,8 @@ public class GitPushOperation extends GitOperation {
     try {
       for (final PushResult p : g.push().call())
         if (p.getRemoteUpdates().size() == 1)
-          for (final RemoteRefUpdate r : p.getRemoteUpdates())
-            if (r.getStatus() == RemoteRefUpdate.Status.UP_TO_DATE) {
+          for (final RemoteRefUpdate ¢ : p.getRemoteUpdates())
+            if (¢.getStatus() == RemoteRefUpdate.Status.UP_TO_DATE) {
               displayMessage("No commits to push");
               return;
             }

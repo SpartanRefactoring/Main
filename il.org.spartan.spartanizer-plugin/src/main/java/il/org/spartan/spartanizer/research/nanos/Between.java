@@ -54,19 +54,19 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
             || (firstTipper(inEqualities, x1).getMatching(x1, "$X2") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X1") + ""));
   }
   @Override public Tip pattern(final InfixExpression x) {
-    final List<Expression> xs = extract.allOperands(x);
-    xs.set(xs.indexOf(left), replacement(left, right));
-    xs.remove(right);
-    final int size = xs.size();
+    final List<Expression> ret = extract.allOperands(x);
+    ret.set(ret.indexOf(left), replacement(left, right));
+    ret.remove(right);
+    final int size = ret.size();
     if (size == 1)
-      return replaceBy(the.onlyOneOf(xs));
+      return replaceBy(the.onlyOneOf(ret));
     if (size == 2)
-      return replaceBy(subject.pair(the.firstOf(xs), the.secondOf(xs)).to(step.operator(x)));
+      return replaceBy(subject.pair(the.firstOf(ret), the.secondOf(ret)).to(step.operator(x)));
     final InfixExpression $ = copy.of(x);
-    $.setLeftOperand(copy.of(xs.get(0)));
-    $.setRightOperand(copy.of(xs.get(1)));
+    $.setLeftOperand(copy.of(ret.get(0)));
+    $.setRightOperand(copy.of(ret.get(1)));
     $.extendedOperands().clear();
-    extendedOperands($).addAll(xs.subList(2, size));
+    extendedOperands($).addAll(ret.subList(2, size));
     return replaceBy($);
   }
   private Tip replaceBy(final Expression replacement) {

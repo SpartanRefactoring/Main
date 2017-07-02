@@ -28,24 +28,24 @@ public class AnyNumberOfInterfaces extends AnyNumberOfBasedNames {
     }
 
     @Override
-    protected String getName(PsiElement ¢) {
-        return az.javaCodeReference(¢).getQualifiedName();// not sure
+    protected String getName(PsiElement e) {
+        return az.javaCodeReference(e).getQualifiedName();// not sure
     }
 
     @Override
-    public boolean conforms(PsiElement ¢) {
-        return iz.javaCodeReference(¢) && super.conforms(¢);
+    public boolean conforms(PsiElement e) {
+        return iz.javaCodeReference(e) && super.conforms(e);
     }
 
     @Override
     public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
         if (i.value().getParent() == null) return 1;
-        Wrapper<Integer> $ = new Wrapper<>(0);
+        Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
-        i.value().getParent().accept(λ -> {
-            if (generalizes(λ, m).matches()) $.set($.get() + 1);
+        i.value().getParent().accept(n -> {
+            if (generalizes(n, m).matches()) count.set(count.get() + 1);
         });
-        return $.get();
+        return count.get();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AnyNumberOfInterfaces extends AnyNumberOfBasedNames {
         return new AnyNumberOfInterfaces(e, internalEncapsulator(e));
     }
 
-    private Encapsulator internalEncapsulator(Encapsulator ¢) {
-        return new BaseType(¢);
+    private Encapsulator internalEncapsulator(Encapsulator e) {
+        return new BaseType(e);
     }
 }

@@ -14,13 +14,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  */
 public class LocalInitializedReturn implements LeonidasTipperDefinition {
 
-    /**
-     * Write here additional constraints on the matcher tree.
-     * The structural constraint are of the form:
-     * element(<id>).{is/isNot}(() - > <template>)[.ofType(Psi class)];
-     * There are non structural that you can apply, for example
-     * element(<id>).asMethod.startsWith("set);
-     */
     @Override
     public void constraints() {
     }
@@ -37,19 +30,22 @@ public class LocalInitializedReturn implements LeonidasTipperDefinition {
 
     @Override
     public void replacer() {
-        new Template(() -> expression(2));
+        new Template(() -> {
+            /* start */
+            return expression(2);
+            /* end */
+        });
     }
 
-    /**
-     * Defines code examples and results after applying the tipper.
-     * This is used to test the tipper.
-     * example:
-     * examples.put("!(!(x > 4))", "x > 4");
-     */
+
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("int a = 9;\nreturn a;", "return 9;")
+                .put("int a = 9;\na++;\nreturn a;", null)
+                .put("a = 9;\nreturn a;", null)
+                .put("int a = x + 9;\nreturn a;", "return x + 9;")
+                .put("int a = 9;\nx++;\nreturn a;", null)
                 .map();
     }
 

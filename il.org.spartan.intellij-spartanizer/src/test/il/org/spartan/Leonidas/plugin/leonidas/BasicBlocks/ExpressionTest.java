@@ -24,6 +24,15 @@ public class ExpressionTest extends PsiTypeHelper {
         expression = new Expression(psiElement, psiType);
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        psiType = null;
+        psiElement = null;
+        expression = null;
+        super.tearDown();
+    }
+
     public void testEvaluationType() throws Exception {
         assert expression.evaluationType().equals(psiType);
     }

@@ -51,12 +51,12 @@ public final class SingleTipperApplicator {
       final IMarker m, //
       final Type t, //
       final Tipper<?> w) {
-    final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
+    final TipperApplyVisitor ret = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
-      u.accept(v);
+      u.accept(ret);
     else
-      v.applyLocal(w, u);
-    return v.tipper;
+      ret.applyLocal(w, u);
+    return ret.tipper;
   }
   @SuppressWarnings("deprecation") public void go(final IProgressMonitor pm, final IMarker m, final Type t)
       throws IllegalArgumentException, CoreException {

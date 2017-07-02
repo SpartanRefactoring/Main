@@ -19,7 +19,7 @@ import java.util.Map;
  * @author Oren Afek
  * @since 14-05-2017.
  */
-public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBlock {
+public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBlock implements Quantifier {
 
     protected Encapsulator internal;
 
@@ -33,7 +33,7 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     }
 
     @Override
-    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+    public boolean goUpwards(Encapsulator prev, Encapsulator next) {
         return iz.generic(internal) && az.generic(internal).goUpwards(prev, next);
     }
 
@@ -45,21 +45,21 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
 
     @Override
     public Integer extractId(PsiElement e) {
-        PsiElement $ = step.firstParameterExpression(az.methodCallExpression(e));
-        return Toolbox.getInstance().getGeneric($).map(λ -> λ.extractId($)).orElse(null);
+        PsiElement ie = step.firstParameterExpression(az.methodCallExpression(e));
+        return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
     }
 
     @Override
     public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        QuantifierMethodCallBased $ = create(e, m);
-        Encapsulator upperElement = $.getConcreteParent(e);
-        $.inner = upperElement.inner;
-        if (!$.isGeneric())
-			return upperElement.getParent() == null ? $ : upperElement.generalizeWith($);
-		$.putId($.extractId(e.getInner()));
-		$.extractAndAssignDescription(e.getInner());
-		return upperElement.getParent() == null ? $ : upperElement.generalizeWith($);
+        QuantifierMethodCallBased o = create(e, m);
+        Encapsulator upperElement = o.getConcreteParent(e);
+        o.inner = upperElement.inner;
+        if (!o.isGeneric())
+            return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+        o.putId(o.extractId(e.getInner()));
+        o.extractAndAssignDescription(e.getInner());
+        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
     public Encapsulator getConcreteParent(Encapsulator e,  Map<Integer, List<Matcher.Constraint>> m) {
@@ -76,13 +76,18 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> $, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (!iz.generic(internal)) return super.replaceByRange($, m ,r);
-        $ = az.generic(internal).applyReplacingRules($, m);
-        if (parent == null) return $;
-        List<PsiElement> l = Lists.reverse($);
-        l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.generic(internal)) return super.replaceByRange(es, m, r);
+        GenericEncapsulator ge = az.generic(internal);
+        if (es == null) {
+            r.deleteByRange(inner.getParent(), inner, inner);
+            return null;
+        }
+        es = ge.applyReplacingRules(es, m);
+        if (parent == null) return es;
+        List<PsiElement> l = Lists.reverse(es);
+        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
         r.deleteByRange(inner.getParent(), inner, inner);
-        return $;
+        return es;
     }
 }

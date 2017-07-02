@@ -25,20 +25,20 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     final List<Expression> es = hop.operands(x);
     Expression prev = copy.of(the.firstOf(es));
     final CompilationUnit u = az.compilationUnit(x.getRoot());
-    final List<Expression> es2 = new LinkedList<>();
+    final List<Expression> ret = new LinkedList<>();
     for (final Expression e : the.tailOf(es))
       if (u.getLineNumber(prev.getStartPosition()) != u.getLineNumber(e.getStartPosition()) || !iz.stringLiteral(prev) || !iz.stringLiteral(e)) {
-        es2.add(prev);
+        ret.add(prev);
         prev = copy.of(e);
       } else {
         final StringLiteral l = az.stringLiteral(prev);
         l.setLiteralValue(l.getLiteralValue() + az.stringLiteral(e).getLiteralValue());
       }
-    es2.add(prev);
-    if (es2.size() >= 2)
-      return subject.operands(es2).to(op.PLUS2);
+    ret.add(prev);
+    if (ret.size() >= 2)
+      return subject.operands(ret).to(op.PLUS2);
     final StringLiteral $ = x.getAST().newStringLiteral();
-    $.setLiteralValue(az.stringLiteral(the.firstOf(es2)).getLiteralValue());
+    $.setLiteralValue(az.stringLiteral(the.firstOf(ret)).getLiteralValue());
     return $;
   }
   @Override protected boolean prerequisite(final InfixExpression x) {

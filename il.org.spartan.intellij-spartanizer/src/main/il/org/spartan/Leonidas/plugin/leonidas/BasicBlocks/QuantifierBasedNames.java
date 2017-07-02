@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Oren Afek, michalcohen
  * @since 20-06-2017.
  */
-public abstract class QuantifierBasedNames extends NamedElement{
+public abstract class QuantifierBasedNames extends NamedElement implements Quantifier {
     protected Encapsulator internal;
 
     public QuantifierBasedNames(Encapsulator e, String template, Encapsulator i) {
@@ -30,7 +30,7 @@ public abstract class QuantifierBasedNames extends NamedElement{
     }
 
     @Override
-    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+    public boolean goUpwards(Encapsulator prev, Encapsulator next) {
         return iz.generic(internal) && az.generic(internal).goUpwards(prev, next);
     }
 
@@ -42,12 +42,12 @@ public abstract class QuantifierBasedNames extends NamedElement{
     @Override
     public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        QuantifierBasedNames $ = create(e, m);
-        Encapsulator upperElement = $.getConcreteParent(e);
-        $.inner = upperElement.inner;
-        if ($.isGeneric())
-            $.putId($.extractId(e.getInner()));
-        return upperElement.getParent() == null ? $ : upperElement.generalizeWith($);
+        QuantifierBasedNames o = create(e, m);
+        Encapsulator upperElement = o.getConcreteParent(e);
+        o.inner = upperElement.inner;
+        if (o.isGeneric())
+            o.putId(o.extractId(e.getInner()));
+        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
     @PreservesIterator
@@ -60,13 +60,13 @@ public abstract class QuantifierBasedNames extends NamedElement{
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> $, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (!iz.generic(internal)) return super.replaceByRange($, m ,r);
-        $ = az.generic(internal).applyReplacingRules($, m);
-        if (parent == null) return $;
-        List<PsiElement> l = Lists.reverse($);
-        l.forEach(λ -> r.addAfter(inner.getParent(), inner, λ));
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.generic(internal)) return super.replaceByRange(es, m, r);
+        es = az.generic(internal).applyReplacingRules(es, m);
+        if (parent == null) return es;
+        List<PsiElement> l = Lists.reverse(es);
+        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
         r.deleteByRange(inner.getParent(), inner, inner);
-        return $;
+        return es;
     }
 }

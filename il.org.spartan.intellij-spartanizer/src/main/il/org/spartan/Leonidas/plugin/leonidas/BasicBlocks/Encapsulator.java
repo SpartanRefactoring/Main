@@ -52,15 +52,15 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     public Encapsulator(Encapsulator n, Encapsulator parent) {
         this.parent = parent;
         inner = n.inner;
-        children = n.getChildren().stream().map(λ -> new Encapsulator(λ, this)).collect(Collectors.toList());
+        children = n.getChildren().stream().map(c -> new Encapsulator(c, this)).collect(Collectors.toList());
     }
 
     /**
-     * @param ¢ PsiElement
+     * @param e PsiElement
      * @return an encapsulating node that hides e.
      */
-    public static Encapsulator buildTreeFromPsi(PsiElement ¢) {
-        return new Encapsulator(¢);
+    public static Encapsulator buildTreeFromPsi(PsiElement e) {
+        return new Encapsulator(e);
     }
 
     /**
@@ -109,7 +109,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     public String toString() {
-        return inner == null ? "stub" : inner + "";
+        return inner == null ? "stub" : inner.toString();
     }
 
     @NotNull
@@ -129,7 +129,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
      * @return the replacer
      */
     public Encapsulator generalizeWith(Encapsulator replacer) {
-        parent.children.replaceAll(λ -> λ != Encapsulator.this ? λ : replacer);
+        parent.children.replaceAll(e -> e != Encapsulator.this ? e : replacer);
         replacer.parent = this.parent;
         return replacer;
     }
@@ -146,11 +146,11 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     /**
-     * @param ¢ ID
+     * @param i ID
      * @return this, for fluent API
      */
-    public Encapsulator putId(Integer ¢) {
-        inner.putUserData(ID, ¢);
+    public Encapsulator putId(Integer i) {
+        inner.putUserData(ID, i);
         return this;
     }
 

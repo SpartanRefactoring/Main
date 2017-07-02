@@ -131,17 +131,17 @@ public abstract class Traversal implements Selfie<Traversal> {
     final IJavaProject jp = r.getJavaProject();
     if (jp == null)
       return null;
-    final IProject p = jp.getProject();
-    if (p == null)
+    final IProject ret = jp.getProject();
+    if (ret == null)
       return null;
-    if (configurations.containsKey(p))
-      return configurations.get(p);
+    if (configurations.containsKey(ret))
+      return configurations.get(ret);
     final Toolbox $ = Toolboxes.allClone();
-    final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
+    final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(ret);
     final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
     for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
       ¢.removeAll(xs);
-    configurations.put(p, $);
+    configurations.put(ret, $);
     return $;
   }
   protected Range getRange() {

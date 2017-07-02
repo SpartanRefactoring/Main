@@ -25,13 +25,13 @@ class TippersViewAction extends AnAction {
 
         @Nullable
         private PsiElement getPsiElementFromContext(AnActionEvent e) {
-            PsiFile $ = e.getData(LangDataKeys.PSI_FILE);
+            PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
             Editor editor = e.getData(PlatformDataKeys.EDITOR);
-            return $ == null || editor == null ? null : $.findElementAt(editor.getCaretModel().getOffset());
+            return psiFile == null || editor == null ? null : psiFile.findElementAt(editor.getCaretModel().getOffset());
         }
 
 
-        private PsiClass getPsiClassFromContext(AnActionEvent ¢) {
-            return PsiTreeUtil.getParentOfType(getPsiElementFromContext(¢), PsiClass.class);
+    private PsiClass getPsiClassFromContext(AnActionEvent e) {
+        return PsiTreeUtil.getParentOfType(getPsiElementFromContext(e), PsiClass.class);
         }
 }

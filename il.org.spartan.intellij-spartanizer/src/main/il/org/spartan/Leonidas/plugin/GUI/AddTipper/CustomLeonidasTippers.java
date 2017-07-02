@@ -9,6 +9,7 @@ import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,17 +66,37 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
      * @param matcher     matcher function source code
      * @param replacer    replacer function source code
      */
-    public void generate(String name, String description, String matcher, String replacer) {
-        tippers.put(name, getTipperString(name, description, matcher, replacer));
+    public boolean generate(String name, String description, String matcher, String replacer, String constraints) {
+        try {
+            String tipperContent = getTipperString(name, description, matcher, replacer, constraints);
 
-        Toolbox.getInstance().add(new LeonidasTipper(name, tippers.get(name)));
+            Toolbox.getInstance().add(new LeonidasTipper(name, tipperContent));
+            tippers.put(name, tipperContent);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "There was an error while parsing the leonidas file.\n" +
+                            "If you are having trouble finding the problem, visit the following wiki page:\n" +
+                            "\n" +
+                            "https://github.com/TechnionYP5777/Leonidas-FTW/wiki/Leonidas\n",
+                    "Parsing error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 
-    private String getTipperString(String name, String description, String matcher, String replacer) {
+    private String getTipperString(String name, String description, String matcher, String replacer, String constraints) {
         return String.format("/**\n" +
                 "* %s\n" +
                 "*/\n" +
-                "public class %s implements LeonidasTipperDefinition {\n" +
+                "public class %s implements LeonidasTipperDefinition {\n\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public void constraints() {\n" +
+                "        %s\n" +
+                "    }\n" +
+                "\n" +
                 "    @Override\n" +
                 "    public void matcher() {\n" +
                 "        new Template(() -> {\n" +
@@ -93,16 +114,13 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
                 "           /* end */\n" +
                 "       });\n" +
                 "    }\n" +
-                "}\n", description, name, matcher, replacer);
+                "}\n", description, name, constraints, matcher, replacer);
     }
 
     @Override
-    public boolean equals(Object ¢) {
-        if (¢ == this) return true;
-        if (¢ == null || getClass() != ¢.getClass()) return false;
-
-        return tippers == null ? ((CustomLeonidasTippers) ¢).tippers == null
-				: tippers.equals(((CustomLeonidasTippers) ¢).tippers);
+    public boolean equals(Object o) {
+        return o == this || (o != null && getClass() == o.getClass() && (tippers == null ? ((CustomLeonidasTippers) o).tippers == null
+                : tippers.equals(((CustomLeonidasTippers) o).tippers)));
     }
 
     @Override

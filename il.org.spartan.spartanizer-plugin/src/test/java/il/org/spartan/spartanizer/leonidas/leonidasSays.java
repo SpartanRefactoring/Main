@@ -65,8 +65,8 @@ public enum leonidasSays {
     }
   }
   static ASTNode extractStatementIfOne(final ASTNode $) {
-    final List<Statement> statements = statements(az.block($));
-    return statements == null || statements.size() != 1 ? $ : the.firstOf(statements);
+    final List<Statement> ret = statements(az.block($));
+    return ret == null || ret.size() != 1 ? $ : the.firstOf(ret);
   }
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
@@ -89,8 +89,8 @@ public enum leonidasSays {
         return true;
       }
     });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
-    return $$;
+    @SuppressWarnings("unchecked") final N ret = (N) $.get();
+    return ret;
   }
   public static statementsTipper statementsTipper(final String p, final String s, final String d) {
     return new statementsTipper(TipperFactory.statementsPattern(p, s, d));

@@ -38,11 +38,11 @@ public class VolatileCFG extends CFG<VolatileCFG> {
     $.append("* Roots *\n");
     $.append(shorten(roots) + "\n");
     $.append("* In *\n");
-    for (final ASTNode n : sins.keySet())
-      $.append(shorten(n) + " <-\n\t" + shorten(sins.get(n)) + "\n");
+    for (final ASTNode ¢ : sins.keySet())
+      $.append(shorten(¢) + " <-\n\t" + shorten(sins.get(¢)) + "\n");
     $.append("* Out *\n");
-    for (final ASTNode n : souts.keySet())
-      $.append(shorten(n) + " ->\n\t" + shorten(souts.get(n)) + "\n");
+    for (final ASTNode ¢ : souts.keySet())
+      $.append(shorten(¢) + " ->\n\t" + shorten(souts.get(¢)) + "\n");
     return $ + "";
   }
   private static String shorten(final ASTNode ¢) {

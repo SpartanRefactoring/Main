@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
-@SuppressWarnings("restriction")
+
 public enum BindingUtils {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** @param pattern an {@link ASTNode}

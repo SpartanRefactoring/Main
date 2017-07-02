@@ -62,8 +62,8 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
   private static IfStatement normalized(final Statement $, final Statement nextStatement, final Expression x) {
     if (!iz.block($) || wizard.endsWithSequencer($))
       return subject.pair($, nextStatement).toIf(x);
-    final List<Statement> ss = extract.statements($);
-    return ss.size() < 2 ? null : //
-        subject.pair(subject.ss(ss).add(copy.of(nextStatement)).toBlock(), nextStatement).toIf(x);
+    final List<Statement> ret = extract.statements($);
+    return ret.size() < 2 ? null : //
+        subject.pair(subject.ss(ret).add(copy.of(nextStatement)).toBlock(), nextStatement).toIf(x);
   }
 }

@@ -13,6 +13,7 @@ plugins {
     id "jacoco"
 }
 
+
 // Order the compiler to use UTF-8 encoding
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
@@ -67,11 +68,33 @@ patchPluginXml {
     sinceBuild '141.0'
 }
 
+jacoco {
+    toolVersion = "+"
+}
+
+def coverageSourceDirs = [
+        'src/main/java'
+]
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            excludes = ['il.org.spartan.Leonidas.*']
+        }
+    }
+}
+
 // Used to generate data regarding test coverage, used by CodeCov
 jacocoTestReport {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+
+    outputs.upToDateWhen {false}
+
     reports {
         xml.enabled true
-        html.enabled false
+        html.enabled true
     }
 }
 
@@ -81,13 +104,7 @@ check.dependsOn jacocoTestReport
 repositories { jcenter() }
 dependencies {
     compile "com.fifesoft:rsyntaxtextarea:2.6.1"
-    testCompile "org.mockito:mockito-core:2.+"
+    compile "org.mockito:mockito-core:2.+"
     compile "org.reflections:reflections:0.9.10"
     compile "commons-io:commons-io:2.5"
-    compile (project(":il.org.spartan.spartanizer-plugin")) {
-        exclude group: 'eclipse-deps', module:'javax.annotation'
-        exclude group: 'eclipse-deps', module: 'javax.inject'
-        exclude group: 'eclipse-deps', module: 'javax.xml'
-        exclude group: 'eclipse-deps', module: 'javax.servlet'
-    }
 }

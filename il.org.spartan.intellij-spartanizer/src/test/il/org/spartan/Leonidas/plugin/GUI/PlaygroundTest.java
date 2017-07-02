@@ -23,6 +23,12 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
         playground.doSpartanization();
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        playground = null;
+        super.tearDown();
+    }
+
     public void testLeonidasTipper1() {
         preparePlayground("if(x==0){\n\tx=1;\n}");
         assert "if(x==0)x=1;".equals(playground.getOutput().replaceAll("\\s+", ""));
@@ -31,14 +37,12 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
     public void testLeonidasTipper2() {
         preparePlayground("while(x==0){x=1;}");
         assert "while(x==0)x=1;".equals(playground.getOutput().replaceAll("\\s+", ""));
-
     }
 
     public void testLeonidasTipper3() {
         preparePlayground("!(!(x))");
         assert "x".equals(playground.getOutput());
     }
-
 
     public void testNanoTipper1() {
         preparePlayground("l.get(l.size()-1)");
@@ -52,7 +56,7 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
 
     public void testNanoTipper3() {
         preparePlayground("i->{return i;}");
-        assert "i->i".equals(playground.getOutput());
+        assert "i-> i".equals(playground.getOutput());
     }
 
     public void testClear() {

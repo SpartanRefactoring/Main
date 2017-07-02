@@ -15,7 +15,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  */
 public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
 
-
     @Override
     public void constraints() {
     }
@@ -33,14 +32,20 @@ public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
 
     @Override
     public void replacer() {
-        new Template(() -> booleanExpression(0) ? expression(1) : expression(2));
+        new Template(() -> {
+            /* start */
+            return booleanExpression(0) ? expression(1) : expression(2);
+            /* end */
+        });
     }
-
 
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("if(l.size() > 0)\nreturn l.get(0);\nreturn null;", "return l.size() > 0 ? l.get(0) : null;")
+                .put("if(l.size() > 0){\nreturn l.get(0);\n}\nreturn null;", null)
+                .put("if(l.size() > 0)\nreturn l.get(0);\nelse\nreturn -1;\nreturn 0;", null)
+                .put("if(l.size() > 0)\nreturn l.get(0);\nelse\nreturn -1;\n", null)
                 .map();
     }
 }

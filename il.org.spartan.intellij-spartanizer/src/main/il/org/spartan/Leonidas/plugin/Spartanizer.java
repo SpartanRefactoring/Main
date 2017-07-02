@@ -17,8 +17,8 @@ import static il.org.spartan.Leonidas.auxilary_layer.Utils.isAnnotationPresent;
 public enum Spartanizer {
     ;
 
-    static boolean canTip(PsiElement ¢) {
-        return Toolbox.getInstance().canTip(¢);
+    static boolean canTip(PsiElement e) {
+        return Toolbox.getInstance().canTip(e);
     }
 
     static boolean shouldSpartanize(PsiElement e) {
@@ -32,16 +32,16 @@ public enum Spartanizer {
         Toolbox toolbox = Toolbox.getInstance();
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement ¢) {
-                super.visitElement(¢);
-                toolbox.executeAllTippers(¢);
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                toolbox.executeAllTippers(e);
             }
         });
     }
 
-    static void spartanizeElement(PsiElement ¢) {
-        if (shouldSpartanize(¢))
-            Toolbox.getInstance().executeAllTippers(¢);
+    static void spartanizeElement(PsiElement e) {
+        if (shouldSpartanize(e))
+            Toolbox.getInstance().executeAllTippers(e);
     }
 
     static void spartanizeElement(PsiElement e, Tipper t) {
@@ -55,9 +55,9 @@ public enum Spartanizer {
         Toolbox toolbox = Toolbox.getInstance();
         f.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement ¢) {
-                super.visitElement(¢);
-                toolbox.executeAllTippers(¢);
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                toolbox.executeAllTippers(e);
             }
         });
     }
@@ -65,10 +65,8 @@ public enum Spartanizer {
     public static void spartanizeFileRecursively(PsiFile f) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
-        while (toolbox.replaced) {
+        for (; toolbox.replaced; spartanizeFileOnePass(f))
             toolbox.replaced = false;
-            spartanizeFileOnePass(f);
-        }
         spartanizeFileOnePass(f);
     }
 
@@ -78,21 +76,18 @@ public enum Spartanizer {
         Toolbox toolbox = Toolbox.getInstance();
         f.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement ¢) {
-                super.visitElement(¢);
-                toolbox.executeAllTippersNoNanos(¢);
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                toolbox.executeAllTippersNoNanos(e);
             }
         });
     }
 
-    // TODO this is a bad name. its not recursive.
     public static void spartanizeFileRecursivelyNoNanos(PsiFile f) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
-        while (toolbox.replaced) {
+        for (; toolbox.replaced; spartanizeFileOnePassNoNanos(f))
             toolbox.replaced = false;
-            spartanizeFileOnePassNoNanos(f);
-        }
     }
 
 

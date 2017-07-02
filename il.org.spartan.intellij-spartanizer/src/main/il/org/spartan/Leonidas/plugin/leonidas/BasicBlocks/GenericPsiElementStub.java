@@ -148,4 +148,7 @@ public class GenericPsiElementStub {
         return new Object();
     }
 
+    public static Object all(Object o) {
+        return new Object();
+    }
 }

@@ -22,6 +22,13 @@ public class StatementTest extends PsiTypeHelper {
         statement = new Statement(psiElement);
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        psiElement = null;
+        statement = null;
+        super.tearDown();
+    }
 
     public void testGeneralizes() throws Exception {
         assert statement.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("x + 1;")), new HashMap<>()).matches();

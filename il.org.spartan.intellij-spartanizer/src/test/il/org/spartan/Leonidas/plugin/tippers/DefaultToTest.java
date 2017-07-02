@@ -75,17 +75,17 @@ public class DefaultToTest extends PsiTypeHelper {
     }
 
     public void testCreateReplacementLegalCases() {
-        Arrays.stream(legalCasesStrings).forEach(λ ->
+        Arrays.stream(legalCasesStrings).forEach(s ->
                 assertEqualsByText(new DefaultsTo().createReplacement(
-                        createConditionalExpressionFromLegalString(λ)),
+                        createConditionalExpressionFromLegalString(s)),
                         createTestExpression(legalReplacement)));
     }
 
     private PsiConditionalExpression createConditionalExpressionFromLegalString(String conditionalString) {
-        int $ = conditionalString.indexOf('?'), indexOfColon = conditionalString.indexOf(':');
-        return createTestConditionalExpression(conditionalString.substring(0, $).trim(),
-				conditionalString.substring($ + 1, indexOfColon).trim(),
-				conditionalString.substring(indexOfColon + 1).trim());
+        int indexOfQuestionMark = conditionalString.indexOf('?'), indexOfColon = conditionalString.indexOf(':');
+        return createTestConditionalExpression(conditionalString.substring(0, indexOfQuestionMark).trim(),
+                conditionalString.substring(indexOfQuestionMark + 1, indexOfColon).trim(),
+                conditionalString.substring(indexOfColon + 1).trim());
     }
 
 }

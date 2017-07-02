@@ -4,8 +4,8 @@ import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
-import static il.org.spartan.Leonidas.auxilary_layer.Utils.getDocumentFromPsiElement;
-import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
+import java.util.Optional;
+
 
 /**
  * @author michalcohen
@@ -14,12 +14,12 @@ import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
 public class UtilsTest extends PsiTypeHelper {
 
     public void testIn() throws Exception {
-        assert in(5, 3, 4, 5, 6);
-        assert !in(2, 3, 4, 5, 6);
-        assert in("banana", "apple", "pear", "avocado", "banana");
-        assert !in(3);
-        assert !in(new Object());
-        assert !in(null);
+        assert Utils.in(5, 3, 4, 5, 6);
+        assert !Utils.in(2, 3, 4, 5, 6);
+        assert Utils.in("banana", "apple", "pear", "avocado", "banana");
+        assert !Utils.in(3);
+        assert !Utils.in(new Object());
+        assert !Utils.in(null);
     }
 
     public void testGetAllReferences() throws Exception {
@@ -28,9 +28,9 @@ public class UtilsTest extends PsiTypeHelper {
         assertEquals(Utils.getAllReferences(m, id).size(), 4);
         id = createTestIdentifierFromString("id");
         PsiIdentifier nonExistent = createTestIdentifierFromString("banana");
-        PsiMethod m1 = createTestMethodFromString("void foo(){ int k=5; }");
-        PsiMethod m2 = createTestMethodFromString("int id() { int id=7; return 8;}");
-        PsiMethod m3 = createTestMethodFromString("int id() { int id=7; return id;}");
+        PsiMethod m1 = createTestMethodFromString("void foo(){ int k=5; }"),
+                m2 = createTestMethodFromString("int id() { int id=7; return 8;}"),
+                m3 = createTestMethodFromString("int id() { int id=7; return id;}");
         assert Utils.getAllReferences(null, null).isEmpty();
         assert Utils.getAllReferences(null, id).isEmpty();
         assert Utils.getAllReferences(m1, id).isEmpty();
@@ -40,7 +40,7 @@ public class UtilsTest extends PsiTypeHelper {
     }
 
     public void testGetDocumentFromPsiElement() throws Exception {
-        assertNull(getDocumentFromPsiElement(createTestIfStatement("x > 2", "x++;")));
+        assertNull(Utils.getDocumentFromPsiElement(createTestIfStatement("x > 2", "x++;")));
     }
 
     public void testGetProject() throws Exception {
@@ -48,7 +48,8 @@ public class UtilsTest extends PsiTypeHelper {
     }
 
     public void testGetChildrenOfType() throws Exception {
-        assertEquals(Utils.getChildrenOfType(createTestMethodFromString("int foo() { int x,y,z; x++; y--; z+=2;"), PsiIdentifier.class).size(), 7);
+        assertEquals(Utils.getChildrenOfType(createTestMethodFromString("int foo() { int x,y,z; x++; y--; z+=2;"),
+                PsiIdentifier.class).size(), 7);
     }
 
     public void testFixSpacesProblemOnPath() throws Exception {
@@ -60,5 +61,13 @@ public class UtilsTest extends PsiTypeHelper {
 
     public void testGetFirstElementInsideBody() throws Exception {
         assertEquals(Utils.getFirstElementInsideBody(createTestCodeBlockFromString("{x++;}")).getText(), "x++;");
+    }
+
+    public void testGetPublicMethod() throws Exception {
+        assertEquals(Optional.empty(), Utils.getPublicMethod(Object.class, "myFakeMethod", Object.class));
+        assertEquals(String.class.getMethod("substring", int.class, int.class),
+                Utils.getPublicMethod(String.class, "substring",
+                        int.class, int.class).orElse(null));
+
     }
 }

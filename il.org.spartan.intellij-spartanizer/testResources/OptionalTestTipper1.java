@@ -11,6 +11,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author michalcohen
  * @since 30-04-2017
  */
+@DisableSpartanization
 @SuppressWarnings("ConstantConditions")
 public class OptionalTestTipper1 implements LeonidasTipperDefinition {
 
@@ -27,22 +28,24 @@ public class OptionalTestTipper1 implements LeonidasTipperDefinition {
     public void matcher() {
         new Template(() -> {
             int x;
-            /** start */
-            while (booleanExpression(0)){
-                ++x;
-                optional(statement(1));
-                --x;
-            }
-            /** end */
+            /* start */
+            while (booleanExpression(0)) {
+				x++;
+				optional(statement(1));
+				x--;
+			}
+			/* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /** start */
-            while (booleanExpression(0))
-				optional(statement(1));
+            /* start */
+            while (booleanExpression(0)) {
+                optional(statement(1));
+            }
+            /* end */
         });
     }
 }

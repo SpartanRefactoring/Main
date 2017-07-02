@@ -41,12 +41,7 @@ public class ToolboxStateService implements PersistentStateComponent<ToolboxStat
     }
 
     void updateAllTippers(List<String> activeTippers) {
-        tippers.keySet().forEach(tipper -> {
-            if (activeTippers.contains(tipper))
-				tippers.put(tipper, true);
-			else
-				tippers.put(tipper, false);
-        });
+        tippers.keySet().forEach(tipper -> tippers.put(tipper, activeTippers.contains(tipper)));
     }
 
     @Override
@@ -56,7 +51,7 @@ public class ToolboxStateService implements PersistentStateComponent<ToolboxStat
 	}
 
     @Override
-    public void loadState(ToolboxStateService ¢) {
-        XmlSerializerUtil.copyBean(¢, this);
+    public void loadState(ToolboxStateService s) {
+        XmlSerializerUtil.copyBean(s, this);
     }
 }

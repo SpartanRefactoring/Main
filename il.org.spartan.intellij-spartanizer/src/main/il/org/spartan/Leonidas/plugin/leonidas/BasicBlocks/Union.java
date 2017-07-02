@@ -87,7 +87,7 @@ public class Union extends GenericMethodCallBasedBlock {
 				encapsulator = new Expression();
 
             if (encapsulator != null) {
-                int id = az.integer(step.firstParameterExpression(az.methodCallExpression(arg)));
+                az.integer(step.firstParameterExpression(az.methodCallExpression(arg)));
                 encapsulators.add(encapsulator);
             }
         });

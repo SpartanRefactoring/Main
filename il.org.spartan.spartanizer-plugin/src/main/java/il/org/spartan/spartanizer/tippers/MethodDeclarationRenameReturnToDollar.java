@@ -41,16 +41,16 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       case "java.lang.Void":
         return null;
     }
-    final String name = Names.methodReturnName.apply(t, d);
-    if (name == null || scope.hasInScope(d.getBody(), name))
+    final String ret = Names.methodReturnName.apply(t, d);
+    if (ret == null || scope.hasInScope(d.getBody(), ret))
       return null;
-    final SimpleName $ = new Conservative(d).selectReturnVariable(name);
-    return $ == null ? null : new Tip(description(d, name, $), myClass(), $) {
+    final SimpleName $ = new Conservative(d).selectReturnVariable(ret);
+    return $ == null ? null : new Tip(description(d, ret, $), myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename($, $(), d, r, g);
       }
       SimpleName $() {
-        return make.from(d).identifier(name);
+        return make.from(d).identifier(ret);
       }
     }.spanning(d);
   }

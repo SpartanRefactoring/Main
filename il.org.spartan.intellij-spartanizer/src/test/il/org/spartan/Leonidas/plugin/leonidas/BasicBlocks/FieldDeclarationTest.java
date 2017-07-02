@@ -16,6 +16,13 @@ public class FieldDeclarationTest extends PsiTypeHelper {
         fieldDeclaration = new FieldDeclaration();
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        fieldDeclaration = null;
+        super.tearDown();
+    }
+
     public void testFieldDeclaration() {
         assert fieldDeclaration
 				.generalizes(Encapsulator.buildTreeFromPsi(createTestFieldDeclarationFromString("int x;")),

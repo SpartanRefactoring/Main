@@ -4,6 +4,7 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiTypeElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
@@ -22,6 +23,8 @@ public class Type extends NamedElement {
 
     private static final String TEMPLATE = "Class";
 
+    boolean setAsOuterClass;
+
     public Type(Encapsulator e) {
         super(e, TEMPLATE);
     }
@@ -34,13 +37,13 @@ public class Type extends NamedElement {
     }
 
     @Override
-    protected String getName(PsiElement ¢) {
-        return !iz.type(¢) ? null : az.type(¢).getText();
+    protected String getName(PsiElement e) {
+        return !iz.type(e) ? null : az.type(e).getText();
     }
 
     @Override
-    public boolean conforms(PsiElement ¢) {
-        return iz.type(¢) && super.conforms(¢);
+    public boolean conforms(PsiElement e) {
+        return iz.type(e) && super.conforms(e);
     }
 
     @Override
@@ -55,13 +58,32 @@ public class Type extends NamedElement {
 
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (setAsOuterClass) {
+            List<PsiElement>[] a = new List[m.values().size()];
+            m.values().toArray(a);
+            PsiClass c = PsiTreeUtil.getParentOfType(a[0].get(0), PsiClass.class);
+            return Utils.wrapWithList(
+                    JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c));
+
+        }
         if (!iz.classDeclaration(es.get(0)))
 			return super.replaceByRange(es, m, r);
 		PsiClass c = az.classDeclaration(es.get(0));
-		PsiTypeElement $ = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(),
-				c);
-		inner = $;
-		return Utils.wrapWithList($);
+        PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(),
+                c);
+        inner = pte;
+        return Utils.wrapWithList(pte);
+    }
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        if (!(dst instanceof Type)) return;
+        super.copyTo(dst);
+        ((Type) dst).setAsOuterClass = setAsOuterClass;
+    }
+
+    public void setAsOuterClass() {
+        setAsOuterClass = true;
     }
 }
 

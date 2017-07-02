@@ -10,18 +10,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Amir on 20-06-2017.
  */
 public class TippersView extends JFrame{
+    private static boolean active;
     private JPanel mainPanel;
     private JScrollPane scrollPane;
     private JList list;
-
     private TippersList cl;
-    private static boolean active;
 
     public TippersView(PsiFile pf){
         super("Available Tippers In Current File");
@@ -34,9 +34,9 @@ public class TippersView extends JFrame{
         Toolbox toolbox = Toolbox.getInstance();
         pf.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement ¢) {
-                super.visitElement(¢);
-                tippers.addAll(toolbox.getAvailableTipsInfo(¢));
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                tippers.addAll(toolbox.getAvailableTipsInfo(e));
             }
         });
 
