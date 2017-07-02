@@ -375,8 +375,8 @@ public final class Matcher {
     return $;
   }
   ASTNode blockReplacement(final Block n) {
-    final Pair<Integer, Integer> p = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
-    final String matching = stringifySubBlock(n, unbox.it(p.first), unbox.it(p.second));
+    final Pair<Integer, Integer> ret = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
+    final String matching = stringifySubBlock(n, unbox.it(ret.first), unbox.it(ret.second));
     final Map<String, String> enviroment = collectEnviroment(make.ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
@@ -387,7 +387,7 @@ public final class Matcher {
         return true;
       }
     });
-    return make.ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
+    return make.ast(stringifySubBlock(n, 0, ret.first.intValue()) + $.get() + stringifySubBlock(n, ret.second.intValue()));
   }
   private static boolean needsSpecialReplacement(final String ¢) {
     return ¢.startsWith($B) || matches$X(¢);

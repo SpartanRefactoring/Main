@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ori Roth
  * @since 2017-05-21
  * @see org.eclipse.jdt.internal.corext.dom.Bindings */
-@SuppressWarnings("restriction")
 public class Bindings {
   public static List<ITypeBinding> getAllFrom(final ITypeBinding b) {
     final List<ITypeBinding> $ = an.empty.list();

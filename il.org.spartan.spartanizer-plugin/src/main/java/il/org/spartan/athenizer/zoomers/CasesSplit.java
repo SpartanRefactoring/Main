@@ -32,15 +32,15 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     return "split cases within switch";
   }
   @Override public Tip tip(final SwitchStatement s) {
-    final SwitchCase n = caseWithNoSequencer(s);
-    final List<Statement> $ = getAdditionalStatements(statements(s), n);
+    final SwitchCase ret = caseWithNoSequencer(s);
+    final List<Statement> $ = getAdditionalStatements(statements(s), ret);
     return new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Map<String, String> mapNames = getMapOldToNewNames($);
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
-        $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), n, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), n, g));
+        $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), ret, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), ret, g));
         if (!iz.sequencerComplex(the.lastOf($)))
-          l.insertBefore(s.getAST().newBreakStatement(), n, g);
+          l.insertBefore(s.getAST().newBreakStatement(), ret, g);
       }
     };
   }
@@ -49,13 +49,13 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
-    for (final Statement ¢ : statements(x)) // TOUGH
-      if (iz.sequencerComplex(¢))
+    for (final Statement ret : statements(x)) // TOUGH
+      if (iz.sequencerComplex(ret))
         $ = null;
-      else if (¢ instanceof SwitchCase) {
+      else if (ret instanceof SwitchCase) {
         if ($ != null)
-          return (SwitchCase) ¢;
-        $ = az.switchCase(¢);
+          return (SwitchCase) ret;
+        $ = az.switchCase(ret);
       }
     return null;
   }

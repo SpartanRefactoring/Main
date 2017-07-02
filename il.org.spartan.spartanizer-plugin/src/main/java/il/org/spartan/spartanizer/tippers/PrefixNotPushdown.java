@@ -95,7 +95,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
   private static Expression tryToSimplify(final Expression ¢) {
     final Expression $ = pushdownNot(az.not(¢));
-    return $ != null ? $ : ¢;
+    return $ == null ? ¢ : $;
   }
   @Override public String description(@SuppressWarnings("unused") final PrefixExpression __) {
     return "Pushdown logical negation ('!')";

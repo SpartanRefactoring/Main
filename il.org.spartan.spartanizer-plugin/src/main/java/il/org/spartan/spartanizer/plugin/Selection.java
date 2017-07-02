@@ -321,14 +321,14 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IStructuredSelection s) {
       final List<?> ss = s.toList();
       if (ss.size() == 1) {
-        final Object o = the.firstOf(ss);
-        return o == null ? empty()
-            : o instanceof MarkerItem ? by((MarkerItem) o)
-                : o instanceof IJavaProject ? by((IJavaProject) o)
-                    : o instanceof IPackageFragmentRoot ? by((IPackageFragmentRoot) o)
-                        : o instanceof IPackageFragment ? by((IPackageFragment) o)
-                            : o instanceof ICompilationUnit ? Selection.of((ICompilationUnit) o)
-                                : !(o instanceof IMember) ? empty() : by((IMember) o);
+        final Object ret = the.firstOf(ss);
+        return ret == null ? empty()
+            : ret instanceof MarkerItem ? by((MarkerItem) ret)
+                : ret instanceof IJavaProject ? by((IJavaProject) ret)
+                    : ret instanceof IPackageFragmentRoot ? by((IPackageFragmentRoot) ret)
+                        : ret instanceof IPackageFragment ? by((IPackageFragment) ret)
+                            : ret instanceof ICompilationUnit ? Selection.of((ICompilationUnit) ret)
+                                : ret instanceof IMember ? by((IMember) ret) : empty();
       }
       final Selection $ = Selection.empty();
       final Collection<MarkerItem> is = an.empty.list();
@@ -408,8 +408,8 @@ public class Selection extends AbstractSelection<Selection> {
     public static ISourceRange makerToRange(final ISourceReference $) {
       try {
         return $.getSourceRange();
-      } catch (final JavaModelException ¢) {
-        return note.bug(¢);
+      } catch (final JavaModelException ret) {
+        return note.bug(ret);
       }
     }
     /** @param m JD

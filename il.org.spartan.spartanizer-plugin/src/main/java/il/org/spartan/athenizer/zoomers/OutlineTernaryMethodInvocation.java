@@ -44,14 +44,14 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
   @Override public Examples examples() {
     return null;
   }
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
     final MethodInvocation whenTrue = copy.of(current), whenFalse = copy.of(current);
     final int i = arguments.indexOf($);
     arguments(whenTrue).remove(i);
     arguments(whenTrue).add(i, copy.of(then($)));
     arguments(whenFalse).remove(i);
     arguments(whenFalse).add(i, copy.of(elze($)));
-    r.replace(current, make.parethesized(subject.pair(whenTrue, whenFalse).toCondition(expression($))), g);
-    return r;
+    ret.replace(current, make.parethesized(subject.pair(whenTrue, whenFalse).toCondition(expression($))), g);
+    return ret;
   }
 }

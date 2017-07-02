@@ -263,7 +263,7 @@ public interface type {
       final Namespace $ = Environment.of(¢);
       if (!$.has(¢.getIdentifier()))
         return NOTHING;
-      final implementation i = (implementation) $.get(¢.getIdentifier()).getType(); // TODO
+      final implementation ret = (implementation) $.get(¢.getIdentifier()).getType(); // TODO
       // yg:
       // getType
       // probably
@@ -276,7 +276,7 @@ public interface type {
       // exceptions
       // on
       // guava->CaseFormat)
-      return i != null ? i : NOTHING;
+      return ret != null ? ret : NOTHING;
     }
     /** @param x JD
      * @return The most specific Type information that can be deduced about the

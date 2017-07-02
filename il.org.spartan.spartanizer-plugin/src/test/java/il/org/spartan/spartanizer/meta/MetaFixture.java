@@ -83,11 +83,11 @@ public abstract class MetaFixture {
   private static CompilationUnit loadAST(final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
-        final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
-        p.setResolveBindings(true);
-        p.setUnitName(fileName);
-        p.setEnvironment(new String[] { JAVA_HOME + "/lib/rt.jar" }, new String[] { getSrcPath($) + "" }, new String[] { "UTF-8" }, true);
-        return (CompilationUnit) p.createAST(null);
+        final ASTParser ret = make.COMPILATION_UNIT.parser(makeAST.string($));
+        ret.setResolveBindings(true);
+        ret.setUnitName(fileName);
+        ret.setEnvironment(new String[] { JAVA_HOME + "/lib/rt.jar" }, new String[] { getSrcPath($) + "" }, new String[] { "UTF-8" }, true);
+        return (CompilationUnit) ret.createAST(null);
       }
     return null;
   }
@@ -178,24 +178,24 @@ public abstract class MetaFixture {
    * adds a mapping to cu of this class or of its containing class if exists
    * @return the new cu or the existing mapping */
   public final CompilationUnit reflectedCompilationUnit() {
-    final Class<? extends MetaFixture> c = getClass();
-    final CompilationUnit $ = classToASTCompilationUnit.get(c);
+    final Class<? extends MetaFixture> ret = getClass();
+    final CompilationUnit $ = classToASTCompilationUnit.get(ret);
     if ($ != null)
       return $;
-    classToASTCompilationUnit.put(c, loadAST((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
-    return classToASTCompilationUnit.get(c);
+    classToASTCompilationUnit.put(ret, loadAST((ret.getDeclaringClass() == null ? ret : ret.getDeclaringClass()).getSimpleName() + ".java"));
+    return classToASTCompilationUnit.get(ret);
   }
   /** If a mapping of this runtime class to a string exists returns it,
    * otherwise adds a mapping to a string of this class or of its containing
    * class if exists
    * @return the new string or the existing mapping */
   public final String reflectedCompilationUnitText() {
-    final Class<? extends MetaFixture> c = getClass();
-    final String $ = classToText.get(c);
+    final Class<? extends MetaFixture> ret = getClass();
+    final String $ = classToText.get(ret);
     if ($ != null)
       return $;
-    classToText.put(c, loadText((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
-    return classToText.get(c);
+    classToText.put(ret, loadText((ret.getDeclaringClass() == null ? ret : ret.getDeclaringClass()).getSimpleName() + ".java"));
+    return classToText.get(ret);
   }
   /** Gets all the single member annotations from current runtime class's cu
    * @return an iterable of these annotations */

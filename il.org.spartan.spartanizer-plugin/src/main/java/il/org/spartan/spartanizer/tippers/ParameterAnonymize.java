@@ -79,12 +79,12 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
     return "Anonymize parameter " + ¢.getName().getIdentifier();
   }
   @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $) {
-    final MethodDeclaration method = getMethod($);
-    if (method == null || body(method) == null)
+    final MethodDeclaration ret = getMethod($);
+    if (ret == null || body(ret) == null)
       return null;
-    for (final SingleVariableDeclaration ¢ : parameters(method))
+    for (final SingleVariableDeclaration ¢ : parameters(ret))
       if (notation.anonymous.equals(¢.getName().getIdentifier()))
         return null;
-    return BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()) ? null : replace($);
+    return BY_ANNOTATION && !suppressing($) || isUsed(ret, $.getName()) || !JohnDoe.property($.getType(), $.getName()) ? null : replace($);
   }
 }

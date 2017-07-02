@@ -24,12 +24,12 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     return "Split assignment statement";
   }
   @Override public Tip tip(final ExpressionStatement ¢) {
-    final Assignment $ = az.assignment(expression(¢));
-    return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), getClass(), ¢) {
+    final Assignment ret = az.assignment(expression(¢));
+    return ret == null || !iz.assignment(right(ret)) ? null : new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         // TODO Doron Meshulam: use class subject --yg
-        final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
+        final Assignment newTail = copy.of(ret), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
@@ -38,7 +38,7 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         l.remove(¢, g);
       }
       public Assignment rightMost(final Assignment newTail) {
-        for (@SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
+        for ( Assignment $ = newTail;; $ = az.assignment(right($)))
           if (!iz.assignment(right(az.assignment(right($)))))
             return $;
       }

@@ -26,18 +26,18 @@ public enum flatten {
    *         operands. */
   public static InfixExpression of(final InfixExpression $) {
     assert $ != null;
-    final Operator o = $.getOperator();
-    assert o != null;
-    return subject.operands(flatten.into(o, hop.operands($), an.empty.list())).to(copy.of($).getOperator());
+    final Operator ret = $.getOperator();
+    assert ret != null;
+    return subject.operands(flatten.into(ret, hop.operands($), an.empty.list())).to(copy.of($).getOperator());
   }
   private static List<Expression> add(final Expression x, final List<Expression> $) {
     $.add(x);
     return $;
   }
   private static List<Expression> into(final Operator o, final Expression x, final List<Expression> $) {
-    final Expression core = core(x);
-    final InfixExpression inner = az.infixExpression(core);
-    return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? x : core, $)
+    final Expression ret = core(x);
+    final InfixExpression inner = az.infixExpression(ret);
+    return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(ret) ? x : ret, $)
         : flatten.into(o, copy.adjust(o, hop.operands(inner)), $);
   }
   private static List<Expression> into(final Operator o, final Iterable<Expression> xs, final List<Expression> $) {

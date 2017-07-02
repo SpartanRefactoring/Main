@@ -39,7 +39,7 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
         .to("if(a || !b) f(); else if(b) g();")//
         .ignores("if(a) f(); else if (x()) g(); else f();");
   }
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
     final IfStatement s2 = copy.of(az.ifStatement(elze)), $ = copy.of(current);
     $.setExpression(operands(condition, operand(elzeIfCondition).to(NOT))//
         .to(CONDITIONAL_OR));
@@ -47,7 +47,7 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
     $.setElseStatement(s2);
     final IfStatement p = az.ifStatement(current.getParent());
     if (p == null || current.getLocationInParent().equals(IfStatement.ELSE_STATEMENT_PROPERTY))
-      r.replace(current, $, g);
+      ret.replace(current, $, g);
     else {
       final Block bl = subject.statement($).toBlock();
       IfStatement originalParent = p, newParent = copy.of(originalParent);
@@ -58,8 +58,8 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
         newParent = copy.of(originalParent);
         newParent.setThenStatement(child);
       }
-      r.replace(current, !iz.blockEssential(extract.statements(bl).get(0)) ? $ : subject.statement($).toBlock(), g);
+      ret.replace(current, !iz.blockEssential(extract.statements(bl).get(0)) ? $ : subject.statement($).toBlock(), g);
     }
-    return r;
+    return ret;
   }
 }

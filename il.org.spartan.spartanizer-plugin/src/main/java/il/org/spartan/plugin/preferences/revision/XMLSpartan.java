@@ -282,8 +282,8 @@ public class XMLSpartan {
   private static Document getFile(final IProject $) {
     try {
       return getFileInner($);
-    } catch (final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
-      return note.bug(¢);
+    } catch (final ParserConfigurationException | CoreException | SAXException | IOException ret) {
+      return note.bug(ret);
     }
   }
   /** Return XML file for given project. Creates one if absent.

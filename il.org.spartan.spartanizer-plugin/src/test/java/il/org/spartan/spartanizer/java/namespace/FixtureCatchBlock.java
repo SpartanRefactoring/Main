@@ -11,10 +11,10 @@ import il.org.spartan.spartanizer.meta.*;
 @SuppressWarnings("InfiniteRecursion")
 public class FixtureCatchBlock extends MetaFixture {
   @knows("f/0") private int f() {
-    try (@knows("fileReader") FileReader fileReader = new FileReader(toString())) {
+    try (@knows("fileReader") FileReader ret = new FileReader(toString())) {
       try (@knows({ "b", "fileReader" }) FileReader b = new FileReader(toString())) {
         if (f() == 3)
-          return fileReader.hashCode();
+          return ret.hashCode();
         try (@knows({ "c", "b", "fileReader" }) FileReader c = new FileReader(toString())) {
           try (@knows({ "f/0", "c", "b", "fileReader", "d" }) FileReader d = new FileReader(toString())) {
             if (f() == 3)
@@ -44,7 +44,7 @@ public class FixtureCatchBlock extends MetaFixture {
           return 12;
         }
       }
-      return fileReader.hashCode();
+      return ret.hashCode();
     } catch (@foreign("$") final IOException x) {
       @foreign("$") final int a = hashCode() * x.hashCode();
       @knows("a") final int y = a * a;

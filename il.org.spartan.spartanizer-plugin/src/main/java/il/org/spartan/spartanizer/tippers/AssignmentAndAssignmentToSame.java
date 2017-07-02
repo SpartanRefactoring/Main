@@ -41,18 +41,18 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
     final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a2) != ASSIGN)
       return null;
-    final SimpleName to = az.simpleName(to(a1));
-    if (!wizard.eq(to, to(a2)) || !sideEffects.free(to))
+    final SimpleName ret = az.simpleName(to(a1));
+    if (!wizard.eq(ret, to(a2)) || !sideEffects.free(ret))
       return null;
     final Expression from1 = from(a1), from2 = from(a2);
-    switch (collect.usesOf(to).in(from2).size()) {
+    switch (collect.usesOf(ret).in(from2).size()) {
       case 0:
         return null;
       case 1:
-        return go($, a1, g, to, from1, from2);
+        return go($, a1, g, ret, from1, from2);
       default:
         if (iz.deterministic(from1) && sideEffects.free(from1))
-          return go($, a1, g, to, from1, from2);
+          return go($, a1, g, ret, from1, from2);
         return null;
     }
   }

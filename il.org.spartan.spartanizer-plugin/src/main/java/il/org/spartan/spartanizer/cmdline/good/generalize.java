@@ -32,9 +32,9 @@ public enum generalize {
     return "$" + type + serial.inner++;
   }
   public static String generalizeIdentifiers(final String s) {
-    final IDocument d = new Document(ASTutils.wrapCode(s));
+    final IDocument ret = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
-    parser.setSource(d.get().toCharArray());
+    parser.setSource(ret.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
@@ -65,11 +65,11 @@ public enum generalize {
       }
     });
     try {
-      r.rewriteAST(d, null).apply(d);
+      r.rewriteAST(ret, null).apply(ret);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(¢);
     }
-    return ASTutils.extractCode(s, d);
+    return ASTutils.extractCode(s, ret);
   }
   public static void main(final String[] args) {
     System.out.println("enter whatever:");
