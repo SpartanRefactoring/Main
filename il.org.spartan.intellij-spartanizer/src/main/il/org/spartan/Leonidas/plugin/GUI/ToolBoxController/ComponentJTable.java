@@ -63,7 +63,7 @@ public class ComponentJTable extends JTable {
                 checkbox.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
                 return checkbox;
             }
-            Component text = (JTextField) value;
+            Component text = (Component) value;
             if (value instanceof JTextField) {
                 text.setBackground(getBackground());
                 text.setForeground(getForeground());
