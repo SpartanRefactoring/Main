@@ -4,8 +4,10 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 
 import java.util.Map;
 
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
  * RemoveCurlyBracesFromIfElseStatement
@@ -19,6 +21,15 @@ public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefin
 
     @Override
     public void constraints() {
+        element(1).isNot(() -> {
+            if (booleanExpression(3)){
+                anyNumberOf(statement(4));
+            }
+        });
+        element(1).isNot(() -> {
+            if (booleanExpression(5))
+                statement(6);
+        });
     }
 
     @Override
