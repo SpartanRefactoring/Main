@@ -167,7 +167,7 @@ public enum misc {
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
     new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
   }
-  public static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
+  public static ASTRewrite replaceTwoStatements(final ASTRewrite ret, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = az.block(what.getParent());
     final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);
@@ -176,8 +176,8 @@ public enum misc {
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
     copy.into(siblings, statements($));
-    r.replace(parent, $, g);
-    return r;
+    ret.replace(parent, $, g);
+    return ret;
   }
   public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
     return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)

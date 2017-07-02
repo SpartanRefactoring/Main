@@ -47,14 +47,14 @@ public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
   @Override protected ASTNode[] span() {
     return as.array(current, nextStatement);
   }
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
     final InfixExpression.Operator o = az.prefixExpression(az.expressionStatement(nextStatement)//
         .getExpression()).getOperator().equals(INCREMENT) ? op.PLUS2 : op.MINUS2;
     final VariableDeclarationFragment $ = copy.of(current());
     $.setInitializer(subject.operands(initializer, //
         initializer.getAST().newNumberLiteral("1")).to(o));
-    r.replace(current(), $, g);
-    r.remove(nextStatement, g);
-    return r;
+    ret.replace(current(), $, g);
+    ret.remove(nextStatement, g);
+    return ret;
   }
 }

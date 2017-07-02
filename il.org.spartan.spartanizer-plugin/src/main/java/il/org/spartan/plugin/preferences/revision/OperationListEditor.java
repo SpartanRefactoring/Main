@@ -54,12 +54,11 @@ public class OperationListEditor extends ListEditor {
   }
   
   private int getRealChosenOpIndex(final int i, final List<WidgetOperationEntry> es) {
-    WidgetOperationEntry chosen = es.get(0);
+    WidgetOperationEntry $ = es.get(0);
     for (final WidgetOperationEntry ¢ : es)
       if (¢.getName().equals(getList().getItem(i)))
-        chosen = ¢;
-    final int realIndex = es.indexOf(chosen);
-    return realIndex;
+        $ = ¢;
+    return es.indexOf($);
   }
   
   public void addDefaultButtonsConfig() {
@@ -229,15 +228,15 @@ public class OperationListEditor extends ListEditor {
   @Override protected String getNewInputObject() {
     final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
-    final String res = $.getResult() == null ? null : $.getName();
-    if (res == null)
-      return res;
+    final String ret = $.getResult() == null ? null : $.getName();
+    if (ret == null)
+      return ret;
     final long serialVersionUID = ObjectStreamClass.lookup($.getResult().getClass()).getSerialVersionUID();
-    final WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, new HashMap<>(), res);
+    final WidgetOperationEntry woe = new WidgetOperationEntry(serialVersionUID, new HashMap<>(), ret);
     woe.disable();
     if ($.getResult().defaultConfiguration() == null)
       new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), woe, PreferencesResources.store()).open();
-    elements_list.add(new AbstractMap.SimpleEntry<>(res, woe));
+    elements_list.add(new AbstractMap.SimpleEntry<>(ret, woe));
     final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.add(woe);
     WidgetPreferences.storeEntries(l);

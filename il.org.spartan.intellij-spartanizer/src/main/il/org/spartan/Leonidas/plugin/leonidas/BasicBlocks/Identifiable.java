@@ -4,8 +4,8 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
+import il.org.spartan.Leonidas.auxilary_layer.haz;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.UserControlled;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
@@ -86,5 +86,13 @@ public abstract class Identifiable extends NamedElement {
     public void changeName(String name) {
         nameToChange = name;
         addReplacingRule((e, m) -> JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(nameToChange));
+    }
+
+    public void notExpressionStatement() {
+        addConstraint((e, m) -> !Utils.inExpressionStatement(e));
+    }
+
+    public void noMoreMethodsApply() {
+        addConstraint((e, m) -> !haz.moreMethodsCalls(e));
     }
 }

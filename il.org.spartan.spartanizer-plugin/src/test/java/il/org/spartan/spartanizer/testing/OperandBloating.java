@@ -45,15 +45,15 @@ public class OperandBloating extends TestOperand {
     System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeBloaterUnitTest(get()));
   }
   public static String bloat(final String source) {
-    final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(source);
-    final String wrap = w.on(source);
+    final WrapIntoComilationUnit ret = WrapIntoComilationUnit.find(source);
+    final String wrap = ret.on(source);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument $ = new Document(wrap);
       r.rewriteAST($, null).apply($);
-      return w.off($.get());
+      return ret.off($.get());
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       return note.bug(¢);
     }
@@ -68,24 +68,24 @@ public class OperandBloating extends TestOperand {
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String $1, peeled1;
+      final String ret, peeled1;
       if (!needRenaming) {
-        $1 = makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($)) + "";
+        ret = makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($)) + "";
         peeled1 = w.off(makeAST.COMPILATION_UNIT.from(doc.get()) + "");
       } else {
-        $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
+        ret = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
         peeled1 = w.off(rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc.get())) + "");
       }
       if (peeled1.equals(get()))
         azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
       if (tide.clean(peeled1).equals(tide.clean(get())))
         azzert.that("Bloatong of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
-      if ($1.equals(peeled1) || Trivia.essence(peeled1).equals(Trivia.essence($1)))
-        return new OperandBloating($1);
+      if (ret.equals(peeled1) || Trivia.essence(peeled1).equals(Trivia.essence(ret)))
+        return new OperandBloating(ret);
       copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", Trivia.escapeQuotes(Trivia.essence(peeled1)),
-          Trivia.escapeQuotes(Trivia.essence($1)));
-      azzert.that(Trivia.essence(peeled1), is(Trivia.essence($1)));
-      return new OperandBloating($1);
+          Trivia.escapeQuotes(Trivia.essence(ret)));
+      azzert.that(Trivia.essence(peeled1), is(Trivia.essence(ret)));
+      return new OperandBloating(ret);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(this, ¢);
     }
@@ -101,13 +101,13 @@ public class OperandBloating extends TestOperand {
       final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
-      if (wrap.equals(unpeeled))
+      final String ret = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
+      if (wrap.equals(ret))
         azzert.fail("Nothing done on " + get());
-      if (unpeeled.equals(get()))
-        azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
-      assertSimilar($1, unpeeled);
-      return new OperandBloating(createCUWithBinding(unpeeled), unpeeled);
+      if (ret.equals(get()))
+        azzert.that("No trimming of " + get(), ret, is(not(get())));
+      assertSimilar($1, ret);
+      return new OperandBloating(createCUWithBinding(ret), ret);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(¢);
     }
@@ -126,16 +126,16 @@ public class OperandBloating extends TestOperand {
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String unpeeled = doc.get();
-      if (wrap.equals(unpeeled))
+      final String ret = doc.get();
+      if (wrap.equals(ret))
         azzert.fail("Nothing done on " + get());
-      if (unpeeled.equals(get()))
-        azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
-      m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
+      if (ret.equals(get()))
+        azzert.that("No trimming of " + get(), ret, is(not(get())));
+      m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(ret)), f);
       assertSimilar($, m + "");
-      final ASTParser p = make.COMPILATION_UNIT.parser(unpeeled);
+      final ASTParser p = make.COMPILATION_UNIT.parser(ret);
       p.setResolveBindings(true);
-      return new OperandBloating(az.compilationUnit(p.createAST(null)), unpeeled);
+      return new OperandBloating(az.compilationUnit(p.createAST(null)), ret);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(this, ¢);
     }
@@ -201,8 +201,7 @@ public class OperandBloating extends TestOperand {
     }
   }
   public void checkDiff(final String wrap, final String unpeeled) {
-    if (!wrap.equals(unpeeled) && !Trivia.essence(get()).equals(Trivia.essence(unpeeled)))
-      if (!unpeeled.equals(get()) && unpeeled.equals(get()))
-        assertSimilar(get(), unpeeled);
+    if (!wrap.equals(unpeeled) && !Trivia.essence(get()).equals(Trivia.essence(unpeeled)) && !unpeeled.equals(get()) && unpeeled.equals(get()))
+      assertSimilar(get(), unpeeled);
   }
 }

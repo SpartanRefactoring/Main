@@ -47,15 +47,15 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       return replacement(GREATER, threshold - 1, $);
     if (o == LESS_EQUALS)
       return replacement(LESS, threshold + 1, $);
-    final AST ast = $.getAST();
+    final AST ret = $.getAST();
     if (threshold < 0)
-      return ast.newBooleanLiteral(!in(o, EQUALS, LESS));
+      return ret.newBooleanLiteral(!in(o, EQUALS, LESS));
     if (o == EQUALS)
       return threshold == 0 ? $ : null;
     if (o == NOT_EQUALS || o == GREATER)
       return threshold != 0 ? null : make.notOf($);
     if (o == LESS)
-      return threshold == 0 ? ast.newBooleanLiteral(false) : threshold != 1 ? null : $;
+      return threshold == 0 ? ret.newBooleanLiteral(false) : threshold != 1 ? null : $;
     assert fault.unreachable() : fault.dump() + //
         "\n threshold='" + threshold + //
         "\n operator ='" + o + //

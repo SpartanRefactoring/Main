@@ -104,8 +104,8 @@ public final class Namespace implements Environment {
     return has(identifier) || children.stream().anyMatch(λ -> λ.hasComplex(identifier));
   }
   static Namespace spawnFor(final Namespace $, final ForStatement s) {
-    final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
-    return s == null || x == null ? $ : $.spawn(for¢).put(x);
+    final VariableDeclarationExpression ret = az.variableDeclarationExpression(s);
+    return s == null || ret == null ? $ : $.spawn(for¢).put(ret);
   }
   static Namespace spawnEnhancedFor(final Namespace n, final EnhancedForStatement s) {
     return s == null ? n : n.spawn(foreach).put(s.getParameter());

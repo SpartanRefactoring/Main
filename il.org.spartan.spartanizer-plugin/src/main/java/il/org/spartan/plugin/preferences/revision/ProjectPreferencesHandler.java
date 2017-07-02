@@ -174,11 +174,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
      * org.eclipse.ui.dialogs.CheckedTreeSelectionDialog#createTreeViewer(org.
      * eclipse.swt.widgets.Composite) */
     @Override protected CheckboxTreeViewer createTreeViewer(final Composite parent) {
-      final CheckboxTreeViewer $ = super.createTreeViewer(parent);
+      final CheckboxTreeViewer ret = super.createTreeViewer(parent);
       // addSelectionListener($); // deprecated method- by click
       final Map<SpartanElement, ToolTip> tooltips = new HashMap<>();
       final Map<ToolTip, Rectangle> bounds = new HashMap<>();
-      $.getTree().addListener(SWT.MouseHover, new Listener() {
+      ret.getTree().addListener(SWT.MouseHover, new Listener() {
         @Override public void handleEvent(final Event e) {
           if (e == null)
             return;
@@ -201,7 +201,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             tt.setAutoHide(true);
             tooltips.put(e, tt);
           }
-          final Rectangle tp = $.getTree().getBounds();
+          final Rectangle tp = ret.getTree().getBounds();
           final Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
           final Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
           final ToolTip tt = tooltips.get(e);
@@ -210,17 +210,17 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           tt.setVisible(true);
         }
       });
-      $.getTree().addListener(SWT.MouseMove, e -> {
+      ret.getTree().addListener(SWT.MouseMove, e -> {
         for (final ToolTip ¢ : tooltips.values())
           if (¢.isVisible()) {
-            final Rectangle tp = $.getTree().getBounds();
+            final Rectangle tp = ret.getTree().getBounds();
             if (!bounds.get(¢).contains(Display.getCurrent().getActiveShell().toDisplay(tp.x + e.x, tp.y + e.y)))
               ¢.setVisible(false);
             break;
           }
       });
-      $.getTree().addListener(SWT.MouseWheel, e -> tooltips.values().forEach(λ -> λ.setVisible(false)));
-      $.addDoubleClickListener(new IDoubleClickListener() {
+      ret.getTree().addListener(SWT.MouseWheel, e -> tooltips.values().forEach(λ -> λ.setVisible(false)));
+      ret.addDoubleClickListener(new IDoubleClickListener() {
         @Override public void doubleClick(final DoubleClickEvent e) {
           final ISelection s = e.getSelection();
           if (s == null || s.isEmpty() || !(s instanceof TreeSelection))
@@ -238,7 +238,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
                 return st.name();
               }
               @Override public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
-                @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
+                 final DocumentChange $ = new DocumentChange(st.name(), d);
                 $.setEdit(new ReplaceEdit(0, before.length(), after));
                 return $;
               }
@@ -251,13 +251,13 @@ public class ProjectPreferencesHandler extends AbstractHandler {
                 return new RefactoringStatus();
               }
             })).run(Display.getCurrent().getActiveShell(), "Tipper Preview") == Window.OK)
-              $.setChecked(st, true);
+              ret.setChecked(st, true);
           } catch (final InterruptedException ¢¢) {
             note.cancel(this, ¢¢);
           }
         }
       });
-      return $;
+      return ret;
     }
   }
 

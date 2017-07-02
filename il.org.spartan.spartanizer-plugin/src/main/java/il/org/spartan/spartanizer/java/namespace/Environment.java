@@ -182,9 +182,9 @@ public interface Environment {
     if (n == null)
       return null;
     for (final ASTNode ¢ : ancestors.of(n)) {
-      final Namespace $ = property.obtain(Namespace.class).from(¢);
-      if ($ != null)
-        return $;
+      final Namespace ret = property.obtain(Namespace.class).from(¢);
+      if (ret != null)
+        return ret;
     }
     Environment.NULL.spawn().fillScope(n.getRoot());
     for (final ASTNode ¢ : ancestors.of(n)) {

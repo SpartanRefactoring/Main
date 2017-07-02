@@ -106,21 +106,21 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
       return nil.forgetting(note.bug("Missing attribute"));
     if (!(o instanceof Class))
       return nil.forgetting(note.bug("Attribute of wrong __"));
-    @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) (Class<?>) o;
-    return Tipper.instantiate(tipperClass);
+    @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> ret = (Class<? extends Tipper<N>>) (Class<?>) o;
+    return Tipper.instantiate(ret);
   }
   private static Object getKey(final IMarker $) {
     try {
       return $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
-    } catch (final CoreException ¢) {
-      return note.bug(¢);
+    } catch (final CoreException ret) {
+      return note.bug(ret);
     }
   }
   public static <X extends ASTNode, T extends Tipper<X>> Tipper<X> instantiate(final Class<T> $) {
     try {
       return $.newInstance();
-    } catch (InstantiationException | IllegalAccessException ¢) {
-      return note.bug(¢);
+    } catch (InstantiationException | IllegalAccessException ret) {
+      return note.bug(ret);
     }
   }
 

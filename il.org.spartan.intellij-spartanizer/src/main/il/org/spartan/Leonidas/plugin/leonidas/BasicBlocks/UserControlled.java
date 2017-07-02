@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -10,5 +10,6 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserControlled {
     String name();
+
     String templatePart();
 }

@@ -58,8 +58,8 @@ public final class Recurser<T> {
   private static List<? extends ASTNode> march(final ASTNode $) {
     try {
       return marchingList($);
-    } catch (final NullPointerException ¢) {
-      return note.bug(¢);
+    } catch (final NullPointerException ret) {
+      return note.bug(ret);
     }
   }
 

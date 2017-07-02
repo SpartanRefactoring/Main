@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+
 
 import java.util.concurrent.atomic.*;
 import java.util.function.Consumer;
@@ -12,13 +12,13 @@ import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
-import org.w3c.dom.*;
+
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
-import il.org.spartan.spartanizer.research.analyses.*;
+
 
 /** TODO Artium Nihamkin please add a description
  * @author Artium Nihamkin
@@ -133,11 +133,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
       ZOOMER_AUTO_ACTIVISION_VALUE.set(store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
       Eclipse.commandSetToggle("il.org.spartan.AthensToggle", store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
-      final Document doc = XMLSpartan.getXML(Eclipse.getAllSpartanizerProjects().get(0));
-      doc.getDocumentElement().normalize();
-      notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
-          : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
-      notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
+//      final Document doc = XMLSpartan.getXML(Eclipse.getAllSpartanizerProjects().get(0));
+//      doc.getDocumentElement().normalize();
+//      notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
+//          : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
+//      notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
     }, (Consumer<Exception>) note::bug);
   }
 }

@@ -32,18 +32,18 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
   @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
-    final List<Expression> es = hop.operands(x);
-    assert es.size() > 1;
+    final List<Expression> ret = hop.operands(x);
+    assert ret.size() > 1;
     final List<Expression> $ = an.empty.list();
     boolean isArithmetic = true;
-    for (final Integer i : range.from(0).to(es.size())) {
-      final Expression e = es.get(i);
+    for (final Integer i : range.from(0).to(ret.size())) {
+      final Expression e = ret.get(i);
       if (!iz.emptyStringLiteral(e)) {
         $.add(e);
         if (type.of(e) == Certain.STRING)
           isArithmetic = false;
       } else {
-        if (i < es.size() - 1 && type.of(es.get(i + 1)) == Certain.STRING)
+        if (i < ret.size() - 1 && type.of(ret.get(i + 1)) == Certain.STRING)
           continue;
         if (isArithmetic) {
           $.add(e);
@@ -51,6 +51,6 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
         }
       }
     }
-    return $.size() == es.size() ? null : $.size() == 1 ? the.firstOf($) : subject.operands($).to(op.PLUS2);
+    return $.size() == ret.size() ? null : $.size() == 1 ? the.firstOf($) : subject.operands($).to(op.PLUS2);
   }
 }

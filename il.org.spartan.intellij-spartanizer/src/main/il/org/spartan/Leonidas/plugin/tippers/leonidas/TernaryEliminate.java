@@ -35,7 +35,7 @@ public class TernaryEliminate implements LeonidasTipperDefinition {
         return new ExampleMapFactory()
                 .put("x == 9 ? 9:9", "9")
                 .put("true ? false : false", "false")
-//                .put("if(( x == a ? b : b) == b){}", "if ((b) == b) {}")
+                .put("if(( x == a ? b : b) == b){}", "if ((b) == b) {}")
                 .put("true? true:false", null)
                 .put("x? x:y", null)
                 .put("return x? x:x;", "return x;")

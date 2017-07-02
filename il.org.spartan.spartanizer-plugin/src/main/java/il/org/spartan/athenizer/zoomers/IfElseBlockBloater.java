@@ -35,7 +35,7 @@ public class IfElseBlockBloater extends IfAbstractPattern implements Category.Bl
         .to("if(x) {a();b();} else {h();}")//
     ;
   }
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite ret, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);
     if (!iz.block(then(current))) {
       final Block b = current.getAST().newBlock();
@@ -47,7 +47,7 @@ public class IfElseBlockBloater extends IfAbstractPattern implements Category.Bl
       statements(b).add(copy.of(elze(current)));
       $.setElseStatement(b);
     }
-    r.replace(current, $, g);
-    return r;
+    ret.replace(current, $, g);
+    return ret;
   }
 }
