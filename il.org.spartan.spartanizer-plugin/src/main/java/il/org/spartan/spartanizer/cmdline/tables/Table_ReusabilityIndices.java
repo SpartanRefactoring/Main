@@ -26,7 +26,7 @@ public class Table_ReusabilityIndices {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(getCurrentLocation());
+            done(current.location);
           }
         });
       }
@@ -34,7 +34,7 @@ public class Table_ReusabilityIndices {
       protected void done(final String path) {
         addMissingKeys();
         initializeWriter();
-        writer.col("Project", presentSourceName);
+        writer.col("Project", current.relativePath);
         try (Table t = new Table("rindices")) {
           for (final String category : usage.keySet()) {
             final Map<String, Integer> map = usage.get(category);

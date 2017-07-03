@@ -6,8 +6,6 @@ import org.eclipse.jgit.transport.*;
 import org.eclipse.ui.*;
 import static org.eclipse.jgit.transport.RemoteRefUpdate.Status.*;
 
-import fluent.ly.*;
-
 /** Git push command.
  * @author Ori Roth
  * @since 2017-04-24 */

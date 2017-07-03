@@ -66,9 +66,9 @@ public class BasicStats extends ASTInFilesVisitor{
      System.err.printf("Num Classes: %d\t Num Methods: %d\n", classNum, methodNum);
   }
   
-  public void visitAll(final ASTVisitor ¢) {
+  public void visitAll(final ASTVisitor v) {
   notify.beginBatch();
-  astVisitor = ¢;
+  astVisitor = v;
   locations.forEach(
       λ -> {
         setCurrentLocation(λ);
@@ -76,8 +76,8 @@ public class BasicStats extends ASTInFilesVisitor{
         visitLocation();
         try {
           out.write(getCurrentLocation() + "\t" + classNum + "\t" + methodNum + "\n");
-        } catch (IOException x) {
-          x.printStackTrace();
+        } catch (IOException ¢) {
+          ¢.printStackTrace();
         }
       }
     );

@@ -20,35 +20,31 @@ import junit.framework.*;
  * @author Yossi Gil
  * @since 2017-03-09 */
 public class GrandVisitor {
-  public static class ExpressionChain {
-    public static void main(final String[] args) {
-      out = system.callingClassUniqueWriter();
-      new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
-        {
-          hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
-            @Override public Void fire() {
-              return null;
-            }
-            @Override public boolean ok(final ExpressionStatement ¢) {
-              return compute.useSpots(¢.getExpression()).size() == 1;
-            }
-          });
-        }
-
-        @Override protected void record(final String summary) {
-          try {
-            out.write(summary);
-          } catch (final IOException ¢) {
-            System.err.println("Error: " + ¢.getMessage());
-          }
-          super.record(summary);
-        }
-      });
-    }
-  }
-
   protected static final String[] defaultArguments = as.array("..");
-  public static BufferedWriter out;
+  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
+  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
+  /* If true, no dotting is printed */
+  @External(alias = "s", value = "silent") protected boolean silent;
+
+  public class Current {
+    public Current(List<String> locations) {
+      this.locations = locations.subList(0, locations.size());
+    }
+
+    public File file;
+    public String fileName;
+    public String absolutePath;
+    public String location;
+    public BufferedWriter out;
+    public final List<String> locations;
+    public ASTVisitor visitor;
+    public String relativePath;
+    public String locationPath;
+    public String locationName;
+  };
+
+  public final Current current;
 
   /** Check whether given string containing Java code contains {@link Test}
    * annotations
@@ -69,7 +65,7 @@ public class GrandVisitor {
     });
     return $.get();
   }
-  public static void main(final String[] args) {
+  public static void main(final String[] args )throws IOException {
     new GrandVisitor(args) {
       /* Override here which ever method you like */
     }.visitAll(new ASTVisitor(true) {
@@ -89,13 +85,6 @@ public class GrandVisitor {
     }
   }
 
-  protected String absolutePath;
-  private ASTVisitor astVisitor;
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
-  protected File currentFile;
-  private String currentLocation;
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
-  private final List<String> locations;
   public final Tappers notify = new Tappers()//
       .push(new Tapper() {
         /** @formatter:off */
@@ -109,52 +98,26 @@ public class GrandVisitor {
         }
       );
 
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
-
-  protected String presentSourceName;
-
-  protected String presentSourcePath;
-
-  protected String relativePath;
-
-    @External(alias = "s", value = "silent") protected boolean silent;
-
-  public GrandVisitor() {
-    this(null);
-  }
+    public GrandVisitor() {
+      this(null);
+    }
 
   public GrandVisitor(final String[] args) {
-    locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
+    current = new Current(External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this));
   }
 
-  private void collect(final CompilationUnit ¢) {
-    if (¢ != null)
-      ¢.accept(astVisitor);
-  }
-
-  void collect(final String javaCode) {
-  collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
- }
-
-  public String getCurrentLocation() {
-    return currentLocation;
-  }
 
   public GrandVisitor listen(final Tapper ¢) {
     notify.push(¢);
     return this;
   }
 
-  public void setCurrentLocation(final String currentLocation) {
-    this.currentLocation = currentLocation;
-  }
-
-  public void visitAll(final ASTVisitor ¢) {
+    public void visitAll(final ASTVisitor ¢) {
     notify.beginBatch();
-    astVisitor = ¢;
-    locations.forEach(
+    current.visitor = ¢;
+    current.locations.forEach(
         λ -> {
-          setCurrentLocation(λ);
+          current.location = λ;
           visitLocation();
         }
         );
@@ -165,8 +128,8 @@ public class GrandVisitor {
     notify.beginFile();
     if (Utils.isProductionCode(f) && productionCode(f))
       try {
-        absolutePath = f.getAbsolutePath();
-        relativePath = f.getPath();
+        current.absolutePath = f.getAbsolutePath();
+        current.relativePath = f.getPath();
         collect(FileUtils.read(f));
       } catch (final IOException ¢) {
         note.io(¢, "File = " + f);
@@ -174,10 +137,19 @@ public class GrandVisitor {
     notify.endFile();
   }
 
+  private void collect(final CompilationUnit ¢) {
+    if (¢ != null)
+      ¢.accept(current.visitor);
+  }
+
   protected void visitLocation() {
     notify.beginLocation();
-    presentSourceName = system.folder2File(presentSourcePath = inputFolder + File.separator + getCurrentLocation());
-    new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> visitFile(currentFile = λ));
+    current.locationName = system.folder2File(current.locationPath = inputFolder + File.separator + current.location); 
+    new FilesGenerator(".java").from(current.locationPath).forEach(λ -> visitFile(current.file = λ));
     notify.endLocation();
   }
+
+  void collect(final String javaCode) {
+  collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+ }
 }

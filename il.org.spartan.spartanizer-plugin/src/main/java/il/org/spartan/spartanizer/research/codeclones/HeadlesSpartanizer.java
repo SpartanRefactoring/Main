@@ -15,11 +15,7 @@ import il.org.spartan.utils.*;
  * @since 2017-04-11 */
 public class HeadlesSpartanizer extends GrandVisitor {
   public final TextualTraversals traversals = new TextualTraversals();
-  File current;
 
-  protected final File current() {
-    return current;
-  }
   protected void setUp() {
     /**/
   }
@@ -37,16 +33,16 @@ public class HeadlesSpartanizer extends GrandVisitor {
   }
   protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
     try {
-      FileUtils.writeToFile(current().getAbsolutePath(), after);
+      FileUtils.writeToFile(v.current.absolutePath, after);
     } catch (final FileNotFoundException ¢) {
       note.io(¢);
     }
   }
+  GrandVisitor v;
   public final void go(final String dirPath) {
     setUp();
-    new GrandVisitor(new String[] { dirPath }) {
+    (v = new GrandVisitor(new String[] { dirPath }) {
       @Override public void visitFile(final File f) {
-        current = f;
         if (!spartanize(f))
           return;
         String beforeChange;
@@ -57,7 +53,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
           note.io(¢);
         }
       }
-    }.visitAll(astVisitor());
+    }).visitAll(astVisitor());
     tearDown();
   }
   public final String fixedPoint(final String from) {

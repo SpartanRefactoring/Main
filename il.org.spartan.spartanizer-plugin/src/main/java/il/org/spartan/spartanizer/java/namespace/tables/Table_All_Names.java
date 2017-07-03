@@ -17,7 +17,7 @@ public class Table_All_Names extends NominalTables {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(getCurrentLocation());
+            done(current.location);
           }
         });
       }
