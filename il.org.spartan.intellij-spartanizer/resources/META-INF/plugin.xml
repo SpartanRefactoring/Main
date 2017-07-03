@@ -87,12 +87,6 @@
                 icon="Icons.Tool_Box_Controller">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
-        <action class="il.org.spartan.Leonidas.plugin.GUI.About.AboutAction"
-                id="myPlugin7"
-                text="About"
-                icon="Icons.Info">
-            <add-to-group group-id="LeonidasGroup" anchor="last"/>
-        </action>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizeProjectAction"
                 id="myPlugin8"
                 text="Spartanize Project"
@@ -115,6 +109,12 @@
                 id="myPlugin11"
                 text="Analyze File"
                 icon="Icons.LeonidasSmallGray">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.About.AboutAction"
+                id="myPlugin7"
+                text="About"
+                icon="Icons.Info">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
     </actions>
