@@ -126,7 +126,7 @@ public class Playground extends JFrame {
             outputArea.setText("Input didn't contain legal java code!");
             stepInit = true;
         } else {
-            pfw = pfc.createFileFromString(pfw.extractCanonicalSubtreeString());
+            pfw = pfc.createFileFromString(pfw.extractRelevantSubtreeString());
             if (!recursive)
 				Spartanizer.spartanizeFileOnePass(pfw.getFile());
 			else
