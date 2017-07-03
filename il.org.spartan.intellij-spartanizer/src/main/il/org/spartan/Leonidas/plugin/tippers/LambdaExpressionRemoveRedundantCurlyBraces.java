@@ -2,10 +2,13 @@ package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiLambdaExpressionImpl;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+
+import java.util.Map;
 
 import static il.org.spartan.Leonidas.auxilary_layer.step.*;
 
@@ -73,4 +76,10 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
         return PsiLambdaExpressionImpl.class;
     }
 
+    @Override
+    public Map<String, String> getExamples() {
+        return new ExampleMapFactory()
+                .put("() -> {return x;}", "() -> x")
+                .map();
+    }
 }
