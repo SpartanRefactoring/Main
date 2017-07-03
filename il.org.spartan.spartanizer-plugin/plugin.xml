@@ -565,8 +565,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="C" label="Current Selection"/>
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="A" label="Active Window"/>
 	  <command commandId="il.org.spartan.AthensToggle" style="push" mnemonic="D" label="Toggle Athenizer"/>
-	  <command commandId="il.org.spartan.ZoomIn" style="push" mnemonic="I" label="Zoom In Once"/>
-	  <command commandId="il.org.spartan.ZoomOut" style="push" mnemonic="O" label="Zoom Out Once"/>
+	  <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="I" label="Zoom In Once"/>
+	  <command commandId="il.org.spartan.SpartanGlobal" style="push" mnemonic="O" label="Zoom Out Once"/>
     </menu>
     <menu label="Widget" mnemonic="W">
 	  <command commandId="il.org.spartan.SpartanWidget" style="push" mnemonic="W"/>
