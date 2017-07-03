@@ -60,8 +60,8 @@ public class BasicStats extends ASTInFilesVisitor{
      });
      try {
       out.close();
-    } catch (IOException x) {
-      x.printStackTrace();
+    } catch (IOException ¢) {
+      ¢.printStackTrace();
     }
      System.err.printf("Num Classes: %d\t Num Methods: %d\n", classNum, methodNum);
   }
