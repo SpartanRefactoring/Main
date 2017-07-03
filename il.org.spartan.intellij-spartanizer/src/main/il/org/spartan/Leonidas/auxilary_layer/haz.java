@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 
 /**
  * Utils class that helps checking if a Psi tree has a specific component.
@@ -82,4 +83,7 @@ public enum haz {
         return mlo != null && mlo.getModifierList().hasExplicitModifier("abstract");
     }
 
+    public static boolean moreMethodsCalls(Encapsulator e) {
+         return e.getInner().getParent().getParent().getParent().getNextSibling().getText().equals(".");
+    }
 }
