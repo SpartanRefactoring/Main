@@ -50,7 +50,8 @@ public class AddTipperUI extends JFrame {
     public AddTipperUI() {
         initComponents();
 
-        setSize(600, 800);
+        setSize(600, 600);
+        setTitle("Add New Tipper");
         setLocationRelativeTo(null);
         matcherTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         replacerTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
