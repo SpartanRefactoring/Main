@@ -1,4 +1,4 @@
-package il.org.spartan.java.cfg.revision;
+package il.org.spartan.java.cfg;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -14,8 +14,8 @@ public class MethodBuilder {
     this.cfg = cfg;
     this.methodDeclaration = methodDeclaration;
   }
-  public static MethodBuilder of(CFG cfg, MethodDeclaration methodDeclaration){
-    return new MethodBuilder(cfg,methodDeclaration);
+  public static MethodBuilder of(CFG g, MethodDeclaration methodDeclaration){
+    return new MethodBuilder(g,methodDeclaration);
   }
   
   void go(){

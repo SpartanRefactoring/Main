@@ -167,4 +167,34 @@ public enum compute {
       }
     }.map(x);
   }
+  public static void cfg(BodyDeclaration root) {
+    new ASTMapReducer<List<Statement>>() {
+      @Override public List<Statement> reduce() {
+        return an.empty.list();
+      }
+      @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {
+        $.addAll(ss);
+        return $;
+      }
+      @Override protected List<Statement> map(final Assignment ¢) {
+        return wizard.listMe(¢);
+      }
+      @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
+        return wizard.listMe(¢);
+      }
+      @Override protected List<Statement> map(final MethodInvocation ¢) {
+        return wizard.listMe(¢);
+      }
+      @Override protected List<Statement> map(final PostfixExpression ¢) {
+        return wizard.listMe(¢);
+      }
+      /** the operator is not in INCREMENT DECREMENT x \not\in \{\} */
+      @Override protected List<Statement> map(final PrefixExpression ¢) {
+        return !is.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() : wizard.listMe(¢);
+      }
+      @Override protected List<Statement> map(final SuperMethodInvocation ¢) {
+        return wizard.listMe(¢);
+      }
+    }.map(root);
+  }
 }

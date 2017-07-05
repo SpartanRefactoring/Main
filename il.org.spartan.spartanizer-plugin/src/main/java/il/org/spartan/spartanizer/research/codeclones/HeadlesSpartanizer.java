@@ -38,7 +38,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
       note.io(¢);
     }
   }
-  GrandVisitor v;
+  JavaProductionFilesVisitor v;
   public final void go(final String dirPath) {
     setUp();
     (v = new GrandVisitor(new String[] { dirPath }) {

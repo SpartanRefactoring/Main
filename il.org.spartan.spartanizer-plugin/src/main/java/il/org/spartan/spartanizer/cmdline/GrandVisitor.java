@@ -19,14 +19,7 @@ import junit.framework.*;
  * <p>
  * @author Yossi Gil
  * @since 2017-03-09 */
-public class GrandVisitor {
-  protected static final String[] defaultArguments = as.array("..");
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
-  /* If true, no dotting is printed */
-  @External(alias = "s", value = "silent") protected boolean silent;
-
+public class GrandVisitor extends JavaProductionFilesVisitor {
   public class Current {
     public Current(List<String> locations) {
       this.locations = locations.subList(0, locations.size());
@@ -44,112 +37,12 @@ public class GrandVisitor {
     public String locationName;
   };
 
-  public final Current current;
-
-  /** Check whether given string containing Java code contains {@link Test}
-   * annotations
-   * <p>
-   * @param f
-   * @return */
-  public static boolean containsTestAnnotation(final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    final Bool $ = new Bool();
-    cu.accept(new ASTTrotter() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        if (extract.annotations(node).stream().noneMatch(λ -> "@Test".equals(λ + "")))
-          return true;
-        startFolding();
-        $.set();
-        return true;
-      }
-    });
-    return $.get();
-  }
-  public static void main(final String[] args )throws IOException {
-    new GrandVisitor(args) {
-      /* Override here which ever method you like */
-    }.visitAll(new ASTVisitor(true) {
-      /* OVerride here which ever method you like */
-    });
-  }
-  /** Determines whether a file is production code, using the heuristic that
-   * production code does not contain {@code @}{@link Test} annotations
-   * <p>
-   * @return */
-  public static boolean productionCode(@¢ final File $) {
-    try {
-      return !containsTestAnnotation(FileUtils.read($));
-    } catch (final IOException ¢) {
-      note.io(¢, "File = " + $);
-      return false;
-    }
-  }
-
-  public final Tappers notify = new Tappers()//
-      .push(new Tapper() {
-        /** @formatter:off */
-        Dotter dotter = new Dotter();
-        @Override public void beginBatch() { dotter.click(); }
-        @Override public void beginFile() { dotter.click(); }
-        @Override public void beginLocation() { dotter.click(); }
-        @Override public void endBatch() { dotter.end(); }
-        @Override public void endFile() { dotter.click(); }
-        @Override public void endLocation() { dotter.clear(); }
-        }
-      );
-
-    public GrandVisitor() {
+  public GrandVisitor() {
       this(null);
     }
 
   public GrandVisitor(final String[] args) {
-    current = new Current(External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this));
+    super(args);
+
   }
-
-
-  public GrandVisitor listen(final Tapper ¢) {
-    notify.push(¢);
-    return this;
-  }
-
-    public void visitAll(final ASTVisitor ¢) {
-    notify.beginBatch();
-    current.visitor = ¢;
-    current.locations.forEach(
-        λ -> {
-          current.location = λ;
-          visitLocation();
-        }
-        );
-    notify.endBatch();
-  }
-
-  public void visitFile(final File f) {
-    notify.beginFile();
-    if (Utils.isProductionCode(f) && productionCode(f))
-      try {
-        current.absolutePath = f.getAbsolutePath();
-        current.relativePath = f.getPath();
-        collect(FileUtils.read(f));
-      } catch (final IOException ¢) {
-        note.io(¢, "File = " + f);
-      }
-    notify.endFile();
-  }
-
-  private void collect(final CompilationUnit ¢) {
-    if (¢ != null)
-      ¢.accept(current.visitor);
-  }
-
-  protected void visitLocation() {
-    notify.beginLocation();
-    current.locationName = system.folder2File(current.locationPath = inputFolder + File.separator + current.location); 
-    new FilesGenerator(".java").from(current.locationPath).forEach(λ -> visitFile(current.file = λ));
-    notify.endLocation();
-  }
-
-  void collect(final String javaCode) {
-  collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
- }
 }
