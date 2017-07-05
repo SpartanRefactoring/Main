@@ -37,7 +37,7 @@ public class TopMenuHandlers extends AbstractHandler {
               λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
           put("il.org.spartan.ZoomTool", λ -> InflateHandler.goAggressiveAction(Selection.Util.current().setUseBinding()));
           put("il.org.spartan.ZoomSelection", e -> {
-            final WrappedCompilationUnit wcu = the.firstOf(Selection.Util.current().inner).build();
+            final WrappedCompilationUnit wcu = the.firstOf(Selection.Util.current().setUseBinding().inner).build();
             SingleFlater.commitChanges(
                 SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(Selection.Util.current().textSelection),
                 ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, null, null, null, false);

@@ -69,7 +69,7 @@ class Table_Effectiveness extends NanoTable {
       }
       void initializeWriter() {
         if (table == null)
-          table = new Table(Table.classToNormalizedFileName(Table_Effectiveness.class) + "-" + corpus, outputFolder);
+          table = new Table(Table.classToNormalizedFileName(Table_Effectiveness.class) + "-" + getCurrentLocation(), outputFolder);
       }
     }.visitAll(visitor);
     table.close();

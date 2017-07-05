@@ -80,7 +80,14 @@ public abstract class Identifiable extends NamedElement {
 
     public void notContains(String s) {
         notContainsList.add(s);
-        addConstraint((e, m) -> notContainsList.stream().noneMatch(ncs -> az.identifier(e.inner).getText().contains(ncs)));
+        addConstraint(
+                (e, m) ->
+                        notContainsList
+                                .stream()
+                                .noneMatch(ncs ->
+                                        (iz.identifier(e.inner) && (az.identifier(e.inner)
+                                                .getText()
+                                                .contains(ncs)))));
     }
 
     public void changeName(String name) {

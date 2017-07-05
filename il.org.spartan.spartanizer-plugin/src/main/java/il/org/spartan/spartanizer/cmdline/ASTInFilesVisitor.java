@@ -28,21 +28,22 @@ import junit.framework.*;
  * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  // fields
+  /** What arguments to use if none are passed to main */
   protected static final String[] defaultArguments = as.array("..");
+  /** Where to place our reports? */
+  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
+  /** The starting point of all input folders */ 
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
   protected static BufferedWriter out;
   protected String absolutePath;
-  private ASTVisitor astVisitor;
+  protected ASTVisitor astVisitor;
   protected File currentFile;
-  private String currentLocation;
-  private final List<String> locations;
+  private static String currentLocation;
+  protected final List<String> locations;
   protected String presentSourceName;
   protected String presentSourcePath;
   protected String relativePath;
   @External(alias = "s", value = "silent") protected boolean silent;
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
 
   public static class BucketMethods {
     static boolean letItBeIn(final List<Statement> ¢) {
@@ -249,7 +250,7 @@ public class ASTInFilesVisitor {
   collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
  }
 
-  public String getCurrentLocation() {
+  public static String getCurrentLocation() {
     return currentLocation;
   }
 

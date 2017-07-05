@@ -4,6 +4,7 @@ import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.jgit.transport.*;
 import org.eclipse.ui.*;
+import static org.eclipse.jgit.transport.RemoteRefUpdate.Status.*;
 
 /** Git push command.
  * @author Ori Roth
@@ -25,11 +26,15 @@ public class GitPushOperation extends GitOperation {
       for (final PushResult p : g.push().call())
         if (p.getRemoteUpdates().size() == 1)
           for (final RemoteRefUpdate ¢ : p.getRemoteUpdates())
-            if (¢.getStatus() == RemoteRefUpdate.Status.UP_TO_DATE) {
+            if (¢.getStatus() == UP_TO_DATE) {
               displayMessage("No commits to push");
               return;
+            } else if (¢.getStatus() != OK) {
+              displayMessage("Git Error: Pull failed");
+              return;
             }
-    } catch (final InvalidRemoteException ¢) {
+    }
+    catch (final InvalidRemoteException ¢) {
       displayMessage("Git Error: Push failed due to an invalid remote");
       return;
     } catch (final TransportException ¢) {

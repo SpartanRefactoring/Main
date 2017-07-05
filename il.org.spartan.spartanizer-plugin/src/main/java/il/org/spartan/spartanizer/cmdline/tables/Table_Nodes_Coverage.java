@@ -29,7 +29,7 @@ public class Table_Nodes_Coverage {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            summarizeStatistics(getCurrentLocation());
+            summarizeStatistics(current.location);
             statistics.clear();
           }
         });

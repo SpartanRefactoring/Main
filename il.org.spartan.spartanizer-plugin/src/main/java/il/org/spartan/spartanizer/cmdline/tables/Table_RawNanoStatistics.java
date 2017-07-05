@@ -43,8 +43,8 @@ public class Table_RawNanoStatistics extends NanoTable {
         listen(new Tapper() {
           @Override public void endLocation() {
             initializeWriter();
-            summarize(getCurrentLocation());
-            System.err.println(" " + getCurrentLocation() + " Done"); // we need
+            summarize(current.location);
+            System.err.println(" " + current.location + " Done"); // we need
                                                                       // to know
                                                                       // if the
             // process is finished or hang

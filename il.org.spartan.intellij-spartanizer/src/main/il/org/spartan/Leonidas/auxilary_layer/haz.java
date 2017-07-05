@@ -84,6 +84,11 @@ public enum haz {
     }
 
     public static boolean moreMethodsCalls(Encapsulator e) {
-         return e.getInner().getParent().getParent().getParent().getNextSibling().getText().equals(".");
+        // forgive me god (quick bug fix)
+        if (e.getInner().getParent() == null) return false;
+        if (e.getInner().getParent().getParent() == null) return false;
+        if (e.getInner().getParent().getParent().getParent() == null) return false;
+        if (e.getInner().getParent().getParent().getParent().getNextSibling() == null) return false;
+        return e.getInner().getParent().getParent().getParent().getNextSibling().getText().equals(".");
     }
 }

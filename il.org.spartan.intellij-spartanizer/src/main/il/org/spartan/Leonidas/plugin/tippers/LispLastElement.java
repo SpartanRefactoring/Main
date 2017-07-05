@@ -3,19 +3,18 @@ package il.org.spartan.Leonidas.plugin.tippers;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
 import com.intellij.psi.util.PsiTreeUtil;
+import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
+
+import java.util.Map;
 
 /**
  * @author AnnaBel7
  * @since 23-12-2016
  */
 
-/*
-List<int> l = new List<>();
-l.get(l.size()-1) -> last(l);
- */
 public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> {
 
     @SuppressWarnings("ConstantConditions")
@@ -72,4 +71,15 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
     public String name() {
         return "LispLastElement";
     }
+
+    @Override
+    public Map<String, String> getExamples() {
+        return new ExampleMapFactory()
+                .put("l.get(l.size()-1);", "last(l);")
+                .put("l.get(l.size())", null)
+                .put("l.get(l.size()-2)", null)
+                .put("l.get(l2.size())", null)
+                .map();
+    }
+
 }
