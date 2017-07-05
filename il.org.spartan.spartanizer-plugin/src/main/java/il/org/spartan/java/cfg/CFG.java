@@ -66,6 +66,6 @@ public abstract class CFG {
     computeCFG(root);
   }
   private static void computeCFG(BodyDeclaration root) {
-    compute.cfg(root);
+    compute.cfgOuts(root);
   }
 }
