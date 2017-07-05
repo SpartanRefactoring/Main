@@ -20,6 +20,7 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
     @Override
     public void constraints() {
         element(2).asExpression.mustNotRefer(0);
+        element(1).asExpression.DoesNotContainMethodCallExpression(); // might change state.
     }
 
     @Override
