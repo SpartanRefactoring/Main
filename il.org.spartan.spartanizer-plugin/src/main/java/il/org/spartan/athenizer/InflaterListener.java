@@ -56,7 +56,7 @@ public class InflaterListener implements KeyListener, Listener {
   private static final List<Predicate<Event>> spartan_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_SUBTRACT, λ -> λ.keyCode == '-',
       λ -> λ.type == SWT.MouseWheel && λ.count < 0, λ -> λ.keyCode == '[' && λ.type == SWT.KeyUp);
 
-  public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
+  @SuppressWarnings("restriction") public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
     this.editor = editor;
     this.selection = selection;

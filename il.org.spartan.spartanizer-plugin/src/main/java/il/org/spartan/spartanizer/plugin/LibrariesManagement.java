@@ -50,8 +50,8 @@ public enum LibrariesManagement {
   }
 
   /** @return true iff the spartan library exists within eclipse. */
-  public static boolean libraryExists() {
-     return as.list(new UserLibraryManager().getUserLibraryNames()).contains(LIBRARY_NAME);
+  @SuppressWarnings("restriction") public static boolean libraryExists() {
+    return as.list(new UserLibraryManager().getUserLibraryNames()).contains(LIBRARY_NAME);
   }
   /** @param p JD
    * @return true iff the project uses the spartan library. */
