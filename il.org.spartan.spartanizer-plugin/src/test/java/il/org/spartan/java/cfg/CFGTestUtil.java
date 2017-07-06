@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since 2017-07-06 */
 public class CFGTestUtil {
-  public static IOAble in(final String code) {
+  public static IOAble cfg(final String code) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find(code).on(code));
     return new IOAble() {
       final IOAble self = this;

@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class CFGTest {
   @Test public void a() {
-    in("" //
+    cfg("" //
         + "void f(int x) {\n" //
         + "  for (int i=0 ; i<100 ; ++i)\n" //
         + "    f(i);\n" //
@@ -18,5 +18,16 @@ public class CFGTest {
             .outs("int i=0").contains("i<100") //
             .ins("i<100").contains("int i=0") //
             .outs("f(i);").contains("++i");
+  }
+  @Test public void b() {
+    cfg("" //
+        + "void f(int x, int y) {\n" //
+        + "  int a = 0, b = 0;\n" //
+        + "  f(a + 0, b + 0);" //
+        + "}") //
+            .outs("a = 0").contains("b = 0") //
+            .outs("b = 0").contains("a + 0") //
+            .outs("a + 0").contains("b + 0") //
+            .outs("b + 0").contains("f(a + 0, b + 0);");
   }
 }
