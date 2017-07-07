@@ -4,9 +4,12 @@ import static il.org.spartan.java.cfg.CFGTestUtil.*;
 
 import org.junit.*;
 
+import il.org.spartan.utils.*;
+
 /** Unit test for {@link CFG}.
  * @author Ori Roth
  * @since 2017-07-06 */
+@UnderConstruction("Dor -- 07/07/2017")
 @SuppressWarnings("static-method")
 public class CFGTest {
   @Test public void a() {
@@ -29,5 +32,34 @@ public class CFGTest {
             .outs("b = 0").contains("a + 0") //
             .outs("a + 0").contains("b + 0") //
             .outs("b + 0").contains("f(a + 0, b + 0);");
+  }
+  @Test public void c() {
+    cfg("" //
+        + "void f(int x) {\n" //
+        + "  int a = f(f(x));\n" //
+        + "  f(a);" //
+        + "}") //
+            .outs("int x").contains("int a = f(f(x));") //
+            .outs("f(x)").contains("f(f(x))") //
+            .outs("f(f(x))").contains("a") //
+            .outs("a").contains("f(a)");
+    ;
+  }
+  @Test public void d() {
+    cfg("" //
+        + "void f(int x) {\n" //
+        + "  int a = x+0 == 0+0 ? 1+1 : x == 2+2 : 3+3 : 4+4;\n" //
+        + "  f(a);" //
+        + "}") //
+            .outs("x+0 == 0+0 ? 1+1 : x == 2+2 : 3+3 : 4+4").contains("x+0==0+0") //
+            .outs("x+0==0+0").contains("x+0")//
+            .outs("x+0").contains("0+0") //
+            .outs("0+0").contains("1+1", "x == 2+2 : 3+3 : 4+4") //
+            .outs("1+1").contains("f(a)");
+  }
+  @Test public void e() {
+    cfg("" //
+        + "int d = a+x;") //
+            .outs("a+x").contains("a");
   }
 }

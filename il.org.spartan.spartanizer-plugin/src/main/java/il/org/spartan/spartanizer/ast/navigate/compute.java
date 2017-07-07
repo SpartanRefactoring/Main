@@ -13,6 +13,8 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.java.cfg.*;
+import il.org.spartan.java.cfg.CFG.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
@@ -167,39 +169,22 @@ public enum compute {
       }
     }.map(x);
   }
-  public static Map<ASTNode, List<ASTNode>> cfgOuts(BodyDeclaration root) {
+  public static void cfg(BodyDeclaration root) {
     if (!iz.methodDeclaration(root) && !iz.enumConstantDeclaration(root) && !iz.fieldDeclaration(root) && !iz.initializer(root))
-      return null;
-    return new ASTMapReducer<Map<ASTNode, List<ASTNode>>>() {
-      @Override public Map<ASTNode, List<ASTNode>> reduce() {
-        return new HashMap<>();
-      }
-      @Override public Map<ASTNode, List<ASTNode>> reduce(final Map<ASTNode, List<ASTNode>> $, final Map<ASTNode, List<ASTNode>> ss) {
-        $.putAll(ss);
-        return $;
-      }
-      // @Override protected List<Statement> map(final Assignment ¢) {
-      // return wizard.listMe(¢);
-      // }
-      // @Override protected List<Statement> map(final ClassInstanceCreation ¢)
-      // {
-      // return wizard.listMe(¢);
-      // }
-      // @Override protected List<Statement> map(final MethodInvocation ¢) {
-      // return wizard.listMe(¢);
-      // }
-      // @Override protected List<Statement> map(final PostfixExpression ¢) {
-      // return wizard.listMe(¢);
-      // }
-      // /** the operator is not in INCREMENT DECREMENT x \not\in \{\} */
-      // @Override protected List<Statement> map(final PrefixExpression ¢) {
-      // return !is.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() :
-      // wizard.listMe(¢);
-      // }
-      // @Override protected List<Statement> map(final SuperMethodInvocation ¢)
-      // {
-      // return wizard.listMe(¢);
-      // }
-    }.map(root);
+      note.bug();
+    else
+      new ASTMapReducer<List<ASTNode>>() {
+        @Override public List<ASTNode> reduce() {
+          return an.empty.list();
+        }
+        @Override public List<ASTNode> reduce(List<ASTNode> r1, List<ASTNode> r2) {
+          r1.addAll(r2);
+          return r1;
+        }
+        @Override protected List<ASTNode> map(final InfixExpression ¢) {
+          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getLeftOperand());
+          return an.empty.list();
+        }
+      }.map(root);
   }
 }

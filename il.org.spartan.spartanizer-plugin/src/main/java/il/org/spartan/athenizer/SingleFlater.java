@@ -219,7 +219,7 @@ public final class SingleFlater {
     public int startLine;
     public int endLine;
 
-    @SuppressWarnings("restriction") @Deprecated private WindowInformation(final ITextEditor e) {
+    @Deprecated @SuppressWarnings("restriction") private WindowInformation(final ITextEditor e) {
       if (!(e instanceof CompilationUnitEditor)) {
         invalidate();
         return;

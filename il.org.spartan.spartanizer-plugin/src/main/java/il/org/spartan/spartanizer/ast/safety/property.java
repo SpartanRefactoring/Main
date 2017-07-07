@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.safety;
 
+import java.util.function.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 /** TODO Yossi Gil Document Class
@@ -17,6 +19,9 @@ public enum property {
   @SuppressWarnings("unchecked") //
   public static <T> T get(final ASTNode n, final String key) {
     return n == null ? null : (T) n.getProperty(key);
+  }
+  public static <T> T get(final ASTNode n, final String key, final Supplier<T> defaulter) {
+    return n == null ? null : property.has(n, key) ? (T) n.getProperty(key) : property.set(n, key, defaulter.get());
   }
   /** Checks node has a property.
    * @param n JD

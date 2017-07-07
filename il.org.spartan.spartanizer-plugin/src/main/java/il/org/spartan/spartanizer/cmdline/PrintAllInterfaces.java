@@ -24,8 +24,8 @@ public class PrintAllInterfaces {
               .beforeCheck(TypeDeclaration::isInterface).afterCheck(q).afterCheck(TypeDeclaration::isInterface));
         }
       });
-    } catch (IOException x) {
-      note.io(x);
+    } catch (IOException ¢) {
+      note.io(¢);
     }
   }
 }

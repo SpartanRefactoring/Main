@@ -32,8 +32,8 @@ public class ExpressionChain {
         super.record(summary);
       }
     });
-  } catch (IOException x) {
-    note.io(x);
+  } catch (IOException ¢) {
+    note.io(¢);
   }
   }
 }

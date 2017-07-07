@@ -22,7 +22,9 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
                     : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢)
                         : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢)
                             : ¢.getNodeType() == METHOD_REF ? map((MethodRef) ¢)
-                                : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) : reduce();
+                                : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢)
+                                    : ¢.getNodeType() == METHOD_DECLARATION ? map((MethodDeclaration) ¢)
+                                    : reduce();
   }
   protected R composite(final List<? extends ASTNode> ns) {
     R $ = reduce();
@@ -128,7 +130,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
       case INFIX_EXPRESSION:
-        return foldl(extract.allOperands((InfixExpression) ¢));
+        return map((InfixExpression) ¢);
       case CONDITIONAL_EXPRESSION:
         return map((ConditionalExpression) ¢);
       case INSTANCEOF_EXPRESSION:
@@ -171,6 +173,12 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
   }
+ 
+  protected R map(final MethodDeclaration ¢) {
+    return reduce(map(¢.getJavadoc()), foldListModifiers(step.extendedModifiers(¢)), map(¢.getName()), foldl(step.parameters(¢)), map(step.body(¢)));
+
+  }
+  
   protected R map(final MethodRefParameter ¢) {
     return reduce(map(¢.getType()), map(¢.getName()));
   }
@@ -201,7 +209,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return map(¢.getLeftOperand());
   }
   protected R map(final Javadoc ¢) {
-    return step.tags(¢).stream().map(this::map).reduce(reduce(), this::reduce);
+    return ¢ == null ? reduce() : step.tags(¢).stream().map(this::map).reduce(reduce(), this::reduce);
   }
   protected R map(final LabeledStatement ¢) {
     return reduce(map(¢.getLabel()), map(¢.getBody()));
@@ -220,6 +228,10 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return reduce(map(¢.getTypeName()), composite(values(¢)));
   }
   protected R map(final PostfixExpression ¢) {
+    return map(expression(¢));
+  }
+  protected R map(final InfixExpression ¢) {
+    System.out.println("mapper");
     return map(expression(¢));
   }
   protected R map(final PrefixExpression ¢) {
