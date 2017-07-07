@@ -23,8 +23,22 @@ public class CFGTestUtil {
           }
         };
       }
+      @Override public Contains outs(Class<? extends ASTNode> c1) {
+        return new Contains(c1) {
+          @Override public Nodes nodes(ASTNode ¢) {
+            return CFG.out(¢);
+          }
+        };
+      }
       @Override public Contains ins(String n1) {
         return new Contains(n1) {
+          @Override public Nodes nodes(ASTNode ¢) {
+            return CFG.in(¢);
+          }
+        };
+      }
+      @Override public Contains ins(Class<? extends ASTNode> c1) {
+        return new Contains(c1) {
           @Override public Nodes nodes(ASTNode ¢) {
             return CFG.in(¢);
           }
@@ -33,20 +47,32 @@ public class CFGTestUtil {
 
       abstract class Contains implements CFGTestUtil.Contains {
         private String n1;
+        private Class<? extends ASTNode> c1;
 
         public Contains(final String n1) {
           this.n1 = n1;
         }
+        public Contains(final Class<? extends ASTNode> c1) {
+          this.c1 = c1;
+        }
         public abstract Nodes nodes(ASTNode n);
         @Override public IOAble contains(String... ns2) {
-          final ASTNode a1 = find($, n1);
-          assert a1 != null : "\nproblem in finding node\n" + tide.clean(n1) + "\nin compilation unit\n" + tide.clean($ + "");
+          return contains(false, ns2);
+        }
+        @Override public IOAble containsOnly(String... ns2) {
+          return contains(true, ns2);
+        }
+        private IOAble contains(boolean checkSize, String... ns2) {
+          final ASTNode a1 = n1 == null ? find($, c1) : find($, n1);
+          assert a1 != null : "\nproblem in finding node\n" + tide.clean(a1 + "") + "\nin compilation unit\n" + tide.clean($ + "");
           final Nodes ns = nodes(a1);
-          assert ns != null : "\nnull nodes of\n" + tide.clean(n1);
+          assert ns != null : "\nnull nodes of\n" + tide.clean(a1 + "");
+          if (checkSize)
+            assert ns.size() == ns2.length : "\nnode\n" + tide.clean(a1 + "") + "\ncontains " + ns.size() + " nodes";
           for (final String n2 : ns2) {
             final ASTNode a2 = find($, n2);
             assert a1 != null : "\nproblem in finding node\n" + tide.clean(n2) + "\nin compilation unit\n" + tide.clean($ + "");
-            assert ns.contains(a2) : "\nnodes of\n" + tide.clean(n1) + "\ndoes not contain\n" + tide.clean(n2);
+            assert ns.contains(a2) : "\nnodes of\n" + tide.clean(a1 + "") + "\ndoes not contain\n" + tide.clean(n2);
           }
           return self;
         }
@@ -56,11 +82,14 @@ public class CFGTestUtil {
 
   public interface IOAble {
     Contains outs(String s);
+    Contains outs(Class<? extends ASTNode> c);
     Contains ins(String s);
+    Contains ins(Class<? extends ASTNode> c);
   }
 
   public interface Contains {
     IOAble contains(String... ss);
+    IOAble containsOnly(String... ss);
   }
 
   static ASTNode find(final ASTNode root, final String code) {
@@ -69,6 +98,16 @@ public class CFGTestUtil {
     root.accept(new ASTVisitor() {
       @Override public void preVisit(ASTNode ¢) {
         if (tide.clean(¢ + "").equals(tidy))
+          $.set(¢);
+      }
+    });
+    return $.get();
+  }
+  static ASTNode find(final ASTNode root, final Class<? extends ASTNode> code) {
+    Wrapper<ASTNode> $ = new Wrapper<>();
+    root.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (code.equals(¢.getClass()))
           $.set(¢);
       }
     });

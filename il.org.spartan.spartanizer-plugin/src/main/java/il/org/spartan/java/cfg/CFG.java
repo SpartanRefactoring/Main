@@ -31,6 +31,9 @@ public abstract class CFG {
     public Stream<ASTNode> stream() {
       return inner.stream();
     }
+    public int size() {
+      return inner.size();
+    }
 
     private final Set<ASTNode> inner = an.empty.set();
   }

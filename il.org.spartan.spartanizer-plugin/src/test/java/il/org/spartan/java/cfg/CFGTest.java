@@ -2,6 +2,7 @@ package il.org.spartan.java.cfg;
 
 import static il.org.spartan.java.cfg.CFGTestUtil.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
@@ -61,5 +62,24 @@ public class CFGTest {
     cfg("" //
         + "int d = a+x;") //
             .outs("a+x").contains("a");
+  }
+  @Test public void tryStatement() {
+    cfg("" //
+        + "try {\n" //
+        + "  f1();\n" //
+        + "} catch (Exception1 x1) {\n" //
+        + "  x1.basa();\n" //
+        + "} catch (Exception2 x2) {\n" //
+        + "  x2.basa();\n" //
+        + "}\n" //
+        + "f2();") //
+            .outs(TryStatement.class).containsOnly("f1();") //
+            .outs("f1();").containsOnly("f()") //
+            .outs("f1()")
+            .containsOnly(//
+                "f2();", //
+                "catch(Exception1 x1){x1.basa();}", //
+                "catch(Exception2 x2){x2.basa();}") //
+            .outs("x1.basa()").containsOnly("f2();");
   }
 }
