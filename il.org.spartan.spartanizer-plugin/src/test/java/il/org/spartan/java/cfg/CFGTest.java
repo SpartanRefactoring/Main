@@ -76,10 +76,51 @@ public class CFGTest {
             .outs(TryStatement.class).containsOnly("{f1();}") //
             .outs("f1();").containsOnly("f()") //
             .outs("f1()")
-            .containsOnly(//
+            .containsOnly( //
                 "f2();", //
                 "catch(Exception1 x1){x1.basa();}", //
                 "catch(Exception2 x2){x2.basa();}") //
             .outs("x1.basa()").containsOnly("f2();");
+  }
+  @Test public void arrayAccess() {
+    cfg("a()[b()][c()]") //
+        .outs("a()[b()][c()]").containsOnly("a()") //
+        .outs("a()").containsOnly("b()") //
+        .outs("b()").containsOnly("c()");
+  }
+  @Test public void arrayCreation() {
+    cfg("new X[f()][g()]") //
+        .outs("new X[f()][g()]").containsOnly("f()") //
+        .outs("f()").containsOnly("g()");
+  }
+  @Test public void arrayInitializer() {
+    cfg("new X[] {f(), g()}") //
+        .outs("new X[] {f(), g()}").containsOnly("f()") //
+        .outs("f()").containsOnly("g()");
+  }
+  @Test public void assignment() {
+    cfg("x = y = z") //
+        .outs("x = y = z").containsOnly("x") //
+        .outs("x").containsOnly("y = z") //
+        .outs("y = z").containsOnly("y") //
+        .outs("y").containsOnly("z");
+  }
+  @Test public void classInstanceCreation() {
+    cfg("f(g(), h()).new I(j(), k())") //
+        .outs("f(g(), h()).new I(j(), k())").containsOnly("f(g(), h())") //
+        .outs("f(g(), h())").containsOnly("g()") //
+        .outs("g()").containsOnly("h()") //
+        .outs("h()").containsOnly("j()") //
+        .outs("j()").containsOnly("k()");
+  }
+  @Test public void conditionalExpression() {
+    cfg("" //
+        + "int a = b ? c : d;\n" //
+        + "f();") //
+            .outs("int a = b ? c : d;").containsOnly("a = b ? c : d") //
+            .outs("a = b ? c : d").containsOnly("b ? c : d") //
+            .outs("b ? c : d").containsOnly("c", "d") //
+            .outs("c").containsOnly("f();") //
+            .outs("d").containsOnly("f();");
   }
 }
