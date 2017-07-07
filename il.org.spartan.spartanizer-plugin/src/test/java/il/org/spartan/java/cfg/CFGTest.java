@@ -73,7 +73,7 @@ public class CFGTest {
         + "  x2.basa();\n" //
         + "}\n" //
         + "f2();") //
-            .outs(TryStatement.class).containsOnly("f1();") //
+            .outs(TryStatement.class).containsOnly("{f1();}") //
             .outs("f1();").containsOnly("f()") //
             .outs("f1()")
             .containsOnly(//

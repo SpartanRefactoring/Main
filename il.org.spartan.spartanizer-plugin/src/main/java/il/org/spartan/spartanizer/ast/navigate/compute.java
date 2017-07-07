@@ -185,6 +185,26 @@ public enum compute {
           property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getLeftOperand());
           return an.empty.list();
         }
+        @Override protected List<ASTNode> map(final IfStatement ¢) {
+          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
+          return an.empty.list();
+        }
+        @Override protected List<ASTNode> map(final SwitchStatement ¢) {
+          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
+          return an.empty.list();
+        }
+        @Override protected List<ASTNode> map(final WhileStatement ¢) {
+          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
+          return an.empty.list();
+        }
+        @Override protected List<ASTNode> map(final ConditionalExpression ¢) {
+          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
+          return an.empty.list();
+        }
+        @Override protected List<ASTNode> map(final TryStatement ¢) {
+          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getBody());
+          return an.empty.list();
+        }
       }.map(root);
   }
 }
