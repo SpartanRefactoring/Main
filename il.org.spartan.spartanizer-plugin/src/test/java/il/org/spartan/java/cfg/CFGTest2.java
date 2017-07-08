@@ -115,8 +115,7 @@ public class CFGTest2 {
             .outs("a = b ? c : d").containsOnly("f();");
   }
   @Test public void fieldAccess() {
-    cfg("f().g") //
-        .outs("f()").containsOnly("f().g");
+    cfg("f().g").outs("f()").containsOnly("f().g");
   }
   @Test public void infixExpression() {
     cfg("w * x + y * z") //
@@ -134,5 +133,66 @@ public class CFGTest2 {
             .outs("boolean a = b instanceof C;").containsOnly("b instanceof C") //
             .outs("b instanceof C").containsOnly("a = b instanceof C") //
             .outs("a = b instanceof C").containsOnly("f()");
+  }
+  @Test public void lambdaExpression() {
+    cfg("" //
+        + "f();\n" //
+        + "Function a = b -> c;\n" //
+        + "g();") //
+            .outs("b -> c").containsOnly("a = b -> c") //
+            .ins("b -> c").containsOnly("f()") //
+            .outs("a = b -> c").containsOnly("g()");
+  }
+  @Test public void methodInvocation() {
+    cfg("f().g(a)") //
+        .outs("f()").containsOnly("a") //
+        .outs("a").containsOnly("f().g(a)");
+  }
+  @Test public void methodReference() {
+    cfg("" //
+        + "f();\n" //
+        + "g(h::i)\n" //
+        + "j();") //
+            .ins("h::i").containsOnly("f()") //
+            .outs("h::i").containsOnly("g(h::i)") //
+            .outs("g(h::i)").containsOnly("j()");
+  }
+  @Test public void parenthesizedExpression() {
+    cfg("" //
+        + "f();\n" //
+        + "g((h::i))\n" //
+        + "j();") //
+            .ins("h::i").containsOnly("f()") //
+            .outs("h::i").containsOnly("g(h::i)") //
+            .outs("g(h::i)").containsOnly("j()");
+  }
+  @Test public void prepostfixExpression() {
+    cfg("" //
+        + "++i;" //
+        + "j++;") //
+            .outs("++i").containsOnly("j++");
+  }
+  @Test public void superFieldAccess() {
+    cfg("" //
+        + "f(super.a);" //
+        + "g(b.super.c)") //
+            .outs("super.a").containsOnly("f(super.a)") //
+            .outs("f(super.a)").containsOnly("b.super.c") //
+            .outs("b.super.c").containsOnly("g(b.super.c)");
+  }
+  @Test public void superMethodInvocation() {
+    cfg("" //
+        + "f(super.a());" //
+        + "g(b.super.c())") //
+            .outs("super.a()").containsOnly("f(super.a())") //
+            .outs("f(super.a)").containsOnly("b.super.c()") //
+            .outs("b.super.c()").containsOnly("g(b.super.c())");
+  }
+  @Test public void thisExpression() {
+    cfg("" //
+        + "f();" //
+        + "g(a.this.b())") //
+            .ins("a.this.b()").containsOnly("f()") //
+            .outs("a.this.b()").containsOnly("g(a.this.b())");
   }
 }
