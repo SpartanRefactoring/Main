@@ -151,7 +151,7 @@ public class CFGTest2 {
   @Test public void methodReference() {
     cfg("" //
         + "f();\n" //
-        + "g(h::i)\n" //
+        + "g(h::i);\n" //
         + "j();") //
             .ins("h::i").containsOnly("f()") //
             .outs("h::i").containsOnly("g(h::i)") //
@@ -160,7 +160,7 @@ public class CFGTest2 {
   @Test public void parenthesizedExpression() {
     cfg("" //
         + "f();\n" //
-        + "g((h::i))\n" //
+        + "g((h::i));\n" //
         + "j();") //
             .ins("h::i").containsOnly("f()") //
             .outs("h::i").containsOnly("g(h::i)") //
@@ -175,7 +175,7 @@ public class CFGTest2 {
   @Test public void superFieldAccess() {
     cfg("" //
         + "f(super.a);" //
-        + "g(b.super.c)") //
+        + "g(b.super.c);") //
             .outs("super.a").containsOnly("f(super.a)") //
             .outs("f(super.a)").containsOnly("b.super.c") //
             .outs("b.super.c").containsOnly("g(b.super.c)");
@@ -183,7 +183,7 @@ public class CFGTest2 {
   @Test public void superMethodInvocation() {
     cfg("" //
         + "f(super.a());" //
-        + "g(b.super.c())") //
+        + "g(b.super.c());") //
             .outs("super.a()").containsOnly("f(super.a())") //
             .outs("f(super.a)").containsOnly("b.super.c()") //
             .outs("b.super.c()").containsOnly("g(b.super.c())");
@@ -191,8 +191,24 @@ public class CFGTest2 {
   @Test public void thisExpression() {
     cfg("" //
         + "f();" //
-        + "g(a.this.b())") //
+        + "g(a.this.b());") //
             .ins("a.this.b()").containsOnly("f()") //
             .outs("a.this.b()").containsOnly("g(a.this.b())");
+  }
+  @Test public void assertStatement() {
+    cfg("" //
+        + "f();\n" //
+        + "assert a : b;\n" //
+        + "g();") //
+            .ins("a").containsOnly("f()") //
+            .outs("a").containsOnly("g()", "b") //
+            .ins("g()").containsOnly("a");
+  }
+  @Test public void block() {
+    cfg("" //
+        + "void f(int x) {\n" //
+        + "  {g();}\n" //
+        + "}") //
+            .outs("x").containsOnly("g()");
   }
 }
