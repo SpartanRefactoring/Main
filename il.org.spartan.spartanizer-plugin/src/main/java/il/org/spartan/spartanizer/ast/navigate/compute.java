@@ -17,10 +17,12 @@ import il.org.spartan.java.cfg.*;
 import il.org.spartan.java.cfg.CFG.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-01 */
+@UnderConstruction("Dor -- 10/07/2017")
 public enum compute {
   ;
   public static List<ReturnStatement> returns(final ASTNode n) {
@@ -169,42 +171,85 @@ public enum compute {
       }
     }.map(x);
   }
+
   public static void cfg(BodyDeclaration root) {
-    if (!iz.methodDeclaration(root) && !iz.enumConstantDeclaration(root) && !iz.fieldDeclaration(root) && !iz.initializer(root))
-      note.bug();
-    else
-      new ASTMapReducer<List<ASTNode>>() {
-        @Override public List<ASTNode> reduce() {
-          return an.empty.list();
+    new ASTMapReducer<ASTNode>() {
+
+      @Override public ASTNode map(final MethodDeclaration ¢) {
+        List<ASTNode> parameters = fold(step.parameters(¢));
+        ASTNode body = map(step.body(¢));
+        if (parameters.isEmpty())
+          return body;
+        for (int i = 0; i < parameters.size() - 1; ++i) {
+          in(parameters.get(i)).add(parameters.get(i + 1));
         }
-        @Override public List<ASTNode> reduce(List<ASTNode> r1, List<ASTNode> r2) {
-          r1.addAll(r2);
-          return r1;
-        }
-        @Override protected List<ASTNode> map(final InfixExpression ¢) {
-          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getLeftOperand());
-          return an.empty.list();
-        }
-        @Override protected List<ASTNode> map(final IfStatement ¢) {
-          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
-          return an.empty.list();
-        }
-        @Override protected List<ASTNode> map(final SwitchStatement ¢) {
-          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
-          return an.empty.list();
-        }
-        @Override protected List<ASTNode> map(final WhileStatement ¢) {
-          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
-          return an.empty.list();
-        }
-        @Override protected List<ASTNode> map(final ConditionalExpression ¢) {
-          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getExpression());
-          return an.empty.list();
-        }
-        @Override protected List<ASTNode> map(final TryStatement ¢) {
-          property.get(¢, CFG.keyOut, () -> new OutNodes()).add(¢.getBody());
-          return an.empty.list();
-        }
-      }.map(root);
+        if (body !=null)
+          //in(parameters.get(parameters.size())).add(body.get(0));
+        return parameters.get(0);
+        return null;
+      }
+      
+      
+      
+ 
+
+
+
+      @Override public ASTNode map(final Block ¢) {
+        List<ASTNode> statements = fold(step.statements(¢));
+      return null;
+      }
+      
+//      @Override public List<ASTNode> map(final VariableDeclarationStatement ¢) {
+//        List<ASTNode> parameters = foldl(step.parameters(¢));
+//        List<ASTNode> body = map(step.body(¢));
+//        if (parameters.isEmpty())
+//          return body;
+//        for (int i = 0; i < parameters.size() - 1; ++i) {
+//          in(parameters.get(i)).add(parameters.get(i + 1));
+//        }
+//        if (!body.isEmpty())
+//          in(parameters.get(parameters.size())).add(body.get(0));
+//        return as.list(parameters.get(0));
+//      }
+      
+      private List<ASTNode> fold(List<? extends ASTNode> parameters) {
+        return parameters.stream().map(a -> map(a)).filter(a -> a!=null).collect(Collectors.toList());
+      }
+
+
+
+
+
+
+
+      @Override public ASTNode reduce() {
+        return null;
+      }
+
+
+
+
+
+
+
+      @Override public ASTNode reduce(ASTNode r1, ASTNode r2) {
+        return null;
+      }
+      
+    }.map(root);
+  };
+  
+
+  
+  private static List<ASTNode> in(ASTNode n) {
+    if (!property.has(n, CFG.keyIn))
+      property.set(n, CFG.keyIn, an.empty.list());
+    return property.get(n, CFG.keyIn);
+  }
+  private static List<ASTNode> out(ASTNode n) {
+    if (!property.has(n, CFG.keyOut))
+      property.set(n, CFG.keyOut, an.empty.list());
+    return property.get(n, CFG.keyOut);
   }
 }
