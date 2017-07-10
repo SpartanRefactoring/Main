@@ -11,6 +11,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 import il.org.spartan.Leonidas.plugin.leonidas.PreservesIterator;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -81,7 +82,7 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
         GenericEncapsulator ge = az.generic(internal);
         if (es == null) {
             r.deleteByRange(inner.getParent(), inner, inner);
-            return null;
+            return new LinkedList<>();
         }
         es = ge.applyReplacingRules(es, m);
         if (parent == null) return es;

@@ -88,9 +88,9 @@ public class TipperTest {
         Map<String, String> examples = getExamples();
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.testing = true;
-        log("\n*************************Now testing " + getTipperName() + ":*************************\n");
-        if (examples.entrySet().isEmpty())
-            log("No examples exist for tipper " + getTipperName());
+        //log("\n*************************Now testing " + getTipperName() + ":*************************\n");
+        //if (examples.entrySet().isEmpty())
+        //    log("No examples exist for tipper " + getTipperName());
         for (Map.Entry<String, String> entry : examples.entrySet()) {
             crashed = false;
             String key = entry.getKey();
@@ -102,7 +102,7 @@ public class TipperTest {
             String value = entry.getValue();
             PsiFileCenter pfc = new PsiFileCenter();
             PsiFileCenter.PsiFileWrapper filewkey = pfc.createFileFromString(key);
-            log("Testing example:\n" + key + "\n");
+            //log("Testing example:\n" + key + "\n");
             if (filewkey.getCodeType() == PsiFileCenter.CodeType.ILLEGAL) {
                 log("\nError! The following key in the examples of the tipper " + getTipperName() + " contains illegal java code: \n" + key + "\n");
                 crashTest();
@@ -122,7 +122,7 @@ public class TipperTest {
             try {
                 tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(), getTipperName());
             } catch (Exception e) {
-                log("An exception was thrown. \n");
+                log("An exception was thrown. in" + getTipperName() + "\n" + key + "\n to" + value);
                 if (printsToScreen) {
                     e.printStackTrace();
                     log("\n");
@@ -159,8 +159,8 @@ public class TipperTest {
 			}
 
             //log("after: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
-            if (!crashed)
-                log(".............OK.............\n");
+            //if (!crashed)
+            //log(".............OK.............\n");
         }
 
         toolbox.testing = false;

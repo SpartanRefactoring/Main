@@ -89,4 +89,9 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
                 elements.remove(n);
         });
     }
+
+    @Override
+    public String toString() {
+        return hasNext() ? value().toString() + "\n\nHas next? " + hasNext() : "ended";
+    }
 }

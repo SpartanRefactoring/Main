@@ -159,8 +159,12 @@ public enum Utils {
     public static PsiElement getNextActualSibling(PsiElement e) {
         if (e == null) return null;
         PsiElement current = e.getNextSibling();
-        while (current != null && (iz.whiteSpace(current) || iz.comment(current)))
+        while (current != null && (iz.whiteSpace(current) || iz.comment(current))) {
+            if (iz.comment(current) && current.getText().contains("X_CENTER_MARKER"))
+                return null;
             current = current.getNextSibling();
+
+        }
         return current;
     }
 

@@ -102,4 +102,8 @@ public abstract class Identifiable extends NamedElement {
     public void noMoreMethodsApply() {
         addConstraint((e, m) -> !haz.moreMethodsCalls(e));
     }
+
+    public void nameEquals(Integer i) {
+        addConstraint((e, m) -> m.containsKey(i) && e.getText().equals(m.get(i)));
+    }
 }

@@ -308,7 +308,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 l.set(x);
             }
         });
-        return l.get().getBody();
+        return iz.codeBlock(l.get().getBody()) ? Utils.getNextActualSibling(l.get().getBody().getFirstChild()) : l.get().getBody();
     }
 
     /**

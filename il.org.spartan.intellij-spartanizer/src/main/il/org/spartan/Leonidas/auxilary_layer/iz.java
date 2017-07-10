@@ -524,4 +524,8 @@ public enum iz {
     public static boolean innerElementOfClass(PsiElement e) {
         return typeCheck(PsiMethod.class, e) || typeCheck(PsiField.class, e) || (typeCheck(PsiClass.class, e) && iz.classDeclaration(e.getParent()));
     }
+
+    public static boolean quantifierAll(Quantifier q) {
+        return q instanceof AllMethodCallBased;
+    }
 }

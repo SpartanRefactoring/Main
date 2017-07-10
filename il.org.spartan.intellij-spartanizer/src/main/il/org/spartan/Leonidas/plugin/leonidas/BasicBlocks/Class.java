@@ -83,7 +83,7 @@ public class Class extends NamedElement{
      */
     private MatchingResult matchInnerElements(PsiElement[] innerElements, List<Matcher> ms){
         if (ms.isEmpty()) return new MatchingResult(true);
-        List<List<MatchingResult>> l = ms.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
+        List<List<MatchingResult>> l = ms.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0), new MatchingResult(true))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
         MatchingResult[] ass = new MatchingResult[ms.size()];
         if (!matchInnerElementAux(l, ms.size() - 1, new LinkedList<>(), ass))
 			return new MatchingResult(false);

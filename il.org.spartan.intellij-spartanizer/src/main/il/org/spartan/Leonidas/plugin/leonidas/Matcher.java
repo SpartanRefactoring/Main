@@ -43,8 +43,49 @@ public class Matcher {
      * @return true iff the tree of the user matcher the roots and holds through all the constraints.
      */
     public boolean match(PsiElement treeToMatch) {
-        return getMatchingResult(treeToMatch, new Wrapper<>(0)).matches();
+        return getMatchingResult(treeToMatch, new Wrapper<>(0), new MatchingResult(true)).matches();
     }
+
+    /**
+     * @param treeToMatch the tree of the user
+     * @return the matching result: true iff the trees match, and a mapping between ids of
+     * generic element to the element of the user.
+     */
+    public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors, MatchingResult previousRes) {
+        MatchingResult mr = new MatchingResult(false);
+        List<Encapsulator> potentialRoots = new ArrayList<>();
+        PsiElement ce = treeToMatch;
+        int n = Utils.getNumberOfRootsPossible(treeToMatch);
+        for (int i = 1; i <= n; ++i) {
+            MatchingResult m = new MatchingResult(true);
+            potentialRoots.add(Encapsulator.buildTreeFromPsi(ce));
+            ce = Utils.getNextActualSibling(ce);
+            previousRes.setMatches();
+            m.combineWith(matchingRecursion(
+                    new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots), previousRes, i == n));
+            if (m.matches()) {
+                mr.combineWith(m);
+                mr.setMatches();
+                numberOfNeighbors.set(i);
+                break;
+            }
+        }
+        if (mr.notMatches()) return mr;
+
+        Map<Integer, List<PsiElement>> info = mr.getMap();
+        return info.keySet().stream()
+                .allMatch(id -> {
+                    Boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream()
+                            .allMatch(c -> info.get(id).stream().peek(x -> {
+                            }).allMatch(e -> c.match(e, mr)));
+                    Boolean b2 = getGenericElements().get(id) == null
+                            || getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id)
+                            .stream().allMatch(e -> c.accept(new Encapsulator(e), info)));
+                    return b1 && b2;
+                })
+                ? mr : mr.setNotMatches();
+    }
+
 
     /**
      * Goes through each and every quantifier and tries all possible assignments for this quantifiers.
@@ -54,29 +95,45 @@ public class Matcher {
      */
     @UpdatesIterator
     private MatchingResult matchingRecursion(EncapsulatorIterator needle, EncapsulatorIterator cursor,
-                                             MatchingResult r) {
+                                             MatchingResult r, Boolean allElementsIncluded) {
         EncapsulatorIterator bgNeedle = needle.clone(), bgCursor = cursor.clone(); // base ground iterators
         r.combineWith(matchBead(bgNeedle, bgCursor, r));
         if (r.notMatches()) return r;
         if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return r.setMatches();
-        if (bgNeedle.hasNext() != bgCursor.hasNext()) return  r.setNotMatches();
+        if (!bgCursor.hasNext()) {
+            while (bgNeedle.hasNext()) {
+                if (!iz.quantifier(bgNeedle.value()))
+                    return r.setNotMatches();
+                Quantifier q = az.quantifier(bgNeedle.value());
+                if (iz.quantifierAll(q) && !allElementsIncluded)
+                    return r.setNotMatches();
+                Quantifier.QuantifierIterator it = q.quantifierIterator(bgCursor, r.getMap());
+                if (it.value() != 0) return r.setNotMatches();
+                bgNeedle.setNumberOfOccurrences(0);
+                bgNeedle.next();
+            }
+            return r.setMatches();
+        }
+        if (bgNeedle.hasNext() != bgCursor.hasNext() && iz.quantifier(bgNeedle.value())) return r.setNotMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (!iz.quantifier(bgNeedle.value()))
-			return r.setNotMatches();
+            return r.setNotMatches();
         Quantifier q = az.quantifier(bgNeedle.value());
+        if (iz.quantifierAll(q) && !allElementsIncluded)
+            return r.setNotMatches();
         for (Quantifier.QuantifierIterator it = q.quantifierIterator(bgCursor, r.getMap()); it.hasNext(); it.next()) {
             r.setMatches();
-			varNeedle = bgNeedle.clone();
-			varCursor = bgCursor.clone();
+            varNeedle = bgNeedle.clone();
+            varCursor = bgCursor.clone();
             varNeedle.setNumberOfOccurrences(it.value());
             MatchingResult mq = matchQuantifier(varNeedle, varCursor, r);
             if (mq.notMatches())
                 continue;
-			MatchingResult sr = matchingRecursion(varNeedle, varCursor, r);
-			if (!sr.notMatches())
+            MatchingResult sr = matchingRecursion(varNeedle, varCursor, r, allElementsIncluded);
+            if (sr.matches())
                 return r.combineWith(mq).combineWith(sr);
         }
-		return r.setNotMatches();
+        return r.setNotMatches();
     }
 
     /**
@@ -113,7 +170,7 @@ public class Matcher {
     @UpdatesIterator
     private MatchingResult matchQuantifier(EncapsulatorIterator needle, EncapsulatorIterator cursor
             , MatchingResult r) {
-       // MatchingResult m = new MatchingResult(true);
+        // MatchingResult m = new MatchingResult(true);
         int n = needle.getNumberOfOccurrences();
         if (n == 0) {
             needle.next();
@@ -136,8 +193,8 @@ public class Matcher {
     }
 
     /**
-     * @param m builds recursively the matchers for the constraints that are relevant to the current matcher.
-     * @param map     a mapping between id of generic elements and lists of constraints.
+     * @param m   builds recursively the matchers for the constraints that are relevant to the current matcher.
+     * @param map a mapping between id of generic elements and lists of constraints.
      */
     private void buildMatcherTree(Matcher m, Map<Integer, List<Constraint>> map) {
         if (map == null) return;
@@ -149,7 +206,7 @@ public class Matcher {
                         NonStructuralConstraint nsc = (NonStructuralConstraint) j;
                         Encapsulator ie = !iz.quantifier(e) ? e : az.quantifier(e).getInternal();
                         try {
-                            Utils.getDeclaredMethod(ie.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[] {})).invoke(ie, nsc.objects);
+                            Utils.getDeclaredMethod(ie.getClass(), nsc.methodName, Arrays.stream(nsc.objects).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[]{})).invoke(ie, nsc.objects);
                         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                             e1.printStackTrace();
                         }
@@ -185,50 +242,13 @@ public class Matcher {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * @param treeToMatch the tree of the user
-     * @return the matching result: true iff the trees match, and a mapping between ids of
-     * generic element to the element of the user.
-     */
-    public MatchingResult getMatchingResult(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
-        MatchingResult mr = new MatchingResult(false);
-        List<Encapsulator> potentialRoots = new ArrayList<>();
-        PsiElement ce = treeToMatch;
-        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); ++i){
-            MatchingResult m = new MatchingResult(true);
-            potentialRoots.add(Encapsulator.buildTreeFromPsi(ce));
-            ce = Utils.getNextActualSibling(ce);
-            m.combineWith(matchingRecursion(
-                    new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots),m));
-            if (m.matches()){
-                mr.combineWith(m);
-                mr.setMatches();
-                numberOfNeighbors.set(i);
-                break;
-            }
-        }
-        if (mr.notMatches()) return mr;
-
-        Map<Integer, List<PsiElement>> info = mr.getMap();
-        return info.keySet().stream()
-                .allMatch(id -> {
-                    Boolean b1 = constrains.getOrDefault(id, new LinkedList<>()).stream()
-                            .allMatch(c -> info.get(id).stream().peek(x -> {
-                            }).allMatch(c::match)), b2 = getGenericElements().get(id) == null
-                            || getGenericElements().get(id).getConstraints().stream().allMatch(c -> info.get(id)
-                            .stream().allMatch(e -> c.accept(new Encapsulator(e), mr.getMap())));
-
-                    return b1 && b2;
-                })
-                ? mr : mr.setNotMatches();
-    }
 
     /**
      * @param treeToMatch - The patterns from which we extract the IDs
      * @return a mapping between an ID to a PsiElement
      */
     public Map<Integer, List<PsiElement>> extractInfo(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
-        return getMatchingResult(treeToMatch, numberOfNeighbors).getMap();
+        return getMatchingResult(treeToMatch, numberOfNeighbors, new MatchingResult(true)).getMap();
     }
 
     /**
@@ -261,17 +281,21 @@ public class Matcher {
         return roots;
     }
 
+    private boolean match(PsiElement e, MatchingResult mr) {
+        return getMatchingResult(e, new Wrapper<>(0), mr).matches();
+    }
+
     public abstract static class Constraint {
-		protected final ConstraintType type;
+        protected final ConstraintType type;
 
-		Constraint(ConstraintType t) {
-			type = t;
-		}
+        Constraint(ConstraintType t) {
+            type = t;
+        }
 
-		public enum ConstraintType {
-			IS, ISNOT, SPECIFIC
-		}
-	}
+        public enum ConstraintType {
+            IS, ISNOT, SPECIFIC
+        }
+    }
 
     /**
      * Represents a constraint on a generalized variable of the leonidas language.
@@ -295,10 +319,12 @@ public class Matcher {
 
         /**
          * @param e the users tree to match.
+         * @param mr
          * @return indication of e being matched recursively to the matcher, when taking in consideration the type of the constraint.
          */
-        boolean match(PsiElement e) {
-            return (type == ConstraintType.IS && matcher.match(e)) || (type == ConstraintType.ISNOT && !matcher.match(e));
+        boolean match(PsiElement e, MatchingResult mr) {
+            MatchingResult nmr = new MatchingResult(true).combineWith(mr);
+            return (type == ConstraintType.IS && matcher.match(e, nmr)) || (type == ConstraintType.ISNOT && !matcher.match(e, nmr));
         }
     }
 

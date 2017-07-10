@@ -29,6 +29,7 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
 
     @Override
     public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
+        if (!i.hasNext()) return 0;
         if (i.value().getParent() == null) return 1;
         Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
