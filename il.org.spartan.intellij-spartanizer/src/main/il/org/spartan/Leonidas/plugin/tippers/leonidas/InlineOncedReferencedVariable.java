@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author Oren Afek, Michal Cohen
  * @since 20/06/17
  */
+@SuppressWarnings("ALL")
 public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
 
     Object identifier1;

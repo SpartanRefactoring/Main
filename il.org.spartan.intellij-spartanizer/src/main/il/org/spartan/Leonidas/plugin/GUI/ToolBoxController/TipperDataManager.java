@@ -18,7 +18,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * Created by Sharon on 29-Jun-17.
+ * @author Sharon
+ * @since 29-06-2017.
  */
 @State(
         name = "TipperDataManager",

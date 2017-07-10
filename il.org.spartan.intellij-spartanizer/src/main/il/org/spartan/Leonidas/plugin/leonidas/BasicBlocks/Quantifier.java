@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by melanyc on 7/1/2017.
+ * @author michalcohen
+ * @since 01-07-2017.
  */
 public interface Quantifier {
 

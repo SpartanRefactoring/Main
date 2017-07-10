@@ -7,6 +7,7 @@ import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,24 +19,26 @@ import java.util.Map;
  * @author amirsagiv
  * @since 23-12-2016
  */
-public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
+public class SafeReference extends NanoPatternTipper {
     @Override
     public boolean canTip(PsiElement e) {
         return firstScenario(e) || secondScenario(e) || thirdScenario(e) || fourthScenario(e);
 
     }
 
+    @NotNull
     @Override
-    public String description(PsiConditionalExpression x) {
+    public String description(PsiElement x) {
         return
-				"Replace:\n" +
-				"	x == null ? x.y : null\n" +
-				"With:\n" +
-				"	nullConditional(x ,  ¢ -> ¢.y)";
+                "Replace:\n" +
+                        "	x == null ? x.y : null\n" +
+                        "With:\n" +
+                        "	nullConditional(x ,  ¢ -> ¢.y)";
     }
 
-	@Override
-	public String description() {
+    @NotNull
+    @Override
+    public String description() {
 		return
 				"Replace:\n" +
 						"	x == null ? x.y : null\n" +
@@ -43,11 +46,12 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
 						"	nullConditional(x ,  ¢ -> ¢.y)";
 	}
 
+    @NotNull
     @Override
-	@SuppressWarnings("ConstantConditions")
-    public PsiElement createReplacement(PsiConditionalExpression x) {
+    @SuppressWarnings("ConstantConditions")
+    public PsiElement createReplacement(PsiElement x) {
         return JavaPsiFacade
-				.getElementFactory(
+                .getElementFactory(
                         x.getProject())
                 .createExpressionFromText(
                         "nullConditional(" + (firstScenario(x) || secondScenario(x)
@@ -57,32 +61,33 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
                                 .getReferenceNameElement().getText()
                                 : az.methodCallExpression(az.conditionalExpression(x).getElseExpression())
                                 .getMethodExpression().getQualifier().getText()
-												+ " , ¢ -> ¢."
-												+ az.methodCallExpression(
+                                + " , ¢ -> ¢."
+                                + az.methodCallExpression(
                                 az.conditionalExpression(x).getElseExpression())
                                 .getMethodExpression().getReferenceNameElement().getText()
-												+ "()"
+                                + "()"
                                 : iz.referenceExpression(az.conditionalExpression(x).getThenExpression())
                                 ? az.referenceExpression(az.conditionalExpression(x).getThenExpression())
                                 .getQualifier().getText()
-												+ " , ¢ -> ¢."
-												+ az.referenceExpression(
+                                + " , ¢ -> ¢."
+                                + az.referenceExpression(
                                 az.conditionalExpression(x).getThenExpression())
                                 .getReferenceNameElement().getText()
                                 : az.methodCallExpression(az.conditionalExpression(x).getThenExpression())
                                 .getMethodExpression().getQualifier().getText()
-												+ " , ¢ -> ¢."
-												+ az.methodCallExpression(
+                                + " , ¢ -> ¢."
+                                + az.methodCallExpression(
                                 az.conditionalExpression(x).getThenExpression())
                                 .getMethodExpression().getReferenceNameElement().getText()
-												+ "()")
-								+ ")",
+                                + "()")
+                                + ")",
                         x);
     }
 
+    @NotNull
     @Override
-	public Class<? extends PsiConditionalExpression> getOperableType() {
-		return PsiConditionalExpressionImpl.class;
+    public Class<? extends PsiConditionalExpression> getOperableType() {
+        return PsiConditionalExpressionImpl.class;
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -169,18 +174,21 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
                 .getArgumentList().getExpressions().length == 0));
     }
 
+    @NotNull
     @Override
-    protected Tip pattern(final PsiConditionalExpression ¢) {
+    protected Tip pattern(final PsiElement ¢) {
         return tip(¢);
     }
 
-	@Override
-	public String name() {
+    @NotNull
+    @Override
+    public String name() {
 		return "SafeReference";
 	}
 
-	@Override
-	public Map<String,String> getExamples(){
+    @NotNull
+    @Override
+    public Map<String,String> getExamples(){
         Map<String, String> examples = new HashMap<>();
         examples.put("x == null ? null : x.y", "nullConditional(x , ¢ -> ¢.y)");
         examples.put("null == x ? null : x.y", "nullConditional(x , ¢ -> ¢.y)");

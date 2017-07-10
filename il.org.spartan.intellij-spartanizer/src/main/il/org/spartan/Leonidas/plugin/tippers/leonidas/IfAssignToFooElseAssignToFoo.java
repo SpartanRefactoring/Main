@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 30-05-2017
  */
+@SuppressWarnings("ALL")
 public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
 
     Object identifier0;

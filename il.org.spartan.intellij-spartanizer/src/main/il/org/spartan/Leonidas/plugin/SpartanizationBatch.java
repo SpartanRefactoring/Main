@@ -24,14 +24,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class SpartanizationBatch extends Task.Modal {
 
-    private static final String title = "Spartanization in progress";
-    private final Project project;
+    private static final String title = "Spartanization in Progress";
     private final Set<PsiFile> files;
     private AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
     SpartanizationBatch(Project project, Set<PsiFile> files) {
         super(project, title, true);
-        this.project = project;
         this.files = files;
     }
 

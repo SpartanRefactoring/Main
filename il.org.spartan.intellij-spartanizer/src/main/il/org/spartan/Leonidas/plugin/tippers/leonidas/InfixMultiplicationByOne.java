@@ -10,6 +10,7 @@ import java.util.Map;
  *
  * @author Roey Maor
  */
+@SuppressWarnings("ALL")
 public class InfixMultiplicationByOne implements LeonidasTipperDefinition {
     int identifier0;
 

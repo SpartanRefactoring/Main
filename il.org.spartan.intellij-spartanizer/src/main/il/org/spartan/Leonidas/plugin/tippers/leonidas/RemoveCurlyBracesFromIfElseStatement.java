@@ -4,9 +4,7 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
@@ -16,7 +14,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @since 14/06/17
  *
  */
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings("ALL")
 public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefinition {
 
     @Override

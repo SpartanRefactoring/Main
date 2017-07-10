@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * A basic block representing a Variable : identifier or field access.
  * @author Amir Sagiv
- * @Date 24-05-2017
+ * @since 24-05-2017
  */
 public class Variable extends NamedElement {
     public static final String TEMPLATE = "variable";

@@ -12,6 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 5/29/2017.
  */
+@SuppressWarnings("ALL")
 public class StringLiteralEqualsChangeOrder implements LeonidasTipperDefinition {
 
     String identifier0;

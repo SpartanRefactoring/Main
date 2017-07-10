@@ -8,6 +8,7 @@ import il.org.spartan.Leonidas.auxilary_layer.haz;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Map;
  * @since 24-12-2016
  */
 
-public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
+public class DefaultsTo extends NanoPatternTipper {
 
     @Override
     public boolean canTip(PsiElement e) {
@@ -52,12 +53,13 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
                         (iz.notEqualsOperator(operator)) && rOp.getText().equals(thenExpr.getText())));
     }
 
-    //TODO change to better description
+    @NotNull
     @Override
-    public String description(PsiConditionalExpression x) {
+    public String description(PsiElement x) {
         return "Change to defaults-to syntax";
     }
 
+    @NotNull
     @Override
     public String name() {
         return "DefaultsTo";
@@ -67,23 +69,28 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
         return iz.equalsOperator(step.operator(az.binaryExpression(step.conditionExpression(x))));
     }
 
+    @NotNull
     @Override
-	@SuppressWarnings("ConstantConditions")
-    public PsiElement createReplacement(PsiConditionalExpression x) {
+    @SuppressWarnings("ConstantConditions")
+    public PsiElement createReplacement(PsiElement e) {
+        PsiConditionalExpression x = az.conditionalExpression(e);
         return JavaPsiFacade.getElementFactory(x.getProject()).createExpressionFromText("defaults(" + (eqOperator(x) ? x.getElseExpression() : x.getThenExpression()).getText() + ").to("
                 + (eqOperator(x) ? x.getThenExpression() : x.getElseExpression()).getText() + ")", x);
     }
 
+    @NotNull
     @Override
-    protected Tip pattern(PsiConditionalExpression ¢) {
+    protected Tip pattern(PsiElement ¢) {
         return null;
     }
 
+    @NotNull
     @Override
     public Class<PsiConditionalExpressionImpl> getOperableType() {
         return PsiConditionalExpressionImpl.class;
     }
 
+    @NotNull
     @Override
     public Map<String,String> getExamples(){
         Map<String, String> examples = new HashMap<>();

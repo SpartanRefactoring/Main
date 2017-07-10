@@ -197,7 +197,7 @@ public enum Utils {
         if (c.equals(Object.class)) throw new NoSuchMethodException();
         try {
             return c.getDeclaredMethod(name, parameterTypes);
-        } catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException ignored) {
         }
         return getDeclaredMethod(c.getSuperclass(), name, parameterTypes);
     }

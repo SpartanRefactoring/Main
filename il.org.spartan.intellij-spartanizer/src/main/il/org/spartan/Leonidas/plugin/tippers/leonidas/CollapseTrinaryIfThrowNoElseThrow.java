@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 30-5-2017
  */
+@SuppressWarnings("ALL")
 public class CollapseTrinaryIfThrowNoElseThrow implements LeonidasTipperDefinition {
 
     @Override

@@ -13,6 +13,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A basic block representing a type element.
@@ -59,9 +60,7 @@ public class Type extends NamedElement {
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         if (setAsOuterClass) {
-            List<PsiElement>[] a = new List[m.values().size()];
-            m.values().toArray(a);
-            PsiClass c = PsiTreeUtil.getParentOfType(a[0].get(0), PsiClass.class);
+            PsiClass c = PsiTreeUtil.getParentOfType(m.values().stream().collect(Collectors.toList()).get(0).get(0), PsiClass.class);
             return Utils.wrapWithList(
                     JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c));
 

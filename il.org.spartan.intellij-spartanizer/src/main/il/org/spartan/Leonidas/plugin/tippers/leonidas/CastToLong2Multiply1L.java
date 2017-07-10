@@ -11,6 +11,7 @@ import java.util.Map;
  * @author Roey Maor
  * @since 29/06/2017
  */
+@SuppressWarnings("ALL")
 public class CastToLong2Multiply1L implements LeonidasTipperDefinition {
 
     int identifier0;

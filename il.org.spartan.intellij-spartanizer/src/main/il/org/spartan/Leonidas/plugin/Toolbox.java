@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.intellij.codeInsight.actions.ReformatCodeAction;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -24,7 +23,6 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
@@ -94,7 +92,7 @@ public class Toolbox implements ApplicationComponent {
 
         String savedTippers = PropertiesComponent.getInstance().getValue("savedTippers");
         if (savedTippers != null && !"".equals(savedTippers)) {
-            List<String> tipperNames = new Gson().fromJson(savedTippers, List.class);
+            @SuppressWarnings("unchecked") List<String> tipperNames = new Gson().fromJson(savedTippers, List.class);
 
             CustomLeonidasTippers.getInstance()
                     .getTippers()
@@ -157,7 +155,7 @@ public class Toolbox implements ApplicationComponent {
 
         this.allTipperMap.values().forEach(element -> element.forEach(tipper -> {
             if (list.contains(tipper.name())) {
-                tipperMap.putIfAbsent(tipper.getOperableType(), new CopyOnWriteArrayList<>());
+                tipperMap.putIfAbsent(tipper.getOperableType(), new CopyOnWriteArrayList());
                 operableTypes.add(tipper.getOperableType());
                 tipperMap.get(tipper.getOperableType()).add(tipper);
             }
@@ -201,7 +199,7 @@ public class Toolbox implements ApplicationComponent {
         }));
     }
 
-    public Toolbox add(Tipper<? extends PsiElement> t) {
+    public Toolbox add(Tipper t) {
         tipperMap.putIfAbsent(t.getOperableType(), new CopyOnWriteArrayList<>());
         operableTypes.add(t.getOperableType());
         tipperMap.get(t.getOperableType()).add(t);
@@ -232,20 +230,14 @@ public class Toolbox implements ApplicationComponent {
      * @param e      element to spartanize
      * @param t tipper to be used
      */
-    public void executeTipper(PsiElement e, Tipper<PsiElement> t) {
+    public void executeTipper(PsiElement e, Tipper t) {
         if (e != null && t != null && t.canTip(e))
 			t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
         (new ReformatCodeAction())
-                .actionPerformed(AnActionEvent.createFromDataContext("banana", null, new DataContext() {
-                    @Override
-                    @Nullable
-                    public Object getData(String dataId) {
-                        return "project".equals(dataId) ? Utils.getProject()
-                                : "editor".equals(dataId)
-                                ? FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor()
-                                : "virtualFile".equals(dataId) ? e.getContainingFile().getVirtualFile() : null;
-                    }
-                }));
+                .actionPerformed(AnActionEvent.createFromDataContext("banana", null, dataId -> "project".equals(dataId) ? Utils.getProject()
+                        : "editor".equals(dataId)
+                        ? FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor()
+                        : "virtualFile".equals(dataId) ? e.getContainingFile().getVirtualFile() : null));
     }
 
     /**
@@ -308,7 +300,7 @@ public class Toolbox implements ApplicationComponent {
                         .get();
         } catch (Exception ignore) {
         }
-        return new NoTip<>();
+        return new NoTip();
     }
 
     /**

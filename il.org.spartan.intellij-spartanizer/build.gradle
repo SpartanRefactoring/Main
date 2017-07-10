@@ -78,6 +78,7 @@ def coverageSourceDirs = [
 
 jacocoTestCoverageVerification {
     violationRules {
+        //noinspection GroovyAssignabilityCheck
         rule {
             element = 'CLASS'
             excludes = ['il.org.spartan.Leonidas.*']

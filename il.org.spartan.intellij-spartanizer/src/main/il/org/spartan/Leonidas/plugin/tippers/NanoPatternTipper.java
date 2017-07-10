@@ -13,6 +13,7 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.tipping.TipperCategory;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -29,13 +30,14 @@ import java.util.Arrays;
  * @author Roey Maor, michalcohen
  * @since 26-12-2016
  */
-public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<N>, TipperCategory.Nanos {
+public abstract class NanoPatternTipper implements Tipper, TipperCategory.Nanos {
 
     /**
      * @param e the PsiElement on which the tip will be applied
      * @return an element tip to apply on e.
      */
-    public Tip tip(final N e) {
+    @NotNull
+    public Tip tip(final PsiElement e) {
         PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
         try {
             srcDir.checkCreateSubdirectory("spartanizer");
@@ -53,15 +55,16 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
                     public void go(PsiRewrite r) {
                     }
 				};
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
-        return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
+        return new Tip(description(e), e, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
                 PsiElement e_tag = createReplacement(e);
                 new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
                     @Override
                     protected void run() throws Throwable {
+                        if (!canTip(e)) return;
                         if ((!Toolbox.getInstance().playground) && (!Toolbox.getInstance().testing))
                             createEnvironment(e);
                         e.replace(e_tag);
@@ -78,7 +81,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @param e - the element to be replaced
      * @return the PsiElement that will replace e.
      */
-    public abstract PsiElement createReplacement(N e);
+    public abstract PsiElement createReplacement(PsiElement e);
 
     @SuppressWarnings({"OptionalGetWithoutIsPresent", "ResultOfMethodCallIgnored"})
     private PsiFile createUtilsFile(PsiElement e, PsiDirectory d) throws IOException {
@@ -138,14 +141,15 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @param e - the PsiElement on which the tip is applied.
      * @throws IOException - if for some reason writing new file to the users disk throws exception.
      */
-    private void createEnvironment(final N e) throws IOException {
+    private void createEnvironment(final PsiElement e) throws IOException {
         insertImportStatement(e, insertSpartanizerUtils(e));
     }
 
+    @NotNull
     @Override
     public String name() {
         return "NanoPatternTipper";
     }
 
-    protected abstract Tip pattern(N ¢);
+    protected abstract Tip pattern(PsiElement ¢);
 }

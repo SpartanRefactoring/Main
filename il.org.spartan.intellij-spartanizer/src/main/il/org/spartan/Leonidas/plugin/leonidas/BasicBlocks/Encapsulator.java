@@ -21,6 +21,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.I
  * @author michalcohen
  * @since 22-02-2017
  */
+@SuppressWarnings("Convert2MethodRef")
 public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsulator> {
     protected PsiElement inner;
     protected Encapsulator parent;

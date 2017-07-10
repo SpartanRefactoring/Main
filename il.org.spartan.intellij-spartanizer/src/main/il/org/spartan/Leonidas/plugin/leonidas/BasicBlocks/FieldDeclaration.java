@@ -13,7 +13,7 @@ import java.util.Map;
  * A basic block representing a field declaration: public Class0 field0;
  * @author Sharon LK
  * @since 23-06-2017 (No correct date was given...)
- * @TODO: fix initializer.
+ * TODO: fix initializer.
  */
 public class FieldDeclaration extends ModifiableElement {
     public static final String TEMPLATE = "field";

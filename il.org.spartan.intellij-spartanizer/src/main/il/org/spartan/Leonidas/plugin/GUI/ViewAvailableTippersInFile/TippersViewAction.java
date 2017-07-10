@@ -12,7 +12,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Created by Amir on 20-06-2017.
+ * @author Amir
+ * @since 20-06-2017.
  */
 class TippersViewAction extends AnAction {
 

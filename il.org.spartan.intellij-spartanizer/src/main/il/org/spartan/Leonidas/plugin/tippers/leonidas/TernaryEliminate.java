@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Amir Sagiv
  * @since 28-06-2017
  */
+@SuppressWarnings("ALL")
 public class TernaryEliminate implements LeonidasTipperDefinition {
 
 

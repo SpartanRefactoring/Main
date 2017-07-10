@@ -57,7 +57,7 @@ public class SpartanizerAction extends AnAction {
                         new AddSpartanizerUtilsAction().createEnvironment(e);
                     }
                 }.execute();
-            } catch (Exception ex) {
+            } catch (Exception ignored) {
             }
             LoadingIndicator li = new LoadingIndicator("Spartanizing current file");
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());

@@ -13,7 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author melanyc
  * @since 30-04-2017
  */
-@SuppressWarnings({"ConstantConditions", "StatementWithEmptyBody"})
+@SuppressWarnings("ALL")
 public class IfEmptyThen implements LeonidasTipperDefinition {
 
     /**

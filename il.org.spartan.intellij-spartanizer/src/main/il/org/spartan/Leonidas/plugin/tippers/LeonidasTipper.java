@@ -17,6 +17,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.leonidas.Replacer;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
  * @since 26-03-2017.
  */
 @SuppressWarnings("ConstantConditions")
-public class LeonidasTipper implements Tipper<PsiElement> {
+public class LeonidasTipper implements Tipper {
 
     private String description;
     private String name;
@@ -75,25 +76,28 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return matcher.match(e);
     }
 
+    @NotNull
     @Override
     public String description(PsiElement e) {
         return description;
     }
 
+    @NotNull
     @Override
     public String name() {
         return name;
     }
 
+    @NotNull
     @Override
     public Tip tip(PsiElement node) {
         return new Tip(description(node), node, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
                 if (!canTip(node))
-					return;
-				Wrapper<Integer> i = new Wrapper<>(0);
-				getReplacerCopy().replace(node, matcher.extractInfo(node, i), i.get(), r);
+                    return;
+                Wrapper<Integer> i = new Wrapper<>(0);
+                getReplacerCopy().replace(node, matcher.extractInfo(node, i), i.get(), r);
             }
         };
     }
@@ -102,6 +106,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Extracting template body ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    @NotNull
     @Override
     public Class<? extends PsiElement> getOperableType() {
         return rootType;

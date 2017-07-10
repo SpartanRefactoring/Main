@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author Oren Afek
  * @since 02-06-2017
  */
+@SuppressWarnings("ALL")
 public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefinition {
 
     Object variable0;

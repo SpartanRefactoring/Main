@@ -14,6 +14,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Oren Afek
  * @since 29-06-2017
  */
+@SuppressWarnings("ALL")
 @TipperUnderConstruction(BROKEN_MATCHER) //Waiting for AnyNumberOfParameter
 public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition {
 

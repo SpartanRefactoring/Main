@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 14/06/17
  */
+@SuppressWarnings("ALL")
 public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
 
     @Override

@@ -9,6 +9,7 @@ import java.util.Map;
  *
  * @author Roey Maor
  */
+@SuppressWarnings("ALL")
 public class InfixGreaterEqualToGreater implements LeonidasTipperDefinition {
     int identifier0;
     int identifier1;

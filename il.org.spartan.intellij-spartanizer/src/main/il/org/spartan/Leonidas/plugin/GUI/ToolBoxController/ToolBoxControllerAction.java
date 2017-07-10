@@ -7,7 +7,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
  * @author Amir Sagiv
  * @since 24/04/2017
  */
-class ToolBoxControllerAction extends AnAction {
+public class ToolBoxControllerAction extends AnAction {
     public static void main(String[] args) {
         new ToolBoxController();
     }
