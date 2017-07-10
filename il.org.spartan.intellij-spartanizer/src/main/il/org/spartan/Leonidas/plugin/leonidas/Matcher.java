@@ -57,12 +57,13 @@ public class Matcher {
         PsiElement ce = treeToMatch;
         int n = Utils.getNumberOfRootsPossible(treeToMatch);
         for (int i = 1; i <= n; ++i) {
+            MatchingResult previousResCopy = new MatchingResult(true).combineWith(previousRes);
             MatchingResult m = new MatchingResult(true);
             potentialRoots.add(Encapsulator.buildTreeFromPsi(ce));
             ce = Utils.getNextActualSibling(ce);
-            previousRes.setMatches();
+            //previousResCopy.setMatches();
             m.combineWith(matchingRecursion(
-                    new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots), previousRes, i == n));
+                    new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots), previousResCopy, i == n));
             if (m.matches()) {
                 mr.combineWith(m);
                 mr.setMatches();
