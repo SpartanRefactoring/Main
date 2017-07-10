@@ -12,9 +12,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Dor Ma'ayan & Ori Roth
  * @since 2017-06-14 */
 public abstract class CFG {
-  public class Nodes {
-    public final boolean contains(Object o) {
-      return inner.contains(o);
+  public static final String keyIn = "in";
+  public static final String keyOut = "out";
+
+  public static class Nodes {
+    public final boolean contains(Object ¢) {
+      return inner.contains(¢);
     }
     public final Iterator<ASTNode> iterator() {
       return inner.iterator();
@@ -28,34 +31,26 @@ public abstract class CFG {
     public Stream<ASTNode> stream() {
       return inner.stream();
     }
+    public int size() {
+      return inner.size();
+    }
 
     private final Set<ASTNode> inner = an.empty.set();
   }
 
-  public class InNodes extends Nodes {}
+  public static class InNodes extends Nodes {}
 
-  public class OutNodes extends Nodes {}
+  public static class OutNodes extends Nodes {}
 
-  /** Compute the CFG for a given root /** Compute the CFG for a given root
-   * @param root method declaration */
-  public void compute(final MethodDeclaration root) {
-    if (root != null)
-      root.accept(new ASTVisitor() {
-        @Override public boolean visit(final MethodDeclaration ¢) {
-          MethodBuilder.of(CFG.this, ¢);
-          return true;
-        }
-      });
+  public static Nodes in(ASTNode ¢) {
+    if (!property.has(¢, keyIn))
+      fill(¢);
+    return property.get(¢, keyIn);
   }
-  public static Nodes in(ASTNode n) {
-    if (property.obtain(Nodes.class).from(n) == null)
-      fill(n);
-    return property.obtain(Nodes.class).from(n);
-  }
-  public static Nodes out(ASTNode n) {
-    if (property.obtain(Nodes.class).from(n) == null)
-      fill(n);
-    return property.obtain(Nodes.class).from(n);
+  public static Nodes out(ASTNode ¢) {
+    if (!property.has(¢, keyOut))
+      fill(¢);
+    return property.get(¢, keyOut);
   }
   private static void fill(ASTNode n) {
     BodyDeclaration root = containing.bodyDeclaration(n);

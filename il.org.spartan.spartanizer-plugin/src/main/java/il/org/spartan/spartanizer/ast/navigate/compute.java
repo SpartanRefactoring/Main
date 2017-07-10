@@ -13,12 +13,16 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.java.cfg.*;
+import il.org.spartan.java.cfg.CFG.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-01 */
+@UnderConstruction("Dor -- 10/07/2017")
 public enum compute {
   ;
   public static List<ReturnStatement> returns(final ASTNode n) {
@@ -167,34 +171,85 @@ public enum compute {
       }
     }.map(x);
   }
+
   public static void cfg(BodyDeclaration root) {
-    new ASTMapReducer<List<Statement>>() {
-      @Override public List<Statement> reduce() {
-        return an.empty.list();
+    new ASTMapReducer<ASTNode>() {
+
+      @Override public ASTNode map(final MethodDeclaration ¢) {
+        List<ASTNode> parameters = fold(step.parameters(¢));
+        ASTNode body = map(step.body(¢));
+        if (parameters.isEmpty())
+          return body;
+        for (int i = 0; i < parameters.size() - 1; ++i) {
+          in(parameters.get(i)).add(parameters.get(i + 1));
+        }
+        if (body !=null)
+          //in(parameters.get(parameters.size())).add(body.get(0));
+        return parameters.get(0);
+        return null;
       }
-      @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {
-        $.addAll(ss);
-        return $;
+      
+      
+      
+ 
+
+
+
+      @Override public ASTNode map(final Block ¢) {
+        List<ASTNode> statements = fold(step.statements(¢));
+      return null;
       }
-      @Override protected List<Statement> map(final Assignment ¢) {
-        return wizard.listMe(¢);
+      
+//      @Override public List<ASTNode> map(final VariableDeclarationStatement ¢) {
+//        List<ASTNode> parameters = foldl(step.parameters(¢));
+//        List<ASTNode> body = map(step.body(¢));
+//        if (parameters.isEmpty())
+//          return body;
+//        for (int i = 0; i < parameters.size() - 1; ++i) {
+//          in(parameters.get(i)).add(parameters.get(i + 1));
+//        }
+//        if (!body.isEmpty())
+//          in(parameters.get(parameters.size())).add(body.get(0));
+//        return as.list(parameters.get(0));
+//      }
+      
+      private List<ASTNode> fold(List<? extends ASTNode> parameters) {
+        return parameters.stream().map(a -> map(a)).filter(a -> a!=null).collect(Collectors.toList());
       }
-      @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
-        return wizard.listMe(¢);
+
+
+
+
+
+
+
+      @Override public ASTNode reduce() {
+        return null;
       }
-      @Override protected List<Statement> map(final MethodInvocation ¢) {
-        return wizard.listMe(¢);
+
+
+
+
+
+
+
+      @Override public ASTNode reduce(ASTNode r1, ASTNode r2) {
+        return null;
       }
-      @Override protected List<Statement> map(final PostfixExpression ¢) {
-        return wizard.listMe(¢);
-      }
-      /** the operator is not in INCREMENT DECREMENT x \not\in \{\} */
-      @Override protected List<Statement> map(final PrefixExpression ¢) {
-        return !is.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() : wizard.listMe(¢);
-      }
-      @Override protected List<Statement> map(final SuperMethodInvocation ¢) {
-        return wizard.listMe(¢);
-      }
+      
     }.map(root);
+  };
+  
+
+  
+  private static List<ASTNode> in(ASTNode n) {
+    if (!property.has(n, CFG.keyIn))
+      property.set(n, CFG.keyIn, an.empty.list());
+    return property.get(n, CFG.keyIn);
+  }
+  private static List<ASTNode> out(ASTNode n) {
+    if (!property.has(n, CFG.keyOut))
+      property.set(n, CFG.keyOut, an.empty.list());
+    return property.get(n, CFG.keyOut);
   }
 }
