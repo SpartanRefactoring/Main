@@ -24,7 +24,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
                             : ¢.getNodeType() == METHOD_REF ? map((MethodRef) ¢)
                                 : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢)
                                     : ¢.getNodeType() == METHOD_DECLARATION ? map((MethodDeclaration) ¢)
-                                    : reduce();
+                                        : ¢.getNodeType() == VARIABLE_DECLARATION_FRAGMENT ? map((VariableDeclarationFragment) ¢) : reduce();
   }
   protected R composite(final List<? extends ASTNode> ns) {
     R $ = reduce();
@@ -173,12 +173,9 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
   }
- 
   protected R map(final MethodDeclaration ¢) {
     return reduce(map(¢.getJavadoc()), foldListModifiers(step.extendedModifiers(¢)), map(¢.getName()), foldl(step.parameters(¢)), map(step.body(¢)));
-
   }
-  
   protected R map(final MethodRefParameter ¢) {
     return reduce(map(¢.getType()), map(¢.getName()));
   }
@@ -334,6 +331,10 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   }
   protected R map(final VariableDeclarationExpression ¢) {
     return reduce(fragments(¢));
+  }
+  // TODO yossi gil: check if it's alright
+  protected R map(final VariableDeclarationFragment ¢) {
+    return reduce(as.list(¢));
   }
   protected R map(final VariableDeclarationStatement ¢) {
     return reduce(fragments(¢));

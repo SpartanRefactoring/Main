@@ -25,6 +25,9 @@ public abstract class CFG {
     public final boolean add(ASTNode ¢) {
       return inner.add(¢);
     }
+    public final boolean addAll(List<? extends ASTNode> ¢) {
+      return inner.addAll(¢);
+    }
     public final boolean remove(ASTNode ¢) {
       return inner.remove(¢);
     }
@@ -34,13 +37,27 @@ public abstract class CFG {
     public int size() {
       return inner.size();
     }
+    public Set<ASTNode> asSet() {
+      return inner;
+    }
+    public static Nodes empty() {
+      return new Nodes();
+    }
 
     private final Set<ASTNode> inner = an.empty.set();
   }
 
-  public static class InNodes extends Nodes {}
+  public static class InNodes extends Nodes {
+    public static Nodes empty() {
+      return new InNodes();
+    }
+  }
 
-  public static class OutNodes extends Nodes {}
+  public static class OutNodes extends Nodes {
+    public static Nodes empty() {
+      return new OutNodes();
+    }
+  }
 
   public static Nodes in(ASTNode ¢) {
     if (!property.has(¢, keyIn))

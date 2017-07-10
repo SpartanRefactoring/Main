@@ -51,9 +51,9 @@ public class CFGTest2 {
   }
   @Test public void d() {
     cfg("int d = a + x;") //
-        .outs("a").contains("x") //
-        .outs("x").contains("a + x") //
-        .outs("a + x").contains("d = a + x");
+        .outs("a").containsOnly("x") //
+        .outs("x").containsOnly("a + x") //
+        .outs("a + x").containsOnly("d = a + x");
   }
   @Test public void tryStatement() {
     cfg("" //

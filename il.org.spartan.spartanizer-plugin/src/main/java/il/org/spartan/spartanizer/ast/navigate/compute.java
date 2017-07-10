@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static il.org.spartan.java.cfg.CFG.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -14,7 +15,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.java.cfg.*;
-import il.org.spartan.java.cfg.CFG.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
@@ -171,85 +171,150 @@ public enum compute {
       }
     }.map(x);
   }
-
   public static void cfg(BodyDeclaration root) {
-    new ASTMapReducer<ASTNode>() {
-
-      @Override public ASTNode map(final MethodDeclaration ¢) {
-        List<ASTNode> parameters = fold(step.parameters(¢));
-        ASTNode body = map(step.body(¢));
-        if (parameters.isEmpty())
-          return body;
-        for (int i = 0; i < parameters.size() - 1; ++i) {
-          in(parameters.get(i)).add(parameters.get(i + 1));
-        }
-        if (body !=null)
-          //in(parameters.get(parameters.size())).add(body.get(0));
-        return parameters.get(0);
-        return null;
+    /* Fill firsts */
+    final Map<ASTNode, List<ASTNode>> firsts = new HashMap<>();
+    new ASTMapReducer<List<ASTNode>>() {
+      @Override protected List<ASTNode> map(MethodDeclaration ¢) {
+        List<ASTNode> firstParameter = fold(step.parameters(¢));
+        List<ASTNode> firstBody = map(step.body(¢));
+        return setFirst(¢, firstParameter.isEmpty() ? firstBody : firstParameter);
+      };
+      @Override protected List<ASTNode> map(Block ¢) {
+        return setFirst(¢, fold(step.statements(¢)));
+      };
+      @Override protected List<ASTNode> map(VariableDeclarationStatement ¢) {
+        return setFirst(¢, fold(step.fragments(¢)));
+      };
+      @Override protected List<ASTNode> map(VariableDeclarationFragment ¢) {
+        List<ASTNode> i = map(step.initializer(¢));
+        return i != null ? setFirst(¢, i) : setFirst(¢, ¢);
+      };
+      @Override protected List<ASTNode> map(InfixExpression ¢) {
+        map(step.right(¢));
+        return setFirst(¢, map(step.left(¢)));
+      };
+      @Override protected List<ASTNode> map(SimpleName ¢) {
+        return setFirst(¢, ¢);
+      };
+      @Override public List<ASTNode> reduce() {
+        return an.empty.list();
       }
-      
-      
-      
- 
-
-
-
-      @Override public ASTNode map(final Block ¢) {
-        List<ASTNode> statements = fold(step.statements(¢));
-      return null;
+      @Override public List<ASTNode> reduce(List<ASTNode> r1, List<ASTNode> r2) {
+        r1.addAll(r2);
+        return r1;
       }
-      
-//      @Override public List<ASTNode> map(final VariableDeclarationStatement ¢) {
-//        List<ASTNode> parameters = foldl(step.parameters(¢));
-//        List<ASTNode> body = map(step.body(¢));
-//        if (parameters.isEmpty())
-//          return body;
-//        for (int i = 0; i < parameters.size() - 1; ++i) {
-//          in(parameters.get(i)).add(parameters.get(i + 1));
-//        }
-//        if (!body.isEmpty())
-//          in(parameters.get(parameters.size())).add(body.get(0));
-//        return as.list(parameters.get(0));
-//      }
-      
       private List<ASTNode> fold(List<? extends ASTNode> parameters) {
-        return parameters.stream().map(a -> map(a)).filter(a -> a!=null).collect(Collectors.toList());
+        return parameters.stream().map(a -> map(a)).filter(a -> !a.isEmpty()).findFirst().orElse(reduce());
       }
-
-
-
-
-
-
-
-      @Override public ASTNode reduce() {
-        return null;
+      protected List<ASTNode> setFirst(ASTNode node, List<ASTNode> fs) {
+        firsts.put(node, fs);
+        return fs;
       }
-
-
-
-
-
-
-
-      @Override public ASTNode reduce(ASTNode r1, ASTNode r2) {
-        return null;
+      protected List<ASTNode> setFirst(ASTNode node, ASTNode f) {
+        return setFirst(node, as.list(f));
       }
-      
     }.map(root);
+    /* Fill lasts */
+    final Map<ASTNode, List<ASTNode>> lasts = new HashMap<>();
+    new ASTMapReducer<List<ASTNode>>() {
+      @Override protected List<ASTNode> map(MethodDeclaration ¢) {
+        List<ASTNode> lastParameter = fold(step.parameters(¢));
+        List<ASTNode> lastBody = map(step.body(¢));
+        return setLast(¢, lastParameter.isEmpty() ? lastBody : lastParameter);
+      };
+      @Override protected List<ASTNode> map(Block ¢) {
+        return setLast(¢, fold(step.statements(¢)));
+      };
+      @Override protected List<ASTNode> map(VariableDeclarationStatement ¢) {
+        return setLast(¢, fold(step.fragments(¢)));
+      };
+      @Override protected List<ASTNode> map(VariableDeclarationFragment ¢) {
+        List<ASTNode> i = map(step.initializer(¢));
+        return i != null ? setLast(¢, i) : setLast(¢, ¢);
+      };
+      @Override protected List<ASTNode> map(InfixExpression ¢) {
+        map(step.left(¢));
+        return setLast(¢, map(step.right(¢)));
+      };
+      @Override protected List<ASTNode> map(SimpleName ¢) {
+        return setLast(¢, ¢);
+      };
+      @Override public List<ASTNode> reduce() {
+        return an.empty.list();
+      }
+      @Override public List<ASTNode> reduce(List<ASTNode> r1, List<ASTNode> r2) {
+        r1.addAll(r2);
+        return r1;
+      }
+      private List<ASTNode> fold(List<? extends ASTNode> parameters) {
+        List<List<ASTNode>> $ = parameters.stream().map(a -> map(a)).filter(a -> !a.isEmpty()).collect(Collectors.toList());
+        return $.isEmpty() ? reduce() : $.get($.size() - 1);
+      }
+      protected List<ASTNode> setLast(ASTNode node, List<ASTNode> ls) {
+        lasts.put(node, ls);
+        return ls;
+      }
+      protected List<ASTNode> setLast(ASTNode node, ASTNode l) {
+        return setLast(node, as.list(l));
+      }
+    }.map(root);
+    /* Conclusion out */
+    root.accept(new ASTVisitor() {
+      @Override public boolean visit(MethodDeclaration node) {
+        List<SingleVariableDeclaration> ps = step.parameters(node);
+        Block b = step.body(node);
+        out(node).addAll(firsts(node));
+        if (!ps.isEmpty()) {
+          chain(ps);
+          chain(ps.get(ps.size() - 1), b);
+        }
+        return true;
+      }
+      @Override public boolean visit(Block node) {
+        chain(step.statements(node));
+        return true;
+      }
+      @Override public boolean visit(VariableDeclarationStatement node) {
+        chain(step.fragments(node));
+        return true;
+      }
+      @Override public boolean visit(VariableDeclarationFragment node) {
+        out(step.initializer(node)).add(node);
+        return true;
+      }
+      @Override public boolean visit(InfixExpression node) {
+        chain(step.left(node), step.right(node));
+        lasts(step.right(node)).stream().forEach(x -> out(x).add(node));
+        return true;
+      }
+      private <T extends ASTNode> void chain(List<T> ts) {
+        List<T> ns = ts.stream().filter(t -> !firsts(t).isEmpty()).collect(Collectors.toList());
+        for (int i = 0; i < ns.size() - 1; ++i) {
+          final int ii = i;
+          lasts(ns.get(i)).stream().forEach(l -> out(l).addAll(firsts(ns.get(ii + 1))));
+        }
+      }
+      private void chain(ASTNode n1, ASTNode n2) {
+        if (n1 != null && n2 != null)
+          lasts(n1).stream().forEach(l -> out(l).addAll(firsts(n2)));
+      }
+      private List<ASTNode> firsts(ASTNode n) {
+        return firsts.containsKey(n) ? firsts.get(n) : an.empty.list();
+      }
+      private List<ASTNode> lasts(ASTNode n) {
+        return lasts.containsKey(n) ? lasts.get(n) : an.empty.list();
+      }
+    });
   };
-  
-
-  
-  private static List<ASTNode> in(ASTNode n) {
+  static Nodes in(ASTNode n) {
     if (!property.has(n, CFG.keyIn))
-      property.set(n, CFG.keyIn, an.empty.list());
+      property.set(n, CFG.keyIn, InNodes.empty());
     return property.get(n, CFG.keyIn);
   }
-  private static List<ASTNode> out(ASTNode n) {
+  static Nodes out(ASTNode n) {
     if (!property.has(n, CFG.keyOut))
-      property.set(n, CFG.keyOut, an.empty.list());
+      property.set(n, CFG.keyOut, OutNodes.empty());
     return property.get(n, CFG.keyOut);
   }
 }
