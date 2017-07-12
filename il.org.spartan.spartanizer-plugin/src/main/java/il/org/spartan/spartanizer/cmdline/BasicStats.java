@@ -33,9 +33,9 @@ public class BasicStats extends ASTInFilesVisitor{
     } catch (IOException x1) {
       x1.printStackTrace();
     }
-    BasicStats a = new BasicStats(args);
+    BasicStats stats = new BasicStats(args);
 
-    a.visitAll(new ASTTrotter() {
+    stats.visitAll(new ASTTrotter() {
       @Override public boolean visit(final TypeDeclaration ¢) {
         ++classNum;
         System.err.printf(getCurrentLocation() + " Visiting Type: %s\t(%d)\n",¢.getName(),classNum);
