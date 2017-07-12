@@ -1,20 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.team.internal.ui.history.*;
-
-import fluent.ly.*;
 import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
 
@@ -39,7 +25,7 @@ public class Spartanize extends ASTInFilesVisitor {
   }
   
   private static void go(String[] args) {
-    Spartanize a = new Spartanize(args);
+    new Spartanize(args).showLocations();
     new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
       //
             });
