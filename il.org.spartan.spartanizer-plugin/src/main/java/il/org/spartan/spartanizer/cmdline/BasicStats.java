@@ -39,7 +39,6 @@ public class BasicStats extends ASTInFilesVisitor{
       @Override public boolean visit(final TypeDeclaration ¢) {
         ++classNum;
         System.err.printf(getCurrentLocation() + " Visiting Type: %s\t(%d)\n",¢.getName(),classNum);
-//        System.err.println(locations.size());
         return true;
        }
        
@@ -52,7 +51,6 @@ public class BasicStats extends ASTInFilesVisitor{
          return true;
         }
        @Override protected void record(final String summary) {
-           //System.err.println(classnum);
        }
        @Override public boolean visit(final ReturnStatement ¢) {
          return true;
