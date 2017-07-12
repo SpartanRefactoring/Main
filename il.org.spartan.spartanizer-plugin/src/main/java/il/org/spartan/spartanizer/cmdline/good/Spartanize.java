@@ -1,8 +1,22 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.team.internal.ui.history.*;
+
 import fluent.ly.*;
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** This is a command line program, which can be thought of as a spartan
  * compiler. For each {@code .java} file it find, it encounters, it creates a
@@ -11,15 +25,44 @@ import il.org.spartan.spartanizer.cmdline.*;
  * file, and would be overwritten each time this program is run.
  * @author Matteo Orru'
  * @since 2017-06-25 */
-public class spartanize extends ASTInFilesVisitor {
+public class Spartanize extends ASTInFilesVisitor {
+  
+  public Spartanize(final String[] args) {
+    super(args);
+  }
+  
+  public final TextualTraversals traversals = new TextualTraversals();
+  
   public static void main(final String[] args) throws SecurityException, IllegalArgumentException {
+    go(args);
     visit(args.length != 0 ? args : defaultArguments);
   }
+  
+  private static void go(String[] args) {
+    Spartanize a = new Spartanize(args);
+    new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+      //
+            });
+    
+  }
+
+  public void showLocations(){
+    for(final String location: locations)
+      System.out.println(location);
+  }
   public static void visit(final String... args) {
-    for (final String ¢ : External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, spartanize.class))
+    for (final String ¢ : External.Introspector.extract(args != null && args.length != 0 ? 
+        args : defaultArguments, Spartanize.class)) {
+      
       matteo(¢);
+    }
   }
   private static void matteo(String ¢) {
-    forget.it(¢);
+    System.out.println(¢);
+    //forget.it(¢);
+  }
+  
+  public final String fixedPoint(final String from) {
+    return traversals.fixed(from);
   }
 }
