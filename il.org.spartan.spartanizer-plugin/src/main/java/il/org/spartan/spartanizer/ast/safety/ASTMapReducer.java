@@ -35,6 +35,14 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   protected R compound(final Expression... ¢) {
     return foldl(as.list(¢).stream().filter(λ -> λ != null).collect(Collectors.toList()));
   }
+  protected R map(final List<Statement> ss) {
+    R $ = reduce();
+    if (ss != null)
+      for (final ASTNode ¢ : ss)
+        $ = reduce($, map(¢));
+    return $;
+  }
+ 
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
     if (ns != null)
@@ -80,7 +88,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return reduce(map(to(¢)), map(from(¢)));
   }
   protected R map(final Block ¢) {
-    return foldl(statements(¢));
+    return map(statements(¢));
   }
   protected R map(final BreakStatement ¢) {
     return compound(¢.getLabel());
