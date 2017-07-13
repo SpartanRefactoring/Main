@@ -12,16 +12,16 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 29/6/17
  */
+@SuppressWarnings("ALL")
 public class ArrayAccessAndIncrement implements LeonidasTipperDefinition {
 
 
+    Object[] identifier0 = new Object[]{};
     private int identifier1;
 
     @Override
     public void constraints() {
     }
-
-    Object[] identifier0 = new Object[]{};
 
     @Override
     public void matcher() {

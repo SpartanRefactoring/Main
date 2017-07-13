@@ -38,8 +38,7 @@ public abstract class NamedElement extends GenericEncapsulator{
 			return this;
 		description = "";
 		String[] words = getName(e).split("\\$")[1].split("_");
-        for (int i = 0; i < words.length; ++i)
-            description += (words[i] + " ");
+        for (String word : words) description += (word + " ");
         return this;
     }
 

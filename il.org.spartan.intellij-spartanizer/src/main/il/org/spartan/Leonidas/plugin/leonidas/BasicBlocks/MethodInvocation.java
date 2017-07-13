@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class MethodInvocation extends Identifiable {
 
     @Override
     public boolean conforms(PsiElement e) {
-        return super.conforms(e);
+        return iz.identifier(e) && super.conforms(e);
     }
 
 

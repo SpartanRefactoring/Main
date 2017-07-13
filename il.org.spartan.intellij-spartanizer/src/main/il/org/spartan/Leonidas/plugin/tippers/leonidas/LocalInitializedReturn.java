@@ -12,6 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Oren Afek
  * @since 20/06/17
  */
+@SuppressWarnings("ALL")
 public class LocalInitializedReturn implements LeonidasTipperDefinition {
 
     @Override

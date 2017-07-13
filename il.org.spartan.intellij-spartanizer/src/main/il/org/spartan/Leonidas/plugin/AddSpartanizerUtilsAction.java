@@ -41,6 +41,7 @@ public class AddSpartanizerUtilsAction extends AnAction {
     public void createEnvironment(AnActionEvent e) {
         PsiFile pf;
         try {
+            //noinspection ConstantConditions
             pf = getPsiClassFromContext(e).getContainingFile();
         }catch (NullPointerException exception){
             return;
@@ -49,14 +50,12 @@ public class AddSpartanizerUtilsAction extends AnAction {
         // creates the directory and adds the file if needed
         try {
             srcDir.checkCreateSubdirectory("spartanizer");
-            pf = createUtilsFile(srcDir.createSubdirectory("spartanizer"));
+            createUtilsFile(srcDir.createSubdirectory("spartanizer"));
         } catch (IncorrectOperationException x) {
-            PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(d -> "spartanizer".equals(d.getName())).findAny().get();
+            PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(d -> "spartanizer".equals(d.getName())).findAny().orElseGet(null);
             try {
-                pf = Arrays.stream(pd.getFiles()).noneMatch(f -> "SpartanizerUtils.java".equals(f.getName()))
-                        ? createUtilsFile(pd)
-                        : Arrays.stream(pd.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst()
-                        .get();
+                if (Arrays.stream(pd.getFiles()).noneMatch(f -> "SpartanizerUtils.java".equals(f.getName())))
+                    createUtilsFile(pd);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

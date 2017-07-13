@@ -29,7 +29,7 @@ public class SpartanizerEnableAction extends AnAction {
                     + " Spartanization In Current File");
             presentation.setIcon(Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE)) ? Icons.Enable : Icons.Disable);
             DaemonCodeAnalyzer.getInstance(p).restart();
-        }catch (NullPointerException exc){
+        } catch (NullPointerException ignored) {
 
         }
     }

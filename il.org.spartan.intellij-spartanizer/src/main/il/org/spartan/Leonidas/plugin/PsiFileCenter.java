@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class PsiFileCenter {
 
-    private static String marker = "/*X_CENTER_MARKER*/";
     private static String markerRegex = "/\\*X_CENTER_MARKER\\*/";
     private HashMap<CodeType, String> wrappingPrefixes;
     private HashMap<CodeType, String> wrappingPostfixes;
@@ -47,9 +46,10 @@ public class PsiFileCenter {
         List<CodeType> codeTypesByGenerality = Arrays.asList(CodeType.FILE_BOUND, CodeType.CLASS_BOUND, CodeType.METHOD_BOUND, CodeType.EXPRESSION, CodeType.ENUM_BOUND);
         PsiFile file;
         for (CodeType type : codeTypesByGenerality) {
+            String marker = "/*X_CENTER_MARKER*/";
             file = PsiFileFactory.getInstance(Utils.getProject())
                     .createFileFromText(JavaLanguage.INSTANCE, wrappingPrefixes.get(type) + marker + "\n\n" + s + "\n\n" + marker + wrappingPostfixes.get(type));
-            Wrapper<Boolean> isValid = new Wrapper(true);
+            Wrapper<Boolean> isValid = new Wrapper<>(true);
             file.accept(new JavaRecursiveElementVisitor() {
                 @Override
                 public void visitErrorElement(PsiErrorElement e) {

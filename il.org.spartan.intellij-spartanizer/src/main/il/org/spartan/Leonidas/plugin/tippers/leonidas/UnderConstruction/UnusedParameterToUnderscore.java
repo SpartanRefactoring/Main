@@ -17,6 +17,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Anna Belozovsky
  * @since 15/06/2017
  */
+@SuppressWarnings("ALL")
 @TipperUnderConstruction(UNTESTED)
 public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
 

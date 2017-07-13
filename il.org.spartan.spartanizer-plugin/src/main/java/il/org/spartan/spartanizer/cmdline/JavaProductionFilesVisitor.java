@@ -50,22 +50,22 @@ public class JavaProductionFilesVisitor {
 interface template  {
   interface B{}
 }
-  static public class Current {
-  public Current(List<String> locations) {
-    this.locations = locations.subList(0, locations.size());
-  }
+  public static class Current {
+    public Current(List<String> locations) {
+      this.locations = locations.subList(0, locations.size());
+    }
 
-  public File file;
-  public String fileName;
-  public String absolutePath;
-  public String location;
-  public BufferedWriter out;
-  public final List<String> locations;
-  public ASTVisitor visitor;
-  public String relativePath;
-  public String locationPath;
-  public String locationName;
-}
+    public File file;
+    public String fileName;
+    public String absolutePath;
+    public String location;
+    public BufferedWriter out;
+    public final List<String> locations;
+    public ASTVisitor visitor;
+    public String relativePath;
+    public String locationPath;
+    public String locationName;
+  }
   public JavaProductionFilesVisitor(Current current) {
     this.current = current;
   }

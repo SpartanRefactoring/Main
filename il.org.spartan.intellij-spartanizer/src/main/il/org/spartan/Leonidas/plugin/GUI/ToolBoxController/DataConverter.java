@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Created by Sharon on 30-Jun-17.
+ * @author Sharon
+ * @since 30-06-17.
  */
 public class DataConverter<T> {
     public static final DataConverter<String> STRING = new DataConverter<>(s -> s, s -> s);
@@ -28,17 +29,10 @@ public class DataConverter<T> {
         this.fromString = fromString;
     }
 
-    public String toString(T t) {
-        return toString.apply(t);
-    }
-
-    public Object fromString(String s) {
-        return fromString.apply(s);
-    }
-
     public static String convert(Object o) {
-		return String.class.isAssignableFrom(o.getClass()) ? STRING.toString((String) o)
-				: Integer.class.isAssignableFrom(o.getClass()) ? INTEGER.toString((Integer) o)
+        //noinspection unchecked
+        return String.class.isAssignableFrom(o.getClass()) ? STRING.toString((String) o)
+                : Integer.class.isAssignableFrom(o.getClass()) ? INTEGER.toString((Integer) o)
 						: Integer.class.isAssignableFrom(o.getClass()) ? DOUBLE.toString((Double) o)
 								: Integer.class.isAssignableFrom(o.getClass()) ? FLOAT.toString((Float) o)
 										: Integer.class.isAssignableFrom(o.getClass()) ? LONG.toString((Long) o)
@@ -67,5 +61,13 @@ public class DataConverter<T> {
                 Long.class.isAssignableFrom(c) ||
                 List.class.isAssignableFrom(c) ||
                 Existence.class.isAssignableFrom(c);
+    }
+
+    public String toString(T t) {
+        return toString.apply(t);
+    }
+
+    public Object fromString(String s) {
+        return fromString.apply(s);
     }
 }

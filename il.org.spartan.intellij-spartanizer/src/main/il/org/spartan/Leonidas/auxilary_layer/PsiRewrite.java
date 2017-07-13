@@ -15,6 +15,7 @@ import java.util.List;
  * @author Roey Maor
  * @since 03-12-2016
  */
+@SuppressWarnings("Convert2MethodRef")
 public class PsiRewrite {
     private PsiFile psiFile;
     private Project project;

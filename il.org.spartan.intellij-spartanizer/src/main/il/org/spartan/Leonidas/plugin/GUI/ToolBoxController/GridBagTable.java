@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /**
@@ -32,27 +31,6 @@ public class GridBagTable extends JPanel {
             add(components.get(i), makeContentConstraints(1, 2 * i + 2, 50));
             add(new JSeparator(JSeparator.HORIZONTAL), makeSeparatorConstraints(2 * i + 1));
         });
-    }
-
-    /**
-     * Example for teammates. TODO remove this
-     */
-    public static void runExample() {
-        JFrame frame = new JFrame(GridBagTable.class.getSimpleName());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JCheckBox checkbox = new JCheckBox();
-        checkbox.setName("checkbox");
-
-        JTextField textfield = new JTextField("iamgroot");
-        textfield.setName("textfield");
-
-        JTable table = new JTable(3, 2);
-        table.setName("table");
-
-        frame.add(new GridBagTable("Property", "Value", Arrays.asList(checkbox, textfield, table)));
-        frame.pack();
-        frame.setVisible(true);
     }
 
     private JLabel makeHeaderLabel(String label) {

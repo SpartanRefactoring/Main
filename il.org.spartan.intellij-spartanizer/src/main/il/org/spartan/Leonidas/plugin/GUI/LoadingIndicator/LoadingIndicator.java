@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by roym on 28/06/17.
+ * @author roym
+ * @since 28-06-2017.
  */
 public class LoadingIndicator extends JFrame {
 

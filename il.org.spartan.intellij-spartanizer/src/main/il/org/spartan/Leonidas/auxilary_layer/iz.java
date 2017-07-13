@@ -25,6 +25,7 @@ import static com.intellij.psi.PsiModifier.STATIC;
  * @author Oren Afek
  * @since 01-12-2016
  */
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public enum iz {
     ;
     private static final String ABSTRACT = "abstract";
@@ -523,5 +524,13 @@ public enum iz {
 
     public static boolean innerElementOfClass(PsiElement e) {
         return typeCheck(PsiMethod.class, e) || typeCheck(PsiField.class, e) || (typeCheck(PsiClass.class, e) && iz.classDeclaration(e.getParent()));
+    }
+
+    public static boolean quantifierAll(Quantifier q) {
+        return q instanceof AllMethodCallBased;
+    }
+
+    public static boolean lambdaExpression(PsiElement e) {
+        return typeCheck(PsiLambdaExpression.class, e);
     }
 }

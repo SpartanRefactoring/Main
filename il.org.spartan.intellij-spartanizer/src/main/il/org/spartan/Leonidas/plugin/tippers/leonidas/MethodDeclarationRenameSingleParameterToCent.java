@@ -15,6 +15,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author melanyc
  * @since 10-06-2017
  */
+@SuppressWarnings("ALL")
 @UserControlledTipper
 public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTipperDefinition {
 

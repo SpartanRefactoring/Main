@@ -17,7 +17,6 @@ import java.awt.event.WindowEvent;
  */
 public class AboutLeonidas extends JFrame {
     private static boolean active;
-    private static String backgroundImagePath = "/aboutBG.jpg";
     private JPanel panel1;
     private JTextPane textPane1;
     private JButton closeButton;
@@ -43,6 +42,7 @@ public class AboutLeonidas extends JFrame {
         closepanel.setOpaque(false);
 
 
+        String backgroundImagePath = "/aboutBG.jpg";
         setContentPane(new JLabel(new ImageIcon(getClass().getResource(backgroundImagePath))));
         this.setLayout(new BorderLayout());
         this.add(panel1);

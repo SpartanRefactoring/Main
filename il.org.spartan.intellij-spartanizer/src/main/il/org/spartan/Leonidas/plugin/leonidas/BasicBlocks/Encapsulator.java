@@ -21,6 +21,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.I
  * @author michalcohen
  * @since 22-02-2017
  */
+@SuppressWarnings("Convert2MethodRef")
 public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsulator> {
     protected PsiElement inner;
     protected Encapsulator parent;
@@ -89,7 +90,10 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
 
     @Override
     public <T> T accept(EncapsulatorValueVisitor<T> v, BinaryOperator<T> accumulator) {
-        return accumulator.apply(v.visit(this), children.stream().filter(Objects::nonNull).map(child -> child.accept(v, accumulator))
+        return children.isEmpty() ? v.visit(this) : accumulator.apply(v.visit(this), children.stream()
+                .filter(Objects::nonNull)
+                .map(child -> child.accept(v, accumulator))
+                .filter(Objects::nonNull)
                 .reduce(accumulator).orElse(null));
     }
 

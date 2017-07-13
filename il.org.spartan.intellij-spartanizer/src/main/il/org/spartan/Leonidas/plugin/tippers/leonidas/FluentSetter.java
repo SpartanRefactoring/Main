@@ -14,6 +14,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author michalcohen, amirsagiv83
  * @since 29-05-17
  */
+@SuppressWarnings("ALL")
 public class FluentSetter implements LeonidasTipperDefinition {
 
     @Override

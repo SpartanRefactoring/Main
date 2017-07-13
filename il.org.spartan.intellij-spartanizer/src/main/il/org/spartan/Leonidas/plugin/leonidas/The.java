@@ -40,6 +40,7 @@ public abstract class The {
 
     public abstract EndThe isNot(Supplier<?> template);
 
+    @SuppressWarnings("EmptyMethod")
     class EndThe {
         public <T> void ofType(Class<? extends T> __) {/**/}
     }

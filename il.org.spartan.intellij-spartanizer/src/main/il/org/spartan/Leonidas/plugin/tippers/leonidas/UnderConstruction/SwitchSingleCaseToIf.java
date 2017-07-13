@@ -5,9 +5,10 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.*;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.*;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.INCOMPLETE;
 
 
 /**
@@ -16,11 +17,11 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Roey Maor
  * @since 29/06/2017
  */
+@SuppressWarnings("ALL")
 @TipperUnderConstruction(INCOMPLETE)
 public class SwitchSingleCaseToIf implements LeonidasTipperDefinition {
 
     int identifier0;
-    private final static int expression(int d){return 5;}
 
     @Override
     public void matcher() {

@@ -9,6 +9,7 @@ import java.util.Map;
  *
  * @author Sharon LK
  */
+@SuppressWarnings("ALL")
 public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition {
     int identifier0;
 

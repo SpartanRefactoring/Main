@@ -5,8 +5,8 @@ import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.*;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.*;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER;
 
 /**
  * Inline assignment into subsequent assignment.
@@ -14,25 +14,15 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Oren Afek
  * @since 29-06-2017
  */
-@TipperUnderConstruction(BROKEN_MATCHER)
+@SuppressWarnings("ALL")
+@TipperUnderConstruction(BROKEN_MATCHER) //Waiting for AnyNumberOfParameter
 public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition {
 
 
-    @Override
-    public void constraints() {
-    }
-
     X identifier0;
 
-    class X {
-
-        public X methodInvocation1() {
-            return this;
-        }
-
-        public X methodInvocation2() {
-            return this;
-        }
+    @Override
+    public void constraints() {
     }
 
     @Override
@@ -44,7 +34,6 @@ public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition 
             /* end */
         });
     }
-
 
     @Override
     public void replacer() {
@@ -61,5 +50,16 @@ public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition 
                 .put("s = s.trim();\n s = s.substring(0,1);", "s = s.trim().substring(0,1);")
                 .map();
 
+    }
+
+    class X {
+
+        public X methodInvocation1() {
+            return this;
+        }
+
+        public X methodInvocation2() {
+            return this;
+        }
     }
 }

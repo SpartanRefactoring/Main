@@ -14,7 +14,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author michalcohen
  * @since 30-04-2017
  */
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings("ALL")
 public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefinition {
 
     /**

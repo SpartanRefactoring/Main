@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author Oren Afek
  * @since 02-06-2017
  */
+@SuppressWarnings("ALL")
 public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefinition {
 
     Object variable0;
@@ -20,6 +21,7 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
     @Override
     public void constraints() {
         element(2).asExpression.mustNotRefer(0);
+        element(1).asExpression.DoesNotContainMethodCallExpression(); // might change state.
     }
 
     @Override

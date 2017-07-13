@@ -51,9 +51,10 @@ public class Method extends ModifiableElement {
         if (!iz.method(e.getInner()) || super.generalizes(e, map).notMatches()) return new MatchingResult(false);
         PsiMethod m = az.method(e.getInner());
         Wrapper<Integer> dummy = new Wrapper<>(0);
-        return matcherReturnType.getMatchingResult(m.getReturnTypeElement(), dummy).combineWith(
-                matcherParameters.getMatchingResult(m.getParameterList(), dummy)).combineWith(
-                matcherCodeBlock.getMatchingResult(m.getBody(), dummy));
+        MatchingResult mr = new MatchingResult(true);
+        return matcherReturnType.getMatchingResult(m.getReturnTypeElement(), dummy, mr).combineWith(
+                matcherParameters.getMatchingResult(m.getParameterList(), dummy, mr)).combineWith(
+                matcherCodeBlock.getMatchingResult(m.getBody(), dummy, mr));
     }
 
     @Override

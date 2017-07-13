@@ -13,6 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Roey Maor
  * @since 29/06/2017
  */
+@SuppressWarnings("ALL")
 public class WhileInfiniteBreakToReturn implements LeonidasTipperDefinition {
 
     Object identifier3;

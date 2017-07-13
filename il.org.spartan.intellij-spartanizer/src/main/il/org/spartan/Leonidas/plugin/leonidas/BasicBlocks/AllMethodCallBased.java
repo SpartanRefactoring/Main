@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by melanyc on 7/1/2017.
+ * @author michalcohen
+ * @since 01-07-2017.
  */
 public class AllMethodCallBased extends QuantifierMethodCallBased {
 
@@ -26,6 +27,7 @@ public class AllMethodCallBased extends QuantifierMethodCallBased {
 
     @Override
     public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
+        if (!i.hasNext()) return 0;
         if (i.value().getParent() == null) return 1;
         Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody

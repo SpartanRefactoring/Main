@@ -21,6 +21,7 @@ import java.net.URI;
 /**
  * @author Sharon LK
  */
+@SuppressWarnings({"FieldCanBeLocal", "Convert2MethodRef"})
 public class AddTipperUI extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Sharon KL

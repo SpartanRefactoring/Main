@@ -27,7 +27,7 @@ class TippersList extends JList {
         numOfElements = 0;
         setCellRenderer(new CellRenderer());
         this.setFixedCellHeight(40);
-        this.setFont(new Font("",0,20));
+        this.setFont(new Font("", Font.PLAIN, 20));
         addMouseListener(new MouseAdapter() {
                              public void mouseClicked(MouseEvent e) {
                                  int index = locationToIndex(e.getPoint());

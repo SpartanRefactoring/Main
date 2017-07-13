@@ -4,9 +4,11 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiLambdaExpressionImpl;
 import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -22,7 +24,7 @@ import static il.org.spartan.Leonidas.auxilary_layer.step.*;
 () -> {return x;} => () -> x;
  */
 
-public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLambdaExpression> {
+public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper {
 
     @Override
     public boolean canTip(PsiElement ¢) {
@@ -42,18 +44,21 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
         return iz.expressionStatement(firstStatement(blockBody(element)));
     }
 
+    @NotNull
     @Override
-    public String description(PsiLambdaExpression x) {
+    public String description(PsiElement x) {
         return "Remove redundant curly braces";
     }
 
+    @NotNull
     @Override
     public String name() {
         return "LambdaExpressionRemoveRedundantCurlyBraces";
     }
 
     @Override
-    public Tip tip(final PsiLambdaExpression element) {
+    public Tip tip(final PsiElement e) {
+        PsiLambdaExpression element = az.lambdaExpression(e);
         assert statements(blockBody(element)).size() == 1;
         final PsiStatement s = firstStatement(blockBody(element));
 
@@ -71,11 +76,13 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
 
     }
 
+    @NotNull
     @Override
     public Class<? extends PsiLambdaExpression> getOperableType() {
         return PsiLambdaExpressionImpl.class;
     }
 
+    @NotNull
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()

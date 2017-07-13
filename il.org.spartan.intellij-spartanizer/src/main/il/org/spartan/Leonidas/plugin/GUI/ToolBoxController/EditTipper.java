@@ -15,8 +15,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +24,7 @@ import java.util.stream.Collectors;
  * @author Amir Sagiv, Anna Belozovsky
  * @since 14-05-2017
  */
+@SuppressWarnings({"unchecked", "Convert2MethodRef"})
 public class EditTipper extends JFrame {
     private JPanel mainPanel;
     private JButton applyButton;
@@ -76,12 +75,7 @@ public class EditTipper extends JFrame {
 
         applyButton.addActionListener(e -> applyListener());
         closeButton.addActionListener(e -> this.dispose());
-        table.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                applyButton.setEnabled(true);
-            }
-        });
+        table.addPropertyChangeListener(evt -> applyButton.setEnabled(true));
         OKButton.addActionListener(e -> {
             applyListener();
             this.dispose();
@@ -131,29 +125,29 @@ public class EditTipper extends JFrame {
 						continue;
 					}
 					if (type == Map.class) {
-						for (Map.Entry<Integer, String> entry : ((Map<Integer, String>) field.get(root)).entrySet()) {
+                        //noinspection unchecked
+                        for (Map.Entry<Integer, String> entry : ((Map<Integer, String>) field.get(root)).entrySet()) {
                             table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i,
                                     0);
-                            table.getModel().setValueAt(new JTextField((String) entry.getValue()), i++, 1);
+                            table.getModel().setValueAt(new JTextField(entry.getValue()), i++, 1);
                         }
 						continue;
 					}
 					if (type == Existence.class) {
-						JComboBox cb = new JComboBox(new Existence[] { Existence.DO_NOT_CARE, Existence.MUST_EXISTS,
-								Existence.DOES_NOT_EXISTS });
+                        @SuppressWarnings("unchecked") JComboBox cb = new JComboBox(new Existence[]{Existence.DO_NOT_CARE, Existence.MUST_EXISTS,
+                                Existence.DOES_NOT_EXISTS });
 						cb.setSelectedItem(field.get(root));
                         table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i, 0);
                         table.getModel().setValueAt(cb, i++, 1);
                         continue;
 					}
 					if (type.newInstance() instanceof String) {
-						if ("".equals((String) field.get(root)))
-							continue;
+                        if ("".equals(field.get(root)))
+                            continue;
                         table.getModel().setValueAt(new JLabel(root.getDescription() + " " + annotation.name()), i, 0);
                         table.getModel().setValueAt(new JTextField((String) field.get(root)), i++, 1);
-                        continue;
-					}
-                } catch (Exception e) {
+                    }
+                } catch (Exception ignored) {
                 }
 			}
         return i;
@@ -191,9 +185,8 @@ public class EditTipper extends JFrame {
 					}
 					if (type.newInstance() instanceof String) {
                         field.set(root, ((JTextField) table.getValueAt(i++, 1)).getText());
-                        continue;
-					}
-                } catch (Exception e) {
+                    }
+                } catch (Exception ignored) {
                 }
 			}
         return i;

@@ -7,6 +7,7 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import java.util.Map;
  * @since 23-12-2016
  */
 
-public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> {
+public class LispLastElement extends NanoPatternTipper {
 
     @SuppressWarnings("ConstantConditions")
     private boolean canTip(PsiMethodCallExpression x) {
@@ -46,32 +47,39 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
         return iz.methodCallExpression(e) && canTip(az.methodCallExpression(e));
     }
 
+    @NotNull
     @Override
-    public String description(PsiMethodCallExpression x) {
+    public String description(PsiElement x) {
         return "replace " + x.getText() + " with list last";
     }
 
+    @NotNull
     @Override
-    public PsiElement createReplacement(PsiMethodCallExpression x) {
+    public PsiElement createReplacement(PsiElement e) {
+        PsiMethodCallExpression x = az.methodCallExpression(e);
         @SuppressWarnings("ConstantConditions") PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(x.getMethodExpression(), PsiReferenceExpression.class)[0];
         return JavaPsiFacade.getElementFactory(x.getProject()).createExpressionFromText("last(" + container.getText() + ")", x);
     }
 
+    @NotNull
     @Override
-    protected Tip pattern(PsiMethodCallExpression ¢) {
+    protected Tip pattern(PsiElement ¢) {
         return tip(¢);
     }
 
+    @NotNull
     @Override
     public Class<? extends PsiMethodCallExpression> getOperableType() {
         return PsiMethodCallExpressionImpl.class;
     }
 
+    @NotNull
     @Override
     public String name() {
         return "LispLastElement";
     }
 
+    @NotNull
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()

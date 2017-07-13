@@ -4,7 +4,7 @@ import javax.swing.*;
 
 /**
  * @author RoeiRaz
- * @sincne 26/5/17
+ * @since 26/5/17
  * <p>
  * keeps the path to the leonidas icon.
  */

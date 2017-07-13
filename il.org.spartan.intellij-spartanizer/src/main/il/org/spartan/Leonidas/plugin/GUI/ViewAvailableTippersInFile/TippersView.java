@@ -14,8 +14,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Amir on 20-06-2017.
+ * @author Amir
+ * @since 20-06-2017.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class TippersView extends JFrame{
     private static boolean active;
     private JPanel mainPanel;

@@ -85,4 +85,8 @@ public class Expression extends GenericMethodCallBasedBlock {
         });
         return wi.get();
     }
+
+    public void DoesNotContainMethodCallExpression() {
+        addConstraint((e, m) -> e.accept(e1 -> !iz.methodCallExpression(e1.getInner()), (b1, b2) -> b1 && b2));
+    }
 }

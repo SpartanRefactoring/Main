@@ -17,7 +17,7 @@ import java.util.Map;
  * A basic block representing an identifier. Class0 identifier1 = expression(2);
  *
  * @author Amir Sagiv
- * @Date 24-05-2017
+ * @since 24-05-2017
  */
 public abstract class Identifiable extends NamedElement {
 
@@ -66,8 +66,8 @@ public abstract class Identifiable extends NamedElement {
         if (!(dst instanceof Identifiable)) return;
         super.copyTo(dst);
         Identifiable castDst = (Identifiable) dst;
-        castDst.containsList = new LinkedList(containsList);
-        castDst.notContainsList = new LinkedList(notContainsList);
+        castDst.containsList = new LinkedList<>(containsList);
+        castDst.notContainsList = new LinkedList<>(notContainsList);
         castDst.nameToChange = String.valueOf(nameToChange);
     }
 
@@ -101,5 +101,9 @@ public abstract class Identifiable extends NamedElement {
 
     public void noMoreMethodsApply() {
         addConstraint((e, m) -> !haz.moreMethodsCalls(e));
+    }
+
+    public void nameEquals(Integer i) {
+        addConstraint((e, m) -> m.containsKey(i) && e.getText().equals(m.get(i).get(0).getText()));
     }
 }

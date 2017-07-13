@@ -146,4 +146,8 @@ public enum az {
     public static <T extends PsiElement> String string(T value) {
         return String.valueOf(value.getText());
     }
+
+    public static PsiLambdaExpression lambdaExpression(PsiElement e) {
+        return e == null || !iz.lambdaExpression(e) ? null : (PsiLambdaExpression) e;
+    }
 }

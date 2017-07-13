@@ -12,7 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author melanyc
  * @since 30-04-2017
  */
-@SuppressWarnings("DoubleNegation")
+@SuppressWarnings("ALL")
 public class DoubleNot implements LeonidasTipperDefinition {
 
     /**

@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  * @author amirsagiv83, michalcohen
  * @since 29-05-2017.
  */
+@SuppressWarnings("Convert2MethodRef")
 public class Class extends NamedElement{
 
     private static final String TEMPLATE = "Class";
@@ -83,7 +84,7 @@ public class Class extends NamedElement{
      */
     private MatchingResult matchInnerElements(PsiElement[] innerElements, List<Matcher> ms){
         if (ms.isEmpty()) return new MatchingResult(true);
-        List<List<MatchingResult>> l = ms.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
+        List<List<MatchingResult>> l = ms.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0), new MatchingResult(true))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
         MatchingResult[] ass = new MatchingResult[ms.size()];
         if (!matchInnerElementAux(l, ms.size() - 1, new LinkedList<>(), ass))
 			return new MatchingResult(false);
@@ -108,6 +109,7 @@ public class Class extends NamedElement{
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> map, PsiRewrite r) {
         PsiClass psiClass = az.classDeclaration(es.get(0)), innerAsClass = az.classDeclaration(inner);
+        //noinspection ConstantConditions
         innerAsClass.setName(psiClass.getName());
         List<Encapsulator> innerClasses = Arrays.stream(innerAsClass.getInnerClasses())
                 .map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList()),

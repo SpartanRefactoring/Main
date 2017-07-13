@@ -12,6 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author Oren Afek
  * @since 31-05-2017
  */
+@SuppressWarnings("ALL")
 public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTipperDefinition {
 
     Object identifier0;
