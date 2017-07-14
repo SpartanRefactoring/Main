@@ -1,5 +1,9 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
+
+import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
@@ -20,21 +24,39 @@ public class Spartanize extends ASTInFilesVisitor {
   public final TextualTraversals traversals = new TextualTraversals();
   
   public static void main(final String[] args) throws SecurityException, IllegalArgumentException {
-    go(args);
-    visit(args.length != 0 ? args : defaultArguments);
+    run(args);
+    //visit(args.length != 0 ? args : defaultArguments);
   }
   
-  private static void go(String[] args) {
-    new Spartanize(args).showLocations();
-    new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+  private static void run(String[] args) {
+    Spartanize s = new Spartanize(args);
+    s.showLocations().visitAll(new ASTTrotter() {
+           
       //
-            });
+      @Override public boolean preVisit2(final ASTNode ¢) {
+//        System.out.println("Folding: " + !isFolding());
+//        System.out.println("go: " + go(¢));
+//        System.out.println(!isFolding() && go(¢) != null);
+//        return !isFolding() && go(¢) != null;
+        return true;
+      }
+      
+      @Override public boolean visit(final CompilationUnit ¢) {
+        //++total;
+//        if (!interesting(¢))
+//          return true;
+        //++interesting;
+        record(squeeze(theSpartanizer.repetitively(removeComments(JUnitTestMethodFacotry.code(¢ + "")))) + "\n");
+        return true;
+      }
+    });
     
   }
 
-  public void showLocations(){
+  public Spartanize showLocations(){
     for(final String location: locations)
-      System.out.println(location);
+      System.out.println("--------->" + location);
+    return this;
   }
   public static void visit(final String... args) {
     for (final String ¢ : External.Introspector.extract(args != null && args.length != 0 ? 
