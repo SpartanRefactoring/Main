@@ -32,12 +32,7 @@ public class Spartanize extends ASTInFilesVisitor {
     Spartanize s = new Spartanize(args);
     s.showLocations().visitAll(new ASTTrotter() {
            
-      //
       @Override public boolean preVisit2(final ASTNode ¢) {
-//        System.out.println("Folding: " + !isFolding());
-//        System.out.println("go: " + go(¢));
-//        System.out.println(!isFolding() && go(¢) != null);
-//        return !isFolding() && go(¢) != null;
         return true;
       }
       
@@ -61,14 +56,12 @@ public class Spartanize extends ASTInFilesVisitor {
   public static void visit(final String... args) {
     for (final String ¢ : External.Introspector.extract(args != null && args.length != 0 ? 
         args : defaultArguments, Spartanize.class)) {
-      
-      matteo(¢);
+       matteo(¢);
     }
   }
   private static void matteo(String ¢) {
     System.out.println(¢);
-    //forget.it(¢);
-  }
+   }
   
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
