@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.team.internal.ui.synchronize.*;
 
 import an.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -32,31 +33,45 @@ public class ASTTrotter extends ASTVisitor {
   public boolean isFolding() {
     return folding;
   }
-  @SuppressWarnings("unchecked") private <N extends ASTNode, T> Collection<Rule<N, T>> get(final N ¢) {
+  
+  @SuppressWarnings("unchecked") 
+  private <N extends ASTNode, T> Collection<Rule<N, T>> get(final N ¢) {
+    System.out.println("Nodetype:\t" + ¢.getNodeType());
     @SuppressWarnings("rawtypes") final Collection $ = get(¢.getNodeType());
     return $;
   }
+  
   private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
     return dispatch[¢] = dispatch[¢] != null ? dispatch[¢] : empty.list();
   }
+  
   protected void startFolding() {
     folding = true;
   }
+  
   public ASTTrotter() {
     super(true);
+    init(); 
   }
   @Override public boolean preVisit2(final ASTNode ¢) {
     return !isFolding() && go(¢) != null;
   }
-  @SuppressWarnings("unchecked") private <N extends ASTNode, T> T go(final N n) {
+  @SuppressWarnings("unchecked")
+  protected <N extends ASTNode, T> T go(final N n) {
+    System.out.println("dispatch: " + dispatch);
     return dispatch == null ? null : (T) get(n).stream().filter(λ -> λ.check(n)).map(λ -> λ.apply(n)).findFirst().orElse(null);
   }
-  @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") final ASTNode __) {
+  
+  @SuppressWarnings("static-method") 
+  boolean interesting(@SuppressWarnings("unused") final ASTNode __) {
     return true;
   }
-  @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") final ExpressionStatement ¢) {
+  
+  @SuppressWarnings("static-method") 
+  boolean interesting(@SuppressWarnings("unused") final ExpressionStatement ¢) {
     return false;
   }
+  
   @Override public boolean visit(final ExpressionStatement ¢) {
     ++total;
     if (!interesting(¢))
@@ -65,9 +80,11 @@ public class ASTTrotter extends ASTVisitor {
     record(squeeze(theSpartanizer.repetitively(removeComments(JUnitTestMethodFacotry.code(¢ + "")))) + "\n");
     return true;
   }
+  
   @Override public boolean visit(final ReturnStatement ¢) {
     return process(¢);
   }
+  
   private boolean process(final ASTNode ¢) {
     ++total;
     if (!interesting(¢))
@@ -76,6 +93,7 @@ public class ASTTrotter extends ASTVisitor {
     record(squeeze(theSpartanizer.repetitively(removeComments(JUnitTestMethodFacotry.code(¢ + "")))) + "\n");
     return true;
   }
+  
   @Override public boolean visit(final MethodDeclaration ¢) {
     ++total;
     if (!interesting(¢))
@@ -84,10 +102,14 @@ public class ASTTrotter extends ASTVisitor {
     record(squeeze(theSpartanizer.repetitively(removeComments(JUnitTestMethodFacotry.code(¢ + "")))) + "\n");
     return true;
   }
-  @SuppressWarnings("boxing") protected void record(final String summary) {
+  
+  @SuppressWarnings("boxing") 
+  protected void record(final String summary) {
     System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
   }
-  @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") final MethodDeclaration __) {
+  
+  @SuppressWarnings("static-method") 
+  boolean interesting(@SuppressWarnings("unused") final MethodDeclaration __) {
     return false;
   }
 
