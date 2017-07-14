@@ -1,83 +1,88 @@
 package il.org.spartan.java.cfg;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** The main class of the CFG implementation
- * @author Dor Ma'ayan & Ori Roth
+ * @author Dor Ma'ayan
+ * @author Ori Roth
  * @since 2017-06-14 */
-public abstract class CFG {
-  public static final String keyIn = "in";
-  public static final String keyOut = "out";
-
-  public static class Nodes {
-    public final boolean contains(Object ¢) {
-      return inner.contains(¢);
-    }
-    public final Iterator<ASTNode> iterator() {
-      return inner.iterator();
-    }
-    public final boolean add(ASTNode ¢) {
-      return inner.add(¢);
-    }
-    public final boolean addAll(List<? extends ASTNode> ¢) {
-      return inner.addAll(¢);
-    }
-    public final boolean remove(ASTNode ¢) {
-      return inner.remove(¢);
-    }
-    public Stream<ASTNode> stream() {
-      return inner.stream();
-    }
-    public int size() {
-      return inner.size();
-    }
-    public Set<ASTNode> asSet() {
-      return inner;
-    }
-    public static Nodes empty() {
-      return new Nodes();
+public interface CFG {
+  enum KEYS {
+    INCOMING, //
+    OUTGOING, //
+    FIRST, //
+    LAST; //
+    To to(ASTNode to) {
+      return new To() {
+        @Override public To add(ASTNode what) {
+          if (what != null && to != null)
+            property.get(to, KEYS.this.getClass().getCanonicalName() + KEYS.this, () -> new Nodes()).add(what);
+          return this;
+        }
+        @Override public To clear() {
+          if (to != null)
+            property.get(to, KEYS.this.getClass().getCanonicalName() + KEYS.this, () -> new Nodes()).clear();
+          return this;
+        }
+      };
     }
 
-    private final Set<ASTNode> inner = an.empty.set();
-  }
-
-  public static class InNodes extends Nodes {
-    public static Nodes empty() {
-      return new InNodes();
+    interface To {
+      To add(ASTNode what);
+      To clear();
     }
   }
 
-  public static class OutNodes extends Nodes {
-    public static Nodes empty() {
-      return new OutNodes();
-    }
-  }
+  static void compute(BodyDeclaration n) {
+    new VoidMapReducer() {
+      Stack<ASTNode> breakTarget = new Stack<>();
+      Map<String, ASTNode> labelMap = new LinkedHashMap<>();
+      Stack<ASTNode> continueTarget = new Stack<>();
+      Stack<ASTNode> returnTarget = new Stack<>();
+      {
+        returnTarget.push(parent(n));
+      }
 
-  public static Nodes in(ASTNode ¢) {
-    if (!property.has(¢, keyIn))
-      fill(¢);
-    return property.get(¢, keyIn);
-  }
-  public static Nodes out(ASTNode ¢) {
-    if (!property.has(¢, keyOut))
-      fill(¢);
-    return property.get(¢, keyOut);
-  }
-  private static void fill(ASTNode n) {
-    BodyDeclaration root = containing.bodyDeclaration(n);
-    if (root != null)
-      traverse(root);
-  }
-  private static void traverse(BodyDeclaration root) {
-    computeCFG(root);
-  }
-  private static void computeCFG(BodyDeclaration root) {
-    compute.cfg(root);
+      @Override public Void map(final ASTNode ¢) {
+        if (iz.isOneOf(¢, ASTNode.LINE_COMMENT))
+          return null;
+        return super.map(¢);
+      }
+      @Override protected Void map(List<Statement> ss) {
+        Statement previous = null;
+        for (Statement s : ss) {
+          KEYS.INCOMING.to(s).add(previous);
+          KEYS.OUTGOING.to(previous).add(s);
+          previous = s;
+        }
+        return super.map(ss);
+      }
+      @Override protected Void map(IfStatement ¢) {
+        KEYS.FIRST.to(¢).add(expression(¢));
+        KEYS.OUTGOING.to(expression(¢)).add(then(¢)).add(elze(¢));
+        return null;
+      }
+      @Override protected Void map(LabeledStatement __) {
+        return null;
+      }
+      @Override protected Void map(ReturnStatement ¢) {
+        KEYS.OUTGOING.to(¢).clear();
+        return super.map(¢);
+      }
+      @Override protected Void map(BreakStatement ¢) {
+        KEYS.OUTGOING.to(¢).clear().add(breakTarget.peek());
+        return super.map(¢);
+      }
+      @Override protected Void map(ContinueStatement ¢) {
+        KEYS.OUTGOING.to(¢).clear().add(continueTarget.peek());
+        return super.map(¢);
+      }
+    }.map(n);
   }
 }

@@ -592,7 +592,8 @@ public interface iz {
   static boolean isMinusAssignment(final Assignment ¢) {
     return ¢ != null && ¢.getOperator() == MINUS_ASSIGN;
   }
-  static boolean isOneOf(final int i, final int... is) {
+  static boolean isOneOf(final ASTNode n, final int... is) {
+    final int i = n.getNodeType();
     return Arrays.stream(is).filter(λ -> i == λ).findAny().isPresent();
   }
   /** @param a the assignment whose operator we want to check
