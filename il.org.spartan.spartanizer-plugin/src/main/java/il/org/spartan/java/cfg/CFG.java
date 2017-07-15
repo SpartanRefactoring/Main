@@ -95,7 +95,7 @@ public interface CFG {
       };
     }
     Nodes nodes(ASTNode ¢) {
-      return property.get(¢, getClass().getCanonicalName() + "." + this, () -> new Nodes());
+      return property.get(¢, getClass().getCanonicalName() + "." + this, Nodes::new);
     }
 
     interface Of {

@@ -2,11 +2,11 @@ package il.org.spartan.spartanizer.cmdline;
 
 public interface Tapper {
   //@formatter:off
-  default void beginBatch(){/**/};
-  default void beginFile() {/**/};
-  default void beginLocation() {/**/};
-  default void endBatch() {/**/};
-  default void endFile() {/**/};
-  default void endLocation() {/**/};
+  default void beginBatch(){/**/}
+  default void beginFile() {/**/}
+  default void beginLocation() {/**/}
+  default void endBatch() {/**/}
+  default void endFile() {/**/}
+  default void endLocation() {/**/}
   //@formatter:on
 }
