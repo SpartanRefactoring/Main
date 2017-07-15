@@ -142,7 +142,7 @@ public class GUIApplicator extends Applicator implements Selfie<GUIApplicator> {
     name(t.tipperName());
     return this;
   }
-  public <N extends ASTNode> GUIApplicator restrictTo(final Class<N> c, @SuppressWarnings("unchecked") final Tipper<N>... ts) {
+  public <N extends ASTNode> GUIApplicator restrictTo(final Class<N> c, final Tipper<N>... ts) {
     inner.setSelection(selection());
     /** TODO Dor set name */
     // inner.setName(t.description());
