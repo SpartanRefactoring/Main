@@ -4,6 +4,7 @@ import static fluent.ly.azzert.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -24,19 +25,19 @@ public class Issue1044 extends MetaFixture {
   private final Namespace clazz = fixtureClass.getChild(2);
 
   @Test public void test1a() {
-    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new Integer(5)"))))), is("i4"));
+    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.instanceOf(Expression.class).in(make.ast("new Integer(5)"))))), is("i4"));
   }
   @Test public void test1b() {
-    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new B();"))))), is("b1"));
+    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.instanceOf(Expression.class).in(make.ast("new B();"))))), is("b1"));
   }
   @Test public void test2a() {
-    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new Integer(5);"))))), is("i1"));
+    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.instanceOf(Expression.class).in(make.ast("new Integer(5);"))))), is("i1"));
   }
   @Test public void test2b() {
-    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new A();"))))), is("a2"));
+    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.instanceOf(Expression.class).in(make.ast("new A();"))))), is("a2"));
   }
   @Test public void test3a() {
-    azzert.that(clazz.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new X();"))))), is("x3"));
+    azzert.that(clazz.generateName(type(az.classInstanceCreation(findFirst.instanceOf(Expression.class).in(make.ast("new X();"))))), is("x3"));
   }
 }
 

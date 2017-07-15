@@ -120,7 +120,7 @@ public abstract class LogBook implements Serializable {
     return true;
   }
   public void merge(final File f) throws IOException, ClassNotFoundException {
-    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));) {
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
       merge((LogBook) in.readObject());
     }
   }
@@ -196,7 +196,7 @@ public abstract class LogBook implements Serializable {
    * @return <code><b>this</b></code>
    * @throws IOException in case of failure */
   public LogBook writeTo(final FileOutputStream s) throws IOException {
-    try (ObjectOutputStream out = new ObjectOutputStream(s);) {
+    try (ObjectOutputStream out = new ObjectOutputStream(s)) {
       out.writeObject(this);
       return this;
     }
@@ -283,7 +283,7 @@ public abstract class LogBook implements Serializable {
     private static final long serialVersionUID = 1;
 
     public static Mutable readFrom(final File ¢) throws IOException, ClassNotFoundException {
-      try (ObjectInputStream $ = new ObjectInputStream(new FileInputStream(¢));) {
+      try (ObjectInputStream $ = new ObjectInputStream(new FileInputStream(¢))) {
         return (Mutable) $.readObject();
       }
     }

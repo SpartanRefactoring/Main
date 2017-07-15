@@ -14,8 +14,7 @@ import il.org.spartan.classfiles.reify.*;
 
 @SuppressWarnings("static-method") public class ClassProxyTest {
   private static final long serialVersionUID = 0x7556556FAE212ADEL;
-  private final String stringSignature = "My String Signature";
-  public final long publicInstanceLong = 123456789011L * serialVersionUID;
+    public final long publicInstanceLong = 123456789011L * serialVersionUID;
   public final float someFloat = 4.91F;
   public final double someDouble = 1.125;
 
@@ -175,7 +174,8 @@ import il.org.spartan.classfiles.reify.*;
   @Test public void testMeUsingString() throws IOException, ClassNotFoundException {
      final String[] stringConstants = new ClassProxy<>(ClassProxyTest.class).getReferencedStrings();
     Arrays.sort(stringConstants);
-    assert Arrays.binarySearch(stringConstants, stringSignature) >= 0;
+      String stringSignature = "My String Signature";
+      assert Arrays.binarySearch(stringConstants, stringSignature) >= 0;
   }
 
   @Test public void testNameFormat() throws ClassNotFoundException {

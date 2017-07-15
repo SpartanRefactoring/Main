@@ -23,33 +23,33 @@ public class MatcherTest {
     assert patternMatcher("x + 7", "").matches(findFirst.infixExpression(make.ast("x + 7")));
   }
   @Test public void b() {
-    assert patternMatcher("for($N1 $N2 : $X1) $B", "").matches(findFirst.enhancedForStatement(make.ast("for (A b : C) print();")));
+    assert patternMatcher("for($N1 $N2 : $X1) $B", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for (A b : C) print();")));
   }
   @Test public void b2() {
     assert !patternMatcher("x + 7", "").matches(findFirst.infixExpression(make.ast("x - 7")));
   }
   @Test public void c() {
     azzert.that(
-        patternMatcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.enhancedForStatement(make.ast("for (A b : C) print();")), "$B") + "",
+        patternMatcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for (A b : C) print();")), "$B") + "",
         is("print();\n"));
   }
   @Test public void c2() {
     assert !patternMatcher("x++", "").matches(findFirst.infixExpression(make.ast("--x")));
   }
   @Test public void d() {
-    azzert.that(patternMatcher("$X + b", "").getMatching(findFirst.expression(make.ast("a + b")), "$X") + "", is("a"));
+    azzert.that(patternMatcher("$X + b", "").getMatching(findFirst.instanceOf(Expression.class).in(make.ast("a + b")), "$X") + "", is("a"));
   }
   @Test public void d2() {
     assert !patternMatcher("++x", "").matches(findFirst.infixExpression(make.ast("++x")));
   }
   @Test public void d3() {
-    assert patternMatcher("$D", "").matches(findFirst.expression(make.ast("null")));
+    assert patternMatcher("$D", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("null")));
   }
   @Test public void d4() {
-    assert patternMatcher("$D", "").matches(findFirst.expression(make.ast("0")));
+    assert patternMatcher("$D", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("0")));
   }
   @Test public void d5() {
-    assert patternMatcher("$D", "").matches(findFirst.expression(make.ast("false")));
+    assert patternMatcher("$D", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("false")));
   }
   @Test public void d6() {
     assert patternMatcher("return $D;", "").matches(findFirst.returnStatement(make.ast("return false;")));
@@ -97,20 +97,20 @@ public class MatcherTest {
     assert patternMatcher("return $N2.$N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(make.ast("return g.h.j.a.b(c(h,i,u));")));
   }
   @Test public void k10() {
-    assert patternMatcher("$N.$SN", "").matches(findFirst.expression(make.ast("x.y.z")));
+    assert patternMatcher("$N.$SN", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("x.y.z")));
   }
   @Test public void k11() {
-    assert patternMatcher("$N.$SN()", "").matches(findFirst.expression(make.ast("x.y.z()")));
+    assert patternMatcher("$N.$SN()", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("x.y.z()")));
   }
   @Test public void k12() {
     assert patternMatcher("$SN == null ? null : $SN.$SN2.$SN3()", "")
-        .matches(findFirst.conditionalExpression(make.ast("x == null ? null : x.y.z()")));
+        .matches(findFirst.instanceOf(ConditionalExpression.class).in(make.ast("x == null ? null : x.y.z()")));
   }
   @Test public void k13() {
-    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(make.ast("x == null ? null : x.y.z()")));
+    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.instanceOf(ConditionalExpression.class).in(make.ast("x == null ? null : x.y.z()")));
   }
   @Test public void k14() {
-    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(make.ast("x == false ? 0 : x.y.z()")));
+    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.instanceOf(ConditionalExpression.class).in(make.ast("x == false ? 0 : x.y.z()")));
   }
   @Test public void k2() {
     assert !patternMatcher("try $B1 catch(a b) $B2", "").matches(findFirst.tryStatement(make.ast("try{}catch(What | Ever never ){}")));
@@ -119,28 +119,28 @@ public class MatcherTest {
     assert patternMatcher("$L", "").matches(findFirst.booleanLiteral(make.ast("true")));
   }
   @Test public void k4() {
-    assert patternMatcher("$N1 = $L", "").matches(findFirst.assignment(make.ast("x = true")));
+    assert patternMatcher("$N1 = $L", "").matches(findFirst.instanceOf(Assignment.class).in(make.ast("x = true")));
   }
   @Test public void k5() {
     assert patternMatcher("$N1.$N2", "").matches(findFirst.name(make.ast("x.y.z")));
   }
   @Test public void k6() {
-    assert patternMatcher("$SN1", "").matches(findFirst.expression(make.ast("x")));
+    assert patternMatcher("$SN1", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("x")));
   }
   @Test public void k7() {
-    assert patternMatcher("$SN1 + $SN2", "").matches(findFirst.expression(make.ast("x + y")));
+    assert patternMatcher("$SN1 + $SN2", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("x + y")));
   }
   @Test public void k8() {
-    assert patternMatcher("$SN + $SN", "").matches(findFirst.expression(make.ast("x + x")));
+    assert patternMatcher("$SN + $SN", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("x + x")));
   }
   @Test public void k9() {
-    assert patternMatcher("$SN.$SN2", "").matches(findFirst.expression(make.ast("x.y")));
+    assert patternMatcher("$SN.$SN2", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("x.y")));
   }
   @Test public void l() {
     assert patternMatcher("return ($T)a;", "").matches(findFirst.instanceOf(ReturnStatement.class).in(make.ast("return (Object)a;")));
   }
   @Test public void m() {
-    assert patternMatcher("a += 2", "").matches(findFirst.assignment(make.ast("a += 2;")));
+    assert patternMatcher("a += 2", "").matches(findFirst.instanceOf(Assignment.class).in(make.ast("a += 2;")));
   }
   @Test public void n() {
     assert patternMatcher("--$N", "").matches(findFirst.instanceOf(PrefixExpression.class).in(make.ast("--x")));
@@ -152,19 +152,19 @@ public class MatcherTest {
     assert patternMatcher("for(int $N = $L1; $N < $L2; ++$N)$B", "").matches(findFirst.forStatement(make.ast("for(int i = 0; i < 7; ++i) ;")));
   }
   @Test public void p01() {
-    assert !patternMatcher("x", "").matches(findFirst.expression(make.ast("(x)")));
+    assert !patternMatcher("x", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("(x)")));
   }
   @Test public void p02() {
-    assert patternMatcher("(x)", "").matches(findFirst.expression(make.ast("(x)")));
+    assert patternMatcher("(x)", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("(x)")));
   }
   @Test public void p03() {
-    assert !patternMatcher("$N", "").matches(findFirst.expression(make.ast("(x)")));
+    assert !patternMatcher("$N", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("(x)")));
   }
   @Test public void p04() {
-    assert !patternMatcher("$SN", "").matches(findFirst.expression(make.ast("(x)")));
+    assert !patternMatcher("$SN", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("(x)")));
   }
   @Test public void p05() {
-    assert patternMatcher("$X", "").matches(findFirst.expression(make.ast("(x)")));
+    assert patternMatcher("$X", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("(x)")));
   }
   @Test public void q() {
     assert patternMatcher("return $N1().$N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(make.ast("return a().b();")));
@@ -197,29 +197,29 @@ public class MatcherTest {
     assert !patternMatcher("$T x;", "").matches(findFirst.variableDeclarationStatement(make.ast("Object y;")));
   }
   @Test public void t07() {
-    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.enhancedForStatement(make.ast("for(C i : col) f();")));
+    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for(C i : col) f();")));
   }
   @Test public void t08() {
-    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.enhancedForStatement(make.ast("for(C<?> i : col) f();")));
+    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for(C<?> i : col) f();")));
   }
   @Test public void t09() {
-    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.enhancedForStatement(make.ast("for(C<? extends N> i : col) f();")));
+    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for(C<? extends N> i : col) f();")));
   }
   @Test public void t10() {
-    assert patternMatcher("for($T $N : $X1) $X2;", "").matches(findFirst.enhancedForStatement(make.ast("for(C<? extends N> i : col) f();")));
+    assert patternMatcher("for($T $N : $X1) $X2;", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for(C<? extends N> i : col) f();")));
   }
   @Test public void t10b() {
-    assert patternMatcher("for($T $N1 : $N2) $X;", "").matches(findFirst.enhancedForStatement(make.ast("for(C<? extends N> i : col) f();")));
+    assert patternMatcher("for($T $N1 : $N2) $X;", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for(C<? extends N> i : col) f();")));
   }
   @Test public void t11() {
-    assert patternMatcher("for($T $N2 : $N3) $X;", "").matches(findFirst.enhancedForStatement(make.ast("for (Class ¢ : bf) f();")));
+    assert patternMatcher("for($T $N2 : $N3) $X;", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for (Class ¢ : bf) f();")));
   }
   @Test public void t12() {
-    assert patternMatcher("for($T $N2 : $N3) $X;", "").matches(findFirst.enhancedForStatement(make.ast("for (Class<?> ¢ : bf) f();")));
+    assert patternMatcher("for($T $N2 : $N3) $X;", "").matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for (Class<?> ¢ : bf) f();")));
   }
   @Test public void t13() {
     assert patternMatcher("for($T $N2 : $N3) $X;", "")
-        .matches(findFirst.enhancedForStatement(make.ast("for (Class<? extends BroadcastFilter> ¢ : bf) f();")));
+        .matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for (Class<? extends BroadcastFilter> ¢ : bf) f();")));
   }
   @Test public void u() {
     assert !patternMatcher("$N1();", "").matches(findFirst.expressionStatement(make.ast("a(b);")));
@@ -229,13 +229,13 @@ public class MatcherTest {
         .blockMatches(findFirst.block(make.ast("for(Object i : is) if(i.isNice()) return i;")));
   }
   @Test public void w() {
-    assert !patternMatcher("x = 1", "").matches(findFirst.assignment(make.ast("x += 1")));
+    assert !patternMatcher("x = 1", "").matches(findFirst.instanceOf(Assignment.class).in(make.ast("x += 1")));
   }
   @Test public void x() {
     assert !patternMatcher("x < 7", "").matches(findFirst.infixExpression(make.ast("x <= 7")));
   }
   @Test public void x01() {
-    assert !patternMatcher("$X;", "").matches(findFirst.expression(make.ast("return 6;")));
+    assert !patternMatcher("$X;", "").matches(findFirst.instanceOf(Expression.class).in(make.ast("return 6;")));
   }
   @Test public void y() {
     assert patternMatcher("try $B1 catch($T $N) $B2", "").matches(findFirst.tryStatement(make.ast("try{}catch(What ever){}")));
@@ -245,7 +245,7 @@ public class MatcherTest {
   }
   @Test public void z2() {
     assert patternMatcher("for($T $N1 : $X1) if($X2) return false;", "")//
-        .matches(findFirst.enhancedForStatement(make.ast("for(X x : Y) if(whatever) return false;")));
+        .matches(findFirst.instanceOf(EnhancedForStatement.class).in(make.ast("for(X x : Y) if(whatever) return false;")));
   }
   @Test public void z3() {
     assert blockMatcher("$T $N = $X1; return default¢($N).to($X2);", "")//

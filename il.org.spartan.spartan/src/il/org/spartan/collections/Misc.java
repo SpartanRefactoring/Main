@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Misc {
   public static boolean compareWithStream(final String s, final InputStream is) {
-    try (final Scanner actual = new Scanner(s); final Scanner expected = new Scanner(is);) {
+    try (final Scanner actual = new Scanner(s); final Scanner expected = new Scanner(is)) {
       for (;;) {
         if (actual.hasNext() != expected.hasNext())
           return false;

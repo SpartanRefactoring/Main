@@ -1,11 +1,13 @@
 package il.org.spartan.java.cfg;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.java.cfg.CFG.Edges.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** The main class of the CFG implementation
@@ -13,76 +15,95 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Ori Roth
  * @since 2017-06-14 */
 public interface CFG {
-  enum KEYS {
-    INCOMING, //
-    OUTGOING, //
-    FIRST, //
-    LAST; //
-    To to(ASTNode to) {
-      return new To() {
-        @Override public To add(ASTNode what) {
-          if (what != null && to != null)
-            property.get(to, KEYS.this.getClass().getCanonicalName() + KEYS.this, () -> new Nodes()).add(what);
-          return this;
-        }
-        @Override public To clear() {
-          if (to != null)
-            property.get(to, KEYS.this.getClass().getCanonicalName() + KEYS.this, () -> new Nodes()).clear();
-          return this;
-        }
-      };
-    }
-
-    interface To {
-      To add(ASTNode what);
-      To clear();
-    }
-  }
-
-  static void compute(BodyDeclaration n) {
+  static void compute(final BodyDeclaration d) {
     new VoidMapReducer() {
       Stack<ASTNode> breakTarget = new Stack<>();
-      Map<String, ASTNode> labelMap = new LinkedHashMap<>();
       Stack<ASTNode> continueTarget = new Stack<>();
-      Stack<ASTNode> returnTarget = new Stack<>();
-      {
-        returnTarget.push(parent(n));
-      }
+      Map<String, ASTNode> labelMap = new LinkedHashMap<>();
+      Stack<ASTNode> returnTarget = anonymous.ly(() -> {
+        final Stack<ASTNode> $ = new Stack<>();
+        $.push(parent(d));
+        return $;
+      });
 
       @Override public Void map(final ASTNode ¢) {
         if (iz.isOneOf(¢, ASTNode.LINE_COMMENT))
           return null;
         return super.map(¢);
       }
-      @Override protected Void map(List<Statement> ss) {
+      @Override protected Void map(final BreakStatement ¢) {
+        outgoing.of(¢).set(breakTarget.peek());
+        return super.map(¢);
+      }
+      @Override protected Void map(final ContinueStatement ¢) {
+          outgoing.of(¢).clear();
+        final SimpleName label = ¢.getLabel();
+        if (label == null)
+          outgoing.of(¢).add(continueTarget.peek());
+        else {
+          final ASTNode astNode = labelMap.get(label + "");
+          if (astNode != null)
+            outgoing.of(¢).add(astNode);
+        }
+        return super.map(¢);
+      }
+      @Override protected Void map(final IfStatement ¢) {
+        beginnings.of(¢).add(expression(¢));
+        outgoing.of(expression(¢)).add(then(¢)).add(elze(¢));
+        return super.map(¢);
+      }
+      @Override protected Void map(final LabeledStatement ¢) {
+        labelMap.put(¢.getLabel() + "", ¢);
+        return super.map(¢);
+      }
+      @Override protected Void map(final List<Statement> ss) {
         Statement previous = null;
-        for (Statement s : ss) {
-          KEYS.INCOMING.to(s).add(previous);
-          KEYS.OUTGOING.to(previous).add(s);
-          previous = s;
+        for (final Statement current : ss) {
+          incoming.of(current).add(previous);
+          outgoing.of(previous).add(current);
+          previous = current;
         }
         return super.map(ss);
       }
-      @Override protected Void map(IfStatement ¢) {
-        KEYS.FIRST.to(¢).add(expression(¢));
-        KEYS.OUTGOING.to(expression(¢)).add(then(¢)).add(elze(¢));
-        return null;
-      }
-      @Override protected Void map(LabeledStatement __) {
-        return null;
-      }
-      @Override protected Void map(ReturnStatement ¢) {
-        KEYS.OUTGOING.to(¢).clear();
+      @Override protected Void map(final ReturnStatement ¢) {
+        outgoing.of(¢).set(returnTarget.peek());
         return super.map(¢);
       }
-      @Override protected Void map(BreakStatement ¢) {
-        KEYS.OUTGOING.to(¢).clear().add(breakTarget.peek());
-        return super.map(¢);
+    }.map(d);
+  }
+
+  enum Edges {
+    beginnings, //
+    ends, //
+    incoming, //
+    outgoing; //
+    Of of(final ASTNode to) {
+      return new Of() {
+        Nodes nodes() {
+          return Edges.this.nodes(to);
+        }
+        @Override public Of add(final ASTNode what) {
+          if (what != null && to != null)
+            nodes().add(what);
+          return this;
+        }
+        @Override public Of clear() {
+          if (to != null)
+            nodes().clear();
+          return this;
+        }
+      };
+    }
+    Nodes nodes(ASTNode ¢) {
+      return property.get(¢, getClass().getCanonicalName() + "." + this, Nodes::new);
+    }
+
+    interface Of {
+      Of add(ASTNode what);
+      Of clear();
+      default Of set(final ASTNode what) {
+        return clear().add(what);
       }
-      @Override protected Void map(ContinueStatement ¢) {
-        KEYS.OUTGOING.to(¢).clear().add(continueTarget.peek());
-        return super.map(¢);
-      }
-    }.map(n);
+    }
   }
 }

@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.*;
 
 import javax.xml.parsers.*;
@@ -70,7 +71,7 @@ public class XMLSpartan {
   public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = //
         Toolbox.fullStream()//
-            .map(λ -> λ.getClass())//
+            .map((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass)//
             .map(XMLSpartan::unchecked)//
             .collect(toSet());
     if (p == null)
@@ -156,7 +157,7 @@ public class XMLSpartan {
         existingCategories.put($$.name(), $$);
         return $$;
       }).collect(Collectors.toList());
-      children.forEach(λ -> parent.addChild(λ));
+      children.forEach(parent::addChild);
       $.put(parent, children.toArray(new SpartanElement[children.size()]));
     }
     return trimEmptyCategories($);

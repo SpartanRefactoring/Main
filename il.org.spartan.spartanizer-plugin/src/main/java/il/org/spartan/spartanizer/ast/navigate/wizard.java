@@ -110,11 +110,20 @@ public interface wizard {
       "do", //
       "if", //
   };
+  List<Integer> loopTypes = as.ilist(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
   Class<?>[] np = { InfixExpression.class };
   IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Bool resolveBinding = Bool.valueOf(false);
-  List<Integer> loopTypes = as.ilist(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
 
+
+  static String getPackageNameFromSource(final ASTNode ¢) {
+    return findFirst.instanceOf(PackageDeclaration.class).in(¢).getName() +"";
+  }
+  static String getPackageNameFromSource(final String source) {
+    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    $.setSource(source.toCharArray());
+    return wizard.getPackageNameFromSource($.createAST(null));
+  }
   static Expression addParenthesisIfNeeded(final Expression ¢) {
     return !isParethesisNeeded(¢) ? ¢ : make.parethesized(¢);
   }
@@ -369,6 +378,9 @@ public interface wizard {
   static boolean notDefaultLiteral(final Expression ¢) {
     return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
+  static boolean parenthesisRequiredIn(final Expression in, final ASTNode out) {
+    return precedence.greater(out, in) || precedence.equal(out, in) && !op.nonAssociative(out);
+  }
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
@@ -445,8 +457,5 @@ public interface wizard {
   static boolean valid(final ASTNode ¢) {
     final CompilationUnit $ = az.compilationUnit(¢.getRoot());
     return $ == null || $.getProblems().length == 0;
-  }
-  static boolean parenthesisRequiredIn(final Expression in, final ASTNode out) {
-    return precedence.greater(out, in) || precedence.equal(out, in) && !op.nonAssociative(out);
   }
 }

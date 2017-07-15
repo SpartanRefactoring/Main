@@ -84,7 +84,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     if (inner.isEmpty())
       return "";
     final List<String> $ = new ArrayList<>();
-    try (Formatter f = new Formatter();) {
+    try (Formatter f = new Formatter()) {
       int column = size();
       $.add(String.format("\\multicolumn{%d}{c}{\\mbox{}}", box(column)));
       for (final String nestedTableName : inner.keySet()) {

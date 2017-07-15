@@ -26,47 +26,6 @@ public interface findFirst {
   static AssertStatement assertStatement(final ASTNode ¢) {
     return instanceOf(AssertStatement.class).in(¢);
   }
-  /** @param ¢ JD
-   * @return */
-  static ASTNode assignment(final ASTNode ¢) {
-    return instanceOf(Assignment.class).in(¢);
-  }
-  /** @param ¢ JD
-   * @return */
-  static ASTNode castExpression(final ASTNode ¢) {
-    return instanceOf(CastExpression.class).in(¢);
-  }
-  /** Find the first {@link ConditionalExpression}, under a given node, as found
-   * in the usual visitation order.
-   * @param n First node to visit
-   * @return first {@link ConditionalExpression} representing an addition under
-   *         the parameter given node, or {@code null if no such
-   *         value could be found. */
-  static ConditionalExpression conditionalExpression(final ASTNode n) {
-    final Wrapper<ConditionalExpression> $ = new Wrapper<>();
-    // noinspection SameReturnValue
-    n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final ConditionalExpression ¢) {
-        if ($.get() != null)
-          return false;
-        $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-  /** @param ¢ JD
-   * @return */
-  static ASTNode enhancedForStatement(final ASTNode ¢) {
-    return instanceOf(EnhancedForStatement.class).in(¢);
-  }
-  /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
-   * @param pattern JD
-   * @return first {@link Expression} found in an {@link ASTNode n}, or
-   *         {@code null if there is no such statement. */
-  static Expression expression(final ASTNode ¢) {
-    return findFirst.instanceOf(Expression.class).in(¢);
-  }
   /** Search for an {@link ForStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param pattern JD

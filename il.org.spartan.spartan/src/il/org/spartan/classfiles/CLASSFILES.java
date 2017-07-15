@@ -131,7 +131,7 @@ public enum CLASSFILES {
     }
   }
   private static InputStream searchZip(final File where, final String fileName) {
-    try (ZipFile $ = new ZipFile(where.getAbsoluteFile());) {
+    try (ZipFile $ = new ZipFile(where.getAbsoluteFile())) {
       final ZipEntry e = $.getEntry(fileName);
       if (e == null)
         return null;

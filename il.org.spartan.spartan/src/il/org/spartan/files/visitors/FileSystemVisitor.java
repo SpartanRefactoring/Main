@@ -245,7 +245,7 @@ public class FileSystemVisitor {
     try (ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
       for (final Enumeration<? extends ZipEntry> es = Z.entries(); es.hasMoreElements();) {
         final ZipEntry e = es.nextElement();
-        try (InputStream is = Z.getInputStream(e);) {
+        try (InputStream is = Z.getInputStream(e)) {
           if (e.isDirectory()) {
             visitor.visitZipDirectory(Z.getName(), e.getName(), is);
             continue;
