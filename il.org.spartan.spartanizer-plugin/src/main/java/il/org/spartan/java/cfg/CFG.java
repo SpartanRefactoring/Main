@@ -8,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** The main class of the CFG implementation
@@ -51,18 +50,18 @@ public interface CFG {
       @Override protected Void map(final IfStatement ¢) {
         beginnings.of(¢).add(expression(¢));
         outgoing.of(expression(¢)).add(then(¢)).add(elze(¢));
-        return null;
+        return super.map(¢);
       }
       @Override protected Void map(final LabeledStatement ¢) {
         labelMap.put(¢.getLabel() + "", ¢);
-        return null;
+        return super.map(¢);
       }
       @Override protected Void map(final List<Statement> ss) {
         Statement previous = null;
-        for (final Statement s : ss) {
-          incoming.of(s).add(previous);
-          outgoing.of(previous).add(s);
-          previous = s;
+        for (final Statement current : ss) {
+          incoming.of(current).add(previous);
+          outgoing.of(previous).add(current);
+          previous = current;
         }
         return super.map(ss);
       }

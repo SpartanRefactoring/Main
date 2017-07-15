@@ -5,7 +5,6 @@ import static il.org.spartan.java.cfg.CFG.Edges.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.java.cfg.CFG.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.utils.*;
 
