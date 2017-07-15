@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
@@ -38,22 +39,6 @@ public final class Application implements IApplication {
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
-  static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
-    final Wrapper<MethodInvocation> $ = new Wrapper<>();
-    u.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final MethodInvocation ¢) {
-        if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
-          $.set(¢);
-        return super.visit(¢);
-      }
-    });
-    return $.get() == null ? i : $.get();
-  }
-  private static String getPackageNameFromSource(final String source) {
-    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
-    $.setSource(source.toCharArray());
-    return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
-  }
   private static void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");
@@ -75,17 +60,6 @@ public final class Application implements IApplication {
     System.out.println("  -logPath Output dir for logs");
     System.out.println("");
   }
-  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    // noinspection SameReturnValue
-    n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final PackageDeclaration ¢) {
-        $.set(¢.getName() + "");
-        return false;
-      }
-    });
-    return $.get();
-  }
-
   private IJavaProject javaProject;
   private IPackageFragmentRoot srcRoot;
   private IPackageFragment pack;
@@ -181,7 +155,7 @@ public final class Application implements IApplication {
   }
   private ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
-    setPackage(getPackageNameFromSource($));
+    setPackage(wizard.getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
   private boolean parseArguments(final Collection<String> args) {

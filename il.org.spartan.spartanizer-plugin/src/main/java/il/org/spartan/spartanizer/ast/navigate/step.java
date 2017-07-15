@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import an.*;
 import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -764,5 +765,16 @@ public enum step {
   }
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+  static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
+    final Wrapper<MethodInvocation> $ = new Wrapper<>();
+    u.accept(new ASTVisitor(true) {
+      @Override public boolean visit(final MethodInvocation ¢) {
+        if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
+          $.set(¢);
+        return super.visit(¢);
+      }
+    });
+    return $.get() == null ? i : $.get();
   }
 }

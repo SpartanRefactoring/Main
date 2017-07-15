@@ -25,6 +25,7 @@ import il.org.spartan.utils.*;
  * {@link EventApplicator}
  * @author Matteo Orru' */
 @SuppressWarnings("TooBroadScope")
+public
 final class BatchSpartanizerApplication implements IApplication {
   private static final String folder = "/tmp";
   private static final String script = "./essence";
@@ -43,23 +44,8 @@ final class BatchSpartanizerApplication implements IApplication {
   }
   ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
     final String $ = FileUtils.read(¢);
-    setPackage(getPackageNameFromSource($));
+    setPackage(wizard.getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
-  }
-  private static String getPackageNameFromSource(final String source) {
-    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
-    $.setSource(source.toCharArray());
-    return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
-  }
-  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    // noinspection SameReturnValue
-    n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final PackageDeclaration ¢) {
-        $.set(¢.getName() + "");
-        return false;
-      }
-    });
-    return $.get();
   }
   private void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);

@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of ***
@@ -32,20 +33,8 @@ final class BindingFun implements IApplication {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
-    return getPackageNameFromSource($.createAST(null));
+    return wizard.getPackageNameFromSource($.createAST(null));
   }
-  private static String getPackageNameFromSource(final ASTNode n) {
-    final Wrapper<String> $ = new Wrapper<>("");
-    // noinspection SameReturnValue
-    n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final PackageDeclaration ¢) {
-        $.set(¢.getName() + "");
-        return false;
-      }
-    });
-    return $.get();
-  }
-
   private IJavaProject javaProject;
   private IPackageFragmentRoot srcRoot;
   private IPackageFragment pack;

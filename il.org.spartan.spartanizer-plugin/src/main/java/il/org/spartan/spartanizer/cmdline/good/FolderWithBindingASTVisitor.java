@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
@@ -39,20 +40,8 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
-    return getPackageNameFromSource($.createAST(null));
+    return wizard.getPackageNameFromSource($.createAST(null));
   }
-  private static String getPackageNameFromSource(final ASTNode n) {
-    final Wrapper<String> $ = new Wrapper<>("");
-    // noinspection SameReturnValue
-    n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final PackageDeclaration ¢) {
-        $.set(¢.getName() + "");
-        return false;
-      }
-    });
-    return $.get();
-  }
-
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;

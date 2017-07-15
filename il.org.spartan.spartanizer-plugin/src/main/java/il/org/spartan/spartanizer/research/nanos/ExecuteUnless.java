@@ -41,7 +41,7 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
    * @param ¢ statement
    * @return */
   private static boolean doesNotReferenceNonFinal(final IfStatement ¢) {
-    return findFirst.assignment(¢) == null;
+    return findFirst.instanceOf(Assignment.class).in(¢) == null;
   }
   /** First order approximation - does statement throw?
    * @param ¢ statement
