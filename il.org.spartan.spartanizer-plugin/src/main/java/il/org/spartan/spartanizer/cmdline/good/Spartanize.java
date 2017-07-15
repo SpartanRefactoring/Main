@@ -25,23 +25,22 @@ public class Spartanize extends ASTInFilesVisitor {
   
   public static void main(final String[] args) throws SecurityException, IllegalArgumentException {
     run(args);
-    //visit(args.length != 0 ? args : defaultArguments);
   }
   
   private static void run(String[] args) {
-    Spartanize s = new Spartanize(args);
-    s.showLocations().visitAll(new ASTTrotter() {
-           
+    (new Spartanize(args)).visitAll(new ASTTrotter() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         return true;
       }
-      
       @Override public boolean visit(final CompilationUnit ¢) {
-        //++total;
-//        if (!interesting(¢))
-//          return true;
-        //++interesting;
+        if (!interesting(¢))
+          return true;
         record(squeeze(theSpartanizer.repetitively(removeComments(JUnitTestMethodFacotry.code(¢ + "")))) + "\n");
+        return true;
+      }
+      
+      @Override
+      protected boolean interesting(@SuppressWarnings("unused") final ASTNode __) {
         return true;
       }
     });
@@ -54,14 +53,9 @@ public class Spartanize extends ASTInFilesVisitor {
     return this;
   }
   public static void visit(final String... args) {
-    for (final String ¢ : External.Introspector.extract(args != null && args.length != 0 ? 
-        args : defaultArguments, Spartanize.class)) {
-       matteo(¢);
-    }
+    for (final String ¢ : External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, Spartanize.class))
+      ;
   }
-  private static void matteo(String ¢) {
-    System.out.println(¢);
-   }
   
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
