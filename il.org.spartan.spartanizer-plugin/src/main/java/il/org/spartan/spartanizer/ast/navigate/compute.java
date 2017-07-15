@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-import static il.org.spartan.java.cfg.CFG.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -14,7 +13,6 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.java.cfg.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;

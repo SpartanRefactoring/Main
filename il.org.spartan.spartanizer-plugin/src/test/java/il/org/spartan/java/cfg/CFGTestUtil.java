@@ -1,5 +1,7 @@
 package il.org.spartan.java.cfg;
 
+import static il.org.spartan.java.cfg.CFG.Edges.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -19,28 +21,32 @@ public class CFGTestUtil {
       @Override public Contains outs(String n1) {
         return new Contains(n1) {
           @Override public Nodes nodes(ASTNode ¢) {
-            return CFG.out(¢);
+            final ASTNode ¢1 = ¢;
+            return outgoing.nodes(¢1);
           }
         };
       }
       @Override public Contains outs(Class<? extends ASTNode> c1) {
         return new Contains(c1) {
           @Override public Nodes nodes(ASTNode ¢) {
-            return CFG.out(¢);
+            final ASTNode ¢1 = ¢;
+            return outgoing.nodes(¢1);
           }
         };
       }
       @Override public Contains ins(String n1) {
         return new Contains(n1) {
           @Override public Nodes nodes(ASTNode ¢) {
-            return CFG.in(¢);
+            final ASTNode ¢1 = ¢;
+            return incoming.nodes(¢1);
           }
         };
       }
       @Override public Contains ins(Class<? extends ASTNode> c1) {
         return new Contains(c1) {
           @Override public Nodes nodes(ASTNode ¢) {
-            return CFG.in(¢);
+            final ASTNode ¢1 = ¢;
+            return incoming.nodes(¢1);
           }
         };
       }
