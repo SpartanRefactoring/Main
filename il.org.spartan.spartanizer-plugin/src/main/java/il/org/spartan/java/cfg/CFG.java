@@ -53,8 +53,8 @@ public interface CFG {
         outgoing.of(expression(¢)).add(then(¢)).add(elze(¢));
         return null;
       }
-      @Override protected Void map(final LabeledStatement s) {
-        labelMap.put(s.getLabel() + "", s);
+      @Override protected Void map(final LabeledStatement ¢) {
+        labelMap.put(¢.getLabel() + "", ¢);
         return null;
       }
       @Override protected Void map(final List<Statement> ss) {
