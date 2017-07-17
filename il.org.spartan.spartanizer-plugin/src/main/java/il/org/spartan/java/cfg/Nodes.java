@@ -15,7 +15,7 @@ public class Nodes {
   public final boolean add(ASTNode ¢) {
     return inner.add(¢);
   }
-  public final boolean addAll(List<? extends ASTNode> ¢) {
+  public final boolean addAll(Collection<? extends ASTNode> ¢) {
     return inner.addAll(¢);
   }
   public final boolean remove(ASTNode ¢) {
@@ -30,6 +30,9 @@ public class Nodes {
   public Set<ASTNode> asSet() {
     return inner;
   }
+  public boolean isEmpty() {
+    return inner.isEmpty();
+  }
   public static Nodes empty() {
     return new Nodes();
   }
@@ -39,5 +42,5 @@ public class Nodes {
   public Nodes clear() {
     inner.clear();
     return this;
-  } 
+  }
 }

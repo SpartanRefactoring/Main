@@ -236,7 +236,6 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return map(expression(¢));
   }
   protected R map(final InfixExpression ¢) {
-    System.out.println("mapper");
     return map(expression(¢));
   }
   protected R map(final PrefixExpression ¢) {
