@@ -39,7 +39,7 @@ public class Spartanize extends ASTInFilesVisitor {
         return true;
       }
       
-      @Override
+      @Deprecated
       protected boolean interesting(@SuppressWarnings("unused") final ASTNode __) {
         return true;
       }
