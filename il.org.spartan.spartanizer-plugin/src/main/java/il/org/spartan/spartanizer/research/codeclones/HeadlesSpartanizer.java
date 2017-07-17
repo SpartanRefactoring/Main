@@ -1,8 +1,11 @@
 package il.org.spartan.spartanizer.research.codeclones;
 
 import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.omg.CORBA.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -56,7 +59,13 @@ public class HeadlesSpartanizer extends GrandVisitor {
     (new GrandVisitor(new String[] {dirPath}) {
       @Override public void visitFile(final File f) {
         current.fileName = f.getName();
-        System.err.println(f.getAbsolutePath());
+        try {
+          current.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
+          System.out.println(current.relativePath);
+        } catch (IOException ¢) {
+          ¢.printStackTrace();
+        }
+        //System.err.println(f.getAbsolutePath());
         if (!spartanize(f))
           return;
         String beforeChange;
@@ -72,11 +81,24 @@ public class HeadlesSpartanizer extends GrandVisitor {
         try {
           System.err.println(current.location);
           current.location = "/tmp/";
-          System.err.println(current.location + current.fileName);
-          FileUtils.writeToFile(current.location + current.fileName , after);
+          System.err.println(current.relativePath);
+          System.err.println(outputFolder + File.separator + current.fileName);
+          System.err.println("parent: " + Paths.get(current.relativePath).getParent());
+          new File(outputFolder + File.separator + Paths.get(current.relativePath).getParent()).mkdirs();
+          FileUtils.writeToFile(outputFolder + File.separator + current.relativePath , after);
         } catch (final FileNotFoundException ¢) {
           note.io(¢);
         }
+      }
+      
+      @SuppressWarnings("unused")
+      protected void mkDirs(final File root, final List<String> dirs, final int depth) {
+        if (depth != 0)
+          for (String s : dirs) {
+            File subdir = new File(root, s);
+            subdir.mkdir();
+            mkDirs(subdir, dirs, depth - 1);
+          }
       }
     }).visitAll(astVisitor());
     tearDown();
