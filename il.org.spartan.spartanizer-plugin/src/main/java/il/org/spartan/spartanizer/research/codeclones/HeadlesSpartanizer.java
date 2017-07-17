@@ -49,17 +49,8 @@ public class HeadlesSpartanizer extends GrandVisitor {
   protected String perform(final String fileContent) {
     return fixedPoint(fileContent);
   }
-//  protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
-//    try {
-//      //System.err.println(v.current.absolutePath);
-//      FileUtils.writeToFile(v.current.absolutePath, after);
-//    } catch (final FileNotFoundException ¢) {
-//      note.io(¢);
-//    }
-//  }
   
-  //Current current = new Current(null);
-  JavaProductionFilesVisitor v;// = new JavaProductionFilesVisitor(current);
+  JavaProductionFilesVisitor v;
   
   public final void go(final String dirPath) {
     setUp();
