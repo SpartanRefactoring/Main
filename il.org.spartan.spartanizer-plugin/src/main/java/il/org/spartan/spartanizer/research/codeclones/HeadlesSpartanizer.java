@@ -5,8 +5,6 @@ import java.nio.file.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.omg.CORBA.*;
-
 import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
@@ -84,7 +82,9 @@ public class HeadlesSpartanizer extends GrandVisitor {
           System.err.println(current.relativePath);
           System.err.println(outputFolder + File.separator + current.fileName);
           System.err.println("parent: " + Paths.get(current.relativePath).getParent());
-          new File(outputFolder + File.separator + Paths.get(current.relativePath).getParent()).mkdirs();
+          Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.relativePath).getParent());
+          if (Files.exists(pathname))
+            new File(pathname + "").mkdirs();
           FileUtils.writeToFile(outputFolder + File.separator + current.relativePath , after);
         } catch (final FileNotFoundException ¢) {
           note.io(¢);
