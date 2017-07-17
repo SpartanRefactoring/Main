@@ -78,7 +78,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         try {
           current.location = "/tmp/";
           Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.relativePath).getParent());
-          if (Files.exists(pathname))
+          if (!Files.exists(pathname))
             new File(pathname + "").mkdirs();
           FileUtils.writeToFile(outputFolder + File.separator + current.relativePath , after);
         } catch (final FileNotFoundException ¢) {
