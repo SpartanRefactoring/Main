@@ -97,65 +97,65 @@ public interface CFG {
             chainReturn(b);
           }
         }
-        private void leaf(ASTNode node) {
+        void leaf(ASTNode node) {
           if (!isIllegalLeaf(node)) {
             beginnings.of(node).add(node);
             ends.of(node).add(node);
           }
         }
-        private boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode node) {
+        boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode node) {
           // TOO Roth: complete
           return false;
         }
-        private void delegateBeginnings(ASTNode n1, ASTNode n2) {
+        void delegateBeginnings(ASTNode n1, ASTNode n2) {
           if (n1 == n2)
             selfBeginnings(n1);
           else
             beginnings.of(n1).addAll(beginnings.of(n2));
         }
-        private void delegateEnds(ASTNode n1, ASTNode n2) {
+        void delegateEnds(ASTNode n1, ASTNode n2) {
           if (n1 == n2)
             selfEnds(n1);
           else
             ends.of(n1).addAll(ends.of(n2));
         }
-        private void selfBeginnings(ASTNode n) {
+        void selfBeginnings(ASTNode n) {
           beginnings.of(n).add(n);
         }
-        private void selfEnds(ASTNode n) {
+        void selfEnds(ASTNode n) {
           ends.of(n).add(n);
         }
-        private void chain(List<? extends ASTNode> ns) {
+        void chain(List<? extends ASTNode> ns) {
           for (int i = 0; i < ns.size() - 1; ++i)
             chain(ns.get(i), ns.get(i + 1));
         }
-        private void chain(ASTNode n1, ASTNode n2) {
-          ends.of(n1).get().stream().forEach(o -> outgoing.of(o).addAll(beginnings.of(n2)));
-          beginnings.of(n2).get().stream().forEach(b -> incoming.of(b).addAll(ends.of(n1)));
+        void chain(ASTNode n1, ASTNode n2) {
+          ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
+          beginnings.of(n2).get().stream().forEach(λ -> incoming.of(λ).addAll(ends.of(n1)));
         }
-        private void chainShallow(ASTNode n1, ASTNode n2) {
-          ends.of(n1).get().stream().forEach(o -> outgoing.of(o).add(n2));
+        void chainShallow(ASTNode n1, ASTNode n2) {
+          ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).add(n2));
           incoming.of(n2).addAll(ends.of(n1));
         }
-        private void chainReturn(ASTNode n) {
-          ends.of(n).get().stream().forEach(o -> outgoing.of(o).add(returnTarget.peek()));
+        void chainReturn(ASTNode n) {
+          ends.of(n).get().stream().forEach(λ -> outgoing.of(λ).add(returnTarget.peek()));
         }
-        private boolean isBreakTarget(ASTNode n) {
+        boolean isBreakTarget(ASTNode n) {
           return iz.isOneOf(n, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
         }
-        private boolean isContinueTarget(ASTNode n) {
+        boolean isContinueTarget(ASTNode n) {
           return iz.isOneOf(n, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
         }
-        private boolean isReturnTarget(@SuppressWarnings("unused") ASTNode __) {
+        boolean isReturnTarget(@SuppressWarnings("unused") ASTNode __) {
           return false;
         }
-        private boolean isEmpty(ASTNode n) {
+        boolean isEmpty(ASTNode n) {
           return beginnings.of(n).get().isEmpty();
         }
       });
   }
 
-  public enum Edges {
+  enum Edges {
     beginnings, //
     ends, //
     incoming, //
@@ -187,7 +187,7 @@ public interface CFG {
         }
       };
     }
-    protected Nodes getNodes(ASTNode ¢) {
+    Nodes getNodes(ASTNode ¢) {
       return property.get(¢, getClass().getCanonicalName() + "." + this, Nodes::new);
     }
     Nodes nodes(ASTNode n) {
