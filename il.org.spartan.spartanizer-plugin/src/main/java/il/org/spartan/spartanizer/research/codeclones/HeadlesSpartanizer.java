@@ -21,8 +21,17 @@ public class HeadlesSpartanizer extends GrandVisitor {
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
-    System.err.println("hs.current.location:\t" + hs.current.location);
-    hs.go(hs.current.locations.get(0));
+    System.err.println(hs.current.locations.size());
+     hs.goAll();
+    //hs.go(hs.current.locations.get(0));
+  }
+
+  private void goAll() {
+    hs.current.locations.stream().forEach(λ -> {
+      System.err.println(λ);
+      hs.current.location = λ; 
+      go(λ); 
+    });
   }
   
   public HeadlesSpartanizer(final String[] args){
@@ -53,7 +62,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
   JavaProductionFilesVisitor v;
   
   public final void go(final String dirPath) {
-    setUp();
+    // setUp();
     (new GrandVisitor(new String[] {dirPath}) {
       @Override public void visitFile(final File f) {
         current.fileName = f.getName();
@@ -86,17 +95,8 @@ public class HeadlesSpartanizer extends GrandVisitor {
         }
       }
       
-      @SuppressWarnings("unused")
-      protected void mkDirs(final File root, final List<String> dirs, final int depth) {
-        if (depth != 0)
-          for (String s : dirs) {
-            File subdir = new File(root, s);
-            subdir.mkdir();
-            mkDirs(subdir, dirs, depth - 1);
-          }
-      }
     }).visitAll(astVisitor());
-    tearDown();
+    // tearDown();
   }
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
