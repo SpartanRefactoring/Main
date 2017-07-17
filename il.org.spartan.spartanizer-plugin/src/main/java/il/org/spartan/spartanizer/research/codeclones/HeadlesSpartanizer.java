@@ -63,7 +63,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
         } catch (IOException ¢) {
           ¢.printStackTrace();
         }
-        //System.err.println(f.getAbsolutePath());
         if (!spartanize(f))
           return;
         String beforeChange;
@@ -77,11 +76,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
       
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
         try {
-          System.err.println(current.location);
           current.location = "/tmp/";
-          System.err.println(current.relativePath);
-          System.err.println(outputFolder + File.separator + current.fileName);
-          System.err.println("parent: " + Paths.get(current.relativePath).getParent());
           Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.relativePath).getParent());
           if (Files.exists(pathname))
             new File(pathname + "").mkdirs();

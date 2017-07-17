@@ -21,8 +21,8 @@ import junit.framework.*;
 public class JavaProductionFilesVisitor {
   protected static final String[] defaultArguments = as.array("..");
   @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
+  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = system.tmp;
   @External(alias = "s", value = "silent") protected boolean silent;
   public final Current current;
 
@@ -49,11 +49,17 @@ public class JavaProductionFilesVisitor {
 interface template  {
   interface B{}
 }
+  /**
+   * TODO Matteo Orru': document class 
+   * 
+   * @author Yossi Gil
+   * @since 2017-07-16
+   */
+
   public static class Current {
     public Current(List<String> locations) {
       this.locations = locations.subList(0, locations.size());
     }
-
     public File file;
     public String fileName;
     public String absolutePath;
@@ -65,12 +71,23 @@ interface template  {
     public String locationPath;
     public String locationName;
   }
+  
+  
   public JavaProductionFilesVisitor(Current current) {
     this.current = current;
   }
+  
   public JavaProductionFilesVisitor(String[] args) {
-    current = new Current(External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this));
+    List<String> extract = External.Introspector.extract(args(args), this);
+    System.err.println("extract.size:\t" + extract.get(0));
+    current = new Current(extract);
   }
+
+  private String[] args(String[] args) {
+    System.err.println("---->" + args);
+    return args != null && args.length != 0 ? args : defaultArguments;
+  }
+  
   public static void main(final String[] args) throws IOException {
     new GrandVisitor(args) {
       /* Override here which ever method you like */
