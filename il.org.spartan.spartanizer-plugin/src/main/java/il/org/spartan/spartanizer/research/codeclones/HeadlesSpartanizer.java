@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
+import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
@@ -16,6 +17,9 @@ import il.org.spartan.utils.*;
  * @author Matteo Orru'
  * @since 2017-04-11 */
 public class HeadlesSpartanizer extends GrandVisitor {
+  
+  @External(alias = "c", value = "copy file") 
+  @SuppressWarnings("CanBeFinal") boolean copy;
   
   static HeadlesSpartanizer hs;
   
@@ -62,7 +66,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
   JavaProductionFilesVisitor v;
   
   public final void go(final String dirPath) {
-    // setUp();
+    setUp();
     (new GrandVisitor(new String[] {dirPath}) {
       @Override public void visitFile(final File f) {
         current.fileName = f.getName();
@@ -85,18 +89,20 @@ public class HeadlesSpartanizer extends GrandVisitor {
       
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
         try {
-          current.location = "/tmp/";
-          Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.relativePath).getParent());
-          if (!Files.exists(pathname))
-            new File(pathname + "").mkdirs();
-          FileUtils.writeToFile(outputFolder + File.separator + current.relativePath , after);
-        } catch (final FileNotFoundException ¢) {
+          //current.location = "/tmp/";
+          if(copy){
+            Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.relativePath).getParent());
+            if (!Files.exists(pathname)) new File(pathname + "").mkdirs();
+            System.out.println(copy);
+            FileUtils.writeToFile(outputFolder + File.separator + current.relativePath , after);
+          }
+         } catch (final FileNotFoundException ¢) {
           note.io(¢);
         }
       }
       
     }).visitAll(astVisitor());
-    // tearDown();
+    tearDown();
   }
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
