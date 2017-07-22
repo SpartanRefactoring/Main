@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.research.analyses.analyzers.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

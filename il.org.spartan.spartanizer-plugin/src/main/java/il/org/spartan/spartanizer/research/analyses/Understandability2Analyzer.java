@@ -8,6 +8,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.good.*;
+import il.org.spartan.spartanizer.research.analyses.analyzers.*;
 
 /** Class to measure Understandability metrics in a method
  * @author Ori Marcovitch
