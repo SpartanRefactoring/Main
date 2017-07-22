@@ -2,13 +2,13 @@ package il.org.spartan.spartanizer.research.codeclones;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** __ this class you can spartanize a directory easily. Or you can extends this
@@ -18,9 +18,8 @@ import il.org.spartan.utils.*;
  * @since 2017-04-11 */
 public class HeadlesSpartanizer extends GrandVisitor {
   
-  @External(alias = "c", value = "copy file") 
-  @SuppressWarnings("CanBeFinal") boolean copy;
-  
+  @External(alias = "c", value = "copy file") @SuppressWarnings("CanBeFinal") boolean copy;
+  static Table table;
   static HeadlesSpartanizer hs;
   
   public static void main(final String[] args){
@@ -68,6 +67,38 @@ public class HeadlesSpartanizer extends GrandVisitor {
   public final void go(final String dirPath) {
     setUp();
     (new GrandVisitor(new String[] {dirPath}) {
+      
+      protected void done(final String path) {
+        summarize(path);
+        reset();
+        System.err.println(" " + path + " Done"); // we need to know if the
+                                                  // process is finished or hang
+      }
+      
+      private void reset() {}
+
+      public void summarize(final String path) {
+        initializeWriter();
+        table//
+            .col("Project", path)//
+//            .col("Commands", statementsCoverage())//
+//            .col("Expressions", expressionsCoverage())//
+//            .col("Nodes", statistics.nodesCoverage())//
+//            .col("Methods", methodsCovered())//
+//            .col("Touched", touched())//
+//            .col("Iteratives", iterativesCoverage())//
+//            .col("ConditionalExpressions", conditionalExpressionsCoverage())//
+//            .col("ConditionalCommands", conditionalStatementsCoverage())//
+            // .col("total Commands", commands())//
+            // .col("total Methods", methods())//
+            .nl();
+      }
+      
+      void initializeWriter() {
+        if (table == null)
+          table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
+      }
+      
       @Override public void visitFile(final File f) {
         current.fileName = f.getName();
         try {
