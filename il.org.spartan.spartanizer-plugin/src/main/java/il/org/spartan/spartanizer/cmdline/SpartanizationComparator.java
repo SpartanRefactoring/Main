@@ -57,10 +57,10 @@ public enum SpartanizationComparator {
       note.bug(¢);
     }
   }
-  private static void collect(final String javaCode, final String id) {
+  static void collect(final String javaCode, final String id) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
   }
-  private static void collect(final CompilationUnit u, final String id) {
+  static void collect(final CompilationUnit u, final String id) {
     // dotter.click();
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {

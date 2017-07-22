@@ -7,6 +7,7 @@ import java.nio.file.*;
 import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.SpartanizationComparator.*;
@@ -80,7 +81,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.location);
+            done(current.location, current.before, current.after);
           }
         });
       }
@@ -90,6 +91,13 @@ public class HeadlesSpartanizer extends GrandVisitor {
         reset();
       }
       
+      protected void done(final String path, final String before, final String after) {
+        summarize(path,before,after);
+        reset();
+      }
+      
+      private void summarize(String path, String before, String after) {}
+
       protected void done(final String path, final ASTNode n) {
         summarize(path,n);
         reset();
@@ -135,25 +143,37 @@ public class HeadlesSpartanizer extends GrandVisitor {
         String beforeChange;
         try {
           beforeChange = FileUtils.read(f);
-          analyze(beforeChange, perform(beforeChange));
+          current.before = beforeChange;
+          current.after = perform(beforeChange);
+          analyze(current.before, current.after);
         } catch (final IOException ¢) {
           note.io(¢);
         }
+        //done(project,¢);
         notify.endLocation();
       }
       
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
+        //SpartanizationComparator.collect(before,"before");
+        //SpartanizationComparator.collect(after,"after");
+        report((CompilationUnit) makeAST.COMPILATION_UNIT.from(before),"before");
+        report((CompilationUnit) makeAST.COMPILATION_UNIT.from(after),"after");
         try {
           //current.location = "/tmp/";
           if(copy){
             Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.relativePath).getParent());
             if (!Files.exists(pathname)) new File(pathname + "").mkdirs();
-            System.out.println(copy);
+            // System.out.println(copy);
             FileUtils.writeToFile(outputFolder + File.separator + current.relativePath , after);
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
         }
+              
+      }
+
+      void report(CompilationUnit from, String string) {
+        //
       }
       
     }).visitAll(astVisitor());
@@ -178,4 +198,8 @@ public class HeadlesSpartanizer extends GrandVisitor {
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
   }
+  
+//  private static void collect(final String javaCode, final String id) {
+//    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
+//  }
 }
