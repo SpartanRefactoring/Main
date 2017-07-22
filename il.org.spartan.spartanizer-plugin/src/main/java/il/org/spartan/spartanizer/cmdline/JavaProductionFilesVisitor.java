@@ -70,6 +70,8 @@ interface template  {
     public String relativePath;
     public String locationPath;
     public String locationName;
+    protected String before;
+    protected String after;
   }
   
   

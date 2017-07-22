@@ -42,7 +42,7 @@ public enum SpartanizationComparator {
   }
   private static void collect(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where)) {
-      System.out.println(¢.getName());
+      //System.out.println(¢.getName());
       presentFile = ¢.getName();
       presentSourcePath = ¢.getPath();
       collect(¢);
@@ -152,7 +152,7 @@ public enum SpartanizationComparator {
     int run(R r);
   }
 
-  static class NamedFunction<R> {
+  public static class NamedFunction<R> {
     final String name;
     final ToInt<R> f;
 

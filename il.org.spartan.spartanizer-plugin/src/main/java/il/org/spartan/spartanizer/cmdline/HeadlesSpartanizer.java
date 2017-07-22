@@ -1,12 +1,17 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.tide.*;
+
 import java.io.*;
 import java.nio.file.*;
 import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.SpartanizationComparator.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
@@ -49,8 +54,8 @@ public class HeadlesSpartanizer extends GrandVisitor {
   protected void setUp() {
     /**/
   }
-  protected void tearDown() {
-    /**/
+  protected static void tearDown() {
+    table.close();
   }
   @SuppressWarnings("static-method") protected boolean spartanize(@SuppressWarnings("unused") final File __) {
     return true;
@@ -81,17 +86,25 @@ public class HeadlesSpartanizer extends GrandVisitor {
       }
       
       protected void done(final String path) {
-        summarize(path);
+        summarize(path,null);
         reset();
-        System.err.println(" " + path + " Done"); // we need to know if the
+      }
+      
+      protected void done(final String path, final ASTNode n) {
+        summarize(path,n);
+        reset();
+        //System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
       }
       
-      public void summarize(final String path) {
+      public void summarize(final String project, final ASTNode ¢) {
         initializeWriter();
         table//
-            .col("Project", path)//
-//            .col("Commands", statementsCoverage())//
+            .col("Project", project)//
+            .col("File", current.fileName)//
+            .col("Path", current.relativePath);
+        for (final NamedFunction f : functions())
+          table.col(f.name(), f.function().run(¢));
 //            .col("Expressions", expressionsCoverage())//
 //            .col("Nodes", statistics.nodesCoverage())//
 //            .col("Methods", methodsCovered())//
@@ -101,7 +114,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
 //            .col("ConditionalCommands", conditionalStatementsCoverage())//
             // .col("total Commands", commands())//
             // .col("total Methods", methods())//
-            .nl();
+         table.nl();
       }
       
       void initializeWriter() {
@@ -146,6 +159,22 @@ public class HeadlesSpartanizer extends GrandVisitor {
     }).visitAll(astVisitor());
     tearDown();
   }
+  
+  static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+    return new NamedFunction<>(name, f);
+  }
+  
+  public static NamedFunction<?>[] functions() {
+    return as.array(//
+        m("length - ", metrics::length), //
+        m("essence - ", λ -> Essence.of(λ + "").length()), //
+        m("tokens - ", λ -> metrics.tokens(λ + "")), //
+        m("nodes - ", countOf::nodes), //
+        m("body - ", metrics::bodySize), //
+        m("methodDeclaration - ", λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+        m("tide - ", λ -> clean(λ + "").length()));//
+  }
+  
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
   }
