@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.codeclones;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.nio.file.*;
@@ -126,6 +126,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         } catch (final IOException ¢) {
           note.io(¢);
         }
+        notify.endLocation();
       }
       
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
