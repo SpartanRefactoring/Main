@@ -83,35 +83,17 @@ public class HeadlesSpartanizer extends GrandVisitor {
           @Override public void endLocation() {
             done();
           }
-
-          
         });
       }
       
       protected void done() {
         summarize(current.location,current.before,current.after);
       }     
-//      protected void done(final String path) {
-//        summarize(path,null);
-//        reset();
-//      }
       
-      protected void done(final String path, final String before, final String after) {
-        summarize(path,before,after);
-        reset();
-      }
-      
-      private void summarize(String project, String before, String after) {
+      void summarize(String project, String before, String after) {
         summarize(project,asCu(before),asCu(after)); 
       }
-
-      protected void done(final String path, final ASTNode n) {
-//        summarize(path,n);
-        reset();
-        //System.err.println(" " + path + " Done"); // we need to know if the
-                                                  // process is finished or hang
-      }
-      
+ 
       public void summarize(final String project, final ASTNode before, final ASTNode after) {
         initializeWriter();
         table//
@@ -120,19 +102,10 @@ public class HeadlesSpartanizer extends GrandVisitor {
             .col("Path", current.relativePath);
         reportCUMetrics(before, "before");
         reportCUMetrics(after, "after");
-//            .col("Expressions", expressionsCoverage())//
-//            .col("Nodes", statistics.nodesCoverage())//
-//            .col("Methods", methodsCovered())//
-//            .col("Touched", touched())//
-//            .col("Iteratives", iterativesCoverage())//
-//            .col("ConditionalExpressions", conditionalExpressionsCoverage())//
-//            .col("ConditionalCommands", conditionalStatementsCoverage())//
-            // .col("total Commands", commands())//
-            // .col("total Methods", methods())//
-         table.nl();
+        table.nl();
       }
 
-      private void reportCUMetrics(final ASTNode ¢, final String id) {
+      void reportCUMetrics(final ASTNode ¢, final String id) {
         for (final NamedFunction f : functions())
           table.col(f.name() + "-" + id, f.function().run(¢));
       }
@@ -161,29 +134,22 @@ public class HeadlesSpartanizer extends GrandVisitor {
         } catch (final IOException ¢) {
           note.io(¢);
         }
-        //done(project,¢);
         notify.endLocation();
       }
       
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
-        //SpartanizationComparator.collect(before,"before");
-        //SpartanizationComparator.collect(after,"after");
         try {
-          //current.location = "/tmp/";
           if(copy){
             Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.relativePath).getParent());
             if (!Files.exists(pathname)) new File(pathname + "").mkdirs();
-            // System.out.println(copy);
             FileUtils.writeToFile(outputFolder + File.separator + current.relativePath , after);
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
-          
         }
-              
       }
 
-      private CompilationUnit asCu(final String before) {
+      CompilationUnit asCu(final String before) {
         return (CompilationUnit) makeAST.COMPILATION_UNIT.from(before);
       }
 
@@ -209,8 +175,4 @@ public class HeadlesSpartanizer extends GrandVisitor {
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
   }
-  
-//  private static void collect(final String javaCode, final String id) {
-//    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
-//  }
 }
