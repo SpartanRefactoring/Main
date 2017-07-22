@@ -1,9 +1,10 @@
-package il.org.spartan.spartanizer.research.analyses;
+package il.org.spartan.spartanizer.research.analyses.analyzers;
 
 import java.util.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.research.analyses.analyzers.*;
 import il.org.spartan.utils.*;
 
 /** Created out of {@link ConfigurableObjectTemplate}

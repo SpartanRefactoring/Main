@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.analyses;
+package il.org.spartan.spartanizer.research.analyses.analyzers;
 
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 
@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.analyses.analyzers.*;
 import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.utils.*;
