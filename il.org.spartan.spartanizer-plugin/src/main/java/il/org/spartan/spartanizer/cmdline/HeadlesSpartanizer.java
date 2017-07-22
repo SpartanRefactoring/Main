@@ -81,38 +81,45 @@ public class HeadlesSpartanizer extends GrandVisitor {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.location, current.before, current.after);
+            done();
           }
+
+          
         });
       }
       
-      protected void done(final String path) {
-        summarize(path,null);
-        reset();
-      }
+      protected void done() {
+        summarize(current.location,current.before,current.after);
+      }     
+//      protected void done(final String path) {
+//        summarize(path,null);
+//        reset();
+//      }
       
       protected void done(final String path, final String before, final String after) {
         summarize(path,before,after);
         reset();
       }
       
-      private void summarize(String path, String before, String after) {}
+      private void summarize(String project, String before, String after) {
+        summarize(project,asCu(before),asCu(after)); 
+      }
 
       protected void done(final String path, final ASTNode n) {
-        summarize(path,n);
+//        summarize(path,n);
         reset();
         //System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
       }
       
-      public void summarize(final String project, final ASTNode ¢) {
+      public void summarize(final String project, final ASTNode before, final ASTNode after) {
         initializeWriter();
         table//
             .col("Project", project)//
             .col("File", current.fileName)//
             .col("Path", current.relativePath);
-        for (final NamedFunction f : functions())
-          table.col(f.name(), f.function().run(¢));
+        reportCUMetrics(before, "before");
+        reportCUMetrics(after, "after");
 //            .col("Expressions", expressionsCoverage())//
 //            .col("Nodes", statistics.nodesCoverage())//
 //            .col("Methods", methodsCovered())//
@@ -123,6 +130,11 @@ public class HeadlesSpartanizer extends GrandVisitor {
             // .col("total Commands", commands())//
             // .col("total Methods", methods())//
          table.nl();
+      }
+
+      private void reportCUMetrics(final ASTNode ¢, final String id) {
+        for (final NamedFunction f : functions())
+          table.col(f.name() + "-" + id, f.function().run(¢));
       }
       
       void initializeWriter() {
@@ -156,8 +168,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
         //SpartanizationComparator.collect(before,"before");
         //SpartanizationComparator.collect(after,"after");
-        report((CompilationUnit) makeAST.COMPILATION_UNIT.from(before),"before");
-        report((CompilationUnit) makeAST.COMPILATION_UNIT.from(after),"after");
         try {
           //current.location = "/tmp/";
           if(copy){
@@ -168,14 +178,15 @@ public class HeadlesSpartanizer extends GrandVisitor {
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
+          
         }
               
       }
 
-      void report(CompilationUnit from, String string) {
-        //
+      private CompilationUnit asCu(final String before) {
+        return (CompilationUnit) makeAST.COMPILATION_UNIT.from(before);
       }
-      
+
     }).visitAll(astVisitor());
     tearDown();
   }
