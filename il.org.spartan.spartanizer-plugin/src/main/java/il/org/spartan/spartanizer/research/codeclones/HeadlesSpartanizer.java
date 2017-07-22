@@ -64,9 +64,21 @@ public class HeadlesSpartanizer extends GrandVisitor {
   
   JavaProductionFilesVisitor v;
   
+  static void reset() {
+    //
+  }
+  
   public final void go(final String dirPath) {
     setUp();
     (new GrandVisitor(new String[] {dirPath}) {
+      
+      {
+        listen(new Tapper() {
+          @Override public void endLocation() {
+            done(current.location);
+          }
+        });
+      }
       
       protected void done(final String path) {
         summarize(path);
@@ -75,8 +87,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
                                                   // process is finished or hang
       }
       
-      private void reset() {}
-
       public void summarize(final String path) {
         initializeWriter();
         table//
