@@ -28,31 +28,26 @@ public class HeadlesSpartanizer extends GrandVisitor {
   static Table table;
   static HeadlesSpartanizer hs;
   static Table tippersTable;
+  JavaProductionFilesVisitor v;
+  TextualTraversals traversals = new TextualTraversals();
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
     System.err.println(hs.current.locations.size());
      hs.goAll();
-    //hs.go(hs.current.locations.get(0));
   }
 
   private void goAll() {
     hs.current.locations.stream().forEach(λ -> {
-      //System.err.println(λ);
       hs.current.location = λ; 
       go(λ);
     });
   }
-  
   public HeadlesSpartanizer(final String[] args){
     super(args);
   }
-  
   public HeadlesSpartanizer() {
   }
-
-  public final TextualTraversals traversals = new TextualTraversals();
-
   protected void setUp() {
     /**/
   }
@@ -69,7 +64,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
     return fixedPoint(fileContent);
   }
   
-  JavaProductionFilesVisitor v;
   
   static void reset() {
     //
@@ -78,7 +72,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
   public final void go(final String dirPath) {
     setUp();
     (new GrandVisitor(new String[] {dirPath}) {
-      
       {
         listen(new Tapper() {
           @Override public void beginBatch(){
@@ -107,16 +100,13 @@ public class HeadlesSpartanizer extends GrandVisitor {
           }
         });
       }
-      
       protected void done() {
         summarize(current.location,current.before,current.after);
         tippersTable.close();
       }     
-      
       void summarize(String project, String before, String after) {
         summarize(project,asCu(before),asCu(after)); 
       }
- 
       public void summarize(final String project, final ASTNode before, final ASTNode after) {
         initializeWriter();
         table//
@@ -127,25 +117,21 @@ public class HeadlesSpartanizer extends GrandVisitor {
         reportCUMetrics(after, "after");
         table.nl();
       }
-
       @SuppressWarnings({ "rawtypes", "unchecked" })
       void reportCUMetrics(final ASTNode ¢, final String id) {
         for (final NamedFunction f : functions())
           table.col(f.name() + "-" + id, f.function().run(¢));
       }
-      
       void initializeWriter() {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" 
                         + corpus, outputFolder);
       }
-      
       @Override public void visitFile(final File f) {
         current.fileName = f.getName();
         notify.beginFile();
         try {
           current.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
-          //System.out.println(current.relativePath);
         } catch (IOException ¢) {
           ¢.printStackTrace();
         }
@@ -162,7 +148,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
         }
         notify.endFile();
       }
-      
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
         try {
           if(copy){
@@ -174,11 +159,9 @@ public class HeadlesSpartanizer extends GrandVisitor {
           note.io(¢);
         }
       }
-
       CompilationUnit asCu(final String before) {
         return (CompilationUnit) makeAST.COMPILATION_UNIT.from(before);
       }
-
     }).visitAll(astVisitor());
     tearDown();
   }
