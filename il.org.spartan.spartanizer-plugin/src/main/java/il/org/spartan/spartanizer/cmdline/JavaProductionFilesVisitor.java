@@ -20,7 +20,7 @@ import junit.framework.*;
  * @since 2017-07-04 */
 public class JavaProductionFilesVisitor {
   protected static final String[] defaultArguments = as.array("..");
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
+  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected static String corpus = "";
   @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = system.tmp;
   @External(alias = "s", value = "silent") protected boolean silent;
@@ -50,7 +50,7 @@ interface template  {
   interface B{}
 }
   /**
-   * TODO Matteo Orru': document class 
+   * Current contains the information on the current file being under analysis 
    * 
    * @author Yossi Gil
    * @since 2017-07-16
@@ -134,7 +134,9 @@ interface template  {
     current.locations.forEach(
         λ -> {
           current.location = λ;
+          notify.beginLocation();
           visitLocation();
+          notify.endLocation();
         }
         );
     notify.endBatch();
@@ -159,10 +161,14 @@ interface template  {
   }
 
   protected void visitLocation() {
-    notify.beginLocation();
+    //notify.beginLocation();
     current.locationName = system.folder2File(current.locationPath = inputFolder + File.separator + current.location); 
-    new FilesGenerator(".java").from(current.locationPath).forEach(λ -> visitFile(current.file = λ));
-    notify.endLocation();
+    new FilesGenerator(".java").from(current.locationPath)
+                               .forEach(λ -> {//notify.beginFile();
+                               visitFile(current.file = λ);
+                               //notify.endFile();
+                               });
+    //notify.endLocation();
   }
 
   void collect(final String javaCode) {
