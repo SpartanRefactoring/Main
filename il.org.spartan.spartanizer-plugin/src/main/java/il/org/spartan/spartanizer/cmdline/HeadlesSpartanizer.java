@@ -90,6 +90,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
             System.err.println("Begin " + current.fileName);
             tippersTable.col("Project",current.location);
             tippersTable.col("File",current.fileName);
+            tippersTable.nl();
           }
           @Override public void beginLocation() {
             System.err.println("Begin " + current.location);
