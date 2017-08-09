@@ -24,9 +24,10 @@ import il.org.spartan.utils.*;
  * @since 2017-04-11 */
 public class HeadlesSpartanizer extends GrandVisitor {
   
-  @External(alias = "c", value = "copy file") @SuppressWarnings("CanBeFinal") boolean copy;
+  @External(alias = "cp", value = "copy file") @SuppressWarnings("CanBeFinal") boolean copy;
   static Table table;
   static HeadlesSpartanizer hs;
+  static Table tippersTable;
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
@@ -37,9 +38,9 @@ public class HeadlesSpartanizer extends GrandVisitor {
 
   private void goAll() {
     hs.current.locations.stream().forEach(λ -> {
-      System.err.println(λ);
+      //System.err.println(λ);
       hs.current.location = λ; 
-      go(λ); 
+      go(λ);
     });
   }
   
@@ -80,14 +81,35 @@ public class HeadlesSpartanizer extends GrandVisitor {
       
       {
         listen(new Tapper() {
-          @Override public void endLocation() {
+          @Override public void beginBatch(){
+            System.err.println(" --- Begin Batch Process --- ");
+            tippersTable = new Table("tippers" //Table.classToNormalizedFileName(Table.class) 
+                  + "-" + corpus, outputFolder);
+          }
+          @Override public void beginFile() {
+            System.err.println("Begin " + current.fileName);
+            tippersTable.col("Project",current.location);
+            tippersTable.col("File",current.fileName);
+          }
+          @Override public void beginLocation() {
+            System.err.println("Begin " + current.location);
+          }
+          @Override public void endBatch() {
+            System.err.println(" --- End Batch Process --- ");
             done();
+          }
+          @Override public void endFile() {
+            System.err.println("End " + current.fileName);
+          }
+          @Override public void endLocation() {
+            System.err.println("End " + current.location);
           }
         });
       }
       
       protected void done() {
         summarize(current.location,current.before,current.after);
+        tippersTable.close();
       }     
       
       void summarize(String project, String before, String after) {
@@ -105,6 +127,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         table.nl();
       }
 
+      @SuppressWarnings({ "rawtypes", "unchecked" })
       void reportCUMetrics(final ASTNode ¢, final String id) {
         for (final NamedFunction f : functions())
           table.col(f.name() + "-" + id, f.function().run(¢));
@@ -112,14 +135,16 @@ public class HeadlesSpartanizer extends GrandVisitor {
       
       void initializeWriter() {
         if (table == null)
-          table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
+          table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" 
+                        + corpus, outputFolder);
       }
       
       @Override public void visitFile(final File f) {
         current.fileName = f.getName();
+        notify.beginFile();
         try {
           current.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
-          System.out.println(current.relativePath);
+          //System.out.println(current.relativePath);
         } catch (IOException ¢) {
           ¢.printStackTrace();
         }
@@ -134,7 +159,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         } catch (final IOException ¢) {
           note.io(¢);
         }
-        notify.endLocation();
+        notify.endFile();
       }
       
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
