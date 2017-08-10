@@ -35,15 +35,18 @@ public class HeadlesSpartanizer extends GrandVisitor {
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
     System.err.println(hs.current.data.locations.size());
-     hs.goAll();
+    hs.goAll();
   }
 
   private void goAll() {
+    //notify.beginBatch();
     hs.current.data.locations.stream().forEach(λ -> {
       hs.current.data.location = λ; 
       go(λ);
     });
+    notify.endBatch();
   }
+  
   public HeadlesSpartanizer(final String[] args){
     super(args);
   }
@@ -53,7 +56,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
     /**/
   }
   protected static void tearDown() {
-    table.close();
+    //table.close();
   }
   @SuppressWarnings("static-method") 
   protected boolean spartanize(@SuppressWarnings("unused") final File __) {
@@ -80,8 +83,9 @@ public class HeadlesSpartanizer extends GrandVisitor {
             System.err.println(" --- Begin Batch Process --- ");
             tippersTable = new Table("tippers" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
-            traversals.traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
-                + "-" + corpus, outputFolder);
+            if(traversals.traversal.table == null)
+              traversals.traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
+                  + "-" + corpus, outputFolder);
           }
           @Override public void beginFile() {
             System.err.println("Begin " + current.data.fileName);
@@ -107,7 +111,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
       }
       protected void done() {
         summarize(current.data.location,current.data.before,current.data.after);
-        tippersTable.close();
+        //tippersTable.close();
       }     
       void summarize(String project, String before, String after) {
         summarize(project,asCu(before),asCu(after)); 

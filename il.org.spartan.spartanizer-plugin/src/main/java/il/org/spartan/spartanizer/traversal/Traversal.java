@@ -78,35 +78,34 @@ public abstract class Traversal implements Selfie<Traversal> {
           table.col("File", fileName);
           currentFileName = fileName;
         }
-        @Override public void setNode(){
-          System.err.println(" --- setNode --- ");
-          System.err.println("node: " + node);
-          table.col("Node", node);
-        }
-        @Override public void noTipper()      {
-          //System.err.println(" --- noTipper --- ");
-          table.col("NoTipper","yes");
-          }
+//        @Override public void setNode(){
+//          System.err.println(" --- setNode --- ");
+//          System.err.println("node: " + node);
+//          table.col("Node", node);
+//        }
+//        @Override public void noTipper()      {
+//          //System.err.println(" --- noTipper --- ");
+//          table.col("NoTipper","yes");
+//          }
         @Override public void tipperAccepts() {
           //System.err.println(" --- tipperAccepts --- ");
           table.col("Project", project);
           table.col("File", currentFileName);
-          table.col("TipperRejects","no");
-          table.col("TipperAccept","yes");
-          table.col("NoTipper","no");
+          //table.col("TipperRejects","no");
+          //table.col("TipperAccept","yes");
+          //table.col("NoTipper","no");
           table.col("Tipper",tipper.tipperName());
-          table.col("NoTipper","no");
-          
-          //table.col("Tip",tip.description);
+          //table.col("NoTipper","no");
+          table.col("Description",tipper.description());
           // table.col("Node", node);
           }
-        @Override public void tipperRejects() {
-          //System.err.println(" --- tipperRejects --- ");
-          table.col("TipperRejects","yes");
-          table.col("TipperAccept","no");
-          table.col("NoTipper","no");
-          table.col("Tipper","none");
-          }
+//        @Override public void tipperRejects() {
+//          //System.err.println(" --- tipperRejects --- ");
+//          table.col("TipperRejects","yes");
+//          table.col("TipperAccept","no");
+//          table.col("NoTipper","no");
+//          table.col("Tipper","none");
+//          }
         @Override public void tipperTip()     {
           //System.err.println(" --- tipperTip --- ");
           }
