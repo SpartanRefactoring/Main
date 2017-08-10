@@ -58,20 +58,9 @@ interface template  {
 
   public static class Current {
     public Current(List<String> locations) {
-      this.locations = locations.subList(0, locations.size());
+      this.data.locations = locations.subList(0, locations.size());
     }
-    public File file;
-    public String fileName;
-    public String absolutePath;
-    public String location;
-    public BufferedWriter out;
-    public final List<String> locations;
-    public ASTVisitor visitor;
-    public String relativePath;
-    public String locationPath;
-    public String locationName;
-    protected String before;
-    protected String after;
+    public CurrentData data = new CurrentData();
   }
   
   
@@ -130,10 +119,10 @@ interface template  {
 
   public void visitAll(final ASTVisitor ¢) {
     notify.beginBatch();
-    current.visitor = ¢;
-    current.locations.forEach(
+    current.data.visitor = ¢;
+    current.data.locations.forEach(
         λ -> {
-          current.location = λ;
+          current.data.location = λ;
           notify.beginLocation();
           visitLocation();
           notify.endLocation();
@@ -146,8 +135,8 @@ interface template  {
     notify.beginFile();
     if (Utils.isProductionCode(f) && productionCode(f))
       try {
-        current.absolutePath = f.getAbsolutePath();
-        current.relativePath = f.getPath();
+        current.data.absolutePath = f.getAbsolutePath();
+        current.data.relativePath = f.getPath();
         collect(FileUtils.read(f));
       } catch (final IOException ¢) {
         note.io(¢, "File = " + f);
@@ -157,15 +146,15 @@ interface template  {
 
   private void collect(final CompilationUnit ¢) {
     if (¢ != null)
-      ¢.accept(current.visitor);
+      ¢.accept(current.data.visitor);
   }
 
   protected void visitLocation() {
     //notify.beginLocation();
-    current.locationName = system.folder2File(current.locationPath = inputFolder + File.separator + current.location); 
-    new FilesGenerator(".java").from(current.locationPath)
+    current.data.locationName = system.folder2File(current.data.locationPath = inputFolder + File.separator + current.data.location); 
+    new FilesGenerator(".java").from(current.data.locationPath)
                                .forEach(λ -> {//notify.beginFile();
-                               visitFile(current.file = λ);
+                               visitFile(current.data.file = λ);
                                //notify.endFile();
                                });
     //notify.endLocation();
