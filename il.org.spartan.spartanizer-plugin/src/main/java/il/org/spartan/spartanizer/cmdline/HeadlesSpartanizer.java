@@ -26,8 +26,8 @@ public class HeadlesSpartanizer extends GrandVisitor {
   
   @External(alias = "cp", value = "copy file") @SuppressWarnings("CanBeFinal") boolean copy;
   static Table table;
-  static HeadlesSpartanizer hs;
   static Table tippersTable;
+  static HeadlesSpartanizer hs;
   JavaProductionFilesVisitor v;
   TextualTraversals traversals = new TextualTraversals();
   
@@ -54,7 +54,8 @@ public class HeadlesSpartanizer extends GrandVisitor {
   protected static void tearDown() {
     table.close();
   }
-  @SuppressWarnings("static-method") protected boolean spartanize(@SuppressWarnings("unused") final File __) {
+  @SuppressWarnings("static-method") 
+  protected boolean spartanize(@SuppressWarnings("unused") final File __) {
     return true;
   }
   @SuppressWarnings("static-method") protected ASTVisitor astVisitor() {
@@ -78,6 +79,9 @@ public class HeadlesSpartanizer extends GrandVisitor {
             System.err.println(" --- Begin Batch Process --- ");
             tippersTable = new Table("tippers" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
+            traversals.traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
+                + "-" + corpus, outputFolder);
+            
           }
           @Override public void beginFile() {
             System.err.println("Begin " + current.fileName);
@@ -90,6 +94,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
           }
           @Override public void endBatch() {
             System.err.println(" --- End Batch Process --- ");
+            traversals.traversal.table.close();
             done();
           }
           @Override public void endFile() {
@@ -129,6 +134,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
       }
       @Override public void visitFile(final File f) {
         current.fileName = f.getName();
+        traversals.traversal.notify.begin();
         notify.beginFile();
         try {
           current.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
@@ -137,11 +143,9 @@ public class HeadlesSpartanizer extends GrandVisitor {
         }
         if (!spartanize(f))
           return;
-        String beforeChange;
         try {
-          beforeChange = FileUtils.read(f);
-          current.before = beforeChange;
-          current.after = perform(beforeChange);
+          current.before = FileUtils.read(f);
+          current.after = perform(current.before);
           analyze(current.before, current.after);
         } catch (final IOException ¢) {
           note.io(¢);

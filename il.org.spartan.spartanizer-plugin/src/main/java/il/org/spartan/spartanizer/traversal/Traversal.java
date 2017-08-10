@@ -14,6 +14,7 @@ import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** The interface of * {@link TraversalImplementation}, conducting a traversal
@@ -29,6 +30,23 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Traversal implements Selfie<Traversal> {
+  
+  protected final Int rewriteCount = new Int();
+  private Tip otherTip;
+  private CompilationUnit compilationUnit;
+  private TextEditGroup editGroup;
+  private Range range;
+  protected final Tips tips = Tips.empty();
+  protected final Map<IProject, Toolbox> configurations = new HashMap<>();
+  protected String fileName;
+  protected boolean firstAddition = true;
+  protected ASTNode node;
+  protected ASTRewrite rewrite;
+  protected Tip tip;
+  protected Tipper<?> tipper;
+  protected boolean useProjectPreferences;
+  public static Table table;  
+
   public Toolbox toolbox = Toolboxes.allClone();
   /** A list of all listeners to actions carried out by this instance. */
   public final TraversalTappers notify = new TraversalTappers()//
@@ -47,21 +65,54 @@ public abstract class Traversal implements Selfie<Traversal> {
           final Toolbox $ = getPreferredConfiguration(compilationUnit());
           toolbox = $ != null ? $ : toolbox;
         }
-      });
-  protected final Int rewriteCount = new Int();
-  private Tip otherTip;
-  private CompilationUnit compilationUnit;
-  private TextEditGroup editGroup;
-  private Range range;
-  protected final Tips tips = Tips.empty();
-  protected final Map<IProject, Toolbox> configurations = new HashMap<>();
-  protected String fileName;
-  protected boolean firstAddition = true;
-  protected ASTNode node;
-  protected ASTRewrite rewrite;
-  protected Tip tip;
-  protected Tipper<?> tipper;
-  protected boolean useProjectPreferences;
+      }) //
+      .push(new TraversalTapper() {
+        @Override public void begin() {
+          System.err.println(" --- Begin Tippization --- ");
+          if(table == null)
+            table = new Table(Table.classToNormalizedFileName(Table.class) + "tippers2", "/tmp"); // + "-" + corpus, "/tmp");
+          System.err.println("filename: " + fileName);
+          table.col("File", fileName);
+        }
+        @Override public void setNode(){
+          System.err.println(" --- setNode --- ");
+          System.err.println("node: " + node);
+          table.col("Node", node);
+        }
+        @Override public void noTipper()      {
+          System.err.println(" --- noTipper --- ");
+          table.col("NoTipper","yes");
+          }
+        @Override public void tipperAccepts() {
+          System.err.println(" --- tipperAccepts --- ");
+          table.col("TipperRejects","no");
+          table.col("TipperAccept","yes");
+          table.col("NoTipper","no");
+          table.col("Tipper",tipper.tipperName());
+          }
+        @Override public void tipperRejects() {
+          System.err.println(" --- tipperRejects --- ");
+          table.col("TipperRejects","yes");
+          table.col("TipperAccept","no");
+          table.col("NoTipper","no");
+          table.col("Tipper","none");
+          }
+        @Override public void tipperTip()     {
+          System.err.println(" --- tipperTip --- ");
+          }
+        @Override public void tipPrune()      {
+          System.err.println(" --- tipPrune --- ");
+          }
+        @Override public void tipRewrite()    {
+          System.err.println(" --- tipRewrite --- ");
+          table.nl();
+          }
+        @Override public void end(){
+          System.err.println(" --- End Tippization --- ");
+          table//
+            .close();
+        }
+       });
 
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
@@ -158,9 +209,11 @@ public abstract class Traversal implements Selfie<Traversal> {
     return otherTip = auxiliaryTip;
   }
   protected void setCompilationUnit(final CompilationUnit ¢) {
-    compilationUnit = ¢;
+    //compilationUnit = ¢;
+    //System.err.println("compilation unit: " + ¢);
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
-    notify.begin();
+    //System.err.println(fileName);
+    //notify.begin();
   }
   protected void setNode(final ASTNode currentNode) {
     node = currentNode;
