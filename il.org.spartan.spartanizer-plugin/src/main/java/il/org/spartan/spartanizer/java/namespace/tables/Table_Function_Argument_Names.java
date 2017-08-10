@@ -19,7 +19,7 @@ public class Table_Function_Argument_Names extends NominalTables {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.location);
+            done(current.data.location);
           }
         });
       }
