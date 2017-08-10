@@ -91,12 +91,15 @@ public abstract class Traversal implements Selfie<Traversal> {
           //System.err.println(" --- tipperAccepts --- ");
           table.col("Project", project);
           table.col("File", currentFileName);
+          table.col("Tips",tips.size()+1);
           //table.col("TipperRejects","no");
           //table.col("TipperAccept","yes");
           //table.col("NoTipper","no");
           table.col("Tipper",tipper.tipperName());
           //table.col("NoTipper","no");
-          table.col("Description",tipper.description());
+          table.col("Description","\""+tipper.description()+"\"");
+          table.col("Group",tipper.tipperGroup().label());
+          table.col("Parents",tipper.tipperGroup().parents());
           // table.col("Node", node);
           }
 //        @Override public void tipperRejects() {
