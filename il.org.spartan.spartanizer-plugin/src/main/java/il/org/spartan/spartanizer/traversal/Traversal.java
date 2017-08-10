@@ -49,6 +49,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   public static Table table;  
 
   public Toolbox toolbox = Toolboxes.allClone();
+  protected String currentFileName;
   /** A list of all listeners to actions carried out by this instance. */
   public final TraversalTappers notify = new TraversalTappers()//
       .push(new TraversalTapper() {
@@ -73,7 +74,9 @@ public abstract class Traversal implements Selfie<Traversal> {
 //          if(table == null)
 //            table = new Table(Table.classToNormalizedFileName(Table.class) + "tippers2", "/tmp"); // + "-" + corpus, "/tmp");
           System.err.println("filename: " + fileName);
+          table.col("Project", project);
           table.col("File", fileName);
+          currentFileName = fileName;
         }
         @Override public void setNode(){
           System.err.println(" --- setNode --- ");
@@ -86,10 +89,16 @@ public abstract class Traversal implements Selfie<Traversal> {
           }
         @Override public void tipperAccepts() {
           //System.err.println(" --- tipperAccepts --- ");
+          table.col("Project", project);
+          table.col("File", currentFileName);
           table.col("TipperRejects","no");
           table.col("TipperAccept","yes");
           table.col("NoTipper","no");
           table.col("Tipper",tipper.tipperName());
+          table.col("NoTipper","no");
+          
+          //table.col("Tip",tip.description);
+          // table.col("Node", node);
           }
         @Override public void tipperRejects() {
           //System.err.println(" --- tipperRejects --- ");
@@ -113,6 +122,7 @@ public abstract class Traversal implements Selfie<Traversal> {
           //table.close();
         }
        });
+  public String project;
 
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips

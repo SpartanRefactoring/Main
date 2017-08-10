@@ -135,6 +135,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
       @Override public void visitFile(final File f) {
         current.data.fileName = f.getName();
         traversals.traversal.fileName = f.getName();
+        traversals.traversal.project = current.data.location;
         traversals.traversal.notify.begin();
         notify.beginFile();
         try {
