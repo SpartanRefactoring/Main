@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.traversal;
 
 import static java.util.stream.Collectors.*;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
 
 import java.util.*;
 
@@ -38,7 +39,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   private Range range;
   protected final Tips tips = Tips.empty();
   protected final Map<IProject, Toolbox> configurations = new HashMap<>();
-  protected String fileName;
+  public String fileName;
   protected boolean firstAddition = true;
   protected ASTNode node;
   protected ASTRewrite rewrite;
@@ -69,8 +70,8 @@ public abstract class Traversal implements Selfie<Traversal> {
       .push(new TraversalTapper() {
         @Override public void begin() {
           System.err.println(" --- Begin Tippization --- ");
-          if(table == null)
-            table = new Table(Table.classToNormalizedFileName(Table.class) + "tippers2", "/tmp"); // + "-" + corpus, "/tmp");
+//          if(table == null)
+//            table = new Table(Table.classToNormalizedFileName(Table.class) + "tippers2", "/tmp"); // + "-" + corpus, "/tmp");
           System.err.println("filename: " + fileName);
           table.col("File", fileName);
         }
@@ -80,37 +81,36 @@ public abstract class Traversal implements Selfie<Traversal> {
           table.col("Node", node);
         }
         @Override public void noTipper()      {
-          System.err.println(" --- noTipper --- ");
+          //System.err.println(" --- noTipper --- ");
           table.col("NoTipper","yes");
           }
         @Override public void tipperAccepts() {
-          System.err.println(" --- tipperAccepts --- ");
+          //System.err.println(" --- tipperAccepts --- ");
           table.col("TipperRejects","no");
           table.col("TipperAccept","yes");
           table.col("NoTipper","no");
           table.col("Tipper",tipper.tipperName());
           }
         @Override public void tipperRejects() {
-          System.err.println(" --- tipperRejects --- ");
+          //System.err.println(" --- tipperRejects --- ");
           table.col("TipperRejects","yes");
           table.col("TipperAccept","no");
           table.col("NoTipper","no");
           table.col("Tipper","none");
           }
         @Override public void tipperTip()     {
-          System.err.println(" --- tipperTip --- ");
+          //System.err.println(" --- tipperTip --- ");
           }
         @Override public void tipPrune()      {
-          System.err.println(" --- tipPrune --- ");
+          //System.err.println(" --- tipPrune --- ");
           }
         @Override public void tipRewrite()    {
-          System.err.println(" --- tipRewrite --- ");
+          //System.err.println(" --- tipRewrite --- ");
           table.nl();
           }
         @Override public void end(){
           System.err.println(" --- End Tippization --- ");
-          table//
-            .close();
+          //table.close();
         }
        });
 
