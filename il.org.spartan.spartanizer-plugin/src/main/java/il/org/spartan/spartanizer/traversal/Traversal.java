@@ -76,38 +76,56 @@ public abstract class Traversal implements Selfie<Traversal> {
           table.col("File", fileName);
           currentFileName = fileName;
         }
-        @Override public void setNode(){
-          System.err.println(" --- setNode --- ");
-        }
-        @Override public void noTipper()      {
-          System.err.println(" --- noTipper --- ");
-        }
+//        @Override public void setNode(){
+//          System.err.println(" --- setNode --- ");
+//        }
+//        @Override public void noTipper()      {
+//          System.err.println(" --- noTipper --- ");
+//        }
         @Override public void tipperAccepts() {
+          //Range hl = tip.highlight;
           System.err.println(" --- tipperAccepts --- ");
           table.col("Project", project);
           table.col("File", currentFileName);
           table.col("Tips",tips.size()+1);
           table.col("Tipper",tipper.tipperName());
-          //table.col("Tipper Class",tip.tipperClass + "");
-          table.col("Tip Highligh",tip.highlight + "");
+//          try {
+//            table.col("Tip Highlight",tip.highlight + "");
+//          } catch (final NullPointerException e){
+//            table.col("Tip Highlight","null");
+//          }
 //          table.col("Tip Span", tip.span + "");
 //          table.col("Tip Description", tip.description);
 //          table.col("Tip lineNumber", tip.lineNumber + "");
 //          table.col("Tip lastComponent", cCamelCase.lastComponent(tip.tipperClass + "") + "");
+//          try {
+//            table.col("Tip yyy  ",tip+"");
+//          } catch (final NullPointerException e){
+//            table.col("Tip ---",currentFileName);
+//          }          
+//          table.col("Tip",tip+"");
           table.col("Group", tipper.tipperGroup().label());
           table.col("Parents",tipper.tipperGroup().parents().size());
-          table.col("Description","\""+tipper.description()+"\"");
           }
         @Override public void tipperRejects() {
           System.err.println(" --- tipperRejects --- ");
+          System.err.println(currentFileName);
           }
         @Override public void tipperTip()     {
           System.err.println(" --- tipperTip --- ");
-          //table.col("Tip","\""+tip+"\"");
+          table.col("Tipper Class",tip.tipperClass + "");
+          table.col("Tip Highlight (from)",tip.highlight.from + "");
+          table.col("Tip Highlight (to)",tip.highlight.to + "");
+          table.col("Tip Span (from)", tip.span.from + "");
+          table.col("Tip Span (to)", tip.span.to + "");
+          table.col("Tip Description", "\"" + tip.description + "\"");
+          table.col("Tip lineNumber", tip.lineNumber + "");
+          table.col("Tip lastComponent", cCamelCase.lastComponent(tip.tipperClass + "") + "");
+
           }
-        @Override public void tipPrune()      {
-          System.err.println(" --- tipPrune --- ");
-          }
+//        @Override public void tipPrune()      {
+//          System.err.println(" --- tipPrune --- ");
+//          }
         @Override public void tipRewrite()    {
           System.err.println(" --- tipRewrite --- ");
           table.nl();
