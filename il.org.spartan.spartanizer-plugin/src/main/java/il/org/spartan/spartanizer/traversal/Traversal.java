@@ -88,8 +88,13 @@ public abstract class Traversal implements Selfie<Traversal> {
           table.col("File", currentFileName);
           table.col("Tips",tips.size()+1);
           table.col("Tipper",tipper.tipperName());
-          table.col("Tip",""+tip);
-          table.col("Group",tipper.tipperGroup().label());
+          //table.col("Tipper Class",tip.tipperClass + "");
+          table.col("Tip Highligh",tip.highlight + "");
+//          table.col("Tip Span", tip.span + "");
+//          table.col("Tip Description", tip.description);
+//          table.col("Tip lineNumber", tip.lineNumber + "");
+//          table.col("Tip lastComponent", cCamelCase.lastComponent(tip.tipperClass + "") + "");
+          table.col("Group", tipper.tipperGroup().label());
           table.col("Parents",tipper.tipperGroup().parents().size());
           table.col("Description","\""+tipper.description()+"\"");
           }
@@ -98,7 +103,7 @@ public abstract class Traversal implements Selfie<Traversal> {
           }
         @Override public void tipperTip()     {
           System.err.println(" --- tipperTip --- ");
-          table.col("Tip","\""+tip+"\"");
+          //table.col("Tip","\""+tip+"\"");
           }
         @Override public void tipPrune()      {
           System.err.println(" --- tipPrune --- ");
