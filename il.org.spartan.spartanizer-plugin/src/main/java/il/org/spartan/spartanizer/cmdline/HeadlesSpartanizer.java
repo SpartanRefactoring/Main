@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.cmdline.SpartanizationComparator.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
@@ -83,29 +84,29 @@ public class HeadlesSpartanizer extends GrandVisitor {
             System.err.println(" --- Begin Batch Process --- ");
             tippersTable = new Table("tippers" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
-            if(traversals.traversal.table == null)
-              traversals.traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
+            if(Traversal.table == null)
+              Traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
           }
           @Override public void beginFile() {
-            System.err.println("Begin " + current.data.fileName);
-            tippersTable.col("Project",current.data.location);
-            tippersTable.col("File",current.data.fileName);
+            System.err.println("Begin " + CurrentData.fileName);
+            tippersTable.col("Project",CurrentData.location);
+            tippersTable.col("File",CurrentData.fileName);
             tippersTable.nl();
           }
           @Override public void beginLocation() {
-            System.err.println("Begin " + current.data.location);
+            System.err.println("Begin " + CurrentData.location);
           }
           @Override public void endBatch() {
             System.err.println(" --- End Batch Process --- ");
-            traversals.traversal.table.close();
+            Traversal.table.close();
             done();
           }
           @Override public void endFile() {
-            System.err.println("End " + current.data.fileName);
+            System.err.println("End " + CurrentData.fileName);
           }
           @Override public void endLocation() {
-            System.err.println("End " + current.data.location);
+            System.err.println("End " + CurrentData.location);
           }
         });
       }
