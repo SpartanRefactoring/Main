@@ -71,57 +71,44 @@ public abstract class Traversal implements Selfie<Traversal> {
       .push(new TraversalTapper() {
         @Override public void begin() {
           System.err.println(" --- Begin Tippization --- ");
-//          if(table == null)
-//            table = new Table(Table.classToNormalizedFileName(Table.class) + "tippers2", "/tmp"); // + "-" + corpus, "/tmp");
           System.err.println("filename: " + fileName);
           table.col("Project", project);
           table.col("File", fileName);
           currentFileName = fileName;
         }
-//        @Override public void setNode(){
-//          System.err.println(" --- setNode --- ");
-//          System.err.println("node: " + node);
-//          table.col("Node", node);
-//        }
-//        @Override public void noTipper()      {
-//          //System.err.println(" --- noTipper --- ");
-//          table.col("NoTipper","yes");
-//          }
+        @Override public void setNode(){
+          System.err.println(" --- setNode --- ");
+        }
+        @Override public void noTipper()      {
+          System.err.println(" --- noTipper --- ");
+        }
         @Override public void tipperAccepts() {
-          //System.err.println(" --- tipperAccepts --- ");
+          System.err.println(" --- tipperAccepts --- ");
           table.col("Project", project);
           table.col("File", currentFileName);
           table.col("Tips",tips.size()+1);
-          //table.col("TipperRejects","no");
-          //table.col("TipperAccept","yes");
-          //table.col("NoTipper","no");
           table.col("Tipper",tipper.tipperName());
-          //table.col("NoTipper","no");
-          table.col("Description","\""+tipper.description()+"\"");
+          table.col("Tip",""+tip);
           table.col("Group",tipper.tipperGroup().label());
-          table.col("Parents",tipper.tipperGroup().parents());
-          // table.col("Node", node);
+          table.col("Parents",tipper.tipperGroup().parents().size());
+          table.col("Description","\""+tipper.description()+"\"");
           }
-//        @Override public void tipperRejects() {
-//          //System.err.println(" --- tipperRejects --- ");
-//          table.col("TipperRejects","yes");
-//          table.col("TipperAccept","no");
-//          table.col("NoTipper","no");
-//          table.col("Tipper","none");
-//          }
+        @Override public void tipperRejects() {
+          System.err.println(" --- tipperRejects --- ");
+          }
         @Override public void tipperTip()     {
-          //System.err.println(" --- tipperTip --- ");
+          System.err.println(" --- tipperTip --- ");
+          table.col("Tip","\""+tip+"\"");
           }
         @Override public void tipPrune()      {
-          //System.err.println(" --- tipPrune --- ");
+          System.err.println(" --- tipPrune --- ");
           }
         @Override public void tipRewrite()    {
-          //System.err.println(" --- tipRewrite --- ");
+          System.err.println(" --- tipRewrite --- ");
           table.nl();
           }
         @Override public void end(){
           System.err.println(" --- End Tippization --- ");
-          //table.close();
         }
        });
   public String project;
@@ -221,11 +208,7 @@ public abstract class Traversal implements Selfie<Traversal> {
     return otherTip = auxiliaryTip;
   }
   protected void setCompilationUnit(final CompilationUnit ¢) {
-    //compilationUnit = ¢;
-    //System.err.println("compilation unit: " + ¢);
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
-    //System.err.println(fileName);
-    //notify.begin();
   }
   protected void setNode(final ASTNode currentNode) {
     node = currentNode;
