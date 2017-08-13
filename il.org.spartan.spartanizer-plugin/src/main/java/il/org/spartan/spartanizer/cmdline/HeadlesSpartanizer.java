@@ -35,14 +35,14 @@ public class HeadlesSpartanizer extends GrandVisitor {
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
-    System.err.println(hs.current.data.locations.size());
+    System.err.println(CurrentData.locations.size());
     hs.goAll();
   }
 
   private void goAll() {
     //notify.beginBatch();
-    hs.current.data.locations.stream().forEach(λ -> {
-      hs.current.data.location = λ; 
+    CurrentData.locations.stream().forEach(λ -> {
+      CurrentData.location = λ; 
       go(λ);
     });
     notify.endBatch();
@@ -111,7 +111,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         });
       }
       protected void done() {
-        summarize(current.data.location,current.data.before,current.data.after);
+        summarize(CurrentData.location,CurrentData.before,CurrentData.after);
         //tippersTable.close();
       }     
       void summarize(String project, String before, String after) {
@@ -121,8 +121,8 @@ public class HeadlesSpartanizer extends GrandVisitor {
         initializeWriter();
         table//
             .col("Project", project)//
-            .col("File", current.data.fileName)//
-            .col("Path", current.data.relativePath);
+            .col("File", CurrentData.fileName)//
+            .col("Path", CurrentData.relativePath);
         reportCUMetrics(before, "before");
         reportCUMetrics(after, "after");
         table.nl();
@@ -138,22 +138,22 @@ public class HeadlesSpartanizer extends GrandVisitor {
                         + corpus, outputFolder);
       }
       @Override public void visitFile(final File f) {
-        current.data.fileName = f.getName();
+        CurrentData.fileName = f.getName();
         traversals.traversal.fileName = f.getName();
-        traversals.traversal.project = current.data.location;
+        traversals.traversal.project = CurrentData.location;
         traversals.traversal.notify.begin();
         notify.beginFile();
         try {
-          current.data.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
+          CurrentData.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
         } catch (IOException ¢) {
           ¢.printStackTrace();
         }
         if (!spartanize(f))
           return;
         try {
-          current.data.before = FileUtils.read(f);
-          current.data.after = perform(current.data.before);
-          analyze(current.data.before, current.data.after);
+          CurrentData.before = FileUtils.read(f);
+          CurrentData.after = perform(CurrentData.before);
+          analyze(CurrentData.before, CurrentData.after);
         } catch (final IOException ¢) {
           note.io(¢);
         }
@@ -162,9 +162,9 @@ public class HeadlesSpartanizer extends GrandVisitor {
       protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
         try {
           if(copy){
-            Path pathname = Paths.get(outputFolder + File.separator + Paths.get(current.data.relativePath).getParent());
+            Path pathname = Paths.get(outputFolder + File.separator + Paths.get(CurrentData.relativePath).getParent());
             if (!Files.exists(pathname)) new File(pathname + "").mkdirs();
-            FileUtils.writeToFile(outputFolder + File.separator + current.data.relativePath , after);
+            FileUtils.writeToFile(outputFolder + File.separator + CurrentData.relativePath , after);
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
