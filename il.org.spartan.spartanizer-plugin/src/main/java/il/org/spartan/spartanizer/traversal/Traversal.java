@@ -47,6 +47,8 @@ public abstract class Traversal implements Selfie<Traversal> {
   protected Tipper<?> tipper;
   protected boolean useProjectPreferences;
   public static Table table;  
+  int tipReject;
+  int noTipper;
 
   public Toolbox toolbox = Toolboxes.allClone();
   protected String currentFileName;
@@ -70,20 +72,23 @@ public abstract class Traversal implements Selfie<Traversal> {
       }) //
       .push(new TraversalTapper() {
         @Override public void begin() {
-          System.err.println(" --- Begin Tippization --- ");
-          System.err.println("filename: " + fileName);
+          //System.err.println(" --- Begin Tippization --- ");
+          //System.err.println("filename: " + fileName);
           table.col("Project", project);
           table.col("File", fileName);
           currentFileName = fileName;
+          tipReject = 0;
+          noTipper = 0;
           }
         @Override public void setNode(){
-          System.err.println(" --- setNode --- ");
+          //System.err.println(" --- setNode --- ");
           }
         @Override public void noTipper()      {
-          System.err.println(" --- noTipper --- ");
+          //System.err.println(" --- noTipper --- ");
+          noTipper++;
           }
         @Override public void tipperAccepts() {
-          System.err.println(" --- tipperAccepts --- ");
+          //System.err.println(" --- tipperAccepts --- ");
           table.col("Project", project);
           table.col("File", currentFileName);
           table.col("Absolute Path",CurrentData.absolutePath);
@@ -94,11 +99,12 @@ public abstract class Traversal implements Selfie<Traversal> {
           table.col("Parents",tipper.tipperGroup().parents().size());
           }
         @Override public void tipperRejects() {
-          System.err.println(" --- tipperRejects --- ");
-          System.err.println(currentFileName);
+          //System.err.println(" --- tipperRejects --- ");
+          //System.err.println(currentFileName);
+          tipReject++;
           }
         @Override public void tipperTip()     {
-          System.err.println(" --- tipperTip --- ");
+          //System.err.println(" --- tipperTip --- ");
           table.col("Tipper Class",tip.tipperClass + "");
           table.col("Tip Highlight (from)",tip.highlight.from + "");
           table.col("Tip Highlight (to)",tip.highlight.to + "");
@@ -109,14 +115,14 @@ public abstract class Traversal implements Selfie<Traversal> {
           table.col("Tip lastComponent", cCamelCase.lastComponent(tip.tipperClass + "") + "");
           }
         @Override public void tipPrune()      {
-          System.err.println(" --- tipPrune --- ");
+          //System.err.println(" --- tipPrune --- ");
           }
         @Override public void tipRewrite()    {
-          System.err.println(" --- tipRewrite --- ");
+          //System.err.println(" --- tipRewrite --- ");
           table.nl();
           }
         @Override public void end(){
-          System.err.println(" --- End Tippization --- ");
+          //System.err.println(" --- End Tippization --- ");
         }
        });
   public String project;

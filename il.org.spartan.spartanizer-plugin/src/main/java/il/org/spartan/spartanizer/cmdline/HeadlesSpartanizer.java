@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** __ this class you can spartanize a directory easily. Or you can extends this
+/** This class you can spartanize a directory easily. Or you can extends this
  * class and configure it to fit to your own needs.
  * @author oran1248
  * @author Matteo Orru'
@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
 public class HeadlesSpartanizer extends GrandVisitor {
   
   @External(alias = "cp", value = "copy file") @SuppressWarnings("CanBeFinal") boolean copy;
-  static Table table;
+  static Table summaryTable;
   static Table tippersTable;
   static HeadlesSpartanizer hs;
   JavaProductionFilesVisitor v;
@@ -40,7 +40,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
   }
 
   private void goAll() {
-    //notify.beginBatch();
+    notify.beginBatch();
     CurrentData.locations.stream().forEach(λ -> {
       CurrentData.location = λ; 
       go(λ);
@@ -57,7 +57,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
     /**/
   }
   protected static void tearDown() {
-    //table.close();
+    //summaryTable.close();
   }
   @SuppressWarnings("static-method") 
   protected boolean spartanize(@SuppressWarnings("unused") final File __) {
@@ -76,75 +76,82 @@ public class HeadlesSpartanizer extends GrandVisitor {
   }
   
   public final void go(final String dirPath) {
-    setUp();
+    //setUp();
     (new GrandVisitor(new String[] {dirPath}) {
       {
         listen(new Tapper() {
           @Override public void beginBatch(){
-            System.err.println(" --- Begin Batch Process --- ");
+            //System.err.println(" --- Begin Batch Process --- ");
             tippersTable = new Table("tippers" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
             if(Traversal.table == null)
               Traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
+            
+            System.err.println("----------------------->" + outputFolder);
+            return;
           }
           @Override public void beginFile() {
-            System.err.println("Begin " + CurrentData.fileName);
+            //System.err.println("Begin " + CurrentData.fileName);
+            traversals.traversal.notify.begin();
             tippersTable.col("Project",CurrentData.location);
             tippersTable.col("File",CurrentData.fileName);
             tippersTable.nl();
           }
           @Override public void beginLocation() {
-            System.err.println("Begin " + CurrentData.location);
+            // System.err.println("Begin " + CurrentData.location);
           }
           @Override public void endBatch() {
-            System.err.println(" --- End Batch Process --- ");
+            //System.err.println(" --- End Batch Process --- ");
             Traversal.table.close();
             done();
           }
           @Override public void endFile() {
-            System.err.println("End " + CurrentData.fileName);
+            //System.err.println("End " + CurrentData.fileName);
+            traversals.traversal.notify.end();
           }
           @Override public void endLocation() {
-            System.err.println("End " + CurrentData.location);
+            //System.err.println("End " + CurrentData.location);
           }
         });
       }
       protected void done() {
         summarize(CurrentData.location,CurrentData.before,CurrentData.after);
-        //tippersTable.close();
+        //summaryTable.close();
       }     
       void summarize(String project, String before, String after) {
         summarize(project,asCu(before),asCu(after)); 
       }
       public void summarize(final String project, final ASTNode before, final ASTNode after) {
         initializeWriter();
-        table//
+        summaryTable//
             .col("Project", project)//
             .col("File", CurrentData.fileName)//
             .col("Path", CurrentData.relativePath);
         reportCUMetrics(before, "before");
         reportCUMetrics(after, "after");
-        table.nl();
+        summaryTable.nl();
       }
       @SuppressWarnings({ "rawtypes", "unchecked" })
       void reportCUMetrics(final ASTNode ¢, final String id) {
         for (final NamedFunction f : functions())
-          table.col(f.name() + "-" + id, f.function().run(¢));
+          summaryTable.col(f.name() + "-" + id, f.function().run(¢));
       }
       void initializeWriter() {
-        if (table == null)
-          table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" 
+        System.err.println("------------------------------->" + outputFolder);
+        if (summaryTable == null)
+          summaryTable = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" 
                         + corpus, outputFolder);
       }
       @Override public void visitFile(final File f) {
         CurrentData.fileName = f.getName();
         traversals.traversal.fileName = f.getName();
         traversals.traversal.project = CurrentData.location;
-        traversals.traversal.notify.begin();
+        
         notify.beginFile();
         try {
           CurrentData.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
+          CurrentData.absolutePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
         } catch (IOException ¢) {
           ¢.printStackTrace();
         }
@@ -174,7 +181,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         return (CompilationUnit) makeAST.COMPILATION_UNIT.from(before);
       }
     }).visitAll(astVisitor());
-    tearDown();
+    //tearDown();
   }
   
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
