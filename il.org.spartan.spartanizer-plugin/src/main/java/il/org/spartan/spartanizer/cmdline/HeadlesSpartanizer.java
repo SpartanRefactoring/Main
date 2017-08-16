@@ -26,6 +26,8 @@ import il.org.spartan.utils.*;
 public class HeadlesSpartanizer extends GrandVisitor {
   
   @External(alias = "cp", value = "copy file") @SuppressWarnings("CanBeFinal") boolean copy;
+  @External(alias = "u", value = "unique") @SuppressWarnings("CanBeFinal") boolean unique;
+
   static Table summaryTable;
   static Table tippersTable;
   static HeadlesSpartanizer hs;
@@ -35,7 +37,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
-    //System.err.println(CurrentData.locations.size());
     hs.goAll();
   }
 
@@ -56,7 +57,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
     /**/
   }
   protected static void tearDown() {
-    //summaryTable.close();
+    /**/
   }
   @SuppressWarnings("static-method") 
   protected boolean spartanize(@SuppressWarnings("unused") final File __) {
@@ -86,9 +87,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
             if(Traversal.table == null)
               Traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
-            
-            //System.err.println("----------------------->" + outputFolder);
-            return;
+             return;
           }
           @Override public void beginFile() {
             //System.err.println("Begin " + CurrentData.fileName);
@@ -116,7 +115,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
       }
       protected void done() {
         summarize(CurrentData.location,CurrentData.before,CurrentData.after);
-        //summaryTable.close();
       }     
       void summarize(String project, String before, String after) {
         summarize(project,asCu(before),asCu(after)); 
@@ -137,7 +135,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
           summaryTable.col(f.name() + "-" + id, f.function().run(¢));
       }
       void initializeWriter() {
-        //System.err.println("------------------------------->" + outputFolder);
         if (summaryTable == null)
           summaryTable = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" 
                         + corpus, outputFolder);
@@ -165,12 +162,20 @@ public class HeadlesSpartanizer extends GrandVisitor {
         }
         notify.endFile();
       }
-      protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
+      protected void analyze(final String before, final String after) {
         try {
-          if(copy){
+          if(copy && !unique){
             Path pathname = Paths.get(outputFolder + File.separator + Paths.get(CurrentData.relativePath).getParent());
             if (!Files.exists(pathname)) new File(pathname + "").mkdirs();
             FileUtils.writeToFile(outputFolder + File.separator + CurrentData.relativePath , after);
+          } else if (copy && unique) {
+            /* */
+            Path pathBefore = Paths.get(outputFolder + File.separator + "before.java");
+            Path pathAfter = Paths.get(outputFolder + File.separator + "after.java");
+            if (!Files.exists(pathBefore)) new File(pathBefore + "").mkdirs();
+            FileUtils.writeToFile(pathBefore + "" , before);
+            if (!Files.exists(pathAfter)) new File(pathAfter + "").mkdirs();
+            FileUtils.writeToFile(pathAfter + "" , after);
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
