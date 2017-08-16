@@ -35,17 +35,16 @@ public class HeadlesSpartanizer extends GrandVisitor {
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
-    System.err.println(CurrentData.locations.size());
+    //System.err.println(CurrentData.locations.size());
     hs.goAll();
   }
 
   private void goAll() {
-    notify.beginBatch();
+    System.err.println("eccolo!");
     CurrentData.locations.stream().forEach(λ -> {
       CurrentData.location = λ; 
       go(λ);
     });
-    notify.endBatch();
   }
   
   public HeadlesSpartanizer(final String[] args){
@@ -88,7 +87,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
               Traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
             
-            System.err.println("----------------------->" + outputFolder);
+            //System.err.println("----------------------->" + outputFolder);
             return;
           }
           @Override public void beginFile() {
@@ -102,7 +101,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
             // System.err.println("Begin " + CurrentData.location);
           }
           @Override public void endBatch() {
-            //System.err.println(" --- End Batch Process --- ");
+            System.err.println(" --- End Batch Process --- ");
             Traversal.table.close();
             done();
           }
@@ -138,7 +137,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
           summaryTable.col(f.name() + "-" + id, f.function().run(¢));
       }
       void initializeWriter() {
-        System.err.println("------------------------------->" + outputFolder);
+        //System.err.println("------------------------------->" + outputFolder);
         if (summaryTable == null)
           summaryTable = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" 
                         + corpus, outputFolder);
