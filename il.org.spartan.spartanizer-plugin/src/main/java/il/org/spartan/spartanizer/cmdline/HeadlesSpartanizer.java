@@ -34,7 +34,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
   JavaProductionFilesVisitor v;
   TextualTraversals traversals = new TextualTraversals();
   CurrentData data = new CurrentData();
-  PrintWriter beforeWriter;
+  static PrintWriter beforeWriter, afterWriter;
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
@@ -171,27 +171,36 @@ public class HeadlesSpartanizer extends GrandVisitor {
               new File(pathname + "").mkdirs();
             FileUtils.writeToFile(outputFolder + File.separator + CurrentData.relativePath , after);
           } else if (copy && unique) {
-            
-            Path pathBefore = Paths.get(outputFolder);
-            if (Files.notExists(pathBefore)) 
-              new File(pathBefore + File.separator + "before.java").mkdirs();
-            
-            if (beforeWriter == null) 
-              beforeWriter = new PrintWriter(pathBefore +  File.separator + "before.java");
-            beforeWriter.append(before);
-            beforeWriter.flush();
-            
-            Path pathAfter = Paths.get(outputFolder);
-            if (Files.notExists(pathAfter)) 
-              new File(pathAfter + File.separator + "after.java").mkdirs();
-            FileUtils.writeToFile2(pathAfter  + File.separator + "after.java" , after);
-            
+            writeBeforeAfter(before, after);
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
           ¢.printStackTrace();
         }
       }
+      private void writeBeforeAfter(final String before, final String after) throws FileNotFoundException {
+        if (beforeWriter == null) 
+          beforeWriter = new PrintWriter(outputFolder +  File.separator + "before" + ".java");
+        writeFile(before, "before", beforeWriter);
+        if (afterWriter == null) 
+          afterWriter = new PrintWriter(outputFolder +  File.separator + "after" + ".java");
+        writeFile(after, "after", afterWriter);
+      }
+      @SuppressWarnings({ "resource" })
+      private void writeFile(final String before, final String name, PrintWriter writer) throws FileNotFoundException {
+        Path path = Paths.get(outputFolder);
+        if (Files.notExists(path)) 
+          new File(path + File.separator + name + ".java").mkdirs();
+        //initializeBeforeWriter(name, writer, path);
+        writer.append(before);
+        writer.flush();
+      }
+      
+      private void initializeWriter(final String name, PrintWriter writer, Path path) throws FileNotFoundException {
+        if (beforeWriter == null) 
+          beforeWriter = new PrintWriter(path +  File.separator + name + ".java");
+      }
+     
       CompilationUnit asCu(final String before) {
         return (CompilationUnit) makeAST.COMPILATION_UNIT.from(before);
       }
@@ -199,6 +208,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
     //tearDown();
   }
   
+
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
