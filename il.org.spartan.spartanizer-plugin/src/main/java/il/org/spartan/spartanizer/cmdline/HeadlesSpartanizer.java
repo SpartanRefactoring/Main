@@ -34,6 +34,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
   JavaProductionFilesVisitor v;
   TextualTraversals traversals = new TextualTraversals();
   CurrentData data = new CurrentData();
+  PrintWriter beforeWriter;
   
   public static void main(final String[] args){
     hs = new HeadlesSpartanizer(args);
@@ -78,6 +79,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
   public final void go(final String dirPath) {
     //setUp();
     (new GrandVisitor(new String[] {dirPath}) {
+      
       {
         listen(new Tapper() {
           @Override public void beginBatch(){
@@ -143,7 +145,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
         CurrentData.fileName = f.getName();
         traversals.traversal.fileName = f.getName();
         traversals.traversal.project = CurrentData.location;
-        
         notify.beginFile();
         try {
           CurrentData.relativePath = Paths.get(f.getCanonicalPath()).subpath(Paths.get(inputFolder).getNameCount(), Paths.get(f.getCanonicalPath()).getNameCount()) + "";
@@ -166,19 +167,29 @@ public class HeadlesSpartanizer extends GrandVisitor {
         try {
           if(copy && !unique){
             Path pathname = Paths.get(outputFolder + File.separator + Paths.get(CurrentData.relativePath).getParent());
-            if (!Files.exists(pathname)) new File(pathname + "").mkdirs();
+            if (!Files.exists(pathname)) 
+              new File(pathname + "").mkdirs();
             FileUtils.writeToFile(outputFolder + File.separator + CurrentData.relativePath , after);
           } else if (copy && unique) {
-            /* */
-            Path pathBefore = Paths.get(outputFolder + File.separator + "before.java");
-            Path pathAfter = Paths.get(outputFolder + File.separator + "after.java");
-            if (!Files.exists(pathBefore)) new File(pathBefore + "").mkdirs();
-            FileUtils.writeToFile(pathBefore + "" , before);
-            if (!Files.exists(pathAfter)) new File(pathAfter + "").mkdirs();
-            FileUtils.writeToFile(pathAfter + "" , after);
+            
+            Path pathBefore = Paths.get(outputFolder);
+            if (Files.notExists(pathBefore)) 
+              new File(pathBefore + File.separator + "before.java").mkdirs();
+            
+            if (beforeWriter == null) 
+              beforeWriter = new PrintWriter(pathBefore +  File.separator + "before.java");
+            beforeWriter.append(before);
+            beforeWriter.flush();
+            
+            Path pathAfter = Paths.get(outputFolder);
+            if (Files.notExists(pathAfter)) 
+              new File(pathAfter + File.separator + "after.java").mkdirs();
+            FileUtils.writeToFile2(pathAfter  + File.separator + "after.java" , after);
+            
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
+          ¢.printStackTrace();
         }
       }
       CompilationUnit asCu(final String before) {
