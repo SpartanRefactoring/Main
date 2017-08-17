@@ -180,13 +180,13 @@ public class HeadlesSpartanizer extends GrandVisitor {
       }
       private void writeBeforeAfter(final String before, final String after) throws FileNotFoundException {
         if (beforeWriter == null) 
-          beforeWriter = new PrintWriter(outputFolder +  File.separator + "before" + ".java");
+          beforeWriter = new PrintWriter(outputFolder +  File.separator + CurrentData.location + "-" + "before" + ".java");
         writeFile(before, "before", beforeWriter);
         if (afterWriter == null) 
-          afterWriter = new PrintWriter(outputFolder +  File.separator + "after" + ".java");
+          afterWriter = new PrintWriter(outputFolder +  File.separator + CurrentData.location + "-" + "after" + ".java");
         writeFile(after, "after", afterWriter);
       }
-      @SuppressWarnings({ "resource" })
+      @SuppressWarnings("unused")
       private void writeFile(final String before, final String name, PrintWriter writer) throws FileNotFoundException {
         Path path = Paths.get(outputFolder);
         if (Files.notExists(path)) 
@@ -196,6 +196,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         writer.flush();
       }
       
+      @SuppressWarnings("unused")
       private void initializeWriter(final String name, PrintWriter writer, Path path) throws FileNotFoundException {
         if (beforeWriter == null) 
           beforeWriter = new PrintWriter(path +  File.separator + name + ".java");
