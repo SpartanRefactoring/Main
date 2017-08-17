@@ -123,6 +123,8 @@ public abstract class Traversal implements Selfie<Traversal> {
           }
         @Override public void end(){
           //System.err.println(" --- End Tippization --- ");
+          System.err.println("tipReject:\t" + tipReject);
+          System.err.println("noTipper:\t" + tipReject);
         }
        });
   public String project;

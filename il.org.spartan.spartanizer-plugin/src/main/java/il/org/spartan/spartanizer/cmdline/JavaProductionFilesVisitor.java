@@ -70,12 +70,10 @@ interface template  {
   
   public JavaProductionFilesVisitor(String[] args) {
     List<String> extract = External.Introspector.extract(args(args), this);
-    //System.err.println("extract.size:\t" + extract.get(0));
     current = new Current(extract);
   }
 
   private String[] args(String[] args) {
-    //System.err.println("---->" + args);
     return args != null && args.length != 0 ? args : defaultArguments;
   }
   
