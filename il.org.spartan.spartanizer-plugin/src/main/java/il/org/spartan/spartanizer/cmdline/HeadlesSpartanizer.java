@@ -27,6 +27,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
   
   @External(alias = "cp", value = "copy file") @SuppressWarnings("CanBeFinal") boolean copy;
   @External(alias = "u", value = "unique") @SuppressWarnings("CanBeFinal") boolean unique;
+  @External(alias = "s", value = "statistics") @SuppressWarnings("CanBeFinal") boolean stats;
 
   static Table summaryTable;
   static Table tippersTable;
@@ -42,57 +43,25 @@ public class HeadlesSpartanizer extends GrandVisitor {
   }
 
   private void goAll() {
-    System.err.println("eccolo!");
     CurrentData.locations.stream().forEach(λ -> {
       CurrentData.location = λ; 
       go(λ);
     });
-  }
-  
-  public HeadlesSpartanizer(final String[] args){
-    super(args);
-  }
-  public HeadlesSpartanizer() {
-  }
-  protected void setUp() {
-    /**/
-  }
-  protected static void tearDown() {
-    /**/
-  }
-  @SuppressWarnings("static-method") 
-  protected boolean spartanize(@SuppressWarnings("unused") final File __) {
-    return true;
-  }
-  @SuppressWarnings("static-method") protected ASTVisitor astVisitor() {
-    return new ASTVisitor() {/**/};
-  }
-  protected String perform(final String fileContent) {
-    return fixedPoint(fileContent);
-  }
-  
-  
-  static void reset() {
-    //
+    notify.endBatch();
   }
   
   public final void go(final String dirPath) {
-    //setUp();
+    setUp();
     (new GrandVisitor(new String[] {dirPath}) {
       
       {
         listen(new Tapper() {
           @Override public void beginBatch(){
-            //System.err.println(" --- Begin Batch Process --- ");
-            tippersTable = new Table("tippers" //Table.classToNormalizedFileName(Table.class) 
-                  + "-" + corpus, outputFolder);
-            if(Traversal.table == null)
-              Traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
-                  + "-" + corpus, outputFolder);
-             return;
+            System.err.println(" --- Begin Batch Process --- ");
+            initializeWriter();
           }
           @Override public void beginFile() {
-            //System.err.println("Begin " + CurrentData.fileName);
+            System.err.println("Begin " + CurrentData.fileName);
             traversals.traversal.notify.begin();
             tippersTable.col("Project",CurrentData.location);
             tippersTable.col("File",CurrentData.fileName);
@@ -103,11 +72,11 @@ public class HeadlesSpartanizer extends GrandVisitor {
           }
           @Override public void endBatch() {
             System.err.println(" --- End Batch Process --- ");
-            Traversal.table.close();
             done();
           }
           @Override public void endFile() {
             //System.err.println("End " + CurrentData.fileName);
+            summarize(CurrentData.location,CurrentData.before,CurrentData.after);
             traversals.traversal.notify.end();
           }
           @Override public void endLocation() {
@@ -116,13 +85,19 @@ public class HeadlesSpartanizer extends GrandVisitor {
         });
       }
       protected void done() {
-        summarize(CurrentData.location,CurrentData.before,CurrentData.after);
+//        summarize(CurrentData.location,CurrentData.before,CurrentData.after);
+        finalizeWriters();
       }     
+      private void finalizeWriters() {
+        Traversal.table.close();
+        tippersTable.close();
+        summaryTable.close();
+      }
       void summarize(String project, String before, String after) {
         summarize(project,asCu(before),asCu(after)); 
       }
       public void summarize(final String project, final ASTNode before, final ASTNode after) {
-        initializeWriter();
+        //initializeWriter();
         summaryTable//
             .col("Project", project)//
             .col("File", CurrentData.fileName)//
@@ -137,6 +112,11 @@ public class HeadlesSpartanizer extends GrandVisitor {
           summaryTable.col(f.name() + "-" + id, f.function().run(¢));
       }
       void initializeWriter() {
+        if(tippersTable == null)
+          tippersTable = new Table("tippers" + "-" + corpus, outputFolder);
+        System.err.println(Traversal.table == null);
+        if(Traversal.table == null)
+          Traversal.table = new Table("tippers2" + "-" + corpus, outputFolder);
         if (summaryTable == null)
           summaryTable = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" 
                         + corpus, outputFolder);
@@ -228,4 +208,30 @@ public class HeadlesSpartanizer extends GrandVisitor {
   public final String fixedPoint(final String from) {
     return traversals.fixed(from);
   }
+  
+  public HeadlesSpartanizer(final String[] args){
+    super(args);
+  }
+  protected void setUp() {
+    initializeWriters();
+    notify.beginBatch();
+  }
+  private void initializeWriters() {
+    
+  }
+
+  protected void tearDown() {
+    notify.endBatch();
+  }
+  @SuppressWarnings("static-method") 
+  protected boolean spartanize(@SuppressWarnings("unused") final File __) {
+    return true;
+  }
+  @SuppressWarnings("static-method") protected ASTVisitor astVisitor() {
+    return new ASTVisitor() {/**/};
+  }
+  protected String perform(final String fileContent) {
+    return fixedPoint(fileContent);
+  }
+ 
 }

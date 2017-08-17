@@ -126,7 +126,7 @@ interface template  {
           notify.endLocation();
         }
         );
-    notify.endBatch();
+    //notify.endBatch();
   }
 
   public void visitFile(final File f) {
