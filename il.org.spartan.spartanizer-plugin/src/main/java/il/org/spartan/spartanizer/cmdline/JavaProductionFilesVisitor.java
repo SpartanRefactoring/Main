@@ -148,14 +148,11 @@ interface template  {
   }
 
   protected void visitLocation() {
-    //notify.beginLocation();
     current.data.locationName = system.folder2File(current.data.locationPath = inputFolder + File.separator + current.data.location); 
     new FilesGenerator(".java").from(current.data.locationPath)
-                               .forEach(λ -> {//notify.beginFile();
-                               visitFile(current.data.file = λ);
-                               //notify.endFile();
+                               .forEach(λ -> {
+                                 visitFile(current.data.file = λ);
                                });
-    //notify.endLocation();
   }
 
   void collect(final String javaCode) {
