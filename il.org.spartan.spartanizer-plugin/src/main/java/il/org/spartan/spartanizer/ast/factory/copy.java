@@ -51,7 +51,4 @@ public enum copy {
   public static <N extends ASTNode> Collection<N> of(final Collection<N> ¢) {
     return ¢.stream().map(copy::of).collect(toList());
   }
-  public static Expression ofWhileExpression(final WhileStatement ¢) {
-    return of(expression(¢));
-  }
 }

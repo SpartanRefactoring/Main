@@ -97,13 +97,13 @@ public interface CFG {
             chainReturn(b);
           }
         }
-        void leaf(ASTNode node) {
-          if (!isIllegalLeaf(node)) {
-            beginnings.of(node).add(node);
-            ends.of(node).add(node);
+        void leaf(ASTNode n) {
+          if (!isIllegalLeaf(n)) {
+            beginnings.of(n).add(n);
+            ends.of(n).add(n);
           }
         }
-        boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode node) {
+        boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode n) {
           // TOO Roth: complete
           return false;
         }
