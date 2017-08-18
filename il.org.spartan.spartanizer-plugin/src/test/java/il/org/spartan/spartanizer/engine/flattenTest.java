@@ -6,7 +6,7 @@
 package il.org.spartan.spartanizer.engine;
 
 import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.spartanizer.engine.parse.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

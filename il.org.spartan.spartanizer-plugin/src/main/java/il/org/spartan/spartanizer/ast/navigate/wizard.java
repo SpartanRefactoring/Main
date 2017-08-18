@@ -138,17 +138,17 @@ public interface wizard {
   static ASTNode ast(final String javaSnippet) {
     switch (GuessedContext.find(javaSnippet)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
-        return into.cu(javaSnippet);
+        return parse.cu(javaSnippet);
       case EXPRESSION_LOOK_ALIKE:
-        return into.e(javaSnippet);
+        return parse.e(javaSnippet);
       case METHOD_LOOK_ALIKE:
-        return into.m(javaSnippet);
+        return parse.m(javaSnippet);
       case OUTER_TYPE_LOOKALIKE:
-        return into.t(javaSnippet);
+        return parse.t(javaSnippet);
       case STATEMENTS_LOOK_ALIKE:
-        return into.s(javaSnippet);
+        return parse.s(javaSnippet);
       case BLOCK_LOOK_ALIKE:
-        return az.astNode(the.firstOf(statements(az.block(into.s(javaSnippet)))));
+        return az.astNode(the.firstOf(statements(az.block(parse.s(javaSnippet)))));
       default:
         for (final int guess : as.intArray(ASTParser.K_EXPRESSION, ASTParser.K_STATEMENTS, ASTParser.K_CLASS_BODY_DECLARATIONS,
             ASTParser.K_COMPILATION_UNIT)) {

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.spartanizer.engine.parse.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;

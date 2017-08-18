@@ -16,12 +16,12 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 11-11-16 */
 public class Issue0818 {
   static final InfixExpressionConcatentateCompileTime tipper = new InfixExpressionConcatentateCompileTime();
-  static final InfixExpression ie01 = into.i("\"a\" + \"b\"");
-  static final InfixExpression ie02 = into.i("\"a\" + runTimeValue");
-  static final InfixExpression ie03 = into.i("\"a\" * \"b\"");
-  static final InfixExpression ie04 = into.i("\"a\" + b + \"c\"");
-  static final InfixExpression ie05 = into.i("b + \"a\"");
-  static final InfixExpression ie06 = into.i("\"a\" + \"b\" + c");
+  static final InfixExpression ie01 = parse.i("\"a\" + \"b\"");
+  static final InfixExpression ie02 = parse.i("\"a\" + runTimeValue");
+  static final InfixExpression ie03 = parse.i("\"a\" * \"b\"");
+  static final InfixExpression ie04 = parse.i("\"a\" + b + \"c\"");
+  static final InfixExpression ie05 = parse.i("b + \"a\"");
+  static final InfixExpression ie06 = parse.i("\"a\" + \"b\" + c");
 
   @Test @SuppressWarnings("static-method") public void a() {
     azzert.that("ab", is(az.stringLiteral(tipper.replacement(ie01)).getLiteralValue()));

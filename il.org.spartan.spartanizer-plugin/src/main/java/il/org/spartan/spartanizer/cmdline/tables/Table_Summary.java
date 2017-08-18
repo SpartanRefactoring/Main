@@ -61,7 +61,7 @@ public class Table_Summary extends NanoTable {
           ¢.accept(new AnnotationCleanerVisitor());
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
-          logAfterSpartanization(into.cu(spartanzied));
+          logAfterSpartanization(parse.cu(spartanzied));
           analyze.apply(spartanzied);
         } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           forget.em(__);

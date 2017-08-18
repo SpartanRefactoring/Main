@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.utils;
 
 import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.spartanizer.engine.parse.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -112,7 +112,7 @@ public final class SubjectTest {
     azzert.that(subject.pair(e("a*B"), e("c*d")).to(REMAINDER), iz("a * B % (c * d)"));
   }
   @Test public void subjectOperands() {
-    final Expression e = into.e("2 + a <b");
+    final Expression e = parse.e("2 + a <b");
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);
@@ -135,7 +135,7 @@ public final class SubjectTest {
     assert subject.operands(hop.operands(copy.of(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
   }
   @Test public void subjectOperandsWithParenthesis() {
-    final Expression e = into.e("(2 + a) * b");
+    final Expression e = parse.e("(2 + a) * b");
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);

@@ -12,13 +12,13 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings("static-method")
 public class cantTipTest {
   @Test public void testNullPrecedingFragmentInTerminalScopeStatement() {
-    assert cantTip.declarationInitializerStatementTerminatingScope(findFirst.forStatement(into.s("{for(;;){}}")));
-    assert cantTip.declarationInitializerStatementTerminatingScope(findFirst.whileStatement(into.s("{while(true){}}")));
+    assert cantTip.declarationInitializerStatementTerminatingScope(findFirst.forStatement(parse.s("{for(;;){}}")));
+    assert cantTip.declarationInitializerStatementTerminatingScope(findFirst.whileStatement(parse.s("{while(true){}}")));
   }
   @Test public void testRemoveoRedundantIfInFor() {
-    assert !cantTip.removeRedundantIf(findFirst.forStatement(into.s("{for(;;){if(true){}}}")));
+    assert !cantTip.removeRedundantIf(findFirst.forStatement(parse.s("{for(;;){if(true){}}}")));
   }
   @Test public void testRemoveRedundantIfInWhile() {
-    assert !cantTip.remvoeRedundantIf(findFirst.whileStatement(into.s("{while(true){if(true){}}}")));
+    assert !cantTip.remvoeRedundantIf(findFirst.whileStatement(parse.s("{while(true){if(true){}}}")));
   }
 }

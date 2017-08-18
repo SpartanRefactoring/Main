@@ -5,7 +5,7 @@
  * @since Oct 7, 2016 */
 package il.org.spartan.spartanizer.ast.engine;
 
-import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.spartanizer.engine.parse.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 

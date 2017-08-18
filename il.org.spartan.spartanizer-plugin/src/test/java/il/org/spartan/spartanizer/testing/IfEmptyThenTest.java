@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class IfEmptyThenTest {
-  private static final Statement INPUT = into.s("{if (b) ; else ff();}");
+  private static final Statement INPUT = parse.s("{if (b) ; else ff();}");
   private static final IfStatement IF = findFirst.ifStatement(INPUT);
   private static final IfEmptyThen TIPPER = new IfEmptyThen();
 

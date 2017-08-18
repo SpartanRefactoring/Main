@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0294 {
-  final Statement s = into.s("A a=new A();for (A b: g.f(a,true))sum+=b;");
+  final Statement s = parse.s("A a=new A();for (A b: g.f(a,true))sum+=b;");
   final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class).in(s);
   final BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class).in(s);
 

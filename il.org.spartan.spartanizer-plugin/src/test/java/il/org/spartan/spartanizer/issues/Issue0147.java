@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2016-11-26 */
 @SuppressWarnings("static-method")
 public class Issue0147 {
-  private static final Statement INPUT = into.s("for(int i=0; i<5;++i){x.fuanc(); continue;}");
-  private static final Statement INPUT1 = into.s("for(int i=0; i<5;++i){x.fuanc(); if(bool) continue;}");
+  private static final Statement INPUT = parse.s("for(int i=0; i<5;++i){x.fuanc(); continue;}");
+  private static final Statement INPUT1 = parse.s("for(int i=0; i<5;++i){x.fuanc(); if(bool) continue;}");
   private static final ForStatement FOR = findFirst.forStatement(INPUT);
   private static final ForStatement FOR1 = findFirst.forStatement(INPUT1);
   private static final ForRedundantContinue TIPPER = new ForRedundantContinue();

@@ -77,7 +77,7 @@ public class Issue0239 {
                 stays();
   }
   @Test public void a$04() {
-    final Block block = az.block(into.s( //
+    final Block block = az.block(parse.s( //
         "  final int i2 = Integer.valueOf(2);\n" + //
             "  f1(i1,i2);\n"//
     )); //
