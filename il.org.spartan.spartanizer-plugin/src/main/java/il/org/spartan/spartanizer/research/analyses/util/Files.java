@@ -9,6 +9,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.analyses.analyzers.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** File utils

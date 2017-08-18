@@ -20,7 +20,7 @@ import junit.framework.*;
  * @since 2017-07-04 */
 public class JavaProductionFilesVisitor {
   protected static final String[] defaultArguments = as.array("..");
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
+  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected static String corpus = "";
   @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = system.tmp;
   @External(alias = "s", value = "silent") protected boolean silent;
@@ -50,7 +50,7 @@ interface template  {
   interface B{}
 }
   /**
-   * TODO Matteo Orru': document class 
+   * Current contains the information on the current file being under analysis 
    * 
    * @author Yossi Gil
    * @since 2017-07-16
@@ -58,18 +58,9 @@ interface template  {
 
   public static class Current {
     public Current(List<String> locations) {
-      this.locations = locations.subList(0, locations.size());
+      this.data.locations = locations.subList(0, locations.size());
     }
-    public File file;
-    public String fileName;
-    public String absolutePath;
-    public String location;
-    public BufferedWriter out;
-    public final List<String> locations;
-    public ASTVisitor visitor;
-    public String relativePath;
-    public String locationPath;
-    public String locationName;
+    public CurrentData data = new CurrentData();
   }
   
   
@@ -79,12 +70,10 @@ interface template  {
   
   public JavaProductionFilesVisitor(String[] args) {
     List<String> extract = External.Introspector.extract(args(args), this);
-    System.err.println("extract.size:\t" + extract.get(0));
     current = new Current(extract);
   }
 
   private String[] args(String[] args) {
-    System.err.println("---->" + args);
     return args != null && args.length != 0 ? args : defaultArguments;
   }
   
@@ -128,11 +117,13 @@ interface template  {
 
   public void visitAll(final ASTVisitor ¢) {
     notify.beginBatch();
-    current.visitor = ¢;
-    current.locations.forEach(
+    current.data.visitor = ¢;
+    current.data.locations.forEach(
         λ -> {
-          current.location = λ;
+          current.data.location = λ;
+          notify.beginLocation();
           visitLocation();
+          notify.endLocation();
         }
         );
     notify.endBatch();
@@ -142,8 +133,8 @@ interface template  {
     notify.beginFile();
     if (Utils.isProductionCode(f) && productionCode(f))
       try {
-        current.absolutePath = f.getAbsolutePath();
-        current.relativePath = f.getPath();
+        current.data.absolutePath = f.getAbsolutePath();
+        current.data.relativePath = f.getPath();
         collect(FileUtils.read(f));
       } catch (final IOException ¢) {
         note.io(¢, "File = " + f);
@@ -153,14 +144,15 @@ interface template  {
 
   private void collect(final CompilationUnit ¢) {
     if (¢ != null)
-      ¢.accept(current.visitor);
+      ¢.accept(current.data.visitor);
   }
 
   protected void visitLocation() {
-    notify.beginLocation();
-    current.locationName = system.folder2File(current.locationPath = inputFolder + File.separator + current.location); 
-    new FilesGenerator(".java").from(current.locationPath).forEach(λ -> visitFile(current.file = λ));
-    notify.endLocation();
+    current.data.locationName = system.folder2File(current.data.locationPath = inputFolder + File.separator + current.data.location); 
+    new FilesGenerator(".java").from(current.data.locationPath)
+                               .forEach(λ -> {
+                                 visitFile(current.data.file = λ);
+                               });
   }
 
   void collect(final String javaCode) {

@@ -33,6 +33,7 @@ public class TraversalImplementation extends Traversal {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
+        notify.setNode(); 
         if (Ranger.disjoint(¢, range))
           return false;
         if (!check(¢) || disabling.on(¢))
@@ -40,13 +41,17 @@ public class TraversalImplementation extends Traversal {
         findTip(¢);
         if (getTip() == null)
           return true;
-        tips.stream().filter(λ -> Ranger.overlap(λ.span, getTip().span)).collect(toList()).forEach(λ -> {
-          setAuxiliaryTip(λ);
-          tips.remove(λ);
-          notify.tipPrune();
-        });
-        if (getTip() != null)
+        tips.stream()
+            .filter(λ -> Ranger.overlap(λ.span, getTip().span))
+                                        .collect(toList())
+                                        .forEach(λ -> {
+                                              setAuxiliaryTip(λ);
+                                              tips.remove(λ);
+                                              notify.tipPrune();
+                                        });
+        if (getTip() != null){
           tips.add(getTip());
+        }
         return true;
       }
       @Override protected void initialization(final ASTNode ¢) {
@@ -86,6 +91,7 @@ public class TraversalImplementation extends Traversal {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
+        notify.setNode();
         if (Ranger.disjoint(¢, range))
           return false;
         if (!check(¢) || disabling.on(¢))
@@ -120,6 +126,7 @@ public class TraversalImplementation extends Traversal {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         setNode(n);
+        notify.setNode();
         if (!check(n) || disabling.on(n))
           return true;
         final Tipper<N> $ = findTipper(n);
@@ -142,6 +149,7 @@ public class TraversalImplementation extends Traversal {
       final Tipper<N> $ = findTipper(¢);
       if ($ == null)
         return;
+      //System.err.println($);
       assert $.tip(¢) != null;
       setTip($.tip(¢));
     }, (Consumer<Exception>) note::bug);

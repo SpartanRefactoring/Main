@@ -26,7 +26,7 @@ public class MetricsTable extends NominalTables {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.location);
+            done(current.data.location);
           }
         });
       }

@@ -25,7 +25,7 @@ public class Table_Summary_Unspartanized extends Table_Summary {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.location);
+            done(current.data.location);
           }
         });
       }

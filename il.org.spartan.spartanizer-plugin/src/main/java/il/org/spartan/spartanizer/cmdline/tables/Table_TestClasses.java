@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.cmdline.tables.visitors.*;
 import il.org.spartan.tables.*;
 
-/** TODO Matteo Orru': document class {@link }
+/** Write the number of test methods
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}
  * @since 2017-02-21 */
 public class Table_TestClasses extends Table_SummaryForPaper {

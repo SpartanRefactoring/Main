@@ -1,10 +1,11 @@
-package il.org.spartan.spartanizer.research.analyses;
+package il.org.spartan.spartanizer.research.analyses.analyzers;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.utils.*;
 
 /** Class for averaging whatever about methods before and after refactoring +
