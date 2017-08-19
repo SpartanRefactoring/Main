@@ -78,7 +78,14 @@ public interface CFG {
           delegateBeginnings(node, left);
           selfEnds(node);
           chain(left, right);
-          chainShallow(right,node);
+          chainShallow(right, node);
+        }
+        @Override public void endVisit(ArrayAccess node) {
+          Expression arr = node.getArray(), index = node.getIndex();
+          delegateBeginnings(node, arr);
+          selfEnds(node);
+          chain(arr, index);
+          chainShallow(index, node);
         }
         @Override public void endVisit(VariableDeclarationStatement node) {
           List<VariableDeclarationFragment> fs = step.fragments(node);
@@ -125,13 +132,16 @@ public interface CFG {
           List<Expression> es = an.empty.list();
           es.addAll(step.arguments(node));
           Expression e = step.expression(node);
-          if (e != null)
+          if (e != null) {
+            delegateBeginnings(node, e);
             es.add(e);
+          }
           if (es.isEmpty()) {
             leaf(node);
             return;
           }
-          delegateBeginnings(node, es.get(0));
+          if (e == null)
+            delegateBeginnings(node, es.get(0));
           selfEnds(node);
           chain(es);
           chainShallow(es.get(es.size() - 1), node);
