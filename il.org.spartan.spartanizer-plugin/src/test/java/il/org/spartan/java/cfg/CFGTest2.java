@@ -85,8 +85,9 @@ public class CFGTest2 {
         .outs("g()").containsOnly("new X[f()][g()]");
   }
   @Test public void arrayInitializer() {
-    cfg("new X[] {f(), g()}") //
-        .outs("f()").containsOnly("g()") //
+    cfg("new X[] {{f()}, g()}") //
+        .outs("f()").containsOnly("{f()}") //
+        .outs("{f()}").containsOnly("g()") //
         .outs("g()").containsOnly("new X[] {f(), g()}");
   }
   @Test public void assignment() {
@@ -210,5 +211,16 @@ public class CFGTest2 {
         + "  {g();}\n" //
         + "}") //
             .outs("x").containsOnly("g()");
+  }
+  @Test public void empty() {
+    cfg("" //
+        + "void f(int x) {\n" //
+        + "  g();\n" //
+        + "  ;\n" //
+        + "  {}\n" //
+        + "  {;}\n" //
+        + "  h();\n" //
+        + "}") //
+            .outs("g()").containsOnly("h()");
   }
 }

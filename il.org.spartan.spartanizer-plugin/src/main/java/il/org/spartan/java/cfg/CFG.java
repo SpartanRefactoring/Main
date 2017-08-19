@@ -53,6 +53,9 @@ public interface CFG {
         @Override public void endVisit(SimpleName node) {
           leaf(node);
         }
+        @Override public void endVisit(NumberLiteral node) {
+          leaf(node);
+        }
         @Override public void endVisit(InfixExpression node) {
           Expression left = node.getLeftOperand(), right = node.getRightOperand();
           delegateBeginnings(node, left);
@@ -78,6 +81,8 @@ public interface CFG {
         }
         @Override public void endVisit(Block node) {
           List<Statement> ss = step.statements(node);
+          if (ss.isEmpty())
+            return;
           delegateBeginnings(node, ss.get(0));
           delegateEnds(node, ss.get(ss.size() - 1));
           chain(ss);
@@ -85,7 +90,7 @@ public interface CFG {
         @Override public void endVisit(MethodDeclaration node) {
           List<SingleVariableDeclaration> ps = step.parameters(node);
           Block b = step.body(node);
-          if (ps == null || ps.isEmpty()) {
+          if (ps.isEmpty()) {
             chainReturn(b);
             return;
           }
@@ -96,6 +101,52 @@ public interface CFG {
             chain(ps.get(ps.size() - 1), b);
             chainReturn(b);
           }
+        }
+        @Override public void endVisit(MethodInvocation node) {
+          List<Expression> es = an.empty.list();
+          es.addAll(step.arguments(node));
+          Expression e = step.expression(node);
+          if (e != null)
+            es.add(e);
+          if (es.isEmpty()) {
+            leaf(node);
+            return;
+          }
+          delegateBeginnings(node, es.get(0));
+          selfEnds(node);
+          chain(es);
+          chainShallow(es.get(es.size() - 1), node);
+        }
+        @Override public void endVisit(ExpressionStatement node) {
+          Expression e = step.expression(node);
+          if (e == null)
+            return;
+          delegateBeginnings(node, e);
+          delegateEnds(node, e);
+        }
+        @Override public void endVisit(ArrayInitializer node) {
+          List<Expression> es = step.expressions(node);
+          if (es.isEmpty()) {
+            leaf(node);
+            return;
+          }
+          chain(es);
+          chainShallow(es.get(es.size() - 1), node);
+        }
+        @SuppressWarnings("unchecked") @Override public void endVisit(ArrayCreation node) {
+          List<Expression> es = an.empty.list();
+          es.addAll(node.dimensions());
+          ArrayInitializer i = node.getInitializer();
+          if (i != null)
+            es.add(i);
+          if (es.isEmpty()) {
+            leaf(node);
+            return;
+          }
+          delegateBeginnings(node, es.get(0));
+          selfEnds(node);
+          chain(es);
+          chainShallow(es.get(es.size() - 1), node);
         }
         void leaf(ASTNode n) {
           if (!isIllegalLeaf(n)) {
