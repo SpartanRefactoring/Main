@@ -91,6 +91,8 @@ public class CFGTest2 {
         .outs("g()").containsOnly("new X[] {f(), g()}");
   }
   @Test public void assignment() {
+    int x = 0, y, z = 0;
+    x += y = z;
     cfg("x += y = z") //
         .outs("x").containsOnly("y") //
         .outs("y").containsOnly("z") //
