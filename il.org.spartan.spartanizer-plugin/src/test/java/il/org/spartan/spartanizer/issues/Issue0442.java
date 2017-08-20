@@ -7,8 +7,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -46,7 +46,7 @@ public class Issue0442 {
     azzert.that(precedence.of(e("a+b")), is(5));
     azzert.that(abbreviate.it(t("List<Set<Integer>> __;")), equalTo("iss"));
     azzert.that(compute.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), iz("1/2*3/4*5*6/7/8/9"));
-    azzert.that(metrics.literals(i("3+4+5+6")), hasItem("6"));
+    azzert.that(Metrics.literals(i("3+4+5+6")), hasItem("6"));
   }
   @Test public void vanilla01() {
     assert true;

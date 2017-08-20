@@ -79,10 +79,8 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
       l1.addAll(l2);
       return l1;
     }));
-    if (needPreliminaryStringSafe($)) {
-      final ASTNode ¢ = current;
-      $.add(0, make.from(¢).emptyString());
-    }
+    if (needPreliminaryStringSafe($))
+      $.add(0, make.from(current).emptyString());
     final ASTNode ¢1 = current;
     return $.isEmpty() ? make.from(¢1).emptyString() : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(Operator.PLUS);
   }

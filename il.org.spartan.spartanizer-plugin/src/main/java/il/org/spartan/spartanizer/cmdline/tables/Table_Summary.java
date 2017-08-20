@@ -24,7 +24,7 @@ public class Table_Summary extends NanoTable {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.data.location);
+            done(CurrentData.location);
           }
         });
       }

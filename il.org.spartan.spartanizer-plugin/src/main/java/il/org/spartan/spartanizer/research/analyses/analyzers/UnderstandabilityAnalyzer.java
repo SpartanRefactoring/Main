@@ -6,16 +6,15 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.research.analyses.analyzers.*;
 
 /** Class to measure Understandability metrics in a method
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 public class UnderstandabilityAnalyzer extends IntegerMetricalAnalyzer {
   @Override protected int metric(final ASTNode ¢) {
-    return metrics.subtreeUnderstandability(¢);
+    return Metrics.subtreeUnderstandability(¢);
   }
   public static void main(final String[] args) {
     try (Scanner reader = new Scanner(System.in)) {

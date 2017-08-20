@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** TODO YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also
@@ -69,17 +70,17 @@ public class switchBranch {
   }
   public int depth() {
     if (depth < 0)
-      depth = metrics.depth(statements);
+      depth = Metrics.depth(statements);
     return depth;
   }
   public int statementsNum() {
     if (numOfStatements < 0)
-      numOfStatements = metrics.countStatements(statements);
+      numOfStatements = Metrics.countStatements(statements);
     return numOfStatements;
   }
   public int nodesNum() {
     if (numOfNodes < 0)
-      numOfNodes = metrics.nodes(statements);
+      numOfNodes = Metrics.nodes(statements);
     return numOfNodes;
   }
   public int casesNum() {
@@ -88,10 +89,10 @@ public class switchBranch {
   public int sequencerLevel() {
     if (sequencerLevel >= 0)
       return sequencerLevel;
-    final int $ = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT),
-        re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT),
-        br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
-        co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = $ + re + br + co;
+    final int $ = Metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT),
+        re = Metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT),
+        br = Metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
+        co = Metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = $ + re + br + co;
     assert sum > 0;
     return sequencerLevel = sum > $ && sum > re && sum > br && sum > co ? 0 : $ > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
   }

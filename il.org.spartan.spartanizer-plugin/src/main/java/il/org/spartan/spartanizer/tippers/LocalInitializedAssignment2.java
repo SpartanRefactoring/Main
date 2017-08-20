@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.utils.*;
@@ -34,7 +35,7 @@ public final class LocalInitializedAssignment2 extends LocalInitializedStatement
       return null;
     final Expression newInitializer = copy.of(from(a));
     final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - Metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);

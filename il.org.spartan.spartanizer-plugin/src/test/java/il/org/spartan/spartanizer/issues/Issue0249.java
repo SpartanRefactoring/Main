@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -55,6 +55,6 @@ public class Issue0249 {
     azzert.that(az.block(parse.s("{}")), iz("{}"));
   }
   public int metricUnderTest(final String javaStatements) {
-    return metrics.horizontalComplexity(javaStatements == null ? null : parse.s(javaStatements));
+    return Metrics.horizontalComplexity(javaStatements == null ? null : parse.s(javaStatements));
   }
 }

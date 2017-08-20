@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.factory.make.*;
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 

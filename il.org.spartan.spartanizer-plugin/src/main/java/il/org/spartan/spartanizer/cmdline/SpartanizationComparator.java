@@ -1,9 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.tide.*;
-
 import java.io.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
@@ -13,6 +10,8 @@ import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metric;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -70,7 +69,7 @@ public enum SpartanizationComparator {
       }
     });
   }
-  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider(final MethodDeclaration ¢, final String id) {
+  static void consider(final MethodDeclaration ¢, final String id) {
     ¢.getStartPosition();
     System.out.println(¢.getName());
     //
@@ -79,28 +78,28 @@ public enum SpartanizationComparator {
         .put("Path", presentSourcePath) //
         .put("Status", id);
     //
-    for (final NamedFunction f : functions())
-      writer.put(f.name(), f.function().run(¢));
+    for (final Metric.Integral f : metrics())
+      writer.put(f.name, f.apply(¢));
     writer.nl();
   }
 
   static String presentFile;
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider2(final MethodDeclaration ¢) {
+  static void consider2(final MethodDeclaration ¢) {
     writer.put("File", presentFile).put("Name", ¢.getName()).put("Path", presentSourcePath);
-    for (final NamedFunction f : functions())
-      writer.put(f.name(), f.function().run(¢));
+    for (final Metric f : metrics())
+      writer.put(f.name, f.compute(¢));
     writer.nl();
   }
-  public static NamedFunction<?>[] functions() {
+  public static Metric.Integral[] metrics() {
     return as.array(//
-        m("length - ", metrics::length), //
-        m("essence - ", λ -> Essence.of(λ + "").length()), //
-        m("tokens - ", λ -> metrics.tokens(λ + "")), //
-        m("nodes - ", countOf::nodes), //
-        m("body - ", metrics::bodySize), //
-        m("methodDeclaration - ", λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-        m("tide - ", λ -> clean(λ + "").length()));//
+        Metric.named("length - ").of(Metrics::length), //
+        Metric.named("essence - ").of(Metrics::essence), //
+        Metric.named("tokens - ").of( Metrics::tokens), //
+        Metric.named("nodes - ").of( countOf::nodes), //
+        Metric.named("body - ").of( Metrics::bodySize), //
+        Metric.named("methodDeclaration - ").of(Metrics::statements),
+        Metric.named("tide - ").of(Metrics::tide));//
   }
   static void consider(final MethodDeclaration ¢) {
     final Type type = ¢.getReturnType2();
@@ -143,28 +142,5 @@ public enum SpartanizationComparator {
     ;
     writer.nl();
   }
-  static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
-    return new NamedFunction<>(name, f);
-  }
 
-  @FunctionalInterface
-  public interface ToInt<R> {
-    int run(R r);
-  }
-
-  public static class NamedFunction<R> {
-    final String name;
-    final ToInt<R> f;
-
-    NamedFunction(final String name, final ToInt<R> f) {
-      this.name = name;
-      this.f = f;
-    }
-    public String name() {
-      return name;
-    }
-    public ToInt<R> function() {
-      return f;
-    }
-  }
 }

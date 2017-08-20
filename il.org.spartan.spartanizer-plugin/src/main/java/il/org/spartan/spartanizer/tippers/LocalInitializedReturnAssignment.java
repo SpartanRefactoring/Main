@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
@@ -35,7 +36,7 @@ public final class LocalInitializedReturnAssignment extends $FragmentAndStatemen
       return null;
     final Expression newReturnValue = copy.of(from(a));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - Metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);

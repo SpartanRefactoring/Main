@@ -15,6 +15,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -204,7 +205,7 @@ public enum misc {
     return positivePrefixLength($) >= positivePrefixLength(misc.invert($));
   }
   static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
+    return Metrics.length($.getExpression(), then($));
   }
   static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)

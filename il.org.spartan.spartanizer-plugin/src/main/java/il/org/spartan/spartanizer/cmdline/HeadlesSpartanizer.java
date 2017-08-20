@@ -4,13 +4,15 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.function.*;
+
 import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.SpartanizationComparator.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.plugin.*;
@@ -130,10 +132,10 @@ public class HeadlesSpartanizer extends GrandVisitor {
         reportCUMetrics(after, "after");
         summaryTable.nl();
       }
-      @SuppressWarnings({ "rawtypes", "unchecked" })
+      @SuppressWarnings({ })
       void reportCUMetrics(final ASTNode ¢, final String id) {
-        for (final NamedFunction f : functions())
-          summaryTable.col(f.name() + "-" + id, f.function().run(¢));
+        for (final Metric.Integral f : functions())
+          summaryTable.col(f.name + "-" + id, f.apply(¢));
       }
       void initializeWriter() {
         if (summaryTable == null)
@@ -208,19 +210,15 @@ public class HeadlesSpartanizer extends GrandVisitor {
   }
   
 
-  static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
-    return new NamedFunction<>(name, f);
-  }
-  
-  public static NamedFunction<?>[] functions() {
+  public static Metric.Integral[] functions() {
     return as.array(//
-        m("length - ", metrics::length), //
-        m("essence - ", λ -> Essence.of(λ + "").length()), //
-        m("tokens - ", λ -> metrics.tokens(λ + "")), //
-        m("nodes - ", countOf::nodes), //
-        m("body - ", metrics::bodySize), //
-        m("methodDeclaration - ", λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-        m("tide - ", λ -> clean(λ + "").length()));//
+        Metric.named("length - ").of((ToIntFunction<ASTNode>) Metrics::length), //
+        Metric.named("essence - ").of((ToIntFunction<ASTNode>) λ -> Essence.of(λ + "").length()), //
+        Metric.named("tokens - ").of((ToIntFunction<ASTNode>) λ -> Metrics.tokens(λ + "")), //
+        Metric.named("nodes - ").of((ToIntFunction<ASTNode>) countOf::nodes), //
+        Metric.named("body - ").of((ToIntFunction<ASTNode>) Metrics::bodySize), //
+        Metric.named("methodDeclaration - ").of((ToIntFunction<ASTNode>) λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+        Metric.named("tide - ").of((ToIntFunction<ASTNode>) λ -> clean(λ + "").length()));//
   }
   
   public final String fixedPoint(final String from) {

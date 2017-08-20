@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:

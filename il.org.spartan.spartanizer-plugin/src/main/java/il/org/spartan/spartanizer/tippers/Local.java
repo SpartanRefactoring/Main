@@ -11,6 +11,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** TODO dormaayn: document class
@@ -43,13 +44,13 @@ public abstract class Local extends FragmentAmongFragments {
   }
   protected int eliminationSaving() {
     final List<VariableDeclarationFragment> live = remainingSiblings();
-    final int $ = metrics.size(declaration);
+    final int $ = Metrics.size(declaration);
     if (live.isEmpty())
       return $;
     final VariableDeclarationStatement newParent = copy.of(declaration);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
-    return $ - metrics.size(newParent);
+    return $ - Metrics.size(newParent);
   }
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .

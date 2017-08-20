@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -311,8 +312,8 @@ public interface wizard {
         return false;
       }
     });
-    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
-        || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
+    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> Metrics.countStatements(x) > Metrics.countStatements(y)
+        || Metrics.countStatements(x) == Metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
   static Message[] getProblems(final ASTNode $) {
     return !($ instanceof CompilationUnit) ? null : ((CompilationUnit) $).getMessages();
@@ -399,7 +400,7 @@ public interface wizard {
     return $;
   }
   static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
+    return Metrics.length($.getExpression(), then($));
   }
   static String problems(final ASTNode ¢) {
     return !(¢ instanceof CompilationUnit) ? "???" : problems((CompilationUnit) ¢);

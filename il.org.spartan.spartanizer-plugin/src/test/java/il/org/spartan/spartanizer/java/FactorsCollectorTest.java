@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 

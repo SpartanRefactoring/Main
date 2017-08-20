@@ -345,7 +345,7 @@ public interface Utils {
    * @since 2014-05-31 */
   @SuppressWarnings("static-method")
   class TEST {
-    public static Integer[] intToIntegers(final int... is) {
+    public static Integer[] intToIntFunctionegers(final int... is) {
       final Integer[] $ = new Integer[is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)
         $[¢] = fluent.ly.box.it(is[¢]);
@@ -417,9 +417,9 @@ public interface Utils {
       assertArrayEquals(as.array("A", "C", "B", "D"), ss);
     }
     @Test public void swapTypicalCase() {
-      final Integer[] $ = intToIntegers(29, 1, 60);
+      final Integer[] $ = intToIntFunctionegers(29, 1, 60);
       swap($, 0, 1);
-      assertArrayEquals(intToIntegers(1, 29, 60), $);
+      assertArrayEquals(intToIntFunctionegers(1, 29, 60), $);
     }
   }
 }

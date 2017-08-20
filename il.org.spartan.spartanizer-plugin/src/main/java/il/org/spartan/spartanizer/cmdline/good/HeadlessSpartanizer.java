@@ -39,7 +39,6 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   }
   @Override public void apply() {
     try {
-      System.out.println(Arrays.toString(ReportGenerator.metricsMap().get("methods")));
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + File.separator + name + ".before.java", "before");
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + File.separator + name + ".after.java", "after");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".CSV", "metrics");

@@ -11,6 +11,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
@@ -45,7 +46,7 @@ public final class LocalInitializedUpdateAssignment extends $FragmentAndStatemen
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(op.assign2infix(o));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - Metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);

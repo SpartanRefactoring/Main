@@ -3,15 +3,16 @@ package il.org.spartan.spartanizer.cmdline.runnables;
 import static il.org.spartan.tide.*;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.library.Utils;
-import il.org.spartan.spartanizer.cmdline.runnables.ReportGenerator.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.plugin.*;
 
@@ -33,11 +34,15 @@ public interface ConfigurableReport {
     public static void addOutput(final ASTNode output) {
       getOutputList().add(output);
     }
-    @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
-          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, countOf::nodes), m("body" + id, metrics::bodySize),
-          m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-          m("tide" + id, λ -> clean(λ + "").length()));//
+    public static Metric.Integral[] functions(final String id) {
+      return as.array(Metric.named("length" + id).of((ToIntFunction<ASTNode>) λ -> (λ + "").length()),
+          Metric.named("essence" + id).of((ToIntFunction<ASTNode>) λ -> Essence.of(λ + "").length()),
+          Metric.named("tokens" + id).of((ToIntFunction<ASTNode>) λ -> Metrics.tokens(λ + "")),
+          Metric.named("nodes" + id).of((ToIntFunction<ASTNode>) countOf::nodes),
+          Metric.named("body" + id).of((ToIntFunction<ASTNode>) Metrics::bodySize),
+          Metric.named("methodDeclaration" + id).of((ToIntFunction<ASTNode>) λ -> az.methodDeclaration(λ) == null ? -1
+              : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+          Metric.named("tide" + id).of((ToIntFunction<ASTNode>) λ -> clean(λ + "").length()));//
     }
     public static String getFileName() {
       return reportFileName;
@@ -50,9 +55,6 @@ public interface ConfigurableReport {
     }
     public static List<ASTNode> getOutputList() {
       return outputList;
-    }
-    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
-      return new NamedFunction<>(name, f);
     }
     public static void setFileName(final String ¢) {
       reportFileName = ¢;
@@ -129,7 +131,7 @@ public interface ConfigurableReport {
       private int defaultValue() {
         return hashCode();
       }
-      @SuppressWarnings("boxing") int go() {
+      int go() {
         // listeners().push("Initializing the " + getFileName() + " report.");
         if (Settings.this.isRobustMode()) {
           listeners().pop("we dare do nothing in robust mode");
@@ -172,28 +174,24 @@ public interface ConfigurableReport {
         report().summaryFileName();
       }
       // running report
-      @SuppressWarnings({ "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode n) {
-        for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-          report().put(¢.name() + "1", ¢.function().run(i));
-          report().put(¢.name() + "2", ¢.function().run(n));
+      private void write(final ASTNode i, final ASTNode n) {
+        for (final Metric.Integral ¢ : ReportGenerator.metrics) {
+          report().put(¢.name + "1", ¢.apply(i));
+          report().put(¢.name + "2", ¢.apply(n));
         }
       }
-      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, final String id,
-          final BiFunction<Integer, Integer> bf) {
+      private void write(final ASTNode i, final ASTNode n, final String id, final ToDoubleFromTwoIntegers bf) {
         if (bf == null && id == null) {
           write(i, n);
           return;
         }
         assert bf != null;
         assert id != null;
-        as.list(ReportGenerator.Util.functions("")).forEach(λ -> report().put(id + λ.name(), bf.apply(λ.function().run(i), λ.function().run(n))));
+        as.list(ReportGenerator.metrics).forEach(λ -> report().put(id + λ.name, bf.apply(λ.apply(i), λ.apply(n))));
       }
-      @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-        String a; // TODO Matteo: to be converted to double or float? -- Matteo
-        for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-          a = Utils.p(¢.function().run(n1), ¢.function().run(n2));
-          report().put(id + ¢.name() + " %", a);
-        }
+      private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
+        for (final Metric.Integral ¢ : ReportGenerator.integralMetrics())
+          report().put(id + ¢.name + " %", Utils.p(¢.apply(n1), ¢.apply(n2)));
       }
     }
   }

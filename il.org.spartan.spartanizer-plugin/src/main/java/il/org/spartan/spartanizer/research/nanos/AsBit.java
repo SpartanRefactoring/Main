@@ -32,7 +32,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return "Casting a boolean into an int";
   }
   @Override public String technicalName() {
-    return "CastXFromBooleanToInt";
+    return "CastXFromBooleanToIntFunction";
   }
   @Override public String example() {
     return firstPattern(tippers);

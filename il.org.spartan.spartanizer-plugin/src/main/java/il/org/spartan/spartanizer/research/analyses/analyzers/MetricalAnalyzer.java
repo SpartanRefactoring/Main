@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.research.analyses.analyzers;
 
 import java.util.*;
 
-import il.org.spartan.spartanizer.research.analyses.analyzers.*;
-
 /** Class to count statement inside a method before and after refactoring +
  * patterning
  * @author Ori Marcovitch

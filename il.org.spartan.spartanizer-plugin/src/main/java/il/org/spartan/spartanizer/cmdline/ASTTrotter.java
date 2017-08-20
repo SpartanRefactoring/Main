@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.team.internal.ui.synchronize.*;
-
 import an.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.good.*;

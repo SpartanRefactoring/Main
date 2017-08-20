@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
@@ -53,7 +54,7 @@ public final class LocalInitializedIfAssignment extends $FragmentAndStatement//
     if (!i.canInlineinto(condition, from(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer).toCondition(condition);
-    if (i.replacedSize(newInitializer) > metrics.size(nextStatement, initializer))
+    if (i.replacedSize(newInitializer) > Metrics.size(nextStatement, initializer))
       return null;
     $.replace(initializer, newInitializer, g);
     i.inlineInto(then(newInitializer), newInitializer.getExpression());
