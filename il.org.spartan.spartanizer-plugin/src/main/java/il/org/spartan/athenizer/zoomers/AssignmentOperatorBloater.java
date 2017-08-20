@@ -50,7 +50,7 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
       return x;
     final CastExpression $ = x.getAST().newCastExpression();
     $.setType(x.getAST().newPrimitiveType(PrimitiveType.BYTE));
-    $.setExpression(make.parethesized(x));
+    $.setExpression(subject.operand(x).parenthesis());
     return $;
   }
   private static boolean validTypes(final Assignment ¢) {

@@ -69,8 +69,7 @@ interface template  {
   }
   
   public JavaProductionFilesVisitor(String[] args) {
-    List<String> extract = External.Introspector.extract(args(args), this);
-    current = new Current(extract);
+    current = new Current(External.Introspector.extract(args(args), this));
   }
 
   private String[] args(String[] args) {
@@ -150,9 +149,7 @@ interface template  {
   protected void visitLocation() {
     current.data.locationName = system.folder2File(current.data.locationPath = inputFolder + File.separator + current.data.location); 
     new FilesGenerator(".java").from(current.data.locationPath)
-                               .forEach(λ -> {
-                                 visitFile(current.data.file = λ);
-                               });
+                               .forEach(λ -> visitFile(current.data.file = λ));
   }
 
   void collect(final String javaCode) {

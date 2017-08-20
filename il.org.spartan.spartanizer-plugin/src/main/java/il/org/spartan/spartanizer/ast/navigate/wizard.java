@@ -30,6 +30,7 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
@@ -125,10 +126,10 @@ public interface wizard {
     return wizard.getPackageNameFromSource($.createAST(null));
   }
   static Expression addParenthesisIfNeeded(final Expression ¢) {
-    return !isParethesisNeeded(¢) ? ¢ : make.parethesized(¢);
+    return !isParethesisNeeded(¢) ? ¢ : subject.operand(¢).parenthesis();
   }
   static Expression applyDeMorgan(final InfixExpression $) {
-    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(toList())).to(op.negate(operator($)));
+    return subject.operands(hop.operands(flatten.of($)).stream().map(cons::not).collect(toList())).to(op.negate(operator($)));
   }
   /** Converts a string into an AST, depending on it's form, as determined
    * by @link{GuessedContext.find}.
@@ -326,7 +327,7 @@ public interface wizard {
         $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
       });
     });
-    return subject.append(subject.pair(the.firstOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
+    return Wizard.append(subject.pair(the.firstOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
   static String intToClassName(final int $) {
     try {
@@ -386,7 +387,7 @@ public interface wizard {
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
   static Expression parenthesize(final Expression ¢) {
-    return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
+    return iz.noParenthesisRequired(¢) ? copy.of(¢) : subject.operand(¢).parenthesis();
   }
   static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
@@ -451,11 +452,17 @@ public interface wizard {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = make.invert(s);
-    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
+    final IfStatement $ = cons.invert(s);
+    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(cons.invert($));
   }
   static boolean valid(final ASTNode ¢) {
     final CompilationUnit $ = az.compilationUnit(¢.getRoot());
     return $ == null || $.getProblems().length == 0;
+  }
+  static SimpleName newLowerCamelCase(final SimpleName old, final String s) {
+    return make.from(old).identifier(s.substring(0, 1).toLowerCase() + s.substring(1));
+  }
+  static SimpleName newLowerCamelCase(final SimpleName old, final Type t) {
+    return make.from(old).identifier((t + "").split("<")[0].substring(0, 1).toLowerCase() + (t + "").substring(1));
   }
 }

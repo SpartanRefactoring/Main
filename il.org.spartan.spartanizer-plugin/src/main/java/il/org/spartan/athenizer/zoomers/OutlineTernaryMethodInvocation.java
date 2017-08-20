@@ -51,7 +51,7 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
     arguments(whenTrue).add(i, copy.of(then($)));
     arguments(whenFalse).remove(i);
     arguments(whenFalse).add(i, copy.of(elze($)));
-    ret.replace(current, make.parethesized(subject.pair(whenTrue, whenFalse).toCondition(expression($))), g);
+    ret.replace(current, subject.operand(subject.pair(whenTrue, whenFalse).toCondition(expression($))).parenthesis(), g);
     return ret;
   }
 }

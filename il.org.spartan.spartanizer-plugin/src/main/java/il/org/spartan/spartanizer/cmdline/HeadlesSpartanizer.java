@@ -89,7 +89,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
             if(Traversal.table == null)
               Traversal.table = new Table("tippers2" //Table.classToNormalizedFileName(Table.class) 
                   + "-" + corpus, outputFolder);
-             return;
           }
           @Override public void beginFile() {
             //System.err.println("Begin " + CurrentData.fileName);
@@ -165,41 +164,40 @@ public class HeadlesSpartanizer extends GrandVisitor {
       }
       protected void analyze(final String before, final String after) {
         try {
-          if(copy && !unique){
+          if (!copy || unique) {
+            if (copy && unique)
+              writeBeforeAfter(before, after);
+          } else {
             Path pathname = Paths.get(outputFolder + File.separator + Paths.get(CurrentData.relativePath).getParent());
-            if (!Files.exists(pathname)) 
+            if (!Files.exists(pathname))
               new File(pathname + "").mkdirs();
-            FileUtils.writeToFile(outputFolder + File.separator + CurrentData.relativePath , after);
-          } else if (copy && unique) {
-            writeBeforeAfter(before, after);
+            FileUtils.writeToFile(outputFolder + File.separator + CurrentData.relativePath, after);
           }
          } catch (final FileNotFoundException ¢) {
           note.io(¢);
           ¢.printStackTrace();
         }
       }
-      private void writeBeforeAfter(final String before, final String after) throws FileNotFoundException {
+      void writeBeforeAfter(final String before, final String after) throws FileNotFoundException {
         if (beforeWriter == null) 
-          beforeWriter = new PrintWriter(outputFolder +  File.separator + CurrentData.location + "-" + "before" + ".java");
+          beforeWriter = new PrintWriter(outputFolder + File.separator + CurrentData.location + "-before.java");
         writeFile(before, "before", beforeWriter);
         if (afterWriter == null) 
-          afterWriter = new PrintWriter(outputFolder +  File.separator + CurrentData.location + "-" + "after" + ".java");
+          afterWriter = new PrintWriter(outputFolder + File.separator + CurrentData.location + "-after.java");
         writeFile(after, "after", afterWriter);
       }
-      @SuppressWarnings("unused")
-      private void writeFile(final String before, final String name, PrintWriter writer) throws FileNotFoundException {
+      @SuppressWarnings("unused") void writeFile(final String before, final String name, PrintWriter w) throws FileNotFoundException {
         Path path = Paths.get(outputFolder);
         if (Files.notExists(path)) 
           new File(path + File.separator + name + ".java").mkdirs();
         //initializeBeforeWriter(name, writer, path);
-        writer.append(before);
-        writer.flush();
+        w.append(before);
+        w.flush();
       }
       
-      @SuppressWarnings("unused")
-      private void initializeWriter(final String name, PrintWriter writer, Path path) throws FileNotFoundException {
+      @SuppressWarnings("unused") void initializeWriter(final String name, PrintWriter w, Path p) throws FileNotFoundException {
         if (beforeWriter == null) 
-          beforeWriter = new PrintWriter(path +  File.separator + name + ".java");
+          beforeWriter = new PrintWriter(p +  File.separator + name + ".java");
       }
      
       CompilationUnit asCu(final String before) {

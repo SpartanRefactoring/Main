@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** Expands terms of +/- expressions without reordering, e.g., convert
  * {@code a + (b+c+(d-e))} into {@code a+b+c+d-e}
@@ -25,10 +26,10 @@ public enum TermsExpander {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
   private static InfixExpression appendMinus(final Term ¢, final InfixExpression $) {
-    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
+    return ¢.negative() ? Wizard.append($, ¢.expression) : subject.pair($, ¢.expression).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
   }
   private static InfixExpression appendPlus(final Term t, final InfixExpression $) {
-    return t.positive() ? subject.append($, t.expression) : subject.pair($, t.expression).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
+    return t.positive() ? Wizard.append($, t.expression) : subject.pair($, t.expression).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
   private static Expression base(final List<Term> ts) {
     assert ts != null;

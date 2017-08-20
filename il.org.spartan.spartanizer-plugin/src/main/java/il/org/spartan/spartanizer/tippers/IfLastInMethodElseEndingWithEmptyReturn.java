@@ -33,7 +33,7 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<I
     final ReturnStatement $ = az.returnStatement(hop.lastStatement(elze(s)));
     return $ == null || $.getExpression() != null ? null : new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, make.emptyStatement(s), g);
+        r.replace($, atomic.emptyStatement(s), g);
       }
     };
   }

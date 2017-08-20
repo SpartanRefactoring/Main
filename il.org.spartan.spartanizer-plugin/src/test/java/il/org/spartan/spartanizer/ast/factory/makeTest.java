@@ -15,21 +15,21 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings("static-method") //
 public final class makeTest {
   @Test public void issue72me4xA() {
-    azzert.that(make.minus(parse.e("-x")), iz("x"));
+    azzert.that(cons.minus(parse.e("-x")), iz("x"));
   }
   @Test public void issue72me4xB() {
-    azzert.that(make.minus(parse.e("x")), iz("-x"));
+    azzert.that(cons.minus(parse.e("x")), iz("-x"));
   }
   @Test public void issue72me4xC() {
-    azzert.that(make.minus(parse.e("+x")), iz("-x"));
+    azzert.that(cons.minus(parse.e("+x")), iz("-x"));
   }
   @Test public void issue72me4xD() {
-    azzert.that(make.minus(parse.e("-x")), iz("x"));
+    azzert.that(cons.minus(parse.e("-x")), iz("x"));
   }
   @Test public void issue72me4xF() {
-    azzert.that(make.minus(parse.e("x")), iz("-x"));
+    azzert.that(cons.minus(parse.e("x")), iz("-x"));
   }
   @Test public void issue72me4xG() {
-    azzert.that(make.minus(parse.e("+x")), iz("-x"));
+    azzert.that(cons.minus(parse.e("+x")), iz("-x"));
   }
 }

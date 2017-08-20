@@ -40,8 +40,8 @@ public class Issue0072 {
     assert !i.hasExtendedOperands();
     assert iz.literal0(left(i));
     assert !iz.literal0(right(i));
-    azzert.that(make.minus(left(i)), iz("0"));
-    azzert.that(make.minus(right(i)), iz("-x"));
+    azzert.that(cons.minus(left(i)), iz("0"));
+    azzert.that(cons.minus(right(i)), iz("-x"));
     trimmingOf(s)//
         .gives("-x");
   }

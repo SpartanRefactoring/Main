@@ -20,7 +20,7 @@ public interface ZZZZ {
   /** A POJO including all parameters of a function.
    * @author Yossi Gil
    * @since 2017-07-25 */
-  @Target({ ElementType.TYPE })
+  @Target(ElementType.TYPE)
   @interface Operation {
   }
 

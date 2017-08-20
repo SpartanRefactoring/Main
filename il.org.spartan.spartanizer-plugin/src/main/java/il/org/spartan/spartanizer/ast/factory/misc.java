@@ -149,7 +149,7 @@ public enum misc {
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
   public static Expression parenthesize(final Expression ¢) {
-    return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
+    return iz.noParenthesisRequired(¢) ? copy.of(¢) : subject.operand(¢).parenthesis();
   }
   public static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = find.occurencesOf(s, id);

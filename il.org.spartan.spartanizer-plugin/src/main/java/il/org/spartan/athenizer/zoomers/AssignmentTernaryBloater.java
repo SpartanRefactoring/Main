@@ -39,7 +39,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     final ExpressionStatement e1 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o)));
     ExpressionStatement e2 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)));
     if (wizard.eq(left, then($)))
-      return pair(e2, null).toIf(make.notOf($.getExpression()));
+      return pair(e2, null).toIf(cons.not($.getExpression()));
     if (wizard.eq(left, elze($)))
       e2 = null;
     return pair(e1, e2).toIf($.getExpression());

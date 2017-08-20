@@ -53,7 +53,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
-    return subject.pair(literal != $ ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
+    return subject.pair(literal != $ ? main : cons.not(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert ?: into Boolean expression";

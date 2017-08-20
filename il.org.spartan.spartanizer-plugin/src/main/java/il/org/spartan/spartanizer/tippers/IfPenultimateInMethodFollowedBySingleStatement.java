@@ -32,14 +32,14 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
-    $.replace(deleteMe, make.emptyStatement(deleteMe), g);
+    $.replace(deleteMe, atomic.emptyStatement(deleteMe), g);
     remove.statement(nextStatement, $, g);
     final IfStatement newIf = copy.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
       lisp.removeLast(statements(block));
     else
-      newIf.setThenStatement(make.emptyStatement(newIf));
+      newIf.setThenStatement(atomic.emptyStatement(newIf));
     newIf.setElseStatement(copy.of(nextStatement));
     $.replace(s, newIf, g);
     remove.statement(nextStatement, $, g);

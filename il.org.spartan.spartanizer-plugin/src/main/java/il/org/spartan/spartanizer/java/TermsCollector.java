@@ -67,8 +67,8 @@ public final class TermsCollector {
   }
   private Void addMinusTerm(final Expression ¢) {
     assert ¢ != null;
-    final Expression $ = minus.peel(¢);
-    return minus.level(¢) % 2 != 0 ? collectPlusPrefix($) : collectMinusPrefix($);
+    final Expression $ = compute.peel(¢);
+    return compute.level(¢) % 2 != 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
   private Void addPlus(final Expression ¢) {
     assert ¢ != null;
@@ -78,8 +78,8 @@ public final class TermsCollector {
   }
   private Void addPlusTerm(final Expression ¢) {
     assert ¢ != null;
-    final Expression $ = minus.peel(¢);
-    return minus.level(¢) % 2 == 0 ? collectPlusPrefix($) : collectMinusPrefix($);
+    final Expression $ = compute.peel(¢);
+    return compute.level(¢) % 2 == 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
   private Void addPositiveTerm(final Expression ¢) {
     return isLeafTerm(¢) ? addPlusTerm(¢) : collectPlusNonLeaf(az.infixExpression(¢));

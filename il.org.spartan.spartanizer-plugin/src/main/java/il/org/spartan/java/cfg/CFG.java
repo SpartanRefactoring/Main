@@ -30,25 +30,25 @@ public interface CFG {
           return $;
         });
 
-        @Override public void preVisit(ASTNode n) {
-          if (isBreakTarget(n))
-            breakTarget.push(n);
-          if (isContinueTarget(n))
-            continueTarget.push(n);
-          if (isReturnTarget(n))
-            returnTarget.push(n);
-          if (iz.labeledStatement(n))
-            labelMap.put(((LabeledStatement) n).getLabel().getIdentifier(), n);
+        @Override public void preVisit(ASTNode ¢) {
+          if (isBreakTarget(¢))
+            breakTarget.push(¢);
+          if (isContinueTarget(¢))
+            continueTarget.push(¢);
+          if (isReturnTarget(¢))
+            returnTarget.push(¢);
+          if (iz.labeledStatement(¢))
+            labelMap.put(((LabeledStatement) ¢).getLabel().getIdentifier(), ¢);
         }
-        @Override public void postVisit(ASTNode n) {
-          if (isBreakTarget(n))
+        @Override public void postVisit(ASTNode ¢) {
+          if (isBreakTarget(¢))
             breakTarget.pop();
-          if (isContinueTarget(n))
+          if (isContinueTarget(¢))
             continueTarget.pop();
-          if (isReturnTarget(n))
+          if (isReturnTarget(¢))
             returnTarget.pop();
-          if (iz.labeledStatement(n))
-            labelMap.remove(((LabeledStatement) n).getLabel().getIdentifier());
+          if (iz.labeledStatement(¢))
+            labelMap.remove(((LabeledStatement) ¢).getLabel().getIdentifier());
         }
         @Override public void endVisit(SimpleName node) {
           leaf(node);
@@ -97,11 +97,11 @@ public interface CFG {
             chainReturn(b);
           }
         }
-        void leaf(ASTNode n) {
-          if (!isIllegalLeaf(n)) {
-            beginnings.of(n).add(n);
-            ends.of(n).add(n);
-          }
+        void leaf(ASTNode ¢) {
+          if (isIllegalLeaf(¢))
+            return;
+          beginnings.of(¢).add(¢);
+          ends.of(¢).add(¢);
         }
         boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode n) {
           // TOO Roth: complete
@@ -119,15 +119,15 @@ public interface CFG {
           else
             ends.of(n1).addAll(ends.of(n2));
         }
-        void selfBeginnings(ASTNode n) {
-          beginnings.of(n).add(n);
+        void selfBeginnings(ASTNode ¢) {
+          beginnings.of(¢).add(¢);
         }
-        void selfEnds(ASTNode n) {
-          ends.of(n).add(n);
+        void selfEnds(ASTNode ¢) {
+          ends.of(¢).add(¢);
         }
         void chain(List<? extends ASTNode> ns) {
-          for (int i = 0; i < ns.size() - 1; ++i)
-            chain(ns.get(i), ns.get(i + 1));
+          for (int ¢ = 0; ¢ < ns.size() - 1; ++¢)
+            chain(ns.get(¢), ns.get(¢ + 1));
         }
         void chain(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
@@ -140,17 +140,17 @@ public interface CFG {
         void chainReturn(ASTNode n) {
           ends.of(n).get().stream().forEach(λ -> outgoing.of(λ).add(returnTarget.peek()));
         }
-        boolean isBreakTarget(ASTNode n) {
-          return iz.isOneOf(n, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
+        boolean isBreakTarget(ASTNode ¢) {
+          return iz.isOneOf(¢, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
         }
-        boolean isContinueTarget(ASTNode n) {
-          return iz.isOneOf(n, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
+        boolean isContinueTarget(ASTNode ¢) {
+          return iz.isOneOf(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
         }
         boolean isReturnTarget(@SuppressWarnings("unused") ASTNode __) {
           return false;
         }
-        boolean isEmpty(ASTNode n) {
-          return beginnings.of(n).get().isEmpty();
+        boolean isEmpty(ASTNode ¢) {
+          return beginnings.of(¢).get().isEmpty();
         }
       });
   }
@@ -190,10 +190,10 @@ public interface CFG {
     Nodes getNodes(ASTNode ¢) {
       return property.get(¢, getClass().getCanonicalName() + "." + this, Nodes::new);
     }
-    Nodes nodes(ASTNode n) {
-      if (!property.has(n, getClass().getCanonicalName() + "." + this))
-        compute(az.bodyDeclaration(yieldAncestors.untilClass(BodyDeclaration.class).from(n)));
-      return getNodes(n);
+    Nodes nodes(ASTNode ¢) {
+      if (!property.has(¢, getClass().getCanonicalName() + "." + this))
+        compute(az.bodyDeclaration(yieldAncestors.untilClass(BodyDeclaration.class).from(¢)));
+      return getNodes(¢);
     }
 
     interface Of {

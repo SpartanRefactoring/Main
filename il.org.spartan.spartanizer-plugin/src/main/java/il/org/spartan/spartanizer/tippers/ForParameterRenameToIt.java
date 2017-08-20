@@ -12,6 +12,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.atomic;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -57,7 +58,7 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
     assert uses != null;
     if (uses.isEmpty())
       return null;
-    final SimpleName ¢ = make.newCent(d);
+    final SimpleName ¢ = atomic.newCent(d);
     return isNameDefined($, ¢) ? null : new Tip("Rename iterator '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename(n, ¢, $, r, g);

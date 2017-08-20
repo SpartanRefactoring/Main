@@ -23,6 +23,4 @@ public class CurrentData {
   public static String locationName;
   public static String before;
   public static String after;
-
-  public CurrentData() {}
 }

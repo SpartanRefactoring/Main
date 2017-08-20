@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.atomic;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
@@ -50,7 +51,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     return b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty() ? null
         : new Tip(description(c), myClass(), c.getException().getName(), c) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            misc.rename($, make.newCent($), c, r, g);
+            misc.rename($, atomic.newCent($), c, r, g);
           }
         };
   }

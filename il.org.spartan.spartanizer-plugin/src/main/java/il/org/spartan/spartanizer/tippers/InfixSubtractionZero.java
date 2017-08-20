@@ -27,7 +27,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   private static final long serialVersionUID = -0x1DD7EC059CC8417AL;
 
   private static List<Expression> minusFirst(final List<Expression> prune) {
-    return cons(make.minus(the.firstOf(prune)), chop(prune));
+    return cons(cons.minus(the.firstOf(prune)), chop(prune));
   }
   private static List<Expression> prune(final Collection<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
@@ -42,7 +42,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
       return make.from(first).literal(0);
     assert !$.isEmpty();
     if ($.size() == 1)
-      return !iz.literal0(first) ? first : make.minus(the.firstOf($));
+      return !iz.literal0(first) ? first : cons.minus(the.firstOf($));
     assert $.size() >= 2;
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }

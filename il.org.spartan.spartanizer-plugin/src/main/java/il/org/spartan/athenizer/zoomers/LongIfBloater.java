@@ -9,6 +9,7 @@ import il.org.spartan.athenizer.zoom.zoomers.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 
@@ -36,7 +37,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
   }
   private static Expression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
     final InfixExpression $ = subject.pair(¢.getRightOperand(), the.firstOf(extendedOperands(¢))).to(¢.getOperator());
-    subject.append($, step.extendedOperands(¢));
+    Wizard.append($, step.extendedOperands(¢));
     if (!$.extendedOperands().isEmpty())
       $.extendedOperands().remove(0);
     return $;

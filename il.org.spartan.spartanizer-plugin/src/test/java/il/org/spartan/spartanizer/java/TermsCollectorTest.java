@@ -12,6 +12,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 @SuppressWarnings("static-method")
@@ -253,7 +254,7 @@ public final class TermsCollectorTest {
     azzert.that(c.minus(), iz("[]"));
   }
   @Test public void test50() {
-    azzert.that(minus.peel(e("a*b")), iz("a*b"));
+    azzert.that(compute.peel(e("a*b")), iz("a*b"));
   }
   @Test public void test51() {
     c.collect(i("a*b+b*c"));

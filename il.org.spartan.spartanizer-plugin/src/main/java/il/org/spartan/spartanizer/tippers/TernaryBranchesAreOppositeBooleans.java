@@ -24,7 +24,7 @@ public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<Condi
 
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     final Expression $ = ¢.getElseExpression(), then = ¢.getThenExpression();
-    return wizard.eq($, truee) && wizard.eq(then, falsee) ? make.notOf(copy.of(¢.getExpression()))
+    return wizard.eq($, truee) && wizard.eq(then, falsee) ? cons.not(copy.of(¢.getExpression()))
         : wizard.eq($, falsee) && wizard.eq(then, truee) ? copy.of(¢.getExpression()) : null;
   }
 

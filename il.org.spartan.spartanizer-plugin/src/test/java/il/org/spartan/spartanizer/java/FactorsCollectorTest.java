@@ -177,7 +177,7 @@ public final class FactorsCollectorTest {
     azzert.that(c.dividers(), iz("[]"));
   }
   @Test public void test50() {
-    azzert.that(minus.peel(e("a*b")), iz("a*b"));
+    azzert.that(compute.peel(e("a*b")), iz("a*b"));
   }
   @Test public void test51() {
     c.collect(i("(a+b)*(b+c)"));

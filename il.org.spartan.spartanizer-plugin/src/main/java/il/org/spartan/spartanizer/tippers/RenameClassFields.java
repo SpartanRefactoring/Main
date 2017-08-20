@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
@@ -36,7 +37,7 @@ public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
       return null;
     final SimpleName $ = az.variableDeclrationFragment((ASTNode) d.fragments().get(0)).getName();
     assert $ != null;
-    final SimpleName ¢ = make.newLowerCamelCase($, (d.getType() + "").split("<")[0]);
+    final SimpleName ¢ = wizard.newLowerCamelCase($, (d.getType() + "").split("<")[0]);
     return ¢.getIdentifier().equals($.getIdentifier()) ? null : new Tip("Rename paraemter " + $ + " to  " + ¢, getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, ret, r, g);

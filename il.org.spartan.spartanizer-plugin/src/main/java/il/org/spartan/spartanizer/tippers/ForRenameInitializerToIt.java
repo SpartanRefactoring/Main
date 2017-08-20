@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.atomic;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -45,7 +46,7 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     final Statement body = $.getBody();
     if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor($, n))
       return null;
-    final SimpleName ¢ = make.newCent(x);
+    final SimpleName ¢ = atomic.newCent(x);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename(n, ¢, $, r, g);

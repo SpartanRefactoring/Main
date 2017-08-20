@@ -85,7 +85,7 @@ public abstract class Traversal implements Selfie<Traversal> {
           }
         @Override public void noTipper()      {
           //System.err.println(" --- noTipper --- ");
-          noTipper++;
+          ++noTipper;
           }
         @Override public void tipperAccepts() {
           //System.err.println(" --- tipperAccepts --- ");
@@ -101,7 +101,7 @@ public abstract class Traversal implements Selfie<Traversal> {
         @Override public void tipperRejects() {
           //System.err.println(" --- tipperRejects --- ");
           //System.err.println(currentFileName);
-          tipReject++;
+          ++tipReject;
           }
         @Override public void tipperTip()     {
           //System.err.println(" --- tipperTip --- ");
