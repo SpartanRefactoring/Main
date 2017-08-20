@@ -122,7 +122,7 @@ public class ReportGenerator implements ConfigurableReport {
         .put("δ Statement", Utils.d(nm1.statements(), nm2.statements()))//
         .put("% Statement", Utils.p(nm1.statements(), nm2.statements()));//
   }
-  public static void reportMetrics(final ASTNodeMetrics nm, final String id, final String key) {
+  public static void reportMetrics(final ASTNodeMetrics nm, final String key) {
     report(key)//
         .put("Nodes", nm.nodes())//
         .put("Body", nm.body())//
@@ -132,7 +132,7 @@ public class ReportGenerator implements ConfigurableReport {
         .put("Essence", nm.essence())//
         .put("Statements", nm.statements());//
   }
-  public static void reportRatio(final ASTNodeMetrics nm, final String id, final String key) {
+  public static void reportRatio(final ASTNodeMetrics nm, final String key) {
     report(key) //
         // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))
         // //
@@ -208,7 +208,7 @@ public class ReportGenerator implements ConfigurableReport {
     for (final Metric.Integral ¢ : ReportGenerator.metrics)
       Util.report("metrics").put(id + ¢.name + " %", i.apply(¢.apply(n1), ¢.apply(n2)) + "");
   }
-  public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
+  public static void writeRatio(final ASTNode n1, @SuppressWarnings("unused") final ASTNode __, final String id,
       final ToDoubleFromTwoIntegers i) {
     final int ess = Util.find("essence").apply(n1), tide = Util.find("tide").apply(n1), body = Util.find("body").apply(n1),
         nodes = Util.find("nodes").apply(n1);

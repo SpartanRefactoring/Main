@@ -99,7 +99,7 @@ public class Metrics{
     ¢.accept(new ASTVisitor() {
       @Override public void postVisit(final ASTNode n) {
         if (n != null && n.getParent() != null && n != ¢)
-          n.getParent().setProperty("Depth", Integer.max(property.getInt(n.getParent(),"Depth"), (Integer) n.getProperty("Depth") + 1));
+          property.setInt(n.getParent(),"Depth", Math.max(property.getInt(n.getParent(),"Depth"), property.getInt(n,"Depth") + 1));
       }
       @Override public void preVisit(@SuppressWarnings("hiding") final ASTNode ¢) {
         if (¢ != null)

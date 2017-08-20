@@ -141,7 +141,7 @@ interface template  {
     notify.endFile();
   }
 
-  private void collect(final CompilationUnit ¢) {
+  private static void collect(final CompilationUnit ¢) {
     if (¢ != null)
       ¢.accept(CurrentData.visitor);
   }
