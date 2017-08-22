@@ -69,6 +69,11 @@ public class HeadlesSpartanizer extends GrandVisitor {
           }
           @Override public void beginLocation() {
             // System.err.println("Begin " + CurrentData.location);
+            try {
+              initializeBeforeAfter();
+            } catch (FileNotFoundException x) {
+              x.printStackTrace();
+            }
           }
           @Override public void endBatch() {
             System.err.println(" --- End Batch Process --- ");
@@ -81,11 +86,11 @@ public class HeadlesSpartanizer extends GrandVisitor {
           }
           @Override public void endLocation() {
             //System.err.println("End " + CurrentData.location);
+            finalizeBeforeAfter();
           }
         });
       }
       protected void done() {
-//        summarize(CurrentData.location,CurrentData.before,CurrentData.after);
         finalizeWriters();
       }     
       private void finalizeWriters() {
@@ -97,7 +102,6 @@ public class HeadlesSpartanizer extends GrandVisitor {
         summarize(project,asCu(before),asCu(after)); 
       }
       public void summarize(final String project, final ASTNode before, final ASTNode after) {
-        //initializeWriter();
         summaryTable//
             .col("Project", project)//
             .col("File", CurrentData.fileName)//
@@ -151,6 +155,11 @@ public class HeadlesSpartanizer extends GrandVisitor {
               new File(pathname + "").mkdirs();
             FileUtils.writeToFile(outputFolder + File.separator + CurrentData.relativePath , after);
           } else if (copy && unique) {
+            try {
+              initializeBeforeAfter();
+            } catch (FileNotFoundException x) {
+              x.printStackTrace();
+            }
             writeBeforeAfter(before, after);
           }
          } catch (final FileNotFoundException ¢) {
@@ -158,13 +167,21 @@ public class HeadlesSpartanizer extends GrandVisitor {
           ¢.printStackTrace();
         }
       }
+      void finalizeBeforeAfter() {
+        beforeWriter.close();
+        beforeWriter = null;
+        afterWriter.close();
+        afterWriter = null;
+      }
       private void writeBeforeAfter(final String before, final String after) throws FileNotFoundException {
+        writeFile(before, "before", beforeWriter);
+        writeFile(after, "after", afterWriter);
+      }
+      void initializeBeforeAfter() throws FileNotFoundException {
         if (beforeWriter == null) 
           beforeWriter = new PrintWriter(outputFolder +  File.separator + CurrentData.location + "-" + "before" + ".java");
-        writeFile(before, "before", beforeWriter);
         if (afterWriter == null) 
           afterWriter = new PrintWriter(outputFolder +  File.separator + CurrentData.location + "-" + "after" + ".java");
-        writeFile(after, "after", afterWriter);
       }
       @SuppressWarnings("unused")
       private void writeFile(final String before, final String name, PrintWriter writer) throws FileNotFoundException {
@@ -186,7 +203,7 @@ public class HeadlesSpartanizer extends GrandVisitor {
         return (CompilationUnit) makeAST.COMPILATION_UNIT.from(before);
       }
     }).visitAll(astVisitor());
-    //tearDown();
+    tearDown();
   }
   
 
