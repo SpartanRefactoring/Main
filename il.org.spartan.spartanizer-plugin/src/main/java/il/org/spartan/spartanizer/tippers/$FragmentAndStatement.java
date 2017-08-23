@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -27,13 +28,13 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
   static int eliminationSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = wizard.live(f, fragments(parent));
-    final int $ = metrics.size(parent);
+    final int $ = Metrics.size(parent);
     if (live.isEmpty())
       return $;
     final VariableDeclarationStatement newParent = copy.of(parent);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
-    return $ - metrics.size(newParent);
+    return $ - Metrics.size(newParent);
   }
   public static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final Collection<VariableDeclarationFragment> $ = an.empty.list();
@@ -50,12 +51,12 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
   }
   public static int removalSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final int $ = metrics.size(parent);
+    final int $ = Metrics.size(parent);
     if (parent.fragments().size() <= 1)
       return $;
     final VariableDeclarationStatement newParent = copy.of(parent);
     newParent.fragments().remove(parent.fragments().indexOf(f));
-    return $ - metrics.size(newParent);
+    return $ - Metrics.size(newParent);
   }
   static boolean usedInSubsequentInitializers(final VariableDeclarationFragment f, final SimpleName n) {
     boolean searching = true;

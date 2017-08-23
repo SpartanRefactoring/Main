@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public enum precedence {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static final int UNDEFINED = -1;
-  private static final ChainStringToIntegerMap of = new ChainStringToIntegerMap()//
+  private static final ChainStringToIntFunctionegerMap of = new ChainStringToIntFunctionegerMap()//
       .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess", "FieldAccess", "QualifiedName") //
       .putOn(2, "++ pre", "-- pre", "+ unary", "- unary", "!", "~", "PrefixExpression") //
       .putOn(3, "() cast", "new", "ArrayCreation", "ClassInstanceCreation", "CastExpression") //

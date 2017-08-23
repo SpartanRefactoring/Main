@@ -6,7 +6,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
 public class BucketMethods extends GrandVisitor {
-  public static void main(final String[] args) throws IOException {
+  public static void main(final String[] args) {
     try (BufferedWriter out = system.callingClassUniqueWriter()) {
       new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         @Override protected void record(final String summary) {
@@ -18,6 +18,8 @@ public class BucketMethods extends GrandVisitor {
           super.record(summary);
         }
       });
+    } catch (IOException ¢) {
+      throw new RuntimeException(¢);
     }
   }
 }

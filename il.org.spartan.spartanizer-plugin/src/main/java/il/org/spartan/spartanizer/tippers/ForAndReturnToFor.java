@@ -34,7 +34,7 @@ public class ForAndReturnToFor extends GoToNextStatement<ForStatement>//
     if (expression == null)
       return null;
     $.replace(s, f, g);
-    f.setBody(subject.pair(nextStatement, null).toIf(make.notOf(expression)));
+    f.setBody(subject.pair(nextStatement, null).toIf(cons.not(expression)));
     f.setExpression(null);
     $.remove(nextStatement, g);
     return $;

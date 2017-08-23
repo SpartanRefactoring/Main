@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
 import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.spartanizer.engine.parse.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -177,7 +176,7 @@ public final class FactorsCollectorTest {
     azzert.that(c.dividers(), iz("[]"));
   }
   @Test public void test50() {
-    azzert.that(minus.peel(e("a*b")), iz("a*b"));
+    azzert.that(compute.peel(e("a*b")), iz("a*b"));
   }
   @Test public void test51() {
     c.collect(i("(a+b)*(b+c)"));

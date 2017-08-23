@@ -8,9 +8,6 @@ import fluent.ly.*;
  * @author Yossi Gil
  * @since 2017-03-19 */
 public interface Utils {
-  static boolean always() {
-    return true;
-  }
   static double d(final double n1, final double n2) {
     return 1 - n2 / n1;
   }

@@ -5,7 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.research.analyses.analyzers.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
 

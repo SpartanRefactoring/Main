@@ -182,7 +182,7 @@ public class ASTInFilesVisitor {
   /** Check whether given string containing Java code contains {@link Test}
    * annotations
    * <p>
-   * @param f
+   * @param function
    * @return */
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
@@ -259,8 +259,8 @@ public class ASTInFilesVisitor {
     return this;
   }
 
-  public void setCurrentLocation(final String currentLocation) {
-    this.currentLocation = currentLocation;
+  public static void setCurrentLocation(final String currentLocation) {
+    ASTInFilesVisitor.currentLocation = currentLocation;
   }
 
   public void visitAll(final ASTVisitor ¢) {

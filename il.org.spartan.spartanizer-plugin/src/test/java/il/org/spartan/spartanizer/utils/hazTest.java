@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.spartanizer.engine.parse.*;
 
 import org.junit.*;
 

@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Sep 25, 2016 */
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class IfEmptyThenEmptyElseTest {
-  private static final Statement INPUT = into.s("{if (b) ; else ;}");
+  private static final Statement INPUT = parse.s("{if (b) ; else ;}");
   private static final IfStatement IF = findFirst.ifStatement(INPUT);
   private static final IfEmptyThenEmptyElse TIPPER = new IfEmptyThenEmptyElse();
 

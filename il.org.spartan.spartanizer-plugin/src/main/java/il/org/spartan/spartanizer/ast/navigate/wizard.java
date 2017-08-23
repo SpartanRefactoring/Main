@@ -25,11 +25,13 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
@@ -125,10 +127,10 @@ public interface wizard {
     return wizard.getPackageNameFromSource($.createAST(null));
   }
   static Expression addParenthesisIfNeeded(final Expression ¢) {
-    return !isParethesisNeeded(¢) ? ¢ : make.parethesized(¢);
+    return !isParethesisNeeded(¢) ? ¢ : subject.operand(¢).parenthesis();
   }
   static Expression applyDeMorgan(final InfixExpression $) {
-    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(toList())).to(op.negate(operator($)));
+    return subject.operands(hop.operands(flatten.of($)).stream().map(cons::not).collect(toList())).to(op.negate(operator($)));
   }
   /** Converts a string into an AST, depending on it's form, as determined
    * by @link{GuessedContext.find}.
@@ -138,17 +140,17 @@ public interface wizard {
   static ASTNode ast(final String javaSnippet) {
     switch (GuessedContext.find(javaSnippet)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
-        return into.cu(javaSnippet);
+        return parse.cu(javaSnippet);
       case EXPRESSION_LOOK_ALIKE:
-        return into.e(javaSnippet);
+        return parse.e(javaSnippet);
       case METHOD_LOOK_ALIKE:
-        return into.m(javaSnippet);
+        return parse.m(javaSnippet);
       case OUTER_TYPE_LOOKALIKE:
-        return into.t(javaSnippet);
+        return parse.t(javaSnippet);
       case STATEMENTS_LOOK_ALIKE:
-        return into.s(javaSnippet);
+        return parse.s(javaSnippet);
       case BLOCK_LOOK_ALIKE:
-        return az.astNode(the.firstOf(statements(az.block(into.s(javaSnippet)))));
+        return az.astNode(the.firstOf(statements(az.block(parse.s(javaSnippet)))));
       default:
         for (final int guess : as.intArray(ASTParser.K_EXPRESSION, ASTParser.K_STATEMENTS, ASTParser.K_CLASS_BODY_DECLARATIONS,
             ASTParser.K_COMPILATION_UNIT)) {
@@ -310,8 +312,8 @@ public interface wizard {
         return false;
       }
     });
-    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
-        || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
+    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> Metrics.countStatements(x) > Metrics.countStatements(y)
+        || Metrics.countStatements(x) == Metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
   static Message[] getProblems(final ASTNode $) {
     return !($ instanceof CompilationUnit) ? null : ((CompilationUnit) $).getMessages();
@@ -326,7 +328,7 @@ public interface wizard {
         $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
       });
     });
-    return subject.append(subject.pair(the.firstOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
+    return Wizard.append(subject.pair(the.firstOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
   static String intToClassName(final int $) {
     try {
@@ -386,7 +388,7 @@ public interface wizard {
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
   static Expression parenthesize(final Expression ¢) {
-    return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
+    return iz.noParenthesisRequired(¢) ? copy.of(¢) : subject.operand(¢).parenthesis();
   }
   static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
@@ -398,7 +400,7 @@ public interface wizard {
     return $;
   }
   static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
+    return Metrics.length($.getExpression(), then($));
   }
   static String problems(final ASTNode ¢) {
     return !(¢ instanceof CompilationUnit) ? "???" : problems((CompilationUnit) ¢);
@@ -451,11 +453,17 @@ public interface wizard {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = make.invert(s);
-    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
+    final IfStatement $ = cons.invert(s);
+    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(cons.invert($));
   }
   static boolean valid(final ASTNode ¢) {
     final CompilationUnit $ = az.compilationUnit(¢.getRoot());
     return $ == null || $.getProblems().length == 0;
+  }
+  static SimpleName newLowerCamelCase(final SimpleName old, final String s) {
+    return make.from(old).identifier(s.substring(0, 1).toLowerCase() + s.substring(1));
+  }
+  static SimpleName newLowerCamelCase(final SimpleName old, final Type t) {
+    return make.from(old).identifier((t + "").split("<")[0].substring(0, 1).toLowerCase() + (t + "").substring(1));
   }
 }

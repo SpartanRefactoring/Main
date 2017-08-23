@@ -5,7 +5,7 @@
  * @since Oct 19, 2016 */
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.spartanizer.engine.parse.*;
 
 import org.junit.*;
 

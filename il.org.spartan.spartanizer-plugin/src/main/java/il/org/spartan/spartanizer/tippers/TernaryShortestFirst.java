@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
@@ -30,13 +30,13 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
         && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
   }
   private static boolean compatibleCondition(final Expression e1, final Expression e2) {
-    return compatible(e1, e2) || compatible(e1, make.notOf(e2));
+    return compatible(e1, e2) || compatible(e1, cons.not(e2));
   }
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
   @Override public ConditionalExpression replacement(final ConditionalExpression x) {
-    final ConditionalExpression $ = subject.pair(elze(x), then(x)).toCondition(make.notOf(x.getExpression()));
+    final ConditionalExpression $ = subject.pair(elze(x), then(x)).toCondition(cons.not(x.getExpression()));
     final Expression then = elze($), elze = then($);
     if (!iz.conditionalExpression(then) && iz.conditionalExpression(elze))
       return null;
@@ -49,7 +49,7 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
       if (Math.abs(a1 - a2) > 0.1)
         return a1 > a2 ? $ : null;
     }
-    final Expression condition = make.notOf($.getExpression());
-    return metrics.length(condition, then) > metrics.length(make.notOf(condition), elze) ? $ : null;
+    final Expression condition = cons.not($.getExpression());
+    return Metrics.length(condition, then) > Metrics.length(cons.not(condition), elze) ? $ : null;
   }
 }

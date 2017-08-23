@@ -31,7 +31,7 @@ public final class LocalInitializedWhileConvertToFor extends ReplaceToNextStatem
         .allMatch(λ -> collect.variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
   public static Expression Initializers(final VariableDeclarationFragment ¢) {
-    return make.variableDeclarationExpression(fragmentParent(¢));
+    return cons.variableDeclarationExpression(fragmentParent(¢));
   }
   public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));

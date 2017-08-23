@@ -43,12 +43,12 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
   private static ASTNode replacement(final MethodInvocation i, final Expression condition, final AssertStatement $) {
     switch (name(i) + "") {
       case "assertFalse":
-        return setAssert($, make.notOf(condition));
+        return setAssert($, cons.not(condition));
       case "assertTrue":
         return setAssert($, copy.of(condition));
       case "assertNonNull":
       case "NonNull":
-        return setAssert($, subject.operands(condition, make.nullLiteral(i)).to(NOT_EQUALS));
+        return setAssert($, subject.operands(condition, atomic.nullLiteral(i)).to(NOT_EQUALS));
       default:
         return null;
     }

@@ -38,7 +38,7 @@ public final class Issue0223 {
     return new ClassInstanceCreationBoxedValueTypes();
   }
   @Test public void a$020_CreateContext() {
-    context = into.s(INPUT);
+    context = parse.s(INPUT);
     assert context != null;
   }
   @Test public void a$030_FindFocus() {

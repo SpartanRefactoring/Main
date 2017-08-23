@@ -33,6 +33,6 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
         && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
   @Override public Expression replacement(final InfixExpression ¢) {
-    return make.conjugate(¢);
+    return cons.conjugate(¢);
   }
 }

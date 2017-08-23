@@ -106,17 +106,17 @@ public class Issue0251 {
   }
   @Test public void t17() {
     final String variable = "while(b==q){if(tipper==q()){int i;}}";
-    assert !sideEffects.free(into.s(variable));
+    assert !sideEffects.free(parse.s(variable));
     trimmingOf(variable)//
         .gives("while(b==q)if(tipper==q()){int i;}")//
         .gives("while(b==q)if(tipper==q()){}")//
     ;
   }
   @Test public void t17a() {
-    assert !sideEffects.free(into.e("q()"));
+    assert !sideEffects.free(parse.e("q()"));
   }
   @Test public void t17b() {
-    assert !sideEffects.free(into.s("while(b==q){if(tipper==q()){int i;}}"));
+    assert !sideEffects.free(parse.s("while(b==q){if(tipper==q()){int i;}}"));
   }
   /** Introduced by Yossi on Sat-Mar-25-05:15:04-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */

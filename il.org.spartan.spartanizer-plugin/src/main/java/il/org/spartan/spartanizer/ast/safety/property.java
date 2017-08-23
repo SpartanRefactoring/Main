@@ -21,7 +21,13 @@ public enum property {
     return n == null ? null : (T) n.getProperty(key);
   }
   public static <T> T get(final ASTNode n, final String key, final Supplier<T> defaulter) {
-    return n == null ? null : property.has(n, key) ? (T) n.getProperty(key) : property.set(n, key, defaulter.get());
+    return n == null ? null : property.has(n, key) ? property.get(n, key) : property.set(n, key, defaulter.get());
+  }
+  public static int getInt(ASTNode n, String key) {
+    return getInteger(n, key).intValue();
+  }
+  public static Integer getInteger(ASTNode n, String key) {
+    return get(n, key);
   }
   /** Checks node has a property.
    * @param n JD
@@ -68,5 +74,9 @@ public enum property {
   @FunctionalInterface
   public interface Obtainer<N> {
     N from(ASTNode n);
+  }
+
+  public static void setInt(ASTNode n, String key, int value) {
+    set(n, key, Integer.valueOf(value));
   }
 }

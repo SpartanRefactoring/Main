@@ -28,7 +28,7 @@ public final class Issue0086 extends Issue____ {
     assert tipper != null;
   }
   @Test public void a02_CreateContext() {
-    context = into.s(INPUT);
+    context = parse.s(INPUT);
     assert context != null;
   }
   @Test public void a03_FindFocus() {

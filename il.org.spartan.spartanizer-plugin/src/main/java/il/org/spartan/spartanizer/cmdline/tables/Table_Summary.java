@@ -24,7 +24,7 @@ public class Table_Summary extends NanoTable {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.data.location);
+            done(CurrentData.location);
           }
         });
       }
@@ -61,7 +61,7 @@ public class Table_Summary extends NanoTable {
           ¢.accept(new AnnotationCleanerVisitor());
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
-          logAfterSpartanization(into.cu(spartanzied));
+          logAfterSpartanization(parse.cu(spartanzied));
           analyze.apply(spartanzied);
         } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           forget.em(__);

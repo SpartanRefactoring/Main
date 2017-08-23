@@ -26,8 +26,8 @@ public class Table_RawNanoStatistics_Unspartanized extends Table_RawNanoStatisti
         listen(new Tapper() {
           @Override public void endLocation() {
             initializeWriter();
-            summarize(current.data.location);
-            System.err.println(" " + current.data.location + " Done"); // we need
+            summarize(CurrentData.location);
+            System.err.println(" " + CurrentData.location + " Done"); // we need
                                                                       // to know
                                                                       // if the
             // process is finished or hang

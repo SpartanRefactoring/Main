@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.research.analyses.analyzers.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.utils.*;
 
 /** Class for averaging whatever about methods before and after refactoring +
@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
 public abstract class AvgMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
   @Override protected abstract int metric(ASTNode n);
   @Override @SuppressWarnings("boxing") public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
-    final int statements = metrics.countStatements(before);
+    final int statements = Metrics.countStatements(before);
     getSafe(beforeHistogram, statements).add(Int.valueOf(metric(before)));
     getSafe(afterHistogram, statements).add(Int.valueOf(metric(findFirst.instanceOf(MethodDeclaration.class).in(after))));
     if (metric(before) >= metric(findFirst.instanceOf(MethodDeclaration.class).in(after)))

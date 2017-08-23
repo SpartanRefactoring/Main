@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.atomic;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
@@ -44,7 +45,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = make.newCent(c);
+    final SimpleName ¢ = atomic.newCent(c);
     return new Tip(description(c), getClass(), c.getException().getName()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, c, r, g);

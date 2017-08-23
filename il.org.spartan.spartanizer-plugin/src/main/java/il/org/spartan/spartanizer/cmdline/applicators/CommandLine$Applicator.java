@@ -14,6 +14,7 @@ import fluent.ly.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.library.*;
 import il.org.spartan.spartanizer.cmdline.runnables.*;
@@ -26,8 +27,8 @@ import il.org.spartan.spartanizer.traversal.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class CommandLine$Applicator extends GenericApplicator {
-  final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
-  final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
+  final ChainStringToIntFunctionegerMap spectrum = new ChainStringToIntFunctionegerMap();
+  final ChainStringToIntFunctionegerMap coverage = new ChainStringToIntFunctionegerMap();
   public static String presentFileName;
   public static String presentFilePath;
   public static long startingTimePerFile;
@@ -111,7 +112,7 @@ public class CommandLine$Applicator extends GenericApplicator {
     ReportGenerator.writeMethodMetrics(input, output, "methods");
     ReportGenerator.nl("methods");
   }
-  @SuppressWarnings("boxing") private void computeMetrics(final ASTNode input, final ASTNode output) {
+  private void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     // ReportGenerator.report("tips").put("Name", extract.name(input));
     // ReportGenerator.report("tips").put("Category", extract.category(input));
@@ -180,11 +181,11 @@ public class CommandLine$Applicator extends GenericApplicator {
         final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
         ReportGenerator.report("tips").put("including Class", includingClass.getName());
         ReportGenerator.report("tips").put("Class LOC", countOf.lines(includingClass));
-        ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
+        ReportGenerator.report("tips").put("Class Tokens", Metrics.tokens(includingClass + ""));
         final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
         ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
         ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : countOf.lines(includingMethod));
-        ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
+        ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : Metrics.tokens(includingMethod + ""));
         ReportGenerator.writeTipsLine(n, s, "tips");
         TraversalMonitor.rewrite(r, s);
         return true;

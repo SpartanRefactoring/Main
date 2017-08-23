@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.traversal;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A visitor hack converting the __ specific visit functions, into a single
+/** A visitor hack converting the type specific visit functions, into a single
  * call to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
  * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
  * we do not because some of the tests rely on the functions here returning
@@ -16,13 +16,41 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     super(true);
   }
 
+  static abstract class ME extends DispatchingVisitor implements ZZZZ.ID {
+    static ME p1 = new ME() {
+      <@All N extends ASTNode> boolean f(N ¢) {
+        return cautiousGo(¢);
+      }
+
+      @Override protected <N extends ASTNode> boolean go(N n) {
+        return false;
+      }
+    };
+    static ME p2 = new ME() {
+      <@Only({ Block.class, DoStatement.class }) N extends ASTNode> boolean visit(N ¢) {
+        return cautiousGo(¢);
+      }
+      @Override protected <N extends ASTNode> boolean go(N n) {
+        return false;
+      }
+    };
+    static ME p3 = new ME() {
+      <@Only({ Block.class, DoStatement.class }) N extends ASTNode> boolean g(N ¢) {
+        return cautiousGo(¢);
+      }
+      @Override protected <N extends ASTNode> boolean go(N n) {
+        return false;
+      }
+    };
+  }
+
   private boolean initialized;
 
   boolean cautiousGo(final ASTNode ¢) {
     return go(¢);
   }
   protected abstract <N extends ASTNode> boolean go(N n);
-  protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
+  protected void initialization(@SuppressWarnings("unused") final ASTNode type) {
     // to be overridden
   }
   @Override public void preVisit(final ASTNode ¢) {

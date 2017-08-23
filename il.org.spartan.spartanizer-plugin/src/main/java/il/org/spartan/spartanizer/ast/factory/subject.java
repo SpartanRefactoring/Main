@@ -9,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -20,16 +19,6 @@ import il.org.spartan.spartanizer.java.*;
  * @since Oct 7, 2016 */
 public enum subject {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  public static InfixExpression append(final InfixExpression base, final Expression add) {
-    final InfixExpression $ = copy.of(base);
-    extendedOperands($).add(make.plant(copy.of(add)).into($));
-    return $;
-  }
-  public static InfixExpression append(final InfixExpression base, final Iterable<Expression> adds) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>(base);
-    adds.forEach(λ -> $.set(append($.get(), λ)));
-    return $.get();
-  }
   /** Create a new Operand
    * @param inner the expression of the operand
    * @return the new operand */
@@ -85,7 +74,6 @@ public enum subject {
   public static SeveralStatements statements(final Statement... ¢) {
     return ss(as.list(¢));
   }
-
   public static class Claimer {
     protected final AST ast;
 
@@ -309,6 +297,18 @@ public enum subject {
       this.inner = an.empty.list();
       this.inner.addAll(inner.stream().map(this::claim).collect(toList()));
     }
+    /** Create a new if statement owned by ast the if statement contains a given
+     * condition and uses the class parameters (then, elze)
+     * @param condition the condition of the if statement
+     * @return an If statement with the given condition */
+    public IfStatement toIf(final Expression condition) {
+      final IfStatement $ = ast.newIfStatement();
+      $.setExpression(claim(condition));
+      final Block b = ast.newBlock();
+      step.statements(b).addAll(inner);
+      $.setThenStatement(b);
+      return $;
+    }
     /** Transform the inner into a block
      * @return a Block statement */
     public Block toBlock() {
@@ -388,7 +388,7 @@ public enum subject {
      * @see toIf
      * @see logicalNot */
     public IfStatement toNot(final Expression condition) {
-      return toIf(make.notOf(condition));
+      return toIf(cons.not(condition));
     }
   }
 }

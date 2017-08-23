@@ -49,9 +49,8 @@ public class TraversalImplementation extends Traversal {
                                               tips.remove(λ);
                                               notify.tipPrune();
                                         });
-        if (getTip() != null){
+        if (getTip() != null)
           tips.add(getTip());
-        }
         return true;
       }
       @Override protected void initialization(final ASTNode ¢) {

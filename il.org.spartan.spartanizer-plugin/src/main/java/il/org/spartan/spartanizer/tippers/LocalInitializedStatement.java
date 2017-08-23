@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** TODO dormaayn: document class
@@ -20,7 +21,7 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
     return as.array(current, nextStatement);
   }
   protected int waste() {
-    return uses().size() * (metrics.size(Inliner.protect(initializer)) - 1);
+    return uses().size() * (Metrics.size(Inliner.protect(initializer)) - 1);
   }
   private List<SimpleName> uses() {
     return collect.usesOf(name).in(nextStatement);

@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.cmdline.good.*;
 
 /** Compute reusabilty index for methods Meanwhile just computes the index of
@@ -27,7 +27,7 @@ public class ComputeMethodsIndex extends DeprecatedFolderASTVisitor {
   @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration ¢) {
     if (statements(¢) == null || statements(¢).isEmpty())
       return false;
-    methods.put(identifier(name(¢)), metrics.tokens(¢ + ""));
+    methods.put(identifier(name(¢)), Metrics.tokens(¢ + ""));
     return true;
   }
 

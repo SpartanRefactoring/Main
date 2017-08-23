@@ -18,7 +18,7 @@ public class Table_Class_Field_Names extends NominalTables {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(current.data.location);
+            done(CurrentData.location);
           }
         });
       }

@@ -32,7 +32,7 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
     try {
       descendants//
           .whoseClassIs(EnhancedForStatement.class)//
-          .from(into.cu(nanonizer.fixedPoint(u)))//
+          .from(parse.cu(nanonizer.fixedPoint(u)))//
           .stream()//
           .filter(iz::simpleLoop)//
           .forEach(λ -> appendFile(out, λ + ""));

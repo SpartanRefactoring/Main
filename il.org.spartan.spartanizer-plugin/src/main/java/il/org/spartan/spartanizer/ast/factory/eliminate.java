@@ -32,10 +32,10 @@ public enum eliminate {
   public static Statement lastStatement(final Statement $) {
     final Block b = az.block($);
     if (b == null)
-      return make.emptyStatement($);
+      return atomic.emptyStatement($);
     final List<Statement> ss = step.statements(b);
     if (ss.isEmpty())
-      return make.emptyStatement($);
+      return atomic.emptyStatement($);
     ss.remove(ss.size() - 1);
     return $;
   }

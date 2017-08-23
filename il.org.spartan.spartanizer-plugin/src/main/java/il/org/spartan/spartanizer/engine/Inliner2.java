@@ -15,7 +15,7 @@ import org.eclipse.text.edits.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
@@ -72,7 +72,7 @@ public final class Inliner2 {
    * @return A non-negative integer, computed from the number of occurrences of
    *         {@link #what} in the operands, and the size of the replacement. */
   public int addedSize() {
-    return spots.size() * (metrics.size(replacement) - metrics.size(what));
+    return spots.size() * (Metrics.size(replacement) - Metrics.size(what));
   }
   /** [[SuppressWarningsSpartan]] */
   private boolean multipleInlineOK() {
@@ -163,7 +163,7 @@ public final class Inliner2 {
        *         of {@link #name} in the operands, and the size of the
        *         replacement. */
       public int addedSize() {
-        return occurrences.size() * (metrics.size(with) - 1);
+        return occurrences.size() * (Metrics.size(with) - 1);
       }
       public boolean canGo() {
         if (with == null || occurrences.isEmpty())
@@ -212,7 +212,7 @@ public final class Inliner2 {
        *         parameters, the number of occurrences of {@link #name} in the
        *         operands, and the size of the replacement. */
       public int replacedSize() {
-        return metrics.size(range) + occurrences.size() * (metrics.size(get()) - 1);
+        return Metrics.size(range) + occurrences.size() * (Metrics.size(get()) - 1);
       }
       public Inner with(final Expression ¢) {
         with = ¢;

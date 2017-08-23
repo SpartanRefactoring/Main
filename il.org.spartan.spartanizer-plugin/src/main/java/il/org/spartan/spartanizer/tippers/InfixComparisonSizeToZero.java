@@ -53,7 +53,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (o == EQUALS)
       return threshold == 0 ? $ : null;
     if (o == NOT_EQUALS || o == GREATER)
-      return threshold != 0 ? null : make.notOf($);
+      return threshold != 0 ? null : cons.not($);
     if (o == LESS)
       return threshold == 0 ? ret.newBooleanLiteral(false) : threshold != 1 ? null : $;
     assert fault.unreachable() : fault.dump() + //

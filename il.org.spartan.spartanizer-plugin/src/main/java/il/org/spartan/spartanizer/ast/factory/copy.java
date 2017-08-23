@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.ast.factory;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -50,8 +48,5 @@ public enum copy {
    * @return a duplicate of the parameter, downcasted to the returned __. */
   public static <N extends ASTNode> Collection<N> of(final Collection<N> ¢) {
     return ¢.stream().map(copy::of).collect(toList());
-  }
-  public static Expression ofWhileExpression(final WhileStatement ¢) {
-    return of(expression(¢));
   }
 }

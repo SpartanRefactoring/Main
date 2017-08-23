@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.applicators.*;
 import il.org.spartan.spartanizer.cmdline.library.Utils;
@@ -29,154 +30,73 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class ReportGenerator implements ConfigurableReport {
-  protected static String outputFolder = "/tmp/";
-  protected static String inputFolder;
-  protected String afterFileName;
-  protected String beforeFileName;
-  protected String spectrumFileName;
-  protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
+  public static final Metric.Integral[] metrics = as.array(Metric.named("length").of((ToIntFunction<ASTNode>) λ -> (λ + "").length()),
+      Metric.named("essence").of((ToIntFunction<ASTNode>) λ -> Essence.of(λ + "").length()),
+      Metric.named("tokens").of((ToIntFunction<ASTNode>) λ -> Metrics.tokens(λ + "")),
+      Metric.named("nodes").of((ToIntFunction<ASTNode>) countOf::nodes), Metric.named("body").of((ToIntFunction<ASTNode>) Metrics::bodySize),
+      Metric.named("statements").of((ToIntFunction<ASTNode>) λ -> az.methodDeclaration(λ) == null ? -1
+          : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+      Metric.named("tide").of((ToIntFunction<ASTNode>) λ -> clean(λ + "").length()));
   protected static final Map<String, PrintWriter> files = new HashMap<>();
-  @SuppressWarnings("rawtypes") protected static final HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
+  protected static String inputFolder;
+  protected static String outputFolder = "/tmp/";
 
-  @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {
-    return metricsMap;
+  protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
+  public static void close(final String key) {
+    report(key).close();
   }
-
-  public enum Util {
-    DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-    @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
-          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, countOf::nodes), m("body" + id, metrics::bodySize),
-          m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-          m("tide" + id, λ -> clean(λ + "").length()));//
-    }
-    @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
-      final HashMap<String, NamedFunction[]> $ = new HashMap<>();
-      $.put("metrics", functions(""));
-      $.put("methods",
-          as.array(m("N. of Nodes", countOf::nodes), //
-              m("Average Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
-                                              // "").length()), //
-              m("Average Uncle Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
-                                                    // "").length()), //
-              m("Character Length", λ -> -1000) // Essence.of(¢ +
-                                                // "").length()) //
-          // Report Halstead Metrics
-          )); //
-      return $;
-    }
-    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
-      return new NamedFunction<>(name, f);
-    }
-    static CSVStatistics report(final String ¢) {
-      assert ¢ != null;
-      return reports.get(¢);
-    }
-    @SuppressWarnings("unchecked") public static NamedFunction<ASTNode> find(final String ¢) {
-      return Stream.of(ReportGenerator.Util.functions("")).filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
-    }
+  public static void closeFile(final String key) {
+    files(key).flush();
+    files(key).close();
   }
-
-  // running report
-  @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(n1));
-      ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(n2));
-    }
+  public static void emptyTipsLine() {
+    report("tips").put("tipName", "");
+    // report("tips").put("description", ¢.description);
+    report("tips").put("LineNumber", "");
+    report("tips").put("from", "");
+    report("tips").put("to", "");
+    // report("tips").put("tipperClass", ¢.tipperClass);
+    // long time = new Date().getTime();
+    report("tips").put("time", "");
+    report("tips").put("startTimeDiff", "");
+    report("tips").put("startTimeDiffPerFile", "");
+    report("tips").put("lastTimeDiff", "");
   }
-  public static String getOutputFolder() {
-    return outputFolder;
-  }
-  public static void setOutputFolder(final String outputFolder) {
-    ReportGenerator.outputFolder = outputFolder;
+  public static void generate(final String ¢) {
+    initializeReport(¢ + "_metrics.CSV", ¢);
   }
   public static String getInputFolder() {
     return inputFolder;
   }
-  public static void setInputFolder(final String inputFolder) {
-    ReportGenerator.inputFolder = inputFolder;
+  public static String getOutputFolder() {
+    return outputFolder;
   }
-
-  @FunctionalInterface
-  public interface BiFunction<T, R> {
-    double apply(T t, R r);
-  }
-
-  @SuppressWarnings({ "boxing", "unchecked" }) public static void write(final ASTNode input, final ASTNode output, final String id,
-      final BiFunction<Integer, Integer> i) {
-    as.list(ReportGenerator.Util.functions(""))
-        .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), i.apply(λ.function().run(input), λ.function().run(output))));
-  }
-  @SuppressWarnings({ "boxing", "unchecked" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
-      final BiFunction<Integer, Integer> i) {
-    as.list(ReportGenerator.Util.functions(""))
-        .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), (int) i.apply(λ.function().run(n1), λ.function().run(n2))));
-  }
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
-      final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : Util.functions(""))
-      ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(n1), ¢.function().run(n2)));
-  }
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
-      final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : Util.functions(""))
-      Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
-  }
-  @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-    for (final NamedFunction ¢ : Util.functions(""))
-      Util.report("metrics").put(id + ¢.name() + " %", Utils.p(¢.function().run(n1), ¢.function().run(n2)));
-  }
-  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
-      final BiFunction<Integer, Integer> i) {
-    final int ess = Util.find("essence").function().run(n1), tide = Util.find("tide").function().run(n1), body = Util.find("body").function().run(n1),
-        nodes = Util.find("nodes").function().run(n1);
-    Util.report("metrics").put("R(E/L)", i.apply(Util.find("length").function().run(n1), ess));
-    Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
-    Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
-  }
-
-  @FunctionalInterface
-  public interface ToInt<R> {
-    int run(R r);
-  }
-
-  static class NamedFunction<R> {
-    final String name;
-    final ToInt<R> f;
-
-    NamedFunction(final String name, final ToInt<R> f) {
-      this.name = name;
-      this.f = f;
-    }
-    public String name() {
-      return name;
-    }
-    public ToInt<R> function() {
-      return f;
-    }
-  }
-
   @SuppressWarnings("resource") public static void initializeFile(final String fileName, final String id) throws IOException {
     files.put(id, new PrintWriter(new FileWriter(fileName)));
   }
   public static void initializeReport(final String reportFileName, final String id) {
     reports.put(id, new CSVStatistics(reportFileName, id));
   }
+  public static HashMap<String, Metric.Integral[]> metricsMap() {
+    return Util.initialize();
+  }
+  public static void name(final ASTNode input) {
+    report("metrics").put("name", extract.name(input));
+    report("metrics").put("category", extract.category(input));
+  }
+  public static void name(final ASTNode input, final String reportName) {
+    report(reportName).put("node", extract.name(input));
+    report(reportName).put("category", extract.category(input));
+  }
+  public static void nl(final String key) {
+    report(key).nl();
+  }
+  public static void printFile(final String input, final String key) {
+    assert input != null;
+    files(key).print(input);
+  }
   public static CSVStatistics report(final String key) {
     return reports.get(key);
-  }
-  private static PrintWriter files(final String key) {
-    return files.get(key);
-  }
-  public static void reportMetrics(final ASTNodeMetrics nm, final String id, final String key) {
-    report(key)//
-        .put("Nodes" + id, nm.nodes())//
-        .put("Body" + id, nm.body())//
-        .put("Length" + id, nm.length())//
-        .put("Tokens" + id, nm.tokens())//
-        .put("Tide" + id, nm.tide())//
-        .put("Essence" + id, nm.essence())//
-        .put("Statements" + id, nm.statements());//
   }
   public static void reportDifferences(final ASTNodeMetrics nm1, final ASTNodeMetrics nm2, final String key) {
     report(key) //
@@ -202,41 +122,35 @@ public class ReportGenerator implements ConfigurableReport {
         .put("δ Statement", Utils.d(nm1.statements(), nm2.statements()))//
         .put("% Statement", Utils.p(nm1.statements(), nm2.statements()));//
   }
-  public static void reportRatio(final ASTNodeMetrics nm, final String id, final String key) {
+  public static void reportMetrics(final ASTNodeMetrics nm, final String key) {
+    report(key)//
+        .put("Nodes", nm.nodes())//
+        .put("Body", nm.body())//
+        .put("Length", nm.length())//
+        .put("Tokens", nm.tokens())//
+        .put("Tide", nm.tide())//
+        .put("Essence", nm.essence())//
+        .put("Statements", nm.statements());//
+  }
+  public static void reportRatio(final ASTNodeMetrics nm, final String key) {
     report(key) //
         // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))
         // //
-        .put("R(E/L)" + id, Utils.ratio(nm.length(), nm.essence())) //
-        .put("R(E/T)" + id, Utils.ratio(nm.tide(), nm.essence())) //
-        .put("R(B/S)" + id, Utils.ratio(nm.nodes(), nm.body())); //
-  }
-  public static void close(final String key) {
-    report(key).close();
-  }
-  public static void summaryFileName(final String key) {
-    report(key).summaryFileName();
-  }
-  public static void nl(final String key) {
-    report(key).nl();
-  }
-  public static void printFile(final String input, final String key) {
-    assert input != null;
-    files(key).print(input);
-  }
-  public static void closeFile(final String key) {
-    files(key).flush();
-    files(key).close();
+        .put("R(E/L)", Utils.ratio(nm.length(), nm.essence())) //
+        .put("R(E/T)", Utils.ratio(nm.tide(), nm.essence())) //
+        .put("R(B/S)", Utils.ratio(nm.nodes(), nm.body())); //
   }
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
   }
-  public static void name(final ASTNode input) {
-    report("metrics").put("name", extract.name(input));
-    report("metrics").put("category", extract.category(input));
+  public static void setInputFolder(final String inputFolder) {
+    ReportGenerator.inputFolder = inputFolder;
   }
-  public static void name(final ASTNode input, final String reportName) {
-    report(reportName).put("node", extract.name(input));
-    report(reportName).put("category", extract.category(input));
+  public static void setOutputFolder(final String outputFolder) {
+    ReportGenerator.outputFolder = outputFolder;
+  }
+  public static void summaryFileName(final String key) {
+    report(key).summaryFileName();
   }
   public static void tip(final Tip ¢) {
     report("tips").put("FileName", CommandLine$Applicator.presentFileName);
@@ -255,11 +169,65 @@ public class ReportGenerator implements ConfigurableReport {
     report("tips").put("startTimeDiffPerFile", time - CommandLine$Applicator.startingTimePerFile);
     report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
   }
+  public static void write(final ASTNode input, final ASTNode output, final String id,
+      final ToDoubleFromTwoIntegers i) {
+    as.list(ReportGenerator.metrics)
+        .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name, i.apply(λ.apply(input), λ.apply(output))));
+  }
+  public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
+      final ToDoubleFromTwoIntegers i) {
+    for (final Metric.Integral ¢ : ReportGenerator.metrics)
+      ReportGenerator.Util.report("metrics").put(id + ¢.name, i.apply(¢.apply(n1), ¢.apply(n2)));
+  }
+  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
+      final ToDoubleFromTwoIntegers i) {
+    as.list(ReportGenerator.metrics).forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name, (int) i.apply(λ.apply(n1), λ.apply(n2))));
+  }
+  @SuppressWarnings("unchecked") public static <T> void writeLine(final Consumer<T> ¢) {
+    ¢.accept((T) ¢);
+  }
+  public static void writeMethodMetrics(final ASTNode input, final ASTNode output, final String id) {
+    for (final Metric.Integral ¢ : metricsMap().get(id)) {
+      Util.report(id).put(¢.name + "1", ¢.apply(input));
+      Util.report(id).put(¢.name + "2", ¢.apply(output));
+    }
+  }
+  // running report
+  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+    for (final Metric.Integral ¢ : ReportGenerator.metrics) {
+      ReportGenerator.Util.report(id).put(¢.name + "1", ¢.apply(n1));
+      ReportGenerator.Util.report(id).put(¢.name + "2", ¢.apply(n2));
+    }
+  }
+  @SuppressWarnings({ }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
+    for (final Metric.Integral ¢ : ReportGenerator.metrics)
+      Util.report("metrics").put(id + ¢.name + " %", Utils.p(¢.apply(n1), ¢.apply(n2)));
+  }
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
+      final ToDoubleFromTwoIntegers i) {
+    for (final Metric.Integral ¢ : ReportGenerator.metrics)
+      Util.report("metrics").put(id + ¢.name + " %", i.apply(¢.apply(n1), ¢.apply(n2)) + "");
+  }
+  public static void writeRatio(final ASTNode n1, @SuppressWarnings("unused") final ASTNode __, final String id,
+      final ToDoubleFromTwoIntegers i) {
+    final int ess = Util.find("essence").apply(n1), tide = Util.find("tide").apply(n1), body = Util.find("body").apply(n1),
+        nodes = Util.find("nodes").apply(n1);
+    Util.report("metrics").put("R(E/L)", i.apply(Util.find("length").apply(n1), ess));
+    Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
+    Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
+  }
   public static void writeTipsLine(@SuppressWarnings("unused") final ASTNode __, final Tip t, final String reportName) {
     // name(n, reportName);
     tip(t);
     report(reportName).nl();
   }
+
+  private static PrintWriter files(final String key) {
+    return files.get(key);
+  }
+  protected String afterFileName;
+  protected String beforeFileName;
+  protected String spectrumFileName;
 
   public static class LineWriter implements Consumer<Object> {
     @Override public void accept(@SuppressWarnings("unused") final Object __) {
@@ -267,29 +235,39 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings("unchecked") public static <T> void writeLine(final Consumer<T> ¢) {
-    ¢.accept((T) ¢);
-  }
-  public static void generate(final String ¢) {
-    initializeReport(¢ + "_metrics.CSV", ¢);
-  }
-  public static void emptyTipsLine() {
-    report("tips").put("tipName", "");
-    // report("tips").put("description", ¢.description);
-    report("tips").put("LineNumber", "");
-    report("tips").put("from", "");
-    report("tips").put("to", "");
-    // report("tips").put("tipperClass", ¢.tipperClass);
-    // long time = new Date().getTime();
-    report("tips").put("time", "");
-    report("tips").put("startTimeDiff", "");
-    report("tips").put("startTimeDiffPerFile", "");
-    report("tips").put("lastTimeDiff", "");
-  }
-  @SuppressWarnings({ "rawtypes", "unchecked" }) public static void writeMethodMetrics(final ASTNode input, final ASTNode output, final String id) {
-    for (final NamedFunction ¢ : metricsMap().get(id)) {
-      Util.report(id).put(¢.name() + "1", ¢.function().run(input));
-      Util.report(id).put(¢.name() + "2", ¢.function().run(output));
+  public enum Util {
+    DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
+    public static Metric.Integral find(final String ¢) {
+      return Stream.of(ReportGenerator.metrics).filter(λ -> Objects.equals(λ.name, ¢)).findFirst().orElse(null);
     }
+    public static HashMap<String, Metric.Integral[]> initialize() {
+      final HashMap<String, Metric.Integral[]> $ = new HashMap<>();
+      $.put("metrics", ReportGenerator.metrics);
+      $.put("methods",
+          as.array(Metric.named("No of Nodes").of((ToIntFunction<ASTNode>) countOf::nodes), //
+              Metric.named("Average Depth").of((ToIntFunction<ASTNode>) λ -> -1000), // (¢)
+                                                                                     // ->
+                                                                                     // Essence.of(¢
+                                                                                     // +
+              // "").length()), //
+              Metric.named("Average Uncle Depth").of((ToIntFunction<ASTNode>) λ -> -1000), // (¢)
+                                                                                           // ->
+              // Essence.of(¢ +
+              // "").length()), //
+              Metric.named("Character Length").of((ToIntFunction<ASTNode>) λ -> -1000) // Essence.of(¢
+                                                                                       // +
+          // "").length()) //
+          // Report Halstead Metrics
+          )); //
+      return $;
+    }
+    static CSVStatistics report(final String ¢) {
+      assert ¢ != null;
+      return reports.get(¢);
+    }
+  }
+
+  public static Metric.Integral[] integralMetrics() {
+    return metrics;
   }
 }

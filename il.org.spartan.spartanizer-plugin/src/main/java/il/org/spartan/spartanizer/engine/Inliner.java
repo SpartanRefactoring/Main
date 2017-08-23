@@ -15,6 +15,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -111,7 +112,7 @@ public final class Inliner {
      *         of {@link #name} in the operands, and the size of the
      *         replacement. */
     public int addedSize(final ASTNode... ¢) {
-      return uses(¢).size() * (metrics.size(get()) - 1);
+      return uses(¢).size() * (Metrics.size(get()) - 1);
     }
     public boolean canInlineinto(final ASTNode... ¢) {
       return collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
@@ -128,7 +129,7 @@ public final class Inliner {
      *         parameters, the number of occurrences of {@link #name} in the
      *         operands, and the size of the replacement. */
     public int replacedSize(final ASTNode... ¢) {
-      return metrics.size(¢) + uses(¢).size() * (metrics.size(get()) - 1);
+      return Metrics.size(¢) + uses(¢).size() * (Metrics.size(get()) - 1);
     }
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ¢) {
       Stream.of(¢).forEach(this::inlineIntoSingleton);

@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.runnables.ConfigurableReport.Settings.*;
 import il.org.spartan.spartanizer.java.*;
@@ -37,7 +38,7 @@ public class MetricsReport implements ConfigurableReport {
   }
 
   @FunctionalInterface
-  public interface ToInt<R> {
+  public interface ToIntFunction<R> {
     int run(R r);
   }
 
@@ -46,33 +47,15 @@ public class MetricsReport implements ConfigurableReport {
     double apply(T t, R r);
   }
 
-  static class NamedFunction<R> {
-    final String name;
-    final ToInt<R> f;
 
-    NamedFunction(final String name, final ToInt<R> f) {
-      this.name = name;
-      this.f = f;
-    }
-    public String name() {
-      return name;
-    }
-    public ToInt<R> function() {
-      return f;
-    }
-  }
-
-  @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-    return as.array(m("length" + id, λ -> (λ + "").length()), //
-        m("essence" + id, λ -> Essence.of(λ + "").length()), //
-        m("tokens" + id, λ -> metrics.tokens(λ + "")), //
-        m("nodes" + id, countOf::nodes), //
-        m("body" + id, metrics::bodySize), //
-        m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()), //
-        m("tide" + id, λ -> clean(λ + "").length())); //
-  }
-  static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
-    return new NamedFunction<>(name, f);
+  public static Metric.Integral[] functions(final String id) {
+    return as.array(Metric.named("length" + id).of((java.util.function.ToIntFunction<ASTNode>) λ -> (λ + "").length()), //
+        Metric.named("essence" + id).of((java.util.function.ToIntFunction<ASTNode>) λ -> Essence.of(λ + "").length()), //
+        Metric.named("tokens" + id).of((java.util.function.ToIntFunction<ASTNode>) λ -> Metrics.tokens(λ + "")), //
+        Metric.named("nodes" + id).of((java.util.function.ToIntFunction<ASTNode>) countOf::nodes), //
+        Metric.named("body" + id).of((java.util.function.ToIntFunction<ASTNode>) Metrics::bodySize), //
+        Metric.named("methodDeclaration" + id).of((java.util.function.ToIntFunction<ASTNode>) λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()), //
+        Metric.named("tide" + id).of((java.util.function.ToIntFunction<ASTNode>) λ -> clean(λ + "").length())); //
   }
   public static void write() {
     final Action wr = settings.getAction();

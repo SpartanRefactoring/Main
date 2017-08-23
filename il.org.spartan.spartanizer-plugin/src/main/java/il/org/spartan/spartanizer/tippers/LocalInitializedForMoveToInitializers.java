@@ -75,7 +75,7 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
   public static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
     final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(the.firstOf(initializers($)));
     initializers($).clear();
-    initializers($).add(make.variableDeclarationExpression(s));
+    initializers($).add(cons.variableDeclarationExpression(s));
     fragments(az.variableDeclarationExpression(the.firstOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
   @Override public String description(final VariableDeclarationFragment ¢) {

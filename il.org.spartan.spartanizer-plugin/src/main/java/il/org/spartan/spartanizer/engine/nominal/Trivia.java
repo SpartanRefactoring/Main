@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 public enum Trivia {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static String accurateEssence(final String codeFragment) {
-    return Trivia.fixTideClean(Trivia.removeComments(into.cu(codeFragment)) + "");
+    return Trivia.fixTideClean(Trivia.removeComments(parse.cu(codeFragment)) + "");
   }
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD

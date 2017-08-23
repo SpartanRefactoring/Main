@@ -15,23 +15,23 @@ import il.org.spartan.spartanizer.tippers.*;
 public class InfixAdditionSubtractionExpandTest {
   private static final String input = "1+a*b+2+b*c+3+d*e+4";
   private static final String input2 = "1+a*b+2+ (b*c+3) +d*e+4";
-  private static final InfixExpression INPUT = into.i(input);
+  private static final InfixExpression INPUT = parse.i(input);
   private final String s = "365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1";
 
   @Test @SuppressWarnings("static-method") public void test01() {
     assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
   @Test @SuppressWarnings("static-method") public void test02() {
-    assert new InfixAdditionSubtractionExpand().check(into.i(tide.clean(input2)));
+    assert new InfixAdditionSubtractionExpand().check(parse.i(tide.clean(input2)));
   }
   @Test @SuppressWarnings("static-method") public void test03() {
-    assert new InfixAdditionSubtractionExpand().check(into.i(input2));
+    assert new InfixAdditionSubtractionExpand().check(parse.i(input2));
   }
   @Test public void test04() {
-    assert !new InfixAdditionSubtractionExpand().check(into.i(s));
+    assert !new InfixAdditionSubtractionExpand().check(parse.i(s));
   }
   @Test @SuppressWarnings("static-method") public void test05() {
-    assert new InfixAdditionSubtractionExpand().check(into.i("a - (b+c)"));
+    assert new InfixAdditionSubtractionExpand().check(parse.i("a - (b+c)"));
   }
   @Test @SuppressWarnings("static-method") public void test06() {
     trimmingOf("a - (b+c)")//

@@ -31,6 +31,6 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
     return extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
   @Override public Statement replacement(final IfStatement ¢) {
-    return make.throwOf(subject.pair(extract.throwExpression(then(¢)), extract.throwExpression(elze(¢))).toCondition(¢.getExpression()));
+    return cons.throwOf(subject.pair(extract.throwExpression(then(¢)), extract.throwExpression(elze(¢))).toCondition(¢.getExpression()));
   }
 }

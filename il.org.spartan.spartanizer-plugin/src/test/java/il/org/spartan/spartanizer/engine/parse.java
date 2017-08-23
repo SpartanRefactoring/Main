@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
  * sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-public enum into {
+public enum parse {
   ;
   /** Convert a given {@link String} into an {@link Assignment}, or fail the
    * current test, if such a conversion is not possible
@@ -79,7 +79,7 @@ public enum into {
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input. */
   public static Collection<Expression> es(final String... expressions) {
-    return Stream.of(expressions).map(into::e).collect(toList());
+    return Stream.of(expressions).map(parse::e).collect(toList());
   }
   /** Convert a given {@link String} into an {@link InfixExpression}, or fail
    * the current test, if such a conversion is not possible

@@ -35,7 +35,7 @@ class Factor {
     final InfixExpression $ = expression.getAST().newInfixExpression();
     $.setOperator(DIVIDE);
     $.setLeftOperand(expression.getAST().newNumberLiteral("1"));
-    $.setRightOperand(!iz.infixExpression(expression) ? copy.of(expression) : make.parethesized(copy.of(expression)));
+    $.setRightOperand(!iz.infixExpression(expression) ? copy.of(expression) : subject.operand(copy.of(expression)).parenthesis());
     return $;
   }
   boolean divider() {

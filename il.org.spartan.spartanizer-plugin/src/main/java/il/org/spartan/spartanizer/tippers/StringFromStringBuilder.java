@@ -80,8 +80,9 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
       return l1;
     }));
     if (needPreliminaryStringSafe($))
-      $.add(0, make.emptyString(current));
-    return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(Operator.PLUS);
+      $.add(0, make.from(current).emptyString());
+    final ASTNode ¢1 = current;
+    return $.isEmpty() ? make.from(¢1).emptyString() : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(Operator.PLUS);
   }
   public static boolean needPreliminaryStringUnsafe(final List<Expression> ¢) {
     return ¢.isEmpty() || !iz.stringLiteral(the.firstOf(¢)) && !iz.name(the.firstOf(¢)) && !iz.methodInvocation(the.firstOf(¢));

@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class InfixAdditionSortTest {
   private static final String input = "1+a*b+2+b*c+3+d*e+4";
-  private static final InfixExpression INPUT = into.i(input);
+  private static final InfixExpression INPUT = parse.i(input);
   private static final int nTERMS = 7;
   private static final String OUTPUT = "a*b + b*c  + d*e + 1 + 2 + 3+4";
 
@@ -111,16 +111,16 @@ public final class InfixAdditionSortTest {
     assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
   @Test public void test05b() {
-    assert new InfixAdditionSubtractionExpand().check(into.i("3*a+(b-c)-(b+c)"));
+    assert new InfixAdditionSubtractionExpand().check(parse.i("3*a+(b-c)-(b+c)"));
   }
 
   private final String s = "365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1";
 
   @Test public void test05c() {
-    assert !new InfixAdditionSubtractionExpand().check(into.i(s));
+    assert !new InfixAdditionSubtractionExpand().check(parse.i(s));
   }
   @Test public void test05d() {
-    assert new InfixAdditionSubtractionExpand().check(into.i("a - (b+c)"));
+    assert new InfixAdditionSubtractionExpand().check(parse.i("a - (b+c)"));
   }
   @Test public void test05e() {
     trimmingOf("a - (b+c)")//
@@ -161,7 +161,7 @@ public final class InfixAdditionSortTest {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert INPUT != null;
-    assert wizard.eq(into.i(tide.clean(i + "")), INPUT);
+    assert wizard.eq(parse.i(tide.clean(i + "")), INPUT);
   }
   @Test public void test12() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);

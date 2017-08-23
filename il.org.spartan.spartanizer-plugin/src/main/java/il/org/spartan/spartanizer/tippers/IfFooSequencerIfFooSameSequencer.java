@@ -45,7 +45,7 @@ public final class IfFooSequencerIfFooSameSequencer extends GoToNextStatement<If
     final List<Statement> ss1 = extract.statements(then);
     return !wizard.eq(ss1, extract.statements(then($))) || !iz.sequencer(last(ss1)) ? null
         : misc.replaceTwoStatements(r, s,
-            make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), $.getExpression()).to(CONDITIONAL_OR)),
+            subject.statement(BlockSimplify.reorganizeNestedStatement(then)).toIf(subject.pair(s.getExpression(), $.getExpression()).to(CONDITIONAL_OR)),
             g);
   }
 }

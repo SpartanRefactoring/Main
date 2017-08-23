@@ -29,7 +29,7 @@ public class Table_Nodes_Coverage {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            summarizeStatistics(current.data.location);
+            summarizeStatistics(CurrentData.location);
             statistics.clear();
           }
         });
@@ -40,7 +40,7 @@ public class Table_Nodes_Coverage {
         try {
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
-          statistics.logAfterSpartanization(into.cu(spartanzied));
+          statistics.logAfterSpartanization(parse.cu(spartanzied));
           analyze.apply(spartanzied);
         } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           forget.em(__);

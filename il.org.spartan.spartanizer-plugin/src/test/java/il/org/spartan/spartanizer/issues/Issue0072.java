@@ -33,15 +33,15 @@ public class Issue0072 {
   }
   @Test public void ma() {
     final String s = "0-x";
-    final InfixExpression i = into.i(s);
+    final InfixExpression i = parse.i(s);
     azzert.that(i, iz(s));
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));
     assert !i.hasExtendedOperands();
     assert iz.literal0(left(i));
     assert !iz.literal0(right(i));
-    azzert.that(make.minus(left(i)), iz("0"));
-    azzert.that(make.minus(right(i)), iz("-x"));
+    azzert.that(cons.minus(left(i)), iz("0"));
+    azzert.that(cons.minus(right(i)), iz("-x"));
     trimmingOf(s)//
         .gives("-x");
   }
@@ -77,17 +77,17 @@ public class Issue0072 {
         .stays();
   }
   @Test public void me1() {
-    assert !iz.negative(into.e("0"));
+    assert !iz.negative(parse.e("0"));
   }
   @Test public void me2() {
-    assert iz.negative(into.e("-1"));
-    assert !iz.negative(into.e("+1"));
-    assert !iz.negative(into.e("1"));
+    assert iz.negative(parse.e("-1"));
+    assert !iz.negative(parse.e("+1"));
+    assert !iz.negative(parse.e("1"));
   }
   @Test public void me3() {
-    assert iz.negative(into.e("-x"));
-    assert !iz.negative(into.e("+x"));
-    assert !iz.negative(into.e("x"));
+    assert iz.negative(parse.e("-x"));
+    assert !iz.negative(parse.e("+x"));
+    assert !iz.negative(parse.e("x"));
   }
   @Test public void meA() {
     trimmingOf("(x-0)")//
@@ -108,7 +108,7 @@ public class Issue0072 {
         .stays();
   }
   @Test public void mf1B() {
-    assert iz.simple(into.e("x"));
+    assert iz.simple(parse.e("x"));
     trimmingOf("-(x-0)")//
         .gives("-(x)")//
         .gives("-x")//

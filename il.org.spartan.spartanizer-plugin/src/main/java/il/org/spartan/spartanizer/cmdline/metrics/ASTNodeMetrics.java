@@ -5,6 +5,7 @@ import static il.org.spartan.tide.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -26,9 +27,9 @@ public final class ASTNodeMetrics {
   }
   public void computeMetrics() {
     length = node.getLength();
-    tokens = metrics.tokens(node + "");
+    tokens = Metrics.tokens(node + "");
     nodes = countOf.nodes(node);
-    body = metrics.bodySize(node);
+    body = Metrics.bodySize(node);
     final MethodDeclaration methodDeclaration = az.methodDeclaration(node);
     statements = methodDeclaration == null ? -1 : extract.statements(step.body(methodDeclaration)).size();
     // extract.statements(az.

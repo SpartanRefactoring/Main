@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.traversal.*;
  * @since 2016 */
 public class Spartanizer$Applicator extends GenericApplicator {
   CSVStatistics spectrumStats;
-  final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
+  final ChainStringToIntFunctionegerMap spectrum = new ChainStringToIntFunctionegerMap();
 
   /** Instantiates this class */
   public Spartanizer$Applicator() {
@@ -81,7 +81,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
     computeMetrics(input, outputASTNode);
     return false;
   }
-  @SuppressWarnings("boxing") protected void computeMetrics(final ASTNode input, final ASTNode output) {
+  protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);

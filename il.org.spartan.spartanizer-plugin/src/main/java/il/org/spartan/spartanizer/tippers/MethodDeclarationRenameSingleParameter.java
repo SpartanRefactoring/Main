@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.atomic;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -41,7 +42,7 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
     final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = make.newCent(d);
+    final SimpleName ¢ = atomic.newCent(d);
     return new Tip("Rename Single paraemter " + $ + " to the chosen prefrence", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, d, r, g);

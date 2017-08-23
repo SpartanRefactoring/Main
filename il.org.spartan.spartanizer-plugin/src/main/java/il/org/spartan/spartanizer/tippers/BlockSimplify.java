@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.atomic;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
@@ -33,7 +34,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     final List<Statement> $ = extract.statements(¢);
     switch ($.size()) {
       case 0:
-        return make.emptyStatement(¢);
+        return atomic.emptyStatement(¢);
       case 1:
         return copy.of(the.firstOf($));
       default:
@@ -63,7 +64,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
       return null;
     switch (ss.size()) {
       case 0:
-        return make.emptyStatement(b);
+        return atomic.emptyStatement(b);
       case 1:
         final Statement $ = the.firstOf(ss);
         if (iz.blockEssential($))

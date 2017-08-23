@@ -15,13 +15,13 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 16-11-10 */
 public class Issue0814 {
   @Test @SuppressWarnings("static-method") public void nullTest() {
-    final Assignment a = into.a("a = 3");
-    final Statement s = into.s("f();");
+    final Assignment a = parse.a("a = 3");
+    final Statement s = parse.s("f();");
     a.getParent().delete();
     assert new AssignmentAndReturn().go(null, a, s, null) == null;
   }
   @Test @SuppressWarnings("static-method") public void simpleTest() {
-    final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
+    final MethodDeclaration m = parse.m("public int p(){ int a;a = 3; return a; }");
     final ReturnStatement s = the.firstOf(new MethodExplorer(m).returnStatements());
     // noinspection SameReturnValue
     m.accept(new ASTVisitor(true) {
