@@ -13,7 +13,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.library.Utils;
+import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
 import il.org.spartan.spartanizer.cmdline.runnables.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -87,7 +87,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
     ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
-    ReportGenerator.write(input, output, "δ ", Utils::d);
+    ReportGenerator.write(input, output, "δ ", FileHeuristics::d);
     ReportGenerator.writePerc(input, output, "δ ");
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     ReportGenerator.nl("metrics");

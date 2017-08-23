@@ -41,6 +41,10 @@ public abstract class Accumulator {
     return this;
   }
 
+  public Integer val() {
+    return Integer.valueOf(value); 
+  }
+
   /** A simple counter class.
    * @author Itay Maman, The Technion
    * @since Jul 30, 2007 */
@@ -48,6 +52,9 @@ public abstract class Accumulator {
     public Counter() {}
     public Counter(final String name) {
       super(name);
+    }
+    public void inc() {
+      add();
     }
     public void add() {
       add(1);
@@ -66,7 +73,7 @@ public abstract class Accumulator {
     @SuppressWarnings("static-method")
     public static class TEST {
       @Test public void booleanAdds() {
-        final Counter c = new Counter();
+        final Accumulator c = new Counter();
         azzert.that(c.value(), is(0));
         c.add(true);
         azzert.that(c.value(), is(1));

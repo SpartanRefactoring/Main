@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.library.Utils;
+import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.plugin.*;
 
@@ -151,7 +151,7 @@ public interface ConfigurableReport {
           write(getInputList().get(i), getOutputList().get(i), "Δ ", (n1, n2) -> (n1 - n2));
           // write
           // listeners().tick("writing delta");
-          write(getInputList().get(i), getOutputList().get(i), "δ ", Utils::d);
+          write(getInputList().get(i), getOutputList().get(i), "δ ", FileHeuristics::d);
           // write
           // listeners().tick("writing perc");
           writePerc(getInputList().get(i), getOutputList().get(i), "δ ");
@@ -191,7 +191,7 @@ public interface ConfigurableReport {
       }
       private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
         for (final Metric.Integral ¢ : ReportGenerator.integralMetrics())
-          report().put(id + ¢.name + " %", Utils.p(¢.apply(n1), ¢.apply(n2)));
+          report().put(id + ¢.name + " %", FileHeuristics.p(¢.apply(n1), ¢.apply(n2)));
       }
     }
   }

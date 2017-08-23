@@ -2,12 +2,19 @@ package il.org.spartan.spartanizer.cmdline.library;
 
 import java.io.*;
 
+import org.eclipse.jdt.core.dom.*;
+
 import fluent.ly.*;
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.utils.*;
+import junit.framework.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-03-19 */
-public interface Utils {
+public interface FileHeuristics {
   static double d(final double n1, final double n2) {
     return 1 - n2 / n1;
   }
@@ -27,7 +34,7 @@ public interface Utils {
   static String format3(final double ¢) {
     if (¢ == 0 || ¢ >= 1 && ¢ - (int) ¢ < 0.0005)
       return "%.0f";
-    switch (digits(Utils.round3(¢))) {
+    switch (digits(FileHeuristics.round3(¢))) {
       case 1:
         return "%.2f";
       case 2:
@@ -40,17 +47,17 @@ public interface Utils {
     }
   }
   static boolean isProductionCode(final File ¢) {
-    return !Utils.isTestSourceFile(¢.getName());
+    return !FileHeuristics.isTestSourceFile(¢.getName());
   }
   static boolean isTestFile(final File ¢) {
-    return Utils.isTestSourceFile(¢.getName());
+    return FileHeuristics.isTestSourceFile(¢.getName());
   }
   static boolean isTestSourceFile(final String fileName) {
     return fileName.contains("/test/") || fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*")
         || fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$");
   }
   static String p(final int n1, final int n2) {
-    return Utils.formatRelative(d(n1, n2));
+    return FileHeuristics.formatRelative(d(n1, n2));
   }
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
@@ -73,5 +80,39 @@ public interface Utils {
       default:
         return ¢;
     }
+  }
+  /** Check whether given string containing Java code contains {@link Test}
+   * annotations
+   * <p>
+   * @param function
+   * @return */
+  static boolean containsTestAnnotation(final String javaCode) {
+    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    final Bool $ = new Bool();
+    cu.accept(new ASTTrotter() {
+      @Override public boolean visit(final MethodDeclaration node) {
+        if (extract.annotations(node).stream().noneMatch(λ -> "@Test".equals(λ + "")))
+          return true;
+        startFolding();
+        $.set();
+        return true;
+      }
+    });
+    return $.get();
+  }
+  /** Determines whether a file is production code, using the heuristic that
+   * production code does not contain {@code @}{@link Test} annotations
+   * <p>
+   * @return */
+  static boolean productionCode(@¢ final File $) {
+    try {
+      return !containsTestAnnotation(FileUtils.read($));
+    } catch (final IOException ¢) {
+      note.io(¢, "File = " + $);
+      return false;
+    }
+  }
+  public static boolean p(final File f) {
+    return isProductionCode(f) && productionCode(f);
   }
 }

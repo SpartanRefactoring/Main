@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.applicators.*;
-import il.org.spartan.spartanizer.cmdline.library.Utils;
+import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
 import il.org.spartan.spartanizer.cmdline.metrics.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -101,26 +101,26 @@ public class ReportGenerator implements ConfigurableReport {
   public static void reportDifferences(final ASTNodeMetrics nm1, final ASTNodeMetrics nm2, final String key) {
     report(key) //
         .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
-        .put("δ Nodes", Utils.d(nm1.nodes(), nm2.nodes()))//
-        .put("δ Nodes %", Utils.p(nm1.nodes(), nm2.nodes()))//
+        .put("δ Nodes", FileHeuristics.d(nm1.nodes(), nm2.nodes()))//
+        .put("δ Nodes %", FileHeuristics.p(nm1.nodes(), nm2.nodes()))//
         .put("Δ Body", nm1.body() - nm2.body())//
-        .put("δ Body", Utils.d(nm1.body(), nm2.body()))//
-        .put("% Body", Utils.p(nm1.body(), nm2.body()))//
+        .put("δ Body", FileHeuristics.d(nm1.body(), nm2.body()))//
+        .put("% Body", FileHeuristics.p(nm1.body(), nm2.body()))//
         .put("Δ Tokens", nm1.tokens() - nm2.tokens())//
-        .put("δ Tokens", Utils.d(nm1.tokens(), nm2.tokens()))//
-        .put("% Tokens", Utils.p(nm1.tokens(), nm2.tokens()))//
+        .put("δ Tokens", FileHeuristics.d(nm1.tokens(), nm2.tokens()))//
+        .put("% Tokens", FileHeuristics.p(nm1.tokens(), nm2.tokens()))//
         .put("Δ Length", nm1.length() - nm2.length())//
-        .put("δ Length", Utils.d(nm1.length(), nm2.length()))//
-        .put("% Length", Utils.p(nm1.length(), nm2.length()))//
+        .put("δ Length", FileHeuristics.d(nm1.length(), nm2.length()))//
+        .put("% Length", FileHeuristics.p(nm1.length(), nm2.length()))//
         .put("Δ Tide2", nm1.tide() - nm2.tide())//
-        .put("δ Tide2", Utils.d(nm1.tide(), nm2.tide()))//
-        .put("δ Tide2", Utils.p(nm1.tide(), nm2.tide()))//
+        .put("δ Tide2", FileHeuristics.d(nm1.tide(), nm2.tide()))//
+        .put("δ Tide2", FileHeuristics.p(nm1.tide(), nm2.tide()))//
         .put("Δ Essence", nm1.essence() - nm2.essence())//
-        .put("δ Essence", Utils.d(nm1.essence(), nm2.essence()))//
-        .put("% Essence", Utils.p(nm1.essence(), nm2.essence()))//
+        .put("δ Essence", FileHeuristics.d(nm1.essence(), nm2.essence()))//
+        .put("% Essence", FileHeuristics.p(nm1.essence(), nm2.essence()))//
         .put("Δ Statement", nm1.statements() - nm2.statements())//
-        .put("δ Statement", Utils.d(nm1.statements(), nm2.statements()))//
-        .put("% Statement", Utils.p(nm1.statements(), nm2.statements()));//
+        .put("δ Statement", FileHeuristics.d(nm1.statements(), nm2.statements()))//
+        .put("% Statement", FileHeuristics.p(nm1.statements(), nm2.statements()));//
   }
   public static void reportMetrics(final ASTNodeMetrics nm, final String key) {
     report(key)//
@@ -136,9 +136,9 @@ public class ReportGenerator implements ConfigurableReport {
     report(key) //
         // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))
         // //
-        .put("R(E/L)", Utils.ratio(nm.length(), nm.essence())) //
-        .put("R(E/T)", Utils.ratio(nm.tide(), nm.essence())) //
-        .put("R(B/S)", Utils.ratio(nm.nodes(), nm.body())); //
+        .put("R(E/L)", FileHeuristics.ratio(nm.length(), nm.essence())) //
+        .put("R(E/T)", FileHeuristics.ratio(nm.tide(), nm.essence())) //
+        .put("R(B/S)", FileHeuristics.ratio(nm.nodes(), nm.body())); //
   }
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
@@ -201,7 +201,7 @@ public class ReportGenerator implements ConfigurableReport {
   }
   @SuppressWarnings({ }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
     for (final Metric.Integral ¢ : ReportGenerator.metrics)
-      Util.report("metrics").put(id + ¢.name + " %", Utils.p(¢.apply(n1), ¢.apply(n2)));
+      Util.report("metrics").put(id + ¢.name + " %", FileHeuristics.p(¢.apply(n1), ¢.apply(n2)));
   }
   public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final ToDoubleFromTwoIntegers i) {

@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.traversal;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
+
 /** A visitor hack converting the type specific visit functions, into a single
  * call to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
  * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
@@ -23,7 +25,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
       }
 
       @Override protected <N extends ASTNode> boolean go(N n) {
-        return false;
+        return falze.forgetting(n); 
       }
     };
     static ME p2 = new ME() {

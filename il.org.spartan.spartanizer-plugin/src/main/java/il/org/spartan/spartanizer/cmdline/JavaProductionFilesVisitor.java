@@ -26,27 +26,7 @@ public class JavaProductionFilesVisitor {
   @External(alias = "s", value = "silent") protected boolean silent;
   public final Current current;
 
-  /** Check whether given string containing Java code contains {@link Test}
-   * annotations
-   * <p>
-   * @param function
-   * @return */
-  public static boolean containsTestAnnotation(final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    final Bool $ = new Bool();
-    cu.accept(new ASTTrotter() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        if (extract.annotations(node).stream().noneMatch(λ -> "@Test".equals(λ + "")))
-          return true;
-        startFolding();
-        $.set();
-        return true;
-      }
-    });
-    return $.get();
-  }
-
-interface template  {
+  interface template  {
   interface B{}
 }
   /**
@@ -83,19 +63,6 @@ interface template  {
       /* OVerride here which ever method you like */
     });
   }
-  /** Determines whether a file is production code, using the heuristic that
-   * production code does not contain {@code @}{@link Test} annotations
-   * <p>
-   * @return */
-  public static boolean productionCode(@¢ final File $) {
-    try {
-      return !containsTestAnnotation(FileUtils.read($));
-    } catch (final IOException ¢) {
-      note.io(¢, "File = " + $);
-      return false;
-    }
-  }
-
   public final Tappers notify = new Tappers()//
       .push(new Tapper() {
         /** @formatter:off */
@@ -130,7 +97,7 @@ interface template  {
 
   public void visitFile(final File f) {
     notify.beginFile();
-    if (Utils.isProductionCode(f) && productionCode(f))
+    if (FileHeuristics.p(f))
       try {
         CurrentData.absolutePath = f.getAbsolutePath();
         CurrentData.relativePath = f.getPath();
@@ -152,6 +119,6 @@ interface template  {
                                .forEach(λ -> visitFile(CurrentData.file = λ));
   }
 
-  void collect(final String javaCode) {
+  static void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
    }}

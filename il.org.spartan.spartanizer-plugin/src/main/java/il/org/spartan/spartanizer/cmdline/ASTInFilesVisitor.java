@@ -277,7 +277,7 @@ public class ASTInFilesVisitor {
 
   public void visitFile(final File f) {
     notify.beginFile();
-    if (Utils.isProductionCode(f) && productionCode(f))
+    if (FileHeuristics.isProductionCode(f) && productionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();

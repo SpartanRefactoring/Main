@@ -120,7 +120,7 @@ public class CommandLine$Applicator extends GenericApplicator {
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, "metrics");
     ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
-    ReportGenerator.write(input, output, "δ ", Utils::d);
+    ReportGenerator.write(input, output, "δ ", FileHeuristics::d);
     ReportGenerator.writePerc(input, output, "δ ");
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     ReportGenerator.nl("metrics");
