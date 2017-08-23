@@ -29,7 +29,7 @@ public class JavaProductionFilesVisitor {
   /** Check whether given string containing Java code contains {@link Test}
    * annotations
    * <p>
-   * @param f
+   * @param function
    * @return */
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
@@ -58,7 +58,7 @@ interface template  {
 
   public static class Current {
     public Current(List<String> locations) {
-      this.data.locations = locations.subList(0, locations.size());
+      CurrentData.locations = locations.subList(0, locations.size());
     }
     public CurrentData data = new CurrentData();
   }
@@ -69,15 +69,14 @@ interface template  {
   }
   
   public JavaProductionFilesVisitor(String[] args) {
-    List<String> extract = External.Introspector.extract(args(args), this);
-    current = new Current(extract);
+    current = new Current(External.Introspector.extract(args(args), this));
   }
 
-  private String[] args(String[] args) {
+  private static String[] args(String[] args) {
     return args != null && args.length != 0 ? args : defaultArguments;
   }
   
-  public static void main(final String[] args) throws IOException {
+  public static void main(final String[] args) {
     new GrandVisitor(args) {
       /* Override here which ever method you like */
     }.visitAll(new ASTVisitor(true) {
@@ -117,24 +116,24 @@ interface template  {
 
   public void visitAll(final ASTVisitor ¢) {
     notify.beginBatch();
-    current.data.visitor = ¢;
-    current.data.locations.forEach(
+    CurrentData.visitor = ¢;
+    CurrentData.locations.forEach(
         λ -> {
-          current.data.location = λ;
+          CurrentData.location = λ;
           notify.beginLocation();
           visitLocation();
           notify.endLocation();
         }
         );
-    //notify.endBatch();
+    notify.endBatch();
   }
 
   public void visitFile(final File f) {
     notify.beginFile();
     if (Utils.isProductionCode(f) && productionCode(f))
       try {
-        current.data.absolutePath = f.getAbsolutePath();
-        current.data.relativePath = f.getPath();
+        CurrentData.absolutePath = f.getAbsolutePath();
+        CurrentData.relativePath = f.getPath();
         collect(FileUtils.read(f));
       } catch (final IOException ¢) {
         note.io(¢, "File = " + f);
@@ -142,17 +141,15 @@ interface template  {
     notify.endFile();
   }
 
-  private void collect(final CompilationUnit ¢) {
+  private static void collect(final CompilationUnit ¢) {
     if (¢ != null)
-      ¢.accept(current.data.visitor);
+      ¢.accept(CurrentData.visitor);
   }
 
   protected void visitLocation() {
-    current.data.locationName = system.folder2File(current.data.locationPath = inputFolder + File.separator + current.data.location); 
-    new FilesGenerator(".java").from(current.data.locationPath)
-                               .forEach(λ -> {
-                                 visitFile(current.data.file = λ);
-                               });
+    CurrentData.locationName = system.folder2File(CurrentData.locationPath = inputFolder + File.separator + CurrentData.location); 
+    new FilesGenerator(".java").from(CurrentData.locationPath)
+                               .forEach(λ -> visitFile(CurrentData.file = λ));
   }
 
   void collect(final String javaCode) {
