@@ -6,14 +6,16 @@ import java.util.*;
 import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.CommandLineSelection.*;
 import il.org.spartan.spartanizer.cmdline.applicators.*;
+import il.org.spartan.spartanizer.cmdline.good.*;
 import il.org.spartan.spartanizer.cmdline.runnables.*;
 
 /** A configurable version of the HeadlessSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
-public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
+public class HeadlessSpartanizer2 extends AbstractCommandLineProcessor {
   @External(alias = "np", value = "Nano Patterns") private static String[] nanoPatterns;
   @External final CommandLineApplicator commandLineApplicator = new CommandLineApplicator();
   @External final boolean CommandLine$Applicator = true;
@@ -27,13 +29,13 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   @External(alias = "etg", value = "exclude one or more tipper groups") String[] excludedTipperGroups;
   @External(alias = "tg", value = "tipper group to be applied to the classes") String[] tipperGroups;
 
-  public HeadlessSpartanizer() {
+  public HeadlessSpartanizer2() {
     this(".");
   }
-  HeadlessSpartanizer(final String path) {
+  HeadlessSpartanizer2(final String path) {
     this(path, system.folder2File(path));
   }
-  HeadlessSpartanizer(final String presentSourcePath, final String name) {
+  HeadlessSpartanizer2(final String presentSourcePath, final String name) {
     inputFolder = presentSourcePath;
     this.name = name;
   }

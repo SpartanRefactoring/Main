@@ -3,12 +3,13 @@ package il.org.spartan.spartanizer.cmdline.good;
 import static il.org.spartan.external.External.Introspector.*;
 
 import fluent.ly.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.runnables.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru'
  * @since Oct 26, 2016 */
-final class CommandLineClient extends HeadlessSpartanizer {
+final class CommandLineClient extends HeadlessSpartanizer2 {
   public static void main(final String[] args) {
     new CommandLineClient().go(args);
   }

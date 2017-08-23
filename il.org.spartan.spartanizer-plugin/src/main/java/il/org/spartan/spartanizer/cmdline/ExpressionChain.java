@@ -6,12 +6,13 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.utils.*;
 
 public class ExpressionChain {
   public static void main(final String[] args) {
     try (BufferedWriter out = system.callingClassUniqueWriter()) {
-    new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+    new MasterVisitor(args) {/**/}.visitAll(new ASTTrotter() {
       {
         hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
           @Override public Void fire() {

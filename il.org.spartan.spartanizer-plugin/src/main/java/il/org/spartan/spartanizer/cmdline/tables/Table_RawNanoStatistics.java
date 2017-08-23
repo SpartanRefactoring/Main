@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -38,13 +39,13 @@ public class Table_RawNanoStatistics extends NanoTable {
         .forEach(λ -> table.col(λ, 0));
   }
   public static void main(final String[] args) {
-    new GrandVisitor(args) {
+    new MasterVisitor(args) {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
             initializeWriter();
-            summarize(CurrentData.location);
-            System.err.println(" " + CurrentData.location + " Done"); // we need
+            summarize(location);
+            System.err.println(" " + location + " Done"); // we need
                                                                       // to know
                                                                       // if the
             // process is finished or hang

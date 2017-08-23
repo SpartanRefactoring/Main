@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.tables.*;
 
 /** Generates a table of the class fields
@@ -22,11 +22,11 @@ public class MetricsTable extends NominalTables {
     map.put("variables", 0);
     map.put("catch", 0);
     map.put("method_invocation", 0);
-    new GrandVisitor(args) {
+    new MasterVisitor(args) {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(CurrentData.location);
+            done(location);
           }
         });
       }

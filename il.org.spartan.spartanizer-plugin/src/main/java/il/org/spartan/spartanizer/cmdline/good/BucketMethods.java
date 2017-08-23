@@ -4,11 +4,12 @@ import java.io.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 
-public class BucketMethods extends GrandVisitor {
+public class BucketMethods {
   public static void main(final String[] args) {
     try (BufferedWriter out = system.callingClassUniqueWriter()) {
-      new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+      new MasterVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         @Override protected void record(final String summary) {
           try {
             out.write(summary);

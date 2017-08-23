@@ -7,13 +7,14 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.utils.*;
 
 public class PrintAllInterfaces {
   public static void main(final String[] args) {
     try (BufferedWriter out = system.callingClassUniqueWriter()) {
       MethodHandles.lookup();
-      new GrandVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+      new MasterVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         {
           final Rule<TypeDeclaration, Object> r = Rule.on(TypeDeclaration::isInterface).go(λ -> System.out.println(λ.getName()));
           final Predicate<TypeDeclaration> q = λ -> {

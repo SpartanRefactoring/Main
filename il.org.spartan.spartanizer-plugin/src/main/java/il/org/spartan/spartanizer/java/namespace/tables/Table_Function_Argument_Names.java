@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.tables.*;
 
@@ -15,11 +16,11 @@ import il.org.spartan.tables.*;
 public class Table_Function_Argument_Names extends NominalTables {
   public static void main(final String[] args) {
     namePrevelance = new HashMap<>();
-    new GrandVisitor(args) {
+    new MasterVisitor(args) {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(CurrentData.location);
+            done(location);
           }
         });
       }

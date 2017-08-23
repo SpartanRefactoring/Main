@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
@@ -22,11 +23,11 @@ public class Table_ReusabilityIndices {
   static final Collection<String> defined = new LinkedHashSet<>();
 
   public static void main(final String[] args) {
-    new GrandVisitor(args) {
+    new MasterVisitor(args) {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(CurrentData.location);
+            done(location);
           }
         });
       }
@@ -34,7 +35,7 @@ public class Table_ReusabilityIndices {
       protected void done(final String path) {
         addMissingKeys();
         initializeWriter();
-        writer.col("Project", CurrentData.relativePath);
+        writer.col("Project", relativePath);
         try (Table t = new Table("rindices")) {
           for (final String category : usage.keySet()) {
             final Map<String, Integer> map = usage.get(category);

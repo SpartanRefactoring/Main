@@ -5,6 +5,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.tables.*;
@@ -21,11 +22,11 @@ public class Table_Summary_Unspartanized extends Table_Summary {
   }
 
   public static void main(final String[] args) {
-    new GrandVisitor(args) {
+    new MasterVisitor(args) {
       {
         listen(new Tapper() {
           @Override public void endLocation() {
-            done(CurrentData.location);
+            done(location);
           }
         });
       }

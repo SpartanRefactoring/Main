@@ -7,6 +7,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
@@ -21,7 +22,7 @@ public class Issue1345 {
     trimmer = new TextualTraversals();
   }
   @Test(timeout = 30000) public void runTheAthenizerOnItself() {
-    new GrandVisitor(new String[] { "-i", ".", "." }) {
+    new MasterVisitor(new String[] { "-i", ".", "." }) {
       @Override public void visitFile(final File f) {
         try {
           // TODO Tomer Dragucki: replace this line so bloating will be

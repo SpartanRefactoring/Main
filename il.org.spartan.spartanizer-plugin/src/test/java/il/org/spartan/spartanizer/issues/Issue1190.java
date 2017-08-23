@@ -7,6 +7,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.visitor.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
@@ -25,7 +26,7 @@ public class Issue1190 {
     trimmer = new TextualTraversals();
   }
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {
-    new GrandVisitor(new String[] { "-i", ".", "." }) {
+    new MasterVisitor(new String[] { "-i", ".", "." }) {
       @Override public void visitFile(final File f) {
         try {
           trimmer.fixed(FileUtils.read(f));
