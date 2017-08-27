@@ -46,7 +46,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   protected Tip tip;
   protected Tipper<?> tipper;
   protected boolean useProjectPreferences;
-  public static Table table;  
+  public static Table table = new Table("Dummy");  
   int tipReject;
   int noTipper;
 
@@ -224,7 +224,9 @@ public abstract class Traversal implements Selfie<Traversal> {
     return otherTip = auxiliaryTip;
   }
   protected void setCompilationUnit(final CompilationUnit ¢) {
+    compilationUnit = ¢;
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
+    notify.begin();
   }
   protected void setNode(final ASTNode currentNode) {
     node = currentNode;

@@ -66,14 +66,6 @@ public interface Category {
   }
 
   interface Transformation extends Category {
-    interface Collapse extends Transformation {
-      String ___ = "Collapse two syntactical structures, such as declaration and subsequent initialization, into one";
-
-      interface FactorOut extends Collapse {
-        @SuppressWarnings("hiding") String ___ = "Collapse two syntactical elements into one by factoring common elements, as in the application of the distrubtive rule";
-      }
-    }
-
     interface Reshape extends Transformation {
       String ___ = "Reshape a syntactical element, such as a for loop, to a simpler or smaller element of the same syntactical kind";
     }
