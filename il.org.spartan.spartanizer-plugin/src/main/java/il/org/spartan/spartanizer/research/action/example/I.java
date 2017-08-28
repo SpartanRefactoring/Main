@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.action.a1;
+package il.org.spartan.spartanizer.research.action.example;
 
 import fluent.ly.*;
 

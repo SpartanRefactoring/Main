@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.action.a1;
+package il.org.spartan.spartanizer.research.action.example;
 
 import java.util.*;
 import java.util.function.*;
@@ -8,8 +8,8 @@ import fluent.ly.*;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-public interface E {
-  interface Delegator<S extends E.Set> extends E.Set, il.org.spartan.spartanizer.research.action.a0.E.Delegator<S> {
+interface E {
+  interface Delegator<S extends E.Set> extends E.Set, il.org.spartan.spartanizer.research.action.a1.E.Delegator<S> {
     static <S extends E.Set> E.Delegator<S> to(S ¢) {
       return new E.Delegator.ToOne<>(¢);
     }
@@ -18,10 +18,9 @@ public interface E {
     }
     @Override void delegate(Consumer<? super S> action);
 
-    abstract class Abstract<S extends E.Set> extends il.org.spartan.spartanizer.research.action.a0.E.Delegator.Abstract<S> implements E.Delegator<S> {
-      @Override public final void end() {
-        E.Delegator.super.end();
-      }
+    abstract class Abstract<S extends E.Set> extends il.org.spartan.spartanizer.research.action.a1.E.Delegator.Abstract<S> implements E.Delegator<S> {
+      @Override public void action1() {/**/}
+      @Override public void action2() {/**/}
     }
 
     class Many<S extends E.Set> extends ToAny<S> {
@@ -70,12 +69,14 @@ public interface E {
     }
   }
 
-  interface Idle extends Set, il.org.spartan.spartanizer.research.action.a0.E.Idle {
-    @Override default void end() {/**/}
+  interface Idle extends Set, il.org.spartan.spartanizer.research.action.a1.E.Idle {
+    @Override default void action1() {/**/}
+    @Override default void action2() {/**/}
   }
 
   /* Empty protocol */
-  interface Set extends E, il.org.spartan.spartanizer.research.action.a0.E.Set {
-    void end();
+  interface Set extends E, il.org.spartan.spartanizer.research.action.a1.E.Set {
+    void action1();
+    void action2();
   }
 }

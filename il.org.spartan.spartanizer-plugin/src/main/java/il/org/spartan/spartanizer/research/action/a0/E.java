@@ -13,24 +13,15 @@ public interface E {
     static <S extends Set> Delegator<S> to(S ¢) {
       return new Delegator.ToOne<>(¢);
     }
-    // @formatter:off
-    @Override
-    default void begin() {
+    @Override default void begin() {
       delegate(S::begin);
     }
-
-
     void delegate(Consumer<? super S> action);
 
-    // @formatter:on
     abstract class Abstract<S extends E.Set> implements Delegator<S> {
-      // @formatter:off
-      @Override
-      public final void begin() {
+      @Override public final void begin() {
         Delegator.super.begin();
       }
-
-      // @formatter:on
     }
 
     class Many<S extends E.Set> extends ToAny<S> {
@@ -65,7 +56,10 @@ public interface E {
         this.inner = inner;
       }
       @Override public void delegate(Consumer<? super S> action) {
-        action.accept(inner);
+        if (action == null)
+          forget.it(inner);
+        else
+          action.accept(inner);
       }
     }
 
