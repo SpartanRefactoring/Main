@@ -13,14 +13,20 @@ interface E {
     static <S extends E.Set> E.Delegator<S> to(S ¢) {
       return new E.Delegator.ToOne<>(¢);
     }
-    @Override default void end() {
-      delegate(S::end);
+    @Override default void action1() {
+      delegate(S::action1);
     }
-    @Override void delegate(Consumer<? super S> action);
+    @Override default void action2() {
+      delegate(S::action2);
+    }
 
     abstract class Abstract<S extends E.Set> extends il.org.spartan.spartanizer.research.action.a1.E.Delegator.Abstract<S> implements E.Delegator<S> {
-      @Override public void action1() {/**/}
-      @Override public void action2() {/**/}
+      @Override public void action1() {
+        E.Delegator.super.action1();
+      }
+      @Override public void action2() {
+        E.Delegator.super.action2();
+      }
     }
 
     class Many<S extends E.Set> extends ToAny<S> {

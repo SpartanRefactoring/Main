@@ -16,7 +16,6 @@ public interface E {
     @Override default void end() {
       delegate(S::end);
     }
-    @Override void delegate(Consumer<? super S> action);
 
     abstract class Abstract<S extends E.Set> extends il.org.spartan.spartanizer.research.action.a0.E.Delegator.Abstract<S> implements E.Delegator<S> {
       @Override public final void end() {

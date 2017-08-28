@@ -12,7 +12,7 @@ class I<S extends E.Set, Self extends I<S, Self>> implements Selfie<Self> {
     listeners.add(¢);
     return self();
   }
-  public final void go() {
+  public void go() {
     listeners.begin();
     listeners.end();
   }
