@@ -23,10 +23,14 @@ public interface A1 {
 
   interface E {
     interface Delegator<S extends E.Set> extends E.Set {
-      static <S extends Set> Delegator<S> to(S ¢) {
-        return new Delegator.ToOne<>(¢);
+      static <S extends E.Set> A1.E.Delegator<S> to(S ¢) {
+        return new A1.E.Delegator.ToOne<>(¢);
       }
       // @formatter:off
+      @Override
+      default void begin() {
+        delegate(S::end);
+      }
       @Override
       default void end() {
         delegate(S::end);
@@ -47,12 +51,12 @@ public interface A1 {
       }
 
       class Many<S extends E.Set> extends ToAny<S> {
-        List<Delegator<S>> inner = new ArrayList<>();
+        List<A1.E.Delegator<S>> inner = new ArrayList<>();
 
         void add(S ¢) {
-          inner.add(new Delegator.ToOne<>(¢));
+          inner.add(new A1.E.Delegator.ToOne<>(¢));
         }
-        @Override Iterable<Delegator<S>> inner() {
+        @Override Iterable<A1.E.Delegator<S>> inner() {
           return inner;
         }
       }
@@ -65,10 +69,10 @@ public interface A1 {
 
       abstract class ToAny<S extends E.Set> extends Abstract<S> {
         @Override public final void delegate(Consumer<? super S> action) {
-          for (Delegator<S> d : inner())
+          for (A1.E.Delegator<S> d : inner())
             d.delegate(action);
         }
-        abstract Iterable<Delegator<S>> inner();
+        abstract Iterable<A1.E.Delegator<S>> inner();
       }
 
       class ToOne<S extends E.Set> extends Abstract<S> {
@@ -89,12 +93,12 @@ public interface A1 {
       }
     }
 
-    interface Idle extends Set {
+    interface Idle extends Set, A0.E.Idle {
       @Override default void end() { /**/}
     }
 
     /* Empty protocol */
-    interface Set extends A0.E.Set {
+    interface Set extends E, A0.E.Set {
       void end();
     }
   }
