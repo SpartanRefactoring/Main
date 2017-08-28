@@ -5,7 +5,7 @@ import fluent.ly.*;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-class I<S extends E.Set, Self extends I<S, Self>> implements Selfie<Self> {
+abstract class I<S extends E.Set, Self extends I<S, Self>> implements Selfie<Self> {
   public final E.Delegator.Many<S> listeners = new E.Delegator.Many<>();
 
   public final Self withListener(S ¢) {
