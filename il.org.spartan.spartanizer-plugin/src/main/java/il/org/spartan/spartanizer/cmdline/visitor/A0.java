@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 public interface A0 {
   void go();
 
-  class I<S extends E.Set, Self extends I<?, ?>> implements A0, Selfie<Self> {
+  class I<S extends E.Set, Self extends I<S, Self>> implements A0, Selfie<Self> {
     public final E.Delegator.Many<S> listeners = new E.Delegator.Many<>();
 
     public final Self withListener(S ¢) {

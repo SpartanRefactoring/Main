@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 public interface A1 {
   void go();
 
-  class I<S extends E.Set, Self extends I<?, ?>> implements A1, Selfie<Self> {
+  class I<S extends E.Set, Self extends I<S, Self>> implements A1, Selfie<Self> {
     public final E.Delegator.Many<S> listeners = new E.Delegator.Many<>();
 
     public final Self withListener(S ¢) {
@@ -22,22 +22,18 @@ public interface A1 {
   }
 
   interface E {
-    interface Delegator<S extends E.Set> extends E.Set {
+    interface Delegator<S extends E.Set> extends E.Set, A0.E.Delegator<S> {
       static <S extends E.Set> A1.E.Delegator<S> to(S ¢) {
         return new A1.E.Delegator.ToOne<>(¢);
       }
       // @formatter:off
-      @Override
-      default void begin() {
-        delegate(S::end);
-      }
       @Override
       default void end() {
         delegate(S::end);
       }
 
 
-      void delegate(Consumer<? super S> action);
+      @Override void delegate(Consumer<? super S> action);
 
       // @formatter:on
       abstract class Abstract<S extends E.Set> implements A1.E.Delegator<S> {
