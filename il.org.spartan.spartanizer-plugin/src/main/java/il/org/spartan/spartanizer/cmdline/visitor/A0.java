@@ -7,9 +7,20 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public interface A0 {
-  void go();
 
-  class I<S extends E.Set, Self extends I<S, Self>> implements A0, Selfie<Self> {
+   public interface Interface <S, Self extends A0<Self>> implements  Selfie<Self> {
+  static void main(String[] args) {
+    System.out.print("Nothing should be between the angular brackets<");
+    A0.I<>.create().go();
+    System.out.println(""); 
+    System.out.print("Hello World should be between the angular brackets<");
+    new A0.I<>().go();
+    A0.create().w
+    System.out.println(""); 
+  }
+  Self withListener(S ¢); 
+
+ class I<S extends E.Set, Self extends I<S, Self>> implements A0, Selfie<Self> {
     public final E.Delegator.Many<S> listeners = new E.Delegator.Many<>();
 
     public final Self withListener(S ¢) {
