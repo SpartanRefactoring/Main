@@ -9,6 +9,8 @@ import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import op.*;
+import op.traverse.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -41,7 +43,7 @@ public class ASTTraversor extends Traverse.Execution {
   }
   public ASTTraversor(String[] arguments) {
     super(arguments);
-    withTapper(new I.IdleTapper() {
+    withTapper(new Run.IdleTapper() {
       @Override @SuppressWarnings("synthetic-access") public void beginFile() {
         ((CompilationUnit) makeAST.COMPILATION_UNIT.from(content)).accept(visitors);
       }

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.visitor;
+package op.traverse;
 
 import java.io.*;
 import java.nio.file.*;
@@ -15,74 +15,13 @@ import il.org.spartan.utils.*;
  * system.
  * @author Yossi Gil
  * @since 2017-08-24 */
-public interface Traverse extends Operation {
-  interface Parent extends Operation {}
+public interface Traverse  {
+  interface ParentEvents extends op.a1.Events{} 
 
   static Traverse create() {
-    return new Execution<Execution<?, ?>, Events.Set>();
+    return new Run<Run<Run, Events>, Events.Set>();
   }
 
-  class Execution<Self extends Execution<?, ?>, S extends Events.Set> //
-      extends Operation.Execution<S, Execution<?, ?>> //
-      implements Arguments<Self> {
-    /** Transient variables */
-    /** Default command line argument list, used when the arguments is empty */
-    public static final String[] DEFAULT_ARGUMENTS = as.array("..");
-    final List<BooleanSupplier> filters = new ArrayList<>();
-
-    /** runs the class arguments are corpora to be searched */
-    @Override public final void go() {
-      doBatch();
-    }
-    @Override public Self withArguments(String[] arguments) {
-      corpora.addAll(External.Introspector.extract(de.fault(arguments).to(DEFAULT_ARGUMENTS), this));
-      return self();
-    }
-    @Override public Self withFilter(BooleanSupplier filter) {
-      filters.add(filter);
-      return self();
-    }
-    private void doBatch() {
-      if (corpora.isEmpty())
-        corpora.addAll(as.list(system.foldersIn(inputAbsolutePath())));
-      for (corpusIndex = 0; corpusIndex < corpora.size(); ++corpusIndex)
-        doCorpus();
-      corpusIndex = -1;
-    }
-    private void doCorpus() {
-      projects.clear();
-      projects.addAll(as.list(system.foldersIn(corpusAbsolutePath())));
-      listeners.beginCorpus();
-      for (projectIndex = 0; projectIndex < projects.size(); ++projectIndex)
-        doProject();
-      listeners.endCorpus();
-    }
-    private void doFile(File f) {
-      file = f;
-      listeners.beginFile();
-      if (FileHeuristics.noTestMethods(file()))
-        try {
-          fileContents = FileUtils.read(file());
-          listeners.beginFile();
-          listeners.endFile();
-        } catch (final IOException ¢) {
-          note.io(¢, "File = " + file());
-        }
-      listeners.endFile();
-      file = null;
-    }
-    private void doProject() {
-      listeners.beginProject();
-      new FilesGenerator(".java").from(projectAbsolutePath()).forEach(λ -> doFile(λ));
-      listeners.endProject();
-    }
-
-    public class Hook extends Traverse.Events.Delegator.ToInner {
-      @Override public final Hook inner() {
-        return this;
-      }
-    }
-  }
 
   /** Implements a multi-layer traversal of Java files. A variety of query
    * functions and variables reflect the state. Inheritors and clients can use
@@ -223,76 +162,4 @@ public interface Traverse extends Operation {
     }
   }
 
-  /** Do not sort
-   * @author Yossi Gil
-   * @since 2017-08-24 */
-  interface Events extends Operation.Events {
-    interface Set extends Operation.Events.Set {
-      void beginCorpus();
-      void beginFile();
-      void beginProject();
-      void endCorpus();
-      void endFile();
-      void endProject();
-    }
-
-    interface Idle extends Events.Set, Operation.Events.Idle {
-      @Override default void beginCorpus() {/**/}
-      @Override default void beginFile() {/**/}
-      @Override default void beginProject() {/**/}
-      @Override default void endCorpus() {/**/}
-      @Override default void endFile() {/**/}
-      @Override default void endProject() {/**/}
-    }
-
-    interface Delegator<S extends Events.Set> extends Operation.Events.Delegator<S>  implements Traverse.Events.Set{
-      //@formatter:off
-        // vim: +;/ter:on/-!sort|column -t|awk '{print "\t\t\t\t"$0}'|expand -t2
-          @Override  default  void  beginCorpus()   {  delegate(S::beginCorpus);   }
-          @Override  default  void  beginFile()     {  delegate(S::beginFile);     }
-          @Override  default  void  beginProject()  {  delegate(S::beginProject);  }
-          @Override  default  void  endCorpus()     {  delegate(S::endCorpus);     }
-          @Override  default  void  endFile()       {  delegate(S::endFile);       }
-          @Override  default  void  endProject()    {  delegate(S::endProject);    }
-        //@formatter:on
-      void delegate(Consumer<? super S> action);
-
-      class Many<S extends Traverse.Set> extends Operation.Events.Delegator.Many<S> implements Traverse.Events.Delegator<S> {
-        /** Delegation @formatter:off */
-          // vim: /ter:off/+;/ter:on/-!sort|column -t|awk '{print "\t\t\t\t" $0}'|expand -t2
-        //@formatter:off
-          @Override public void beginCorpus() { Traverse.Events.Delegator.super.beginCorpus(); } 
-          @Override public void beginFile() { Traverse.Events.Delegator.super.beginFile(); } 
-          @Override public void beginProject() { Traverse.Events.Delegator.super.beginProject(); } 
-          @Override public void endCorpus() { Traverse.Events.Delegator.super.endCorpus(); } 
-          @Override public void endFile() { Traverse.Events.Delegator.super.endFile(); } 
-          @Override public void endProject() { Traverse.Events.Delegator.super.endProject(); } 
-      }
-
-      /** @formatter:on */
-      // vim: /ter:off/+;/ter:on/-!sort|column -t|awk '{print "\t\t\t\t"
-      // $0}'|expand -t2
-      //@formatter:off
-        //@formatter:on
-      abstract class ToInner<S extends Events.Set> extends Implementation {
-        @Override public void delegate(Consumer<? super Events> action) {
-          action.accept(inner());
-        }
-        abstract S inner();
-      }
-    }
-
-    class Many<S extends Traverse.Events.Set> extends Operation.Events.Delegator.Many<S> implements Events.Set {
-      // vim: /ter:off/+;/ter:on/-!sort|column -t|awk '{print "\t\t\t\t"
-      // $0}'|expand -t2
-    //@formatter:off
-        @Override  public  void  beginCorpus()   {  delegate(S::beginCorpus);   }
-        @Override  public  void  beginFile()     {  delegate(S::beginFile);     }
-        @Override  public  void  beginProject()  {  delegate(S::beginProject);  }
-        @Override  public  void  endCorpus()     {  delegate(S::endCorpus);     }
-        @Override  public  void  endFile()       {  delegate(S::endFile);       }
-        @Override  public  void  endProject()    {  delegate(S::endProject);    }
-       /** @formatter:on */
-    }
-  }
 }

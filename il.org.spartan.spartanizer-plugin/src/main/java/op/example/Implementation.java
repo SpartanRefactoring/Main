@@ -1,12 +1,12 @@
-package il.org.spartan.spartanizer.research.action.example;
+package op.example;
 
 import fluent.ly.*;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-abstract class I<S extends E.Set, Self extends I<S, Self>> implements Selfie<Self> {
-  public final E.Delegator.Many<S> listeners = new E.Delegator.Many<>();
+abstract class Implementation<S extends Events.Set, Self extends Implementation<S, Self>> implements Selfie<Self> {
+  public final Events.Delegator.Many<S> listeners = new Events.Delegator.Many<>();
 
   public final Self withListener(S ¢) {
     listeners.add(¢);

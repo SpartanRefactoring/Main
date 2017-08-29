@@ -6,11 +6,13 @@ import java.util.function.*;
 import fluent.ly.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.external.*;
+import op.*;
+import op.traverse.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-08-26 */
-public class FeaturedTraversor<Self extends FeaturedTraversor<?>> extends Traverse.Arguments.Execution implements Selfie<Self> {
+public class FeaturedTraversor<Self extends FeaturedTraversor<?>> extends op.Arguments.Execution implements Selfie<Self> {
 
   public static void main(String[] arguments) {
     new FeaturedTraversor<>().withArguments(arguments).execute();

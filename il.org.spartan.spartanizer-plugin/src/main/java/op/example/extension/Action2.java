@@ -1,17 +1,19 @@
-package il.org.spartan.spartanizer.research.action.example;
+package op.example.extension;
+
+import op.example.*;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-public class Action extends I<E.Set, Action> {
-  public class X implements E.Idle {
-    public int getX() {
-      return Action.this.getX();
+public class Action2 extends Action {
+  public class X extends Action.X {
+    public int getY() {
+      return Action2.this.getY();
     }
   }
 
-  @SuppressWarnings("static-method") public int getX() {
-    return 13;
+  @SuppressWarnings("static-method") public int getY() {
+    return 3;
   }
   @Override public void go() {
     listeners.begin();
@@ -22,7 +24,7 @@ public class Action extends I<E.Set, Action> {
     listeners.end();
   }
   public static void main(String[] args) {
-    Action a = new Action();
+    Action2 a = new Action2();
     a.withListener(a.new X() {
       @Override public void begin() {
         System.out.println("begin1");
@@ -37,6 +39,7 @@ public class Action extends I<E.Set, Action> {
     }).withListener(a.new X() {
       @Override public void begin() {
         System.out.println("x = " + getX());
+        System.out.println("y = " + getY());
       }
     }).withListener(a.new X() {
       @Override public void action2() {

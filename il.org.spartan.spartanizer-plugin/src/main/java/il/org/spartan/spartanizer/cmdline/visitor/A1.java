@@ -22,7 +22,7 @@ public interface A1 {
   }
 
   interface E {
-    interface Delegator<S extends E.Set> extends E.Set, A0.E.Delegator<S> {
+    interface Delegator<S extends E.Set> extends E.Set, A0.Events.Delegator<S> {
       static <S extends E.Set> A1.E.Delegator<S> to(S ¢) {
         return new A1.E.Delegator.ToOne<>(¢);
       }
@@ -89,12 +89,12 @@ public interface A1 {
       }
     }
 
-    interface Idle extends Set, A0.E.Idle {
+    interface Idle extends Set, A0.Events.Idle {
       @Override default void end() { /**/}
     }
 
     /* Empty protocol */
-    interface Set extends E, A0.E.Set {
+    interface Set extends E, A0.Events.Set {
       void end();
     }
   }

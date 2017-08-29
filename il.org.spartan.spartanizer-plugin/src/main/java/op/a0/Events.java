@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.action.a0;
+package op.a0;
 
 import java.util.*;
 import java.util.function.*;
@@ -8,8 +8,8 @@ import fluent.ly.*;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-public interface E {
-  interface Delegator<S extends E.Set> extends E.Set {
+public interface Events {
+  interface Delegator<S extends Events.Set> extends Listener {
     static <S extends Set> Delegator<S> to(S ¢) {
       return new Delegator.ToOne<>(¢);
     }
@@ -18,13 +18,13 @@ public interface E {
     }
     void delegate(Consumer<? super S> action);
 
-    abstract class Abstract<S extends E.Set> implements Delegator<S> {
+    abstract class Abstract<S extends Events.Set> implements Delegator<S> {
       @Override public final void begin() {
         Delegator.super.begin();
       }
     }
 
-    class Many<S extends E.Set> extends ToAny<S> {
+    class Many<S extends Events.Set> extends ToAny<S> {
       List<Delegator<S>> inner = new ArrayList<>();
 
       void add(S ¢) {
@@ -35,13 +35,13 @@ public interface E {
       }
     }
 
-    final class Stub<S extends E.Set> extends Abstract<S> {
+    final class Stub<S extends Events.Set> extends Abstract<S> {
       @Override public void delegate(Consumer<? super S> action) {
         forget.it(action);
       }
     }
 
-    abstract class ToAny<S extends E.Set> extends Abstract<S> {
+    abstract class ToAny<S extends Events.Set> extends Abstract<S> {
       @Override public final void delegate(Consumer<? super S> action) {
         for (Delegator<S> d : inner())
           d.delegate(action);
@@ -49,7 +49,7 @@ public interface E {
       abstract Iterable<Delegator<S>> inner();
     }
 
-    class ToOne<S extends E.Set> extends Abstract<S> {
+    class ToOne<S extends Events.Set> extends Abstract<S> {
       private S inner;
 
       public ToOne(S inner) {
@@ -63,19 +63,23 @@ public interface E {
       }
     }
 
-    class Undefined<S extends E.Set> extends ToOne<S> {
+    class Undefined<S extends Events.Set> extends ToOne<S> {
       public Undefined() {
         super(null);
       }
     }
   }
-
+interface Listener extends Set {
+  interface Default extends Set {
+    @Override default void begin() { /**/}
+  }
+}
   interface Idle extends Set {
     @Override default void begin() { /**/}
   }
 
   /* Empty protocol */
-  interface Set extends E {
+  interface Set extends Events {
     void begin();
   }
 }

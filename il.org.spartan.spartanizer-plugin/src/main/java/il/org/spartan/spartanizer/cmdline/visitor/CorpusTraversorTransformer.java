@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.tables.*;
+import op.*;
+import op.traverse.*;
 
 /**  A traversal where there each java file is also converted textual to something else.
  * @author Yossi Gil
@@ -28,7 +30,7 @@ public abstract class CorpusTraversorTransformer extends FeaturedTraversor<Featu
 
   public CorpusTraversorTransformer(String[] arguments) {
     super(arguments);
-    withTapper(new I.IdleTapper() {
+    withTapper(new Run.IdleTapper() {
       @Override @SuppressWarnings("synthetic-access") public void beginFile() {
         transformedContent = output();
       }
