@@ -8,7 +8,7 @@ import fluent.ly.*;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-interface Events {
+public interface Events {
   interface Delegator<S extends Events.Set> extends Listener, op.a1.Events.Delegator<S> {
     static <S extends Events.Set> Events.Delegator<S> to(S ¢) {
       return new Events.Delegator.ToOne<>(¢);

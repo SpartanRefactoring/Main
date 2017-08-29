@@ -46,4 +46,23 @@ public abstract class Action2<Self extends Action2<Self>> extends Action<Self> {
     });
     a.go();
   }
+  public static void main2(@SuppressWarnings("unused") String[] args) {
+    Implementation a = new Implementation();
+    Action.Implementation b = new Action.Implementation();
+    Run<Events.Set, Implementation>.Hook al = a.new Hook() {
+      @Override public void begin() {
+        System.out.println(host().y);
+        ;
+      }
+    };
+    Run<Events.Set, Action.Implementation>.Hook bl = b.new Hook() {
+      @Override public void begin() {
+        System.out.println(host().x);
+      }
+    };
+    a.withListener(al).withListener(bl);
+    b.withListener(al).withListener(bl);
+    a.go();
+    b.go();
+  }
 }
