@@ -3,16 +3,11 @@ package op.example;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-public class Action extends Implementation<Events.Set, Action> {
-  public class X implements Events.Listener.Idle {
-    public int getX() {
-      return Action.this.getX();
-    }
-  }
+public abstract class Action<Self extends Action<Self>> extends Run<Events.Set, Self> {
+  public static class Implementation extends Action<Implementation> {/**/}
 
-  @SuppressWarnings("static-method") public int getX() {
-    return 13;
-  }
+  public int x = 13;
+
   @Override public void go() {
     listeners.begin();
     System.out.println("ACTION1");
@@ -22,23 +17,23 @@ public class Action extends Implementation<Events.Set, Action> {
     listeners.end();
   }
   public static void main(String[] args) {
-    Action a = new Action();
-    a.withListener(a.new X() {
+    Implementation a = new Implementation();
+    a.withListener(a.new Hook() {
       @Override public void begin() {
         System.out.println("begin1");
       }
-    }).withListener(a.new X() {
+    }).withListener(a.new Hook() {
       @Override public void begin() {
         System.out.println("begin2");
       }
       @Override public void action1() {
         System.out.println("action1");
       }
-    }).withListener(a.new X() {
+    }).withListener(a.new Hook() {
       @Override public void begin() {
-        System.out.println("x = " + getX());
+        System.out.println("x = " + host().x);
       }
-    }).withListener(a.new X() {
+    }).withListener(a.new Hook() {
       @Override public void action2() {
         System.out.println("action2");
       }

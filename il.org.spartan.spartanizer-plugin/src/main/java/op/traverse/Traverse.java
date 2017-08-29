@@ -15,14 +15,7 @@ import il.org.spartan.utils.*;
  * system.
  * @author Yossi Gil
  * @since 2017-08-24 */
-public interface Traverse  {
-  interface ParentEvents extends op.a1.Events{} 
-
-  static Traverse create() {
-    return new Run<Run<Run, Events>, Events.Set>();
-  }
-
-
+public interface Traverse {
   /** Implements a multi-layer traversal of Java files. A variety of query
    * functions and variables reflect the state. Inheritors and clients can use
    * information provided in {@link Traverse} to determine the current state of
@@ -32,7 +25,7 @@ public interface Traverse  {
    * @see #go()
    * @author Yossi Gil
    * @since 2017-07-04 */
-  interface Arguments<Self extends Arguments<?>> extends Selfie<Self>, Traverse {
+  interface Arguments<Self extends Arguments<Self>> extends Selfie<Self>, Traverse {
     Self withArguments(String[] arguments);
     Self withFilter(BooleanSupplier filter);
     Self withHook(Events h);
@@ -96,9 +89,7 @@ public interface Traverse  {
       }
     }
 
-    abstract class Implementation<Self extends Implementation<Self>> extends Mutables<Self> {}
-
-    abstract class Mutables<Self extends Mutables<Self>> implements Variables, Arguments<Self> {
+    abstract class Mutables<Self extends Mutables<Self>> implements Variables, Arguments {
       /** Fields  @formatter:off */
         // vim: +;/ter:on/-!sort|column -t|awk '{print"\t\t\t"$0}'|expand -t2
         File          file;
@@ -161,5 +152,4 @@ public interface Traverse  {
       }
     }
   }
-
 }

@@ -1,12 +1,17 @@
 package op.traverse;
 
+import java.io.*;
+import java.util.*;
 import java.util.function.*;
 
 import fluent.ly.*;
+import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.cmdline.library.*;
+import il.org.spartan.spartanizer.traversal.*;
+import op.traverse.Traverse.*;
 
-class Run<Self extends Run<?, ?>, S extends Events.Set> //
-    extends op.a1.Run<S, Run<?, ?>> //
+class Run<Self extends Run<Self, S>, S extends Events.Set> //
     implements Arguments<Self> {
   /** Transient variables */
   /** Default command line argument list, used when the arguments is empty */
@@ -14,7 +19,7 @@ class Run<Self extends Run<?, ?>, S extends Events.Set> //
   final List<BooleanSupplier> filters = new ArrayList<>();
 
   /** runs the class arguments are corpora to be searched */
-  @Override public final void go() {
+  public final void go() {
     doBatch();
   }
   @Override public Self withArguments(String[] arguments) {
@@ -23,6 +28,9 @@ class Run<Self extends Run<?, ?>, S extends Events.Set> //
   }
   @Override public Self withFilter(BooleanSupplier filter) {
     filters.add(filter);
+    return self();
+  }
+  @Override public Self withHook(@SuppressWarnings("unused") Events h) {
     return self();
   }
   private void doBatch() {
