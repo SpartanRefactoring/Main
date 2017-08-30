@@ -3,7 +3,7 @@ package op.example;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-08-28 */
-public abstract class Action<Self extends Action<Self>> extends Run<Events.Set, Self> {
+public abstract class Action<Self extends Action<Self>> extends Go<Events.Set, Self> {
   public static class Implementation extends Action<Implementation> {/**/}
 
   public int x = 13;
@@ -31,7 +31,7 @@ public abstract class Action<Self extends Action<Self>> extends Run<Events.Set, 
       }
     }).withListener(a.new Hook() {
       @Override public void begin() {
-        System.out.println("x = " + host().x);
+        System.out.println("x = " + enclosure().x);
       }
     }).withListener(a.new Hook() {
       @Override public void action2() {

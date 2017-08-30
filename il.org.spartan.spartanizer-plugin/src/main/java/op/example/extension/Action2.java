@@ -33,8 +33,8 @@ public abstract class Action2<Self extends Action2<Self>> extends Action<Self> {
       }
     }).withListener(a.new Hook() {
       @Override public void begin() {
-        System.out.println("x = " + host().x);
-        System.out.println("y = " + host().y);
+        System.out.println("x = " + enclosure().x);
+        System.out.println("y = " + enclosure().y);
       }
     }).withListener(a.new Hook() {
       @Override public void action2() {
@@ -49,15 +49,15 @@ public abstract class Action2<Self extends Action2<Self>> extends Action<Self> {
   public static void main2(@SuppressWarnings("unused") String[] args) {
     Implementation a = new Implementation();
     Action.Implementation b = new Action.Implementation();
-    Run<Events.Set, Implementation>.Hook al = a.new Hook() {
+    Go<Events.Set, Implementation>.Hook al = a.new Hook() {
       @Override public void begin() {
-        System.out.println(host().y);
+        System.out.println(enclosure().y);
         ;
       }
     };
-    Run<Events.Set, Action.Implementation>.Hook bl = b.new Hook() {
+    Go<Events.Set, Action.Implementation>.Hook bl = b.new Hook() {
       @Override public void begin() {
-        System.out.println(host().x);
+        System.out.println(enclosure().x);
       }
     };
     a.withListener(al).withListener(bl);

@@ -9,7 +9,7 @@ import fluent.ly.*;
  * @author Ori Roth
  * @since 2017-08-28 */
 public interface Events {
-  interface Delegator<S extends Events.Set> extends Listener, op.a1.Events.Delegator<S> {
+  interface Delegator<S extends Events.Set> extends Listener, op.end.Events.Delegator<S> {
     static <S extends Events.Set> Events.Delegator<S> to(S ¢) {
       return new Events.Delegator.ToOne<>(¢);
     }
@@ -20,7 +20,7 @@ public interface Events {
       delegate(S::action2);
     }
 
-    abstract class Abstract<S extends Events.Set> extends op.a1.Events.Delegator.Abstract<S> implements Events.Delegator<S> {
+    abstract class Abstract<S extends Events.Set> extends op.end.Events.Delegator.Abstract<S> implements Events.Delegator<S> {
       @Override public void action1() {
         Events.Delegator.super.action1();
       }
@@ -76,14 +76,14 @@ public interface Events {
   }
 
   interface Listener extends Set {
-    interface Idle extends Events.Set, op.a1.Events.Listener.Idle {
+    interface Idle extends Events.Set, op.end.Events.Listener.Idle {
       @Override default void action1() {/**/}
       @Override default void action2() {/**/}
     }
   }
 
   /* Empty protocol */
-  interface Set extends Events, op.a1.Events.Set {
+  interface Set extends Events, op.end.Events.Set {
     void action1();
     void action2();
   }
