@@ -1,19 +1,20 @@
 package op.zz;
 
+import op.z.*;
 import op.zz.OperationListener.*;
 
-/** TODO Ori Roth: document class
+/** Brief example of {@link Listener}/{@link Observable} inheritence.
  * @author Ori Roth
  * @since 2017-08-31 */
 public class Main {
-  interface HelloListener extends OperationListener {
+  interface HelloListener extends OperationListener<HelloListener> {
     public default void sayHello() {/**/}
   }
 
-  interface HelloListenerContainer<L extends HelloListener> extends OperationListenerContainer<L>, HelloListener {/**/}
+  interface HelloListenerContainer extends OperationListenerContainer<HelloListener>, HelloListener {/**/}
 
-  static class HelloListenerContainerImplementation<L extends HelloListener> extends OperationListenerContainerImplementation<L>
-      implements HelloListenerContainer<L> {
+  static class HelloListenerContainerImplementation extends OperationListenerContainerImplementation<HelloListener>
+      implements HelloListenerContainer {
     private static final long serialVersionUID = -4655868501813965628L;
 
     @Override public void sayHello() {
@@ -22,8 +23,8 @@ public class Main {
   }
 
   static class HelloObservable extends ObservableOperation<HelloListener> {
-    @Override protected HelloListenerContainer<HelloListener> initializeContainer() {
-      return new HelloListenerContainerImplementation<>();
+    @Override protected HelloListenerContainer initializeContainer() {
+      return new HelloListenerContainerImplementation();
     }
     @Override public void go() {
       listeners().begin();
