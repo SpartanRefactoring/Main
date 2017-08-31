@@ -9,10 +9,7 @@ public interface OperationListener<Self extends OperationListener<Self>> extends
   public default void begin() {/**/}
   public default void end() {/**/}
 
-  public interface OperationListenerContainer<L extends OperationListener<L>> extends ListenerContainer<L>, OperationListener<L> {/**/}
-
-  public class OperationListenerContainerImplementation<L extends OperationListener<L>> extends ListenerContainerImplementation<L>
-      implements OperationListenerContainer<L> {
+  public class OperationListenerContainer<L extends OperationListener<L>> extends ListenerContainer<L> implements OperationListener<L> {
     private static final long serialVersionUID = 8137051051870841683L;
 
     @Override public void begin() {

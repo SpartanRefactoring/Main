@@ -8,7 +8,7 @@ import op.zz.OperationListener.*;
  * @since 2017-08-31 */
 public class ObservableOperation<L extends OperationListener<L>> extends Observable<L> {
   @Override protected OperationListenerContainer<L> initializeContainer() {
-    return new OperationListenerContainerImplementation<>();
+    return new OperationListenerContainer<>();
   }
   public void go() {
     listeners().begin();

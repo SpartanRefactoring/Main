@@ -11,10 +11,7 @@ public class Main {
     public default void sayHello() {/**/}
   }
 
-  interface HelloListenerContainer extends OperationListenerContainer<HelloListener>, HelloListener {/**/}
-
-  static class HelloListenerContainerImplementation extends OperationListenerContainerImplementation<HelloListener>
-      implements HelloListenerContainer {
+  static class HelloListenerContainer extends OperationListenerContainer<HelloListener> implements HelloListener {
     private static final long serialVersionUID = -4655868501813965628L;
 
     @Override public void sayHello() {
@@ -24,7 +21,7 @@ public class Main {
 
   static class HelloObservable extends ObservableOperation<HelloListener> {
     @Override protected HelloListenerContainer initializeContainer() {
-      return new HelloListenerContainerImplementation();
+      return new HelloListenerContainer();
     }
     @Override public void go() {
       listeners().begin();

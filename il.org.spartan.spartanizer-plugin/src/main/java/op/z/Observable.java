@@ -11,7 +11,7 @@ public class Observable<L extends Listener<L>> {
 
   /** Successors allocate {@link Observable#listeners}. */
   protected ListenerContainer<L> initializeContainer() {
-    return new ListenerContainerImplementation<>();
+    return new ListenerContainer<>();
   }
   /** {@link Observable#listeners} presented as a delegation listener. */
   protected L listeners() {
