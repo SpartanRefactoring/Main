@@ -7,13 +7,11 @@ import op.zz.OperationListener.*;
  * @author Ori Roth
  * @since 2017-08-31 */
 public class Main {
-  interface HelloListener extends OperationListener<HelloListener> {
+  interface HelloListener extends OperationListener {
     public default void sayHello() {/**/}
   }
 
   static class HelloListenerContainer extends OperationListenerContainer<HelloListener> implements HelloListener {
-    private static final long serialVersionUID = -4655868501813965628L;
-
     @Override public void sayHello() {
       delegate(HelloListener::sayHello);
     }
@@ -39,16 +37,14 @@ public class Main {
       @Override public void sayHello() {
         System.out.println("Beginer: hello!");
       }
-    });
-    o.container().add(new HelloListener() {
+    }).add(new HelloListener() {
       @Override public void end() {
         System.out.println("END");
       }
       @Override public void sayHello() {
         System.out.println("Ender: hello!");
       }
-    });
-    o.container().add(new HelloListener() {
+    }).add(new HelloListener() {
       @Override public void sayHello() {
         System.out.println("Hello!");
       }
