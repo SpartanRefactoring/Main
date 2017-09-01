@@ -2,12 +2,12 @@ package op.y;
 
 import java.util.*;
 
-/** TODO Ori Roth: document class
+/** Simple example of inheritance from an {@link Observable}.
  * @author Ori Roth
  * @since 2017-09-01 */
 @SuppressWarnings("hiding")
 public class ObservableHello<Self extends ObservableHello<Self>> extends ObservableOperation<Self> {
-  /** TODO Ori Roth: document class
+  /** Listener for hello operation.
    * @author Ori Roth
    * @since 2017-09-01 */
   public interface HelloListener extends OperationListener {

@@ -2,11 +2,11 @@ package op.y;
 
 import java.util.*;
 
-/** TODO Ori Roth: document class
+/** Observable operation. Contains a {@link ObservableOperation#go()} method.
  * @author Ori Roth
  * @since 2017-09-01 */
 public class ObservableOperation<Self extends ObservableOperation<Self>> extends Observable<Self> {
-  /** TODO Ori Roth: document class
+  /** Listener for an operation, records operation beginning and ending.
    * @author Ori Roth
    * @since 2017-09-01 */
   public interface OperationListener extends Listener {
@@ -26,7 +26,7 @@ public class ObservableOperation<Self extends ObservableOperation<Self>> extends
   }
 
   protected List<OperationListener> inner = new LinkedList<>();
-  public OperationListener listeners = new OperationDelegator()/* {
+  public OperationListener listeners = new OperationDelegator() /*{
     {
       add(new OperationListener() {
         @Override public void begin() {
