@@ -1,7 +1,7 @@
-package op.zz;
+package op.xx;
 
-import op.z.*;
-import op.zz.OperationListener.*;
+import op.x.*;
+import op.xx.OperationListener.*;
 
 /** Operation that accepts {@link OperationListener}s.
  * @author Ori Roth

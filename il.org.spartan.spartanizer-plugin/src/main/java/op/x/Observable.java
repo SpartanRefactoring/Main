@@ -1,6 +1,6 @@
-package op.z;
+package op.x;
 
-import op.z.Listener.*;
+import op.x.Listener.*;
 
 /** Empty observable class. Successors may add methods and use different set of
  * listeners (type parameter {@code L}).

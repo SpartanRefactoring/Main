@@ -1,7 +1,7 @@
-package op.zz;
+package op.xx;
 
-import op.z.*;
-import op.zz.OperationListener.*;
+import op.x.*;
+import op.xx.OperationListener.*;
 
 /** Brief example of {@link Listener}/{@link Observable} inheritence.
  * @author Ori Roth
