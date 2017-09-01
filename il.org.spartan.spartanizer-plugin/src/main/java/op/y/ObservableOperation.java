@@ -9,12 +9,13 @@ public class ObservableOperation<Self extends ObservableOperation<Self>> extends
   /** Listener for an operation, records operation beginning and ending.
    * @author Ori Roth
    * @since 2017-09-01 */
-  public interface OperationListener extends Listener {
-    public default void begin() {/**/}
-    public default void end() {/**/}
+  public class OperationListener extends Listener {
+    public void begin() {/**/}
+    public void end() {/**/}
   }
 
-  public class OperationDelegator implements OperationListener {
+  protected List<OperationListener> inner = new LinkedList<>();
+  public OperationListener listeners = new OperationListener() {
     @Override public void begin() {
       for (OperationListener listener : inner)
         listener.begin();
@@ -23,18 +24,8 @@ public class ObservableOperation<Self extends ObservableOperation<Self>> extends
       for (OperationListener listener : inner)
         listener.end();
     }
-  }
-
-  protected List<OperationListener> inner = new LinkedList<>();
-  public OperationListener listeners = new OperationDelegator() /*{
-    {
-      add(new OperationListener() {
-        @Override public void begin() {
-          System.out.println("parent begins");
-        }
-      });
-    }
-  }*/;
+//    {add(new OperationListener() {@Override public void begin() {System.out.println("parent begins");};});}
+  };
 
   public Self add(OperationListener listener) {
     inner.add(listener);
