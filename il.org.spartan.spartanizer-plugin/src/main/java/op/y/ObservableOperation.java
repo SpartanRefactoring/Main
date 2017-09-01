@@ -1,13 +1,19 @@
-package op.yy;
+package op.y;
 
 import java.util.*;
-
-import op.y.Observable;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-09-01 */
 public class ObservableOperation<Self extends ObservableOperation<Self>> extends Observable<Self> {
+  /** TODO Ori Roth: document class
+   * @author Ori Roth
+   * @since 2017-09-01 */
+  public interface OperationListener extends Listener {
+    public default void begin() {/**/}
+    public default void end() {/**/}
+  }
+
   public class OperationDelegator implements OperationListener {
     @Override public void begin() {
       for (OperationListener listener : inner)
@@ -20,7 +26,7 @@ public class ObservableOperation<Self extends ObservableOperation<Self>> extends
   }
 
   protected List<OperationListener> inner = new LinkedList<>();
-  public OperationListener listeners = new OperationDelegator() {
+  public OperationListener listeners = new OperationDelegator()/* {
     {
       add(new OperationListener() {
         @Override public void begin() {
@@ -28,7 +34,7 @@ public class ObservableOperation<Self extends ObservableOperation<Self>> extends
         }
       });
     }
-  };
+  }*/;
 
   public Self add(OperationListener listener) {
     inner.add(listener);
