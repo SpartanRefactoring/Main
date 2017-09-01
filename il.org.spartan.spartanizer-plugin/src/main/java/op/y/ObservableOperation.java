@@ -24,7 +24,15 @@ public class ObservableOperation<Self extends ObservableOperation<Self>> extends
       for (OperationListener listener : inner)
         listener.end();
     }
-//    {add(new OperationListener() {@Override public void begin() {System.out.println("parent begins");};});}
+
+    // TODO Roth: remove, part of the example
+    {
+      add(new OperationListener() {
+        @Override public void begin() {
+          System.out.println("parent begins");
+        };
+      });
+    }
   };
 
   public Self add(OperationListener listener) {
