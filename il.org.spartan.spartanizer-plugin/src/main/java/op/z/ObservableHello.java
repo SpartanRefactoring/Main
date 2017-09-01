@@ -7,29 +7,36 @@ import op.yy.*;
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-09-01 */
-public class ObservableHello<Self extends ObservableHello<Self>> extends ObservableOperation<Self> implements HelloListener {
-  @SuppressWarnings("hiding") protected List<HelloListener> inner = new LinkedList<>();
+@SuppressWarnings("hiding")
+public class ObservableHello<Self extends ObservableHello<Self>> extends ObservableOperation<Self> {
+  class HelloDelegator extends OperationDelegator implements HelloListener {
+    @Override public void begin() {
+      super.begin();
+      for (OperationListener listener : inner)
+        listener.begin();
+    }
+    @Override public void end() {
+      super.end();
+      for (OperationListener listener : inner)
+        listener.end();
+    }
+    @Override public void sayHello() {
+      for (HelloListener listener : inner)
+        listener.sayHello();
+    }
+  }
+
+  protected List<HelloListener> inner = new LinkedList<>();
+  public HelloListener listeners = new HelloDelegator();
 
   public Self add(HelloListener listener) {
     inner.add(listener);
-    super.add(new OperationListener() {
-      @Override public void begin() {
-        listener.begin();
-      }
-      @Override public void end() {
-        listener.end();
-      }
-    });
     return self();
   }
-  @Override public void sayHello() {
-    for (HelloListener listener : inner)
-      listener.sayHello();
-  }
   @Override public void go() {
-    begin();
-    sayHello();
-    end();
+    listeners.begin();
+    listeners.sayHello();
+    listeners.end();
   }
   public static void main(String[] args) {
     class ObservableHelloEndpoint extends ObservableHello<ObservableHelloEndpoint> {/**/}
