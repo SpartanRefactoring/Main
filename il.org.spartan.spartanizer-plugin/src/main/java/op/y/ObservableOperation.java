@@ -17,12 +17,10 @@ public class ObservableOperation<Self extends ObservableOperation<Self>> extends
   protected List<OperationListener> inner = new LinkedList<>();
   public OperationListener listeners = new OperationListener() {
     @Override public void begin() {
-      for (OperationListener listener : inner)
-        listener.begin();
+      delegate(inner, OperationListener::begin);
     }
     @Override public void end() {
-      for (OperationListener listener : inner)
-        listener.end();
+      delegate(inner, OperationListener::end);
     }
 
     // TODO Roth: remove, part of the example

@@ -23,22 +23,29 @@ public class ObservableHello<Self extends ObservableHello<Self>> extends Observa
   public HelloListener listeners = new HelloListener() {
     @Override public void begin() {
       ObservableHello.super.listeners.begin();
-      for (OperationListener listener : inner)
-        listener.begin();
     }
     @Override public void end() {
       ObservableHello.super.listeners.end();
-      for (OperationListener listener : inner)
-        listener.end();
     }
     @Override public void sayHello() {
-      for (HelloListener listener : inner)
-        listener.sayHello();
+      delegate(inner, HelloListener::sayHello);
     }
   };
 
   public Self add(HelloListener listener) {
-    inner.add(listener);
+    inner.add(new HelloListener() {
+      @Override public void sayHello() {
+        listener.sayHello();
+      }
+    });
+    ObservableHello.super.add(new HelloListener() {
+      @Override public void begin() {
+        listener.begin();
+      }
+      @Override public void end() {
+        listener.end();
+      }
+    });
     return self();
   }
   @Override public void go() {
