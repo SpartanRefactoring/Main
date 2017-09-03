@@ -111,7 +111,7 @@ interface Events {
   }
 
   /* Empty protocol */
-  interface Set extends Events, ParentEvents.Set {
+  interface Set extends Events, ParentEvents.Protocol {
     void beginCorpus();
     void beginFile();
     void beginProject();

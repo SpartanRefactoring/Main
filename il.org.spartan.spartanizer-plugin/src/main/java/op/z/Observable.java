@@ -18,7 +18,7 @@ public abstract class Observable<L extends Listener, Self extends Observable<L, 
     return self();
   }
 
-  public static final class ConcreteListener implements Listener {/**/}
+  public class ConcreteListener implements Listener {/**/}
 
   public static final class ConcreteObservable extends Observable<Listener, ConcreteObservable> {
     @Override protected Listener delegation(@SuppressWarnings("unused") List<Listener> inner) {

@@ -8,6 +8,6 @@ import op.traverse.*;
  * @since 2017-08-25 */
 public class SimpleTraverse {
   public static void main(final String[] arguments) {
-    Traverse.create().withArguments(arguments).withListener(new Traverse.Events.Empty(){} ).go();
+    Traverse.create().withArguments(arguments).withListener(new Traverse.Listener.Empty(){} ).go();
   }
 }

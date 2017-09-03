@@ -15,7 +15,7 @@ public enum SimpleClientDemo {
     new Go<>().go();
     System.out.println(">");
     System.out.print("There should be nothing between the following angular brackets: <");
-    new Go<>().withListener(new Events.Listener.Default.Template() {/**/}).go();
+    new Go<>().withListener(new Listener.Listener.Default.Template() {/**/}).go();
     System.out.println(">!");
     System.out.print("There should be 'Hello World' between the following angular brackets: <");
     go();
@@ -26,7 +26,7 @@ public enum SimpleClientDemo {
         go());
   }
   private static <T> T go() {
-    return new Go<>().withListener(new Events.Listener.Default.Template() {
+    return new Go<>().withListener(new Listener.Listener.Default.Template() {
       /** Reified ops ar as expressive as anything.. */
       @Override public void begin() {
         System.out.print("Hello, World!");

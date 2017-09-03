@@ -76,14 +76,14 @@ public interface Events {
   }
 
   interface Listener extends Set {
-    interface Idle extends Events.Set, op.end.Events.Listener.Idle {
+    interface Idle extends Events.Set, op.end.Listener.Listener.Idle {
       @Override default void action1() {/**/}
       @Override default void action2() {/**/}
     }
   }
 
   /* Empty protocol */
-  interface Set extends Events, op.end.Events.Set {
+  interface Set extends Events, op.end.Protocol.Set {
     void action1();
     void action2();
   }

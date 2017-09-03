@@ -1,3 +1,3 @@
 /** The most simple op; it has only one event, called
- * {@link Events.Set#begin} */
+ * {@link Protocol.Set#begin} */
 package op.begin;

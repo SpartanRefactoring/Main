@@ -10,7 +10,7 @@ public enum SimpleInheritanceDemo {
     new GoodbyeWorld().go();
   }
 
-  static class HelloWorld extends Go<Events.Set, HelloWorld> {
+  static class HelloWorld extends Go<Protocol.Set, HelloWorld> {
     {
       withListener(new Events.Listener() {
         @Override public void begin() {

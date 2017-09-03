@@ -17,7 +17,7 @@ public abstract class ObservableOperation<L extends OperationListener, Self exte
     }));
   }
 
-  public void go() {
+  public final void go() {
     listeners.begin();
     listeners.end();
   }

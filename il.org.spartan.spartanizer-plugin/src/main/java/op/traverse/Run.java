@@ -68,7 +68,7 @@ class Run<Self extends Run<Self, S>, S extends Events.Set> //
     listeners.endProject();
   }
 
-  public class Hook extends Traverse.Events.Delegator.ToInner {
+  public class Hook extends Traverse.Listener.Delegator.ToInner {
     @Override public final Hook inner() {
       return self();
     }
