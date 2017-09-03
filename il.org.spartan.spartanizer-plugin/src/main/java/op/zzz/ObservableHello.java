@@ -16,6 +16,16 @@ public abstract class ObservableHello<L extends HelloListener, Self extends Obse
     listeners.end();
   }
   protected abstract L adjust(HelloListener listener);
+  @Override protected L adjust(OperationListener listener) {
+    return adjust(new HelloListener() {
+      @Override public void begin() {
+        listener.begin();
+      }
+      @Override public void end() {
+        listener.end();
+      }
+    });
+  }
 
   public class ConcreteHelloListener implements HelloListener {
     public String myName() {
@@ -39,16 +49,6 @@ public abstract class ObservableHello<L extends HelloListener, Self extends Obse
     }
     @Override protected HelloListener adjust(HelloListener listener) {
       return listener;
-    }
-    @Override protected HelloListener adjust(OperationListener listener) {
-      return new HelloListener() {
-        @Override public void begin() {
-          listener.begin();
-        }
-        @Override public void end() {
-          listener.end();
-        }
-      };
     }
   }
 
