@@ -156,6 +156,13 @@ public interface CFG {
           delegateEnds(node, ss.get(ss.size() - 1));
           chain(ss);
         }
+        @Override public void endVisit(Assignment node) {
+          Expression left = node.getLeftHandSide(), right = node.getRightHandSide();
+          delegateBeginnings(node, left);
+          selfEnds(node);
+          chain(left, right);
+          chainShallow(right, node);
+        }
         @Override public void endVisit(MethodDeclaration node) {
           List<SingleVariableDeclaration> ps = step.parameters(node);
           Block b = step.body(node);
