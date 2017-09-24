@@ -68,10 +68,30 @@ public interface CFG {
         }
         @Override public void endVisit(ArrayCreation node) {
           List<Expression> dimensions = step.dimensions(node);
-          delegateBeginnings(node, dimensions.get(0));
-          selfEnds(node);
-          chain(dimensions);
-          chainShallow(dimensions.get(dimensions.size() - 1), node);
+          ArrayInitializer initializer = node.getInitializer();
+          List<Expression> initializers = step.expressions(initializer);
+          if (dimensions.size() != 0) {
+            delegateBeginnings(node, dimensions.get(0));
+            selfEnds(node);
+            chain(dimensions);
+            chainShallow(dimensions.get(dimensions.size() - 1), node);
+          } else {
+            delegateBeginnings(node, initializers.get(0));
+            selfEnds(node);
+            chain(initializers);
+            chainShallow(initializers.get(initializers.size() - 1), node);
+          }
+        }
+        @Override public void endVisit(SuperFieldAccess node) {
+          Name name = node.getQualifier();
+          SimpleName field = node.getName();
+          if (name != null) {
+            delegateBeginnings(node, name);
+            delegateEnds(node, field);
+            chain(name, field);
+          } else {
+            leaf(field);
+          }
         }
         @Override public void endVisit(MethodInvocation node) {
           List<Expression> arguments = step.arguments(node);
@@ -144,6 +164,18 @@ public interface CFG {
           delegateEnds(node, fs.get(fs.size() - 1));
           chain(fs);
         }
+        
+        @Override public void endVisit(SingleVariableDeclaration node) {
+          if(node.getInitializer()==null)
+            leaf(node);
+          else {
+            Expression initializer = node.getInitializer();
+            delegateBeginnings(node, initializer);
+            selfEnds(node);
+            chain(initializer,node);
+          }
+        }
+        
         @Override public void endVisit(AssertStatement node) {
           Expression condition = node.getExpression(), message = node.getMessage();
           delegateBeginnings(node, condition);
@@ -152,9 +184,13 @@ public interface CFG {
         }
         @Override public void endVisit(Block node) {
           List<Statement> ss = step.statements(node);
-          delegateBeginnings(node, ss.get(0));
-          delegateEnds(node, ss.get(ss.size() - 1));
-          chain(ss);
+          if (ss.size() == 1)
+            leaf(ss.get(0));
+          else {
+            delegateBeginnings(node, ss.get(0));
+            delegateEnds(node, ss.get(ss.size() - 1));
+            chain(ss);
+          }
         }
         @Override public void endVisit(Assignment node) {
           Expression left = node.getLeftHandSide(), right = node.getRightHandSide();
