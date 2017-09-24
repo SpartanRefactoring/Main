@@ -65,8 +65,7 @@ public class CFGTest {
         + "  x2.basa();\n" //
         + "}\n" //
         + "f2();") //
-            .outs("f1()")
-            .containsOnly( //
+            .outs("f1()").containsOnly( //
                 "f2()", //
                 "Exception1 x1", //
                 "Exception2 x2") //
@@ -116,7 +115,7 @@ public class CFGTest {
             .outs("a = b ? c : d").containsOnly("f();");
   }
   @Test public void fieldAccess() {
-    cfg("f().g").outs("f()").containsOnly("f().g");
+    cfg("f().g").outs("f()").containsOnly("g").outs("g").containsOnly("f().g");
   }
   @Test public void infixExpression() {
     cfg("w * x + y * z") //

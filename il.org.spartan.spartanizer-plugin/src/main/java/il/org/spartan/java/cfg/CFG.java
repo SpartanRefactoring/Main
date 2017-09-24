@@ -53,6 +53,47 @@ public interface CFG {
         @Override public void endVisit(SimpleName node) {
           leaf(node);
         }
+        
+        @Override public void endVisit(ParenthesizedExpression node) {
+          leaf(node);
+        }
+        
+        @Override public void endVisit(MethodInvocation node) {
+          List<Expression> arguments = step.arguments(node);
+          if(arguments.isEmpty())
+            leaf(node);
+          else {
+            delegateBeginnings(node, arguments.get(0));
+            selfEnds(node);
+            chain(arguments);
+            chainShallow(arguments.get(arguments.size()-1), node);
+          }
+        }
+        
+        @Override public void endVisit(FieldAccess node) {
+          Expression left = node.getExpression();
+          SimpleName right = node.getName();
+          delegateBeginnings(node,left);
+          selfEnds(node);
+          chain(left, right);
+          chainShallow(right, node);
+        }
+        
+        @Override public void endVisit(ConditionalExpression node) {
+           Expression condition = node.getExpression(), thenExpression = node.getThenExpression(), elseExpression = node.getElseExpression();
+           delegateBeginnings(node,condition);
+           delegateEnds(node,thenExpression);
+           delegateEnds(node,elseExpression);
+           chain(condition,thenExpression);
+           chain(condition,elseExpression);           
+        }
+        
+        
+        
+        
+        
+        
+        
         @Override public void endVisit(InfixExpression node) {
           Expression left = node.getLeftOperand(), right = node.getRightOperand();
           delegateBeginnings(node, left);
@@ -129,17 +170,12 @@ public interface CFG {
           for (int ¢ = 0; ¢ < ns.size() - 1; ++¢)
             chain(ns.get(¢), ns.get(¢ + 1));
         }
-        
-        /**
-         * To all the ends of the first node, put the outgoings of the second node
-         */
+        /** To all the ends of the first node, put the outgoings of the second node */
         void chain(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
           beginnings.of(n2).get().stream().forEach(λ -> incoming.of(λ).addAll(ends.of(n1)));
         }
-        /**
-         * chian with hierarchy
-         */
+        /** chian with hierarchy */
         void chainShallow(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).add(n2));
           incoming.of(n2).addAll(ends.of(n1));
@@ -163,10 +199,10 @@ public interface CFG {
   }
 
   enum Edges {
-    beginnings, //Nodes which are first to be evaluated inside the node
-    ends, //Nodes which are last to be evaluated inside the node
-    incoming, //The node evaluated before you
-    outgoing; //The node evaluated after you
+    beginnings, // Nodes which are first to be evaluated inside the node
+    ends, // Nodes which are last to be evaluated inside the node
+    incoming, // The node evaluated before you
+    outgoing; // The node evaluated after you
     Of of(final ASTNode to) {
       return new Of() {
         @Override public Nodes get() {
