@@ -103,7 +103,7 @@ public interface CFG {
           beginnings.of(¢).add(¢);
           ends.of(¢).add(¢);
         }
-        boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode n) {
+        boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode __) {
           // TOO Roth: complete
           return false;
         }
@@ -129,10 +129,17 @@ public interface CFG {
           for (int ¢ = 0; ¢ < ns.size() - 1; ++¢)
             chain(ns.get(¢), ns.get(¢ + 1));
         }
+        
+        /**
+         * To all the ends of the first node, put the outgoings of the second node
+         */
         void chain(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
           beginnings.of(n2).get().stream().forEach(λ -> incoming.of(λ).addAll(ends.of(n1)));
         }
+        /**
+         * chian with hierarchy
+         */
         void chainShallow(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).add(n2));
           incoming.of(n2).addAll(ends.of(n1));
@@ -156,10 +163,10 @@ public interface CFG {
   }
 
   enum Edges {
-    beginnings, //
-    ends, //
-    incoming, //
-    outgoing; //
+    beginnings, //Nodes which are first to be evaluated inside the node
+    ends, //Nodes which are last to be evaluated inside the node
+    incoming, //The node evaluated before you
+    outgoing; //The node evaluated after you
     Of of(final ASTNode to) {
       return new Of() {
         @Override public Nodes get() {
