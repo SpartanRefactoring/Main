@@ -163,8 +163,8 @@ public class CFGTest {
         + "g((h::i));\n" //
         + "j();") //
             .ins("h::i").containsOnly("f()") //
-            .outs("h::i").containsOnly("g(h::i)") //
-            .outs("g(h::i)").containsOnly("j()");
+            .outs("h::i").containsOnly("g((h::i))") //
+            .outs("g((h::i))").containsOnly("j()");
   }
   @Test public void prepostfixExpression() {
     cfg("" //

@@ -56,8 +56,14 @@ public interface CFG {
         @Override public void endVisit(NumberLiteral node) {
           leaf(node);
         }
-        @Override public void endVisit(ParenthesizedExpression node) {
+        @Override public void endVisit(ExpressionMethodReference node) {
           leaf(node);
+        }
+        @Override public void endVisit(ParenthesizedExpression node) {
+          delegateTo(node, node.getExpression());
+        }
+        @Override public void endVisit(ExpressionStatement node) {
+          delegateTo(node, node.getExpression());
         }
         @Override public void endVisit(ArrayAccess node) {
           Expression array = node.getArray(), index = node.getIndex();
@@ -94,14 +100,18 @@ public interface CFG {
           }
         }
         @Override public void endVisit(MethodInvocation node) {
-          List<Expression> arguments = step.arguments(node);
-          if (arguments.isEmpty())
+          final Expression e = node.getExpression();
+          final List<Expression> arguments = step.arguments(node), es = new LinkedList<>();
+          if (e != null)
+            es.add(e);
+          es.addAll(arguments);
+          if (es.isEmpty())
             leaf(node);
           else {
-            delegateBeginnings(node, arguments.get(0));
+            delegateBeginnings(node, es.get(0));
             selfEnds(node);
-            chain(arguments);
-            chainShallow(arguments.get(arguments.size() - 1), node);
+            chain(es);
+            chainShallow(es.get(es.size() - 1), node);
           }
         }
         @Override public void endVisit(FieldAccess node) {
@@ -140,14 +150,6 @@ public interface CFG {
           chain(left, right);
           chainShallow(right, node);
         }
-        @Override public void endVisit(ExpressionMethodReference node) {
-          Expression left = node.getExpression();
-          SimpleName right = node.getName();
-          delegateBeginnings(node, left);
-          selfEnds(node);
-          chain(left, right);
-          chainShallow(right, node);
-        }
         @Override public void endVisit(VariableDeclarationFragment node) {
           Expression i = step.initializer(node);
           if (i == null) {
@@ -164,18 +166,16 @@ public interface CFG {
           delegateEnds(node, fs.get(fs.size() - 1));
           chain(fs);
         }
-        
         @Override public void endVisit(SingleVariableDeclaration node) {
-          if(node.getInitializer()==null)
+          if (node.getInitializer() == null)
             leaf(node);
           else {
             Expression initializer = node.getInitializer();
             delegateBeginnings(node, initializer);
             selfEnds(node);
-            chain(initializer,node);
+            chain(initializer, node);
           }
         }
-        
         @Override public void endVisit(AssertStatement node) {
           Expression condition = node.getExpression(), message = node.getMessage();
           delegateBeginnings(node, condition);
@@ -236,6 +236,10 @@ public interface CFG {
           else
             ends.of(n1).addAll(ends.of(n2));
         }
+        private void delegateTo(ASTNode n1, ASTNode n2) {
+          delegateBeginnings(n1, n2);
+          delegateEnds(n1, n2);
+        }
         void selfBeginnings(ASTNode ¢) {
           beginnings.of(¢).add(¢);
         }
@@ -246,7 +250,8 @@ public interface CFG {
           for (int ¢ = 0; ¢ < ns.size() - 1; ++¢)
             chain(ns.get(¢), ns.get(¢ + 1));
         }
-        /** To all the ends of the first node, put the outgoings of the second node */
+        /** To all the ends of the first node, put the outgoings of the second
+         * node */
         void chain(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
           beginnings.of(n2).get().stream().forEach(λ -> incoming.of(λ).addAll(ends.of(n1)));
