@@ -148,7 +148,7 @@ public enum step {
         .collect(toList()) //
     ;
   }
-  @SuppressWarnings("unchecked") public static Iterable<Expression> dimensions(final ArrayCreation ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayCreation ¢) {
     return ¢ == null ? null : ¢.dimensions();
   }
   /** Shorthand for {@link ConditionalExpression#getElseExpression()}

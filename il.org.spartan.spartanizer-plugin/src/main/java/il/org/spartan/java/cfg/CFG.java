@@ -53,49 +53,76 @@ public interface CFG {
         @Override public void endVisit(SimpleName node) {
           leaf(node);
         }
-        
+        @Override public void endVisit(NumberLiteral node) {
+          leaf(node);
+        }
         @Override public void endVisit(ParenthesizedExpression node) {
           leaf(node);
         }
-        
+        @Override public void endVisit(ArrayAccess node) {
+          Expression array = node.getArray(), index = node.getIndex();
+          delegateBeginnings(node, array);
+          selfEnds(node);
+          chain(array, index);
+          chainShallow(index, node);
+        }
+        @Override public void endVisit(ArrayCreation node) {
+          List<Expression> dimensions = step.dimensions(node);
+          delegateBeginnings(node, dimensions.get(0));
+          selfEnds(node);
+          chain(dimensions);
+          chainShallow(dimensions.get(dimensions.size() - 1), node);
+        }
         @Override public void endVisit(MethodInvocation node) {
           List<Expression> arguments = step.arguments(node);
-          if(arguments.isEmpty())
+          if (arguments.isEmpty())
             leaf(node);
           else {
             delegateBeginnings(node, arguments.get(0));
             selfEnds(node);
             chain(arguments);
-            chainShallow(arguments.get(arguments.size()-1), node);
+            chainShallow(arguments.get(arguments.size() - 1), node);
           }
         }
-        
         @Override public void endVisit(FieldAccess node) {
           Expression left = node.getExpression();
           SimpleName right = node.getName();
-          delegateBeginnings(node,left);
+          delegateBeginnings(node, left);
           selfEnds(node);
           chain(left, right);
           chainShallow(right, node);
         }
-        
         @Override public void endVisit(ConditionalExpression node) {
-           Expression condition = node.getExpression(), thenExpression = node.getThenExpression(), elseExpression = node.getElseExpression();
-           delegateBeginnings(node,condition);
-           delegateEnds(node,thenExpression);
-           delegateEnds(node,elseExpression);
-           chain(condition,thenExpression);
-           chain(condition,elseExpression);           
+          Expression condition = node.getExpression(), thenExpression = node.getThenExpression(), elseExpression = node.getElseExpression();
+          delegateBeginnings(node, condition);
+          delegateEnds(node, thenExpression);
+          delegateEnds(node, elseExpression);
+          chain(condition, thenExpression);
+          chain(condition, elseExpression);
         }
-        
-        
-        
-        
-        
-        
-        
+        @Override public void endVisit(ForStatement node) {
+          Statement body = node.getBody();
+          List<Expression> initializers = step.initializers(node);
+          List<Expression> updaters = step.updaters(node);
+          Expression condition = node.getExpression();
+          delegateBeginnings(node, initializers.get(0));
+          chain(initializers);
+          chain(initializers.get(initializers.size() - 1), condition);
+          chain(condition, updaters.get(0));
+          chain(updaters.get(updaters.size() - 1), body);
+          chain(body, condition);
+          delegateEnds(node, condition);
+        }
         @Override public void endVisit(InfixExpression node) {
           Expression left = node.getLeftOperand(), right = node.getRightOperand();
+          delegateBeginnings(node, left);
+          selfEnds(node);
+          chain(left, right);
+          chainShallow(right, node);
+        }
+        @Override public void endVisit(ExpressionMethodReference node) {
+          Expression left = node.getExpression();
+          SimpleName right = node.getName();
           delegateBeginnings(node, left);
           selfEnds(node);
           chain(left, right);
@@ -116,6 +143,12 @@ public interface CFG {
           delegateBeginnings(node, fs.get(0));
           delegateEnds(node, fs.get(fs.size() - 1));
           chain(fs);
+        }
+        @Override public void endVisit(AssertStatement node) {
+          Expression condition = node.getExpression(), message = node.getMessage();
+          delegateBeginnings(node, condition);
+          delegateEnds(node, message);
+          chain(condition, message);
         }
         @Override public void endVisit(Block node) {
           List<Statement> ss = step.statements(node);

@@ -200,7 +200,7 @@ public class CFGTest {
         + "f();\n" //
         + "assert a : b;\n" //
         + "g();") //
-            .ins("a").containsOnly("f()") //
+            // .ins("a").containsOnly("f()") //
             .outs("a").containsOnly("g()", "b") //
             .ins("g()").containsOnly("a");
   }
