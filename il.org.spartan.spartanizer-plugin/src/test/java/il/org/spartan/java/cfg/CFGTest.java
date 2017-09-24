@@ -65,7 +65,8 @@ public class CFGTest {
         + "  x2.basa();\n" //
         + "}\n" //
         + "f2();") //
-            .outs("f1()").containsOnly( //
+            .outs("f1()")
+            .containsOnly( //
                 "f2()", //
                 "Exception1 x1", //
                 "Exception2 x2") //
@@ -83,11 +84,13 @@ public class CFGTest {
         .outs("f()").containsOnly("g()") //
         .outs("g()").containsOnly("new X[f()][g()]");
   }
+  // TODO Roth: verify array creation
   @Test public void arrayInitializer() {
     cfg("new X[] {{f()}, g()}") //
         .outs("f()").containsOnly("{f()}") //
         .outs("{f()}").containsOnly("g()") //
-        .outs("g()").containsOnly("new X[] {f(), g()}");
+        .outs("g()").containsOnly("{{f()}, g()}") //
+        .outs("{{f()}, g()}").containsOnly("new X[] {{f()}, g()}");
   }
   @Test public void assignment() {
     cfg("x += y = z") //
@@ -108,11 +111,10 @@ public class CFGTest {
     cfg("" //
         + "int a = b ? c : d;\n" //
         + "f();") //
-            .outs("int a = b ? c : d;").containsOnly("b") //
             .outs("b").containsOnly("c", "d") //
             .outs("c").containsOnly("a = b ? c : d") //
             .outs("d").containsOnly("a = b ? c : d") //
-            .outs("a = b ? c : d").containsOnly("f();");
+            .outs("a = b ? c : d").containsOnly("f()");
   }
   @Test public void fieldAccess() {
     cfg("f().g").outs("f()").containsOnly("g").outs("g").containsOnly("f().g");
@@ -185,7 +187,7 @@ public class CFGTest {
         + "f(super.a());" //
         + "g(b.super.c());") //
             .outs("super.a()").containsOnly("f(super.a())") //
-            .outs("f(super.a)").containsOnly("b.super.c()") //
+            .outs("f(super.a())").containsOnly("b.super.c()") //
             .outs("b.super.c()").containsOnly("g(b.super.c())");
   }
   @Test public void thisExpression() {
@@ -200,7 +202,7 @@ public class CFGTest {
         + "f();\n" //
         + "assert a : b;\n" //
         + "g();") //
-            // .ins("a").containsOnly("f()") //
+            .ins("a").containsOnly("f()") //
             .outs("a").containsOnly("g()", "b") //
             .ins("g()").containsOnly("a");
   }
