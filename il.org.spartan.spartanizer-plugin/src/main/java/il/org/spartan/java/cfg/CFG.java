@@ -307,28 +307,18 @@ public interface CFG {
         @Override public void endVisit(SimpleName node) {
           leaf(node);
         }
-        // TODO Roth: verify single variable declaration
         @Override public void endVisit(SingleVariableDeclaration node) {
           final Expression i = node.getInitializer();
-          final Name n = node.getName();
           if (i == null)
-            delegateTo(node, n);
+            leaf(node);
           else {
             delegateBeginnings(node, i);
-            delegateEnds(node, n);
-            chain(i, n);
+            selfEnds(node);
+            chainShallow(i, node);
           }
         }
         @Override public void endVisit(SuperFieldAccess node) {
-          Name name = node.getQualifier();
-          SimpleName field = node.getName();
-          if (name != null) {
-            delegateBeginnings(node, name);
-            delegateEnds(node, field);
-            chain(name, field);
-          } else {
-            leaf(field);
-          }
+          leaf(node);
         }
         @Override public void endVisit(SuperMethodInvocation node) {
           final List<Expression> es = step.arguments(node);
@@ -366,6 +356,30 @@ public interface CFG {
           selfBeginnings(node);
           continueTarget.peek().add(node);
         }
+        @Override public void endVisit(ThisExpression node) {
+          leaf(node);
+        }
+        @Override public void endVisit(TryStatement node) {
+          Block body = node.getBody();
+          List<CatchClause> catches = step.catchClauses(node);
+          Block finaly = node.getFinally();
+          delegateBeginnings(node, body);
+          delegateEnds(node, body);
+          for (CatchClause c : catches) {
+            chain(body, c);
+          }
+          if (finaly == null) {
+            for (CatchClause c : catches) {
+              delegateEnds(node, c);
+            }
+          } else {
+            chain(body, finaly);
+            for (CatchClause c : catches) {
+              chain(c, finaly);
+            }
+            delegateEnds(node, finaly);
+          }
+        }
         @Override public void endVisit(VariableDeclarationStatement node) {
           List<VariableDeclarationFragment> fs = step.fragments(node);
           delegateBeginnings(node, fs.get(0));
@@ -373,14 +387,6 @@ public interface CFG {
           chain(fs);
           chainShallow(fs.get(fs.size() - 1), node);
         }
-        // boolean isBreakTarget(ASTNode ¢) {
-        // return iz.isOneOf(¢, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT,
-        // WHILE_STATEMENT, DO_STATEMENT);
-        // }
-        // boolean isContinueTarget(ASTNode ¢) {
-        // return iz.isOneOf(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT,
-        // DO_STATEMENT);
-        // }
         boolean isEmpty(ASTNode ¢) {
           return beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
         }

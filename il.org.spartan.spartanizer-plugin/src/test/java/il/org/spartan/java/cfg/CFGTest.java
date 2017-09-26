@@ -44,10 +44,11 @@ public class CFGTest {
         + "  int a = f(f(x));\n" //
         + "  f(b);" //
         + "}") //
-            .outs("int x").contains("f(x)") //
+            .outs("int x").contains("x") //
             .outs("f(x)").contains("f(f(x))") //
             .outs("f(f(x))").contains("a = f(f(x))") //
-            .outs("a = f(f(x))").contains("b") //
+            .outs("a = f(f(x))").contains("int a = f(f(x));") //
+            .outs("int a = f(f(x));").contains("b") //
             .outs("b").contains("f(b)");
     ;
   }
@@ -197,7 +198,8 @@ public class CFGTest {
     cfg("" //
         + "f();" //
         + "g(a.this.b());") //
-            .ins("a.this.b()").containsOnly("f()") //
+            .ins("a.this.b()").containsOnly("a.this") //
+            .outs("a.this").containsOnly("a.this.b()") //
             .outs("a.this.b()").containsOnly("g(a.this.b())");
   }
   @Test public void assertStatement() {
@@ -214,7 +216,7 @@ public class CFGTest {
         + "void f(int x) {\n" //
         + "  {g();}\n" //
         + "}") //
-            .outs("x").containsOnly("g()");
+            .outs("int x").containsOnly("g()");
   }
   @Test public void empty() {
     cfg("" //
