@@ -74,17 +74,16 @@ public interface CFG {
   static void compute(final BodyDeclaration d) {
     if (d != null && beginnings.of(d).get().isEmpty())
       d.accept(new ASTVisitor() {
-        Stack<ASTNode> breakTarget = new Stack<>();
-        Stack<ASTNode> continueTarget = new Stack<>();
-        Map<String, ASTNode> labelMap = new LinkedHashMap<>();
+        Stack<List<BreakStatement>> breakTarget = new Stack<>();
+        Stack<List<ContinueStatement>> continueTarget = new Stack<>();
         Stack<ASTNode> returnTarget = anonymous.ly(() -> {
           final Stack<ASTNode> $ = new Stack<>();
           $.push(parent(d));
           return $;
         });
+        Map<String, ASTNode> labelMap = new LinkedHashMap<>();
 
-        /** To all the ends of the first node, put the outgoings of the second
-         * node */
+        /** To all the ends of the first node, put the outgoings of the second node */
         void chain(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
           beginnings.of(n2).get().stream().forEach(λ -> incoming.of(λ).addAll(ends.of(n1)));
@@ -214,30 +213,32 @@ public interface CFG {
           chainShallow(right, node);
         }
         @Override public void endVisit(ForStatement node) {
-          // Statement b = node.getBody();
-          // List<Expression> is = step.initializers(node);
-          // Expression c = step.condition(node);
-          // List<Expression> us = step.updaters(node);
-          // List<ASTNode> route = new LinkedList<>();
-          // route.addAll(is);
-          // for (int i = 0; i < 2; ++i) {
-          // if (!isEmpty(b))
-          // route.add(b);
-          // route.addAll(us);
-          // if (c != null)
-          // route.add(c);
-          // }
-          // if (route.isEmpty()) {
-          // // TODO Roth: verify
-          // selfBeginnings(node);
-          // chainInfiniteLoop(node);
-          // } else if (route.size() == is.size() + us.size() << 1) {
-          // // TODO Roth: verify
-          // delegateBeginnings(node, route.get(0));
-          // chain(route);
-          // } else {
-          //
-          // }
+          Statement b = node.getBody();
+          List<Expression> is = step.initializers(node);
+          Expression c = step.condition(node);
+          List<Expression> us = step.updaters(node);
+          List<ASTNode> route = new LinkedList<>();
+          route.addAll(is);
+          for (int i = 0; i < 2; ++i) {
+            if (c != null)
+              route.add(c);
+            if (!isEmpty(b))
+              route.add(b);
+            route.addAll(us);
+          }
+          chain(route);
+          if (route.isEmpty()) {
+            selfBeginnings(node);
+          } else if (c == null && breakTarget.peek().isEmpty()) {
+            delegateBeginnings(node, route.get(0));
+          } else {
+            delegateBeginnings(node, route.get(0));
+            delegateEnds(node, c);
+            if (!breakTarget.isEmpty())
+              for (BreakStatement bs : breakTarget.pop()) {
+                delegateEnds(node, bs);
+              }
+          }
         }
         @Override public void endVisit(InfixExpression node) {
           Expression left = node.getLeftOperand(), right = node.getRightOperand();
@@ -338,18 +339,28 @@ public interface CFG {
           selfEnds(node);
           chainShallow(i, node);
         }
+        @Override public void endVisit(BreakStatement node) {
+          selfBeginnings(node);
+          breakTarget.peek().add(node);
+        }
+        @Override public void endVisit(ContinueStatement node) {
+          selfBeginnings(node);
+          continueTarget.peek().add(node);
+        }
         @Override public void endVisit(VariableDeclarationStatement node) {
           List<VariableDeclarationFragment> fs = step.fragments(node);
           delegateBeginnings(node, fs.get(0));
           delegateEnds(node, fs.get(fs.size() - 1));
           chain(fs);
         }
-        boolean isBreakTarget(ASTNode ¢) {
-          return iz.isOneOf(¢, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
-        }
-        boolean isContinueTarget(ASTNode ¢) {
-          return iz.isOneOf(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
-        }
+        // boolean isBreakTarget(ASTNode ¢) {
+        // return iz.isOneOf(¢, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT,
+        // WHILE_STATEMENT, DO_STATEMENT);
+        // }
+        // boolean isContinueTarget(ASTNode ¢) {
+        // return iz.isOneOf(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT,
+        // DO_STATEMENT);
+        // }
         boolean isEmpty(ASTNode ¢) {
           return beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
         }
@@ -381,20 +392,12 @@ public interface CFG {
           return $;
         }
         @Override public void postVisit(ASTNode ¢) {
-          if (isBreakTarget(¢))
-            breakTarget.pop();
-          if (isContinueTarget(¢))
-            continueTarget.pop();
           if (isReturnTarget(¢))
             returnTarget.pop();
           if (iz.labeledStatement(¢))
             labelMap.remove(((LabeledStatement) ¢).getLabel().getIdentifier());
         }
         @Override public void preVisit(ASTNode ¢) {
-          if (isBreakTarget(¢))
-            breakTarget.push(¢);
-          if (isContinueTarget(¢))
-            continueTarget.push(¢);
           if (isReturnTarget(¢))
             returnTarget.push(¢);
           if (iz.labeledStatement(¢))
