@@ -76,7 +76,7 @@ public class CFGTestUtil {
           for (final String n2 : ns2) {
             final ASTNode a2 = find($, n2);
             assert a1 != null : "\nproblem in finding node\n" + tide.clean(n2) + "\nin compilation unit\n" + tide.clean($ + "");
-            assert ns.contains(a2) : "\nnodes of\n" + tide.clean(a1 + "") + "\ndoes not contain\n" + tide.clean(n2);
+            assert ns.contains(a2) : "\nnodes of\n" + tide.clean(a1 + "") + "\ndoes not contain\n" + tide.clean(n2) + "\nbut:\n" + ns;
           }
           return self;
         }

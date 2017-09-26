@@ -19,7 +19,8 @@ public class CFGTest {
         + "    f(i);\n" //
         + "}") //
             .outs("0").contains("i=0") //
-            .outs("i=0").contains("i<100") //
+            .outs("i=0").contains("int i=0") //
+            .outs("int i=0").contains("i<100") //
             .ins("i<100").contains("i=0") //
             .outs("f(i)").contains("++i");
   }
@@ -32,7 +33,8 @@ public class CFGTest {
             .outs("0").contains("a = 0") //
             .outs("a = 0").contains("1") //
             .outs("1").contains("b = 1") //
-            .outs("b = 1").contains("c") //
+            .outs("b = 1").contains("int a = 0, b = 1;") //
+            .outs("int a = 0, b = 1;").contains("c") //
             .outs("c").contains("d") //
             .outs("d").contains("f(c, d)");
   }
@@ -65,8 +67,7 @@ public class CFGTest {
         + "  x2.basa();\n" //
         + "}\n" //
         + "f2();") //
-            .outs("f1()")
-            .containsOnly( //
+            .outs("f1()").containsOnly( //
                 "f2()", //
                 "Exception1 x1", //
                 "Exception2 x2") //
@@ -114,7 +115,7 @@ public class CFGTest {
             .outs("b").containsOnly("c", "d") //
             .outs("c").containsOnly("a = b ? c : d") //
             .outs("d").containsOnly("a = b ? c : d") //
-            .outs("a = b ? c : d").containsOnly("f()");
+            .outs("a = b ? c : d").containsOnly("int a = b ? c : d;").outs("int a = b ? c : d;").containsOnly("f()");
   }
   @Test public void fieldAccess() {
     cfg("f().g").outs("f()").containsOnly("g").outs("g").containsOnly("f().g");
@@ -132,9 +133,9 @@ public class CFGTest {
     cfg("" //
         + "boolean a = b instanceof C;\n" //
         + "f();") //
-            .outs("boolean a = b instanceof C;").containsOnly("b instanceof C") //
+            .outs("boolean a = b instanceof C;").containsOnly("f()") //
             .outs("b instanceof C").containsOnly("a = b instanceof C") //
-            .outs("a = b instanceof C").containsOnly("f()");
+            .outs("a = b instanceof C").containsOnly("boolean a = b instanceof C;");
   }
   @Test public void lambdaExpression() {
     cfg("" //
@@ -143,7 +144,8 @@ public class CFGTest {
         + "g();") //
             .outs("b -> c").containsOnly("a = b -> c") //
             .ins("b -> c").containsOnly("f()") //
-            .outs("a = b -> c").containsOnly("g()");
+            .outs("a = b -> c").containsOnly("Function a = b -> c;")//
+            .outs("Function a = b -> c;").containsOnly("g()");
   }
   @Test public void methodInvocation() {
     cfg("f().g(a)") //
@@ -172,7 +174,8 @@ public class CFGTest {
     cfg("" //
         + "++i;" //
         + "j++;") //
-            .outs("++i").containsOnly("j++");
+            .outs("++i").containsOnly("j")//
+            .outs("j").containsOnly("j++");
   }
   @Test public void superFieldAccess() {
     cfg("" //

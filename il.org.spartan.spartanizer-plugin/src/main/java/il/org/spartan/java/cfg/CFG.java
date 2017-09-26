@@ -240,6 +240,18 @@ public interface CFG {
               }
           }
         }
+        @Override public void endVisit(PrefixExpression node) {
+          Expression e = node.getOperand();
+          delegateBeginnings(node, e);
+          selfEnds(node);
+          chainShallow(e, node);
+        }
+        @Override public void endVisit(PostfixExpression node) {
+          Expression e = node.getOperand();
+          delegateBeginnings(node, e);
+          selfEnds(node);
+          chainShallow(e, node);
+        }
         @Override public void endVisit(InfixExpression node) {
           Expression left = node.getLeftOperand(), right = node.getRightOperand();
           delegateBeginnings(node, left);
@@ -279,6 +291,12 @@ public interface CFG {
             chain(es);
             chainShallow(es.get(es.size() - 1), node);
           }
+        }
+        @Override public void endVisit(InstanceofExpression node) {
+          Expression e = node.getLeftOperand();
+          delegateBeginnings(node, e);
+          chainShallow(e, node);
+          selfEnds(node);
         }
         @Override public void endVisit(NumberLiteral node) {
           leaf(node);
@@ -326,8 +344,9 @@ public interface CFG {
         @Override public void endVisit(VariableDeclarationExpression node) {
           @SuppressWarnings("unchecked") List<VariableDeclarationFragment> fs = node.fragments();
           delegateBeginnings(node, fs.get(0));
-          delegateEnds(node, fs.get(fs.size() - 1));
           chain(fs);
+          chainShallow(fs.get(fs.size() - 1), node);
+          selfEnds(node);
         }
         @Override public void endVisit(VariableDeclarationFragment node) {
           Expression i = step.initializer(node);
@@ -350,8 +369,9 @@ public interface CFG {
         @Override public void endVisit(VariableDeclarationStatement node) {
           List<VariableDeclarationFragment> fs = step.fragments(node);
           delegateBeginnings(node, fs.get(0));
-          delegateEnds(node, fs.get(fs.size() - 1));
+          selfEnds(node);
           chain(fs);
+          chainShallow(fs.get(fs.size() - 1), node);
         }
         // boolean isBreakTarget(ASTNode ¢) {
         // return iz.isOneOf(¢, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT,
