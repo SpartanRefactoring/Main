@@ -380,6 +380,14 @@ public interface CFG {
             delegateEnds(node, finaly);
           }
         }
+        @Override public void endVisit(CatchClause node) {
+          SingleVariableDeclaration e = node.getException();
+          Block body = node.getBody();
+          delegateBeginnings(node, e);
+          delegateEnds(node, e);
+          delegateEnds(node, body);
+          chain(e, body);
+        }
         @Override public void endVisit(VariableDeclarationStatement node) {
           List<VariableDeclarationFragment> fs = step.fragments(node);
           delegateBeginnings(node, fs.get(0));

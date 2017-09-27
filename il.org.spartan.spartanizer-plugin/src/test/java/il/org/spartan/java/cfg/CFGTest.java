@@ -20,7 +20,7 @@ public class CFGTest {
         + "}") //
             .outs("0").contains("i=0") //
             .outs("i=0").contains("int i=0") //
-            .outs("int i=0").contains("i<100") //
+            .outs("int i=0").contains("i") //
             .ins("i<100").contains("i=0") //
             .outs("f(i)").contains("++i");
   }
