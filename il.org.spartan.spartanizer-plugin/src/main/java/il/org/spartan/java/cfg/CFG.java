@@ -81,7 +81,7 @@ public interface CFG {
           $.push(parent(d));
           return $;
         });
-        Map<String, ASTNode> labelMap = new LinkedHashMap<>();
+        Map<String, ASTNode> labelMap = new LinkedHashMap<>(); // for supporting label continue and label breal
 
         /** To all the ends of the first node, put the outgoings of the second node */
         void chain(ASTNode n1, ASTNode n2) {
@@ -239,6 +239,14 @@ public interface CFG {
                 delegateEnds(node, bs);
               }
           }
+        }
+        @Override public void endVisit(WhileStatement node) {
+          Expression condition = node.getExpression();
+          Statement body = node.getBody();
+          delegateBeginnings(node, condition);
+          delegateEnds(node, condition);
+          chain(condition, body);
+          chain(body, condition);
         }
         @Override public void endVisit(PrefixExpression node) {
           Expression e = node.getOperand();

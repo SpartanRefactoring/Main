@@ -7,6 +7,7 @@ import org.junit.*;
 import il.org.spartan.utils.*;
 
 /** Unit test for {@link CFG}.
+ * @author Dor Ma'ayan
  * @author Ori Roth
  * @since 2017-07-06 */
 @UnderConstruction("Dor -- 07/07/2017")
@@ -20,9 +21,7 @@ public class CFGTest {
         + "}") //
             .outs("0").contains("i=0") //
             .outs("i=0").contains("int i=0") //
-            .outs("int i=0").contains("i") //
-            .ins("i<100").contains("i=0") //
-            .outs("f(i)").contains("++i");
+            .ins("i<100").contains("100");
   }
   @Test public void b() {
     cfg("" //
@@ -109,7 +108,7 @@ public class CFGTest {
         .outs("j()").containsOnly("k()") //
         .outs("k()").containsOnly("f(g(), h()).new I(j(), k())");
   }
-  @Test public void conditionalExpression() {
+  @Test public void conditionalExpression1() {
     cfg("" //
         + "int a = b ? c : d;\n" //
         + "f();") //
@@ -117,6 +116,15 @@ public class CFGTest {
             .outs("c").containsOnly("a = b ? c : d") //
             .outs("d").containsOnly("a = b ? c : d") //
             .outs("a = b ? c : d").containsOnly("int a = b ? c : d;").outs("int a = b ? c : d;").containsOnly("f()");
+  }
+  @Test public void conditionalExpression2() {
+    cfg("" //
+        + "T a = b(x,y) ? c : d(z,q);\n" //
+        + "f();") //
+            .outs("b(x,y)").containsOnly("c", "z") //
+            .outs("c").containsOnly("a = b(x,y) ? c : d(z,q)") //
+            .outs("z").containsOnly("q") //
+            .outs("a = b(x,y) ? c : d(z,q)").containsOnly("T a = b(x,y) ? c : d(z,q);").outs("T a = b(x,y) ? c : d(z,q);").containsOnly("f()");
   }
   @Test public void fieldAccess() {
     cfg("f().g").outs("f()").containsOnly("g").outs("g").containsOnly("f().g");
@@ -201,6 +209,27 @@ public class CFGTest {
             .ins("a.this.b()").containsOnly("a.this") //
             .outs("a.this").containsOnly("a.this.b()") //
             .outs("a.this.b()").containsOnly("g(a.this.b())");
+  }
+  @Test public void basicForStatement() {
+    cfg("for(int i=0;i<2;i++)" //
+        + "{" //
+        + "q();" //
+        + "}" //
+        + "r();") //
+            .ins("int i=0").containsOnly("i=0") //
+            .outs("i<2").containsOnly("q()", "r()") //
+            .outs("q()").containsOnly("i") //
+            .ins("i<2").containsOnly("2");
+  }
+  @Test public void basicWhileStatement() {
+    cfg("while(w(8)<s())" //
+        + "{" //
+        + "q();" //
+        + "}" //
+        + "r();") //
+            .ins("w(8)").containsOnly("8") //
+            .outs("w(8)<s()").containsOnly("q()", "r()") //
+            .outs("q()").containsOnly("8");
   }
   @Test public void assertStatement() {
     cfg("" //
