@@ -85,7 +85,7 @@ public interface CFG {
         });
 
         /** To all the ends of the first node, put the outgoings of the second node */
-        void chain(ASTNode n1, ASTNode n2) {     
+        void chain(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
           beginnings.of(n2).get().stream().forEach(λ -> incoming.of(λ).addAll(ends.of(n1)));
         }
@@ -101,8 +101,8 @@ public interface CFG {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).add(n2));
           incoming.of(n2).addAll(ends.of(n1));
         }
-        void chainThrow(ASTNode n) {
-          chainReturn(n);
+        void chainThrow(ASTNode ¢) {
+          chainReturn(¢);
         }
         void delegateBeginnings(ASTNode n1, ASTNode n2) {
           if (n1 == n2)
@@ -116,7 +116,7 @@ public interface CFG {
           else
             ends.of(n1).addAll(ends.of(n2));
         }
-        private void delegateTo(ASTNode n1, ASTNode n2) {
+        void delegateTo(ASTNode n1, ASTNode n2) {
           delegateBeginnings(n1, n2);
           delegateEnds(n1, n2);
         }
@@ -216,24 +216,23 @@ public interface CFG {
           Statement b = node.getBody();
           Expression c = step.condition(node);
           List<ASTNode> route = new LinkedList<>();
-          for (int i = 0; i < 2; ++i) {
+          for (int ¢ = 0; ¢ < 2; ++¢) {
             if (c != null)
               route.add(c);
             if (!isEmpty(b))
               route.add(b);
           }
           chain(route);
-          if (route.isEmpty()) {
+          if (route.isEmpty())
             selfBeginnings(node);
-          } else if (c == null && breakTarget.peek().isEmpty()) {
+          else {
             delegateBeginnings(node, route.get(0));
-          } else {
-            delegateBeginnings(node, route.get(0));
-            delegateEnds(node, c);
-            if (!breakTarget.isEmpty())
-              for (BreakStatement bs : breakTarget.pop()) {
-                delegateEnds(node, bs);
-              }
+            if (c != null || !breakTarget.peek().isEmpty()) {
+              delegateEnds(node, c);
+              if (!breakTarget.isEmpty())
+                for (BreakStatement ¢ : breakTarget.pop())
+                  delegateEnds(node, ¢);
+            }
           }
         }
         @Override public void endVisit(ExpressionMethodReference node) {
@@ -255,9 +254,8 @@ public interface CFG {
           List<Expression> is = step.initializers(node);
           Expression c = step.condition(node);
           List<Expression> us = step.updaters(node);
-          List<ASTNode> route = new LinkedList<>();
-          route.addAll(is);
-          for (int i = 0; i < 2; ++i) {
+          List<ASTNode> route = new LinkedList<>(is);
+          for (int ¢ = 0; ¢ < 2; ++¢) {
             if (c != null)
               route.add(c);
             if (!isEmpty(b))
@@ -265,16 +263,16 @@ public interface CFG {
             route.addAll(us);
           }
           chain(route);
-          if (route.isEmpty()) {
+          if (route.isEmpty())
             selfBeginnings(node);
-          } else if (c == null && breakTarget.peek().isEmpty()) {
+          else {
             delegateBeginnings(node, route.get(0));
-          } else {
-            delegateBeginnings(node, route.get(0));
-            if (c != null)
-              delegateEnds(node, c);
-            for (BreakStatement bs : breakTarget.pop())
-              delegateEnds(node, bs);
+            if (c != null || !breakTarget.peek().isEmpty()) {
+              if (c != null)
+                delegateEnds(node, c);
+              for (BreakStatement ¢ : breakTarget.pop())
+                delegateEnds(node, ¢);
+            }
           }
         }
         @Override public void endVisit(IfStatement node) {
@@ -285,10 +283,10 @@ public interface CFG {
             chain(condition, then);
             delegateEnds(node, then);
           }
-          if (elze != null && !isEmpty(elze)) {
-            chain(condition, elze);
-            delegateEnds(node, elze);
-          }
+          if (elze == null || isEmpty(elze))
+            return;
+          chain(condition, elze);
+          delegateEnds(node, elze);
         }
         @Override public void endVisit(InfixExpression node) {
           Expression left = node.getLeftOperand(), right = node.getRightOperand();
@@ -390,18 +388,15 @@ public interface CFG {
           Block finaly = s.getFinally();
           delegateBeginnings(s, body);
           delegateEnds(s, body);
-          for (CatchClause c : catches) {
-            chain(body, c);
-          }
-          if (finaly == null) {
-            for (CatchClause c : catches) {
-              delegateEnds(s, c);
-            }
-          } else {
+          for (CatchClause ¢ : catches)
+            chain(body, ¢);
+          if (finaly == null)
+            for (CatchClause ¢ : catches)
+              delegateEnds(s, ¢);
+          else {
             chain(body, finaly);
-            for (CatchClause c : catches) {
-              chain(c, finaly);
-            }
+            for (CatchClause ¢ : catches)
+              chain(¢, finaly);
             delegateEnds(s, finaly);
           }
         }
@@ -433,24 +428,23 @@ public interface CFG {
           Statement b = node.getBody();
           Expression c = step.condition(node);
           List<ASTNode> route = new LinkedList<>();
-          for (int i = 0; i < 2; ++i) {
+          for (int ¢ = 0; ¢ < 2; ++¢) {
             if (c != null)
               route.add(c);
             if (!isEmpty(b))
               route.add(b);
           }
           chain(route);
-          if (route.isEmpty()) {
+          if (route.isEmpty())
             selfBeginnings(node);
-          } else if (c == null && breakTarget.peek().isEmpty()) {
+          else {
             delegateBeginnings(node, route.get(0));
-          } else {
-            delegateBeginnings(node, route.get(0));
-            delegateEnds(node, c);
-            if (!breakTarget.isEmpty())
-              for (BreakStatement bs : breakTarget.pop()) {
-                delegateEnds(node, bs);
-              }
+            if (c != null || !breakTarget.peek().isEmpty()) {
+              delegateEnds(node, c);
+              if (!breakTarget.isEmpty())
+                for (BreakStatement ¢ : breakTarget.pop())
+                  delegateEnds(node, ¢);
+            }
           }
         }
         boolean isBreakTarget(ASTNode ¢) {
@@ -478,13 +472,13 @@ public interface CFG {
           beginnings.of(¢).add(¢);
           ends.of(¢).add(¢);
         }
-        private List<Statement> nonEmptySequence(List<Statement> statements) {
+        List<Statement> nonEmptySequence(List<Statement> statements) {
           final List<Statement> $ = new LinkedList<>();
-          for (final Statement s : statements) {
-            if (isEmpty(s))
+          for (final Statement ¢ : statements) {
+            if (isEmpty(¢))
               continue;
-            $.add(s);
-            if (isInfiniteLoop(s))
+            $.add(¢);
+            if (isInfiniteLoop(¢))
               break;
           }
           return $;

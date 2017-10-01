@@ -37,7 +37,7 @@ public class Nodes {
     return new Nodes();
   }
   @Override public String toString() {
-    return inner.toString();
+    return inner + "";
   }
 
   private final Set<ASTNode> inner = new LinkedHashSet<>();
