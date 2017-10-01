@@ -75,12 +75,12 @@ public interface CFG {
       d.accept(new ASTVisitor() {
         Stack<List<BreakStatement>> breakTarget = new Stack<>();
         Stack<List<ContinueStatement>> continueTarget = new Stack<>();
+        Map<String, ASTNode> labelMap = new LinkedHashMap<>(); // for supporting label continue and label breal
         Stack<ASTNode> returnTarget = anonymous.ly(() -> {
           final Stack<ASTNode> $ = new Stack<>();
           $.push(parent(d));
           return $;
         });
-        Map<String, ASTNode> labelMap = new LinkedHashMap<>(); // for supporting label continue and label breal
 
         /** To all the ends of the first node, put the outgoings of the second node */
         void chain(ASTNode n1, ASTNode n2) {
@@ -171,6 +171,18 @@ public interface CFG {
           delegateEnds(node, ss.get(ss.size() - 1));
           chain(ss);
         }
+        @Override public void endVisit(BreakStatement node) {
+          selfBeginnings(node);
+          breakTarget.peek().add(node);
+        }
+        @Override public void endVisit(CatchClause node) {
+          SingleVariableDeclaration e = node.getException();
+          Block body = node.getBody();
+          delegateBeginnings(node, e);
+          delegateEnds(node, e);
+          delegateEnds(node, body);
+          chain(e, body);
+        }
         @Override public void endVisit(ClassInstanceCreation node) {
           final Expression e = node.getExpression();
           final List<Expression> arguments = step.arguments(node), es = new LinkedList<>();
@@ -193,6 +205,10 @@ public interface CFG {
           delegateEnds(node, elseExpression);
           chain(condition, thenExpression);
           chain(condition, elseExpression);
+        }
+        @Override public void endVisit(ContinueStatement node) {
+          selfBeginnings(node);
+          continueTarget.peek().add(node);
         }
         @Override public void endVisit(ExpressionMethodReference node) {
           leaf(node);
@@ -236,32 +252,18 @@ public interface CFG {
               }
           }
         }
-        @Override public void endVisit(WhileStatement node) {
-          Expression condition = node.getExpression();
-          Statement body = node.getBody();
-          delegateBeginnings(node, condition);
-          delegateEnds(node, condition);
-          chain(condition, body);
-          chain(body, condition);
-        }
-        @Override public void endVisit(PrefixExpression node) {
-          Expression e = node.getOperand();
-          delegateBeginnings(node, e);
-          selfEnds(node);
-          chainShallow(e, node);
-        }
-        @Override public void endVisit(PostfixExpression node) {
-          Expression e = node.getOperand();
-          delegateBeginnings(node, e);
-          selfEnds(node);
-          chainShallow(e, node);
-        }
         @Override public void endVisit(InfixExpression node) {
           Expression left = node.getLeftOperand(), right = node.getRightOperand();
           delegateBeginnings(node, left);
           selfEnds(node);
           chain(left, right);
           chainShallow(right, node);
+        }
+        @Override public void endVisit(InstanceofExpression node) {
+          Expression e = node.getLeftOperand();
+          delegateBeginnings(node, e);
+          chainShallow(e, node);
+          selfEnds(node);
         }
         @Override public void endVisit(LambdaExpression node) {
           leaf(node);
@@ -296,17 +298,23 @@ public interface CFG {
             chainShallow(es.get(es.size() - 1), node);
           }
         }
-        @Override public void endVisit(InstanceofExpression node) {
-          Expression e = node.getLeftOperand();
-          delegateBeginnings(node, e);
-          chainShallow(e, node);
-          selfEnds(node);
-        }
         @Override public void endVisit(NumberLiteral node) {
           leaf(node);
         }
         @Override public void endVisit(ParenthesizedExpression node) {
           delegateTo(node, node.getExpression());
+        }
+        @Override public void endVisit(PostfixExpression node) {
+          Expression e = node.getOperand();
+          delegateBeginnings(node, e);
+          selfEnds(node);
+          chainShallow(e, node);
+        }
+        @Override public void endVisit(PrefixExpression node) {
+          Expression e = node.getOperand();
+          delegateBeginnings(node, e);
+          selfEnds(node);
+          chainShallow(e, node);
         }
         @Override public void endVisit(SimpleName node) {
           leaf(node);
@@ -335,31 +343,6 @@ public interface CFG {
             chainShallow(es.get(es.size() - 1), node);
           }
         }
-        @Override public void endVisit(VariableDeclarationExpression node) {
-          @SuppressWarnings("unchecked") List<VariableDeclarationFragment> fs = node.fragments();
-          delegateBeginnings(node, fs.get(0));
-          chain(fs);
-          chainShallow(fs.get(fs.size() - 1), node);
-          selfEnds(node);
-        }
-        @Override public void endVisit(VariableDeclarationFragment node) {
-          Expression i = step.initializer(node);
-          if (i == null) {
-            leaf(node);
-            return;
-          }
-          delegateBeginnings(node, i);
-          selfEnds(node);
-          chainShallow(i, node);
-        }
-        @Override public void endVisit(BreakStatement node) {
-          selfBeginnings(node);
-          breakTarget.peek().add(node);
-        }
-        @Override public void endVisit(ContinueStatement node) {
-          selfBeginnings(node);
-          continueTarget.peek().add(node);
-        }
         @Override public void endVisit(ThisExpression node) {
           leaf(node);
         }
@@ -384,13 +367,22 @@ public interface CFG {
             delegateEnds(node, finaly);
           }
         }
-        @Override public void endVisit(CatchClause node) {
-          SingleVariableDeclaration e = node.getException();
-          Block body = node.getBody();
-          delegateBeginnings(node, e);
-          delegateEnds(node, e);
-          delegateEnds(node, body);
-          chain(e, body);
+        @Override public void endVisit(VariableDeclarationExpression node) {
+          @SuppressWarnings("unchecked") List<VariableDeclarationFragment> fs = node.fragments();
+          delegateBeginnings(node, fs.get(0));
+          chain(fs);
+          chainShallow(fs.get(fs.size() - 1), node);
+          selfEnds(node);
+        }
+        @Override public void endVisit(VariableDeclarationFragment node) {
+          Expression i = step.initializer(node);
+          if (i == null) {
+            leaf(node);
+            return;
+          }
+          delegateBeginnings(node, i);
+          selfEnds(node);
+          chainShallow(i, node);
         }
         @Override public void endVisit(VariableDeclarationStatement node) {
           List<VariableDeclarationFragment> fs = step.fragments(node);
@@ -399,15 +391,23 @@ public interface CFG {
           chain(fs);
           chainShallow(fs.get(fs.size() - 1), node);
         }
+        @Override public void endVisit(WhileStatement node) {
+          Expression condition = node.getExpression();
+          Statement body = node.getBody();
+          delegateBeginnings(node, condition);
+          delegateEnds(node, condition);
+          chain(condition, body);
+          chain(body, condition);
+        }
         boolean isEmpty(ASTNode ¢) {
           return beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
-        }
-        boolean isInfiniteLoop(ASTNode ¢) {
-          return !beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
         }
         boolean isIllegalLeaf(@SuppressWarnings("unused") ASTNode __) {
           // TOO Roth: complete
           return false;
+        }
+        boolean isInfiniteLoop(ASTNode ¢) {
+          return !beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
         }
         boolean isReturnTarget(@SuppressWarnings("unused") ASTNode __) {
           return false;
