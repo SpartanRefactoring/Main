@@ -1,7 +1,6 @@
 package il.org.spartan.java.cfg;
 
 import static il.org.spartan.java.cfg.CFG.Edges.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -101,9 +100,6 @@ public interface CFG {
           incoming.of(n2).addAll(ends.of(n1));
         }
         void chainThrow(ASTNode n) {
-          chainReturn(n);
-        }
-        void chainInfiniteLoop(ASTNode n) {
           chainReturn(n);
         }
         void delegateBeginnings(ASTNode n1, ASTNode n2) {

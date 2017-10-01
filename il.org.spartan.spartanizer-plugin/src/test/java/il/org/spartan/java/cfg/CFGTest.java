@@ -67,7 +67,8 @@ public class CFGTest {
         + "  x2.basa();\n" //
         + "}\n" //
         + "f2();") //
-            .outs("f1()").containsOnly( //
+            .outs("f1()")
+            .containsOnly( //
                 "f2()", //
                 "Exception1 x1", //
                 "Exception2 x2") //
@@ -210,7 +211,7 @@ public class CFGTest {
             .outs("a.this").containsOnly("a.this.b()") //
             .outs("a.this.b()").containsOnly("g(a.this.b())");
   }
-  @Test public void basicForStatement() {
+  @Test public void forStatementBasic() {
     cfg("for(int i=0;i<2;i++)" //
         + "{" //
         + "q();" //
@@ -221,7 +222,7 @@ public class CFGTest {
             .outs("q()").containsOnly("i") //
             .ins("i<2").containsOnly("2");
   }
-  @Test public void basicWhileStatement() {
+  @Test public void whileStatementBasic() {
     cfg("while(w(8)<s())" //
         + "{" //
         + "q();" //
@@ -247,7 +248,7 @@ public class CFGTest {
         + "}") //
             .outs("int x").containsOnly("g()");
   }
-  @Test public void empty() {
+  @Test public void blockEmpty() {
     cfg("" //
         + "void f(int x) {\n" //
         + "  g();\n" //
@@ -257,5 +258,73 @@ public class CFGTest {
         + "  h();\n" //
         + "}") //
             .outs("g()").containsOnly("h()");
+  }
+  @Test public void doStatement() {
+    cfg("" //
+        + "do {\n" //
+        + "  f();\n" //
+        + "} while (b);\n" //
+        + "g();\n" //
+    ) //
+        .outs("f()").containsOnly("b") //
+        .outs("b").containsOnly("f()", "g()");
+  }
+  @Test public void doStatementEmpty() {
+    cfg("" //
+        + "do {\n" //
+        + "} while (b);\n" //
+        + "g();\n" //
+    ) //
+        .outs("b").containsOnly("f()", "g()");
+  }
+  @Test public void forStatementNoInitializers() {
+    cfg("" //
+        + "f();" //
+        + "for(;j<2;k++)" //
+        + "  g();" //
+        + "h();") //
+            .ins("j<2").contains("f()") //
+            .outs("j<2").containsOnly("g()", "h()") //
+            .outs("g()").containsOnly("k");
+  }
+  @Test public void forStatementNoCondition() {
+    cfg("" //
+        + "f();" //
+        + "for(int i=0;;k++)" //
+        + "  g();" //
+        + "h();") //
+            .ins("0").contains("f()") //
+            .outs("k++").containsOnly("g()") //
+            .outs("g()").containsOnly("k") //
+            .ins("h()").containsOnly();
+  }
+  @Test public void forStatementNoUpdaters() {
+    cfg("" //
+        + "f();" //
+        + "for(int i=0;j<2;)" //
+        + "  g();" //
+        + "h();") //
+            .ins("j<2").contains("f()") //
+            .outs("j<2").containsOnly("g()", "h()") //
+            .outs("g()").containsOnly("j");
+  }
+  @Test public void forStatementEmptyBody() {
+    cfg("" //
+        + "f();" //
+        + "for(;j<2;k++)" //
+        + "  {;}" //
+        + "h();") //
+            .ins("j<2").contains("f()") //
+            .outs("j<2").containsOnly("k", "h()") //
+            .ins("h()").containsOnly("j<2");
+  }
+  @Test public void forStatementEmpty() {
+    cfg("" //
+        + "f();" //
+        + "for(;;);" //
+        + "h();") //
+            .outs("f()").containsOnly("for(;;);") //
+            .outs("for(;;);").containsOnly() //
+            .ins("h()").containsOnly();
   }
 }
