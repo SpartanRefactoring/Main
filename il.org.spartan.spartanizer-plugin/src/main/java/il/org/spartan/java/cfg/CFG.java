@@ -40,7 +40,7 @@ public interface CFG {
     }
     Nodes nodes(ASTNode ¢) {
       if (!property.has(¢, getClass().getCanonicalName() + "." + this))
-        compute(az.bodyDeclaration(yieldAncestors.untilClass(BodyDeclaration.class).from(¢)));
+        init(az.bodyDeclaration(yieldAncestors.untilClass(BodyDeclaration.class).from(¢)));
       return getNodes(¢);
     }
     Of of(final ASTNode to) {
@@ -72,7 +72,7 @@ public interface CFG {
     }
   }
 
-  static void compute(final BodyDeclaration d) {
+  static void init(final BodyDeclaration d) {
     if (d != null && beginnings.of(d).get().isEmpty())
       d.accept(new ASTVisitor() {
         Stack<List<BreakStatement>> breakTarget = new Stack<>();
@@ -85,7 +85,7 @@ public interface CFG {
         });
 
         /** To all the ends of the first node, put the outgoings of the second node */
-        void chain(ASTNode n1, ASTNode n2) {
+        void chain(ASTNode n1, ASTNode n2) {     
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
           beginnings.of(n2).get().stream().forEach(λ -> incoming.of(λ).addAll(ends.of(n1)));
         }
@@ -96,7 +96,7 @@ public interface CFG {
         void chainReturn(ASTNode n) {
           ends.of(n).get().stream().forEach(λ -> outgoing.of(λ).add(returnTarget.peek()));
         }
-        /** chian with hierarchy */
+        /** Chain with hierarchy */
         void chainShallow(ASTNode n1, ASTNode n2) {
           ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).add(n2));
           incoming.of(n2).addAll(ends.of(n1));
@@ -185,19 +185,19 @@ public interface CFG {
           delegateEnds(node, body);
           chain(e, body);
         }
-        @Override public void endVisit(ClassInstanceCreation node) {
-          final Expression e = node.getExpression();
-          final List<Expression> arguments = step.arguments(node), es = new LinkedList<>();
+        @Override public void endVisit(ClassInstanceCreation creation) {
+          final Expression e = creation.getExpression();
+          final List<Expression> arguments = step.arguments(creation), es = new LinkedList<>();
           if (e != null)
             es.add(e);
           es.addAll(arguments);
           if (es.isEmpty())
-            leaf(node);
+            leaf(creation);
           else {
-            delegateBeginnings(node, es.get(0));
-            selfEnds(node);
+            delegateBeginnings(creation, es.get(0));
+            selfEnds(creation);
             chain(es);
-            chainShallow(es.get(es.size() - 1), node);
+            chainShallow(es.get(es.size() - 1), creation);
           }
         }
         @Override public void endVisit(ConditionalExpression node) {
@@ -384,25 +384,25 @@ public interface CFG {
         @Override public void endVisit(ThisExpression node) {
           leaf(node);
         }
-        @Override public void endVisit(TryStatement node) {
-          Block body = node.getBody();
-          List<CatchClause> catches = step.catchClauses(node);
-          Block finaly = node.getFinally();
-          delegateBeginnings(node, body);
-          delegateEnds(node, body);
+        @Override public void endVisit(TryStatement s) {
+          Block body = s.getBody();
+          List<CatchClause> catches = step.catchClauses(s);
+          Block finaly = s.getFinally();
+          delegateBeginnings(s, body);
+          delegateEnds(s, body);
           for (CatchClause c : catches) {
             chain(body, c);
           }
           if (finaly == null) {
             for (CatchClause c : catches) {
-              delegateEnds(node, c);
+              delegateEnds(s, c);
             }
           } else {
             chain(body, finaly);
             for (CatchClause c : catches) {
               chain(c, finaly);
             }
-            delegateEnds(node, finaly);
+            delegateEnds(s, finaly);
           }
         }
         @Override public void endVisit(VariableDeclarationExpression node) {
