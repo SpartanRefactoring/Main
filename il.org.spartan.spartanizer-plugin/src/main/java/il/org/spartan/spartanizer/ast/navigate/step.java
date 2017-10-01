@@ -108,8 +108,7 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnnotationTypeDeclaration ¢) {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
-  /** Expose the list of bodyDeclarations in an
-   * {@link AnonymousClassDeclaration}
+  /** Expose the list of bodyDeclarations in an {@link AnonymousClassDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
   @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
@@ -436,8 +435,10 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? as.list(az.typeDeclaration(¢).getMethods())
-            : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-                .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
+            : iz.enumDeclaration(¢)
+                ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream().filter(λ -> iz.methodDeclaration(az.astNode(λ)))
+                    .collect(toList())
+                : null;
   }
   /** @param ¢ JD
    * @return */
@@ -559,9 +560,9 @@ public enum step {
     return ¢ == null ? null : ¢.getParent();
   }
   /** @param ¢ current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}. If
-   *         parent is not {@link Block} return null, if n is first
-   *         {@link Statement} also null. */
+   * @return the previous {@link Statement} in the parent {@link Block}. If parent
+   *         is not {@link Block} return null, if n is first {@link Statement}
+   *         also null. */
   public static Statement previousStatementInBody(final Statement ¢) {
     return the.previous(¢, statements(az.block(parent(¢))));
   }
@@ -764,5 +765,8 @@ public enum step {
   }
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+  public static Expression condition(DoStatement ¢) {
+    return ¢ == null ? null : ¢.getExpression();
   }
 }

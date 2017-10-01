@@ -6,6 +6,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
@@ -172,7 +174,7 @@ public interface CFG {
           chain(ss);
         }
         @Override public void endVisit(BreakStatement node) {
-          selfBeginnings(node);
+          leaf(node);
           breakTarget.peek().add(node);
         }
         @Override public void endVisit(CatchClause node) {
@@ -211,12 +213,28 @@ public interface CFG {
           continueTarget.peek().add(node);
         }
         @Override public void endVisit(DoStatement node) {
-          Expression condition = node.getExpression();
-          Statement body = node.getBody();
-          delegateBeginnings(node, body);
-          delegateEnds(node, condition);
-          chain(condition, body);
-          chain(body, condition);
+          Statement b = node.getBody();
+          Expression c = step.condition(node);
+          List<ASTNode> route = new LinkedList<>();
+          for (int i = 0; i < 2; ++i) {
+            if (c != null)
+              route.add(c);
+            if (!isEmpty(b))
+              route.add(b);
+          }
+          chain(route);
+          if (route.isEmpty()) {
+            selfBeginnings(node);
+          } else if (c == null && breakTarget.peek().isEmpty()) {
+            delegateBeginnings(node, route.get(0));
+          } else {
+            delegateBeginnings(node, route.get(0));
+            delegateEnds(node, c);
+            if (!breakTarget.isEmpty())
+              for (BreakStatement bs : breakTarget.pop()) {
+                delegateEnds(node, bs);
+              }
+          }
         }
         @Override public void endVisit(ExpressionMethodReference node) {
           leaf(node);
@@ -253,11 +271,23 @@ public interface CFG {
             delegateBeginnings(node, route.get(0));
           } else {
             delegateBeginnings(node, route.get(0));
-            delegateEnds(node, c);
-            if (!breakTarget.isEmpty())
-              for (BreakStatement bs : breakTarget.pop()) {
-                delegateEnds(node, bs);
-              }
+            if (c != null)
+              delegateEnds(node, c);
+            for (BreakStatement bs : breakTarget.pop())
+              delegateEnds(node, bs);
+          }
+        }
+        @Override public void endVisit(IfStatement node) {
+          Expression condition = node.getExpression();
+          Statement then = node.getThenStatement(), elze = node.getElseStatement();
+          delegateBeginnings(node, condition);
+          if (then != null && !isEmpty(then)) {
+            chain(condition, then);
+            delegateEnds(node, then);
+          }
+          if (elze != null && !isEmpty(elze)) {
+            chain(condition, elze);
+            delegateEnds(node, elze);
           }
         }
         @Override public void endVisit(InfixExpression node) {
@@ -400,12 +430,34 @@ public interface CFG {
           chainShallow(fs.get(fs.size() - 1), node);
         }
         @Override public void endVisit(WhileStatement node) {
-          Expression condition = node.getExpression();
-          Statement body = node.getBody();
-          delegateBeginnings(node, condition);
-          delegateEnds(node, condition);
-          chain(condition, body);
-          chain(body, condition);
+          Statement b = node.getBody();
+          Expression c = step.condition(node);
+          List<ASTNode> route = new LinkedList<>();
+          for (int i = 0; i < 2; ++i) {
+            if (c != null)
+              route.add(c);
+            if (!isEmpty(b))
+              route.add(b);
+          }
+          chain(route);
+          if (route.isEmpty()) {
+            selfBeginnings(node);
+          } else if (c == null && breakTarget.peek().isEmpty()) {
+            delegateBeginnings(node, route.get(0));
+          } else {
+            delegateBeginnings(node, route.get(0));
+            delegateEnds(node, c);
+            if (!breakTarget.isEmpty())
+              for (BreakStatement bs : breakTarget.pop()) {
+                delegateEnds(node, bs);
+              }
+          }
+        }
+        boolean isBreakTarget(ASTNode ¢) {
+          return iz.isOneOf(¢, SWITCH_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
+        }
+        boolean isContinueTarget(ASTNode ¢) {
+          return iz.isOneOf(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
         }
         boolean isEmpty(ASTNode ¢) {
           return beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
@@ -444,6 +496,10 @@ public interface CFG {
             labelMap.remove(((LabeledStatement) ¢).getLabel().getIdentifier());
         }
         @Override public void preVisit(ASTNode ¢) {
+          if (isBreakTarget(¢))
+            breakTarget.push(new ArrayList<>());
+          if (isContinueTarget(¢))
+            continueTarget.push(new ArrayList<>());
           if (isReturnTarget(¢))
             returnTarget.push(¢);
           if (iz.labeledStatement(¢))

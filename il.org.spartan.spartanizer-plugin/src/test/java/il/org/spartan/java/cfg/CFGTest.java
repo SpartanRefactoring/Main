@@ -169,6 +169,19 @@ public class CFGTest {
             .outs("q()").containsOnly("i") //
             .ins("i<2").containsOnly("2");
   }
+  @Test public void forStatementBasicBreak() {
+    cfg("for(int i=0;j<2;k++)" //
+        + "{" //
+        + "if(q())" //
+        + " break;" //
+        + "}" //
+        + "r();") //
+            .ins("int i=0").containsOnly("i=0") //
+            .outs("j<2").containsOnly("q()", "r()") //
+            .outs("break;").containsOnly("r()") //
+            .outs("q()").containsOnly("k", "break;") //
+            .ins("j<2").containsOnly("2");
+  }
   @Test public void forStatementEmpty() {
     cfg("" //
         + "f();" //

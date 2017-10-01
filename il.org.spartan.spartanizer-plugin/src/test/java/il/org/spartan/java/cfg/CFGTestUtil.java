@@ -72,7 +72,7 @@ public class CFGTestUtil {
           assert a1 != null : "\nproblem in finding node\n" + tide.clean(a1 + "") + "\nin compilation unit\n" + tide.clean($ + "");
           final Nodes ns = nodes(a1);
           assert ns != null : "\nnull nodes of\n" + tide.clean(a1 + "");
-          assert !checkSize || ns.size() == ns2.length : "\nnode\n" + tide.clean(a1 + "") + "\ncontains " + ns.size() + " nodes";
+          assert !checkSize || ns.size() == ns2.length : "\nnode\n" + tide.clean(a1 + "") + "\ncontains " + ns.size() + " nodes"  + "\nbut:\n" + ns;
           for (final String n2 : ns2) {
             final ASTNode a2 = find($, n2);
             assert a1 != null : "\nproblem in finding node\n" + tide.clean(n2) + "\nin compilation unit\n" + tide.clean($ + "");
