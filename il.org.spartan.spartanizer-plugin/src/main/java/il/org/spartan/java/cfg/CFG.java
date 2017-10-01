@@ -210,6 +210,14 @@ public interface CFG {
           selfBeginnings(node);
           continueTarget.peek().add(node);
         }
+        @Override public void endVisit(DoStatement node) {
+          Expression condition = node.getExpression();
+          Statement body = node.getBody();
+          delegateBeginnings(node, body);
+          delegateEnds(node, condition);
+          chain(condition, body);
+          chain(body, condition);
+        }
         @Override public void endVisit(ExpressionMethodReference node) {
           leaf(node);
         }

@@ -23,40 +23,6 @@ public class CFGTest {
             .outs("i=0").contains("int i=0") //
             .ins("i<100").contains("100");
   }
-  @Test public void b() {
-    cfg("" //
-        + "void f(int x, int y) {\n" //
-        + "  int a = 0, b = 1;\n" //
-        + "  f(c, d);" //
-        + "}") //
-            .outs("0").contains("a = 0") //
-            .outs("a = 0").contains("1") //
-            .outs("1").contains("b = 1") //
-            .outs("b = 1").contains("int a = 0, b = 1;") //
-            .outs("int a = 0, b = 1;").contains("c") //
-            .outs("c").contains("d") //
-            .outs("d").contains("f(c, d)");
-  }
-  @Test public void c() {
-    cfg("" //
-        + "void f(int x) {\n" //
-        + "  int a = f(f(x));\n" //
-        + "  f(b);" //
-        + "}") //
-            .outs("int x").contains("x") //
-            .outs("f(x)").contains("f(f(x))") //
-            .outs("f(f(x))").contains("a = f(f(x))") //
-            .outs("a = f(f(x))").contains("int a = f(f(x));") //
-            .outs("int a = f(f(x));").contains("b") //
-            .outs("b").contains("f(b)");
-    ;
-  }
-  @Test public void d() {
-    cfg("int d = a + x;") //
-        .outs("a").containsOnly("x") //
-        .outs("x").containsOnly("a + x") //
-        .outs("a + x").containsOnly("d = a + x");
-  }
   @Test public void arrayAccess() {
     cfg("a()[b()][c()]") //
         .outs("a()").containsOnly("b()") //
@@ -93,6 +59,20 @@ public class CFGTest {
         .outs("z").containsOnly("y = z") //
         .outs("y = z").containsOnly("x += y = z");
   }
+  @Test public void b() {
+    cfg("" //
+        + "void f(int x, int y) {\n" //
+        + "  int a = 0, b = 1;\n" //
+        + "  f(c, d);" //
+        + "}") //
+            .outs("0").contains("a = 0") //
+            .outs("a = 0").contains("1") //
+            .outs("1").contains("b = 1") //
+            .outs("b = 1").contains("int a = 0, b = 1;") //
+            .outs("int a = 0, b = 1;").contains("c") //
+            .outs("c").contains("d") //
+            .outs("d").contains("f(c, d)");
+  }
   @Test public void block() {
     cfg("" //
         + "void f(int x) {\n" //
@@ -110,6 +90,20 @@ public class CFGTest {
         + "  h();\n" //
         + "}") //
             .outs("g()").containsOnly("h()");
+  }
+  @Test public void c() {
+    cfg("" //
+        + "void f(int x) {\n" //
+        + "  int a = f(f(x));\n" //
+        + "  f(b);" //
+        + "}") //
+            .outs("int x").contains("x") //
+            .outs("f(x)").contains("f(f(x))") //
+            .outs("f(f(x))").contains("a = f(f(x))") //
+            .outs("a = f(f(x))").contains("int a = f(f(x));") //
+            .outs("int a = f(f(x));").contains("b") //
+            .outs("b").contains("f(b)");
+    ;
   }
   @Test public void classInstanceCreation() {
     cfg("f(g(), h()).new I(j(), k())") //
@@ -137,6 +131,12 @@ public class CFGTest {
             .outs("z").containsOnly("q") //
             .outs("a = b(x,y) ? c : d(z,q)").containsOnly("T a = b(x,y) ? c : d(z,q);").outs("T a = b(x,y) ? c : d(z,q);").containsOnly("f()");
   }
+  @Test public void d() {
+    cfg("int d = a + x;") //
+        .outs("a").containsOnly("x") //
+        .outs("x").containsOnly("a + x") //
+        .outs("a + x").containsOnly("d = a + x");
+  }
   @Test public void doStatement() {
     cfg("" //
         + "do {\n" //
@@ -153,7 +153,7 @@ public class CFGTest {
         + "} while (b);\n" //
         + "g();\n" //
     ) //
-        .outs("b").containsOnly("f()", "g()");
+        .outs("b").containsOnly("g()", "b");
   }
   @Test public void fieldAccess() {
     cfg("f().g").outs("f()").containsOnly("g").outs("g").containsOnly("f().g");
@@ -184,7 +184,7 @@ public class CFGTest {
         + "for(;j<2;k++)" //
         + "  {;}" //
         + "h();") //
-            .ins("j<2").contains("f()") //
+            .ins("j").contains("f()") //
             .outs("j<2").containsOnly("k", "h()") //
             .ins("h()").containsOnly("j<2");
   }
@@ -205,7 +205,7 @@ public class CFGTest {
         + "for(;j<2;k++)" //
         + "  g();" //
         + "h();") //
-            .ins("j<2").contains("f()") //
+            .ins("j").contains("f()") //
             .outs("j<2").containsOnly("g()", "h()") //
             .outs("g()").containsOnly("k");
   }
@@ -215,7 +215,7 @@ public class CFGTest {
         + "for(int i=0;j<2;)" //
         + "  g();" //
         + "h();") //
-            .ins("j<2").contains("f()") //
+            .ins("j").contains("int i=0", "g()") //
             .outs("j<2").containsOnly("g()", "h()") //
             .outs("g()").containsOnly("j");
   }
