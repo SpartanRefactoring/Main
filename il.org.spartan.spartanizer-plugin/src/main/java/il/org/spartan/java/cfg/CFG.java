@@ -21,9 +21,9 @@ public interface CFG {
   static void compute(final BodyDeclaration d) {
     if (d != null && beginnings.of(d).get().isEmpty())
       d.accept(new ASTVisitor() {
-        Stack<ASTNode> breakTarget = new Stack<>();
-        Stack<ASTNode> continueTarget = new Stack<>();
-        Map<String, ASTNode> labelMap = new LinkedHashMap<>();
+        final Stack<ASTNode> breakTarget = new Stack<>();
+        final Stack<ASTNode> continueTarget = new Stack<>();
+        final Map<String, ASTNode> labelMap = new LinkedHashMap<>();
         Stack<ASTNode> returnTarget = anonymous.ly(() -> {
           final Stack<ASTNode> $ = new Stack<>();
           $.push(parent(d));
