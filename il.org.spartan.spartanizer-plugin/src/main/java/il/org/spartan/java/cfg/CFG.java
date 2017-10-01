@@ -76,15 +76,6 @@ public interface CFG {
     if (d != null && beginnings.of(d).get().isEmpty())
       d.accept(new ASTVisitor() {
         Alist trace = new Alist();
-        // Stack<List<BreakStatement>> breakTarget = new Stack<>();
-        // Stack<List<ContinueStatement>> continueTarget = new Stack<>();
-        // Map<String, ASTNode> labelMap = new LinkedHashMap<>(); // for supporting
-        // label continue and label breal
-        Stack<ASTNode> returnTarget = anonymous.ly(() -> {
-          final Stack<ASTNode> $ = new Stack<>();
-          $.push(parent(d));
-          return $;
-        });
 
         /** To all the ends of the first node, put the outgoings of the second node */
         void chain(ASTNode n1, ASTNode n2) {
@@ -96,7 +87,7 @@ public interface CFG {
             chain(ns.get(¢), ns.get(¢ + 1));
         }
         void chainReturn(ASTNode n) {
-          ends.of(n).get().stream().forEach(λ -> outgoing.of(λ).add(returnTarget.peek()));
+          ends.of(n).get().stream().forEach(λ -> outgoing.of(λ).addAll(trace.peek("return")));
         }
         /** Chain with hierarchy */
         void chainShallow(ASTNode n1, ASTNode n2) {
@@ -455,6 +446,9 @@ public interface CFG {
         boolean isContinueTarget(ASTNode ¢) {
           return iz.isOneOf(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, WHILE_STATEMENT, DO_STATEMENT);
         }
+        boolean isReturnTarget(ASTNode ¢) {
+          return iz.isOneOf(¢, METHOD_DECLARATION);
+        }
         boolean isEmpty(ASTNode ¢) {
           return beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
         }
@@ -464,9 +458,6 @@ public interface CFG {
         }
         boolean isInfiniteLoop(ASTNode ¢) {
           return !beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
-        }
-        boolean isReturnTarget(@SuppressWarnings("unused") ASTNode __) {
-          return false;
         }
         void leaf(ASTNode ¢) {
           if (isIllegalLeaf(¢))
@@ -485,19 +476,13 @@ public interface CFG {
           }
           return $;
         }
-        @Override public void postVisit(ASTNode ¢) {
-          if (isReturnTarget(¢))
-            returnTarget.pop();
-          // if (iz.labeledStatement(¢))
-          // labelMap.remove(((LabeledStatement) ¢).getLabel().getIdentifier());
-        }
         @Override public void preVisit(ASTNode ¢) {
           if (isBreakTarget(¢))
             trace.push("break");
           if (isContinueTarget(¢))
             trace.push("continue");
           if (isReturnTarget(¢))
-            returnTarget.push(¢);
+            trace.push("return");
           // if (iz.labeledStatement(¢))
           // labelMap.put(((LabeledStatement) ¢).getLabel().getIdentifier(), ¢);
         }
