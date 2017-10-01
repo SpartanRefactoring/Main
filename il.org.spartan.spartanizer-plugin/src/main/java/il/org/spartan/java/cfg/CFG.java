@@ -75,9 +75,11 @@ public interface CFG {
   static void init(final BodyDeclaration d) {
     if (d != null && beginnings.of(d).get().isEmpty())
       d.accept(new ASTVisitor() {
-        Stack<List<BreakStatement>> breakTarget = new Stack<>();
-        Stack<List<ContinueStatement>> continueTarget = new Stack<>();
-        Map<String, ASTNode> labelMap = new LinkedHashMap<>(); // for supporting label continue and label breal
+        Alist trace = new Alist();
+        // Stack<List<BreakStatement>> breakTarget = new Stack<>();
+        // Stack<List<ContinueStatement>> continueTarget = new Stack<>();
+        // Map<String, ASTNode> labelMap = new LinkedHashMap<>(); // for supporting
+        // label continue and label breal
         Stack<ASTNode> returnTarget = anonymous.ly(() -> {
           final Stack<ASTNode> $ = new Stack<>();
           $.push(parent(d));
@@ -175,7 +177,7 @@ public interface CFG {
         }
         @Override public void endVisit(BreakStatement node) {
           leaf(node);
-          breakTarget.peek().add(node);
+          trace.append("break", node);
         }
         @Override public void endVisit(CatchClause node) {
           SingleVariableDeclaration e = node.getException();
@@ -210,7 +212,7 @@ public interface CFG {
         }
         @Override public void endVisit(ContinueStatement node) {
           selfBeginnings(node);
-          continueTarget.peek().add(node);
+          trace.append("continue", node);
         }
         @Override public void endVisit(DoStatement node) {
           Statement b = node.getBody();
@@ -227,11 +229,11 @@ public interface CFG {
             selfBeginnings(node);
           else {
             delegateBeginnings(node, route.get(0));
-            if (c != null || !breakTarget.peek().isEmpty()) {
+            if (c != null || !trace.peek("break").isEmpty()) {
               delegateEnds(node, c);
-              if (!breakTarget.isEmpty())
-                for (BreakStatement ¢ : breakTarget.pop())
-                  delegateEnds(node, ¢);
+              if (!trace.peek("break").isEmpty())
+                for (ASTNode ¢ : trace.pop("break"))
+                  delegateEnds(node, az.breakStatement(¢));
             }
           }
         }
@@ -267,11 +269,11 @@ public interface CFG {
             selfBeginnings(node);
           else {
             delegateBeginnings(node, route.get(0));
-            if (c != null || !breakTarget.peek().isEmpty()) {
+            if (c != null || !trace.peek("break").isEmpty()) {
               if (c != null)
                 delegateEnds(node, c);
-              for (BreakStatement ¢ : breakTarget.pop())
-                delegateEnds(node, ¢);
+              for (ASTNode ¢ : trace.pop("break"))
+                delegateEnds(node, az.breakStatement(¢));
             }
           }
         }
@@ -439,10 +441,10 @@ public interface CFG {
             selfBeginnings(node);
           else {
             delegateBeginnings(node, route.get(0));
-            if (c != null || !breakTarget.peek().isEmpty()) {
+            if (c != null || !trace.peek("break").isEmpty()) {
               delegateEnds(node, c);
-              if (!breakTarget.isEmpty())
-                for (BreakStatement ¢ : breakTarget.pop())
+              if (trace.peek("break") != null)
+                for (ASTNode ¢ : trace.pop("break"))
                   delegateEnds(node, ¢);
             }
           }
@@ -486,18 +488,18 @@ public interface CFG {
         @Override public void postVisit(ASTNode ¢) {
           if (isReturnTarget(¢))
             returnTarget.pop();
-          if (iz.labeledStatement(¢))
-            labelMap.remove(((LabeledStatement) ¢).getLabel().getIdentifier());
+          // if (iz.labeledStatement(¢))
+          // labelMap.remove(((LabeledStatement) ¢).getLabel().getIdentifier());
         }
         @Override public void preVisit(ASTNode ¢) {
           if (isBreakTarget(¢))
-            breakTarget.push(new ArrayList<>());
+            trace.push("break");
           if (isContinueTarget(¢))
-            continueTarget.push(new ArrayList<>());
+            trace.push("continue");
           if (isReturnTarget(¢))
             returnTarget.push(¢);
-          if (iz.labeledStatement(¢))
-            labelMap.put(((LabeledStatement) ¢).getLabel().getIdentifier(), ¢);
+          // if (iz.labeledStatement(¢))
+          // labelMap.put(((LabeledStatement) ¢).getLabel().getIdentifier(), ¢);
         }
         void selfBeginnings(ASTNode ¢) {
           beginnings.of(¢).add(¢);

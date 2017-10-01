@@ -7,7 +7,7 @@ import org.junit.*;
 /** Unit tests for the GitHub issue thus numbered
  * @author Yossi Gil
  * @since 2016 */
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings("static-method")
 public class Issue0129 {
   @Test public void issue129_01() {
     trimmingOf("$ += s + (new Integer(i) + \"\")")//

@@ -157,8 +157,8 @@ public enum az {
   public static ClassInstanceCreation classInstanceCreation(final ASTNode $) {
     return !($ instanceof ClassInstanceCreation) ? null : (ClassInstanceCreation) $;
   }
-  /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is one of the six comparison operators: {@code <}, {@code <=}, {@code >},
+  /** Convert an {@link Expression} into {@link InfixExpression} whose operator is
+   * one of the six comparison operators: {@code <}, {@code <=}, {@code >},
    * {@code >=}, {@code !=}, or {@code ==}.
    * @param $ result
    * @return parameter thus converted, or {@code null</b> if the conversion is
@@ -174,8 +174,7 @@ public enum az {
   public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return ¢ == null ? null : (CompilationUnit) ¢;
   }
-  /** Convert, is possible, an {@link ASTNode} to a
-   * {@link ConditionalExpression}
+  /** Convert, is possible, an {@link ASTNode} to a {@link ConditionalExpression}
    * @param $ result
    * @return argument, but down-casted to a {@link ConditionalExpression}, or
    *         {@code null if no such down-cast is possible.. */
@@ -313,8 +312,8 @@ public enum az {
   public static NormalAnnotation normalAnnotation(final Annotation $) {
     return !($ instanceof NormalAnnotation) ? null : (NormalAnnotation) $;
   }
-  /** Convert an {@link Expression} into a {@link PrefixExpression} whose
-   * operator is {@code !},
+  /** Convert an {@link Expression} into a {@link PrefixExpression} whose operator
+   * is {@code !},
    * @param $ result
    * @return parameter thus converted, or {@code null</b> if the conversion is
    *         not possible for it */
@@ -384,8 +383,8 @@ public enum az {
   public static Statement sequencer(final Statement ¢) {
     return iz.sequencer(¢) ? ¢ : null;
   }
-  /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is either {@link InfixExpression.Operator#AND} or
+  /** Convert an {@link Expression} into {@link InfixExpression} whose operator is
+   * either {@link InfixExpression.Operator#AND} or
    * {@link InfixExpression.Operator#OR}.
    * @param $ result
    * @return parameter thus converted, or {@code null</b> if the conversion is
@@ -489,8 +488,8 @@ public enum az {
   /** Convert, if possible, an {@link Expression} to a
    * {@link VariableDeclarationExpression}
    * @param $ result
-   * @return argument, but down-casted to a
-   *         {@link VariableDeclarationExpression}, or {@code null
+   * @return argument, but down-casted to a {@link VariableDeclarationExpression},
+   *         or {@code null
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression variableDeclarationExpression(final ASTNode $) {
     return !iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
@@ -522,5 +521,8 @@ public enum az {
    *         {@code null if no such down-cast is possible.. */
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
+  }
+  public static ASTNode breakStatement(ASTNode $) {
+    return !($ instanceof BreakStatement) ? null : (BreakStatement) $;
   }
 }
