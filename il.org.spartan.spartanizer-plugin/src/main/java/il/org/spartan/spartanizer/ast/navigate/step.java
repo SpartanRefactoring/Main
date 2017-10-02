@@ -769,4 +769,16 @@ public enum step {
   public static Expression condition(DoStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
+  public static String toCamelCase(final String init) {
+    if (init == null)
+      return null;
+    final StringBuilder ret = new StringBuilder(init.length());
+    for (final String word : init.split("_")) {
+      if (!word.isEmpty()) {
+        ret.append(word.substring(0, 1).toUpperCase());
+        ret.append(word.substring(1).toLowerCase());
+      }
+    }
+    return ret.toString();
+  }
 }

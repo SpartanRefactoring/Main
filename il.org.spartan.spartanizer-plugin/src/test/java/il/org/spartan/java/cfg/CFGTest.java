@@ -2,8 +2,14 @@ package il.org.spartan.java.cfg;
 
 import static il.org.spartan.java.cfg.CFGTestUtil.*;
 
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.stream.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
 /** Unit test for {@link CFG}.
@@ -13,6 +19,26 @@ import il.org.spartan.utils.*;
 @UnderConstruction("Dor -- 07/07/2017")
 @SuppressWarnings("static-method")
 public class CFGTest {
+  boolean contains(List<String> lst, String str) {
+    for (String s : lst)
+      if (s.equals(str))
+        return true;
+    return false;
+  }
+  @Test public void universalTest() {
+    List<String> ASTNodeTypes = Arrays.asList(ASTNode.class.getFields()).stream().map(f -> step.toCamelCase(f.getName()))
+        .collect(Collectors.toList());
+    List<String> HandledNodes = Arrays.asList(CFGTraversal.class.getMethods()).stream().filter(m -> m.getDeclaringClass().equals(CFGTraversal.class))
+        .map(m -> {
+          if (m.getParameters().length > 0 && m.getName().equals("endVisit"))
+            return m.getParameterTypes()[0].getSimpleName();
+          return null;
+        }).filter(m -> m != null).collect(Collectors.toList());
+    for (String t : ASTNodeTypes) {
+      System.out.println(t);
+      assert contains(HandledNodes, t) : "Does Not Handling " + t;
+    }
+  }
   @Test public void a() {
     cfg("" //
         + "void f(int x) {\n" //
@@ -35,7 +61,6 @@ public class CFGTest {
         .outs("f()").containsOnly("g()") //
         .outs("g()").containsOnly("new X[f()][g()]");
   }
-  // TODO Roth: verify array creation
   @Test public void arrayInitializer() {
     cfg("new X[] {{f()}, g()}") //
         .outs("f()").containsOnly("{f()}") //
@@ -172,9 +197,10 @@ public class CFGTest {
   @Test public void forStatementBasicBreak() {
     cfg("for(int i=0;j<2;k++)" //
         + "{" //
-        + "if(q())" //
+        + "if(q()){" //
+        + "t();" //
         + " break;" //
-        + "}" //
+        + "}}" //
         + "r();") //
             .ins("int i=0").containsOnly("i=0") //
             .outs("j<2").containsOnly("q()", "r()") //
