@@ -18,19 +18,6 @@ import il.org.spartan.utils.*;
 @UnderConstruction("Dor -- 07/07/2017")
 @SuppressWarnings("static-method")
 public class CFGTest {
-  @Test public void universalTest() {
-    List<String> ASTNodeTypes = Arrays.asList(ASTNode.class.getFields()).stream().map(f -> step.toCamelCase(f.getName()))
-        .collect(Collectors.toList());
-    List<String> HandledNodes = Arrays.asList(CFGTraversal.class.getMethods()).stream().filter(m -> m.getDeclaringClass().equals(CFGTraversal.class))
-        .map(m -> {
-          if (m.getParameters().length > 0 && m.getName().equals("endVisit"))
-            return m.getParameterTypes()[0].getSimpleName();
-          return null;
-        }).filter(m -> m != null).collect(Collectors.toList());
-    for (String t : ASTNodeTypes) {
-      assert contains(HandledNodes, t) : "Does Not Handling " + t;
-    }
-  }
   @Test public void a() {
     cfg("" //
         + "void f(int x) {\n" //
@@ -40,6 +27,9 @@ public class CFGTest {
             .outs("0").contains("i=0") //
             .outs("i=0").contains("int i=0") //
             .ins("i<100").contains("100");
+  }
+  @Test public void AnonymousClassDeclaration() {
+    // Add Test
   }
   @Test public void arrayAccess() {
     cfg("a()[b()][c()]") //
@@ -121,6 +111,10 @@ public class CFGTest {
             .outs("int a = f(f(x));").contains("b") //
             .outs("b").contains("f(b)");
     ;
+  }
+  @Test public void CastExpression() {
+    cfg("int a = (int)f();") //
+        .outs("f()").containsOnly("(int)f()");
   }
   @Test public void classInstanceCreation() {
     cfg("f(g(), h()).new I(j(), k())") //
@@ -347,6 +341,21 @@ public class CFGTest {
                 "Exception2 x2") //
             .outs("x1.basa()").containsOnly("f2()");
   }
+  @Test public void universalTest() {
+    String[] ignore = { "CompilationUnit" };
+    List<String> ignoreList = Arrays.asList(ignore);
+    List<String> ASTNodeTypes = Arrays.asList(ASTNode.class.getFields()).stream().map(f -> step.toCamelCase(f.getName()))
+        .collect(Collectors.toList());
+    List<String> handledNodes = Arrays.asList(CFGTraversal.class.getMethods()).stream().filter(m -> m.getDeclaringClass().equals(CFGTraversal.class))
+        .map(m -> {
+          if (m.getParameters().length > 0 && m.getName().equals("endVisit"))
+            return m.getParameterTypes()[0].getSimpleName();
+          return null;
+        }).filter(m -> m != null).collect(Collectors.toList());
+    for (String t : ASTNodeTypes) {
+      assert contains(handledNodes, t) || contains(ignoreList, t) : "Does Not Handling " + t;
+    }
+  }
   @Test public void whileStatementBasic() {
     cfg("while(w(8)<s())" //
         + "{" //
@@ -356,12 +365,5 @@ public class CFGTest {
             .ins("w(8)").containsOnly("8") //
             .outs("w(8)<s()").containsOnly("q()", "r()") //
             .outs("q()").containsOnly("8");
-  }
-  @Test public void AnonymousClassDeclaration() {
-    // Add Test
-  }
-  @Test public void CastExpression() {
-    cfg("int a = (int)f();") //
-        .outs("f()").containsOnly("(int)f()");
   }
 }

@@ -30,10 +30,10 @@ public interface CFG {
       }
     }
 
-    Nodes getNodes(ASTNode ¢) {
+    Nodes getNodes(final ASTNode ¢) {
       return property.get(¢, getClass().getCanonicalName() + "." + this, Nodes::new);
     }
-    Nodes nodes(ASTNode ¢) {
+    Nodes nodes(final ASTNode ¢) {
       if (!property.has(¢, getClass().getCanonicalName() + "." + this))
         init(az.bodyDeclaration(yieldAncestors.untilClass(BodyDeclaration.class).from(¢)));
       return getNodes(¢);
@@ -45,12 +45,12 @@ public interface CFG {
             get().add(what);
           return this;
         }
-        @Override public Of addAll(Collection<? extends ASTNode> what) {
+        @Override public Of addAll(final Collection<? extends ASTNode> what) {
           if (what != null && to != null)
             get().addAll(what);
           return this;
         }
-        @Override public Of addAll(Of what) {
+        @Override public Of addAll(final Of what) {
           if (what != null && to != null)
             get().addAll(what.get().asSet());
           return this;
