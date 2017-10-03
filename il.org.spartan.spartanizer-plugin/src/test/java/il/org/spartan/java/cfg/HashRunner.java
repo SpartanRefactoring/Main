@@ -5,77 +5,47 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.apache.commons.lang3.builder.*;
-import org.junit.*;
-import org.junit.runner.*;
-import org.junit.runner.notification.*;
+import org.junit.runners.*;
+import org.junit.runners.model.*;
 
-/** TODO: document class
+/** TODO Roth: document class TODO Roth: move to appropriate package
  * @author Ori Roth
  * @since 2017-10-03 */
-public class HashRunner extends Runner {
-  final Class<?> testclass;
-  final List<Field> focused;
+public class HashRunner extends BlockJUnit4ClassRunner {
   Object testClassInstance;
-  int[] focusedHashesBefore;
-  int[] focusedHashesAfter;
+  final List<Field> focusedFields;
+  int[] focusedFieldsHashes;
 
-  public HashRunner(Class<?> c) {
-    this.testclass = c;
-    this.focused = Arrays.stream(c.getDeclaredFields()).filter(f -> f.isAnnotationPresent(Focus.class)).collect(Collectors.toList());
-    this.focusedHashesBefore = new int[focused.size()];
-    this.focusedHashesAfter = new int[focused.size()];
+  public HashRunner(Class<?> c) throws InitializationError {
+    super(c);
+    this.focusedFields = Arrays.stream(c.getDeclaredFields()).filter(f -> f.isAnnotationPresent(Focus.class)).collect(Collectors.toList());
+    this.focusedFieldsHashes = new int[focusedFields.size()];
   }
-  @Override public Description getDescription() {
-    return Description.createTestDescription(testclass, "Hash Runner");
-  }
-  @Override public void run(RunNotifier n) {
-    testClassInstance = null;
-    try {
-      testClassInstance = testclass.newInstance();
-      fillfields(testClassInstance, focusedHashesBefore);
-    } catch (Exception x) {
-      n.fireTestFailure(new Failure(Description.createTestDescription(testclass, "initialization failed"), x));
-      return;
+  @Override protected Object createTest() throws Exception {
+    if (testClassInstance == null) {
+      testClassInstance = super.createTest();
+      computeHashesInto(testClassInstance, focusedFieldsHashes);
     }
-    for (Method method : testclass.getMethods()) {
-      if (method.isAnnotationPresent(Test.class)) {
-        try {
-          n.fireTestStarted(Description.createTestDescription(testclass, method.getName()));
-          test(method);
-          n.fireTestFinished(Description.createTestDescription(testclass, method.getName()));
-        } catch (Exception x) {
-          n.fireTestFailure(new Failure(Description.createTestDescription(testclass, method.getName()), x));
-        }
+    return testClassInstance;
+  }
+  @Override protected Statement methodInvoker(FrameworkMethod method, Object test) {
+    return new Statement() {
+      @Override public void evaluate() throws Throwable {
+        method.invokeExplosively(test);
+        int[] focusedFieldsHashesAfter = new int[focusedFields.size()];
+        computeHashesInto(test, focusedFieldsHashesAfter);
+        for (int i = 0; i < focusedFields.size(); ++i)
+          if (focusedFieldsHashes[i] == focusedFieldsHashesAfter[i])
+            throw new SameFocusedHash(method, focusedFields.get(i));
+        focusedFieldsHashes = focusedFieldsHashesAfter;
       }
-    }
+    };
   }
-  private void fillfields(Object j, int[] fhs) throws IllegalArgumentException, IllegalAccessException {
-    for (int i = 0; i < focused.size(); ++i)
-      fhs[i] = hash(focused.get(i).get(j));
-  }
-  private void test(Method method) throws IllegalAccessException, InvocationTargetException, SameFocusedHash {
-    method.invoke(testClassInstance);
-    fillfields(testClassInstance, focusedHashesAfter);
-    for (int i = 0; i < focused.size(); ++i)
-      if (focusedHashesBefore[i] == focusedHashesAfter[i])
-        throw new SameFocusedHash(method, i);
-    focusedHashesBefore = focusedHashesAfter;
+  void computeHashesInto(Object j, int[] fhs) throws IllegalArgumentException, IllegalAccessException {
+    for (int i = 0; i < focusedFields.size(); ++i)
+      fhs[i] = hash(focusedFields.get(i).get(j));
   }
   private static int hash(Object o) {
     return HashCodeBuilder.reflectionHashCode(17, 37, o, true, Object.class);
-  }
-
-  private class SameFocusedHash extends Exception {
-    private static final long serialVersionUID = -9109817977086551314L;
-    final int i;
-    final Method m;
-
-    public SameFocusedHash(Method m, int i) {
-      this.i = i;
-      this.m = m;
-    }
-    @Override public String getMessage() {
-      return "field " + focused.get(i).getName() + " did not changed during the execution of " + m.getName();
-    }
   }
 }
