@@ -68,6 +68,7 @@ dependencies {
 	compile "org.mockito:mockito-core:1.+"
 	// added by @orenafek on 25.5.17
 	compile 'org.assertj:assertj-core:3.8.0'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
 }
 
 eclipse {
