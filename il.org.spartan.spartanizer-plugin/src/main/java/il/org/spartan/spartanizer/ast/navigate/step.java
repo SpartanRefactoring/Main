@@ -150,6 +150,9 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayCreation ¢) {
     return ¢ == null ? null : ¢.dimensions();
   }
+  @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayType ¢) {
+    return ¢ == null ? null : ¢.dimensions();
+  }
   /** Shorthand for {@link ConditionalExpression#getElseExpression()}
    * @param ¢ JD
    * @return else part of the parameter */

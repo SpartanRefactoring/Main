@@ -2,7 +2,6 @@ package il.org.spartan.java.cfg;
 
 import static il.org.spartan.java.cfg.CFGTestUtil.*;
 
-import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -19,12 +18,6 @@ import il.org.spartan.utils.*;
 @UnderConstruction("Dor -- 07/07/2017")
 @SuppressWarnings("static-method")
 public class CFGTest {
-  boolean contains(List<String> lst, String str) {
-    for (String s : lst)
-      if (s.equals(str))
-        return true;
-    return false;
-  }
   @Test public void universalTest() {
     List<String> ASTNodeTypes = Arrays.asList(ASTNode.class.getFields()).stream().map(f -> step.toCamelCase(f.getName()))
         .collect(Collectors.toList());
@@ -35,7 +28,6 @@ public class CFGTest {
           return null;
         }).filter(m -> m != null).collect(Collectors.toList());
     for (String t : ASTNodeTypes) {
-      System.out.println(t);
       assert contains(HandledNodes, t) : "Does Not Handling " + t;
     }
   }
@@ -364,5 +356,12 @@ public class CFGTest {
             .ins("w(8)").containsOnly("8") //
             .outs("w(8)<s()").containsOnly("q()", "r()") //
             .outs("q()").containsOnly("8");
+  }
+  @Test public void AnonymousClassDeclaration() {
+    // Add Test
+  }
+  @Test public void CastExpression() {
+    cfg("int a = (int)f();") //
+        .outs("f()").containsOnly("(int)f()");
   }
 }

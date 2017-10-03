@@ -2,6 +2,8 @@ package il.org.spartan.java.cfg;
 
 import static il.org.spartan.java.cfg.CFG.Edges.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -10,6 +12,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Testing utilities for {@link CFGTest}.
  * @author Ori Roth
+ * @author Dor Ma'ayan
  * @since 2017-07-06 */
 public class CFGTestUtil {
   public static IOAble cfg(final String code) {
@@ -72,7 +75,7 @@ public class CFGTestUtil {
           assert a1 != null : "\nproblem in finding node\n" + tide.clean(a1 + "") + "\nin compilation unit\n" + tide.clean($ + "");
           final Nodes ns = nodes(a1);
           assert ns != null : "\nnull nodes of\n" + tide.clean(a1 + "");
-          assert !checkSize || ns.size() == ns2.length : "\nnode\n" + tide.clean(a1 + "") + "\ncontains " + ns.size() + " nodes"  + "\nbut:\n" + ns;
+          assert !checkSize || ns.size() == ns2.length : "\nnode\n" + tide.clean(a1 + "") + "\ncontains " + ns.size() + " nodes" + "\nbut:\n" + ns;
           for (final String n2 : ns2) {
             final ASTNode a2 = find($, n2);
             assert a1 != null : "\nproblem in finding node\n" + tide.clean(n2) + "\nin compilation unit\n" + tide.clean($ + "");
@@ -116,5 +119,11 @@ public class CFGTestUtil {
       }
     });
     return $.get();
+  }
+  public static boolean contains(List<String> lst, String str) {
+    for (String s : lst)
+      if (s.equals(str))
+        return true;
+    return false;
   }
 }

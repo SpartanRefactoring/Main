@@ -60,6 +60,12 @@ public class CFGTraversal extends ASTVisitor {
     chain(array, index);
     chainShallow(index, node);
   }
+  @Override public void endVisit(CastExpression node) {
+    Expression e = node.getExpression();
+    delegateBeginnings(node, e);
+    chainShallow(e, node);
+    selfEnds(node);
+  }
   @Override public void endVisit(ArrayCreation node) {
     selfEnds(node);
     ArrayInitializer i = node.getInitializer();
@@ -132,6 +138,14 @@ public class CFGTraversal extends ASTVisitor {
       chain(es);
       chainShallow(es.get(es.size() - 1), creation);
     }
+  }
+  @Override public void endVisit(AnonymousClassDeclaration node) {
+    List<BodyDeclaration> bodies = step.bodyDeclarations(node);
+    if (bodies.isEmpty())
+      return;
+    delegateBeginnings(node, bodies.get(0));
+    delegateEnds(node, bodies.get(bodies.size() - 1));
+    chain(bodies);
   }
   @Override public void endVisit(ConditionalExpression node) {
     Expression condition = node.getExpression(), thenExpression = node.getThenExpression(), elseExpression = node.getElseExpression();
@@ -301,6 +315,9 @@ public class CFGTraversal extends ASTVisitor {
   @Override public void endVisit(SuperFieldAccess node) {
     leaf(node);
   }
+  @Override public void endVisit(BooleanLiteral node) {
+    leaf(node);
+  }
   @Override public void endVisit(SuperMethodInvocation node) {
     final List<Expression> es = step.arguments(node);
     if (es.isEmpty())
@@ -333,19 +350,18 @@ public class CFGTraversal extends ASTVisitor {
       delegateEnds(s, finaly);
     }
   }
-  // @Override public void endVisit(SwitchStatement node) {
-  // Expression condition = node.getExpression();
-  // List<SwitchCase> statements = extract.switchCases(node);
-  // delegateBeginnings(node,condition);
-  // if(trace.peek("break") != null)
-  // for(ASTNode.)
-  //
-  // }
   @Override public void endVisit(VariableDeclarationExpression node) {
-    @SuppressWarnings("unchecked") List<VariableDeclarationFragment> fs = node.fragments();
+    List<VariableDeclarationFragment> fs = step.fragments(node);
     delegateBeginnings(node, fs.get(0));
     chain(fs);
     chainShallow(fs.get(fs.size() - 1), node);
+    selfEnds(node);
+  }
+  @Override public void endVisit(ArrayType node) {
+    List<Expression> dimensions = step.dimensions(node);
+    delegateBeginnings(node, dimensions.get(0));
+    chain(dimensions);
+    chainShallow(dimensions.get(dimensions.size() - 1), node);
     selfEnds(node);
   }
   @Override public void endVisit(VariableDeclarationFragment node) {
