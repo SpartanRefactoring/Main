@@ -25,6 +25,7 @@ public interface CFG {
       Of addAll(Of what);
       Of clear();
       Nodes get();
+      boolean isPresent();
       default Of set(final ASTNode what) {
         return clear().add(what);
       }
@@ -63,12 +64,20 @@ public interface CFG {
         @Override public Nodes get() {
           return Edges.this.getNodes(to);
         }
+        @Override public boolean isPresent() {
+          return property.has(to, Edges.class.getCanonicalName() + "." + Edges.this);
+        }
       };
     }
   }
 
-  static void init(final BodyDeclaration ¢) {
-    if (¢ != null && beginnings.of(¢).get().isEmpty())
+  // TODO Roth: manage
+  public static void init(final ASTNode ¢) {
+    if (¢ != null && !beginnings.of(¢).isPresent())
+      ¢.accept(new CFGTraversal());
+  }
+  public static void init(final BodyDeclaration ¢) {
+    if (¢ != null && !beginnings.of(¢).isPresent())
       ¢.accept(new CFGTraversal());
   }
 }

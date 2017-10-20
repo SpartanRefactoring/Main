@@ -8,5 +8,5 @@ import java.lang.annotation.*;
  * @since 2017-10-03 */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Focus {
-  // TODO Roth: allow multiple Focus fields
+  boolean wrapper() default false;
 }
