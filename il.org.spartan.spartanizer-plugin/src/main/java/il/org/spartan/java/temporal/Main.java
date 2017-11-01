@@ -5,95 +5,65 @@ package il.org.spartan.java.temporal;
  * @since 2017-11-01 */
 public class Main {
   static class WriteToFile extends Temporal {
-    interface Before extends Temporal.Before {/**/}
+    interface Before extends Operation {/**/}
 
-    interface After extends Temporal.After {/**/}
+    interface After extends Operation {/**/}
 
-    @Override public void go() {
-      consumeTraits();
-      for (Operation o : befores)
-        o.go();
-      for (Operation o : collaterals)
-        o.go();
-      System.out.println("write to file");
-      for (Operation o : afters)
-        o.go();
+    @Override public boolean isBefore(Operation o) {
+      return o instanceof Before;
     }
-    /** Not the same as {@link Temporal#registerNonCollateral}! */
-    @Override public boolean registerNonCollateral(Operation o) {
-      if (registerNonCollateralToList(o, befores) || registerNonCollateralToList(o, afters))
-        return true;
-      if (o instanceof Before) {
-        befores.add((Before) o);
-        return true;
-      } else if (o instanceof After) {
-        afters.add((After) o);
-        return true;
-      }
-      return false;
+    @Override public boolean isAfter(Operation o) {
+      return o instanceof After;
+    }
+    @Override public void body() {
+      System.out.println("write to file");
     }
   }
 
   static class OpenFile extends Temporal implements WriteToFile.Before {
-    interface Before extends Temporal.Before {/**/}
+    interface Before extends Operation {/**/}
 
-    interface After extends Temporal.After {/**/}
+    interface After extends Operation {/**/}
 
-    @Override public void go() {
-      consumeTraits();
-      for (Operation o : befores)
-        o.go();
-      for (Operation o : collaterals)
-        o.go();
-      System.out.println("open file");
-      for (Operation o : afters)
-        o.go();
+    @Override public boolean isBefore(Operation o) {
+      return o instanceof Before;
     }
-    @Override public boolean registerNonCollateral(Operation o) {
-      if (registerNonCollateralToList(o, befores) || registerNonCollateralToList(o, afters))
-        return true;
-      if (o instanceof Before) {
-        befores.add((Before) o);
-        return true;
-      } else if (o instanceof After) {
-        afters.add((After) o);
-        return true;
-      }
-      return false;
+    @Override public boolean isAfter(Operation o) {
+      return o instanceof After;
+    }
+    @Override public void body() {
+      System.out.println("open file");
     }
   }
 
-  static class LogFileOpened extends Temporal implements OpenFile.After {
-    interface Before extends Temporal.Before {/**/}
+  static class LogFileOpened extends Temporal implements OpenFile.After/* , WriteToFile.Before */ {
+    interface Before extends Operation {/**/}
 
-    interface After extends Temporal.After {/**/}
+    interface After extends Operation {/**/}
 
-    @Override public void go() {
-      consumeTraits();
-      for (Operation o : befores)
-        o.go();
-      for (Operation o : collaterals)
-        o.go();
-      System.out.println("logged file openning");
-      for (Operation o : afters)
-        o.go();
+    @Override public boolean isBefore(Operation o) {
+      return o instanceof Before;
     }
-    @Override public boolean registerNonCollateral(Operation o) {
-      if (registerNonCollateralToList(o, befores) || registerNonCollateralToList(o, afters))
-        return true;
-      if (o instanceof Before) {
-        befores.add((Before) o);
-        return true;
-      } else if (o instanceof After) {
-        befores.add((Before) o);
-        return true;
-      }
-      return false;
+    @Override public boolean isAfter(Operation o) {
+      return o instanceof After;
+    }
+    @Override public void body() {
+      System.out.println("logged file opening");
     }
   }
 
   public static void main(String[] args) {
-    Temporal w = new WriteToFile();
+    Temporal w = new WriteToFile(), o = new OpenFile();
+    o.register(new LogFileOpened());
+    w.register(o);
+    w.go();
+    System.out.println("\tShould be the same as...");
+    w = new WriteToFile();
+    w.register(new OpenFile());
+    w.register(new LogFileOpened());
+    w.go();
+    System.out.println("\tShould be the same as...");
+    w = new WriteToFile();
     w.register(new LogFileOpened());
     w.register(new OpenFile());
     w.go();

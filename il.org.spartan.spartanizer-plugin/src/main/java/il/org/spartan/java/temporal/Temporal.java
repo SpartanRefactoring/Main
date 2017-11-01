@@ -6,59 +6,58 @@ import java.util.*;
  * @author Ori Roth
  * @since 2017-11-01 */
 public abstract class Temporal implements Operation {
-  public interface Before extends Operation {/**/}
+  private List<Operation> befores = new LinkedList<>();
+  private List<Operation> afters = new LinkedList<>();
+  private List<Operation> collaterals = new LinkedList<>();
 
-  public interface After extends Operation {/**/}
-
-  protected List<Operation> unaffiliated = new LinkedList<>();
-  protected List<Before> befores = new LinkedList<>();
-  protected List<After> afters = new LinkedList<>();
-  protected List<Operation> collaterals = new LinkedList<>();
-
-  @Override public void go() {
-    consumeTraits();
+  protected abstract void body();
+  @Override public final void go() {
     for (Operation o : befores)
       o.go();
     for (Operation o : collaterals)
       o.go();
-    // Do nothing here
+    body();
     for (Operation o : afters)
       o.go();
   }
-  public void traitForLater(Operation o) {
-    unaffiliated.add(o);
+  @Override public final List<Operation> knownBefores() {
+    return befores;
   }
-  public void consumeTraits() {
-    List<Operation> removed = new LinkedList<>();
-    do {
-      removed.clear();
-      for (Operation o : unaffiliated)
-        if (registerNonCollateral(o) || registerNonCollateralToList(o, collaterals))
-          removed.add(o);
-      unaffiliated.removeAll(removed);
-    } while (!removed.isEmpty());
-    collaterals.addAll(unaffiliated);
-    unaffiliated.clear();
+  @Override public final List<Operation> knownAfters() {
+    return afters;
+  }
+  @Override public final List<Operation> knownCollaterals() {
+    return collaterals;
   }
   public void register(Operation o) {
-    if (!registerNonCollateral(o) && !registerNonCollateralToList(o, collaterals))
+    // Maybe check "o" is not already registered in sub-operation
+    List<Operation> ocs = o.knownCollaterals(), removed = new LinkedList<>();
+    for (Operation oc : ocs)
+      if (temporalsRegisterNonCollateral(this, oc))
+        removed.add(oc);
+    ocs.removeAll(removed);
+    if (!registerNonCollateral(this, o) && !registerNonCollateralToList(o, collaterals))
       collaterals.add(o);
+    collaterals.addAll(ocs);
   }
-  @Override public boolean registerNonCollateral(Operation o) {
-    if (registerNonCollateralToList(o, befores) || registerNonCollateralToList(o, afters))
+  private static boolean registerNonCollateral(Operation current, Operation o) {
+    if (temporalsRegisterNonCollateral(current, o))
       return true;
-    if (o instanceof Before) {
-      befores.add((Before) o);
+    if (current.isBefore(o)) {
+      current.knownBefores().add(o);
       return true;
-    } else if (o instanceof After) {
-      afters.add((After) o);
+    } else if (current.isAfter(o)) {
+      current.knownAfters().add(o);
       return true;
     }
     return false;
   }
-  protected static boolean registerNonCollateralToList(Operation o, List<? extends Operation> l) {
+  private static boolean temporalsRegisterNonCollateral(Operation current, Operation o) {
+    return registerNonCollateralToList(o, current.knownBefores()) || registerNonCollateralToList(o, current.knownAfters());
+  }
+  private static boolean registerNonCollateralToList(Operation o, List<? extends Operation> l) {
     for (Operation x : l)
-      if (x.registerNonCollateral(o))
+      if (registerNonCollateral(x, o))
         return true;
     return false;
   }
