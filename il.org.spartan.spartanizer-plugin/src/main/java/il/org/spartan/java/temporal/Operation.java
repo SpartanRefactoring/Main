@@ -6,8 +6,9 @@ import java.util.*;
  * @author Ori Roth
  * @since 2017-11-01 */
 @SuppressWarnings("unused")
+@FunctionalInterface
 public interface Operation {
-  default void go() {/**/}
+  void go();
   default boolean isBefore(Operation o) {
     return false;
   }
