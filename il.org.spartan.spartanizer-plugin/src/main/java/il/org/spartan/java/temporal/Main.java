@@ -58,7 +58,15 @@ public class Main {
     }
   }
 
-  static class LogFileOpened extends Temporal implements OpenFile.After {
+  static abstract class GeneralLog extends Temporal {
+    protected abstract void log();
+    @Override protected void body() {
+      System.out.println("access log");
+      log();
+    }
+  }
+
+  static class LogFileOpened extends GeneralLog implements OpenFile.After {
     public abstract class Nested extends Temporal {/**/}
 
     public abstract class NestedBefore extends Nested {/**/}
@@ -75,7 +83,7 @@ public class Main {
     @Override public boolean isAfter(Operation o) {
       return o instanceof After || o instanceof NestedAfter;
     }
-    @Override public void body() {
+    @Override public void log() {
       System.out.println("logged file opening");
     }
   }

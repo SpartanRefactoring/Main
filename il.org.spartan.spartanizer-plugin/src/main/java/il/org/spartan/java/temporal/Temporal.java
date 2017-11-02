@@ -30,7 +30,6 @@ public abstract class Temporal implements Operation {
     return collaterals;
   }
   public void register(Operation o) {
-    // Maybe check "o" is not already registered in sub-operation
     List<Operation> ocs = o.knownCollaterals(), removed = new LinkedList<>();
     for (Operation oc : ocs)
       if (temporalsRegisterNonCollateral(this, oc))
