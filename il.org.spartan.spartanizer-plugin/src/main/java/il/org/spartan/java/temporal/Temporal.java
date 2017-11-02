@@ -29,7 +29,7 @@ public abstract class Temporal implements Operation {
   @Override public final List<Operation> knownCollaterals() {
     return collaterals;
   }
-  public void register(Operation o) {
+  public final void register(Operation o) {
     List<Operation> ocs = o.knownCollaterals(), removed = new LinkedList<>();
     for (Operation oc : ocs)
       if (temporalsRegisterNonCollateral(this, oc))

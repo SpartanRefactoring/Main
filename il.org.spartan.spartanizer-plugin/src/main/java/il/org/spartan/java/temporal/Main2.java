@@ -4,153 +4,168 @@ package il.org.spartan.java.temporal;
  * @author Ori Roth
  * @since 2017-11-02 */
 public class Main2 {
+  // Head operation
   static class A extends Temporal {
-    protected String a = "a";
-
     public abstract class Nested extends Temporal {
-      public String a() {
+      public final String a() {
         return a;
       }
     }
-
-    public abstract class NestedBefore extends Nested {/**/}
-
-    public abstract class NestedAfter extends Nested {/**/}
 
     public interface Before extends Operation {/**/}
 
     public interface After extends Operation {/**/}
 
+    public abstract class NestedBefore extends Nested implements Before {/**/}
+
+    public abstract class NestedAfter extends Nested implements After {/**/}
+
     @Override public boolean isBefore(Operation o) {
-      return o instanceof Before || o instanceof NestedBefore;
+      return o instanceof Before;
     }
     @Override public boolean isAfter(Operation o) {
-      return o instanceof After || o instanceof NestedAfter;
+      return o instanceof After;
     }
+
+    protected String a = "a";
+
     @Override public void body() {
       System.out.println("I am A");
     }
   }
 
-  static class B1 extends Temporal implements A.Before {
-    protected String b1 = "b1";
-
+  // Head operation
+  static class B1 extends Temporal {
     public abstract class Nested extends Temporal {
-      public String b1() {
+      public final String b1() {
         return b1;
       }
     }
-
-    public abstract class NestedBefore extends Nested {/**/}
-
-    public abstract class NestedAfter extends Nested {/**/}
 
     public interface Before extends Operation {/**/}
 
     public interface After extends Operation {/**/}
 
+    public abstract class NestedBefore extends Nested implements Before {/**/}
+
+    public abstract class NestedAfter extends Nested implements After {/**/}
+
     @Override public boolean isBefore(Operation o) {
-      return o instanceof Before || o instanceof NestedBefore;
+      return o instanceof Before;
     }
     @Override public boolean isAfter(Operation o) {
-      return o instanceof After || o instanceof NestedAfter;
+      return o instanceof After;
     }
+
+    protected String b1 = "b1";
+
     @Override public void body() {
       System.out.println("I am B1");
     }
   }
 
-  static class B2 extends A.NestedBefore {
+  // Before A
+  static class B2 extends A.Nested implements A.Before {
     final A a;
-    protected String b2 = "b2";
 
     public B2(A a) {
       a.super();
       this.a = a;
     }
 
-    public abstract class Nested extends A.Nested {
+    public abstract class Nested extends A.Nested implements A.Before {
       public Nested() {
         a.super();
       }
-      public String b2() {
+      public final String b2() {
         return b2;
       }
     }
 
-    public abstract class NestedBefore extends Nested {/**/}
+    public interface Before extends A.Before {/**/}
 
-    public abstract class NestedAfter extends Nested {/**/}
+    public interface After extends A.Before {/**/}
 
-    public interface Before extends Operation {/**/}
+    public abstract class NestedBefore extends Nested implements Before {/**/}
 
-    public interface After extends Operation {/**/}
+    public abstract class NestedAfter extends Nested implements After {/**/}
 
     @Override public boolean isBefore(Operation o) {
-      return o instanceof Before || o instanceof NestedBefore;
+      return o instanceof Before;
     }
     @Override public boolean isAfter(Operation o) {
-      return o instanceof After || o instanceof NestedAfter;
+      return o instanceof After;
     }
+
+    protected String b2 = "b2";
+
     @Override public void body() {
       System.out.println("I am B2\n\tI know A's field:   a=" + a());
     }
   }
 
-  static class C extends B2.NestedBefore {
-    final B1 b1;
-    protected String c = "c";
+  // Collateral to B2, before A (implicitly)
+  static class C extends B2.Nested {
+    final B2 b2;
 
-    public C(B1 b1, B2 b2) {
+    public C(B2 b2) {
       b2.super();
-      this.b1 = b1;
+      this.b2 = b2;
     }
 
-    public abstract class Nested extends B1.Nested {
+    public abstract class Nested extends B2.Nested {
       public Nested() {
-        b1.super();
+        b2.super();
       }
-      public String a() {
-        return C.this.a();
-      }
-      public String b2() {
-        return C.this.b2();
-      }
-      public String c() {
+      public final String c() {
         return c;
       }
     }
-
-    public abstract class NestedBefore extends Nested {/**/}
-
-    public abstract class NestedAfter extends Nested {/**/}
 
     public interface Before extends Operation {/**/}
 
     public interface After extends Operation {/**/}
 
+    public abstract class NestedBefore extends Nested implements Before {/**/}
+
+    public abstract class NestedAfter extends Nested implements After {/**/}
+
     @Override public boolean isBefore(Operation o) {
-      return o instanceof Before || o instanceof NestedBefore;
+      return o instanceof Before;
     }
     @Override public boolean isAfter(Operation o) {
-      return o instanceof After || o instanceof NestedAfter;
+      return o instanceof After;
     }
+
+    protected String c = "c";
+
     @Override public void body() {
-      System.out.println("I am C\n\tI know A's field:   a=" + a() + "\n\tI know B1's field: b1=" + b1.b1 + "\n\tI know B2's field: b2=" + b2());
+      System.out.println("I am C\n\tI know A's field:   a=" + a() + "\n\tI know B2's field: b2=" + b2());
     }
   }
 
   public static void main(String[] args) {
+    // After A
+    class B1AfterA extends B1 implements A.After {/**/}
+    class B2Customized extends B2 {
+      public B2Customized(A a) {
+        super(a);
+      }
+      @Override public void body() {
+        super.body();
+        System.out.println("\tI have been customized");
+      }
+    }
     A a = new A();
-    B1 b1 = new B1();
-    B2 b2 = new B2(a);
-    C c = new C(b1, b2);
+    B1 b1 = new B1AfterA();
+    B2 b2 = new B2Customized(a);
+    C c = new C(b2);
     a.register(b1);
     a.register(b2);
     a.register(c);
     a.register(c.new NestedAfter() {
       @Override protected void body() {
-        System.out.println("I am anonym, I come after C and know everything: " + a() + " " + b1() + " " + b2() + " " + c());
+        System.out.println("I am anonym\n\tI know A's field:   a=" + a() + "\n\tI know B2's field: b2=" + b2() + "\n\tI know C's field:   c=" + c());
       }
     });
     a.go();
