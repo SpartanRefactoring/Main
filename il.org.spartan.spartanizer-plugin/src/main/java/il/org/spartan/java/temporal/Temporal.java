@@ -43,10 +43,10 @@ public abstract class Temporal implements Operation {
   private static boolean registerNonCollateral(Operation current, Operation o) {
     if (temporalsRegisterNonCollateral(current, o))
       return true;
-    if (current.isBefore(o)) {
+    if (current.isBefore(o) || o.isAfter(current)) {
       current.knownBefores().add(o);
       return true;
-    } else if (current.isAfter(o)) {
+    } else if (current.isAfter(o) || o.isBefore(current)) {
       current.knownAfters().add(o);
       return true;
     }
