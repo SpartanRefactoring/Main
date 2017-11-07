@@ -26,36 +26,30 @@ public class JavaProductionFilesVisitor {
   @External(alias = "s", value = "silent") protected boolean silent;
   public final Current current;
 
-  interface template  {
-  interface B{}
-}
-  /**
-   * Current contains the information on the current file being under analysis 
-   * 
-   * @author Yossi Gil
-   * @since 2017-07-16
-   */
+  interface template {
+    interface B {}
+  }
 
+  /** Current contains the information on the current file being under analysis
+   * @author Yossi Gil
+   * @since 2017-07-16 */
   public static class Current {
     public Current(List<String> locations) {
       CurrentData.locations = locations.subList(0, locations.size());
     }
+
     public CurrentData data = new CurrentData();
   }
-  
-  
+
   public JavaProductionFilesVisitor(Current current) {
     this.current = current;
   }
-  
   public JavaProductionFilesVisitor(String[] args) {
     current = new Current(External.Introspector.extract(args(args), this));
   }
-
   private static String[] args(String[] args) {
     return args != null && args.length != 0 ? args : defaultArguments;
   }
-  
   public static void main(final String[] args) {
     new GrandVisitor(args) {
       /* Override here which ever method you like */
@@ -63,9 +57,10 @@ public class JavaProductionFilesVisitor {
       /* OVerride here which ever method you like */
     });
   }
+
   public final Tappers notify = new Tappers()//
       .push(new Tapper() {
-        /** @formatter:off */
+    /** @formatter:off */
           Dotter dotter = new Dotter();
           @Override public void beginBatch() { dotter.click(); }
           @Override public void beginFile() { dotter.click(); }
