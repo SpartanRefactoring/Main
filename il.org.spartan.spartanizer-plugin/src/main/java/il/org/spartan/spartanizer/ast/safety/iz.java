@@ -92,8 +92,8 @@ public interface iz {
     return iz.nodeTypeEquals(¢, ARRAY_INITIALIZER);
   }
   /** @param pattern the statement or block to check if it is an assignment
-   * @return {@code true} if the parameter an assignment or false if the
-   *         parameter not or if the block Contains more than one statement */
+   * @return {@code true} if the parameter an assignment or false if the parameter
+   *         not or if the block Contains more than one statement */
   static boolean assignment(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, ASSIGNMENT);
   }
@@ -245,10 +245,8 @@ public interface iz {
   static boolean conditionalOr(final InfixExpression ¢) {
     return ¢ != null && ¢.getOperator() == CONDITIONAL_OR;
   }
-  /** Determine whether a node is a "specific", i.e., {@code null or
-   * {@code this} or literal.
-   * @param x JD
-   * @return whether the parameter is a "specific" */
+  /** Determine whether a node is a "specific", i.e., {@code null or {@code this}
+   * or literal. @param x JD @return whether the parameter is a "specific" */
   static boolean constant(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
         || iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
@@ -317,8 +315,8 @@ public interface iz {
     });
     return $.inner;
   }
-  /** Check whether the operator of an expression is susceptible for applying
-   * one of the two de Morgan laws.
+  /** Check whether the operator of an expression is susceptible for applying one
+   * of the two de Morgan laws.
    * @param x InfixExpression
    * @return whether the parameter is an operator on which the de Morgan laws
    *         apply. */
@@ -439,8 +437,7 @@ public interface iz {
   }
   /** Determine whether a node is an "expression statement"
    * @param pattern JD
-   * @return whether the parameter is an {@link ExpressionStatement}
-   *         statement */
+   * @return whether the parameter is an {@link ExpressionStatement} statement */
   static boolean expression(final ASTNode ¢) {
     return ¢ instanceof Expression;
   }
@@ -454,8 +451,7 @@ public interface iz {
   }
   /** Determine whether a node is an "expression statement"
    * @param pattern JD
-   * @return whether the parameter is an {@link ExpressionStatement}
-   *         statement */
+   * @return whether the parameter is an {@link ExpressionStatement} statement */
   static boolean expressionStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, EXPRESSION_STATEMENT);
   }
@@ -577,8 +573,7 @@ public interface iz {
     return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
   }
   /** @param ¢ JD
-   * @return whether the given node is a method decleration or false
-   *         otherwise */
+   * @return whether the given node is a method decleration or false otherwise */
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
   }
@@ -764,8 +759,8 @@ public interface iz {
   /** Determine whether an {@link Expression} is so basic that it never needs to
    * be placed in parenthesis.
    * @param x JD
-   * @return whether the parameter is so basic that it never needs to be placed
-   *         in parenthesis. */
+   * @return whether the parameter is so basic that it never needs to be placed in
+   *         parenthesis. */
   static boolean noParenthesisRequired(final Expression ¢) {
     return iz.nodeTypeIn(¢, ARRAY_ACCESS, ARRAY_CREATION, BOOLEAN_LITERAL, CAST_EXPRESSION, CHARACTER_LITERAL, CLASS_INSTANCE_CREATION, FIELD_ACCESS,
         INSTANCEOF_EXPRESSION, METHOD_INVOCATION, NULL_LITERAL, NUMBER_LITERAL, PARAMETERIZED_TYPE, PARENTHESIZED_EXPRESSION, QUALIFIED_NAME,
@@ -774,9 +769,8 @@ public interface iz {
   static boolean normalAnnotations(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, NORMAL_ANNOTATION);
   }
-  /** Determine whether a node is the {@code null keyword
-   * @param pattern JD
-   * @return whether it is the {@code null
+  /** Determine whether a node is the
+   * {@code null keyword @param pattern JD @return whether it is the {@code null
    *         literal */
   static boolean nullLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, NULL_LITERAL);
@@ -787,9 +781,8 @@ public interface iz {
   static boolean numberLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, NUMBER_LITERAL);
   }
-  /** Determine whether a node is {@code this} or {@code null
-   * @param x JD
-   * @return whether the parameter is a block statement */
+  /** Determine whether a node is {@code this} or {@code null @param x JD @return
+         * whether the parameter is a block statement */
   static boolean numericLiteral(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL);
   }
@@ -1022,9 +1015,8 @@ public interface iz {
   static boolean thisLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, THIS_EXPRESSION);
   }
-  /** Determine whether a node is {@code this} or {@code null
-   * @param x JD
-   * @return whether the parameter is a block statement */
+  /** Determine whether a node is {@code this} or {@code null @param x JD @return
+         * whether the parameter is a block statement */
   static boolean thisOrNull(final Expression ¢) {
     return iz.nodeTypeIn(¢, NULL_LITERAL, THIS_EXPRESSION);
   }
@@ -1054,9 +1046,9 @@ public interface iz {
   }
   /** @param pattern JD
    * @return whether the node is an Expression Statement of __ Post or Pre
-   *         Expression with ++ or -- operator false if node is not an
-   *         Expression Statement or its a Post or Pre fix expression that its
-   *         operator is not ++ or -- */
+   *         Expression with ++ or -- operator false if node is not an Expression
+   *         Statement or its a Post or Pre fix expression that its operator is
+   *         not ++ or -- */
   static boolean updating(final ASTNode ¢) {
     if (¢ == null)
       return false;
@@ -1079,14 +1071,14 @@ public interface iz {
     return is.in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
   }
   /** @param ¢ JD
-   * @return whether the statement is side effect and updating an initializer
-   *         from the for initializers. returns false if the parent is not a for
+   * @return whether the statement is side effect and updating an initializer from
+   *         the for initializers. returns false if the parent is not a for
    *         loop. */
   static boolean usingForInitializer(final Statement ¢) {
     return az.forStatement(¢.getParent()) != null;
   }
-  /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
-   * or has nothing but empty sideEffects in it.
+  /** Determine whether a given {@link Statement} is an {@link EmptyStatement} or
+   * has nothing but empty sideEffects in it.
    * @param subject JD
    * @return whether there are no non-empty sideEffects in the parameter */
   static boolean vacuous(final Statement ¢) {
@@ -1094,8 +1086,8 @@ public interface iz {
   }
   /** Determine whether the 'else' part of an {@link IfStatement} is vacuous.
    * @param subject JD
-   * @return whether there are no non-empty sideEffects in the 'else' part of
-   *         the parameter */
+   * @return whether there are no non-empty sideEffects in the 'else' part of the
+   *         parameter */
   static boolean vacuousElse(final IfStatement ¢) {
     return vacuous(elze(¢));
   }
@@ -1159,5 +1151,14 @@ public interface iz {
   }
   static boolean hexaDecimal(final Expression ¢) {
     return iz.numberLiteral(¢) && az.numberLiteral(¢).getToken().startsWith("0x");
+  }
+  static boolean assertStatement(Statement s) {
+    String[] arr = { "assertArrayEquals", "assertEquals", "assertFalse", "assertNotEquals", "assertNotNull", "assertNotSame", "assertNull",
+        "assertSame", "assertThat", "assertTrue", "fail" };
+    List<String> asserts = Arrays.asList(arr);
+    String x = "";
+    if (iz.expressionStatement(s) && iz.methodInvocation(az.expressionStatement(s).getExpression()))
+      x = az.methodInvocation(az.expressionStatement(s).getExpression()).getName().getIdentifier();
+    return iz.nodeTypeEquals(s, ASSERT_STATEMENT) || asserts.contains(x);
   }
 }
