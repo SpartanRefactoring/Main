@@ -14,6 +14,11 @@ public class FunctionsDeepInspection extends NominalTables {
   @SuppressWarnings("boxing") public static void main(final String[] args) {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("MethodDeclaration", 0);
+    map.put("0-Arguments", 0);
+    map.put("1-Arguments", 0);
+    map.put("2-Arguments", 0);
+    map.put("3-Arguments", 0);
+    map.put("4+-Arguments", 0);
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -25,6 +30,11 @@ public class FunctionsDeepInspection extends NominalTables {
 
       void reset() {
         map.put("MethodDeclaration", 0);
+        map.put("0-Arguments", 0);
+        map.put("1-Arguments", 0);
+        map.put("2-Arguments", 0);
+        map.put("3-Arguments", 0);
+        map.put("4+-Arguments", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -32,7 +42,9 @@ public class FunctionsDeepInspection extends NominalTables {
       }
       public void summarize(final String path) {
         initializeWriter();
-        table.col("Project", path).col("MethodDeclarations", map.get("MethodDeclaration")).nl();
+        table.col("Project", path).col("MethodDeclarations", map.get("MethodDeclaration")).col("0-Arguments", map.get("0-Arguments"))
+            .col("1-Arguments", map.get("1-Arguments")).col("2-Arguments", map.get("2-Arguments")).col("3-Arguments", map.get("3-Arguments"))
+            .col("4+-Arguments", map.get("4+-Arguments")).nl();
       }
       void initializeWriter() {
         if (table == null)
@@ -42,8 +54,13 @@ public class FunctionsDeepInspection extends NominalTables {
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration x) {
-            if (x != null)
-              map.put("MethodDeclaration", map.get("MethodDeclaration") + 1);
+            if (x != null) {
+              int numArgs = x.parameters().size();
+              if (numArgs < 4)
+                map.put(numArgs + "-Arguments", map.get(numArgs + "-Arguments") + 1);
+              else
+                map.put("4+-Arguments", map.get("4+-Arguments") + 1);
+            }
             return true;
           }
         });
