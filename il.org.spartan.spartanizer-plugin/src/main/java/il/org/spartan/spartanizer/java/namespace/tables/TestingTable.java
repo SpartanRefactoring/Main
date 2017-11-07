@@ -16,7 +16,8 @@ public class TestingTable extends NominalTables {
   @SuppressWarnings("boxing") public static void main(final String[] args) {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("#Tests", 0);
-    map.put("#Asserts", 0);
+    map.put("#JavaAsserts", 0);
+    map.put("#JunitAsserts", 0);
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -28,7 +29,8 @@ public class TestingTable extends NominalTables {
 
       void reset() {
         map.put("#Tests", 0);
-        map.put("#Asserts", 0);
+        map.put("#JavaAsserts", 0);
+        map.put("#JunitAsserts", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -37,7 +39,8 @@ public class TestingTable extends NominalTables {
       public void summarize(final String path) {
         initializeWriter();
         if (map.get("#Tests") != 0) {
-          table.col("Project", path).col("#Tests", map.get("#Tests")).col("#Asserts", map.get("#Asserts")).nl();
+          table.col("Project", path).col("#Tests", map.get("#Tests")).col("#JavaAsserts", map.get("#JavaAsserts"))
+              .col("#JunitAsserts", map.get("#JunitAsserts")).nl();
         }
       }
       void initializeWriter() {
@@ -56,9 +59,10 @@ public class TestingTable extends NominalTables {
                   map.put("#Tests", map.get("#Tests") + 1);
                   List<Statement> lst = extract.statements(x.getBody());
                   for (Statement s : lst) {
-                    if (iz.assertStatement(s)) {
-                      map.put("#Asserts", map.get("#Asserts") + 1);
-                    }
+                    if (iz.assertStatement(s))
+                      map.put("#JavaAsserts", map.get("#JavaAsserts") + 1);
+                    if (iz.junitAssert(s))
+                      map.put("#JunitAsserts", map.get("#JunitAsserts") + 1);
                   }
                 }
               }
