@@ -79,20 +79,24 @@ public class JavaProductionFilesVisitor {
   public void visitAll(final ASTVisitor ¢) {
     notify.beginBatch();
     CurrentData.visitor = ¢;
-    CurrentData.locations.forEach(
-        λ -> {
-          CurrentData.location = λ;
-          notify.beginLocation();
-          visitLocation();
-          notify.endLocation();
-        }
-        );
-    notify.endBatch();
+
+      CurrentData.locations.forEach(
+          λ -> {
+            CurrentData.location = λ;
+            notify.beginLocation();
+            visitLocation();
+            notify.endLocation();
+          }
+          );
+      notify.endBatch();
+
+    
   }
 
   public void visitFile(final File f) {
+    //System.out.println(f);
     notify.beginFile();
-    if (FileHeuristics.p(f))
+    //if (FileHeuristics.p(f))
       try {
         CurrentData.absolutePath = f.getAbsolutePath();
         CurrentData.relativePath = f.getPath();

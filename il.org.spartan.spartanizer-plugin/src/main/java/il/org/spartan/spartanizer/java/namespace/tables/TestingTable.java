@@ -74,13 +74,17 @@ public class TestingTable extends NominalTables {
       }
     }.visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
+        writer.write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~New Test~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n \n");
+        writer.write(¢.toString());
+        writer.write("\n \n \n \n");
         map.put("#Files", map.get("#Files") + 1);
         ¢.accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration x) {
             if (x != null) {
               List<String> annotations = extract.annotations(x).stream().map(a -> a.getTypeName().getFullyQualifiedName())
                   .collect(Collectors.toList());
-              if (annotations.contains("Test")) {
+              if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
+                  && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
                 final Int counter = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
                 x.accept(new ASTVisitor() {
@@ -109,11 +113,9 @@ public class TestingTable extends NominalTables {
                     return true;
                   }
                 });
-                if (counter.inner == 0) {
-                  writer.write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~New Test~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n \n");
-                  writer.write(x.toString());
-                  writer.write("\n \n \n \n");
-                }
+                //if (counter.inner == 0) {
+
+                //}
                 if (counter.inner > 0 && counter.inner < 6)
                   map.put("#" + counter.inner + "-Asseerts", map.get("#" + counter.inner + "-Asseerts") + 1);
                 else if (counter.inner > 5)

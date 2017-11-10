@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
+import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -12,7 +13,7 @@ import il.org.spartan.tables.*;
  * @author Dor Ma'ayan
  * @since 2017-05-18 */
 public class Table_Class_Field_Names extends NominalTables {
-  public static void main(final String[] args) {
+  public static void main(final String[] args) throws FileNotFoundException, UnsupportedEncodingException {
     namePrevelance = new HashMap<>();
     new GrandVisitor(args) {
       {
