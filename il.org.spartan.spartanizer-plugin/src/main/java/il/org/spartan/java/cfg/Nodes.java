@@ -5,6 +5,10 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+/** A class which describe and allows basic operations over Nodes of the CFG
+ * @author Ori Roth
+ * @author Dor Ma'ayan
+ * @since 2017-11-12 */
 public class Nodes {
   public final boolean contains(Object ¢) {
     return inner.contains(¢);

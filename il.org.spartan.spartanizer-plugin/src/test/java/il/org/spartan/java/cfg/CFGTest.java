@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
 /** Unit test for {@link CFG}.
+ * Add here new tests for new ASTNodes using the same format
  * @author Dor Ma'ayan
  * @author Ori Roth
  * @since 2017-07-06 */
@@ -27,9 +28,6 @@ public class CFGTest {
             .outs("0").contains("i=0") //
             .outs("i=0").contains("int i=0") //
             .ins("i<100").contains("100");
-  }
-  @Test public void AnonymousClassDeclaration() {
-    // Add Test
   }
   @Test public void arrayAccess() {
     cfg("a()[b()][c()]") //

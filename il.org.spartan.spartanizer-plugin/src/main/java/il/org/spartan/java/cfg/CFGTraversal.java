@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** The ASTVisitor of the CFG implementation
+ * A simple ASTVisitor which add to each ASTNode
+ * entry and exit points according to it's structure.
  * @author Dor Ma'ayan
  * @author Ori Roth
  * @since 2017-06-14 */

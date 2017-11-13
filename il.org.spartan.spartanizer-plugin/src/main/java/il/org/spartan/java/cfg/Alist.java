@@ -4,8 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO dormaayn: document class
- * @author dormaayn
+/** Implementation of Alist for the CFG
+ * @author Dor Ma'ayan
  * @since 2017-10-01 */
 public class Alist {
   private class Touple {
