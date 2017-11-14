@@ -305,6 +305,11 @@ public enum az {
   public static Name name(final ASTNode ¢) {
     return ¢ instanceof Name ? (Name) ¢ : null;
   }
+  
+  public static ImportDeclaration importDeclaration(final Object ¢) {
+    return ¢ instanceof ImportDeclaration ? (ImportDeclaration) ¢ : null;
+  }
+  
   /** Down-cast, if possible, to {@link NormalAnnotation}
    * @param $ result
    * @return parameter down-casted to the returned __, or
@@ -525,4 +530,5 @@ public enum az {
   public static ASTNode breakStatement(ASTNode $) {
     return !($ instanceof BreakStatement) ? null : (BreakStatement) $;
   }
+
 }

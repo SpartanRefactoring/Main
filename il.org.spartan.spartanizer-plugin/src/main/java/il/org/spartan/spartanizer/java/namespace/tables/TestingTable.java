@@ -21,6 +21,7 @@ public class TestingTable extends NominalTables {
     map.put("#Tests", 0);
     map.put("#JavaAsserts", 0);
     map.put("#JunitAsserts", 0);
+    map.put("#HamcrestAsserts", 0);
     map.put("#IfStatements", 0);
     map.put("#ReturnStatements", 0);
     map.put("#1-Asseerts", 0);
@@ -30,6 +31,7 @@ public class TestingTable extends NominalTables {
     map.put("#5-Asseerts", 0);
     map.put("#6+-Asseerts", 0);
     map.put("#Files", 0);
+    map.put("UsingMockito?", 0);
     PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TestingTables/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
@@ -53,6 +55,8 @@ public class TestingTable extends NominalTables {
         map.put("#5-Asseerts", 0);
         map.put("#6+-Asseerts", 0);
         map.put("#Files", 0);
+        map.put("UsingMockito?", 0);
+        map.put("#HamcrestAsserts", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -62,10 +66,13 @@ public class TestingTable extends NominalTables {
         initializeWriter();
         if (map.get("#Tests") != 0) {
           table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#JavaAsserts", map.get("#JavaAsserts"))
-              .col("#JunitAsserts", map.get("#JunitAsserts")).col("#IfStatements", map.get("#IfStatements"))
-              .col("#ReturnStatements", map.get("#ReturnStatements")).col("#1-Asseerts", map.get("#1-Asseerts"))
-              .col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts")).col("#4-Asseerts", map.get("#4-Asseerts"))
-              .col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts")).nl();
+              .col("#JunitAsserts", map.get("#JunitAsserts")).col("#HamcrestAsserts", map.get("#HamcrestAsserts"))
+              .col("#IfStatements", map.get("#IfStatements")).col("#ReturnStatements", map.get("#ReturnStatements"))
+              .col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts"))
+              .col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts"))
+              .col("UsingMockito?", map.get("UsingMockito?")).nl();
+          writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
+          writer.write("\n \n \n \n \n \n");
         }
       }
       void initializeWriter() {
@@ -74,10 +81,14 @@ public class TestingTable extends NominalTables {
       }
     }.visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
-        writer.write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~New Test~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n \n");
-        writer.write(¢.toString());
-        writer.write("\n \n \n \n");
         map.put("#Files", map.get("#Files") + 1);
+        List<ImportDeclaration> imports = extract.imports(¢);
+        for (ImportDeclaration i : imports) {
+          if (i.getName().getFullyQualifiedName().equals("org.mockito.Mockito")) {
+            if (map.get("UsingMockito?") == 0)
+              map.put("UsingMockito?", 1);
+          }
+        }
         ¢.accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration x) {
             if (x != null) {
@@ -85,6 +96,13 @@ public class TestingTable extends NominalTables {
                   .collect(Collectors.toList());
               if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
                   && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
+                // This is real test!
+                Random rand = new Random();
+                if (rand.nextInt(30) == 11) {
+                  writer.write("~~~~~~~New Test~~~~~~~\n \n");
+                  writer.write(x.toString());
+                  writer.write("\n \n \n \n");
+                }
                 final Int counter = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
                 x.accept(new ASTVisitor() {
@@ -100,6 +118,9 @@ public class TestingTable extends NominalTables {
                       map.put("#JunitAsserts", map.get("#JunitAsserts") + 1);
                       counter.step();
                     }
+                    if (iz.hamcrestAssert(x)) {
+                      map.put("#HamcrestAsserts", map.get("#HamcrestAsserts") + 1);
+                    }
                     return true;
                   }
                   /** handle Returns */
@@ -113,9 +134,8 @@ public class TestingTable extends NominalTables {
                     return true;
                   }
                 });
-                //if (counter.inner == 0) {
-
-                //}
+                // if (counter.inner == 0) {
+                // }
                 if (counter.inner > 0 && counter.inner < 6)
                   map.put("#" + counter.inner + "-Asseerts", map.get("#" + counter.inner + "-Asseerts") + 1);
                 else if (counter.inner > 5)

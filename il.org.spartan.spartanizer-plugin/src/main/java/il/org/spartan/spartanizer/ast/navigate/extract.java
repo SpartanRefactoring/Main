@@ -179,10 +179,10 @@ public enum extract {
   public static Expression core(final PrefixExpression $) {
     return $.getOperator() != op.PLUS1 ? $ : core($.getOperand());
   }
-  /** Computes the "Essence" of a statement, i.e., if a statement is essentially
-   * a single, non-empty, non-block statement, possibly wrapped in brackets,
-   * perhaps along with any number of empty sideEffects, then its Essence is
-   * this single non-empty statement.
+  /** Computes the "Essence" of a statement, i.e., if a statement is essentially a
+   * single, non-empty, non-block statement, possibly wrapped in brackets, perhaps
+   * along with any number of empty sideEffects, then its Essence is this single
+   * non-empty statement.
    * @param ¢ JD
    * @return Essence of the parameter, or {@code null, if there are
    *         no non-empty sideEffects within the parameter. If, however there
@@ -210,8 +210,8 @@ public enum extract {
    * @param pattern a statement or a block to extract the expression statement
    *        from
    * @return expression statement if n is a block or an expression statement or
-   *         null if it not an expression statement or if the block contains
-   *         more than one statement */
+   *         null if it not an expression statement or if the block contains more
+   *         than one statement */
   public static ExpressionStatement expressionStatement(final ASTNode ¢) {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
@@ -322,8 +322,8 @@ public enum extract {
     return !iz.block(¢) ? ¢ : hop.lastStatement(az.block(¢));
   }
   /** @param pattern JD
-   * @return method invocation if it exists or null if it doesn't or if the
-   *         block contains more than one statement */
+   * @return method invocation if it exists or null if it doesn't or if the block
+   *         contains more than one statement */
   public static MethodInvocation methodInvocation(final ASTNode ¢) {
     return az.methodInvocation(extract.expressionStatement(¢).getExpression());
   }
@@ -484,16 +484,16 @@ public enum extract {
   }
   /** Finds the expression returned by a return statement
    * @param pattern a node to extract an expression from
-   * @return null if the statement is not an expression or return statement or
-   *         the expression if they are */
+   * @return null if the statement is not an expression or return statement or the
+   *         expression if they are */
   public static Expression returnExpression(final ASTNode ¢) {
     final ReturnStatement $ = returnStatement(¢);
     return $ == null ? null : $.getExpression();
   }
   /** extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
-   * @return single {@link ReturnStatement} embedded in the parameter, and
-   *         return it; {@code null if not such sideEffects
+   * @return single {@link ReturnStatement} embedded in the parameter, and return
+   *         it; {@code null if not such sideEffects
    *         exists. */
   public static ReturnStatement returnStatement(final ASTNode ¢) {
     return az.returnStatement(extract.singleStatement(¢));
@@ -514,8 +514,8 @@ public enum extract {
     return extract.singleStatement(elze(¢));
   }
   /** @param pattern JD
-   * @return if b is a block with just 1 statement it returns that statement, if
-   *         b is statement it returns b and if b is null it returns a null */
+   * @return if b is a block with just 1 statement it returns that statement, if b
+   *         is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode ¢) {
     return the.onlyOneOf(extract.statements(¢));
   }
@@ -554,8 +554,8 @@ public enum extract {
     return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
   }
   /** @param n a node to extract an expression from
-   * @return null if the statement is not an expression or return statement or
-   *         the expression if they are */
+   * @return null if the statement is not an expression or return statement or the
+   *         expression if they are */
   public static Expression throwExpression(final ASTNode ¢) {
     final ThrowStatement $ = az.throwStatement(extract.singleStatement(¢));
     return $ == null ? null : $.getExpression();
@@ -575,6 +575,15 @@ public enum extract {
     final List<SimpleName> $ = new LinkedList<>();
     for (Name q = n; q != null; q = !iz.qualifiedName(q) ? null : az.qualifiedName(q).getQualifier())
       $.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
+    return $;
+  }
+  public static List<ImportDeclaration> imports(final CompilationUnit n) {
+    if (n == null)
+      return an.empty.list();
+    List<ImportDeclaration> $ = new ArrayList<>();
+    for (Object o : n.imports()) {
+      $.add(az.importDeclaration(o));
+    }
     return $;
   }
   public static List<String> identifiers(final Name ¢) {
