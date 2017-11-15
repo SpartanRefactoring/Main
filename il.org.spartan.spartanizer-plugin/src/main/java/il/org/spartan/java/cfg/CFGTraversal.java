@@ -9,10 +9,14 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.*;
 
-/** The ASTVisitor of the CFG implementation
- * A simple ASTVisitor which add to each ASTNode
- * entry and exit points according to it's structure.
+/** The ASTVisitor of the CFG implementation A simple ASTVisitor which add to
+ * each ASTNode entry and exit points according to it's structure. The entry and
+ * exist points are added as a property to the ASTNode Contain Auxiliary
+ * functions as well as endVisit functions for different kinds of ASTNodes. In
+ * order to extend the CFG supporting more ASTNodes simply follow the pattern
+ * below.
  * @author Dor Ma'ayan
  * @author Ori Roth
  * @since 2017-06-14 */
@@ -56,8 +60,8 @@ public class CFGTraversal extends ASTVisitor {
   static boolean isEmpty(final ASTNode ¢) {
     return beginnings.of(¢).get().isEmpty() && ends.of(¢).get().isEmpty();
   }
-  static boolean isIllegalLeaf(@SuppressWarnings("unused") final ASTNode __) {
-    // TOO Roth: complete
+  /** Mark as Illegal Node */
+  @UnderConstruction static boolean isIllegalLeaf(@SuppressWarnings("unused") final ASTNode __) {
     return false;
   }
   static boolean isInfiniteLoop(final ASTNode ¢) {
@@ -66,6 +70,9 @@ public class CFGTraversal extends ASTVisitor {
   static boolean isReturnTarget(final ASTNode ¢) {
     return iz.isOneOf(¢, METHOD_DECLARATION);
   }
+  /** Mark an ASTNode as a leaf, meaning it doesn't contain any sub-Nodes which
+   * might be executed
+   * @param ¢ ASTNode */
   static void leaf(final ASTNode ¢) {
     if (isIllegalLeaf(¢))
       return;
@@ -98,6 +105,13 @@ public class CFGTraversal extends ASTVisitor {
   void chainThrow(final ASTNode ¢) {
     chainReturn(¢);
   }
+  
+  
+  
+  /************************************************************************************************** From
+   * here on handling each kind of ASTNode in a unique way by Overriding endVisit
+   * Need to be extended in the
+   * future! *****************************************************************************************************/
   @Override public void endVisit(final AnonymousClassDeclaration node) {
     final List<BodyDeclaration> bodies = step.bodyDeclarations(node);
     if (bodies.isEmpty())

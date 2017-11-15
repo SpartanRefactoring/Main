@@ -14,11 +14,21 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Ori Roth
  * @since 2017-06-14 */
 public interface CFG {
+  /** Representation of the properties of the CFG per ASTNode: The first and last
+   * Nodes to be executed and the nodes evaluated before and after the current
+   * node.
+   * @author Dor Ma'ayan
+   * @author Ori Roth
+   * @since 2017-11-15 */
   enum Edges {
     beginnings, // Nodes which are first to be evaluated inside the node
     ends, // Nodes which are last to be evaluated inside the node
     incoming, // The node evaluated before you
     outgoing; // The node evaluated after you
+    /**
+     *  Interface for working and modifying the CFG.
+     * @since 2017-11-15
+     */
     interface Of {
       Of add(ASTNode what);
       Of addAll(Collection<? extends ASTNode> what);
@@ -71,11 +81,14 @@ public interface CFG {
     }
   }
 
-  // TODO Roth: manage
+  /** Initialize the CFG of a given ASTNode
+   * @param ¢ an ASTNode */
   public static void init(final ASTNode ¢) {
     if (¢ != null && !beginnings.of(¢).isPresent())
       ¢.accept(new CFGTraversal());
   }
+  /** Initialize the CFG of a given BodyDeclaration
+   * @param ¢ a BodyDeclaration */
   public static void init(final BodyDeclaration ¢) {
     if (¢ != null && !beginnings.of(¢).isPresent())
       ¢.accept(new CFGTraversal());
