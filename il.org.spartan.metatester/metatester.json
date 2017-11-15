@@ -1,0 +1,4 @@
+{
+  "testSourceRoot": "src\\test\\",
+  "testBinaryRoot": "build\\classes\\test\\"
+}

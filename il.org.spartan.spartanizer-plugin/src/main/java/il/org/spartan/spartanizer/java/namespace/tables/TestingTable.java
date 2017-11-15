@@ -44,7 +44,8 @@ public class TestingTable extends NominalTables {
     map.put("#Files", 0);
     map.put("UsingMockito?", 0);
     map.put("#TestLoops", 0);
-    PrintWriter writer = new PrintWriter("/Users/dormaayanoffice/Desktop/Results/raw.txt", "UTF-8");
+    map.put("#TryCatch", 0);
+    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TestingTables/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -71,6 +72,7 @@ public class TestingTable extends NominalTables {
         map.put("UsingMockito?", 0);
         map.put("#HamcrestAsserts", 0);
         map.put("#TestLoops", 0);
+        map.put("#TryCatch", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -82,10 +84,11 @@ public class TestingTable extends NominalTables {
           table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests"))
               .col("#JunitAnnotations", map.get("#JunitAnnotations")).col("#JavaAsserts", map.get("#JavaAsserts"))
               .col("#JunitAsserts", map.get("#JunitAsserts")).col("#HamcrestAsserts", map.get("#HamcrestAsserts"))
-              .col("#IfStatements", map.get("#IfStatements")).col("#ReturnStatements", map.get("#ReturnStatements"))
-              .col("#TestLoops", map.get("#TestLoops")).col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts"))
-              .col("#3-Asseerts", map.get("#3-Asseerts")).col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts"))
-              .col("#6+-Asseerts", map.get("#6+-Asseerts")).col("UsingMockito?", map.get("UsingMockito?")).nl();
+              .col("#TryCatch", map.get("#TryCatch")).col("#IfStatements", map.get("#IfStatements"))
+              .col("#ReturnStatements", map.get("#ReturnStatements")).col("#TestLoops", map.get("#TestLoops"))
+              .col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts"))
+              .col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts"))
+              .col("UsingMockito?", map.get("UsingMockito?")).nl();
           writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
           writer.write("\n \n \n \n \n \n");
         }
@@ -160,6 +163,10 @@ public class TestingTable extends NominalTables {
                   }
                   @Override public boolean visit(final EnhancedForStatement x) {
                     map.put("#TestLoops", map.get("#TestLoops") + 1);
+                    return true;
+                  }
+                  @Override public boolean visit(final TryStatement x) {
+                    map.put("#TryCatch", map.get("#TryCatch") + 1);
                     return true;
                   }
                 });
