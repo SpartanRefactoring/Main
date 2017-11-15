@@ -27,124 +27,121 @@ import static org.eclipse.jdt.core.dom.CompilationUnit.IMPORTS_PROPERTY;
  */
 public class ASTUtils {
 
-    private Document document;
-    private ASTNode node;
-    private ASTRewrite rw;
+	private Document document;
+	private ASTNode node;
+	private ASTRewrite rw;
 
-    private ASTUtils(ASTNode node, Document document) {
-        this.node = node;
-        this.document = document;
-    }
+	private ASTUtils(ASTNode node, Document document) {
+		this.node = node;
+		this.document = document;
+	}
 
-    public static ASTUtils createRemover(ASTNode node, Document document) {
-        return new ASTUtils(node, document);
-    }
+	public static ASTUtils createRemover(ASTNode node, Document document) {
+		return new ASTUtils(node, document);
+	}
 
-    private ASTNode compUnit(ASTNode removee) {
-        ASTNode parent = removee.getParent();
-        for (; parent != null; ) {
-            if (iz.compilationUnit(parent))
-                return parent;
-            parent = parent.getParent();
-        }
+	private ASTNode compUnit(ASTNode removee) {
+		ASTNode parent = removee.getParent();
+		for (; parent != null;) {
+			if (iz.compilationUnit(parent))
+				return parent;
+			parent = parent.getParent();
+		}
 
-        return removee.getRoot();
-    }
+		return removee.getRoot();
+	}
 
-    public static ASTNode makeASTNode(final String s) {
-        ASTNode node = null;
-        try {
-            node = wizard.ast(s);
-        } catch (Throwable t) {
-            try {
-                node = wizard.ast(s);
-            } catch (Throwable ignore) { /**/}
-        }
+	public static ASTNode makeASTNode(final String s) {
+		ASTNode node = null;
+		try {
+			node = wizard.ast(s);
+		} catch (Throwable t) {
+			try {
+				node = wizard.ast(s);
+			} catch (Throwable ignore) {
+				/**/}
+		}
 
-        return node;
-    }
+		return node;
+	}
 
+	public ASTNode commit() {
+		if (this.rw == null)
+			return node;
+		TextEdit edit = rw.rewriteAST(document, null);
+		return commit(edit, node, document);
+	}
 
-    public ASTNode commit() {
-        if (this.rw == null)
-            return node;
-        TextEdit edit = rw.rewriteAST(document, null);
-        return commit(edit, node, document);
-    }
+	public static ASTNode commit(TextEdit edit, ASTNode defaultNode, Document document) {
+		try {
 
-    public static ASTNode commit(TextEdit edit, ASTNode defaultNode, Document document) {
-        try {
+			edit.apply(document);
+			return makeAST.COMPILATION_UNIT.from(document.get());
+		} catch (BadLocationException ignore) {
+		}
 
-            edit.apply(document);
-            return makeAST.COMPILATION_UNIT.from(document.get());
-        } catch (BadLocationException ignore) {
-        }
+		return defaultNode;
+	}
 
-        return defaultNode;
-    }
+	public static <T> T tripleMethodInvocation(ASTNode node, Function<ASTNode, T> handler) {
+		Wrapper<T> w = new Wrapper<>();
+		node.accept(new ASTVisitor() {
+			@Override
+			public boolean visit(MethodInvocation node) {
+				node.accept(new ASTVisitor() {
+					@Override
+					public boolean visit(MethodInvocation node) {
+						node.accept(new ASTVisitor() {
+							@Override
+							public boolean visit(MethodInvocation node) {
+								w.set(handler.apply(node));
+								return true;
+							}
+						});
 
-    public static <T> T tripleMethodInvocation(ASTNode node, Function<ASTNode, T> handler) {
-        Wrapper<T> w = new Wrapper<>();
-        node.accept(new ASTVisitor() {
-            @Override
-            public boolean visit(MethodInvocation node) {
-                node.accept(new ASTVisitor() {
-                    @Override
-                    public boolean visit(MethodInvocation node) {
-                        node.accept(new ASTVisitor() {
-                            @Override
-                            public boolean visit(MethodInvocation node) {
-                                w.set(handler.apply(node));
-                                return true;
-                            }
-                        });
+						return false;
+					}
+				});
 
-                        return false;
-                    }
-                });
+				return false;
+			}
+		});
 
-                return false;
-            }
-        });
+		return w.get();
+	}
 
-        return w.get();
-    }
+	public static ASTNode addStaticImports(ASTNode root, Document document, String importName, String simpleName) {
+		if (!iz.compilationUnit(root))
+			return root;
+		metatester.aux_layer.mutables.Wrapper<ASTNode> w = new metatester.aux_layer.mutables.Wrapper<>(root);
+		root.accept(new ASTVisitor() {
+			@Override
+			public boolean visit(ImportDeclaration ¢) {
+				w.set(¢);
+				return true;
+			}
+		});
 
-    public static ASTNode addStaticImports(ASTNode root, Document document, String importName, String simpleName) {
-        if (!iz.compilationUnit(root))
-            return root;
-        metatester.aux_layer.mutables.Wrapper<ASTNode> w = new metatester.aux_layer.mutables.Wrapper<>(root);
-        root.accept(
-                new ASTVisitor() {
-                    @Override
-                    public boolean visit(ImportDeclaration ¢) {
-                        w.set(¢);
-                        return true;
-                    }
-                }
-        );
+		ASTNode newRoot = root;
+		ListRewrite lr = ASTRewrite.create(newRoot.getAST()).getListRewrite(newRoot, IMPORTS_PROPERTY);
+		ImportDeclaration id = newRoot.getAST().newImportDeclaration();
+		id.setStatic(true);
+		id.setName(newRoot.getAST().newName(importName.split("\\.")));
+		lr.insertFirst(id, null);
+		try {
+			TextEdit te = lr.getASTRewrite().rewriteAST(document, null);
+			te.apply(document);
+			return COMPILATION_UNIT.from(document.get());
+		} catch (BadLocationException e) {
+			/**/}
+		return root;
 
-        ASTNode newRoot = root;
-        ListRewrite lr = ASTRewrite.create(newRoot.getAST()).getListRewrite(newRoot, IMPORTS_PROPERTY);
-        ImportDeclaration id = newRoot.getAST().newImportDeclaration();
-        id.setStatic(true);
-        id.setName(newRoot.getAST().newName(importName.split("\\.")));
-        lr.insertFirst(id, null);
-        try {
-            TextEdit te = lr.getASTRewrite().rewriteAST(document, null);
-            te.apply(document);
-            return COMPILATION_UNIT.from(document.get());
-        } catch (BadLocationException e) {/**/}
-        return root;
+	}
 
-    }
-
-    public ASTUtils remove(ASTNode removee) {
-        if (this.rw == null)
-            this.rw = ASTRewrite.create(compUnit(removee).getAST());
-        this.rw.remove(removee, null);
-        return this;
-    }
+	public ASTUtils remove(ASTNode removee) {
+		if (this.rw == null)
+			this.rw = ASTRewrite.create(compUnit(removee).getAST());
+		this.rw.remove(removee, null);
+		return this;
+	}
 }
-
-
