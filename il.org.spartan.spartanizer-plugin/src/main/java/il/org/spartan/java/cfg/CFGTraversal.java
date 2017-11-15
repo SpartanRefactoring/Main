@@ -10,9 +10,12 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** The ASTVisitor of the CFG implementation
- * A simple ASTVisitor which add to each ASTNode
- * entry and exit points according to it's structure.
+/** The ASTVisitor of the CFG implementation A simple ASTVisitor which add to
+ * each ASTNode entry and exit points according to it's structure. The entry and
+ * exist points are added as a property to the ASTNode Contain Auxiliary
+ * functions as well as visit functions for different kinds of ASTNodes. In
+ * order to extend the CFG supporting more ASTNodes simply follow the pattern
+ * below.
  * @author Dor Ma'ayan
  * @author Ori Roth
  * @since 2017-06-14 */
