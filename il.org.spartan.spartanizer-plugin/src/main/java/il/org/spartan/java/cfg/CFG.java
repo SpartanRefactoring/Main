@@ -85,12 +85,12 @@ public interface CFG {
    * @param ¢ an ASTNode */
   public static void init(final ASTNode ¢) {
     if (¢ != null && !beginnings.of(¢).isPresent())
-      ¢.accept(new CFGTraversal());
+      ¢.accept(new Traversal());
   }
   /** Initialize the CFG of a given BodyDeclaration
    * @param ¢ a BodyDeclaration */
   public static void init(final BodyDeclaration ¢) {
     if (¢ != null && !beginnings.of(¢).isPresent())
-      ¢.accept(new CFGTraversal());
+      ¢.accept(new Traversal());
   }
 }

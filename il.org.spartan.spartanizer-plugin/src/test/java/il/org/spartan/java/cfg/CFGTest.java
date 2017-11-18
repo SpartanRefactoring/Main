@@ -344,7 +344,7 @@ public class CFGTest {
     List<String> ignoreList = Arrays.asList(ignore);
     List<String> ASTNodeTypes = Arrays.asList(ASTNode.class.getFields()).stream().map(f -> step.toCamelCase(f.getName()))
         .collect(Collectors.toList());
-    List<String> handledNodes = Arrays.asList(CFGTraversal.class.getMethods()).stream().filter(m -> m.getDeclaringClass().equals(CFGTraversal.class))
+    List<String> handledNodes = Arrays.asList(Traversal.class.getMethods()).stream().filter(m -> m.getDeclaringClass().equals(Traversal.class))
         .map(m -> {
           if (m.getParameters().length > 0 && m.getName().equals("endVisit"))
             return m.getParameterTypes()[0].getSimpleName();

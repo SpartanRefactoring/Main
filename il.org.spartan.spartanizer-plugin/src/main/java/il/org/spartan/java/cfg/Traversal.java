@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @author Ori Roth
  * @since 2017-06-14 */
-public class CFGTraversal extends ASTVisitor {
+class Traversal extends ASTVisitor {
   /** To all the ends of the first node, put the outgoings of the second node */
   static void chain(final ASTNode n1, final ASTNode n2) {
     ends.of(n1).get().stream().forEach(λ -> outgoing.of(λ).addAll(beginnings.of(n2)));
@@ -97,7 +97,7 @@ public class CFGTraversal extends ASTVisitor {
     ends.of(¢).add(¢);
   }
 
-  Alist trace = new Alist();
+  AList<ASTNode> trace = new AList<>();
 
   void chainReturn(final ASTNode n) {
     ends.of(n).get().stream().forEach(λ -> outgoing.of(λ).addAll(trace.peek("return")));
@@ -105,9 +105,6 @@ public class CFGTraversal extends ASTVisitor {
   void chainThrow(final ASTNode ¢) {
     chainReturn(¢);
   }
-  
-  
-  
   /************************************************************************************************** From
    * here on handling each kind of ASTNode in a unique way by Overriding endVisit
    * Need to be extended in the
