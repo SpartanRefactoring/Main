@@ -1,5 +1,7 @@
 package metatester;
 
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.subject;
 import il.org.spartan.spartanizer.ast.navigate.compute;
 import il.org.spartan.spartanizer.ast.navigate.extract;
 import il.org.spartan.spartanizer.ast.navigate.step;
@@ -100,6 +102,35 @@ public class ASTTestClassGenerator implements TestClassGenerator {
 		final String $ = generateNewClassString(
 				allTestMethods().stream().map(λ -> tests(λ, infixes(λ))).collect(Collectors.toList()));
 		return loadClass(testClassName, $, testClass, generatedPath);
+	}
+
+
+	private List<MethodDeclaration> getTests() {
+		final List<MethodDeclaration> $ = new ArrayList<>();
+		root.accept(new ASTVisitor() {
+			@Override
+			public boolean visit(final MethodDeclaration ¢) {
+				final Annotation a = extract.annotations(¢).stream().filter(λ -> haz.name(λ, "Test")).findAny()
+						.orElse(null);
+				if (a != null) {
+					final List<MemberValuePair> l = a instanceof NormalAnnotation ? step.values((NormalAnnotation) a)
+							: null;
+					$.add(¢);
+				}
+				return a != null;
+			}
+		});
+		return $;
+	}
+
+	
+	private List<MethodDeclaration> splitTest(MethodDeclaration m){
+		return null;
+	}
+	ASTNode generatTestClassAST(ASTNode root) {
+		ASTNode newTestClass = az.typeDeclaration(copy.of(root));
+		List<MethodDeclaration> tests = getTests();
+		return null;
 	}
 
 	/**
