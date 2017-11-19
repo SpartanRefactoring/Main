@@ -1,8 +1,9 @@
-connection.arguments=
+#Sun Nov 19 10:37:44 IST 2017
 connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
-connection.java.home=null
-connection.jvm.arguments=
-connection.project.dir=..
 derived.resources=.gradle,build
+connection.java.home=null
+connection.arguments=
 eclipse.preferences.version=1
+connection.jvm.arguments=
 project.path=\:il.org.spartan.spartanizer-plugin.test
+connection.project.dir=..
