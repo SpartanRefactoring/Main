@@ -45,7 +45,7 @@ public class TestingTable extends NominalTables {
     map.put("UsingMockito?", 0);
     map.put("#TestLoops", 0);
     map.put("#TryCatch", 0);
-    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TestingTables/raw.txt", "UTF-8");
+    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TableTrending/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
         listen(new Tapper() {

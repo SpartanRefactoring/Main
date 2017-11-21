@@ -17,11 +17,11 @@ import static org.junit.Assert.assertTrue;
     return x;
   }
 @Test public void testOnlySimpleAsserts_meta0(){
-assertThat(1 == 1).isTrue();}
+assertThat(1).isEqualTo(1);}
 @Test public void testOnlySimpleAsserts_meta1(){
-assertThat(0 == 1).isTrue();}
+assertThat(0).isEqualTo(1);}
 @Test public void testOnlySimpleAsserts_meta2(){
-assertThat(2 == 2).isTrue();}@Test public void testOnlyJunitAsserts_meta3(){
+assertThat(2).isEqualTo(2);}@Test public void testOnlyJunitAsserts_meta3(){
 assertThat(1).isEqualTo(1);}
 @Test public void testOnlyJunitAsserts_meta4(){
 assertThat(1).isEqualTo(0);}

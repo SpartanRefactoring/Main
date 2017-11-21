@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,8 @@ public class SimpleTest {
 
 	@Test
 	public void test1() {
+		assert 3 < 2;
+		assertTrue(3 < 2);
 		assert 1 == 1;
 		assert 0 == 1;
 		assert 2 == 2;
@@ -28,4 +31,5 @@ public class SimpleTest {
 		assertThat(f(), is(lessThan(2)));
 
 	}
+
 }
