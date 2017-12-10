@@ -29,22 +29,15 @@ public class TaxonomyTable extends NominalTables {
   @SuppressWarnings("boxing") public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("#Tests", 0);
-    map.put("#JunitAnnotations", 0);
-    map.put("#JavaAsserts", 0);
-    map.put("#JunitAsserts", 0);
-    map.put("#HamcrestAsserts", 0);
-    map.put("#IfStatements", 0);
-    map.put("#ReturnStatements", 0);
-    map.put("#1-Asseerts", 0);
-    map.put("#2-Asseerts", 0);
-    map.put("#3-Asseerts", 0);
-    map.put("#4-Asseerts", 0);
-    map.put("#5-Asseerts", 0);
-    map.put("#6+-Asseerts", 0);
-    map.put("#Files", 0);
-    map.put("UsingMockito?", 0);
-    map.put("#TestLoops", 0);
-    map.put("#TryCatch", 0);
+    map.put("#A", 0);
+    map.put("#F", 0);
+    map.put("#A*", 0);
+    map.put("#F*", 0);
+    map.put("#AF", 0);
+    map.put("#A*F", 0);
+    map.put("#AF*", 0);
+    map.put("#A*F*", 0);
+    map.put("#(A*F*)*", 0);
     PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TableTrending/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
@@ -57,22 +50,15 @@ public class TaxonomyTable extends NominalTables {
 
       void reset() {
         map.put("#Tests", 0);
-        map.put("#JunitAnnotations", 0);
-        map.put("#JavaAsserts", 0);
-        map.put("#JunitAsserts", 0);
-        map.put("#IfStatements", 0);
-        map.put("#ReturnStatements", 0);
-        map.put("#1-Asseerts", 0);
-        map.put("#2-Asseerts", 0);
-        map.put("#3-Asseerts", 0);
-        map.put("#4-Asseerts", 0);
-        map.put("#5-Asseerts", 0);
-        map.put("#6+-Asseerts", 0);
-        map.put("#Files", 0);
-        map.put("UsingMockito?", 0);
-        map.put("#HamcrestAsserts", 0);
-        map.put("#TestLoops", 0);
-        map.put("#TryCatch", 0);
+        map.put("#A", 0);
+        map.put("#F", 0);
+        map.put("#A*", 0);
+        map.put("#F*", 0);
+        map.put("#AF", 0);
+        map.put("#A*F", 0);
+        map.put("#AF*", 0);
+        map.put("#A*F*", 0);
+        map.put("#(A*F*)*", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -81,14 +67,7 @@ public class TaxonomyTable extends NominalTables {
       public void summarize(final String path) {
         initializeWriter();
         if (map.get("#Tests") != 0) {
-          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests"))
-              .col("#JunitAnnotations", map.get("#JunitAnnotations")).col("#JavaAsserts", map.get("#JavaAsserts"))
-              .col("#JunitAsserts", map.get("#JunitAsserts")).col("#HamcrestAsserts", map.get("#HamcrestAsserts"))
-              .col("#TryCatch", map.get("#TryCatch")).col("#IfStatements", map.get("#IfStatements"))
-              .col("#ReturnStatements", map.get("#ReturnStatements")).col("#TestLoops", map.get("#TestLoops"))
-              .col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts"))
-              .col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts"))
-              .col("UsingMockito?", map.get("UsingMockito?")).nl();
+          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", map.get("#A")).nl();
           writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
           writer.write("\n \n \n \n \n \n");
         }
@@ -100,13 +79,6 @@ public class TaxonomyTable extends NominalTables {
     }.visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
         map.put("#Files", map.get("#Files") + 1);
-        List<ImportDeclaration> imports = extract.imports(¢);
-        for (ImportDeclaration i : imports) {
-          if (i.getName().getFullyQualifiedName().equals("org.mockito.Mockito")) {
-            if (map.get("UsingMockito?") == 0)
-              map.put("UsingMockito?", 1);
-          }
-        }
         ¢.accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration x) {
             if (x != null) {
