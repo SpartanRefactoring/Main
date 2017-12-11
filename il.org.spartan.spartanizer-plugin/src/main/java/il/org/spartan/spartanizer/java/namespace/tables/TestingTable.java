@@ -45,6 +45,7 @@ public class TestingTable extends NominalTables {
     map.put("UsingMockito?", 0);
     map.put("#TestLoops", 0);
     map.put("#TryCatch", 0);
+    map.put("#RegularTests", 0);
     PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TableTrending/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
@@ -73,6 +74,7 @@ public class TestingTable extends NominalTables {
         map.put("#HamcrestAsserts", 0);
         map.put("#TestLoops", 0);
         map.put("#TryCatch", 0);
+        map.put("#RegularTests", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -88,7 +90,7 @@ public class TestingTable extends NominalTables {
               .col("#ReturnStatements", map.get("#ReturnStatements")).col("#TestLoops", map.get("#TestLoops"))
               .col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts"))
               .col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts"))
-              .col("UsingMockito?", map.get("UsingMockito?")).nl();
+              .col("UsingMockito?", map.get("UsingMockito?")).col("#RegularTests", map.get("#RegularTests")).nl();
           writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
           writer.write("\n \n \n \n \n \n");
         }
@@ -124,6 +126,7 @@ public class TestingTable extends NominalTables {
                   writer.write("\n \n \n \n");
                 }
                 final Int counter = new Int(); // asseerts counter
+                final Int irregulars = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
                 x.accept(new ASTVisitor() {
                   /** handle regular assert */
@@ -146,30 +149,38 @@ public class TestingTable extends NominalTables {
                   /** handle Returns */
                   @Override public boolean visit(final ReturnStatement x) {
                     map.put("#ReturnStatements", map.get("#ReturnStatements") + 1);
+                    irregulars.step();
                     return true;
                   }
                   /** handle Returns */
                   @Override public boolean visit(final IfStatement x) {
                     map.put("#IfStatements", map.get("#IfStatements") + 1);
+                    irregulars.step();
                     return true;
                   }
                   @Override public boolean visit(final ForStatement x) {
                     map.put("#TestLoops", map.get("#TestLoops") + 1);
+                    irregulars.step();
                     return true;
                   }
                   @Override public boolean visit(final WhileStatement x) {
                     map.put("#TestLoops", map.get("#TestLoops") + 1);
+                    irregulars.step();
                     return true;
                   }
                   @Override public boolean visit(final EnhancedForStatement x) {
                     map.put("#TestLoops", map.get("#TestLoops") + 1);
+                    irregulars.step();
                     return true;
                   }
                   @Override public boolean visit(final TryStatement x) {
                     map.put("#TryCatch", map.get("#TryCatch") + 1);
+                    irregulars.step();
                     return true;
                   }
                 });
+                if (irregulars.get() == 0)
+                  map.put("#RegularTests", map.get("#RegularTests") + 1);
                 if (counter.inner > 0 && counter.inner < 6)
                   map.put("#" + counter.inner + "-Asseerts", map.get("#" + counter.inner + "-Asseerts") + 1);
                 else if (counter.inner > 5)

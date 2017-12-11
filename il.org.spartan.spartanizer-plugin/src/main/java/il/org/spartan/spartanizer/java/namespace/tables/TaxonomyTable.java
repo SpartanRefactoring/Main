@@ -34,11 +34,12 @@ public class TaxonomyTable extends NominalTables {
     map.put("#F", 0);
     map.put("#A*", 0);
     map.put("#F*", 0);
-    map.put("#AF", 0);
-    map.put("#A*F", 0);
-    map.put("#AF*", 0);
-    map.put("#A*F*", 0);
-    map.put("#(A*F*)*", 0);
+    map.put("#FA", 0);
+    map.put("#F*A", 0);
+    map.put("#FA*", 0);
+    map.put("#F*A*", 0);
+    map.put("#(F*A*)*", 0);
+    map.put("#NonLinear", 0);
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -60,6 +61,7 @@ public class TaxonomyTable extends NominalTables {
         map.put("#AF*", 0);
         map.put("#A*F*", 0);
         map.put("#(A*F*)*", 0);
+        map.put("#NonLinear", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -68,7 +70,8 @@ public class TaxonomyTable extends NominalTables {
       public void summarize(final String path) {
         initializeWriter();
         if (map.get("#Tests") != 0) {
-          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", map.get("#A")).nl();
+          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", map.get("#A"))
+              .col("#A*", map.get("#A*")).col("#NonLinear", map.get("#NonLinear")).nl();
         }
       }
       void initializeWriter() {
@@ -88,25 +91,25 @@ public class TaxonomyTable extends NominalTables {
                 // This is real test!
                 final Int counter = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
-                x.accept(new ASTVisitor() {
-                  /** handle regular assert */
-                  @Override public boolean visit(final AssertStatement x) {
-                    counter.step();
-                    return true;
+                List<Statement> statements = extract.statements(x.getBody());
+                boolean linear = true;
+                for (Statement s : statements) {
+                  if (iz.ifStatement(s) || iz.forStatement(s) || iz.enhancedFor(s) || iz.breakStatement(s) || iz.whileStatement(s)
+                      || iz.tryStatement(s)) {
+                    linear = false;
+                    break;
                   }
-                  /** handle JunitAssert */
-                  @Override public boolean visit(final ExpressionStatement x) {
-                    if (iz.junitAssert(x)) {
-                      counter.step();
-                    }
-                    if (iz.hamcrestAssert(x)) {
-                      counter.step();
-                    }
-                    return true;
+                }
+                if (linear) {
+                  if (counter.inner() == 1) {
+                    map.put("#A", map.get("#A") + 1);
                   }
-                });
-                if (counter.inner() == 1)
-                  map.put("#A", map.get("#A") + 1);
+                  if (counter.inner() >= 1) {
+                    map.put("#A*", map.get("#A*") + 1);
+                  }
+                } else {
+                  map.put("#NonLinear", map.get("#NonLinear") + 1);
+                }
               }
             }
             return true;
