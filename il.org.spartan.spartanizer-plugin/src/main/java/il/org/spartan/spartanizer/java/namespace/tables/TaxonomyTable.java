@@ -28,6 +28,7 @@ public class TaxonomyTable extends NominalTables {
   }
   @SuppressWarnings("boxing") public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final HashMap<String, Integer> map = new HashMap<>();
+    map.put("#Files", 0);
     map.put("#Tests", 0);
     map.put("#A", 0);
     map.put("#F", 0);
@@ -49,6 +50,7 @@ public class TaxonomyTable extends NominalTables {
       }
 
       void reset() {
+        map.put("#Files", 0);
         map.put("#Tests", 0);
         map.put("#A", 0);
         map.put("#F", 0);
@@ -84,68 +86,30 @@ public class TaxonomyTable extends NominalTables {
             if (x != null) {
               List<String> annotations = extract.annotations(x).stream().map(a -> a.getTypeName().getFullyQualifiedName())
                   .collect(Collectors.toList());
-              if (isJunitAnnotation(annotations))
-                map.put("#JunitAnnotations", map.get("#JunitAnnotations") + 1);
               if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
                   && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
                 // This is real test!
-                Random rand = new Random();
-                if (rand.nextInt(4) == 2) {
-                  writer.write("~~~~~~~New Test~~~~~~~\n \n");
-                  writer.write(x.toString());
-                  writer.write("\n \n \n \n");
-                }
                 final Int counter = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
                 x.accept(new ASTVisitor() {
                   /** handle regular assert */
                   @Override public boolean visit(final AssertStatement x) {
-                    map.put("#JavaAsserts", map.get("#JavaAsserts") + 1);
                     counter.step();
                     return true;
                   }
                   /** handle JunitAssert */
                   @Override public boolean visit(final ExpressionStatement x) {
                     if (iz.junitAssert(x)) {
-                      map.put("#JunitAsserts", map.get("#JunitAsserts") + 1);
                       counter.step();
                     }
                     if (iz.hamcrestAssert(x)) {
-                      map.put("#HamcrestAsserts", map.get("#HamcrestAsserts") + 1);
+                      counter.step();
                     }
                     return true;
                   }
-                  /** handle Returns */
-                  @Override public boolean visit(final ReturnStatement x) {
-                    map.put("#ReturnStatements", map.get("#ReturnStatements") + 1);
-                    return true;
-                  }
-                  /** handle Returns */
-                  @Override public boolean visit(final IfStatement x) {
-                    map.put("#IfStatements", map.get("#IfStatements") + 1);
-                    return true;
-                  }
-                  @Override public boolean visit(final ForStatement x) {
-                    map.put("#TestLoops", map.get("#TestLoops") + 1);
-                    return true;
-                  }
-                  @Override public boolean visit(final WhileStatement x) {
-                    map.put("#TestLoops", map.get("#TestLoops") + 1);
-                    return true;
-                  }
-                  @Override public boolean visit(final EnhancedForStatement x) {
-                    map.put("#TestLoops", map.get("#TestLoops") + 1);
-                    return true;
-                  }
-                  @Override public boolean visit(final TryStatement x) {
-                    map.put("#TryCatch", map.get("#TryCatch") + 1);
-                    return true;
-                  }
                 });
-                if (counter.inner > 0 && counter.inner < 6)
-                  map.put("#" + counter.inner + "-Asseerts", map.get("#" + counter.inner + "-Asseerts") + 1);
-                else if (counter.inner > 5)
-                  map.put("#6+-Asseerts", map.get("#6+-Asseerts") + 1);
+                if (counter.inner() == 1)
+                  map.put("#A", map.get("A") + 1);
               }
             }
             return true;
