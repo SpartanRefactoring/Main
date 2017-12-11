@@ -39,7 +39,6 @@ public class TaxonomyTable extends NominalTables {
     map.put("#AF*", 0);
     map.put("#A*F*", 0);
     map.put("#(A*F*)*", 0);
-    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TableTrending/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -70,8 +69,6 @@ public class TaxonomyTable extends NominalTables {
         initializeWriter();
         if (map.get("#Tests") != 0) {
           table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", map.get("#A")).nl();
-          writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
-          writer.write("\n \n \n \n \n \n");
         }
       }
       void initializeWriter() {
@@ -109,7 +106,7 @@ public class TaxonomyTable extends NominalTables {
                   }
                 });
                 if (counter.inner() == 1)
-                  map.put("#A", map.get("A") + 1);
+                  map.put("#A", map.get("#A") + 1);
               }
             }
             return true;
@@ -119,7 +116,6 @@ public class TaxonomyTable extends NominalTables {
       }
     });
     table.close();
-    writer.close();
     System.err.println(table.description());
   }
 }
