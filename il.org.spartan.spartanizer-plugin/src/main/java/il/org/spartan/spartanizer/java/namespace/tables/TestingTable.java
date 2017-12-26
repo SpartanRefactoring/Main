@@ -35,6 +35,7 @@ public class TestingTable extends NominalTables {
     map.put("#HamcrestAsserts", 0);
     map.put("#IfStatements", 0);
     map.put("#ReturnStatements", 0);
+    map.put("#0-Asseerts", 0);
     map.put("#1-Asseerts", 0);
     map.put("#2-Asseerts", 0);
     map.put("#3-Asseerts", 0);
@@ -45,8 +46,8 @@ public class TestingTable extends NominalTables {
     map.put("UsingMockito?", 0);
     map.put("#TestLoops", 0);
     map.put("#TryCatch", 0);
-    map.put("#RegularTests", 0);
-    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TableTrending/raw.txt", "UTF-8");
+    map.put("#LinearTests", 0);
+    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/GeneralTestingTables/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -63,6 +64,7 @@ public class TestingTable extends NominalTables {
         map.put("#JunitAsserts", 0);
         map.put("#IfStatements", 0);
         map.put("#ReturnStatements", 0);
+        map.put("#0-Asseerts", 0);
         map.put("#1-Asseerts", 0);
         map.put("#2-Asseerts", 0);
         map.put("#3-Asseerts", 0);
@@ -74,7 +76,7 @@ public class TestingTable extends NominalTables {
         map.put("#HamcrestAsserts", 0);
         map.put("#TestLoops", 0);
         map.put("#TryCatch", 0);
-        map.put("#RegularTests", 0);
+        map.put("#LinearTests", 0);
       }
       protected void done(final String path) {
         summarize(path);
@@ -88,9 +90,10 @@ public class TestingTable extends NominalTables {
               .col("#JunitAsserts", map.get("#JunitAsserts")).col("#HamcrestAsserts", map.get("#HamcrestAsserts"))
               .col("#TryCatch", map.get("#TryCatch")).col("#IfStatements", map.get("#IfStatements"))
               .col("#ReturnStatements", map.get("#ReturnStatements")).col("#TestLoops", map.get("#TestLoops"))
-              .col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts"))
-              .col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts"))
-              .col("UsingMockito?", map.get("UsingMockito?")).col("#RegularTests", map.get("#RegularTests")).nl();
+              .col("#0-Asseerts", map.get("#0-Asseerts")).col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts"))
+              .col("#3-Asseerts", map.get("#3-Asseerts")).col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts"))
+              .col("#6+-Asseerts", map.get("#6+-Asseerts")).col("UsingMockito?", map.get("UsingMockito?"))
+              .col("#LinearTests", map.get("#LinearTests")).nl();
           writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
           writer.write("\n \n \n \n \n \n");
         }
@@ -180,8 +183,8 @@ public class TestingTable extends NominalTables {
                   }
                 });
                 if (irregulars.get() == 0)
-                  map.put("#RegularTests", map.get("#RegularTests") + 1);
-                if (counter.inner > 0 && counter.inner < 6)
+                  map.put("#LinearTests", map.get("#LinearTests") + 1);
+                if (counter.inner >= 0 && counter.inner < 6)
                   map.put("#" + counter.inner + "-Asseerts", map.get("#" + counter.inner + "-Asseerts") + 1);
                 else if (counter.inner > 5)
                   map.put("#6+-Asseerts", map.get("#6+-Asseerts") + 1);
