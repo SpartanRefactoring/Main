@@ -32,13 +32,13 @@ public class TaxonomyTable extends NominalTables {
     map.put("#Tests", 0);
     map.put("#A", 0);
     map.put("#F", 0);
-    map.put("#A*", 0);
-    map.put("#F*", 0);
+    map.put("#A+", 0);
+    map.put("#F+", 0);
     map.put("#FA", 0);
-    map.put("#F*A", 0);
-    map.put("#FA*", 0);
-    map.put("#F*A*", 0);
-    map.put("#(F*A*)*", 0);
+    map.put("#F+A", 0);
+    map.put("#FA+", 0);
+    map.put("#F+A+", 0);
+    map.put("#(F+A+)+", 0);
     map.put("#NonLinear", 0);
     new GrandVisitor(args) {
       {
@@ -54,24 +54,28 @@ public class TaxonomyTable extends NominalTables {
         map.put("#Tests", 0);
         map.put("#A", 0);
         map.put("#F", 0);
-        map.put("#A*", 0);
-        map.put("#F*", 0);
-        map.put("#AF", 0);
-        map.put("#A*F", 0);
-        map.put("#AF*", 0);
-        map.put("#A*F*", 0);
-        map.put("#(A*F*)*", 0);
+        map.put("#A+", 0);
+        map.put("#F+", 0);
+        map.put("#FA", 0);
+        map.put("#F+A", 0);
+        map.put("#FA+", 0);
+        map.put("#F+A+", 0);
+        map.put("#(F+A+)+", 0);
         map.put("#NonLinear", 0);
       }
       protected void done(final String path) {
         summarize(path);
         reset();
       }
+      double rel(String s) {
+        return (double) map.get(s) / map.get("#Tests");
+      }
       public void summarize(final String path) {
         initializeWriter();
         if (map.get("#Tests") != 0) {
-          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", map.get("#A"))
-              .col("#A*", map.get("#A*")).col("#NonLinear", map.get("#NonLinear")).nl();
+          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", rel("#A")).col("#F", rel("#F")).col("#A+", rel("#A+"))
+              .col("#F+", rel("#F+")).col("#FA", rel("#FA")).col("#F+A", rel("#F+A")).col("#FA+", rel("#FA+")).col("#F+A+", rel("#F+A+"))
+              .col("#(F+A+)+", rel("#(F+A+)+")).col("#NonLinear", rel("#NonLinear")).nl();
         }
       }
       void initializeWriter() {
@@ -89,23 +93,58 @@ public class TaxonomyTable extends NominalTables {
               if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
                   && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
                 // This is real test!
-                final Int counter = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
                 List<Statement> statements = extract.statements(x.getBody());
                 boolean linear = true;
+                int assertionCounter = 0;
+                int fixtureCounter = 0;
+                boolean fixturesBefore = true;
+                boolean assertionsStarted = false;
+                boolean exchanges = false;
                 for (Statement s : statements) {
                   if (iz.ifStatement(s) || iz.forStatement(s) || iz.enhancedFor(s) || iz.breakStatement(s) || iz.whileStatement(s)
-                      || iz.tryStatement(s)) {
+                      || iz.tryStatement(s) || iz.returnStatement(s)) {
                     linear = false;
                     break;
                   }
+                  if (iz.assertStatement(s) || iz.junitAssert(s) || iz.hamcrestAssert(s)) {
+                    assertionCounter++;
+                    assertionsStarted = true;
+                    if (!fixturesBefore)
+                      exchanges = true;
+                  } else {
+                    fixtureCounter++;
+                    if (assertionsStarted)
+                      fixturesBefore = false;
+                  }
                 }
                 if (linear) {
-                  if (counter.inner() == 1) {
+                  if (assertionCounter == 1 && fixtureCounter == 0) {
                     map.put("#A", map.get("#A") + 1);
                   }
-                  if (counter.inner() >= 1) {
-                    map.put("#A*", map.get("#A*") + 1);
+                  if (assertionCounter == 0 && fixtureCounter == 1) {
+                    map.put("#F", map.get("#F") + 1);
+                  }
+                  if (assertionCounter >= 1 && fixtureCounter == 0) {
+                    map.put("#A+", map.get("#A+") + 1);
+                  }
+                  if (assertionCounter == 0 && fixtureCounter >= 1) {
+                    map.put("#F+", map.get("#F+") + 1);
+                  }
+                  if (assertionCounter == 1 && fixtureCounter == 1 && fixturesBefore) {
+                    map.put("#FA", map.get("#FA") + 1);
+                  }
+                  if (assertionCounter >= 1 && fixtureCounter == 1 && fixturesBefore) {
+                    map.put("#FA+", map.get("#FA+") + 1);
+                  }
+                  if (assertionCounter == 1 && fixtureCounter >= 1 && fixturesBefore) {
+                    map.put("#F+A", map.get("#F+A") + 1);
+                  }
+                  if (assertionCounter >= 1 && fixtureCounter >= 1 && fixturesBefore) {
+                    map.put("#F+A+", map.get("#F+A+") + 1);
+                  }
+                  if (exchanges) {
+                    map.put("#(F+A+)+", map.get("#(F+A+)+") + 1);
                   }
                 } else {
                   map.put("#NonLinear", map.get("#NonLinear") + 1);
