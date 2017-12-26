@@ -17,8 +17,16 @@ import il.org.spartan.utils.*;
  * @since 2017-10-16 */
 public class TestingTable extends NominalTables {
   static boolean isJunitAnnotation(List<String> annotations) {
-    String[] anno = { "ParameterizedTest", "RepeatedTest", "TestFactory", "TestInstance", "TestTemplate", "DisplayName", "BeforeEach", "AfterEach",
-        "BeforeAll", "AfterAll", "Nested", "Tag", "Disabled", "ExtendWith" };
+    String[] anno = { "After", "AfterClass", "Before", "BeforeClass" };
+    List<String> annoList = Arrays.asList(anno);
+    for (String s : annotations) {
+      if (annoList.contains(s))
+        return true;
+    }
+    return false;
+  }
+  static boolean isIgnoredTest(List<String> annotations) {
+    String[] anno = { "Ignore" };
     List<String> annoList = Arrays.asList(anno);
     for (String s : annotations) {
       if (annoList.contains(s))
@@ -29,7 +37,8 @@ public class TestingTable extends NominalTables {
   @SuppressWarnings("boxing") public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("#Tests", 0);
-    map.put("#JunitAnnotations", 0);
+    map.put("#BeforeAfterAnnotations", 0);
+    map.put("#IgnoredTests", 0);
     map.put("#JavaAsserts", 0);
     map.put("#JunitAsserts", 0);
     map.put("#HamcrestAsserts", 0);
@@ -59,7 +68,8 @@ public class TestingTable extends NominalTables {
 
       void reset() {
         map.put("#Tests", 0);
-        map.put("#JunitAnnotations", 0);
+        map.put("#BeforeAfterAnnotations", 0);
+        map.put("#IgnoredTests", 0);
         map.put("#JavaAsserts", 0);
         map.put("#JunitAsserts", 0);
         map.put("#IfStatements", 0);
@@ -86,13 +96,13 @@ public class TestingTable extends NominalTables {
         initializeWriter();
         if (map.get("#Tests") != 0) {
           table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests"))
-              .col("#JunitAnnotations", map.get("#JunitAnnotations")).col("#JavaAsserts", map.get("#JavaAsserts"))
-              .col("#JunitAsserts", map.get("#JunitAsserts")).col("#HamcrestAsserts", map.get("#HamcrestAsserts"))
-              .col("#TryCatch", map.get("#TryCatch")).col("#IfStatements", map.get("#IfStatements"))
-              .col("#ReturnStatements", map.get("#ReturnStatements")).col("#TestLoops", map.get("#TestLoops"))
-              .col("#0-Asseerts", map.get("#0-Asseerts")).col("#1-Asseerts", map.get("#1-Asseerts")).col("#2-Asseerts", map.get("#2-Asseerts"))
-              .col("#3-Asseerts", map.get("#3-Asseerts")).col("#4-Asseerts", map.get("#4-Asseerts")).col("#5-Asseerts", map.get("#5-Asseerts"))
-              .col("#6+-Asseerts", map.get("#6+-Asseerts")).col("UsingMockito?", map.get("UsingMockito?"))
+              .col("#BeforeAfterAnnotations", map.get("#BeforeAfterAnnotations")).col("#IgnoredTests", map.get("#IgnoredTests"))
+              .col("#JavaAsserts", map.get("#JavaAsserts")).col("#JunitAsserts", map.get("#JunitAsserts"))
+              .col("#HamcrestAsserts", map.get("#HamcrestAsserts")).col("#TryCatch", map.get("#TryCatch"))
+              .col("#IfStatements", map.get("#IfStatements")).col("#ReturnStatements", map.get("#ReturnStatements"))
+              .col("#TestLoops", map.get("#TestLoops")).col("#0-Asseerts", map.get("#0-Asseerts")).col("#1-Asseerts", map.get("#1-Asseerts"))
+              .col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts")).col("#4-Asseerts", map.get("#4-Asseerts"))
+              .col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts")).col("UsingMockito?", map.get("UsingMockito?"))
               .col("#LinearTests", map.get("#LinearTests")).nl();
           writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
           writer.write("\n \n \n \n \n \n");
@@ -118,7 +128,9 @@ public class TestingTable extends NominalTables {
               List<String> annotations = extract.annotations(x).stream().map(a -> a.getTypeName().getFullyQualifiedName())
                   .collect(Collectors.toList());
               if (isJunitAnnotation(annotations))
-                map.put("#JunitAnnotations", map.get("#JunitAnnotations") + 1);
+                map.put("#BeforeAfterAnnotations", map.get("#BeforeAfterAnnotations") + 1);
+              if (isIgnoredTest(annotations))
+                map.put("#IgnoredTests", map.get("#IgnoredTests") + 1);
               if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
                   && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
                 // This is real test!

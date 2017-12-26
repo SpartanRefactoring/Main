@@ -16,16 +16,6 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @since 2017-10-16 */
 public class TaxonomyTable extends NominalTables {
-  static boolean isJunitAnnotation(List<String> annotations) {
-    String[] anno = { "ParameterizedTest", "RepeatedTest", "TestFactory", "TestInstance", "TestTemplate", "DisplayName", "BeforeEach", "AfterEach",
-        "BeforeAll", "AfterAll", "Nested", "Tag", "Disabled", "ExtendWith" };
-    List<String> annoList = Arrays.asList(anno);
-    for (String s : annotations) {
-      if (annoList.contains(s))
-        return true;
-    }
-    return false;
-  }
   @SuppressWarnings("boxing") public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("#Files", 0);
@@ -73,9 +63,9 @@ public class TaxonomyTable extends NominalTables {
       public void summarize(final String path) {
         initializeWriter();
         if (map.get("#Tests") != 0) {
-          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", rel("#A")).col("#F", rel("#F")).col("#A+", rel("#A+"))
-              .col("#F+", rel("#F+")).col("#FA", rel("#FA")).col("#F+A", rel("#F+A")).col("#FA+", rel("#FA+")).col("#F+A+", rel("#F+A+"))
-              .col("#(F+A+)+", rel("#(F+A+)+")).col("#NonLinear", rel("#NonLinear")).nl();
+          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#A", rel("#A")).col("#F", rel("#F"))
+              .col("#A+", rel("#A+")).col("#F+", rel("#F+")).col("#FA", rel("#FA")).col("#F+A", rel("#F+A")).col("#FA+", rel("#FA+"))
+              .col("#F+A+", rel("#F+A+")).col("#(F+A+)+", rel("#(F+A+)+")).col("#NonLinear", rel("#NonLinear")).nl();
         }
       }
       void initializeWriter() {
