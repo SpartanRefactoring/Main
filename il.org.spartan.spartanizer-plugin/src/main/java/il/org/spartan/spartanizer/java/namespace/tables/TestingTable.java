@@ -34,7 +34,7 @@ public class TestingTable extends NominalTables {
     }
     return false;
   }
-  @SuppressWarnings("boxing") public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
+  @SuppressWarnings({ "boxing", "unused" }) public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("#Tests", 0);
     map.put("#BeforeAfterAnnotations", 0);
@@ -56,7 +56,7 @@ public class TestingTable extends NominalTables {
     map.put("#TestLoops", 0);
     map.put("#TryCatch", 0);
     map.put("#LinearTests", 0);
-    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/GeneralTestingTables/raw.txt", "UTF-8");
+    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/paper_results/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -134,12 +134,12 @@ public class TestingTable extends NominalTables {
               if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
                   && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
                 // This is real test!
-                Random rand = new Random();
-                if (rand.nextInt(4) == 2) {
-                  writer.write("~~~~~~~New Test~~~~~~~\n \n");
-                  writer.write(x.toString());
-                  writer.write("\n \n \n \n");
-                }
+                // Random rand = new Random();
+                // if (rand.nextInt(4) == 2) {
+                writer.write("~~~~~~~New Test~~~~~~~\n \n");
+                writer.write(x.toString());
+                writer.write("\n \n \n \n");
+                // }
                 final Int counter = new Int(); // asseerts counter
                 final Int irregulars = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);

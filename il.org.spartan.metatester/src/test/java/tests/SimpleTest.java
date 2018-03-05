@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.lessThan;
 
 import metatester.MetaTester;
 
-@RunWith(MetaTester.class)
+//@RunWith(MetaTester.class)
 @SuppressWarnings("static-method")
 public class SimpleTest {
 
