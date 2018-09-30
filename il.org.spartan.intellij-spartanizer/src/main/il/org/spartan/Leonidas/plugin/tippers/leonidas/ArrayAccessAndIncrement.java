@@ -5,6 +5,7 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
  * Inline Next Increment
@@ -21,6 +22,7 @@ public class ArrayAccessAndIncrement implements LeonidasTipperDefinition {
 
     @Override
     public void constraints() {
+        element(2).asExpression.mustNotRefer(1);
     }
 
     @Override
