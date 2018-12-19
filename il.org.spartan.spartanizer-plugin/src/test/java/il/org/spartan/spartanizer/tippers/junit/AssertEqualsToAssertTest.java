@@ -16,5 +16,15 @@ public class AssertEqualsToAssertTest {
         .gives("assert a().equals(b());")//
         .stays();
   }
+  
+  @Test public void test2() {
+    trimmingOf("assertEquals(1,b())")//
+        .gives("assert 1 == b();");
+  }
+  
+  @Test public void test3() {
+    trimmingOf("int a; assertEquals(a,b());")//
+        .gives("int a; assert a == b();;");
+  }
     
 }
