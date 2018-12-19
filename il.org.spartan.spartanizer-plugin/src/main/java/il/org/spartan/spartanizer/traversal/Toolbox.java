@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.junit.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.categories.*;
 import il.org.spartan.utils.*;
@@ -206,6 +207,8 @@ public class Toolbox {
           // new AnonymizeAllParameters(), //
           null)
       .add(MethodInvocation.class, //
+          new AssertEqualsToAssert(), //
+          //new AssertTrueFalseToAssert(), //
           new MethodInvocationEqualsWithLiteralString(), //
           new MethodInvocationValueOfBooleanConstant(), //
           new MethodInvocationToStringToEmptyStringAddition(), //

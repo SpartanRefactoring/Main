@@ -592,6 +592,10 @@ public enum extract {
   @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> methodArguments(final MethodDeclaration ¢) {
     return ¢.parameters();
   }
+
+  @SuppressWarnings("unchecked") public static List<Expression> methodInvocationArguments(final MethodInvocation ¢) {
+    return ¢.arguments();
+  }
   /** extract VariableDeclarationFragment type, including fixing array type for
    * statement such as <code> double[] dd[]; <code> */
   public static Type type(final VariableDeclarationFragment ¢) {
