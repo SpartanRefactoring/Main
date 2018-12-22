@@ -9,10 +9,11 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** @author Dor Ma'ayan
  * @since 2018-12-19 */
-public class AssertEqualsToAssert extends ReplaceCurrentNode<MethodInvocation> {
+public class AssertEqualsToAssert extends ReplaceCurrentNode<MethodInvocation>  implements Category.Idiomatic  {
   private static final long serialVersionUID = 1L;
 
   public boolean arePrimitives(Expression e1, Expression e2) {
@@ -43,6 +44,6 @@ public class AssertEqualsToAssert extends ReplaceCurrentNode<MethodInvocation> {
     return null;
   }
   @Override public String description(MethodInvocation n) {
-    return null;
+    return "Replace";
   }
 }

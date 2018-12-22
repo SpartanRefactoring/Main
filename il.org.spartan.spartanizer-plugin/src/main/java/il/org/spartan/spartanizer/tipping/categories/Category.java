@@ -56,7 +56,7 @@ public interface Category {
   interface Idiomatic extends Category {
     String ___ = "Change expression to a more familiar structure (often shorter)";
   }
-
+  
   interface Inlining extends Theory.Java {
     String ___ = "Structural";
   }
