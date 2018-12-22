@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.issues;
+package il.org.spartan.spartanizer.tippers.junit;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
@@ -8,9 +8,10 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests for {@link ExpressionStatementAssertTrueFalse}
  * @author Yossi Gil // put your name here
- * @since 2016 // put the year/date here */
+ * @author Dor Ma'ayan
+ * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
-public class Issue0922 {
+public class ExpressionStatementAssertTrueFalseTest {
   @Test public void a$01() {
     trimmingOf("assertTrue(true);")//
         .gives("assert true;")//

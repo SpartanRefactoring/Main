@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tippers;
+package il.org.spartan.spartanizer.tippers.junit;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
