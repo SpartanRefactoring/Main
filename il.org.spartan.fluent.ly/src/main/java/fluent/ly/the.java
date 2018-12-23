@@ -23,8 +23,8 @@ public interface the {
   /** Retrieves the first element of a stream
    * @param <T> type of elements iterated over
    * @param ¢ an arbitrary iterable over this type
-   * @return the first element of the parameter, supposing there is one. If
-   *         there is not such element, the results are unpredictable. */
+   * @return the first element of the parameter, supposing there is one. If there
+   *         is not such element, the results are unpredictable. */
   static <T> T firstOf(final Iterable<T> ¢) {
     return ¢.iterator().next();
   }
@@ -64,6 +64,9 @@ public interface the {
   }
   @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+  }
+  @Contract("null -> null") static <T> T thirdOf(final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(2);
   }
   static char firstOf(final String $) {
     return $.charAt(0);

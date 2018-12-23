@@ -31,6 +31,10 @@ public interface Category {
     String ___ = "Make code as verbose as possible";
   }
 
+  interface Junit extends Category {
+    String ___ = "Transformations for JunitTests";
+  }
+
   interface Collapse extends CommonFactorOut {
     String ___ = "Shorten code by merging two adjacent syntactical elements into one";
   }
@@ -56,7 +60,7 @@ public interface Category {
   interface Idiomatic extends Category {
     String ___ = "Change expression to a more familiar structure (often shorter)";
   }
-  
+
   interface Inlining extends Theory.Java {
     String ___ = "Structural";
   }
@@ -161,16 +165,18 @@ public interface Category {
     }
     System.out.println("<!-- Marker resolution: this is where the quick fixg menus gets bound to the\n"
         + "     Java class which generates several quick fix for tips. -->");
-    System.out.println("<extension point=\"org.eclipse.ui.ide.markerResolution\">\n  <markerResolutionGenerator\n      markerType=\"" + Builder.MARKER_TYPE + "\"\n" //
-        + "      class=\"il.org.spartan.spartanizer.plugin.QuickFixer\"\n" //
-        + "  />\n" //
-        + "</extension>");
+    System.out.println(
+        "<extension point=\"org.eclipse.ui.ide.markerResolution\">\n  <markerResolutionGenerator\n      markerType=\"" + Builder.MARKER_TYPE + "\"\n" //
+            + "      class=\"il.org.spartan.spartanizer.plugin.QuickFixer\"\n" //
+            + "  />\n" //
+            + "</extension>");
     seen.clear();
     for (final Taxon ¢ : Toolboxes.categoryMap.values()) {
       if (seen.contains(¢))
         continue;
       seen.add(¢);
-      System.out.println("<extension point=\"org.eclipse.ui.ide.markerResolution\">\n  <markerResolutionGenerator\n      markerType=\"" + Builder.MARKER_TYPE + "." + ¢.label() + "\"\n" //
+      System.out.println("<extension point=\"org.eclipse.ui.ide.markerResolution\">\n  <markerResolutionGenerator\n      markerType=\""
+          + Builder.MARKER_TYPE + "." + ¢.label() + "\"\n" //
           // TODO Roth: reference qf id
           + "      class=\"il.org.spartan.spartanizer.plugin.QuickFixer\"\n" //
           + "  />\n" //
