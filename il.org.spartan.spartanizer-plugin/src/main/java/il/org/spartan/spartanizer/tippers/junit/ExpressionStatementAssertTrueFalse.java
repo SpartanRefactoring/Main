@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.tipping.categories.*;
 
 /** Replace {@code assertTrue(X)} by {@code assert X;}
  * @author Yossi Gil
+ * @author Dor Ma'ayan
  * @since 2016/12/11 */
 public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode<ExpressionStatement>//
     implements Category.Idiomatic {
@@ -46,9 +47,18 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
         return setAssert($, cons.not(condition));
       case "assertTrue":
         return setAssert($, copy.of(condition));
-      case "assertNonNull":
-      case "NonNull":
-        return setAssert($, subject.operands(condition, atomic.nullLiteral(i)).to(NOT_EQUALS));
+      case "assertNotNull":
+        InfixExpression e = i.getAST().newInfixExpression();
+        e.setOperator(NOT_EQUALS);
+        e.setRightOperand(i.getAST().newNullLiteral());
+        e.setLeftOperand(copy.of(condition));
+        return setAssert($, copy.of(e));
+      case "assertNull":
+        InfixExpression e1 = i.getAST().newInfixExpression();
+        e1.setOperator(EQUALS);
+        e1.setRightOperand(i.getAST().newNullLiteral());
+        e1.setLeftOperand(copy.of(condition));
+        return setAssert($, copy.of(e1));
       default:
         return null;
     }

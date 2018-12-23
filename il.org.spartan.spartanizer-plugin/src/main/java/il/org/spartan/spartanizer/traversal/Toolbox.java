@@ -66,12 +66,12 @@ public class Toolbox {
   /** Implementation */
   @SuppressWarnings("unchecked") public final List<Tipper<? extends ASTNode>>[] implementation = //
       (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
-  /** The default instance of this class; tippers not found here, do not exist!
-   * if you need to disable tippers, or update this, make a copy using
+  /** The default instance of this class; tippers not found here, do not exist! if
+   * you need to disable tippers, or update this, make a copy using
    * {@link Toolboxes#allClone()} */
   public static final lazy<Toolbox> full = lazy.get(() -> new Toolbox()//
       .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
-      //.add(EmptyStatement.class, new EmptyStatementRemove()) //
+      // .add(EmptyStatement.class, new EmptyStatementRemove()) //
       .add(Initializer.class, new InitializerEmptyRemove()) //
       .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
       .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()) //
@@ -208,11 +208,14 @@ public class Toolbox {
           null)
       .add(MethodInvocation.class, //
           new AssertEqualsToAssert(), //
-          //new AssertTrueFalseToAssert(), //
+          // new AssertTrueFalseToAssert(), //
           new MethodInvocationEqualsWithLiteralString(), //
           new MethodInvocationValueOfBooleanConstant(), //
           new MethodInvocationToStringToEmptyStringAddition(), //
           null)//
+      .add(AssertStatement.class, //
+          new ConsolidateAssertions(), //
+          null) //
       .add(TryStatement.class, //
           new TryBodyEmptyLeaveFinallyIfExists(), //
           new TryBodyEmptyNoCatchesNoFinallyEliminate(), //

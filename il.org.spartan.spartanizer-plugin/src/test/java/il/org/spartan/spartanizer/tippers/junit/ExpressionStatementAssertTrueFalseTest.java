@@ -68,26 +68,18 @@ public class ExpressionStatementAssertTrueFalseTest {
         .stays();
   }
   @Test public void a$12() {
-    trimmingOf("Assert.assertNonNull(T);")//
+    trimmingOf("assertNotNull(T);")//
         .gives("assert T != null;")//
         .stays();
   }
   @Test public void a$13() {
-    trimmingOf("Assert.assertNonNull(message, T);")//
+    trimmingOf("assertNotNull(message, T);")//
         .gives("assert T != null: message;")//
         .stays();
   }
   @Test public void a$14() {
     trimmingOf("Assert.assertNull(message, T);")//
-        .stays();
-  }
-  @Test public void a$15() {
-    trimmingOf("Assert.assertNull(message, T);")//
-        .stays();
-  }
-  @Test public void b() {
-    trimmingOf("azzert.NonNull(message, T);")//
-        .gives("assert T != null: message;")//
+        .gives("assert T == null: message;") //
         .stays();
   }
 }

@@ -136,6 +136,9 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   @Override public final boolean visit(final MethodDeclaration ¢) {
     return cautiousGo(¢);
   }
+  @Override public final boolean visit(final AssertStatement ¢) {
+    return cautiousGo(¢);
+  }
   @Override public final boolean visit(final MethodInvocation ¢) {
     return cautiousGo(¢);
   }

@@ -109,6 +109,13 @@ public enum az {
   public static Assignment assignment(final ASTNode $) {
     return !iz.nodeTypeEquals($, ASSIGNMENT) ? null : (Assignment) $;
   }
+  /** Convert, is possible, an {@link ASTNode} to an {@link AssertStatement}
+   * @param $ result
+   * @return argument, but down-casted to a {@link AssertStatement}, or
+   *         {@code null if the downcast is impossible. */
+  public static AssertStatement assertStatement(final ASTNode $) {
+    return !iz.assertStatement(az.statement($)) ? null : (AssertStatement) $;
+  }
   /** Convert, if possible, an {@link Object} to a {@link ASTNode}
    * @param $ result
    * @return argument, but down-casted to a {@link ASTNode}, or
@@ -305,11 +312,9 @@ public enum az {
   public static Name name(final ASTNode ¢) {
     return ¢ instanceof Name ? (Name) ¢ : null;
   }
-  
   public static ImportDeclaration importDeclaration(final Object ¢) {
     return ¢ instanceof ImportDeclaration ? (ImportDeclaration) ¢ : null;
   }
-  
   /** Down-cast, if possible, to {@link NormalAnnotation}
    * @param $ result
    * @return parameter down-casted to the returned __, or
@@ -530,5 +535,4 @@ public enum az {
   public static ASTNode breakStatement(ASTNode $) {
     return !($ instanceof BreakStatement) ? null : (BreakStatement) $;
   }
-
 }
