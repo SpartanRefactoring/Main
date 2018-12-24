@@ -36,5 +36,31 @@ public class AssertEqualsToAssertTest {
     trimmingOf("assertEquals(m,a,b());")//
         .gives("assert a.equals(b()) : m;;");
   }
+  
+  @Test public void test6() {
+    trimmingOf("assertSame(a(),b())")//
+        .gives("assert a() == b();")//
+        .stays();
+  }
+  
+  @Test public void test7() {
+    trimmingOf("assertSame(1,b())")//
+        .gives("assert 1 == b();");
+  }
+  
+  @Test public void test8() {
+    trimmingOf("int a; assertSame(a,b());")//
+        .gives("int a; assert a == b();;");
+  }
+  
+  @Test public void test9() {
+    trimmingOf("int a; assertSame(m,a,b());")//
+        .gives("int a; assert a == b() : m;;");
+  }
+  
+  @Test public void test10() {
+    trimmingOf("assertSame(m,a,b());")//
+        .gives("assert a == b() : m;;");
+  }
     
 }

@@ -208,7 +208,7 @@ public class Toolbox {
           null)
       .add(MethodInvocation.class, //
           new AssertEqualsToAssert(), //
-          // new AssertTrueFalseToAssert(), //
+          new AssertNotEqualsToAssert(), //
           new MethodInvocationEqualsWithLiteralString(), //
           new MethodInvocationValueOfBooleanConstant(), //
           new MethodInvocationToStringToEmptyStringAddition(), //
