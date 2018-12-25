@@ -2,11 +2,17 @@ package metatester;
 
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
+
+import org.junit.internal.AssumptionViolatedException;
+import org.junit.internal.runners.model.EachTestNotifier;
 import org.junit.runner.Description;
+import org.junit.runner.notification.Failure;
+import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
+import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
 import org.junit.runners.parameterized.BlockJUnit4ClassRunnerWithParametersFactory;
 import org.junit.runners.parameterized.TestWithParameters;
@@ -39,7 +45,7 @@ import static metatester.aux_layer.FileUtils.testSourcePath;
  * thrown exceptions</li>
  * </ul>
  * </p>
- *
+ * @author Dor Ma'ayan
  * @author Oren Afek
  * @since 3/27/2017
  */
@@ -56,10 +62,10 @@ public class MetaTester extends BlockJUnit4ClassRunner {
         sourceFile = openSourceFile();
     }
 
-    @Override
-    public Description getDescription() {
-        return Description.createTestDescription(testClass, "metatester");
-    }
+//    @Override
+//    public Description getDescription() {
+//        return Description.createTestDescription(testClass, "metatester");
+//    }
 
     /**
      * The entry point of JUnit4
@@ -67,9 +73,9 @@ public class MetaTester extends BlockJUnit4ClassRunner {
      * @param __ JD
      * @param n  JD
      */
-    @Override
+
     @SuppressWarnings("unused")
-    protected void runChild(final FrameworkMethod __, final RunNotifier n) {
+    protected void runChild2(final FrameworkMethod method, final RunNotifier n) {
         if (hasRan)
             return;
         ASTTestClassGenerator generator = new ASTTestClassGenerator(testClass);
@@ -83,10 +89,27 @@ public class MetaTester extends BlockJUnit4ClassRunner {
                     .createRunnerForTestWithParameters(new TestWithParameters(" ", new TestClass(newTestClass), new ArrayList<>())).run(n);
         } catch (final InitializationError ignore) {/**/}
         // Uncomment this to run the original test as well
-        /* super.runChild(method, notifier); */
+        //super.runChild(method, n);
         hasRan = true;
     }
-
+    
+    
+    @Override
+    protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
+        System.out.println(method);
+    	Description description = describeChild(method);
+        if (isIgnored(method)) {
+            notifier.fireTestIgnored(description);
+        } else {
+        	notifier.addFirstListener(new RunListener() {
+                public void testFailure(Failure failure) {
+                	System.out.println("Wow what a failure" + method);
+                }
+             });
+        	runLeaf(methodBlock(method), description, notifier);
+        }
+    }
+    
     /**
      * Opens the original test's source file
      *

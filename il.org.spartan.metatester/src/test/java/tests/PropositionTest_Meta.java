@@ -5742,7 +5742,7 @@ condition=Proposition.that(Proposition.T);
 condition=Proposition.that(Proposition.F);
 Proposition.that(() -> true).getAsBoolean();
 Proposition.that(() -> condition != null).getAsBoolean();
-//assertThat(Proposition.that(() -> hashCode()).isEqualTo(hashCode()).getAsBoolean());
+assertThat(Proposition.that(() -> hashCode()).isEqualTo(hashCode()).getAsBoolean());
 Proposition.that(Proposition.T).getAsBoolean();
 Proposition.that(Proposition.T).getAsBoolean();
 Proposition.AND(T,T);
