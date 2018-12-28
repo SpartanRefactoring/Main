@@ -76,8 +76,8 @@ public class MetaTester extends BlockJUnit4ClassRunner {
 
     @SuppressWarnings("unused")
     protected void runChild2(final FrameworkMethod method, final RunNotifier n) {
-        if (hasRan)
-            return;
+//        if (hasRan)
+//            return;
         ASTTestClassGenerator generator = new ASTTestClassGenerator(testClass);
         String metaTestClassName = testClass.getSimpleName() + "_Meta";
         removeMetaFileIfExists(generator, metaTestClassName);
@@ -90,7 +90,7 @@ public class MetaTester extends BlockJUnit4ClassRunner {
         } catch (final InitializationError ignore) {/**/}
         // Uncomment this to run the original test as well
         //super.runChild(method, n);
-        hasRan = true;
+        //hasRan = true;
     }
     
     
@@ -104,6 +104,10 @@ public class MetaTester extends BlockJUnit4ClassRunner {
         	notifier.addFirstListener(new RunListener() {
                 public void testFailure(Failure failure) {
                 	System.out.println("Wow what a failure" + method);
+                	System.out.println(method.getMethod().toString());
+
+                	//runLeaf(methodBlock(method), description, notifier);
+                	//runChild2(method,notifier);
                 }
              });
         	runLeaf(methodBlock(method), description, notifier);
