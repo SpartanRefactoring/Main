@@ -12,9 +12,9 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** Generates a table of the class fields
+/** Test Mining for Msc.thesis
  * @author Dor Ma'ayan
- * @since 2017-10-16 */
+ * @since 2019-01-08 */
 public class TestingmMiner extends NominalTables {
   static boolean isJunitAnnotation(List<String> annotations) {
     String[] anno = { "After", "AfterClass", "Before", "BeforeClass" };
@@ -34,9 +34,29 @@ public class TestingmMiner extends NominalTables {
     }
     return false;
   }
+  static boolean isJunit4(CompilationUnit c) {
+    List<ImportDeclaration> imports = extract.imports(c);
+    for (ImportDeclaration i : imports) {
+      if (i.getName().getFullyQualifiedName().contains("org.junit") && !isJunit5(c)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  static boolean isJunit5(CompilationUnit c) {
+    List<ImportDeclaration> imports = extract.imports(c);
+    for (ImportDeclaration i : imports) {
+      if (i.getName().getFullyQualifiedName().contains("org.junit.jupiter")) {
+        return true;
+      }
+    }
+    return false;
+  }
   @SuppressWarnings({ "boxing", "unused" }) public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("#Tests", 0);
+    map.put("#Junit4", 0);
+    map.put("#Junit5", 0);
     map.put("#BeforeAfterAnnotations", 0);
     map.put("#IgnoredTests", 0);
     map.put("#JavaAsserts", 0);
@@ -56,7 +76,7 @@ public class TestingmMiner extends NominalTables {
     map.put("#TestLoops", 0);
     map.put("#TryCatch", 0);
     map.put("#LinearTests", 0);
-    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/paper_results/raw.txt", "UTF-8");
+    PrintWriter writer = new PrintWriter("/Users/Dor/Desktop/TestingTables/raw.txt", "UTF-8");
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -68,6 +88,8 @@ public class TestingmMiner extends NominalTables {
 
       void reset() {
         map.put("#Tests", 0);
+        map.put("#Junit4", 0);
+        map.put("#Junit5", 0);
         map.put("#BeforeAfterAnnotations", 0);
         map.put("#IgnoredTests", 0);
         map.put("#JavaAsserts", 0);
@@ -95,15 +117,8 @@ public class TestingmMiner extends NominalTables {
       public void summarize(final String path) {
         initializeWriter();
         if (map.get("#Tests") != 0) {
-          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests"))
-              .col("#BeforeAfterAnnotations", map.get("#BeforeAfterAnnotations")).col("#IgnoredTests", map.get("#IgnoredTests"))
-              .col("#JavaAsserts", map.get("#JavaAsserts")).col("#JunitAsserts", map.get("#JunitAsserts"))
-              .col("#HamcrestAsserts", map.get("#HamcrestAsserts")).col("#TryCatch", map.get("#TryCatch"))
-              .col("#IfStatements", map.get("#IfStatements")).col("#ReturnStatements", map.get("#ReturnStatements"))
-              .col("#TestLoops", map.get("#TestLoops")).col("#0-Asseerts", map.get("#0-Asseerts")).col("#1-Asseerts", map.get("#1-Asseerts"))
-              .col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts")).col("#4-Asseerts", map.get("#4-Asseerts"))
-              .col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts")).col("UsingMockito?", map.get("UsingMockito?"))
-              .col("#LinearTests", map.get("#LinearTests")).nl();
+          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#Junit4Classes", map.get("#Junit4"))
+              .col("#Junit5Classes", map.get("#Junit5")).nl();
           writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
           writer.write("\n \n \n \n \n \n");
         }
@@ -122,6 +137,17 @@ public class TestingmMiner extends NominalTables {
               map.put("UsingMockito?", 1);
           }
         }
+        if (isJunit4(¢))
+          map.put("#Junit4", map.get("#Junit4") + 1);
+        if (isJunit5(¢))
+          map.put("#Junit5", map.get("#Junit5") + 1);
+        // Random Sample of test classes
+        Random rand = new Random();
+        if (rand.nextInt(50) == 25 && (isJunit4(¢) || isJunit5(¢))) {
+          writer.write("~~~~~~~Test Classs~~~~~~~\n \n");
+          writer.write(¢.toString());
+          writer.write("\n \n \n \n");
+        }
         ¢.accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration x) {
             if (x != null) {
@@ -133,13 +159,6 @@ public class TestingmMiner extends NominalTables {
                 map.put("#IgnoredTests", map.get("#IgnoredTests") + 1);
               if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
                   && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
-                // This is real test!
-                // Random rand = new Random();
-                // if (rand.nextInt(4) == 2) {
-                writer.write("~~~~~~~New Test~~~~~~~\n \n");
-                writer.write(x.toString());
-                writer.write("\n \n \n \n");
-                // }
                 final Int counter = new Int(); // asseerts counter
                 final Int irregulars = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
