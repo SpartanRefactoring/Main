@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @since 2019-01-08 */
 public class TestingmMiner extends NominalTables {
   static boolean isJunitAnnotation(List<String> annotations) {
-    String[] anno = { "After", "AfterClass", "Before", "BeforeClass" };
+    String[] anno = { "After", "AfterClass", "Before", "BeforeClass", "BeforeEach", "BeforeAll", "AfterEeash", "AfterAll" };
     List<String> annoList = Arrays.asList(anno);
     for (String s : annotations) {
       if (annoList.contains(s))
@@ -118,7 +118,9 @@ public class TestingmMiner extends NominalTables {
         initializeWriter();
         if (map.get("#Tests") != 0) {
           table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#Junit4Classes", map.get("#Junit4"))
-              .col("#Junit5Classes", map.get("#Junit5")).nl();
+              .col("#Junit5Classes", map.get("#Junit5")).col("#0-Asseerts", map.get("#0-Asseerts")).col("#1-Asseerts", map.get("#1-Asseerts"))
+              .col("#2-Asseerts", map.get("#2-Asseerts")).col("#3-Asseerts", map.get("#3-Asseerts")).col("#4-Asseerts", map.get("#4-Asseerts"))
+              .col("#5-Asseerts", map.get("#5-Asseerts")).col("#6+-Asseerts", map.get("#6+-Asseerts")).col("#BeforeAfterAnnotations", map.get("#BeforeAfterAnnotations")).nl();
           writer.write("~~~~~~~~~~~~~~~~~~~ Random Samplings from " + path + "~~~~~~~~~~~~~~~~~~~");
           writer.write("\n \n \n \n \n \n");
         }
