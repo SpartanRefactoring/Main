@@ -20,7 +20,8 @@ public class AllTestMethods extends TestTables {
     final HashMap<String, List<String>> map = new HashMap<>();
     map.put("TestClassName", new ArrayList<>());
     map.put("TestClass", new ArrayList<>());
-    final HashMap<String, List<String>> mapMethods = new HashMap<>(); // map from a testing class name to all the method names of te
+    final HashMap<String, List<String>> mapMethods = new HashMap<>();
+    final HashMap<String, List<String>> mapMethodsCode = new HashMap<>();
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -34,6 +35,7 @@ public class AllTestMethods extends TestTables {
         map.put("TestClassName", new ArrayList<>());
         map.put("TestClass", new ArrayList<>());
         mapMethods.clear();
+        mapMethodsCode.clear();
       }
       protected void done(final String path) {
         summarize(path);
@@ -47,8 +49,9 @@ public class AllTestMethods extends TestTables {
             if (mapMethods.containsKey(className) && !mapMethods.get(className).isEmpty()) {
               for (int j = 0; j < mapMethods.get(className).size(); j++) {
                 String methodName = mapMethods.get(className).get(j);
+                String methodCode = mapMethodsCode.get(className).get(j);
                 table.col("Project", path).col("TestClassName", className) //
-                    .col("MethodName", methodName)//
+                    .col("MethodName", methodName).col("MethodCode", methodCode)//
                     .nl();
               }
             }
@@ -80,8 +83,10 @@ public class AllTestMethods extends TestTables {
                         && az.typeDeclaration(m.getParent()).getSuperclassType().toString().equals("TestCase"))) {
                   if (!mapMethods.containsKey(extract.name(x))) {
                     mapMethods.put(extract.name(x), new ArrayList<>());
+                    mapMethodsCode.put(extract.name(x), new ArrayList<>());
                   }
                   mapMethods.get(extract.name(x)).add(extract.name(m));
+                  mapMethodsCode.get(extract.name(x)).add(m.toString());
                 }
                 return true;
               }

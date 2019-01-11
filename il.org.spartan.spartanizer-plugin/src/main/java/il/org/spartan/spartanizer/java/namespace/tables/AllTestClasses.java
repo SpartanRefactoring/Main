@@ -60,7 +60,7 @@ public class AllTestClasses extends TestTables {
               map.put("TestClassName", a);
               List<String> b = map.get("TestClass");
               b.add(x.toString());
-              map.put("TestClassName", b);
+              map.put("TestClass", b);
             }
             return true;
           }
