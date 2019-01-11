@@ -15,11 +15,12 @@ import il.org.spartan.utils.*;
 /** Filter projects which does not contain any Junit test (Dor Msc.)
  * @author Dor Ma'ayan
  * @since 2019-01-10 */
-public class AllTestClasses extends TestTables {
+public class AllTestMethods extends TestTables {
   @SuppressWarnings({ "boxing", "unused" }) public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final HashMap<String, List<String>> map = new HashMap<>();
     map.put("TestClassName", new ArrayList<>());
     map.put("TestClass", new ArrayList<>());
+    final HashMap<String, List<String>> mapMethods = new HashMap<>(); // map from a testing class name to all the method names of te
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -32,6 +33,7 @@ public class AllTestClasses extends TestTables {
       void reset() {
         map.put("TestClassName", new ArrayList<>());
         map.put("TestClass", new ArrayList<>());
+        mapMethods.clear();
       }
       protected void done(final String path) {
         summarize(path);
@@ -41,8 +43,15 @@ public class AllTestClasses extends TestTables {
         initializeWriter();
         if (!map.get("TestClassName").isEmpty()) {
           for (int i = 0; i < map.get("TestClassName").size(); i++) {
-            table.col("Project", path).col("TestClassName", map.get("TestClassName").get(i)) //
-                .col("TestClass", map.get("TestClass").get(i)).nl();
+            String className = map.get("TestClassName").get(i);
+            if (mapMethods.containsKey(className) && !mapMethods.get(className).isEmpty()) {
+              for (int j = 0; j < mapMethods.get(className).size(); j++) {
+                String methodName = mapMethods.get(className).get(j);
+                table.col("Project", path).col("TestClassName", className) //
+                    .col("MethodName", methodName)//
+                    .nl();
+              }
+            }
           }
         }
       }
@@ -60,8 +69,23 @@ public class AllTestClasses extends TestTables {
               map.put("TestClassName", a);
               List<String> b = map.get("TestClass");
               b.add(x.toString());
-              map.put("TestClassName", b);
+              map.put("TestClass", b);
             }
+            x.accept(new ASTVisitor(true) {
+              @Override public boolean visit(final MethodDeclaration m) {
+                List<String> annotations = extract.annotations(m).stream().map(a -> a.getTypeName().getFullyQualifiedName())
+                    .collect(Collectors.toList());
+                if (annotations.contains("Test")
+                    || (iz.typeDeclaration(m.getParent()) && az.typeDeclaration(m.getParent()).getSuperclassType() != null
+                        && az.typeDeclaration(m.getParent()).getSuperclassType().toString().equals("TestCase"))) {
+                  if (!mapMethods.containsKey(extract.name(x))) {
+                    mapMethods.put(extract.name(x), new ArrayList<>());
+                  }
+                  mapMethods.get(extract.name(x)).add(extract.name(m));
+                }
+                return true;
+              }
+            });
             return true;
           }
         });
