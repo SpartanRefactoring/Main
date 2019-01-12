@@ -22,6 +22,7 @@ public class AllTestMethods extends TestTables {
     map.put("TestClass", new ArrayList<>());
     final HashMap<String, List<String>> mapMethods = new HashMap<>();
     final HashMap<String, List<String>> mapMethodsCode = new HashMap<>();
+    final String initialPath = "/Users/Dor/Desktop/TestingTables/MethodsDataBase/";
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -51,8 +52,19 @@ public class AllTestMethods extends TestTables {
                 String methodName = mapMethods.get(className).get(j);
                 String methodCode = mapMethodsCode.get(className).get(j);
                 table.col("Project", path).col("TestClassName", className) //
-                    .col("MethodName", methodName).col("MethodCode", methodCode)//
+                    // .col("MethodName", methodName).col("MethodCode", methodCode)//
                     .nl();
+                try {
+                  File file = new File(initialPath + path + "/" + className + "/" + methodName + ".txt");
+                  file.getParentFile().mkdirs();
+                  FileWriter writer = new FileWriter(file, false);
+                  PrintWriter output = new PrintWriter(writer);
+                  output.print(methodCode);
+                  output.close();
+                } catch (Exception x) {
+                  // TODO Auto-generated catch block
+                  x.printStackTrace();
+                }
               }
             }
           }

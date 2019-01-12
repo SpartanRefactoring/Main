@@ -20,6 +20,8 @@ public class AllTestClasses extends TestTables {
     final HashMap<String, List<String>> map = new HashMap<>();
     map.put("TestClassName", new ArrayList<>());
     map.put("TestClass", new ArrayList<>());
+    final String initialPath = "/Users/Dor/Desktop/TestingTables/TestClassesDataBase/";
+
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -41,8 +43,24 @@ public class AllTestClasses extends TestTables {
         initializeWriter();
         if (!map.get("TestClassName").isEmpty()) {
           for (int i = 0; i < map.get("TestClassName").size(); i++) {
-            table.col("Project", path).col("TestClassName", map.get("TestClassName").get(i)) //
-                .col("TestClass", map.get("TestClass").get(i)).nl();
+            String className = map.get("TestClassName").get(i);
+            String classCode = map.get("TestClass").get(i);
+            table.col("Project", path).col("TestClassName", className ) //
+                // .col("TestClass", map.get("TestClass").get(i)) //
+                .nl();
+            
+            try {
+              File file = new File(initialPath + path + "/" + className + ".txt");
+              file.getParentFile().mkdirs();
+              FileWriter writer = new FileWriter(file, false);
+              PrintWriter output = new PrintWriter(writer);
+              output.print(classCode);
+              output.close();
+            } catch (Exception x) {
+              // TODO Auto-generated catch block
+              x.printStackTrace();
+            }
+            
           }
         }
       }
