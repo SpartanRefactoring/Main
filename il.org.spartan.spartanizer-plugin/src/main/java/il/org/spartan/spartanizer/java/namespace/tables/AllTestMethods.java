@@ -52,15 +52,16 @@ public class AllTestMethods extends TestTables {
                 String methodName = mapMethods.get(className).get(j);
                 String methodCode = mapMethodsCode.get(className).get(j);
                 table.col("Project", path).col("TestClassName", className) //
-                    // .col("MethodName", methodName).col("MethodCode", methodCode)//
+                    .col("MethodName", methodName)//
                     .nl();
                 try {
-                  File file = new File(initialPath + path + "/" + className + "/" + methodName + ".txt");
-                  file.getParentFile().mkdirs();
-                  FileWriter writer = new FileWriter(file, false);
-                  PrintWriter output = new PrintWriter(writer);
-                  output.print(methodCode);
-                  output.close();
+                  // File file = new File(initialPath + path + "/" + className + "/" + methodName
+                  // + ".txt");
+                  // file.getParentFile().mkdirs();
+                  // FileWriter writer = new FileWriter(file, false);
+                  // PrintWriter output = new PrintWriter(writer);
+                  // output.print(methodCode);
+                  // output.close();
                 } catch (Exception x) {
                   // TODO Auto-generated catch block
                   x.printStackTrace();
