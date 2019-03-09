@@ -23,8 +23,8 @@ public class TestingmMiner extends TestTables {
     final HashMap<String, Integer> ifElseMapCounter = new HashMap<>();
     final HashMap<String, Integer> loopMapCounter = new HashMap<>();
     final HashMap<String, Integer> tryCatchMapCounter = new HashMap<>();
-    final HashMap<String, Integer> printMapCounter = new HashMap<>();
     final HashMap<String, Integer> throwsExceptionMapCounter = new HashMap<>();
+    // final HashMap<String, Integer> printMapCounter = new HashMap<>();
     new GrandVisitor(args) {
       {
         listen(new Tapper() {
@@ -48,7 +48,8 @@ public class TestingmMiner extends TestTables {
         initializeWriter();
         for (String method : testMethods) {
           table.col("Project", path).col("MethodName", method).col("#Assrtions", assertionMapCounter.get(method))
-              .col("#Conditions", ifElseMapCounter.get(method)).col("#TryCatch", tryCatchMapCounter.get(method)).nl();
+              .col("#Conditions", ifElseMapCounter.get(method)).col("#TryCatch", tryCatchMapCounter.get(method))
+              .col("#Loop", loopMapCounter.get(method)).col("#Throws", throwsExceptionMapCounter.get(method)).nl();
         }
       }
       void initializeWriter() {
@@ -71,6 +72,8 @@ public class TestingmMiner extends TestTables {
                   final Int assertionCounter = new Int();
                   final Int ifElseCounter = new Int();
                   final Int tryCatchCounter = new Int();
+                  final Int loopCounter = new Int();
+                  final int throwsExceptionCounter = m.thrownExceptionTypes().size();
                   // Traverse over the test method AST
                   m.accept(new ASTVisitor() {
                     @Override public boolean visit(final ExpressionStatement a) {
@@ -87,12 +90,26 @@ public class TestingmMiner extends TestTables {
                       tryCatchCounter.step();
                       return true;
                     }
+                    @Override public boolean visit(final ForStatement a) {
+                      loopCounter.step();
+                      return true;
+                    }
+                    @Override public boolean visit(final WhileStatement a) {
+                      loopCounter.step();
+                      return true;
+                    }
+                    @Override public boolean visit(final EnhancedForStatement a) {
+                      loopCounter.step();
+                      return true;
+                    }
                   });
                   // Then, put the local counters in the global map before analyzing the next
                   // method
                   assertionMapCounter.put(extract.name(x) + "." + extract.name(m), assertionCounter.get());
                   ifElseMapCounter.put(extract.name(x) + "." + extract.name(m), ifElseCounter.get());
                   tryCatchMapCounter.put(extract.name(x) + "." + extract.name(m), tryCatchCounter.get());
+                  loopMapCounter.put(extract.name(x) + "." + extract.name(m), loopCounter.get());
+                  throwsExceptionMapCounter.put(extract.name(x) + "." + extract.name(m), throwsExceptionCounter);
                   return true;
                 }
               });
