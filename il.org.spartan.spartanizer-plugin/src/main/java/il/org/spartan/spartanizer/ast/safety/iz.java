@@ -1170,4 +1170,10 @@ public interface iz {
       x = az.methodInvocation(az.expressionStatement(s).getExpression()).getName().getIdentifier();
     return x.equals("assertThat");
   }
+  static boolean mockitoVerify(Statement s) {
+    String x = "";
+    if (iz.expressionStatement(s) && iz.methodInvocation(az.expressionStatement(s).getExpression()))
+      x = az.methodInvocation(az.expressionStatement(s).getExpression()).getName().getIdentifier();
+    return x.equals("verify");
+  }
 }

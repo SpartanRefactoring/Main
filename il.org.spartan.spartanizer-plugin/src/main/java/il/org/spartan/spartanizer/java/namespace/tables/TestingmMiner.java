@@ -7,6 +7,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
@@ -24,6 +25,9 @@ public class TestingmMiner extends TestTables {
     final HashMap<String, Integer> loopMapCounter = new HashMap<>();
     final HashMap<String, Integer> tryCatchMapCounter = new HashMap<>();
     final HashMap<String, Integer> throwsExceptionMapCounter = new HashMap<>();
+    final HashMap<String, Integer> statementMapCounter = new HashMap<>();
+    final HashMap<String, Integer> totalTokensMapCounter = new HashMap<>();
+    // TODO: #No Tokens, #Assertions with comments, #sum of tokens in assertions, #
     // final HashMap<String, Integer> printMapCounter = new HashMap<>();
     new GrandVisitor(args) {
       {
@@ -49,7 +53,8 @@ public class TestingmMiner extends TestTables {
         for (String method : testMethods) {
           table.col("Project", path).col("MethodName", method).col("#Assrtions", assertionMapCounter.get(method))
               .col("#Conditions", ifElseMapCounter.get(method)).col("#TryCatch", tryCatchMapCounter.get(method))
-              .col("#Loop", loopMapCounter.get(method)).col("#Throws", throwsExceptionMapCounter.get(method)).nl();
+              .col("#Loop", loopMapCounter.get(method)).col("#Throws", throwsExceptionMapCounter.get(method))
+              .col("#Statements", statementMapCounter.get(method)).col("#Tokens", totalTokensMapCounter.get(method)).nl();
         }
       }
       void initializeWriter() {
@@ -74,10 +79,15 @@ public class TestingmMiner extends TestTables {
                   final Int tryCatchCounter = new Int();
                   final Int loopCounter = new Int();
                   final int throwsExceptionCounter = m.thrownExceptionTypes().size();
+                  final int statementCounter = extract.statements(m.getBody()).size();
+                  int totalTokenCounter = 0;
+                  if (m.getBody() != null) {
+                    totalTokenCounter = Metrics.tokens(m.getBody().toString());
+                  }
                   // Traverse over the test method AST
                   m.accept(new ASTVisitor() {
                     @Override public boolean visit(final ExpressionStatement a) {
-                      if (iz.junitAssert(a) || iz.hamcrestAssert(a)) {
+                      if (iz.junitAssert(a) || iz.hamcrestAssert(a) || iz.mockitoVerify(a) || iz.assertStatement(a)) {
                         assertionCounter.step();
                       }
                       return true;
@@ -110,6 +120,8 @@ public class TestingmMiner extends TestTables {
                   tryCatchMapCounter.put(extract.name(x) + "." + extract.name(m), tryCatchCounter.get());
                   loopMapCounter.put(extract.name(x) + "." + extract.name(m), loopCounter.get());
                   throwsExceptionMapCounter.put(extract.name(x) + "." + extract.name(m), throwsExceptionCounter);
+                  statementMapCounter.put(extract.name(x) + "." + extract.name(m), statementCounter);
+                  totalTokensMapCounter.put(extract.name(x) + "." + extract.name(m), totalTokenCounter);
                   return true;
                 }
               });
