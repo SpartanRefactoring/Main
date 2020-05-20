@@ -782,7 +782,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, NUMBER_LITERAL);
   }
   /** Determine whether a node is {@code this} or {@code null @param x JD @return
-             * whether the parameter is a block statement */
+              * whether the parameter is a block statement */
   static boolean numericLiteral(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL);
   }
@@ -1016,7 +1016,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, THIS_EXPRESSION);
   }
   /** Determine whether a node is {@code this} or {@code null @param x JD @return
-             * whether the parameter is a block statement */
+              * whether the parameter is a block statement */
   static boolean thisOrNull(final Expression ¢) {
     return iz.nodeTypeIn(¢, NULL_LITERAL, THIS_EXPRESSION);
   }
@@ -1158,6 +1158,15 @@ public interface iz {
   static boolean junitAssert(Statement s) {
     String[] arr = { "assertArrayEquals", "assertEquals", "assertFalse", "assertNotEquals", "assertNotNull", "assertNotSame", "assertNull",
         "assertSame", "assertTrue", "fail" };
+    List<String> asserts = Arrays.asList(arr);
+    String x = "";
+    if (iz.expressionStatement(s) && iz.methodInvocation(az.expressionStatement(s).getExpression()))
+      x = az.methodInvocation(az.expressionStatement(s).getExpression()).getName().getIdentifier();
+    return asserts.contains(x);
+  }
+  // A bad usage of the assertions API
+  static boolean trueFalseAssertion(Statement s) {
+    String[] arr = { "assertFalse", "assertTrue" };
     List<String> asserts = Arrays.asList(arr);
     String x = "";
     if (iz.expressionStatement(s) && iz.methodInvocation(az.expressionStatement(s).getExpression()))

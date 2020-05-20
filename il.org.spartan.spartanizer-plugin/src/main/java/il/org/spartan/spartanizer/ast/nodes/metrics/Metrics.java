@@ -106,8 +106,66 @@ public class Metrics{
           ¢.setProperty("Depth", Integer.valueOf(1));
       }
     });
-    return (Integer) ¢.getProperty("Depth");
+    return ((Integer) ¢.getProperty("Depth")).intValue();
   }
+  
+  
+  public static int deg(final ASTNode ¢) {
+    ¢.setProperty("Deg", Integer.valueOf(0));
+
+    ¢.accept(new ASTVisitor() {
+      
+      @Override public void preVisit(final ASTNode n) {
+        if (n.getParent().equals(¢))
+          ¢.setProperty("Deg", ((Integer)¢.getProperty("Deg") + 1));
+      }
+    });
+    
+    return ((Integer) ¢.getProperty("Deg")).intValue();
+  }
+  
+  
+  public static int sumDepth(final ASTNode ¢) {
+    ¢.setProperty("sumDepth", Integer.valueOf(0));
+
+    ¢.accept(new ASTVisitor() {
+     
+      @Override public void postVisit(final ASTNode n) {
+          property.setInt(¢,"sumDepth", (((Integer) ¢.getProperty("sumDepth")) + depth(n)));
+      }
+         
+    });
+    return ((Integer) ¢.getProperty("sumDepth")).intValue();
+  }
+  
+  
+  public static double avgDepth(final ASTNode ¢) {
+    if (bodySize(¢) !=0)
+      return (double) sumDepth(¢) / bodySize(¢);
+    else
+      return 0;
+  }
+  
+  
+  @SuppressWarnings("boxing")
+  public static double branching(final ASTNode ¢) {
+    ¢.setProperty("sumBranching", Integer.valueOf(0));
+
+    
+    ¢.accept(new ASTVisitor() {
+     
+      @Override public void postVisit(final ASTNode n) {
+          property.setInt(¢,"sumBranching", (Integer) ¢.getProperty("sumBranching") + (deg(n)*(deg(n)-1))/2);
+      }
+         
+    });
+    
+    if (bodySize(¢) !=0)
+      return (double) ((Integer) ¢.getProperty("sumBranching")).doubleValue() / bodySize(¢);
+    return 0;
+  }
+  
+  
 
   public static int depth(final List<Statement> ss) {
     final Int $ = new Int();
@@ -329,15 +387,18 @@ public static int tokens(final ASTNode ¢) {
   public static int dexterity(final ASTNode n) {
     if (n == null)
       return 0;
-    final Recurser<Integer> $ = new Recurser<>(n, 0);
     final Collection<Integer> nodesTypeSet = new HashSet<>();
-    return $.preVisit(λ -> {
-      if (nodesTypeSet.contains(λ.getRoot().getNodeType()))
-        return λ.getCurrent();
-      nodesTypeSet.add(λ.getRoot().getNodeType());
-      return λ.getCurrent() + 1;
+    
+    n.accept(new ASTVisitor(true) {
+      @Override public void postVisit(final ASTNode x) {
+        if (!nodesTypeSet.contains(x.getNodeType()))
+          nodesTypeSet.add(x.getNodeType());
+      }
     });
+    
+    return nodesTypeSet.size();
   }
+  
   public static int essence(ASTNode λ) {
     return Essence.of(λ + "").length();
   }
