@@ -148,21 +148,44 @@ public class Metrics{
   
   
   @SuppressWarnings("boxing")
-  public static double branching(final ASTNode ¢) {
+  public static double deg2(final ASTNode ¢) {
     ¢.setProperty("sumBranching", Integer.valueOf(0));
 
     
     ¢.accept(new ASTVisitor() {
      
       @Override public void postVisit(final ASTNode n) {
-          property.setInt(¢,"sumBranching", (Integer) ¢.getProperty("sumBranching") + (deg(n)*(deg(n)-1))/2);
+          property.setInt(¢,"sumBranching", (Integer) ¢.getProperty("sumBranching") + ((int)Math.pow(deg(n),2)));
       }
          
     });
     
-    if (bodySize(¢) !=0)
-      return (double) ((Integer) ¢.getProperty("sumBranching")).doubleValue() / bodySize(¢);
-    return 0;
+    return (double) ((Integer) ¢.getProperty("sumBranching")).doubleValue();
+  }
+  
+  
+  public static int factorial(int n) 
+  { 
+      if (n == 0) 
+        return 1; 
+        
+      return n*factorial(n-1); 
+  }
+  
+  @SuppressWarnings("boxing")
+  public static double degPerm(final ASTNode ¢) {
+    ¢.setProperty("sumBranching", Integer.valueOf(0));
+
+    
+    ¢.accept(new ASTVisitor() {
+     
+      @Override public void postVisit(final ASTNode n) {
+          property.setInt(¢,"sumBranching", (Integer) ¢.getProperty("sumBranching") + (factorial(deg(n))));
+      }
+         
+    });
+    
+    return (double) ((Integer) ¢.getProperty("sumBranching")).doubleValue();
   }
   
   

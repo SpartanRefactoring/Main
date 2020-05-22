@@ -20,7 +20,7 @@ public class TestClassMiner extends TestTables {
   @SuppressWarnings({ "unused" }) public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
     final Set<String> classNames = new HashSet<>();
     // Maps from method names to counters
-    final HashMap<String, Integer> totalTestMethodsMapCounter = new HashMap<>();
+    final HashMap<String, Integer> totalMethodsMapCounter = new HashMap<>();
     final HashMap<String, Integer> vocabularyCounter = new HashMap<>();
     final HashMap<String, Integer> nonWhiteCounter = new HashMap<>();
     final HashMap<String, Integer> astSize = new HashMap<>();
@@ -39,13 +39,10 @@ public class TestClassMiner extends TestTables {
     final HashMap<String, Integer> methodInvocationMapCounter = new HashMap<>();
     final HashMap<String, Integer> sumDephsMapCounter = new HashMap<>();
     final HashMap<String, Double> avgDephsMapCounter = new HashMap<>();
-    final HashMap<String, Double> branchingMapCounter = new HashMap<>();
-
-
-    
-    
-
-
+    final HashMap<String, Double> deg2MapCounter = new HashMap<>();
+    final HashMap<String, Double> degPermMapCounter = new HashMap<>();
+    final HashMap<String, Integer> breakMapCounter = new HashMap<>();
+    final HashMap<String, Integer> continueMapCounter = new HashMap<>();
     
     
     //final HashMap<String, Integer> totalTokensMapCounter = new HashMap<>();
@@ -94,7 +91,7 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         
 
         classNames.clear();
-        totalTestMethodsMapCounter.clear();
+        totalMethodsMapCounter.clear();
         vocabularyCounter.clear();
         nonWhiteCounter.clear();
         methodInvocationMapCounter.clear();
@@ -102,7 +99,8 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         maximaldepthCounter.clear();
         sumDephsMapCounter.clear();
         avgDephsMapCounter.clear();
-        branchingMapCounter.clear();
+        deg2MapCounter.clear();
+        degPermMapCounter.clear();
         dexterityCounter.clear();
         expressionCounter.clear();
         tryMapCounter.clear();
@@ -114,6 +112,8 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         junitassertionMapCounter.clear();
         hamcrestMapCounter.clear();
         mockitoMapCounter.clear();
+        breakMapCounter.clear();
+        continueMapCounter.clear();
        
       }
       
@@ -128,7 +128,7 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         initializeWriter();
         for (String className : classNames) {
           table.col("Project", path).col("TestClassName", className)
-          .col("No. Tests", totalTestMethodsMapCounter.get(className))
+          .col("No. Tests", totalMethodsMapCounter.get(className))
           .col("Vocabulary", vocabularyCounter.get(className))
           .col("Non Whithe Characters", nonWhiteCounter.get(className))
           .col("No. Method Invoctions", methodInvocationMapCounter.get(className))
@@ -136,12 +136,15 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
           .col("Max Depth", maximaldepthCounter.get(className))
           .col("Sum Depths", sumDephsMapCounter.get(className))
           .col("Avg Depth", avgDephsMapCounter.get(className))
-          .col("Branching", branchingMapCounter.get(className))
+          .col("Deg2", deg2MapCounter.get(className))
+          .col("DegPerm", degPermMapCounter.get(className))
           .col("Dexterity", dexterityCounter.get(className))
           .col("No. Expressions", expressionCounter.get(className))
           .col("No. Try", tryMapCounter.get(className))
           .col("No. Catch", catchMapCounter.get(className))
           .col("No. Loop", loopMapCounter.get(className))
+          .col("No. Break", breakMapCounter.get(className))
+          .col("No. Continue", continueMapCounter.get(className))
           .col("No. Conditions", conditionsMapCounter.get(className))
           .col("No. Else", elseMapCounter.get(className))
           .col("Bad API", badApiMapCounter.get(className))
@@ -158,8 +161,6 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new ASTVisitor() {
           @SuppressWarnings("boxing") @Override public boolean visit(final TypeDeclaration x) {
-            //if (isJunit4(¢) || isJunit5(¢)) {
-              // Define per test class counters
               final Int assertionCounter = new Int();
               final Int conditionsCounter = new Int();
               final Int elseCounter = new Int();
@@ -170,23 +171,18 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
               final Int hamcrestCounter = new Int();
               final Int mockitoCounter = new Int();
               final Int badApiCounter = new Int();
-              final Int totalTestMethodCounter = new Int();
+              final Int totalMethodCounter = new Int();
               final Int javaAssertionsCounter = new Int();
-              
-              
+              final Int breakCounter = new Int();
+              final Int continueCounter = new Int();
+
               x.accept(new ASTVisitor(true) {
                 public boolean visit(final MethodDeclaration m) {
-                  List<String> annotations = extract.annotations(m).stream().map(a -> a.getTypeName().getFullyQualifiedName())
-                      .collect(Collectors.toList());
-                  if (annotations.contains("Test")
-                      || (iz.typeDeclaration(m.getParent()) && az.typeDeclaration(m.getParent()).getSuperclassType() != null
-                          && az.typeDeclaration(m.getParent()).getSuperclassType().toString().equals("TestCase"))) {
-                    totalTestMethodCounter.step();
-                  }
+                  totalMethodCounter.step();
                   return true;
                 }
               });
-              classNames.add(extract.name(x)); // + "." + extract.name(m));
+              classNames.add(extract.name(x));
 
               x.accept(new ASTVisitor() {
                 @Override public boolean visit(final ExpressionStatement a) {
@@ -229,6 +225,16 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
                     elseCounter.step();
                   return true;
                 }
+                
+                @Override public boolean visit(final BreakStatement a) {
+                  breakCounter.step();
+                  return true;
+                }
+                
+                @Override public boolean visit(final ContinueStatement a) {
+                  continueCounter.step();
+                  return true;
+                }
 
                 @Override public boolean visit(final TryStatement a) {
                   tryCounter.step();
@@ -260,31 +266,33 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
               });
   
                        
-              junitassertionMapCounter.put(extract.name(x), assertionCounter.get());
+              junitassertionMapCounter.put(extract.name(x), assertionCounter.get() >= 1 ? 1 : 0);
               conditionsMapCounter.put(extract.name(x), conditionsCounter.get());
               elseMapCounter.put(extract.name(x), elseCounter.get());
               tryMapCounter.put(extract.name(x), tryCounter.get());
               catchMapCounter.put(extract.name(x), catchCounter.get());
               loopMapCounter.put(extract.name(x), loopCounter.get());
-              hamcrestMapCounter.put(extract.name(x), hamcrestCounter.get());
-              mockitoMapCounter.put(extract.name(x), mockitoCounter.get());
+              hamcrestMapCounter.put(extract.name(x), hamcrestCounter.get() >= 1 ? 1 : 0);
+              mockitoMapCounter.put(extract.name(x), mockitoCounter.get() >= 1 ? 1 : 0);
               badApiMapCounter.put(extract.name(x), badApiCounter.get());
+              breakMapCounter.put(extract.name(x), breakCounter.get());
+              continueMapCounter.put(extract.name(x), continueCounter.get());
               methodInvocationMapCounter.put(extract.name(x), methodInvocationCounter.get());
               vocabularyCounter.put(extract.name(x), Metrics.vocabulary(x));
               astSize.put(extract.name(x), Metrics.bodySize(x));
               dexterityCounter.put(extract.name(x), Metrics.dexterity(x));
               nonWhiteCounter.put(extract.name(x), countOf.nonWhiteCharacters(x));
-              totalTestMethodsMapCounter.put(extract.name(x), totalTestMethodCounter.get());
+              totalMethodsMapCounter.put(extract.name(x), totalMethodCounter.get());
               expressionCounter.put(extract.name(x), Metrics.countExpressions(x));
               maximaldepthCounter.put(extract.name(x), Metrics.depth(x));
               sumDephsMapCounter.put(extract.name(x), Metrics.sumDepth(x));
               avgDephsMapCounter.put(extract.name(x), Metrics.avgDepth(x));
-              branchingMapCounter.put(extract.name(x), Metrics.branching(x));
+              deg2MapCounter.put(extract.name(x), Metrics.deg2(x));
+              degPermMapCounter.put(extract.name(x), Metrics.degPerm(x));
+
 
 
               return true;
-            //}
-            //return true;
           }
         });
         return super.visit(¢);
