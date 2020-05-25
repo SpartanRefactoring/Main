@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.nodes.metrics.*;
@@ -39,46 +40,25 @@ public class TestClassMiner extends TestTables {
     final HashMap<String, Integer> tryMapCounter = new HashMap<>();
     final HashMap<String, Integer> catchMapCounter = new HashMap<>();
     final HashMap<String, Integer> methodInvocationMapCounter = new HashMap<>();
-    final HashMap<String, Integer> sumDephsMapCounter = new HashMap<>();
     final HashMap<String, Double> avgDephsMapCounter = new HashMap<>();
+    final HashMap<String, Double> avgDephsMapCounter2 = new HashMap<>();
     final HashMap<String, Double> deg2MapCounter = new HashMap<>();
     final HashMap<String, Double> degPermMapCounter = new HashMap<>();
     final HashMap<String, Integer> breakMapCounter = new HashMap<>();
     final HashMap<String, Integer> continueMapCounter = new HashMap<>();
-    
-    
-    //final HashMap<String, Integer> totalTokensMapCounter = new HashMap<>();
-    //final HashMap<String, Integer> subTreeCouner = new HashMap<>();
-    //final HashMap<String, Integer> LOCCounter = new HashMap<>();
-    
-    
-/***
- * T & No. Test Methods & The number of tests methods in a test class \\
- * T & Vocabulary & The number of distinct words in the test class \\ 
-T & No. NonWhiteCharacters & The number of non white space characters in the test class code \\
-A & Size &  The number of nodes in the AST representing the tests class \\ 
-A & Maximal depth & $\max_v \text{depth}(v)$ \\
-M & No. Conditions & The number of condition statements in the test class code \\
-A & *Dexterity & The number of distinct node types in the AST representing the tests class  \\ 
-L & Junit Assertions & Is the test class uses Junit assertions, or customized assertions  \\
-L & Hamcrest & Is the tests class uses fluent API Hamcrest assertions \\
-L & Mockito & Is the test class uses Mockito \\
-13 & BadApi  & Is there an inappropriate usage of the Junit interface? \\
-M & No. Loop & The number of loop statements in the test class code \\
-A & No. Expressions & The number of expression nodes in the AST representing the test class \\
-M & *No. Try & The number of try-catch statements in the test class code \\
-M & *No. Else  & The number of else clauses in the test class code \\
-M & *No. Catch & The number of catch clauses statements in the test class code \\
-A & Number of method invocations \\
+    final HashMap<String, Integer> stringLiteralsMapCounter = new HashMap<>();
+    final HashMap<String, Integer> commentsMapCounter = new HashMap<>();
+    final HashMap<String, Integer> fieldAccessMapCounter = new HashMap<>();
+    final HashMap<String, Integer> primitivesMapCounter = new HashMap<>();
+    final HashMap<String, Integer> numericLiteralsMapCounter = new HashMap<>();
+    final HashMap<String, Integer> conjunctionMapCounter = new HashMap<>();
+    final HashMap<String, Integer> disjunctionMapCounter = new HashMap<>();
+    final HashMap<String, Integer> ternaryMapCounter = new HashMap<>();
 
 
 
- 
-A & *Total depth & $\sum_v \text{depth}(v)/N$  \\ 
-A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\ 
 
- */
-    
+
     
     new GrandVisitor(args) {
       {
@@ -100,8 +80,8 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         methodInvocationMapCounter.clear();
         astSize.clear();
         maximaldepthCounter.clear();
-        sumDephsMapCounter.clear();
         avgDephsMapCounter.clear();
+        avgDephsMapCounter2.clear();
         deg2MapCounter.clear();
         degPermMapCounter.clear();
         dexterityCounter.clear();
@@ -118,6 +98,14 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         breakMapCounter.clear();
         continueMapCounter.clear();
         wordCounter.clear();
+        stringLiteralsMapCounter.clear();
+        commentsMapCounter.clear();
+        fieldAccessMapCounter.clear();
+        primitivesMapCounter.clear();
+        numericLiteralsMapCounter.clear();
+        conjunctionMapCounter.clear();
+        disjunctionMapCounter.clear();
+        ternaryMapCounter.clear();
       }
       
       
@@ -134,13 +122,18 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
           .col("No. Methods", totalMethodsMapCounter.get(className))
           .col("Vocabulary", vocabularyCounter.get(className))
           .col("Word", wordCounter.get(className))
+          .col("Strings", stringLiteralsMapCounter.get(className))
+          .col("Numeric Literals", numericLiteralsMapCounter.get(className))
+          .col("Comments", commentsMapCounter.get(className))
           .col("Special", specialCounter.get(className))
           .col("Non Whithe Characters", nonWhiteCounter.get(className))
           .col("No. Method Invoctions", methodInvocationMapCounter.get(className))
+          .col("No. Field Access", fieldAccessMapCounter.get(className))
+          .col("No. Primitives", primitivesMapCounter.get(className))
           .col("AST size", astSize.get(className))
           .col("Max Depth", maximaldepthCounter.get(className))
-          //.col("Sum Depths", sumDephsMapCounter.get(className))
           .col("Avg Depth", avgDephsMapCounter.get(className))
+          .col("Avg Depth Squared", avgDephsMapCounter2.get(className))
           .col("Deg2", deg2MapCounter.get(className))
           .col("DegPerm", degPermMapCounter.get(className))
           .col("Dexterity", dexterityCounter.get(className))
@@ -152,6 +145,9 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
           .col("No. Continue", continueMapCounter.get(className))
           .col("No. Conditions", conditionsMapCounter.get(className))
           .col("No. Else", elseMapCounter.get(className))
+          .col("No. &&", conjunctionMapCounter.get(className))
+          .col("No. ||", disjunctionMapCounter.get(className))
+          .col("No. Ternary", ternaryMapCounter.get(className))
           .col("Bad API", badApiMapCounter.get(className))
           .col("Junit", junitassertionMapCounter.get(className))
           .col("Hamcrest", hamcrestMapCounter.get(className))
@@ -180,7 +176,17 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
               final Int javaAssertionsCounter = new Int();
               final Int breakCounter = new Int();
               final Int continueCounter = new Int();
+              final Int stringCounter = new Int();
+              final Int commentsCounter = new Int();
+              final Int fieldAccessCounter = new Int();
+              final Int primitivesCounter = new Int();
+              final Int numericLiteralsCounter = new Int();
+              final Int conjunctionCounter = new Int();
+              final Int disjunctionCounter = new Int();
+              final Int ternaryCounter = new Int();
 
+              
+              
               x.accept(new ASTVisitor(true) {
                 public boolean visit(final MethodDeclaration m) {
                   totalMethodCounter.step();
@@ -231,8 +237,61 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
                   return true;
                 }
                 
+                @Override public boolean visit(final ConditionalExpression a) {
+                  ternaryCounter.step();
+                  return true;
+                }
+                
+                @Override public boolean visit(final FieldAccess a) {
+                    fieldAccessCounter.step();
+                  return true;
+                }
+                
+                
+                @Override public boolean visit(final InfixExpression e) {
+                  for (Operator o : extract.allOperators(e)) {
+                    if (o == Operator.CONDITIONAL_AND) {
+                      conjunctionCounter.step();
+                     }
+                    if (o == Operator.CONDITIONAL_OR) {
+                      disjunctionCounter.step();
+                     }
+                 }
+                  return true;
+              }
+                
+                @Override public boolean visit(final NumberLiteral a) {
+                  numericLiteralsCounter.step();
+                return true;
+              }
+                
                 @Override public boolean visit(final BreakStatement a) {
                   breakCounter.step();
+                  return true;
+                }
+                
+                @Override public boolean visit(final StringLiteral s) {
+                  stringCounter.add(countOf.nonWhiteCharacters(s));;
+                  return true;
+                }
+                
+                @Override public boolean visit(final PrimitiveType s) {
+                  primitivesCounter.step();
+                  return true;
+                }
+                
+                @Override public boolean visit(final LineComment s) {
+                  commentsCounter.add(countOf.nonWhiteCharacters(s));;
+                  return true;
+                }
+                
+                @Override public boolean visit(final BlockComment s) {
+                  commentsCounter.add(countOf.nonWhiteCharacters(s));;
+                  return true;
+                }
+                
+                @Override public boolean visit(final Javadoc s) {
+                  commentsCounter.add(countOf.nonWhiteCharacters(s));;
                   return true;
                 }
                 
@@ -295,12 +354,22 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
               totalMethodsMapCounter.put(extract.name(x), totalMethodCounter.get());
               expressionCounter.put(extract.name(x), Metrics.countExpressions(x));
               maximaldepthCounter.put(extract.name(x), Metrics.depth(x));
-              sumDephsMapCounter.put(extract.name(x), Metrics.sumDepth(x));
+              
               avgDephsMapCounter.put(extract.name(x), Metrics.avgDepth(x));
+              avgDephsMapCounter2.put(extract.name(x), Metrics.avgDepth2(x));
+              
               deg2MapCounter.put(extract.name(x), Metrics.deg2(x));
               degPermMapCounter.put(extract.name(x), Metrics.degPerm(x));
 
 
+              stringLiteralsMapCounter.put(extract.name(x), stringCounter.get());
+              commentsMapCounter.put(extract.name(x), commentsCounter.get());
+              fieldAccessMapCounter.put(extract.name(x), fieldAccessCounter.get());
+              primitivesMapCounter.put(extract.name(x), primitivesCounter.get());
+              numericLiteralsMapCounter.put(extract.name(x), numericLiteralsCounter.get());
+              conjunctionMapCounter.put(extract.name(x), conjunctionCounter.get());
+              disjunctionMapCounter.put(extract.name(x), disjunctionCounter.get());
+              ternaryMapCounter.put(extract.name(x), ternaryCounter.get());
 
               return true;
           }

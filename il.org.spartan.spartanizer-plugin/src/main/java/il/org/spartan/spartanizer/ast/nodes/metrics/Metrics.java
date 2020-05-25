@@ -139,9 +139,30 @@ public class Metrics{
   }
   
   
+  public static int sumDepth2(final ASTNode ¢) {
+    ¢.setProperty("sumDepth", Integer.valueOf(0));
+
+    ¢.accept(new ASTVisitor() {
+     
+      @Override public void postVisit(final ASTNode n) {
+          property.setInt(¢,"sumDepth", (int) (((Integer) ¢.getProperty("sumDepth")) + Math.pow(depth(n),2)));
+      }
+         
+    });
+    return ((Integer) ¢.getProperty("sumDepth")).intValue();
+  }
+  
+  
   public static double avgDepth(final ASTNode ¢) {
     if (bodySize(¢) !=0)
       return (double) sumDepth(¢) / bodySize(¢);
+    else
+      return 0;
+  }
+  
+  public static double avgDepth2(final ASTNode ¢) {
+    if (bodySize(¢) !=0)
+      return (double) sumDepth2(¢) / bodySize(¢);
     else
       return 0;
   }
