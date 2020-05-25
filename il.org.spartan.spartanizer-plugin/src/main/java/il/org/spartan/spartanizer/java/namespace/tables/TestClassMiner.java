@@ -22,6 +22,8 @@ public class TestClassMiner extends TestTables {
     // Maps from method names to counters
     final HashMap<String, Integer> totalMethodsMapCounter = new HashMap<>();
     final HashMap<String, Integer> vocabularyCounter = new HashMap<>();
+    final HashMap<String, Integer> wordCounter = new HashMap<>();
+    final HashMap<String, Integer> specialCounter = new HashMap<>();
     final HashMap<String, Integer> nonWhiteCounter = new HashMap<>();
     final HashMap<String, Integer> astSize = new HashMap<>();
     final HashMap<String, Integer> maximaldepthCounter = new HashMap<>();
@@ -94,6 +96,7 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         totalMethodsMapCounter.clear();
         vocabularyCounter.clear();
         nonWhiteCounter.clear();
+        specialCounter.clear();
         methodInvocationMapCounter.clear();
         astSize.clear();
         maximaldepthCounter.clear();
@@ -114,7 +117,7 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         mockitoMapCounter.clear();
         breakMapCounter.clear();
         continueMapCounter.clear();
-       
+        wordCounter.clear();
       }
       
       
@@ -128,13 +131,15 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
         initializeWriter();
         for (String className : classNames) {
           table.col("Project", path).col("TestClassName", className)
-          .col("No. Tests", totalMethodsMapCounter.get(className))
+          .col("No. Methods", totalMethodsMapCounter.get(className))
           .col("Vocabulary", vocabularyCounter.get(className))
+          .col("Word", wordCounter.get(className))
+          .col("Special", specialCounter.get(className))
           .col("Non Whithe Characters", nonWhiteCounter.get(className))
           .col("No. Method Invoctions", methodInvocationMapCounter.get(className))
           .col("AST size", astSize.get(className))
           .col("Max Depth", maximaldepthCounter.get(className))
-          .col("Sum Depths", sumDephsMapCounter.get(className))
+          //.col("Sum Depths", sumDephsMapCounter.get(className))
           .col("Avg Depth", avgDephsMapCounter.get(className))
           .col("Deg2", deg2MapCounter.get(className))
           .col("DegPerm", degPermMapCounter.get(className))
@@ -279,9 +284,14 @@ A & *Branching & $\sum_v \binom{\text{deg}(v)}2}/N}$ \\
               continueMapCounter.put(extract.name(x), continueCounter.get());
               methodInvocationMapCounter.put(extract.name(x), methodInvocationCounter.get());
               vocabularyCounter.put(extract.name(x), Metrics.vocabulary(x));
+              wordCounter.put(extract.name(x), Metrics.words(x));
+
               astSize.put(extract.name(x), Metrics.bodySize(x));
               dexterityCounter.put(extract.name(x), Metrics.dexterity(x));
               nonWhiteCounter.put(extract.name(x), countOf.nonWhiteCharacters(x));
+              
+              specialCounter.put(extract.name(x), countOf.specialCharacters(x));
+
               totalMethodsMapCounter.put(extract.name(x), totalMethodCounter.get());
               expressionCounter.put(extract.name(x), Metrics.countExpressions(x));
               maximaldepthCounter.put(extract.name(x), Metrics.depth(x));

@@ -24,6 +24,19 @@ public abstract class Metric {
     });
     return $;
   }
+  
+  /** @param pattern JD
+   * @return */
+  public static ArrayList<String> dictionary_not_unique(final ASTNode u) {
+    final ArrayList<String> $ = new ArrayList<>();
+    u.accept(new ASTVisitor(true) {
+      @Override public void endVisit(final SimpleName node) {
+        $.add(step.identifier(node));
+      }
+    });
+    return $;
+  }
+  
   public static Maker named(final String name) {
     return new Maker() {
       @Override public Metric.Boolean of(Predicate<ASTNode> ¢) {

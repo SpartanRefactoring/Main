@@ -403,6 +403,10 @@ public static int tokens(final ASTNode ¢) {
   public static int vocabulary(final ASTNode u) {
     return Metric.dictionary(u).size();
   }
+  
+  public static int words(final ASTNode u) {
+    return Metric.dictionary_not_unique(u).size();
+  }
 
   /** @param n JD
    * @return The total number of distinct kind of nodes in the AST */

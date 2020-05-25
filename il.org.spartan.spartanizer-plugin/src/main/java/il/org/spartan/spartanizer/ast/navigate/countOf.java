@@ -99,12 +99,23 @@ public interface countOf {
     });
     return $.get();
   }
+  
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param pattern JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nonWhiteCharacters(final ASTNode ¢) {
     return removeWhites(Trivia.cleanForm(¢)).length();
   }
+  
+  
+  static int specialCharacters(final ASTNode ¢) {
+    String res = removeWhites(Trivia.cleanForm(¢));
+    res = res.replaceAll("[a-zA-Z0-9]", "");
+    return res.length();
+  }
+  
+  
+  
   /** Counts the number of nodes in a tree rooted at a given node
    * @param nodeTypeHolder JD
    * @return Number of abstract syntax tree nodes under the parameter. */
