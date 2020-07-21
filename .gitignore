@@ -254,3 +254,5 @@ Untitled*
 # User defined (add below this line) // vim: +,$!sort -u
 # User defined (add below this line) // vim: +,$!sort -u# Prefixes // vim: +,/^\s*$/-1!sort -u
 build/
+.classpath
+.settings
