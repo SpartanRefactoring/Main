@@ -1,8 +1,0 @@
-subprojects {
-	repositories {
-		// local eclipse maven (created by Goomph)
-		maven {
-			url rootProject.file('target.p2/build/p2asmaven/maven')
-		}
-	}
-}

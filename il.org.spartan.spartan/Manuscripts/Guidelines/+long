@@ -1,47 +1,0 @@
-" Frames with upper case letters
-" /begin{frame}[^{}]\{-\}{.\{-1,}\<[A-Z]/e   
-
-
-%s/⟪\n*/\\begin{enumerate}/ge  
-%s/⟫\n*/\\end{enumerate}/ge  
-%s/⸨\n*/\\begin{itemize}/ge  
-%s/⸩/\\end{itemize}/ge  
-%s/⟦/\\begin{description}/ge  
-%s/⟧/\\end{description}/ge  
-
-" Empty lines before \begin{...} / \end{...}
-%s/\(^\s*$\n\)\+\( *\\begin{description}\)/\2/e
-%s/\(^\s*$\n\)\+\( *\\end{description}\)/\2/e
-%s/\(^\s*$\n\)\+\( *\\begin{itemize}\)/\2/e
-%s/\(^\s*$\n\)\+\( *\\end{itemize}\)/\2/e
-%s/\(^\s*$\n\)\+\( *\\begin{enumerate}\)/\2/e
-%s/\(^\s*$\n\)\+\( *\\end{enumerate}\)/\2/e
-
-"%s/\(^\s*$\n\)\+\(\n.*\\end{frame}\)/\2/e
-
-
-" Empty lines after \begin{...} / \end{...}
-%s/\( *\\begin{frame}.*$\)\(\n^\s*$\)\+/\1/e
-
-%s/\( *\\begin{description}.*$\)\(\n^\s*$\)\+/\1/e
-%s/\( *\\end{description}.*$\)\(\n^\s*$\)\+/\1/e
-%s/\( *\\begin{itemize}.*$\)\(\n^\s*$\)\+/\1/e
-%s/\( *\\end{itemize}.*$\)\(\n^\s*$\)\+/\1/e
-%s/\( *\\begin{enumerate}.*$\)\(\n^\s*$\)\+/\1/e
-%s/\( *\\end{enumerate}.*$\)\(\n^\s*$\)\+/\1/e
-
-%s/• *\~/\\item\~/ge  
-%s/•/\\item /ge  
-%s/〘/\\item [/ge 
-%s/〙/]/ge
-
-%s/\\item  \+/\\item /ge  
-
-%s/\\begin{description}\_s*\[ */\\begin{description}[/ge  
-%s/\\begin{enumerate}\_s*\[ */\\begin{enumerate}[/ge  
-%s/\\begin{itemize}\_s*\[ */\\begin{itemize}[/ge  
-
-%s/\\begin{description}\_s*\(\\[^i][^t][^e][^m]\)/\\begin{description}\1/ge  
-%s/\\begin{enumerate}\_s*\(\\[^i][^t][^e][^m]\)/\\begin{enumerate}\1/ge  
-%s/\\begin{itemize}\_s*\(\\[^i][^t][^e][^m]\)/\\begin{itemize}\1/ge  
-
