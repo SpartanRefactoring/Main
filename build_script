@@ -1,0 +1,12 @@
+echo "building Spartanizer:"
+cd fluent.ly
+mvn install -DskipTests
+cd ../spartan
+mvn install -DskipTests
+cd ../spartanizer-plugin
+rm -rf lib
+mkdir lib
+cp ../lib/* lib/
+cp ../fluent.ly/target/*.jar lib/
+cp ../spartan/target/*.jar lib/
+mvn compile

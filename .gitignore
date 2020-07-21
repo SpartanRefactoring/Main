@@ -256,3 +256,4 @@ Untitled*
 build/
 .classpath
 .settings
+/spartanizer-plugin/lib/
