@@ -1,3 +1,5 @@
+mvn eclipse:clean
+mvn eclipse:eclipse
 echo "building Spartanizer:"
 cd fluent.ly
 mvn eclipse:clean
