@@ -8,7 +8,7 @@
 	<name>Main</name>
 	<packaging>pom</packaging>
 	<properties>
-		<project.version>1.0.0-SNAPSHOT</project.version>
+		<project.version>2.13.5-SNAPSHOT</project.version>
 		<maven.compiler.source>14</maven.compiler.source>
 		<maven.compiler.target>14</maven.compiler.target>
 	</properties>

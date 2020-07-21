@@ -21,8 +21,8 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
  ./lib/cli-1.01.jar,
- ./lib/il.org.spartan.fluent.ly-1.0.0-SNAPSHOT.jar,
- ./lib/il.org.spartan.spartan-1.0.0-SNAPSHOT.jar
+ ./lib/il.org.spartan.fluent.ly-2.13.5-SNAPSHOT.jar,
+ ./lib/il.org.spartan.spartan-2.13.5-SNAPSHOT.jar
 Export-Package: .,
  il.org.spartan.athenizer,
  il.org.spartan.athenizer.collateral,
