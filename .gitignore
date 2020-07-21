@@ -257,3 +257,4 @@ build/
 .classpath
 .settings
 /spartanizer-plugin/lib/
+.project

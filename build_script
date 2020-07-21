@@ -1,7 +1,11 @@
 echo "building Spartanizer:"
 cd fluent.ly
+mvn eclipse:clean
+mvn eclipse:eclipse
 mvn install -DskipTests
 cd ../spartan
+mvn eclipse:clean
+mvn eclipse:eclipse
 mvn install -DskipTests
 cd ../spartanizer-plugin
 rm -rf lib
@@ -9,4 +13,6 @@ mkdir lib
 cp ../lib/* lib/
 cp ../fluent.ly/target/*.jar lib/
 cp ../spartan/target/*.jar lib/
-mvn compile
+mvn eclipse:clean
+mvn eclipse:eclipse
+mvn dependency:resolve
