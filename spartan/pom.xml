@@ -10,6 +10,20 @@
 	<artifactId>il.org.spartan.spartan</artifactId>
 	<name>spartan</name>
 	<packaging>jar</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.10</version>
+				<configuration>
+					<classpathContainers>
+						<classpathContainer>M2_REPO/il/org/spartan/il.org.spartan.fluent.ly/${project.version}/il.org.spartan.fluent.ly-${project.version}.jar</classpathContainer>
+					</classpathContainers>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>org.jetbrains</groupId>
@@ -37,8 +51,6 @@
             <groupId>il.org.spartan</groupId>
             <artifactId>il.org.spartan.fluent.ly</artifactId>
             <version>${project.version}</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../fluent.ly/target/il.org.spartan.fluent.ly-${project.version}.jar</systemPath>
         </dependency>
 	</dependencies>
 </project>
