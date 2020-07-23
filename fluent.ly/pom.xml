@@ -10,6 +10,18 @@
 	<artifactId>il.org.spartan.fluent.ly</artifactId>
 	<name>fluent.ly</name>
 	<packaging>jar</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<outputDirectory>../spartanizer-plugin/lib</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>org.jetbrains</groupId>

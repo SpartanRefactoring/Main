@@ -23,8 +23,6 @@
 					</additionalBuildcommands>
 					<classpathContainers>
 						<classpathContainer>org.eclipse.pde.core.requiredPlugins</classpathContainer>
-						<classpathContainer>M2_REPO/il/org/spartan/il.org.spartan.fluent.ly/${project.version}/il.org.spartan.fluent.ly-${project.version}.jar</classpathContainer>
-						<classpathContainer>M2_REPO/il/org/spartan/il.org.spartan.spartan/${project.version}/il.org.spartan.spartan-${project.version}.jar</classpathContainer>
 					</classpathContainers>
 				</configuration>
 			</plugin>

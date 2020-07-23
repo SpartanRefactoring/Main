@@ -3,16 +3,9 @@ mvn eclipse:clean
 mvn -pl '!spartanizer-plugin' install -DskipTests
 mvn dependency:resolve
 mvn eclipse:eclipse
-cd spartan
-sed -i '/path="\/il.org.spartan.fluent.ly"/d' .classpath
-sed -i 's/kind="con" path="M2_REPO\/il\/org\/spartan\/il.org.spartan.fluent.ly/kind="var" path="M2_REPO\/il\/org\/spartan\/il.org.spartan.fluent.ly/g' .classpath
-cd ../spartanizer-plugin
-sed -i '/path="\/il.org.spartan.fluent.ly"/d' .classpath
-sed -i 's/kind="con" path="M2_REPO\/il\/org\/spartan\/il.org.spartan.fluent.ly/kind="var" path="M2_REPO\/il\/org\/spartan\/il.org.spartan.fluent.ly/g' .classpath
-sed -i '/path="\/il.org.spartan.spartan"/d' .classpath
-sed -i 's/kind="con" path="M2_REPO\/il\/org\/spartan\/il.org.spartan.spartan/kind="var" path="M2_REPO\/il\/org\/spartan\/il.org.spartan.spartan/g' .classpath
+cd spartanizer-plugin
 rm -rf lib
 mkdir lib
 cp ../lib/*.jar lib
-cp ../fluent.ly/target/*.jar lib
-cp ../spartan/target/*.jar lib
+cd ..
+mvn -pl '!spartanizer-plugin' jar:jar
