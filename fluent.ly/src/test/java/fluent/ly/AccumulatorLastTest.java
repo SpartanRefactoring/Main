@@ -7,8 +7,7 @@ import org.junit.Test;
 import il.org.spartan.utils.Accumulator;
 import il.org.spartan.utils.Accumulator.Last;
 
-@SuppressWarnings("static-method")
-public class AccumulatorLastTest {
+@SuppressWarnings("static-method") public class AccumulatorLastTest {
   @Test public void booleanAdds() {
     final Accumulator.Last c = new Last();
     azzert.that(as.bit(false), is(0));
@@ -25,6 +24,7 @@ public class AccumulatorLastTest {
     c.add(true);
     azzert.that(c.value(), is(1));
   }
+
   @Test public void emptyAdds() {
     final Accumulator.Last c = new Last();
     for (int ¢ = 0; ¢ < 19; ++¢)

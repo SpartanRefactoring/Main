@@ -4,7 +4,10 @@ import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-/** Organizes objects of the __ parameter in a tree, supplying a
+import sun.tools.java.Environment;
+
+/**
+ * Organizes objects of the __ parameter in a tree, supplying a
  * {@link #components()} of all objects contained in a sub-tree. Object of the
  * __ parameter may present on all nodes on of this tree, including inner nodes.
  * <p>
@@ -30,23 +33,32 @@ import org.eclipse.jdt.annotation.NonNull;
  * <li>Apply self judgment, don't come running to me with every little dilemma
  * you have.
  * </ol>
+ *
  * @see Compound
  * @see Atomic
  * @author Yossi Gil
- * @since 2017-03-11 */
+ * @since 2017-03-11
+ */
 public interface Recursive<T> extends Duplo<T> {
-  /** An atomic recursive structure specializing {@link Recursive}
+  /**
+   * An atomic recursive structure specializing {@link Recursive}
+   *
    * @author Yossi Gil
-   * @since 2017-03-13 */
+   * @since 2017-03-13
+   */
   interface Atomic<T> extends Recursive<T>, Duplo.Atomic<T> {
     //
   }
 
-  /** A compound recursive structure, specializing {@link Recursive}
+  /**
+   * A compound recursive structure, specializing {@link Recursive}
+   *
    * @author Yossi Gil
-   * @since 2017-03-13 */
+   * @since 2017-03-13
+   */
   interface Compound<T> extends Recursive<T>, Duplo.Compound<T> {
     Iterable<Recursive<T>> children();
+
     @Override default Iterable<? extends Duplo<T>> components() {
       return children();
     }
@@ -63,11 +75,13 @@ public interface Recursive<T> extends Duplo<T> {
     }
   }
 
-  /** A compound recursive structure enumerating {@link #components()} in
-   * pre-order
+  /**
+   * A compound recursive structure enumerating {@link #components()} in pre-order
+   *
    * @param <E>
    * @author Yossi Gil
-   * @since 2017-03-13 */
+   * @since 2017-03-13
+   */
   interface Preorder<E> extends Compound<E> {
     @Override default Merge<E> merge() {
       return (self, others) -> {

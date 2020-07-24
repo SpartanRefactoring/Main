@@ -1,8 +1,11 @@
 package fluent.ly;
 
-/** TODO Yossi Gil: document class
+/**
+ * TODO Yossi Gil: document class
+ *
  * @author Yossi Gil
- * @since 2017-04-13 */
+ * @since 2017-04-13
+ */
 public interface de {
   interface To<T> {
     T to(T t);

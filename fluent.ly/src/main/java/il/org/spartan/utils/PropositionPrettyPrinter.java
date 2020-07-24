@@ -14,6 +14,7 @@ public class PropositionPrettyPrinter {
     public PropositionTreeTraversal(final Listener<BooleanSupplier> listener) {
       this.listener = listener;
     }
+
     public void topDown(final BooleanSupplier ¢) {
       listener.in(¢);
       if (¢ instanceof Singleton)
@@ -21,6 +22,7 @@ public class PropositionPrettyPrinter {
       else if (¢ instanceof Some)
         some((Some) ¢);
     }
+
     private void some(final Some ¢) {
       listener.down();
       ¢.stream().forEach(λ -> {
@@ -29,6 +31,7 @@ public class PropositionPrettyPrinter {
       });
       listener.up();
     }
+
     private void singleton(final Singleton ¢) {
       listener.down();
       if (¢.inner instanceof Proposition)
@@ -38,12 +41,19 @@ public class PropositionPrettyPrinter {
   }
 
   public interface Listener<T> {
-    //@formatter:off
-    default   void  down()                                    {/**/}
-    default   void  up()                                      {/**/}
-    default   void  next()                                    {/**/}
-    default   void  in(@SuppressWarnings("unused") final T __)      {/**/}
-    //@formatter:on
+    // @formatter:off
+    default void down() {
+      /**/}
+
+    default void up() {
+      /**/}
+
+    default void next() {
+      /**/}
+
+    default void in(@SuppressWarnings("unused") final T __) {
+      /**/}
+    // @formatter:on
   }
 
   static class Number {
@@ -53,19 +63,24 @@ public class PropositionPrettyPrinter {
     public Number() {
       this(null);
     }
+
     public Number(final Number base) {
       this.base = base;
       number = 1;
     }
+
     public Number more() {
       return new Number(this);
     }
+
     public Number less() {
       return base;
     }
+
     public void next() {
       ++number;
     }
+
     @Override public String toString() {
       return (base == null ? "" : base + ".") + number;
     }
@@ -79,17 +94,21 @@ public class PropositionPrettyPrinter {
       tab = new Tab();
       number = new Number();
     }
+
     public void more() {
       tab.more();
       number = number.more();
     }
+
     public void less() {
       tab.less();
       number = number.less();
     }
+
     public void next() {
       number.next();
     }
+
     @Override public String toString() {
       return tab + "" + number + ") ";
     }
@@ -101,6 +120,7 @@ public class PropositionPrettyPrinter {
     public NodePrettyPrinter() {
       aligner = new NumberWithTab();
     }
+
     @Override public void in(final BooleanSupplier ¢) {
       final StringBuilder sb = new StringBuilder(aligner + "");
       if (¢ instanceof Some || ¢ instanceof Not)
@@ -110,12 +130,15 @@ public class PropositionPrettyPrinter {
       sb.append(" ==> " + Truth.letterOf(¢));
       System.out.println(sb);
     }
+
     @Override public void down() {
       aligner.more();
     }
+
     @Override public void up() {
       aligner.less();
     }
+
     @Override public void next() {
       aligner.next();
     }
@@ -126,9 +149,11 @@ public class PropositionPrettyPrinter {
   public PropositionPrettyPrinter() {
     traversal = new PropositionTreeTraversal(new NodePrettyPrinter());
   }
+
   void present(final Proposition ¢) {
     traversal.topDown(¢);
   }
+
   public static void main(final String[] args) {
     final PropositionPrettyPrinter p = new PropositionPrettyPrinter();
     // example 1

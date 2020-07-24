@@ -8,15 +8,19 @@ import java.nio.file.Paths;
 
 import fluent.ly.note;
 
-/** File utils
+/**
+ * File utils
+ *
  * @author Ori Marcovitch
- * @since Dec 4, 2016 */
+ * @since Dec 4, 2016
+ */
 public enum file {
   ;
   private static void delete(final String path) {
     if (file.exists(path))
       new File(path).delete();
   }
+
   private static void rename(final String from, final String to) {
     file.delete(to);
     final Path source = Paths.get(from);
@@ -26,10 +30,12 @@ public enum file {
       note.io(¢);
     }
   }
+
   private static boolean exists(final String path) {
     final File $ = new File(path);
     return $.exists() && !$.isDirectory();
   }
+
   public static void renameToCSV(final String old) {
     file.rename(old, old + ".csv");
   }

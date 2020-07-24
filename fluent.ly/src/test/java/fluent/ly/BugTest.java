@@ -13,8 +13,7 @@ import fluent.ly.___.Bug.Assertion.Variant.Underflow;
 import fluent.ly.___.Bug.Contract;
 import fluent.ly.___.Bug.Variant;
 
-@SuppressWarnings("static-method")
-public class BugTest {
+@SuppressWarnings("static-method") public class BugTest {
   @Test public void ensure() {
     ___.ensure(true);
     try {
@@ -33,6 +32,7 @@ public class BugTest {
       assertEquals("ensure this message now", e.getMessage());
     }
   }
+
   @Test public void negative() {
     ___.negative(-1);
     ___.negative(-2);
@@ -58,6 +58,7 @@ public class BugTest {
       assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
     }
   }
+
   @Test public void nonnegative() {
     ___.nonnegative(1);
     ___.nonnegative(2);
@@ -75,6 +76,7 @@ public class BugTest {
       assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
     }
   }
+
   @Test public void NonNull() {
     assert new Object() != null;
     try {
@@ -93,6 +95,7 @@ public class BugTest {
       assertEquals("NonNull this message now", e.getMessage());
     }
   }
+
   @Test public void nonpositive() {
     ___.nonpositive(-1);
     ___.nonpositive(-2);
@@ -110,6 +113,7 @@ public class BugTest {
       assertEquals("Found -1.00000 while expecting a nonpositive number.", ¢.getMessage());
     }
   }
+
   @Test public void positive() {
     ___.positive(1);
     ___.positive(2);
@@ -135,6 +139,7 @@ public class BugTest {
       assertEquals("Found -1.00000 while expecting a positive number.", ¢.getMessage());
     }
   }
+
   @Test public void require() {
     ___.require(true);
     try {
@@ -153,12 +158,15 @@ public class BugTest {
       assertEquals("require this message now", ¢.getMessage());
     }
   }
+
   @Test(expected = ___.Bug.class) public void requireBug() {
     ___.require(false);
   }
+
   @Test(expected = Contract.Precondition.class) public void requirePrecondition() {
     ___.require(false);
   }
+
   @Test public void sure() {
     ___.sure(true);
     try {
@@ -177,6 +185,7 @@ public class BugTest {
       assertEquals("sure this message now", e.getMessage());
     }
   }
+
   @Test public void unreachable() {
     try {
       ___.unreachable();
@@ -194,6 +203,7 @@ public class BugTest {
       assertEquals("unreachable this message now", ¢.getMessage());
     }
   }
+
   @Test public void variant() {
     {
       final Variant v = new Variant(10);

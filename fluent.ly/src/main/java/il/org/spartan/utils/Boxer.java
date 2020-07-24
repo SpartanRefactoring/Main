@@ -1,8 +1,11 @@
 package il.org.spartan.utils;
 
-/** TODO Yossi Gil: document class
+/**
+ * TODO Yossi Gil: document class
+ *
  * @author Yossi Gil
- * @since 2017-03-21 */
+ * @since 2017-03-21
+ */
 public class Boxer<Inner> {
   public Inner inner;
 
@@ -11,6 +14,7 @@ public class Boxer<Inner> {
     if (inner == null || inner == this)
       throw new IllegalArgumentException();
   }
+
   @Override public boolean equals(final Object ¢) {
     if (¢ == this)
       return true;
@@ -19,6 +23,7 @@ public class Boxer<Inner> {
     @SuppressWarnings("unchecked") final Boxer<Inner> $ = (Boxer<Inner>) ¢;
     return equals($);
   }
+
   protected boolean equals(final Boxer<Inner> other) {
     if (inner == null) {
       if (other.inner != null)
@@ -27,6 +32,7 @@ public class Boxer<Inner> {
       return false;
     return true;
   }
+
   @Override public int hashCode() {
     return 31 + (inner == null ? 0 : inner.hashCode());
   }

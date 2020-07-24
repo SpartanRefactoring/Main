@@ -7,8 +7,7 @@ import org.junit.Test;
 import il.org.spartan.utils.Accumulator;
 import il.org.spartan.utils.Accumulator.Counter;
 
-@SuppressWarnings("static-method")
-public class CounterTest {
+@SuppressWarnings("static-method") public class CounterTest {
   @Test public void booleanAdds() {
     final Accumulator c = new Counter();
     azzert.that(c.value(), is(0));
@@ -23,6 +22,7 @@ public class CounterTest {
     c.add(true);
     azzert.that(c.value(), is(3));
   }
+
   @Test public void emptyAdds() {
     final Accumulator.Counter c = new Counter();
     for (int ¢ = 0; ¢ < 19; ++¢)
