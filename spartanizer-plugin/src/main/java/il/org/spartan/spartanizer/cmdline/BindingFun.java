@@ -49,7 +49,7 @@ final class BindingFun implements IApplication {
     for (final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))
       try {
         final ICompilationUnit u = openCompilationUnit(f);
-        final ASTParser parser = ASTParser.newParser(AST.JLS8);
+        final ASTParser parser = ASTParser.newParser(AST.JLS14);
         parser.setResolveBindings(true);
         parser.setSource(u);
         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);

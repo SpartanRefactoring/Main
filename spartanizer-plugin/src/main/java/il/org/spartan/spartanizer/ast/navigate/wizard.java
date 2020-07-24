@@ -391,7 +391,7 @@ public interface wizard {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : subject.operand(¢).parenthesis();
   }
   static ASTParser parser(final int kind) {
-    final ASTParser $ = ASTParser.newParser(AST.JLS8);
+    final ASTParser $ = ASTParser.newParser(AST.JLS14);
     setBinding($);
     $.setKind(kind);
     final Map<String, String> options = JavaCore.getOptions();

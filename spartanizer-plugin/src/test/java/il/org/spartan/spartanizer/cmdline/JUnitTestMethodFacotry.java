@@ -83,7 +83,7 @@ public enum JUnitTestMethodFacotry {
   public static String shortenIdentifiers(final String javaFragment) {
     final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
     final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
-    final ASTParser parser = ASTParser.newParser(AST.JLS8);
+    final ASTParser parser = ASTParser.newParser(AST.JLS14);
     parser.setSource($.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();

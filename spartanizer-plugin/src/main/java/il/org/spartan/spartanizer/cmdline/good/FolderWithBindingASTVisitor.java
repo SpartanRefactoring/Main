@@ -25,7 +25,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
   void collect(final File f) {
     try {
       final ICompilationUnit u = openCompilationUnit(f);
-      final ASTParser parser = ASTParser.newParser(AST.JLS8);
+      final ASTParser parser = ASTParser.newParser(AST.JLS14);
       parser.setResolveBindings(true);
       parser.setSource(u);
       collect(az.compilationUnit(parser.createAST(null)));
