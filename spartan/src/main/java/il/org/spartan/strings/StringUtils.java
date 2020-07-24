@@ -277,7 +277,7 @@ public enum StringUtils {
         final Object $[] = new Object[args.length - 1];
         for (int ¢ = 1; ¢ < args.length; ++¢)
           $[¢ - 1] = args[¢];
-        return new Formatter().format(args[0], $) + "";
+        return String.format(args[0], $) + "";
     }
   }
   /** Strip the first and last character of a string.
