@@ -3,6 +3,8 @@ package fluent.ly;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jetbrains.annotations.Nullable;
+
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-10 */
@@ -30,7 +32,7 @@ public interface nil {
   interface Operand<T> extends Supplier<T> {
     default <R> Operand<R> to(final Function<T, R> f) {
       final T t = Operand.this.get();
-      final R $ = t == null ? null : f.apply(t);
+      final @Nullable R $ = t == null ? null : f.apply(t);
       return () -> $;
     }
   }

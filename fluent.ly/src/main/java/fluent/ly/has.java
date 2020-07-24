@@ -3,7 +3,8 @@ package fluent.ly;
 
 import java.util.List;
 
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
+
 
 /**
  * A collection of <code><b>static</b></code> functions for converting from one

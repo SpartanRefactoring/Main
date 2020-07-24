@@ -133,14 +133,14 @@ public enum as {
     return accumulate.to(new HashSet<T>()).add(¢).elements();
   }
   /** Converts a value, which can be either a <code><b>null</b></code> or
-   * references to valid instances, into a {@link NonNull}
+   * references to valid instances, into a {@link @NonNull}
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
   public static String string(final Object $) {
     return $ == null ? "null" : as.string($ + "");
   }
   /** Converts a {@link String}, which can be either a <code><b>null</b></code>
-   * or an actual String, into a {@link NonNull} String.
+   * or an actual String, into a {@link @NonNull} String.
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
   public static String string(final String $) {

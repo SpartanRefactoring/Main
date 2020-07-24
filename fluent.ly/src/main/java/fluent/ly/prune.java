@@ -30,7 +30,7 @@ public enum prune {
   /** Prune <code><b>null</b></code> elements from a given collection.
    * @param <T> JD
    * @param <C> JD
-   * @param ts JD */
+   * @param ¢  JD */
   public static <T, C extends Collection<T>> C nils(final C $) {
     for (final Iterator<T> ¢ = $.iterator(); ¢.hasNext();)
       if (¢.next() == null)

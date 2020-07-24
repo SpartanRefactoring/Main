@@ -10,7 +10,7 @@ public enum safe {
   /** Divide but if denominator 0 return 1
    * @param a
    * @param d
-   * @return */
+   * @return result of division, or {@code 1} is defined */
   public static double div(final double a, final double d) {
     return d == 0 ? 1 : a / d;
   }

@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import il.org.spartan.iterables.iterables;
@@ -27,12 +28,12 @@ import il.org.spatan.iteration.IterableArray;
 import il.org.spatan.iteration.Iteration;
 
 public interface Iterables {
-  static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T> ts) {
+  static <T, C extends Collection<T>> C addAll(final C $, final @NonNull Iterable<? extends T> ts) {
     for (final T ¢ : ts)
       $.add(¢);
     return $;
   }
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(final @NonNull C $, final T... ts) {
     for (final T ¢ : ts)
       $.add(¢);
     return $;

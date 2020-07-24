@@ -7,7 +7,7 @@ import org.junit.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("all")
 public final class AtomicConversionsTest {
   private byte b = (byte) hashCode();
   private final boolean b1 = getClass().equals(getClass());

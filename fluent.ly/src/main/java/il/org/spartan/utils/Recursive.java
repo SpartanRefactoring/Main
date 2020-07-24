@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import org.eclipse.jdt.annotation.NonNull;
 
 /** Organizes objects of the __ parameter in a tree, supplying a
- * {@link #descendants()} of all objects contained in a sub-tree. Object of the
+ * {@link #components()} of all objects contained in a sub-tree. Object of the
  * __ parameter may present on all nodes on of this tree, including inner nodes.
  * <p>
  * TODO Dor Maayan & Oran Gilboa: first assignment TODO Oren Afek & Ori Roth &
@@ -63,7 +63,7 @@ public interface Recursive<T> extends Duplo<T> {
     }
   }
 
-  /** A compound recursive structure enumerating {@link #descendants()} in
+  /** A compound recursive structure enumerating {@link #components()} in
    * pre-order
    * @param <E>
    * @author Yossi Gil

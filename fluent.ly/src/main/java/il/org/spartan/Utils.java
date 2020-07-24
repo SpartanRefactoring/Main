@@ -95,12 +95,12 @@ public interface Utils {
    * <p>
    * For reasons related to the way non-nullability is managed in Java, the
    * compiler will not warn you from doing applying this function to a
-   * {@link NonNull} type. However, there is absolutely no point in removing a
+   * {@link @NonNull} type. However, there is absolutely no point in removing a
    * annotation if the type that does not have it. Doing so a is plain clutter.
    * Since the compiler cannot assist you, you will have to be on the guard.
    * @param $ result
    * @param <T> JD
-   * @return parameter, but guaranteed to be {@link NonNull}
+   * @return parameter, but guaranteed to be {@link @NonNull}
    * @see #mustBeNull(Object) */
   static <T> T canBeNull(final T $) {
     return $;
@@ -123,7 +123,7 @@ public interface Utils {
    * <p>
    * For reasons related to the way non-nullability is managed in Java, the
    * compiler will not warn you from doing applying this function to a
-   * {@link NonNull} type. However, there is absolutely no point in removing a
+   * {@link @NonNull} type. However, there is absolutely no point in removing a
    * annotation if the type that does not have it. Doing so a is plain clutter.
    * Since the compiler cannot assist you, you will have to be on the guard.
    * @param <T> an arbitrary type

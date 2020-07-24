@@ -23,10 +23,11 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
 		<dependency>
 			<groupId>org.jetbrains</groupId>
 			<artifactId>annotations</artifactId>
-			<version>13.0</version>
+			<version>16.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>

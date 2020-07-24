@@ -1,6 +1,8 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package fluent.ly;
 
+import il.org.spartan.Separator;
+
 /** A class to manage printing a {@link String} exactly once. In the first
  * invocation of {@link #toString()}, the initial value is returned. In all
  * subsequent invocations, the empty string is returned.

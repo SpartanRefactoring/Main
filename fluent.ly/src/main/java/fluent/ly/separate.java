@@ -123,7 +123,7 @@ public enum separate {
   /** A simple minded separation of members of a {@link Map} data type.
    * @param <Key> type of elements serving as keys of the map.
    * @param <Value> type of elements serving as values of the map.
-   * @param m a non-<code><b>null</b></code> {@link Map} objects whose entries
+   * @param ¢  a non-<code><b>null</b></code> {@link Map} objects whose entries
    *        are to be separated.
    * @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is

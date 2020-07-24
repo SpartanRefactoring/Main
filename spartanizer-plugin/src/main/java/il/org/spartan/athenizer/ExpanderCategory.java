@@ -2,6 +2,7 @@ package il.org.spartan.athenizer;
 
 import java.util.stream.*;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.preference.*;
 
 import fluent.ly.*;
@@ -71,7 +72,7 @@ public interface ExpanderCategory {
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
-    private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
+    private static @Nullable ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
       return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
