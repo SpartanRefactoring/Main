@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import sun.tools.java.Environment;
 
 /**
  * Organizes objects of the __ parameter in a tree, supplying a
