@@ -11,7 +11,7 @@ import java.util.List;
 import il.org.spartan.ReflectionAnalyzer;
 
 /** A class to print all properties of an arbitrary object which can be
- * retrieved by getters methods (i.e., getXXX()) methods and boolean inspection
+ * retrieved by getter methods (i.e., getXXX()) methods and boolean inspection
  * methods (i.e., isXXX()), as can be determined by reflection information.
  * @author Yossi Gil
  * @since 24/07/2007 */
@@ -51,7 +51,7 @@ public class dump {
   }
   /** Dump a class object
    * @param ¢ JD
-   * @return */
+   * @return a textual description of the parameter*/
   public static String of(final Class<?> ¢) {
     String $ = "\n\n--IDENTIFICATION--\n" + entry("Simple Name", ¢.getSimpleName()) + entry("Canonical Name", ¢.getCanonicalName())
         + entry("Name", ¢.getName()) + entry("toString", ¢ + "") + entry("super class", ¢.getSuperclass())

@@ -5,6 +5,7 @@ import static fluent.ly.azzert.is;
 
 import java.util.function.Supplier;
 
+import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
@@ -106,7 +107,7 @@ public interface idiomatic {
      * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
      *         otherwise code><b>null</b></code>.
      * @param when condition on which value is returned */
-    default T when(final boolean when) {
+    default @Nullable T when(final boolean when) {
       return when ? get() : null;
     }
   }

@@ -119,7 +119,7 @@ public abstract class ___ {
   }
   /** A possibly non-returning method to be used for checking integers which
    * must be non-NaN.
-   * @param d a value which must be not be NaN
+   * @param ¢ a value which must be not be NaN
    * @throws NonNan in case <code>d</code> was NaN */
   public static void nonNaN(final double ¢) throws NonNan {
     nonNaN(¢, "");
@@ -162,7 +162,7 @@ public abstract class ___ {
   }
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
-   * @param d a value which must be nonnegative
+   * @param ¢ a value which must be nonnegative
    * @throws NonNegative in case <code>d</code> was negative */
   public static void nonnegative(final double ¢) throws NonNegative {
     nonnegative(¢, "");
