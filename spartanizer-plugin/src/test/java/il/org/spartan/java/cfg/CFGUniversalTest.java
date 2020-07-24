@@ -1,15 +1,14 @@
 package il.org.spartan.java.cfg;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import java.util.*;
-import java.util.stream.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
 
 /** TODO dormaayn: document class
  * @author dormaayn

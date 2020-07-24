@@ -1,12 +1,16 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
-import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.SimpleName;
 
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.tables.*;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.tables.Table;
 
 /** Generates a table of all the names
  * @author Dor Ma'ayan

@@ -1,8 +1,7 @@
 package il.org.spartan.java.cfg;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Implementation of Alist for the CFG
  * @author Dor Ma'ayan

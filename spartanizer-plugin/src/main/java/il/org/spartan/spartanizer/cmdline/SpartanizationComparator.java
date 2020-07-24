@@ -1,25 +1,32 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
-import java.util.function.Predicate;
+import java.io.File;
+import java.io.IOException;
 import java.util.function.ToIntFunction;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Type;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.bench.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.CSVLineWriter;
+import il.org.spartan.bench.Dotter;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.external.External;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
 import il.org.spartan.spartanizer.ast.nodes.metrics.Metric;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.InteractiveSpartanizer;
+import il.org.spartan.spartanizer.engine.nominal.guessName;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.utils.FileUtils;
 
 /** TODO Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
