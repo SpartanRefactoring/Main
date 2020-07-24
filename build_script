@@ -1,11 +1,12 @@
 echo "building Spartanizer:"
-mvn eclipse:clean
-mvn -pl '!spartanizer-plugin' install -DskipTests
-mvn dependency:resolve
-mvn eclipse:eclipse
+alias mvn=../../Downloads/apache-maven-3.6.3-bin/apache-maven-3.6.3/bin/mvn
+../../Downloads/apache-maven-3.6.3-bin/apache-maven-3.6.3/bin/mvn eclipse:clean
+../../Downloads/apache-maven-3.6.3-bin/apache-maven-3.6.3/bin/mvn -pl '!spartanizer-plugin' install -DskipTests
+../../Downloads/apache-maven-3.6.3-bin/apache-maven-3.6.3/bin/mvn dependency:resolve
+../../Downloads/apache-maven-3.6.3-bin/apache-maven-3.6.3/bin/mvn eclipse:eclipse
 cd spartanizer-plugin
 rm -rf lib
 mkdir lib
 cp ../lib/*.jar lib
 cd ..
-mvn -pl '!spartanizer-plugin' jar:jar
+../../Downloads/apache-maven-3.6.3-bin/apache-maven-3.6.3/bin/mvn -pl '!spartanizer-plugin' jar:jar
