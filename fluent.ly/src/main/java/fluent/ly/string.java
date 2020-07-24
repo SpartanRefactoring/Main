@@ -108,7 +108,7 @@ public enum string {
     try {
       Double.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@SuppressWarnings("unused") final NumberFormatException __) {
       return false;
     }
   }
@@ -116,7 +116,7 @@ public enum string {
     try {
       Float.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@SuppressWarnings("unused") final NumberFormatException __) {
       return false;
     }
   }
@@ -124,7 +124,7 @@ public enum string {
     try {
       Integer.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@SuppressWarnings("unused") final NumberFormatException __) {
       return false;
     }
   }
@@ -132,7 +132,7 @@ public enum string {
     try {
       Long.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@SuppressWarnings("unused") final NumberFormatException __) {
       return false;
     }
   }
@@ -264,7 +264,7 @@ public enum string {
         final Object $[] = new Object[args.length - 1];
         for (int ¢ = 1; ¢ < args.length; ++¢)
           $[¢ - 1] = args[¢];
-        return new Formatter().format(args[0], $) + "";
+        return String.format(args[0], $) + "";
     }
   }
   /** Strip the first and last character of a string.

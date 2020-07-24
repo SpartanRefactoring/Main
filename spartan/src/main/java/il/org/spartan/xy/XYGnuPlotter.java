@@ -6,6 +6,7 @@ import static java.lang.String.*;
 import java.io.*;
 import java.util.*;
 
+import fluent.ly.idiomatic;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
@@ -82,7 +83,7 @@ public class XYGnuPlotter {
       this.curve = curve;
     }
     public Curve(final String curve, final double... ds) {
-      this(curve, (Object[]) box(ds));
+      this(curve, (Object[]) idiomatic.box(ds));
     }
     public Curve(final String curve, final Object... os) {
       this.curve = format(curve, os);
@@ -115,7 +116,7 @@ public class XYGnuPlotter {
       return this;
     }
     public Settings characterize(final String statement, final double... ds) {
-      return characterize(statement, (Object[]) box(ds));
+      return characterize(statement, (Object[]) idiomatic.box(ds));
     }
     public Settings characterize(final String statement, final Object... os) {
       return characterize(format(statement, os));
@@ -125,7 +126,7 @@ public class XYGnuPlotter {
       return this;
     }
     public Settings finalize(final String statement, final double... ds) {
-      return finalize(statement, (Object[]) box(ds));
+      return finalize(statement, (Object[]) idiomatic.box(ds));
     }
     public Settings finalize(final String statement, final Object... os) {
       return finalize(format(statement, os));
@@ -139,7 +140,7 @@ public class XYGnuPlotter {
       return newCurve(format(curve, os));
     }
     public Curve newCurveD(final String curve, final double... ds) {
-      return newCurve(curve, (Object[]) box(ds));
+      return newCurve(curve, (Object[]) idiomatic.box(ds));
     }
     public String plot() {
       return "plot " + Separate.by(curves, ", ") + ";\n";

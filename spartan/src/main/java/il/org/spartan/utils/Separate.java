@@ -31,7 +31,7 @@ public enum Separate {
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final boolean[] bs, final char between) {
-    return by(box(bs), between + "");
+    return by(idiomatic.box(bs), between + "");
   }
   /** Separate elements of a given array of <code><b>boolean</b></code>s by a
    * given {{link @String}}
@@ -41,7 +41,7 @@ public enum Separate {
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final boolean[] bs, final String between) {
-    return by(box(bs), between);
+    return by(idiomatic.box(bs), between);
   }
   /** Separate elements of a given array of <code><b>byte</b></code>s by a given
    * <code><b>char</b></code>
@@ -51,7 +51,7 @@ public enum Separate {
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final byte[] bs, final char between) {
-    return by(box(bs), between + "");
+    return by(idiomatic.box(bs), between + "");
   }
   /** Separate elements of a given array of <code><b>byte</b></code>s by a given
    * {{link @String}}
@@ -61,7 +61,7 @@ public enum Separate {
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final byte[] bs, final String between) {
-    return by(box(bs), between);
+    return by(idiomatic.box(bs), between);
   }
   /** Separate elements of a given array of <code><b>char</b></code>s by a given
    * <code><b>char</b></code>
@@ -71,7 +71,7 @@ public enum Separate {
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
   public static String by(final char[] cs, final char between) {
-    return by(box(cs), between + "");
+    return by(idiomatic.box(cs), between + "");
   }
   /** Separate elements of a given array of <code><b>char</b></code>s by a given
    * {{link @String}}
@@ -81,7 +81,7 @@ public enum Separate {
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
   public static String by(final char[] cs, final String between) {
-    return by(box(cs), between);
+    return by(idiomatic.box(cs), between);
   }
   /** Separate elements of a given array of <code><b>double</b></code>s by a
    * given <code><b>char</b></code>
@@ -91,7 +91,7 @@ public enum Separate {
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
   public static String by(final double[] ds, final char between) {
-    return by(box(ds), between + "");
+    return by(idiomatic.box(ds), between + "");
   }
   /** Separate elements of a given array of <code><b>double</b></code>s by a
    * given {{link @String}}
@@ -101,7 +101,7 @@ public enum Separate {
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
   public static String by(final double[] ds, final String between) {
-    return by(box(ds), between);
+    return by(idiomatic.box(ds), between);
   }
   /** Separate elements of a given {{@link Iterable}} collection of objects by a
    * given {@link String}, where the textual representation of each object is
@@ -175,7 +175,7 @@ public enum Separate {
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
   public static String by(final float[] fs, final char between) {
-    return by(box(fs), between + "");
+    return by(idiomatic.box(fs), between + "");
   }
   /** Separate elements of a given array of <code><b>float</b></code>s by a
    * given {{link @String}}
@@ -185,7 +185,7 @@ public enum Separate {
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
   public static String by(final float[] fs, final String between) {
-    return by(box(fs), between);
+    return by(idiomatic.box(fs), between);
   }
   /** Separate elements of a given array of <code><b>int</b></code>s by a given
    * <code><b>char</b></code>
@@ -195,7 +195,7 @@ public enum Separate {
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
   public static String by(final int[] is, final char between) {
-    return by(box(is), between + "");
+    return by(idiomatic.box(is), between + "");
   }
   /** Separate elements of a given array of <code><b>int</b></code>s by a given
    * {{link @String}}
@@ -205,7 +205,7 @@ public enum Separate {
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
   public static String by(final int[] is, final String between) {
-    return by(box(is), between);
+    return by(idiomatic.box(is), between);
   }
   /** Separate elements of a given {@link Iterable} collection by a given
    * <code><b>char</b></code>
@@ -241,7 +241,7 @@ public enum Separate {
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
   public static String by(final long[] ls, final char between) {
-    return by(box(ls), between + "");
+    return by(idiomatic.box(ls), between + "");
   }
   /** Separate elements of a given array of <code><b>long</b></code>s by a given
    * {{link @String}}
@@ -251,7 +251,7 @@ public enum Separate {
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
   public static String by(final long[] ls, final String between) {
-    return by(box(ls), between);
+    return by(idiomatic.box(ls), between);
   }
   /** A simple minded separation of members of a {@link Map} data type.
    * @param <Key> type of elements serving as keys of the map.
@@ -283,7 +283,7 @@ public enum Separate {
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
   public static String by(final short[] ss, final char between) {
-    return by(box(ss), between + "");
+    return by(idiomatic.box(ss), between + "");
   }
   /** Separate elements of a given array of <code><b>short</b></code>s by a
    * given {{link @String}}
@@ -293,7 +293,7 @@ public enum Separate {
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
   public static String by(final short[] ss, final String between) {
-    return by(box(ss), between);
+    return by(idiomatic.box(ss), between);
   }
   /** Separate elements of a given array by a given <code><b>char</b></code>
    * @param ts an array of elements to be separated

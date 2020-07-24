@@ -128,7 +128,7 @@ public class dump {
         f.setAccessible(true);
         $ += entry(f + "", f.get(o));
       } catch (IllegalArgumentException | IllegalAccessException e) {
-        $ += entry(f + "", "???");
+        $ += entry(f + "", "???" + e);
         continue;
       }
     return $ + "--END OBJECT--\n\n";

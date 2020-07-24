@@ -131,7 +131,7 @@ public abstract class CSVLine extends AbstractStringProperties implements Clonea
   public CSVLine put(final String key, final double value, final String format, final FormatSpecifier... ss) {
     aggregator.record(key, value, ss);
     ___.sure(ss.length == 0 || aggregating());
-    return put(key, String.format(format, box(value)));
+    return put(key, String.format(format, idiomatic.box(value)));
   }
   /** Add a key and a general <code><b>float</b><code> value to this instance
                                            *
@@ -159,7 +159,7 @@ public abstract class CSVLine extends AbstractStringProperties implements Clonea
   public CSVLine put(final String key, final int value, final String format, final FormatSpecifier... ss) {
     aggregator.record(key, value, ss);
     ___.sure(ss.length == 0 || aggregating());
-    return put(key, String.format(format, box(value)));
+    return put(key, String.format(format, idiomatic.box(value)));
   }
   /** Add a key and a general {@link Object} value to this instance
    * @param key The key to be added; must not be <code><b>null</b></code>; must

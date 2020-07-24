@@ -64,7 +64,7 @@ public class Ergodic {
         break;
       final Double d = selectDouble($);
       if (d == null)
-        return unbox.unbox($.toArray(new Double[$.size()]));
+        return unbox.it($.toArray(new Double[$.size()]));
       $.add(d);
     }
     return null;

@@ -5,6 +5,7 @@ import static fluent.ly.unbox.*;
 
 import java.util.*;
 
+import fluent.ly.idiomatic;
 import il.org.spartan.classfiles.*;
 import il.org.spartan.collections.*;
 
@@ -64,8 +65,8 @@ public final class ConstantPool {
     final ArrayList<Double> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof DoubleLiteral)
-        $.add(box(((DoubleLiteral) ¢).value));
-    return unbox($.toArray(new Double[$.size()]));
+        $.add(idiomatic.box(((DoubleLiteral) ¢).value));
+    return it($.toArray(new Double[$.size()]));
   }
   /** Which <code><b>float</b></code>s are found in this class's constants'
    * pool?
@@ -74,8 +75,8 @@ public final class ConstantPool {
     final ArrayList<Float> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof FloatLiteral)
-        $.add(box(((FloatLiteral) ¢).value));
-    return unbox($.toArray(new Float[$.size()]));
+        $.add(idiomatic.box(((FloatLiteral) ¢).value));
+    return it($.toArray(new Float[$.size()]));
   }
   /** Which <code><b>int</b></code>s are found in this class's constants' pool?
    * @return an array with <code><b>int</b></code>s that this class uses. */
@@ -83,8 +84,8 @@ public final class ConstantPool {
     final ArrayList<Integer> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof IntLiteral)
-        $.add(box(((IntLiteral) ¢).value));
-    return unbox($.toArray(new Integer[$.size()]));
+        $.add(idiomatic.box(((IntLiteral) ¢).value));
+    return it($.toArray(new Integer[$.size()]));
   }
   /** Which <code><b>long</b></code>s are found in this class's constants' pool?
    * @return an array with <code><b>long</b></code>s that this class uses. */
@@ -92,8 +93,8 @@ public final class ConstantPool {
     final ArrayList<Long> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof LongLiteral)
-        $.add(box(((LongLiteral) ¢).value));
-    return unbox($.toArray(new Long[$.size()]));
+        $.add(idiomatic.box(((LongLiteral) ¢).value));
+    return it($.toArray(new Long[$.size()]));
   }
   public String[] getReferencedMethods() {
     final ArrayList<String> $ = new ArrayList<>();

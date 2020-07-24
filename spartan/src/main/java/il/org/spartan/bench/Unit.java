@@ -23,7 +23,7 @@ public enum Unit {
   },
   DOUBLE {
     @Override public String format(final double ¢) {
-      return String.format(format3(¢), box(¢));
+      return String.format(format3(¢), idiomatic.box(¢));
     }
   },
   BYTES() {
@@ -96,7 +96,7 @@ public enum Unit {
     return format(v / scale, units);
   }
   public static String format(final double d, final String units) {
-    return String.format(format3(d), box(d)) + units;
+    return String.format(format3(d), idiomatic.box(d)) + units;
   }
   public static String format(final Stopwatch ¢) {
     return formatNanoseconds(¢.time());
@@ -128,7 +128,7 @@ public enum Unit {
     return NANOSECONDS.format(¢);
   }
   public static String formatRelative(final double ¢) {
-    return String.format(format2(¢) + "%%", box(100 * ¢));
+    return String.format(format2(¢) + "%%", idiomatic.box(100 * ¢));
   }
   public static String formatRelative(final double d1, final double d2) {
     return formatRelative(d1 / d2);

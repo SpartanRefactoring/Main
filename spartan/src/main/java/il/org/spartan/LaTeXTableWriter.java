@@ -86,12 +86,12 @@ public class LaTeXTableWriter extends CSVLineWriter {
     final List<String> $ = new ArrayList<>();
     try (Formatter f = new Formatter()) {
       int column = size();
-      $.add(String.format("\\multicolumn{%d}{c}{\\mbox{}}", box(column)));
+      $.add(String.format("\\multicolumn{%d}{c}{\\mbox{}}", idiomatic.box(column)));
       for (final String nestedTableName : inner.keySet()) {
-        f.format("\\cmidrule(lr){%d-", box(column + 1));
+        f.format("\\cmidrule(lr){%d-", idiomatic.box(column + 1));
         final int size = inner.get(nestedTableName).size();
-        $.add(String.format("\\multicolumn{%d}{c}{%s}", box(size), nestedTableName));
-        f.format("%d} ", box(column += size));
+        $.add(String.format("\\multicolumn{%d}{c}{%s}", idiomatic.box(size), nestedTableName));
+        f.format("%d} ", idiomatic.box(column += size));
       }
       return makeLine($) + "\n" + f + "\n";
     }

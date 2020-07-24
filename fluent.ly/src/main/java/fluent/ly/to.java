@@ -2,7 +2,7 @@ package fluent.ly;
 
 import java.util.*;
 
-public class out {
+public class to {
   public static void out(final String ¢) {
     System.out.print(¢);
   }

@@ -1,17 +1,30 @@
 package fluent.ly;
 
-import static fluent.ly.box.*;
-import static fluent.ly.unbox.*;
+import static fluent.ly.unbox.it;
 
-import java.lang.reflect.*;
-import java.util.*;
-import java.util.Map.*;
-import java.util.function.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
 
-import il.org.spartan.iterables.*;
-import il.org.spatan.iteration.*;
+import il.org.spartan.iterables.iterables;
+import il.org.spatan.iteration.CharIterable;
+import il.org.spatan.iteration.CharIterator;
+import il.org.spatan.iteration.FilteredIterable;
+import il.org.spatan.iteration.IterableArray;
+import il.org.spatan.iteration.Iteration;
 
 public interface Iterables {
   static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T> ts) {
@@ -180,7 +193,7 @@ public interface Iterables {
         return position < i;
       }
       @Override public Integer next() {
-        return box(position++);
+        return idiomatic.box(position++);
       }
     };
   }
@@ -273,7 +286,7 @@ public interface Iterables {
     final double[] $ = new double[ds.size()];
     int i = 0;
     for (final Double ¢ : ds)
-      $[i++] = unbox(¢);
+      $[i++] = it(¢);
     return $;
   }
   static List<Double> toList(final double... ds) {

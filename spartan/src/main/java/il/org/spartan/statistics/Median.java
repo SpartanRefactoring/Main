@@ -34,7 +34,7 @@ public enum Median {
     final double median = destructiveMedian(ds), mad = mad(ds);
     for (final double ¢ : ds)
       if (median - 2 * mad <= ¢ && ¢ <= median + 2 * mad)
-        $.add(box(¢));
+        $.add(idiomatic.box(¢));
     return Iterables.toArray($);
   }
 }

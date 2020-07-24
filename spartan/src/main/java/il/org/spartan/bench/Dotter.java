@@ -2,6 +2,8 @@ package il.org.spartan.bench;
 
 import static fluent.ly.box.*;
 
+import fluent.ly.idiomatic;
+
 /** @author Yossi Gil
  * @since 01/05/2011 */
 public class Dotter implements java.io.Serializable {
@@ -43,7 +45,7 @@ public class Dotter implements java.io.Serializable {
   }
   private void lineStart() {
     lineStartTime = System.nanoTime();
-    System.err.printf("%3d", box(++line));
+    System.err.printf("%3d", idiomatic.box(++line));
   }
   private void nl() {
     final long now = System.nanoTime();

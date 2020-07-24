@@ -69,30 +69,6 @@ public abstract class Accumulator {
     @Override protected int transform(final int v) {
       return v == 0 ? 0 : 1;
     }
-
-    @SuppressWarnings("static-method")
-    public static class TEST {
-      @Test public void booleanAdds() {
-        final Accumulator c = new Counter();
-        azzert.that(c.value(), is(0));
-        c.add(true);
-        azzert.that(c.value(), is(1));
-        c.add(false);
-        azzert.that(c.value(), is(1));
-        c.add(false);
-        azzert.that(c.value(), is(1));
-        c.add(true);
-        azzert.that(c.value(), is(2));
-        c.add(true);
-        azzert.that(c.value(), is(3));
-      }
-      @Test public void emptyAdds() {
-        final Counter c = new Counter();
-        for (int ¢ = 0; ¢ < 19; ++¢)
-          c.add();
-        azzert.that(c.value(), is(19));
-      }
-    }
   }
 
   public static class Last extends Accumulator {
@@ -108,33 +84,6 @@ public abstract class Accumulator {
     }
     @Override protected int transform(final int v) {
       return v;
-    }
-
-    @SuppressWarnings("static-method")
-    public static class TEST {
-      @Test public void booleanAdds() {
-        final Last c = new Last();
-        azzert.that(as.bit(false), is(0));
-        azzert.that(c.value(), is(0));
-        c.add(true);
-        azzert.that(c.value(), is(1));
-        azzert.that(as.bit(false), is(0));
-        c.add(false);
-        azzert.that(c.value(), is(0));
-        c.add(false);
-        azzert.that(c.value(), is(0));
-        c.add(true);
-        azzert.that(c.value(), is(1));
-        c.add(true);
-        azzert.that(c.value(), is(1));
-      }
-      @Test public void emptyAdds() {
-        final Last c = new Last();
-        for (int ¢ = 0; ¢ < 19; ++¢)
-          c.add(¢);
-        c.add(11);
-        azzert.that(c.value(), is(11));
-      }
     }
   }
 

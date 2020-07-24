@@ -2,8 +2,6 @@
 package fluent.ly;
 
 import static il.org.spartan.Utils.*;
-import static org.junit.Assert.assertEquals;
-
 import static fluent.ly.azzert.*;
 
 import java.util.*;
@@ -70,7 +68,7 @@ public enum prune {
    * @param <T> type of elements in the input array.
    * @param ¢ an array of values.
    * @return an array of size 0 of elements of type <code>T</code>. */
-  private static <T> T[] shrink(final T[] ¢) {
+  static <T> T[] shrink(final T[] ¢) {
     return Arrays.copyOf(¢, 0);
   }
   @SafeVarargs public static <T> String[] whites(final T... ts) {
@@ -79,120 +77,5 @@ public enum prune {
       if (¢ != null)
         accumulate.to($).add((¢ + "").trim());
     return asArrray($);
-  }
-
-  /** A JUnit test class for the enclosing class.
-   * @author Yossi Gil, the Technion.
-   * @since 27/08/2008 */
-  @SuppressWarnings({ "static-method" }) //
-  public static class TEST1 {
-    final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
-    final String[] NonNullArray = { "1", "2", "4" };
-    private final lazy<List<String>> sparseCollection = () -> as.list(null, null, null, null, null, "A", null, null, null, "B", null, "C", null, null,
-        null, null, null);
-
-    @Test public void nullsNonNullArrayLength() {
-      assertEquals(NonNullArray.length, nulls(NonNullArray).length);
-    }
-    @Test public void nullsNullArrayItems() {
-      assertEquals("1", nulls(NonNullArray)[0]);
-      assertEquals("2", nulls(NonNullArray)[1]);
-      assertEquals("4", nulls(NonNullArray)[2]);
-    }
-    @Test public void nullsPruneArrayAltenatingItems() {
-      assertEquals("A", nulls(alternatingArray)[0]);
-      assertEquals("B", nulls(alternatingArray)[1]);
-      assertEquals("C", nulls(alternatingArray)[2]);
-    }
-    @Test public void nullsPruneArrayAltenatingLength() {
-      assertEquals(3, nulls(alternatingArray).length);
-    }
-    @Test public void nullsPruneSparseCollectionContents() {
-      final String[] a = nils(sparseCollection.get()).toArray(new String[3]);
-      assertEquals("A", a[0]);
-      assertEquals("B", a[1]);
-      assertEquals("C", a[2]);
-      assertEquals(3, a.length);
-    }
-    @Test public void nullsPruneSparseCollectionLength() {
-      assertEquals(3, nils(sparseCollection.get()).size());
-    }
-    @Test public void nullsPrunNonNull() {
-      assert nils(sparseCollection.get()) != null;
-    }
-    @Test public void shrinkArray() {
-      assertEquals(0, shrink(new Object[10]).length);
-    }
-    @Test public void shrinkEmptyArray() {
-      assertEquals(0, shrink(new Object[0]).length);
-    }
-    @Test public void whitesEmptyArray() {
-      assertEquals(0, prune.whites().length);
-    }
-    @Test public void whitesEmptyList() {
-      assertEquals(0, prune.whites().length);
-    }
-  }
-
-  /** A JUnit test class for the enclosing class.
-   * @author Yossi Gil, the Technion.
-   * @since 27/08/2008 */
-  @SuppressWarnings({ "static-method" })
-  public static class TEST2 {
-    final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
-    final String[] NonNullArray = { "1", "2", "4" };
-    private ArrayList<String> sparseCollection;
-
-    @Before public void initSparseCollection() {
-      sparseCollection = new ArrayList<>();
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add("A");
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add("B");
-      sparseCollection.add(null);
-      sparseCollection.add("C");
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-      sparseCollection.add(null);
-    }
-    @Test public void testNonNullArrayItems() {
-      azzert.that(nulls(NonNullArray)[0], is("1"));
-      azzert.that(nulls(NonNullArray)[1], is("2"));
-      azzert.that(nulls(NonNullArray)[2], is("4"));
-    }
-    @Test public void testNonNullArrayLength() {
-      azzert.that(nulls(NonNullArray).length, is(NonNullArray.length));
-    }
-    @Test public void testPruneArrayAltenatingItems() {
-      azzert.that(nulls(alternatingArray)[0], is("A"));
-      azzert.that(nulls(alternatingArray)[1], is("B"));
-      azzert.that(nulls(alternatingArray)[2], is("C"));
-    }
-    @Test public void testPruneArrayAltenatingLength() {
-      azzert.that(nulls(alternatingArray).length, is(3));
-    }
-    @Test public void testPruneSparseCollectionContents() {
-      final String[] a = nils(sparseCollection).toArray(new String[3]);
-      azzert.that(a[0], is("A"));
-      azzert.that(a[1], is("B"));
-      azzert.that(a[2], is("C"));
-      azzert.that(a.length, is(3));
-    }
-    @Test public void testPruneSparseCollectionLength() {
-      azzert.that(nils(sparseCollection).size(), is(3));
-    }
-    @Test public void testPrunNonNull() {
-      assert nils(sparseCollection) != null;
-    }
-    @Test public void testShrink() {
-      azzert.that(shrink(new Object[10]).length, is(0));
-    }
   }
 }

@@ -256,7 +256,7 @@ public abstract class LogBook implements Serializable {
       return unit;
     }
     void add(final double ¢) {
-      records.record(box(¢));
+      records.record(idiomatic.box(¢));
     }
     void add(final long ¢) {
       add(1. * ¢);
@@ -649,7 +649,7 @@ public abstract class LogBook implements Serializable {
       return ¢.isEmpty() ? "" : ¢.values() + ": ";
     }
     private String ratio(final Entry e1, final Entry e2) {
-      return String.format("%.2f*", box(e1.records.median() / e2.records.median())) + "";
+      return String.format("%.2f*", idiomatic.box(e1.records.median() / e2.records.median())) + "";
     }
     private Collection<Entry> select(final Iterable<Entry> es, final String key, final String value) {
       final List<Entry> $ = new ArrayList<>();
@@ -675,7 +675,7 @@ public abstract class LogBook implements Serializable {
             s.append("~~ ");
           else
             s.append("~").append(RELATIVE.format(p)).append("~ ");
-          s.append(String.format("%.2f*", box(s1.median() / s2.median())));
+          s.append(String.format("%.2f*", idiomatic.box(s1.median() / s2.median())));
         }
         s.append(shortForm(es[i]));
       }

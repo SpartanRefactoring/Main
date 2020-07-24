@@ -27,21 +27,21 @@ public class Issue1260 {
   }
   @Test @SuppressWarnings("boxing") public void integer() {
     final CountingReduce r = new CountingReduce();
-    azzert.that(box.box(0), is(r.reduce()));
-    azzert.that(box.box(1), is(r.reduce(1)));
-    azzert.that(box.box(3), is(r.reduce(1, 2)));
-    azzert.that(box.box(6), is(r.reduce(1, 2, 3)));
+    azzert.that(idiomatic.box(0), is(r.reduce()));
+    azzert.that(idiomatic.box(1), is(r.reduce(1)));
+    azzert.that(idiomatic.box(3), is(r.reduce(1, 2)));
+    azzert.that(idiomatic.box(6), is(r.reduce(1, 2, 3)));
   }
   @Test @SuppressWarnings("boxing") public void firstNonNull() {
     final FirstNotNullReduce<Integer> r = new FirstNotNullReduce<>();
     azzert.that(null, is(r.reduce()));
-    azzert.that(box.box(1), is(r.reduce(1, null, 2, null)));
-    azzert.that(box.box(2), is(r.reduce(null, null, 2, 3)));
+    azzert.that(idiomatic.box(1), is(r.reduce(1, null, 2, null)));
+    azzert.that(idiomatic.box(2), is(r.reduce(null, null, 2, 3)));
   }
   @Test @SuppressWarnings("boxing") public void booleanOr() {
     final BooleanOrReducer r = new BooleanOrReducer();
-    azzert.that(box.box(false), is(r.reduce()));
-    azzert.that(box.box(false), is(r.reduce(null, null)));
-    azzert.that(box.box(true), is(r.reduce(null, false, true, false)));
+    azzert.that(idiomatic.box(false), is(r.reduce()));
+    azzert.that(idiomatic.box(false), is(r.reduce(null, null)));
+    azzert.that(idiomatic.box(true), is(r.reduce(null, false, true, false)));
   }
 }

@@ -79,6 +79,8 @@ public interface system {
     final Stack<Character> $ = new Stack<>();
     for (final char ¢ : s.toCharArray())
       switch (¢) {
+        default: // No checking 
+          continue;
         case '(':
         case '[':
         case '{':
