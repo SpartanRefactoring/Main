@@ -101,7 +101,7 @@ public enum op {
     assert $ != null : "No assignment equivalent to " + ¢;
     return $;
   }
-  /** @param o JD
+  /** @param ¢ JD
    * @return whether one of {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
@@ -110,7 +110,7 @@ public enum op {
   }
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
-   * @param o JD
+   * @param ¢o JD
    * @return whether one of {@link #InfixExpression.Operator.LESS},
    *         {@link #InfixExpression.Operator.GREATER},
    *         {@link #InfixExpression.Operator.LESS_EQUALS},
@@ -125,7 +125,7 @@ public enum op {
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
   /** Determine whether an InfixExpression.Operator is a shift operator or not
-   * @param o JD
+   * @param ¢ JD
    * @return whether one of {@link #InfixExpression.Operator.LEFT_SHIFT},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_SIGNED},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED} and false

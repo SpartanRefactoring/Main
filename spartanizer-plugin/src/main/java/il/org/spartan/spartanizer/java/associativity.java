@@ -12,7 +12,7 @@ import fluent.ly.*;
 public enum associativity {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Determine whether associativity is left-to-right
-   * @param o JD
+   * @param ¢ JD
    * @return whether the associativity of the parameter is left-to-right. */
   public static boolean isLeftToRight(final InfixExpression.Operator ¢) {
     return isRightToLeft(precedence.of(¢));

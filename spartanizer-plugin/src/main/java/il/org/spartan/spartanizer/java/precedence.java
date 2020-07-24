@@ -69,7 +69,7 @@ public enum precedence {
     return precedence.isLegal(precedence.of(¢));
   }
   /** Determine the precedence of an arbitrary {@link ASTNode}
-   * @param n JD
+   * @param ¢ JD
    * @return precedence of the parameter */
   public static int of(final ASTNode ¢) {
     return !iz.expression(¢) ? UNDEFINED : precedence.of(az.expression(¢));

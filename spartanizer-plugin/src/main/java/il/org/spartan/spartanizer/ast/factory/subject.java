@@ -222,7 +222,7 @@ public enum subject {
     /** Create a new infix expression owned by ast the left/right hand side of
      * the assignment expression is the field left/right respectively, and the
      * operator is the given one
-     * @param o
+     * @param ¢ JD
      * @return an expression with the parameter o as an operator */
     public InfixExpression to(final InfixExpression.Operator ¢) {
       final InfixExpression $ = ast.newInfixExpression();

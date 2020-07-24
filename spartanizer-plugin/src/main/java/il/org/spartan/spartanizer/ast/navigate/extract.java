@@ -561,7 +561,7 @@ public enum extract {
     return $ == null ? null : $.getExpression();
   }
   /** extract the single {@link ThrowStatement} embedded in a node.
-   * @param n JD
+   * @param ¢ JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; {@code null} if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {

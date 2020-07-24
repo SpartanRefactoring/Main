@@ -271,7 +271,7 @@ public class TestClassMiner extends TestTables {
                 }
                 
                 @Override public boolean visit(final StringLiteral s) {
-                  stringCounter.add(countOf.nonWhiteCharacters(s));;
+                  stringCounter.add(countOf.nonWhiteCharacters(s));
                   return true;
                 }
                 
@@ -281,17 +281,17 @@ public class TestClassMiner extends TestTables {
                 }
                 
                 @Override public boolean visit(final LineComment s) {
-                  commentsCounter.add(countOf.nonWhiteCharacters(s));;
+                  commentsCounter.add(countOf.nonWhiteCharacters(s));
                   return true;
                 }
                 
                 @Override public boolean visit(final BlockComment s) {
-                  commentsCounter.add(countOf.nonWhiteCharacters(s));;
+                  commentsCounter.add(countOf.nonWhiteCharacters(s));
                   return true;
                 }
                 
                 @Override public boolean visit(final Javadoc s) {
-                  commentsCounter.add(countOf.nonWhiteCharacters(s));;
+                  commentsCounter.add(countOf.nonWhiteCharacters(s));
                   return true;
                 }
                 

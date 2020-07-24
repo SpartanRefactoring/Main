@@ -35,7 +35,7 @@ public class AList<T> {
 
   private class Entry {
     private final String key;
-    private final List<T> value = new ArrayList<>();;
+    private final List<T> value = new ArrayList<>();
 
     public Entry(String key) {
       this.key = key;

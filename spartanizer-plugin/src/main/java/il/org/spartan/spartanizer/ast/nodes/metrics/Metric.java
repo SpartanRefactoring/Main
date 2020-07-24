@@ -25,7 +25,7 @@ public abstract class Metric {
     return $;
   }
   
-  /** @param pattern JD
+  /** @param u JD
    * @return */
   public static ArrayList<String> dictionary_not_unique(final ASTNode u) {
     final ArrayList<String> $ = new ArrayList<>();

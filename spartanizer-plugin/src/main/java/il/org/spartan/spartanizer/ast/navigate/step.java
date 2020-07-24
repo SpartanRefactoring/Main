@@ -171,7 +171,7 @@ public enum step {
   public static SingleVariableDeclaration exception(final CatchClause ¢) {
     return ¢ == null ? null : ¢.getException();
   }
-  /** @param n a node to extract an expression from
+  /** @param ¢ a node to extract an expression from
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these. */
   public static Expression expression(final ASTNode ¢) {
