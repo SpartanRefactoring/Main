@@ -1,15 +1,20 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static fluent.ly.azzert.greaterThan;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.lessThan;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static il.org.spartan.spartanizer.engine.parse.s;
 
-import java.util.*;
+import java.util.ArrayList;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 
 /** Test class for {@link ExpressionComparator}
  * @author Yossi Gil

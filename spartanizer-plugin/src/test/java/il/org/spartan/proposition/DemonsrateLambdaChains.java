@@ -1,6 +1,7 @@
 package il.org.spartan.proposition;
 
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /** Demonstrates lambda
  * @author Yossi Gil

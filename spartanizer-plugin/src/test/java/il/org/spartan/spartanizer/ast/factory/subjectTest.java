@@ -5,19 +5,36 @@
  * @since Oct 19, 2016 */
 package il.org.spartan.spartanizer.ast.factory;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static fluent.ly.azzert.not;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static il.org.spartan.spartanizer.engine.parse.i;
+import static il.org.spartan.spartanizer.engine.parse.s;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.Statement;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.subject.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.subject.Pair;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.engine.ExpressionComparator;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.engine.type;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class subjectTest {

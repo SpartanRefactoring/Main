@@ -1,5 +1,6 @@
 package il.org.spartan.graph;
 
+
 import org.eclipse.jdt.annotation.Nullable;
 
 import il.org.spartan.collections.ImmutableArrayList;

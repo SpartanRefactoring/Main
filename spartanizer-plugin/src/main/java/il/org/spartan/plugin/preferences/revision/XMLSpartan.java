@@ -1,30 +1,73 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toSet;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectStreamClass;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.w3c.dom.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.*;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.anonymous;
+import fluent.ly.as;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.tippers.CatchClauseRenameParameterToIt;
+import il.org.spartan.spartanizer.tippers.ConstructorEmptyRemove;
+import il.org.spartan.spartanizer.tippers.EnhancedForParameterRenameToIt;
+import il.org.spartan.spartanizer.tippers.ForParameterRenameToIt;
+import il.org.spartan.spartanizer.tippers.ForRenameInitializerToIt;
+import il.org.spartan.spartanizer.tippers.ForToForUpdaters;
+import il.org.spartan.spartanizer.tippers.InfixExpressionConcatentateCompileTime;
+import il.org.spartan.spartanizer.tippers.LambdaRenameSingleParameterToLambda;
+import il.org.spartan.spartanizer.tippers.LocalInitializedNewAddAll;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameReturnToDollar;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameSingleParameter;
+import il.org.spartan.spartanizer.tippers.MethodInvocationToStringToEmptyStringAddition;
+import il.org.spartan.spartanizer.tippers.ModifierRedundant;
+import il.org.spartan.spartanizer.tippers.ParameterAnonymize;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.spartanizer.tipping.categories.Taxa;
+import il.org.spartan.spartanizer.tipping.categories.Taxon;
+import il.org.spartan.spartanizer.traversal.Tippers;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.utils.Examples;
 
 /** Support for plugin's XML configurations file for projects. Currently
  * describes what tippers are enabled for the project.

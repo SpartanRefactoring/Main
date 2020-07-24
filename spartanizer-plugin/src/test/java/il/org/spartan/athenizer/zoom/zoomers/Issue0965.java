@@ -1,14 +1,14 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
-import il.org.spartan.spartanizer.meta.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.athenizer.zoomers.ToStringExpander;
+import il.org.spartan.spartanizer.meta.MetaFixture;
+import il.org.spartan.spartanizer.testing.BloaterTest;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Test class for issue #965 Unit test for {@link ToStringExpander}
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}

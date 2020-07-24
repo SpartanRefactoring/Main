@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils;
 
-import java.util.*;
+import java.util.Map;
 
 // TODO Yossi Gil remove this class
 public final class MapEntry<K, V> implements Map.Entry<K, V> {

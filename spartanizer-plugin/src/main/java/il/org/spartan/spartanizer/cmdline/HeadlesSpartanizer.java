@@ -1,24 +1,36 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.tide.*;
+import static il.org.spartan.tide.clean;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.function.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.function.ToIntFunction;
 
-import org.eclipse.jdt.core.dom.*;
-import fluent.ly.*;
-import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.tables.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+
+import fluent.ly.as;
+import fluent.ly.note;
+import il.org.spartan.external.External;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metric;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.tables.Table_Summary;
+import il.org.spartan.spartanizer.java.Essence;
+import il.org.spartan.spartanizer.plugin.TextualTraversals;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.FileUtils;
 
 /** This class you can spartanize a directory easily. Or you can extends this
  * class and configure it to fit to your own needs.

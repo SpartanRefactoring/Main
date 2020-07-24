@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import an.empty;
 import il.org.spartan.Utils;
 
@@ -184,7 +186,7 @@ public enum as {
    * @param $ some value
    * @return parameter, after bing to a non-null string.
    */
-  public static String string(final Object $) {
+  public static @NonNull String string(final Object $) {
     return $ == null ? "null" : as.string($ + "");
   }
 
@@ -195,7 +197,7 @@ public enum as {
    * @param $ some value
    * @return parameter, after bing to a non-null string.
    */
-  public static String string(final String $) {
+  public static @NonNull String string(final String $) {
     return $ != null ? $ : "null";
   }
 

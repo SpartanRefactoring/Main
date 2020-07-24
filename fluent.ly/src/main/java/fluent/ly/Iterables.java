@@ -20,13 +20,13 @@ import java.util.function.Predicate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+
 import il.org.spartan.iterables.iterables;
 import il.org.spatan.iteration.CharIterable;
 import il.org.spatan.iteration.CharIterator;
 import il.org.spatan.iteration.FilteredIterable;
 import il.org.spatan.iteration.IterableArray;
 import il.org.spatan.iteration.Iteration;
-
 public interface Iterables {
   static <T, C extends Collection<T>> C addAll(final C $, final @NonNull Iterable<? extends T> ts) {
     for (final T ¢ : ts)

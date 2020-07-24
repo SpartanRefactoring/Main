@@ -1,11 +1,16 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.InfixMultiplicationSort;
+import il.org.spartan.spartanizer.tippers.LocalInitializedInlineIntoNext;
+import il.org.spartan.spartanizer.tippers.TwoDeclarationsIntoOne;
 
 /** Unit test for the GitHub issue thus numbered: of inlining into for
  * @author Yossi Gil

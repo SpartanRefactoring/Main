@@ -61,7 +61,7 @@ public interface the {
     return $;
   }
 
-  static <T> T first(final Iterable<T> ts, final Predicate<T> p) {
+  static <T> @Nullable T first(final Iterable<T> ts, final Predicate<T> p) {
     return the.first(ts.iterator(), p);
   }
 
@@ -82,15 +82,15 @@ public interface the {
    * @return the first element of the array if the array is of non-zero length,
    *         otherwise <code><b>null</b></code>
    */
-  static <T> T first(final T[] ¢) {
+  static <T> @Nullable T first(final T[] ¢) {
     return ¢.length > 0 ? ¢[0] : null;
   }
 
-  @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
+  @Contract("null -> null") static <T> @Nullable T firstOf(final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
 
-  @Contract("null -> null") static <T> T thirdOf(final List<T> ¢) {
+  @Contract("null -> null") static <T> @Nullable T thirdOf(final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(2);
   }
 
@@ -184,7 +184,7 @@ public interface the {
     return $;
   }
 
-  static <T> T nil() {
+  static <T> @Nullable T nil() {
     return null;
   }
 

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.java;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
 
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** Maintain a canonical order of modifiers.
  * @author Yossi Gil

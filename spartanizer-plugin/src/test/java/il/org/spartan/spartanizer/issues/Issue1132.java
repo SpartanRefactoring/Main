@@ -1,15 +1,16 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
-import static java.lang.Math.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
+import static java.lang.Math.abs;
 
-import java.util.*;
+import java.util.Random;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.azzert;
+import fluent.ly.box;
+import il.org.spartan.spartanizer.tippers.AssignmentUpdateAndSameUpdate;
 
 /** Test of {@link AssignmentUpdateAndSameUpdate}
  * @author Yossi Gil

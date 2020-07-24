@@ -87,7 +87,7 @@ public class Augmenter implements Application {
   // TODO Ori Roth: complete
   /** Collateralize a list of statements, returning partition of the statements
    * as list of lists of statements.
-   * @param ss statements to be collateralized
+   * @param __ statements to be collateralized
    * @return collateralization output as list of lists of statements */
   public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;

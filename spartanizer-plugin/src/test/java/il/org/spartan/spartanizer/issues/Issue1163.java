@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.testing.TipperTest;
+import il.org.spartan.spartanizer.tippers.TernaryBooleanLiteral;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** @author Niv Shalmon
  * @since 2017-06-19 */

@@ -3,7 +3,7 @@ package fluent.ly;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * TODO Yossi Gil: document class
@@ -16,7 +16,7 @@ public interface nil {
     R on(T t);
   }
 
-  @SuppressWarnings("unused") static <T> T forgetting(final Object _1, final Object... _2) {
+  @SuppressWarnings("unused") static <T> @Nullable T forgetting(final Object _1, final Object... _2) {
     return null;
   }
 
@@ -24,7 +24,7 @@ public interface nil {
     return λ -> λ == null ? null : f.apply(λ);
   }
 
-  @SuppressWarnings("unused") static <T> T ignoring(final boolean __) {
+  @SuppressWarnings("unused") static <T> @Nullable T ignoring(final boolean __) {
     return null;
   }
 
@@ -32,7 +32,7 @@ public interface nil {
     return null;
   }
 
-  @SuppressWarnings("unused") static <T> T ignoring(final long __) {
+  @SuppressWarnings("unused") static <T> @Nullable T ignoring(final long __) {
     return null;
   }
 

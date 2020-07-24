@@ -1,11 +1,17 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.tippers.FieldInitializedDefaultValue;
+import il.org.spartan.spartanizer.tippers.ForRenameInitializerToIt;
+import il.org.spartan.spartanizer.tippers.IfDeadRemove;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementTerminatingScope;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a

@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.StringLiteral;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

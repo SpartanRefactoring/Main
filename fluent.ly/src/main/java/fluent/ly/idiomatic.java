@@ -5,7 +5,7 @@ import static fluent.ly.azzert.is;
 
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 import org.junit.Test;
 
 /**

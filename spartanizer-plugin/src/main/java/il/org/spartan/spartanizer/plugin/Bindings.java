@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 
 /** Binding utilities.
  * @author Ori Roth

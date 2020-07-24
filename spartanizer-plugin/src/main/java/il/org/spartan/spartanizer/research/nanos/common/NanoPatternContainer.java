@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.research.nanos.common;
 
-import java.util.*;
+import java.util.ArrayList;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.research.TipperFactory;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** List that can contain nano patterns
  * @author orimarco {@code marcovitch.ori@gmail.com}

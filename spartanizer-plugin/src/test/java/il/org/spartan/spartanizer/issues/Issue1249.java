@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.utils.FailingTipper;
 
 /** Testing testing mechanisms.
  * @author Ori Roth

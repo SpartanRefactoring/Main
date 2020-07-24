@@ -1,11 +1,16 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.collections.ChainStringToIntFunctionegerMap;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /** *An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a

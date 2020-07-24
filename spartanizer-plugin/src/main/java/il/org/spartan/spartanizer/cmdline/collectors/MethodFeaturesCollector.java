@@ -1,16 +1,16 @@
 package il.org.spartan.spartanizer.cmdline.collectors;
 
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.CSVLineWriter;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.engine.nominal.guessName;
+import il.org.spartan.spartanizer.java.haz;
 
 /** Collects boolean features of methods
  * @author Yossi Gil

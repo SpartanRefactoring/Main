@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.range;
 
 /** TODO Sapir Bismot please add a description
  * @author Sapir Bismot

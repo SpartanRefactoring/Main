@@ -1,11 +1,15 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.removeWhites;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.BlockComment;
+import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.jdt.core.dom.LineComment;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.engine.parse;
 
 /** Trivia includes in it spaces, tabs, newlines, comments, line comments, and
  * in general anything that is not a token of Java. Here we have a bunch of

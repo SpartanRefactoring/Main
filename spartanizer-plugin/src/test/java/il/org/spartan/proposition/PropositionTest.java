@@ -1,17 +1,28 @@
 package il.org.spartan.proposition;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.utils.Proposition.*;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.utils.Proposition.AND;
+import static il.org.spartan.utils.Proposition.F;
+import static il.org.spartan.utils.Proposition.N;
+import static il.org.spartan.utils.Proposition.OR;
+import static il.org.spartan.utils.Proposition.T;
+import static il.org.spartan.utils.Proposition.X;
 import static il.org.spartan.utils.Proposition.not;
 import static il.org.spartan.utils.Proposition.that;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.function.BooleanSupplier;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.utils.Proposition;
+import il.org.spartan.utils.PropositionReducer;
+import il.org.spartan.utils.ReduceStringConcatenate;
 
 /** Tests class {@link Proposition}
  * @author Yossi Gil {@code     Yossi.Gil@GMail.COM}

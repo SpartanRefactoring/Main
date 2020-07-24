@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /** configurations for a {@link WidgetOperation}
  * @author Niv Shalmon

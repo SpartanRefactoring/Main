@@ -1,11 +1,16 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.WhileStatement;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.ForNoUpdatersNoInitializerToWhile;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameReturnToDollar;
+import il.org.spartan.spartanizer.tippers.WhileToForUpdaters;
 
 /** Unit test for {@link ForNoUpdatersNoInitializerToWhile}
  * @author Yossi Gil

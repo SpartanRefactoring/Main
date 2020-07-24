@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.engine;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.Ranger;
+import il.org.spartan.utils.Range;
 
 /** Tests {@link Ranger}
  * @author Yossi Gil

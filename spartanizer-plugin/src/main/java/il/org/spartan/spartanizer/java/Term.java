@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 
 /** An additive term, which might be either negative or positive
  * @author Yossi Gil

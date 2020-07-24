@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.engine;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 
 /** Enhances {@link ASTVisitor} with information on variable definition and
  * binding. To use, extend as usual, except that the {@link #preVisit(ASTNode)}

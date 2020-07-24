@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.research.analyses.analyzers;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.plugin.ConfigurableObjectTemplate;
+import il.org.spartan.utils.Bool;
+import il.org.spartan.utils.Int;
 
 /** Created out of {@link ConfigurableObjectTemplate}
  * @author Ori Marcovitch

@@ -1,14 +1,20 @@
 package il.org.spartan.spartanizer.issues;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import fluent.ly.idiomatic;
+import il.org.spartan.utils.BooleanOrReducer;
+import il.org.spartan.utils.CountingReduce;
+import il.org.spartan.utils.FirstNotNullReduce;
+import il.org.spartan.utils.ReduceCollectionsAdd;
 
 /** Tests for reducers
  * @author oran1248

@@ -1,15 +1,15 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Collection;
+import java.util.function.DoubleFunction;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
-import org.junit.runners.Parameterized.*;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

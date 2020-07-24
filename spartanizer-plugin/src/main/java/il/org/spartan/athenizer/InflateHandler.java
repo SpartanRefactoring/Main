@@ -1,30 +1,49 @@
 package il.org.spartan.athenizer;
 
-import static il.org.spartan.spartanizer.plugin.Eclipse.*;
-
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.plugin.Eclipse.openedTextEditors;
+import static java.util.stream.Collectors.toList;
 
 import java.util.List;
-import java.util.function.*;
+import java.util.function.Function;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.ui.*;
-import org.eclipse.ui.handlers.*;
-import org.eclipse.ui.part.*;
-import org.eclipse.ui.texteditor.*;
+import org.eclipse.swt.widgets.TypedListener;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPartService;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.texteditor.ITextEditor;
 
-import fluent.ly.*;
-import il.org.spartan.athenizer.SingleFlater.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.athenizer.SingleFlater.Operation;
+import il.org.spartan.athenizer.collateral.Augmenter;
+import il.org.spartan.spartanizer.plugin.Applicator;
+import il.org.spartan.spartanizer.plugin.Eclipse;
+import il.org.spartan.spartanizer.plugin.GUIApplicator;
+import il.org.spartan.spartanizer.plugin.Selection;
+import il.org.spartan.spartanizer.plugin.SpartanizationHandler;
+import il.org.spartan.spartanizer.plugin.WrappedCompilationUnit;
+import il.org.spartan.utils.Bool;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloaterGUIApplicator} as an {@link Applicator} and {@link Augmenter}

@@ -1,16 +1,22 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.containsString;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.nullValue;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.BLOCK_LOOK_ALIKE;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.EXPRESSION_LOOK_ALIKE;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.METHOD_LOOK_ALIKE;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.STATEMENTS_LOOK_ALIKE;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.find;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jface.text.Document;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.GuessedContext;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
 
 /** Unit tests for {@link GuessedContext}
  * @author Yossi Gil

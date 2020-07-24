@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** Test class for {@link getAll2}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>

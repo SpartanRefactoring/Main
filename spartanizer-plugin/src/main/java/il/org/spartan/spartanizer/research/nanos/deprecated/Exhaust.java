@@ -1,15 +1,15 @@
 package il.org.spartan.spartanizer.research.nanos.deprecated;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** Exhaust an iterator but do nothing with elements
  * @author orimarco {@code marcovitch.ori@gmail.com}

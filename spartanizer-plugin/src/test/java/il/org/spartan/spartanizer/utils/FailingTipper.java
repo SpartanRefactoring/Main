@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.utils;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
 
 /** Fails on every operation, used to test testing mechanisms.
  * @author Ori Roth

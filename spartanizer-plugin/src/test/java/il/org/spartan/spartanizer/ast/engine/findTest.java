@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.ast.engine;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.ast.navigate.find.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.ast.navigate.find.singleAtomicDifference;
+import static il.org.spartan.spartanizer.ast.navigate.find.singleExpressionDifference;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 /** TODO orimarco <marcovitch.ori@gmail.com> please add a description
  * @author orimarco <marcovitch.ori@gmail.com>

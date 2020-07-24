@@ -1,17 +1,24 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.List;
+import java.util.function.Function;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.Selfie;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.range;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Tippers;
+import il.org.spartan.utils.Int;
 
 /** Possible events during spartanization process
  * <p>

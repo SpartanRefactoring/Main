@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.subject;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

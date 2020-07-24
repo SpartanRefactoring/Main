@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.testing;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.tippers.InfixAdditionSubtractionExpand;
 
 /** Test class for InfixAdditionSubtractionExpand
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}

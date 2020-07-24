@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import il.org.spartan.spartanizer.meta.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.meta.AlphabeticallySortedSentence;
+import il.org.spartan.spartanizer.meta.MetaFixture;
+import il.org.spartan.spartanizer.tippers.AssignmentAndAssignmentOfSameValue;
 
 /** Unit tests for {@link AssignmentAndAssignmentOfSameValue}
  * @author Yossi Gil

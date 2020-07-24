@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.research.nanos.common.BlockNanoPatternContainer;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** Create a collection out of a copy of another
  * @author orimarco {@code marcovitch.ori@gmail.com}

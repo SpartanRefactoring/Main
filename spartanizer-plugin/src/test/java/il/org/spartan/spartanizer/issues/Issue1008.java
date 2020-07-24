@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.issues;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.AlphabeticallySortedSentence;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** Unit tests for {@link
  * @author Yossi Gil

@@ -1,12 +1,18 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.idiomatic.*;
+import static fluent.ly.idiomatic.eval;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
 
-import fluent.ly.*;
+import fluent.ly.as;
 
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil

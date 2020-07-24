@@ -1,19 +1,57 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_AND_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_OR_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.BIT_XOR_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.DIVIDE_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.LEFT_SHIFT_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.MINUS_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.PLUS_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.REMAINDER_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_SIGNED_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.TIMES_ASSIGN;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER_EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LEFT_SHIFT;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS_EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.OR;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_SIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.XOR;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.COMPLEMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.DECREMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.INCREMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.NOT;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.has;
+import fluent.ly.is;
+import fluent.ly.lisp;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.type;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

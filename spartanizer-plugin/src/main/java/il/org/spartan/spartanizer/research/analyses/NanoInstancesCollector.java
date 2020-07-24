@@ -5,20 +5,22 @@
  * @since Jan 10, 2017 */
 package il.org.spartan.spartanizer.research.analyses;
 
-import java.io.*;
-import java.lang.reflect.*;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.research.analyses.util.*;
-import il.org.spartan.spartanizer.research.nanos.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.good.InteractiveSpartanizer;
+import il.org.spartan.spartanizer.research.analyses.util.Files;
+import il.org.spartan.spartanizer.research.nanos.HoldsForAny;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();

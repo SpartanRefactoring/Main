@@ -1,14 +1,22 @@
 package il.org.spartan.spartanizer.ast.engine;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static fluent.ly.azzert.comparesEqualTo;
+import static fluent.ly.azzert.greaterThanOrEqualTo;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.not;
+import static il.org.spartan.spartanizer.engine.parse.a;
+import static il.org.spartan.spartanizer.engine.parse.c;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static il.org.spartan.spartanizer.engine.parse.p;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.java.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.java.precedence;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

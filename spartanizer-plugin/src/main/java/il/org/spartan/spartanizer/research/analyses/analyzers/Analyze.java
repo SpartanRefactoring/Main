@@ -1,29 +1,52 @@
 package il.org.spartan.spartanizer.research.analyses.analyzers;
 
-import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.javadoc;
+import static il.org.spartan.spartanizer.ast.navigate.step.methods;
+import static il.org.spartan.spartanizer.ast.navigate.step.types;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.appendFile;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.compilationUnit;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.createOutputDirIfNeeded;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.deleteOutputFile;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.getCompilationUnit;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.getProperty;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.inputFiles;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.outputDir;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.set;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.writeFile;
+import static java.util.stream.Collectors.toList;
 
-import static java.util.stream.Collectors.*;
+import java.io.File;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import java.io.*;
-import java.text.*;
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.analyses.util.*;
-import il.org.spartan.spartanizer.research.classifier.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.as;
+import fluent.ly.forget;
+import fluent.ly.safe;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.good.InteractiveSpartanizer;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.MethodRecord;
+import il.org.spartan.spartanizer.research.analyses.MagicNumbersAnalysis;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.analyses.hIndex;
+import il.org.spartan.spartanizer.research.analyses.util.Count;
+import il.org.spartan.spartanizer.research.classifier.Classifier;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.spartanizer.utils.format;
 
 /** Old class for some anlyzes, sort of deprecated since we use
  * {@link DeprecatedFolderASTVisitor}

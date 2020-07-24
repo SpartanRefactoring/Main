@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 import fluent.ly.English;
 import fluent.ly.box;
@@ -85,7 +85,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    */
   static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
     return c -> new Rule.Stateful<>() {
-      @Override public R fire() {
+      @Override public @Nullable R fire() {
         c.accept(current());
         return null;
       }
@@ -327,7 +327,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
                 "    Previously checked arguments was: %s\n" + //
                 "    Operand to rule application is: %s\n",
             ¢, current());
-      final R $ = fire();
+      final @Nullable R $ = fire();
       current = null;
       return $;
     }
@@ -348,7 +348,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       return ok(current = ¢);
     }
 
-    public abstract R fire();
+    public abstract @Nullable R fire();
 
     @Override public final T current() {
       return current;

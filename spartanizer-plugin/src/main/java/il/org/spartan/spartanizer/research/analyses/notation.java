@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import static fluent.ly.is.*;
+import static fluent.ly.is.in;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.SimpleName;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

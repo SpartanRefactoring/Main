@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.java.namespace.Environment.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.java.namespace.Environment.NULL;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

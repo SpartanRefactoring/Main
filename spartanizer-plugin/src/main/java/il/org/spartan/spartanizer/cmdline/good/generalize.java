@@ -1,15 +1,28 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.utils.*;
+import fluent.ly.forget;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.research.ASTutils;
+import il.org.spartan.utils.Int;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

@@ -1,16 +1,21 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.tables.*;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.Category;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.tables.Statistic;
+import il.org.spartan.tables.Table;
 
 /** A class which generates a table of all Nano Patterns gathered by categories.
  * @author orimarco {@code marcovitch.ori@gmail.com}

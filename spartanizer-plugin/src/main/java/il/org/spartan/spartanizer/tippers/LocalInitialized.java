@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>

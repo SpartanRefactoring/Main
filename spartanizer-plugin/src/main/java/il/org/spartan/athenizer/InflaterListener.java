@@ -1,28 +1,38 @@
 package il.org.spartan.athenizer;
 
-import java.util.*;
+import java.util.Arrays;
 import java.util.List;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.internal.ui.javaeditor.*;
-import org.eclipse.jface.text.source.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.text.undo.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.texteditor.*;
+import org.eclipse.swt.widgets.TypedListener;
+import org.eclipse.text.undo.DocumentUndoManagerRegistry;
+import org.eclipse.text.undo.IDocumentUndoManager;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.ITextEditor;
 
-import fluent.ly.*;
-import il.org.spartan.athenizer.SingleFlater.*;
-import il.org.spartan.plugin.preferences.revision.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.the;
+import il.org.spartan.athenizer.SingleFlater.WindowInformation;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources;
+import il.org.spartan.spartanizer.plugin.Eclipse;
+import il.org.spartan.spartanizer.plugin.Selection;
+import il.org.spartan.spartanizer.plugin.WrappedCompilationUnit;
+import il.org.spartan.utils.Bool;
 
 /** Listener for code inflation/deflation using mouse and CTRL key.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

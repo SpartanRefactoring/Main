@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tipping;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /** A list of {@link Tip}s
  * @author Yossi Gil

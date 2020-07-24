@@ -1,23 +1,38 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.removeComments;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.squeeze;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
-import org.eclipse.jdt.core.dom.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.bench.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.library.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+
+import fluent.ly.as;
+import fluent.ly.forget;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.bench.Dotter;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.external.External;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.safety.MethodProperty;
+import il.org.spartan.spartanizer.cmdline.JUnitTestMethodFacotry;
+import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
+import il.org.spartan.spartanizer.tipping.TraversalMonitor;
+import il.org.spartan.utils.FileUtils;
+import il.org.spartan.utils.fault;
 
 /** Parse and visit all Java files under a given path.
  * @author Yossi Gil

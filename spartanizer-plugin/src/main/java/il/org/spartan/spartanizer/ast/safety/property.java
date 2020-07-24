@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

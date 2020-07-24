@@ -1,12 +1,16 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.Recurser;
+import il.org.spartan.spartanizer.engine.parse;
 
 /** Test Cases for Checking the Recurder Mechanism for Passing Recursively Over
  * the AST

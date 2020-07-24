@@ -1,22 +1,94 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.idiomatic.*;
-import static fluent.ly.lisp.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static fluent.ly.idiomatic.eval;
+import static fluent.ly.lisp.chop;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.elze;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedModifiers;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.jdt.core.dom.ASTNode.ANNOTATION_TYPE_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
+import static org.eclipse.jdt.core.dom.ASTNode.EMPTY_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.ENUM_CONSTANT_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ENUM_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.FIELD_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.IF_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.INITIALIZER;
+import static org.eclipse.jdt.core.dom.ASTNode.INTERSECTION_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.METHOD_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.NAME_QUALIFIED_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.PARAMETERIZED_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.PRIMITIVE_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.QUALIFIED_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.UNION_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.WILDCARD_TYPE;
 
-import static java.util.stream.Collectors.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SwitchCase;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.ThrowStatement;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import java.util.*;
-import java.util.stream.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.range;
+import fluent.ly.separate;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.flatten;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.utils.fault;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a

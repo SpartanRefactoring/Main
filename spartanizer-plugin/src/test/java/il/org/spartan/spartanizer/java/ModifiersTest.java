@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.greaterThan;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.lessThan;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** Tests {@link IExtendedModifiersRank}
  * @author Alex Kopzon

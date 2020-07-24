@@ -2,16 +2,24 @@ package il.org.spartan.plugin.preferences.revision;
 
 import java.util.List;
 
-import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 
-import il.org.spartan.spartanizer.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperationEntry;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperationPoint;
 
 /** A dialog for the new widgets
  * @author Raviv Rachmiel

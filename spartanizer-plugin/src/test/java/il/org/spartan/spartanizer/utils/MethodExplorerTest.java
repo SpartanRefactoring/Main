@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.MethodExplorer;
+import il.org.spartan.spartanizer.engine.parse;
 
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class MethodExplorerTest {
