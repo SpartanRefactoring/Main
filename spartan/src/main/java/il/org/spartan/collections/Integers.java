@@ -195,7 +195,7 @@ public class Integers {
     //
   }
 
-  @SuppressWarnings({ "synthetic-access", "boxing" }) //
+  @SuppressWarnings({ "boxing" }) //
   public final class INVARIANT implements Invariantable {
     @Override public void check() {
       azzert.that(size, lessThanOrEqualTo(capacity()));
