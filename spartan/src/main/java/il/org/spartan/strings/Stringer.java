@@ -60,7 +60,7 @@ import il.org.spartan.utils.Separator;
     final int firstDigitIndex = s.length() - $;
     return $ >= "0000000".length() ? s
         : s.substring(0, firstDigitIndex) + "0000000".substring(0, "0000000".length() - $)
-            + s.substring(firstDigitIndex);
+        + s.substring(firstDigitIndex);
   }
 
   /** Return the largest prefix of a String the does not contain a certain

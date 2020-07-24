@@ -69,7 +69,7 @@ import il.org.spartan.utils.Separate;
         .replaceAll(ignoreCase() + beginTag(tag), "") //
         .replaceAll(ignoreCase() + endTag(tag), "") //
         .replaceAll(ignoreCase() + selfClosing(tag), "") //
-    ;
+        ;
   }
 
   public static String replace(final String text, final String from, final String to) {
@@ -196,7 +196,7 @@ import il.org.spartan.utils.Separate;
     @Test public void testDummyInContext() {
       azzert.that(
           "\t /**\r\n\t  * BEFORE\r\n\t  * <dummy>\r\n\t  * text\r\n\t  * </dummy>\r\n\t  * AFTER\r\n\t  */"
-              .replaceFirst(tagRegularExpression, "Content"),
+          .replaceFirst(tagRegularExpression, "Content"),
           is("\t /**\r\n\t  * BEFORE\r\n\t  * Content\r\n\t  * AFTER\r\n\t  */"));
     }
 

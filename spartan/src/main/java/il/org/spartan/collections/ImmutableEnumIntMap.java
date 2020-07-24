@@ -16,7 +16,7 @@ import il.org.spartan.streotypes.Immutable;
  * @since 23/08/2008
  * @see MutableEnumIntMap */
 @Canopy @Classical @Immutable public class ImmutableEnumIntMap<E extends Enum<E>> extends ImmutableArray.Ints
-    implements EnumIntMap<E> {
+implements EnumIntMap<E> {
   /** Initialize an instance with a given array of appropriate size.
    *
    * @param is an array whose <i>i<sup>th</sup></i> entry is the value of the

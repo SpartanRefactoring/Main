@@ -302,7 +302,7 @@ public class RawTokenizer {
   private static final int ZZ_PUSHBACK_2BIG = 2;
   /* error messages for the codes above */
   private static final String ZZ_ERROR_MSG[] = { "Unknown internal scanner error", "Error: could not match input",
-      "Error: pushback value was too large" };
+  "Error: pushback value was too large" };
   /** ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code> */
   private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
   private static final String ZZ_ATTRIBUTE_PACKED_0 = "\11\0\1\11\1\1\2\11\1\1\1\11\7\1\2\11"

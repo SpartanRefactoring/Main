@@ -207,12 +207,12 @@ public final class JVM {
 
     public static String format(final MemoryMXBean ¢) {
       return "Zombies=" + ¢.getObjectPendingFinalizationCount() + "\tHeap [" + format(¢.getHeapMemoryUsage())
-          + "]\n\t\tNon Heap [" + format(¢.getNonHeapMemoryUsage()) + "] ";
+      + "]\n\t\tNon Heap [" + format(¢.getNonHeapMemoryUsage()) + "] ";
     }
 
     public static String format(final MemoryUsage ¢) {
       return "Init:" + format(¢.getInit()) + " Max:" + format(¢.getMax()) + " Committed:" + format(¢.getCommitted())
-          + " Used:" + format(¢.getUsed()) + " ";
+      + " Used:" + format(¢.getUsed()) + " ";
     }
 
     public static long heapSize() {

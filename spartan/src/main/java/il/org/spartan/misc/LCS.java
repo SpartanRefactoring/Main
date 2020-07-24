@@ -162,7 +162,7 @@ public class LCS {
       azzert.that(length( //
           chars2Lines("ABRA"), //
           chars2Lines("CADABRA") //
-      ), is(4));
+          ), is(4));
     }
 
     @Test public void lengthStringAlmostTrivial() {
@@ -170,7 +170,7 @@ public class LCS {
       azzert.that(length( //
           "A\nB\nR\nA", //
           "C\nA\nD\nA\nB\nR\nA\n" //
-      ), is(4));
+          ), is(4));
     }
 
     @Test public void lengthStringMiddle() {
@@ -178,7 +178,7 @@ public class LCS {
       azzert.that(length( //
           chars2Lines("bcde"), //
           chars2Lines("abcdef") //
-      ), is(4));
+          ), is(4));
     }
 
     @Test public void lengthStringPrefix() {
@@ -186,7 +186,7 @@ public class LCS {
       azzert.that(length( //
           chars2Lines("abc"), //
           chars2Lines("abcdef") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringSimple() {
@@ -194,7 +194,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("A"), //
           chars2Lines("A") //
-      ), is(1));
+          ), is(1));
     }
 
     @Test public void lengthStringSimpleA() {
@@ -237,7 +237,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("A"), //
           chars2Lines("A") //
-      ), is(1));
+          ), is(1));
     }
 
     @Test public void lengthStringSuffix() {
@@ -245,7 +245,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("ABCD"), //
           chars2Lines("CD") //
-      ), is(2));
+          ), is(2));
     }
 
     @Test public void lengthStringTrivial() {
@@ -257,7 +257,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B...C..."), //
           chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_1() {
@@ -265,7 +265,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B...C"), //
           chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_2() {
@@ -273,7 +273,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B...C"), //
           chars2Lines(",,,,A,,,,,B,,,C,,,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_3() {
@@ -281,7 +281,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B...C"), //
           chars2Lines(",A,,,,,B,,,C,,,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_4() {
@@ -289,7 +289,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
           chars2Lines(",A,,,,,B,,,C,,,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_5() {
@@ -297,7 +297,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
           chars2Lines(",A,,,B,,C,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_6() {
@@ -305,7 +305,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
           chars2Lines(",A,B,,C,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_6A() {
@@ -313,7 +313,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A."), //
           chars2Lines(",A,") //
-      ), is(1));
+          ), is(1));
     }
 
     @Test public void lengthStringTypical_6B() {
@@ -321,7 +321,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A"), //
           chars2Lines(",A") //
-      ), is(1));
+          ), is(1));
     }
 
     @Test public void lengthStringTypical_6C() {
@@ -329,7 +329,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("."), //
           chars2Lines(",") //
-      ), is(0));
+          ), is(0));
     }
 
     @Test public void lengthStringTypical_6D() {
@@ -337,7 +337,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("X"), //
           chars2Lines("Y") //
-      ), is(0));
+          ), is(0));
     }
 
     @Test public void lengthStringTypical_6E() {
@@ -345,7 +345,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("X"), //
           chars2Lines("X") //
-      ), is(1));
+          ), is(1));
     }
 
     @Test public void lengthStringTypical_7() {
@@ -353,7 +353,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("A.B.C"), //
           chars2Lines(",A,B,,C,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_7A() {
@@ -361,7 +361,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("A.B.C"), //
           chars2Lines(",A,B,,C,,,,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_7B() {
@@ -369,7 +369,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("A.B.C"), //
           chars2Lines(",,,,,A,B,,C,,,,,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_7C() {
@@ -377,7 +377,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
           chars2Lines(",A,B,,C,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_8() {
@@ -385,7 +385,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("A.B.C"), //
           chars2Lines(",A,BC,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_9() {
@@ -393,7 +393,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("A.B.C"), //
           chars2Lines("ABC,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_A() {
@@ -401,7 +401,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("AB.C"), //
           chars2Lines("ABC,") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_B() {
@@ -409,7 +409,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("AB.C"), //
           chars2Lines("ABC") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypical_C() {
@@ -417,7 +417,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines("ABC"), //
           chars2Lines("ABC") //
-      ), is(3));
+          ), is(3));
     }
 
     @Test public void lengthStringTypicalWithDigits() {
@@ -425,7 +425,7 @@ public class LCS {
       azzert.that(length(//
           chars2Lines(".A.B...C..."), //
           chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
-      ), is(3));
+          ), is(3));
     }
   }
 }

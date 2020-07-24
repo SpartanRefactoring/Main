@@ -260,7 +260,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
      * @param from the source of the associations
      * @param tos  the targets of the associations.
      * @return <code><b>this</b></code> */
-    public Builder<E> outgoing(final E from, final E... tos) {
+    @SafeVarargs public final Builder<E> outgoing(final E from, final E... tos) {
       for (final E to : tos)
         newEdge(from, to);
       return this;

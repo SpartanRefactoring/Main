@@ -310,7 +310,7 @@ import il.org.spartan.utils.Separate.F;
       azzert.that(it(//
           makeArray(null, "A", null, "B", "C", null), //
           filler("__").begin("[[").end("]]").separator(":")//
-      ), is("[[__:A:__:B:C:__]]"));
+          ), is("[[__:A:__:B:C:__]]"));
     }
 
     @Test public void testArrayNoBegin() {

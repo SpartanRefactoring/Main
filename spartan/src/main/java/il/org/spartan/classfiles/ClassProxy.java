@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -410,8 +411,8 @@ public class ClassProxy<T> {
     return clazz().isSynthetic();
   }
 
-  public T newInstance() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-    return clazz().newInstance();
+  public T newInstance() throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    return clazz().getDeclaredConstructor().newInstance();
   }
 
   @Override public String toString() {

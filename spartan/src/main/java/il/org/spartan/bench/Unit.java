@@ -38,14 +38,14 @@ public enum Unit {
     @Override public String format(final double m) {
       return Double.isNaN(m) ? "NaN"
           : m < 0 ? "-" + format(-m)
-              : Double.isInfinite(m) ? "∞"
-                  : m < Kb ? format(m, 1, "B")
-                      : m < Mb ? format(m, Kb, "㎅")
-                          : m < Gb ? format(m, Mb, "㎆")
-                              : m < Tb ? format(m, Gb, "㎇") //
-                                  : m < Pb ? format(m, Tb, "TB") //
-                                      : m < Eb ? format(m, Pb, "PB") //
-                                          : format(m, Eb, "EB");
+          : Double.isInfinite(m) ? "∞"
+              : m < Kb ? format(m, 1, "B")
+                  : m < Mb ? format(m, Kb, "㎅")
+                      : m < Gb ? format(m, Mb, "㎆")
+                          : m < Tb ? format(m, Gb, "㎇") //
+                              : m < Pb ? format(m, Tb, "TB") //
+                                  : m < Eb ? format(m, Pb, "PB") //
+                                      : format(m, Eb, "EB");
     }
   },
   NANOSECONDS {
@@ -62,15 +62,15 @@ public enum Unit {
     @Override public String format(final double ¢) {
       return Double.isNaN(¢) ? "NaN"
           : ¢ < 0 ? "-" + format(-¢)
-              : Double.isInfinite(¢) ? "∞"
-                  : ¢ >= 604800 ? format(¢, 604800, "wk")
-                      : ¢ >= 86400 ? format(¢, 86400, "day")
-                          : ¢ >= 3600 ? format(¢, 1440, "hr")
-                              : ¢ >= 60 ? format(¢, 60, "min")
-                                  : ¢ >= 1 ? format(¢, 1, "s")
-                                      : ¢ >= 1E-3 ? format(¢, 1E-3, "㎳")
-                                          : ¢ >= 1E-6 ? format(¢, 1E-6, "㎲")
-                                              : ¢ >= 1E-9 ? format(¢, 1E-9, "㎱") : format(¢, 1E-12, "㎰");
+          : Double.isInfinite(¢) ? "∞"
+              : ¢ >= 604800 ? format(¢, 604800, "wk")
+                  : ¢ >= 86400 ? format(¢, 86400, "day")
+                      : ¢ >= 3600 ? format(¢, 1440, "hr")
+                          : ¢ >= 60 ? format(¢, 60, "min")
+                              : ¢ >= 1 ? format(¢, 1, "s")
+                                  : ¢ >= 1E-3 ? format(¢, 1E-3, "㎳")
+                                      : ¢ >= 1E-6 ? format(¢, 1E-6, "㎲")
+                                          : ¢ >= 1E-9 ? format(¢, 1E-9, "㎱") : format(¢, 1E-12, "㎰");
     }
   },
   RELATIVE {
@@ -110,9 +110,9 @@ public enum Unit {
 
   public static String format2(final double ¢) {
     return ¢ < 0 ? "-" + format2(-¢)
-        : "%" + (100 * ¢ < 0.01 ? ".0f"
-            : 100 * ¢ < 0.1 ? ".2f"
-                : 100 * ¢ < 1 || 100 * ¢ < 10 ? ".1f" : 100 * ¢ < 100 || 100 * ¢ < 1000 ? ".0f" : "5.0g");
+    : "%" + (100 * ¢ < 0.01 ? ".0f"
+        : 100 * ¢ < 0.1 ? ".2f"
+            : 100 * ¢ < 1 || 100 * ¢ < 10 ? ".1f" : 100 * ¢ < 100 || 100 * ¢ < 1000 ? ".0f" : "5.0g");
   }
 
   public static String format3(final double ¢) {

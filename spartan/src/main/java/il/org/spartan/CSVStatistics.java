@@ -51,16 +51,16 @@ public class CSVStatistics extends CSVLine.Ordered {
       l.put(keysHeader, key);
       final ImmutableStatistics s = stats.get(key);
       l//
-          .put("$N$", s.n()) //
-          .put("\\emph{n/a}", s.missing())//
-          .put("Mean", s.n() > 0 ? s.mean() : Double.NaN) //
-          .put("Median", s.n() > 0 ? s.median() : Double.NaN)//
-          .put("$\\sigma$", s.n() > 0 ? s.sd() : Double.NaN) //
-          .put("m.a.d", s.n() > 0 ? s.mad() : Double.NaN) //
-          .put("$\\min$", s.n() > 0 ? s.min() : Double.NaN) //
-          .put("$\\max$", s.n() > 0 ? s.max() : Double.NaN) //
-          .put("Range", s.n() <= 0 ? Double.NaN : s.max() - s.min())//
-          .put("Total", s.n() > 0 ? s.sum() : Double.NaN)//
+      .put("$N$", s.n()) //
+      .put("\\emph{n/a}", s.missing())//
+      .put("Mean", s.n() > 0 ? s.mean() : Double.NaN) //
+      .put("Median", s.n() > 0 ? s.median() : Double.NaN)//
+      .put("$\\sigma$", s.n() > 0 ? s.sd() : Double.NaN) //
+      .put("m.a.d", s.n() > 0 ? s.mad() : Double.NaN) //
+      .put("$\\min$", s.n() > 0 ? s.min() : Double.NaN) //
+      .put("$\\max$", s.n() > 0 ? s.max() : Double.NaN) //
+      .put("Range", s.n() <= 0 ? Double.NaN : s.max() - s.min())//
+      .put("Total", s.n() > 0 ? s.sum() : Double.NaN)//
       ;
       summarizer.writeFlush(l);
     }

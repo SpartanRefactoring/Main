@@ -135,7 +135,7 @@ public class Denser {
           the.ints(18, 19, 20, 21), //
           the.ints(21, 22, 23, 24), //
           the.ints(0, 11, 12, 13) //
-      ));
+          ));
       Assert.assertArrayEquals(the.ints(11, 13, 14), g[0]);
       Assert.assertArrayEquals(the.ints(15, 17, 18), g[1]);
       Assert.assertArrayEquals(the.ints(18, 20, 21), g[2]);

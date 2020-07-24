@@ -20,14 +20,14 @@ public interface beginning {
   static void main(final String[] args) {
     System.out.println("Arguments are: " + //
         beginning.with('(') //
-            .separate(args).by(", ") //
-            .endingWith(")").ifEmpty("NONE"));
+    .separate(args).by(", ") //
+    .endingWith(")").ifEmpty("NONE"));
     System.out.println(//
         "Arguments are: " + //
-            beginning.with('(') //
-                .separate(args).pruned().by(";") //
-                .endingWith(")").ifEmpty("[]") //
-    );
+        beginning.with('(') //
+        .separate(args).pruned().by(";") //
+        .endingWith(")").ifEmpty("[]") //
+        );
   }
 
   static with with(final char ¢) {

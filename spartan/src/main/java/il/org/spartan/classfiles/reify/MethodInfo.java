@@ -42,7 +42,7 @@ public class MethodInfo extends ExecutableEntity {
       for (final Method ¢ : Class.forName("java.lang.Object").getMethods())
         if (¢.getName().equals(name)
             && signature(¢.getName(), class2name(¢.getReturnType()), class2name(¢.getParameterTypes()))
-                .equals(signature()))
+            .equals(signature()))
           return false;
     } catch (final ClassNotFoundException ¢) {
       ¢.printStackTrace();

@@ -58,7 +58,6 @@ public class XYGnuPlotter {
     process.waitFor();
     stdoutRedirector.join();
     stderrRedirector.join();
-    super.finalize();
   }
 
   public void done() {

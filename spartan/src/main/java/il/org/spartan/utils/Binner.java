@@ -191,9 +191,9 @@ public class Binner {
 
     @Test public void twoIntervalsSizedTwoBinMatrix() {
       final int[][] a = new Binner(10, 3, 5, 5, 5).bin(new int[][] { //
-          new int[] { 3, 9, 7, 13 }, //
-          new int[] { 4, 2, 5, 4 }, //
-          new int[] { 19, 11, 24, 12 } //
+        new int[] { 3, 9, 7, 13 }, //
+        new int[] { 4, 2, 5, 4 }, //
+        new int[] { 19, 11, 24, 12 } //
       });
       azzert.that(a.length, is(3));
       azzert.that(a[0][0], is(12));

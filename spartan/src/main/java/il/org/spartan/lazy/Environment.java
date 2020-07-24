@@ -181,7 +181,7 @@ public interface Environment {
       @Test public void seriesA3() {
         azzert.that(helloWorld.¢(), iz(HELLO + SEPARATOR + WORLD));
         helloWorld.bind((final String ¢1, final String ¢2, final String ¢3, final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4))
-            .to(hello, world, hello, world);
+        .to(hello, world, hello, world);
         azzert.that(helloWorld.¢(), iz(HELLO + WORLD + HELLO + WORLD));
       }
 

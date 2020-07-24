@@ -160,16 +160,16 @@ public final class ConstantPool {
   private Constant readConstant(final RobustReader $) {
     final int//
     CONSTANT_UTF8 = 1, //
-        CONSTANT_INTEGER = 3, //
-        CONSTANT_FLOAT = 4, //
-        CONSTANT_LONG = 5, //
-        CONSTANT_DOUBLE = 6, //
-        CONSTANT_CLASS = 7, //
-        CONSTANT_STRING = 8, //
-        CONSTANT_FIELDREF = 9, //
-        CONSTANT_METHODREF = 10, //
-        CONSTANT_INTERFACE_METHODREF = 11, //
-        CONSTANT_NAME_AND_TYPE = 12; //
+    CONSTANT_INTEGER = 3, //
+    CONSTANT_FLOAT = 4, //
+    CONSTANT_LONG = 5, //
+    CONSTANT_DOUBLE = 6, //
+    CONSTANT_CLASS = 7, //
+    CONSTANT_STRING = 8, //
+    CONSTANT_FIELDREF = 9, //
+    CONSTANT_METHODREF = 10, //
+    CONSTANT_INTERFACE_METHODREF = 11, //
+    CONSTANT_NAME_AND_TYPE = 12; //
     int b;
     switch (b = $.readUnsignedByte()) {
     case CONSTANT_CLASS:

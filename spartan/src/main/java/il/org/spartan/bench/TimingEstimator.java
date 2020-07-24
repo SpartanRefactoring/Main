@@ -159,16 +159,16 @@ public class TimingEstimator {
   @Override public String toString() {
     return String.format(//
         "Total:  %s\n" + //
-            "Useful: %s\n" + //
-            "Efficiency: runs=%s netTime=%s grossTime=%s\n" + //
-            "Estimate=%s", //
+        "Useful: %s\n" + //
+        "Efficiency: runs=%s netTime=%s grossTime=%s\n" + //
+        "Estimate=%s", //
         totalRuns, //
         usefulRuns, //
         Unit.formatRelative(usefulRuns.runs(), totalRuns.runs()), //
         Unit.formatRelative(usefulRuns.netTime(), totalRuns.netTime()), //
         Unit.formatRelative(usefulRuns.grossTime(), totalRuns.grossTime()), //
         Unit.NANOSECONDS.format(estimate) //
-    );
+        );
   }
 
   private void updateEstimate(final double update) {

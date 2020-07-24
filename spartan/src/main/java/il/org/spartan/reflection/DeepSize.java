@@ -46,12 +46,12 @@ public class DeepSize {
 
   static class Visitor {
     private static Class<?>[] nonReference = new Class<?>[] { //
-        boolean.class, char.class, void.class, //
-        boolean[].class, char[].class, //
-        byte.class, short.class, int.class, long.class, //
-        byte[].class, short[].class, int[].class, long[].class, //
-        float.class, double.class, //
-        float[].class, double[].class,//
+      boolean.class, char.class, void.class, //
+      boolean[].class, char[].class, //
+      byte.class, short.class, int.class, long.class, //
+      byte[].class, short[].class, int[].class, long[].class, //
+      float.class, double.class, //
+      float[].class, double[].class,//
     };
 
     static ArrayList<Field> getAllFields(final Class<?> c) {

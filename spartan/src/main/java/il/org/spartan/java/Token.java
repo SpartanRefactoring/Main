@@ -109,7 +109,7 @@ public enum Token {
           "kind=" + t.kind, //
           "Category=" + t.kind.category, //
           "error=" + t.isError)//
-      );
+          );
       if (t == EOF)
         return;
     }

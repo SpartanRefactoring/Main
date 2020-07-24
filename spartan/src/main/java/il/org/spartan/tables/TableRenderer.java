@@ -20,18 +20,18 @@ import il.org.spartan.Separator;
         return "\\bottomrule" + NL;
       }
 
-    // @formatter:off
-			@Override
-			public String arraySeparator() {
-				return ", ";
-			}
+      // @formatter:off
+      @Override
+      public String arraySeparator() {
+        return ", ";
+      }
 
-			@Override
-			public String beforeFooter() {
-				return "\\midrule" + NL;
-			}
+      @Override
+      public String beforeFooter() {
+        return "\\midrule" + NL;
+      }
 
-			// @formatter:on
+      // @formatter:on
       @Override public String beforeTable() {
         return "\\toprule" + NL;
       }
@@ -71,18 +71,18 @@ import il.org.spartan.Separator;
         return "\\hline" + NL;
       }
 
-    // @formatter:off
-			@Override
-			public String arraySeparator() {
-				return ", ";
-			}
+      // @formatter:off
+      @Override
+      public String arraySeparator() {
+        return ", ";
+      }
 
-			@Override
-			public String beforeFooter() {
-				return "\\hline" + NL;
-			}
+      @Override
+      public String beforeFooter() {
+        return "\\hline" + NL;
+      }
 
-			// @formatter:on
+      // @formatter:on
       @Override public String beforeTable() {
         return "\\hline" + NL;
       }
@@ -96,17 +96,17 @@ import il.org.spartan.Separator;
       }
     },
     CSV {
-    // @formatter:off
-			@Override
-			public String footerEnd() {
-				return NL;
-			}
+      // @formatter:off
+      @Override
+      public String footerEnd() {
+        return NL;
+      }
 
-			@Override
-			public String recordSeparator() {
-				return ",";
-			}
-			// @formatter:on
+      @Override
+      public String recordSeparator() {
+        return ",";
+      }
+      // @formatter:on
     },
     MARKDOWN {
       @Override public String afterHeader() {
@@ -120,27 +120,27 @@ import il.org.spartan.Separator;
         return NL;
       }
 
-    // @formatter:off
-			@Override
-			public String beforeTable() {
-				return NL;
-			}
+      // @formatter:off
+      @Override
+      public String beforeTable() {
+        return NL;
+      }
 
-			@Override
-			public String recordBegin() {
-				return "|";
-			}
+      @Override
+      public String recordBegin() {
+        return "|";
+      }
 
-			@Override
-			public String recordEnd() {
-				return " |" + NL;
-			}
+      @Override
+      public String recordEnd() {
+        return " |" + NL;
+      }
 
-			@Override
-			public String recordSeparator() {
-				return " | ";
-			}
-			// @formatter:on
+      @Override
+      public String recordSeparator() {
+        return " | ";
+      }
+      // @formatter:on
     };
 
     static int lastSize;
@@ -177,63 +177,63 @@ import il.org.spartan.Separator;
   }
   // @formatter:off
 
-	default String arraySeparator() {
-		return "; ";
-	}
+  default String arraySeparator() {
+    return "; ";
+  }
 
-	default String beforeFooter() {
-		return empty();
-	}
+  default String beforeFooter() {
+    return empty();
+  }
 
-	default String beforeHeader() {
-		return empty();
-	}
+  default String beforeHeader() {
+    return empty();
+  }
 
-	default String beforeTable() {
-		return empty();
-	}
+  default String beforeTable() {
+    return empty();
+  }
 
-	default String cellArray(final Object[] ¢) {
-		return separate.these(¢).by(arraySeparator());
-	}
+  default String cellArray(final Object[] ¢) {
+    return separate.these(¢).by(arraySeparator());
+  }
 
-	default String cellInt(final Long ¢) {
-		return ¢ + "";
-	}
+  default String cellInt(final Long ¢) {
+    return ¢ + "";
+  }
 
-	default String extension() {
-		return toString().toLowerCase();
-	}
+  default String extension() {
+    return toString().toLowerCase();
+  }
 
-	default String footerBegin() {
-		return recordBegin();
-	}
+  default String footerBegin() {
+    return recordBegin();
+  }
 
-	default String footerEnd() {
-		return recordEnd();
-	}
+  default String footerEnd() {
+    return recordEnd();
+  }
 
-	default String footerSeparator() {
-		return recordSeparator();
-	}
+  default String footerSeparator() {
+    return recordSeparator();
+  }
 
-	default String headerLineBegin() {
-		return recordBegin();
-	}
+  default String headerLineBegin() {
+    return recordBegin();
+  }
 
-	default String headerLineEnd() {
-		return recordEnd();
-	}
+  default String headerLineEnd() {
+    return recordEnd();
+  }
 
-	default String headerSeparator() {
-		return recordSeparator();
-	}
+  default String headerSeparator() {
+    return recordSeparator();
+  }
 
-	default String nil() {
-		return "Nº";
-	}
+  default String nil() {
+    return "Nº";
+  }
 
-	// @formatter:on
+  // @formatter:on
   default String recordBegin() {
     return empty();
   }

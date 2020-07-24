@@ -155,10 +155,10 @@ public final class IntegersMap {
         $[j++] = data[¢];
     return $;
   }/*
-    * What are all values stored in this object?
-    *
-    * @return an array of all elements in this set.
-    */
+   * What are all values stored in this object?
+   *
+   * @return an array of all elements in this set.
+   */
 
   public IntegersMap put(final int key, final int value) {
     final int location = location(key);

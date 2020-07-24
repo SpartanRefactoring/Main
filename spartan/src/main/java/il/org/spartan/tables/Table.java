@@ -184,9 +184,9 @@ public class Table extends Row<Table> implements Closeable {
 
   /* @formatter:off */ @Override
 
-	protected Table self() {
-		return this;
-	} /* @formatter:on */
+  protected Table self() {
+    return this;
+  } /* @formatter:on */
 
   private Table set(final List<Statistic> ¢) {
     return set(¢.toArray(new Statistic[¢.size()]));
