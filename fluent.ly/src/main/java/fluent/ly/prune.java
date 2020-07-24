@@ -137,7 +137,7 @@ public enum prune {
   /** A JUnit test class for the enclosing class.
    * @author Yossi Gil, the Technion.
    * @since 27/08/2008 */
-  @SuppressWarnings({ "static-method", "synthetic-access" })
+  @SuppressWarnings({ "static-method" })
   public static class TEST2 {
     final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] NonNullArray = { "1", "2", "4" };
