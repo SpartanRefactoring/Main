@@ -29,7 +29,7 @@ public final class IterableAdapter<T> implements Iterable<T> {
   final Enumeration<T> implementation;
 
   /** Create an {@link Iterable} from a given enumeration
-   * @param implmenetation an enumeration adapted by the newly created
+   * @param implementation an enumeration adapted by the newly created
    *        {@link Iterable} */
   public IterableAdapter(final Enumeration<T> implementation) {
     this.implementation = implementation;

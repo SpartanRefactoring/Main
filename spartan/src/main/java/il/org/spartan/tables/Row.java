@@ -70,14 +70,14 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return value == null ? col(key) : col(key, value.intValue());
   }
   /** Add a key and a {@code long} value to this instance
-   * @param key The key to be added; must not be {@code null @param value The
+   * @param key The key to be added; must not be {@code null} @param value The
    *        value associated with the key @return {@code this} */
   public Self col(final String key, final long value) {
     return col(key, value + "");
   }
   /** Add a key and a non specific {@link Object} value to this instance
-   * @param key The key to be added; must not be {@code null; must not be
-   *        {@code null @param value The value associated with the key @return
+   * @param key The key to be added; must not be {@code null; must not be {@code
+   *        null} @param value The value associated with the key @return
    *        {@code this} */
   public final Self col(final String key, final Object value) {
     if (value == null)
@@ -92,14 +92,15 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
   /** A mutator to add a key and a general {@link String} value to this instance
-   * @param key The key to be added; must not be {@code null @param value The
-   *        value associated with the key @return {@code this} */
+   * @param key The key to be added; must not be {@code null}
+   * @param value The value associated with the key
+   * @return {@code this} */
   public final Self col(final String key, final String value) {
     super.put(key, value);
     return self();
   }
   /** Adds all {@link External} properties in a given object.
-   * @param t an arbitrary object, usually with some of its fields and methods
+   * @param $ an arbitrary object, usually with some of its fields and methods
    *        marked {@link External}
    * @return the parameter */
   public <T> T extract(final T $) {

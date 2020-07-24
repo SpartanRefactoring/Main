@@ -78,7 +78,7 @@ public final class ToIntegers<E> {
    * @param ns an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
    *         are contained in this set */
-  public boolean contains(final E... ns) {
+  @SafeVarargs public final boolean contains(final E... ns) {
     for (final E n : ns)
       if (!contains(n))
         return false;
@@ -88,7 +88,7 @@ public final class ToIntegers<E> {
    * @param ns an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
    *         from the set of elements in the parameter */
-  public boolean disjoint(final E... ns) {
+  @SafeVarargs public final boolean disjoint(final E... ns) {
     for (final E n : ns)
       if (contains(n))
         return false;

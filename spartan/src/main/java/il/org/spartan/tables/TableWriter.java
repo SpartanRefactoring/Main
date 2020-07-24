@@ -15,7 +15,7 @@ import il.org.spartan.Separator;
  * @since 2016-12-25 */
 public class TableWriter implements Closeable {
   /** Create a new instance, writing into a given named file
-   * @param currentFileName the name of the output file
+   * @param basePath the name of the output file
    * @throws IOException */
   public TableWriter(final TableRenderer renderer, final String basePath) throws IOException {
     this.renderer = renderer;

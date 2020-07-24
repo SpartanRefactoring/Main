@@ -31,7 +31,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
   public Sequence() {
     this(null, 0, 0);
   }
-  public Sequence(final E... es) {
+  @SafeVarargs public Sequence(final E... es) {
     this(es, 0, es.length);
   }
   protected Sequence(final E[] es, final int begin, final int end) {

@@ -1,7 +1,11 @@
 package il.org.spartan.collections;
 
 /** @param <T> Type of encoded objects
- * @param <U> An upper bound on the type of encoded objects */
+ * 
+ * @author Yossi Gil
+ *
+ * @since 2020-07-24
+ */
 public interface Contains<U> {
   /** @param u an arbitrary object
    * @return <code><b>true</b</code> <em>if and only if</em> the parameter is

@@ -71,8 +71,8 @@ public enum HTML {
     return $ + "";
   }
   /** Escape an array of {@link String}s for inclusion in an HTML page.
-   * @param ss an array of strings escape.
-   * @return the same array, where each entry is replaced by its escaped
+   * @param $ an array of strings escape.
+   * @return the parameter, where each entry is replaced by its escaped
    *         form. */
   public static String[] esc(final String[] $) {
     for (int ¢ = 0; ¢ < $.length; ++¢)

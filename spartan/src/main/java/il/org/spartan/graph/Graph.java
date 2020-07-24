@@ -170,7 +170,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
      * @param to the target of the associations.
      * @param froms the sources of the associations
      * @return <code><b>this</b></code> */
-    public Builder<E> incoming(final E to, final E... froms) {
+    @SafeVarargs public final Builder<E> incoming(final E to, final E... froms) {
       for (final E from : froms)
         newEdge(from, to);
       return this;
@@ -190,7 +190,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
      * cases in which these data element may not participate in any association.
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    public Builder<E> newSelfLoops(final E... es) {
+    @SafeVarargs public final Builder<E> newSelfLoops(final E... es) {
       for (final E ¢ : es)
         newEdge(¢, ¢);
       return this;
@@ -209,7 +209,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
      * association.
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    public Builder<E> newVertices(final E... es) {
+    @SafeVarargs public final Builder<E> newVertices(final E... es) {
       for (final E ¢ : es)
         newVertex(¢);
       return this;
