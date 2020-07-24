@@ -1,7 +1,6 @@
 package il.org.spartan;
 // TODO: Yossi: I commented this one too.
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
