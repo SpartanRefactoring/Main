@@ -1,4 +1,5 @@
-/* Copyright (c) 1994, 2005, Oracle and/or its affiliates. All rights reserved.
+/*
+ * Copyright (c) 1994, 2005, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. This code is
  * free software; you can redistribute it and/or modify it under the terms of
  * the GNU General Public License version 2 only, as published by the Free
@@ -13,7 +14,8 @@
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA. Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA
  * 94065 USA or visit www.oracle.com if you need additional information or have
- * any questions. */
+ * any questions.
+ */
 package il.org.spartan.classfiles.reify;
 
 import java.io.ByteArrayInputStream;
@@ -22,6 +24,7 @@ import java.io.InputStream;
 import fluent.ly.___;
 
 /** A sane re-implementation of {@link ByteArrayInputStream}.
+ *
  * @author Yossi Gil */
 public class BufferInputStream extends InputStream {
   protected final byte[] bytes;
@@ -33,30 +36,39 @@ public class BufferInputStream extends InputStream {
     this.bytes = bytes;
     length = bytes.length;
   }
+
   @Override public synchronized int available() {
     return length - position;
   }
+
   @Override public void close() {
     ___.nothing();
   }
+
   public boolean done() {
     return position >= length;
   }
+
   public boolean eof() {
     return done();
   }
+
   @Override public synchronized void mark(final int limit) {
     mark = position;
   }
+
   @Override public boolean markSupported() {
     return true;
   }
+
   public final int position() {
     return position;
   }
+
   @Override public synchronized int read() {
     return done() ? -1 : bytes[position++] & 0xff;
   }
+
   @Override public synchronized int read(final byte bs[], final int offset, final int len) {
     if (bs == null)
       throw new NullPointerException();
@@ -71,10 +83,12 @@ public class BufferInputStream extends InputStream {
     position += $;
     return $;
   }
+
   @Override public synchronized void reset() {
     position = mark;
   }
-  @Override public synchronized long skip(long ¢) {
+
+  @Override public synchronized long skip(final long ¢) {
     if (¢ + position > length)
       return skip(length - position);
     if (¢ < 0)

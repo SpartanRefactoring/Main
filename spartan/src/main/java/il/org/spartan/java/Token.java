@@ -24,11 +24,13 @@ public enum Token {
   __boolean, __byte, __short, __int, __long, __char, __float, __double, __void, __package, // package_declaration
   __import, // import_declaration
   // Modifiers:
-  __public, __protected, __private, __static, __abstract, __final, __native, __synchronized, __transient, __volatile, __strictfp,
+  __public, __protected, __private, __static, __abstract, __final, __native, __synchronized, __transient, __volatile,
+  __strictfp,
   // Type generators:
   __class, __interface, __enum, __extends, __implements, __throws, __this, __super, // explicit_constructor_invocation
   // Control flow:
-  __if, __else, __switch, __case, __default, __do, __while, __for, __break, __continue, __return, __throw, __try, __catch, __finally,
+  __if, __else, __switch, __case, __default, __do, __while, __for, __break, __continue, __return, __throw, __try,
+  __catch, __finally,
   // Operators:
   __instanceof, __new, __assert, __const, __goto, AT_INTERFACE(KEYWORD), ANNOTATION(ID),
   // Other identifiers:
@@ -97,6 +99,7 @@ public enum Token {
   public static void main(final String argv[]) throws IOException {
     main(new RawTokenizer(new InputStreamReader(System.in)));
   }
+
   private static void main(final RawTokenizer tokenizer) throws IOException {
     for (;;) {
       final Token t = tokenizer.next();
@@ -118,16 +121,20 @@ public enum Token {
   Token() {
     this(KEYWORD);
   }
+
   Token(final Kind kind) {
     this(kind, false);
   }
+
   Token(final Kind kind, final boolean isError) {
     this.kind = kind;
     this.isError = isError;
   }
+
   public boolean isError() {
     return isError;
   }
+
   public boolean isNL() {
     return this == NL || this == NL_BLOCK_COMMENT || this == NL_DOC_COMMENT;
   }

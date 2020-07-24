@@ -18,6 +18,7 @@ import fluent.ly.azzert;
  * implementation of this function. Moreover, the descendant is actually
  * forbidden from giving any semantics to this function, which would be in
  * contrast with the read-only nature of this iterator.
+ *
  * @see PureIterator
  * @author Yossi Gil
  * @since 2014-06-03
@@ -26,6 +27,7 @@ public abstract class PureIterator<T> implements Iterator<T> {
   /** This <code><b>final</b></code> implementation of the method, prevents
    * descendants from giving {link #remove} semantics other than immediately
    * throwing a fresh instance of {@link IllegalArgumentException}.
+   *
    * @see java.util.Iterator#remove() */
   @Override public final void remove() {
     throw new IllegalArgumentException();
@@ -35,8 +37,8 @@ public abstract class PureIterator<T> implements Iterator<T> {
    * @param <T> JD
    * @since 2016 */
   public abstract static class Staged<@Nullable T> extends PureIterator<T> {
-    /** Stores the next value that this iterator returns. It has non-null
-     * content only after {@link #hasNext} returned true. */
+    /** Stores the next value that this iterator returns. It has non-null content
+     * only after {@link #hasNext} returned true. */
     private T next;
 
     @Override public final T next() {
@@ -44,10 +46,12 @@ public abstract class PureIterator<T> implements Iterator<T> {
       clearNext();
       return $;
     }
+
     protected final void clearNext() {
       cantBeNull(next);
       next = null;
     }
+
     protected final boolean setNext(final T next) {
       mustBeNull(this.next);
       this.next = next;
@@ -59,21 +63,27 @@ public abstract class PureIterator<T> implements Iterator<T> {
     public static <T> void assertEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
     }
+
     public static <T> void assertEquals(final T t1, final T t2) {
       azzert.that(t2, is(t1));
     }
+
     public static <T> void assertNotEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
     }
+
     public static <T> void assertNotEquals(final T t1, final T t2) {
       azzert.that(t2, is(t1));
     }
+
     @Override public boolean hasNext() {
       return false;
     }
+
     @Test public void isEmpty() {
       azzert.nay(hasNext());
     }
+
     @Test(expected = IllegalArgumentException.class) public void tryToRemove() {
       remove();
     }

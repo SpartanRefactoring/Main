@@ -10,12 +10,16 @@ public class CodeOnlyFilter extends TokenFilter {
   @Override public String toString() {
     return $ + "";
   }
+
   @Override protected void __process(final Token __, final String text) {
     $.append(text);
   }
-  /* (non-Javadoc)
+
+  /*
+   * (non-Javadoc)
    *
-   * @see il.org.spartan.java.TokenFilter#ok(il.org.spartan.java. Token) */
+   * @see il.org.spartan.java.TokenFilter#ok(il.org.spartan.java. Token)
+   */
   @Override protected boolean ok(final Token ¢) {
     return !¢.isError() && !¢.isNL() && ¢.kind.category != IGNORE;
   }

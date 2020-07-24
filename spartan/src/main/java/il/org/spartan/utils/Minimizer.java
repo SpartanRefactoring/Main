@@ -12,9 +12,11 @@ public class Minimizer<T> {
   public int index() {
     return maxIndex;
   }
+
   public double min() {
     return min;
   }
+
   public Minimizer<T> next(final T t, final double next) {
     assert t != null;
     if (Double.isNaN(min) || next < min) {
@@ -25,6 +27,7 @@ public class Minimizer<T> {
     ++index;
     return this;
   }
+
   public T value() {
     assert value != null;
     return value;

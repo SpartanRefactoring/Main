@@ -5,6 +5,7 @@ import il.org.spartan.CSVLineWriter;
 
 /** Print out all Unicode characters that are pseudo-letters, and demonstrate
  * class {@link CSVLineWriter}
+ *
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-09-11 */
 public class IdentifierLetters {
@@ -21,6 +22,7 @@ public class IdentifierLetters {
         w.nl();
       }
   }
+
   static String hex(final int ¢) {
     return String.format("U+%0" + (¢ > 255 ? "4" : "2") + "X", Integer.valueOf(¢));
   }

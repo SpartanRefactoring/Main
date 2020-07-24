@@ -7,6 +7,7 @@ import java.util.Iterator;
  * {@link Iterator#remove} operation and saves the user, i.e., whoever chooses
  * to <code><b>implements</b></code> this class, the trouble of providing a
  * vacuous implementation of this function.
+ *
  * @see PureIterator
  * @author Yossi Gil
  * @since 2014-06-03
@@ -14,13 +15,13 @@ import java.util.Iterator;
 public interface PureIterable<T> extends Iterable<T> {
   @Override PureIterator<T> iterator();
 
-  /** A kind of {@link PureIterable} which provides an additional
-   * {@link #size()} service.
+  /** A kind of {@link PureIterable} which provides an additional {@link #size()}
+   * service.
    * <p>
    * For the size service to be meaningful, there is an underlying contract
-   * arranging the mutual expectations between two parties: the customer, and
-   * the supplier. (Customers are clients of this class, a supplier is a
-   * non-abstract class which extends this class):
+   * arranging the mutual expectations between two parties: the customer, and the
+   * supplier. (Customers are clients of this class, a supplier is a non-abstract
+   * class which extends this class):
    * <ol>
    * <li>The <i>size</i> of an instance is the number of elements it yields. It
    * should be clear that the size can never be negative.
@@ -31,6 +32,7 @@ public interface PureIterable<T> extends Iterable<T> {
    * <li>This fixed size can be computed efficiently, specifically without
    * exhausting the sequence items that this iterable may yield.
    * </ol>
+   *
    * @author Yossi Gil
    * @since 2014-06-20
    * @param <T> some arbitrary type */
@@ -40,6 +42,7 @@ public interface PureIterable<T> extends Iterable<T> {
     @Override public PureIterator<T> iterator() {
       return null;
     }
+
     /** @return how many elements are there in this instance */
     public abstract int size();
   }

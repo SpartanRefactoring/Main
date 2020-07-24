@@ -13,6 +13,7 @@ import il.org.spartan.statistics.RealStatistics;
  * output to the main CSV file, this class generates a secondary CSV file,
  * recording the essential statistics (min, max, count, etc.) of each numerical
  * column in the main CSV file.
+ *
  * @author Yossi Gil
  * @since Dec 25, 2009 */
 public class CSVStatistics extends CSVLine.Ordered {
@@ -29,10 +30,12 @@ public class CSVStatistics extends CSVLine.Ordered {
 
   /** Instantiate this class, setting the names of the main and secondary CSV
    * files.
-   * @param baseName the name of the files into which statistics should be
-   *        written; if this name ends with ".csv", this extension is removed.
-   * @param keysHeader the name of the column in which the names of the
-   *        numerical columns in the principal file */
+   *
+   * @param baseName   the name of the files into which statistics should be
+   *                   written; if this name ends with ".csv", this extension is
+   *                   removed.
+   * @param keysHeader the name of the column in which the names of the numerical
+   *                   columns in the principal file */
   public CSVStatistics(final String baseName, final String keysHeader) {
     assert baseName != null;
     assert keysHeader != null;
@@ -40,6 +43,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY_EXTENSION);
     this.keysHeader = keysHeader;
   }
+
   public String close() {
     inner.close();
     for (final String key : stats.keySet()) {
@@ -62,30 +66,37 @@ public class CSVStatistics extends CSVLine.Ordered {
     }
     return summarizer.close();
   }
+
   public String mainFileName() {
     return inner.fileName();
   }
+
   public void nl() {
     inner.writeFlush(this);
   }
+
   @Override public CSVStatistics put(final String key, final double value, final FormatSpecifier... ss) {
     getStatistics(key).record(value);
     super.put(key, value, ss);
     return this;
   }
+
   @Override public CSVStatistics put(final String key, final int value) {
     getStatistics(key).record(value);
     super.put(key, value);
     return this;
   }
+
   @Override public CSVStatistics put(final String key, final long value) {
     getStatistics(key).record(value);
     super.put(key, value);
     return this;
   }
+
   public String summaryFileName() {
     return summarizer.fileName();
   }
+
   RealStatistics getStatistics(final String key) {
     stats.putIfAbsent(key, new RealStatistics());
     return stats.get(key);
@@ -95,11 +106,13 @@ public class CSVStatistics extends CSVLine.Ordered {
     public void close() {
       inner.writeFlush(this);
     }
+
     @Override public CSVStatistics put(final String key, final double value, final FormatSpecifier... ss) {
       getStatistics(key).record(value);
       super.put(key, value, ss);
       return CSVStatistics.this;
     }
+
     @Override public CSVStatistics put(final String key, final long value) {
       getStatistics(key).record(value);
       super.put(key, value);

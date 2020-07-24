@@ -26,22 +26,24 @@ import il.org.spartan.streotypes.Utility;
  * </pre>
  *
  * return <code><b>false</b></code>.
+ *
  * @author Yossi Gil, the Technion.
  * @since 24/08/2008 */
-@Utility
-public enum Suffixed {
+@Utility public enum Suffixed {
   ;
-  /** Determine whether a file name ends with any one of the supplied
-   * extensions.
-   * @param f a file to examine
+  /** Determine whether a file name ends with any one of the supplied extensions.
+   *
+   * @param f        a file to examine
    * @param suffixes a list of potential extensions.
-   * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
-   *         one of the supplied extensions. */
+   * @return <code><b>true</b></code> <em>iff</em>the file name ends with any one
+   *         of the supplied extensions. */
   public static boolean by(final File f, final String... suffixes) {
     return by(f.getName(), suffixes);
   }
+
   /** Determine whether a string ends with any one of the supplied suffixes.
-   * @param s a string to examine
+   *
+   * @param s        a string to examine
    * @param suffixes a list of potential suffixes
    * @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
    *         one of the supplied suffixes. */

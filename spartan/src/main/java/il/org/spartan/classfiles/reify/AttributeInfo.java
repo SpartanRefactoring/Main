@@ -11,6 +11,7 @@ public class AttributeInfo {
     this.name = name;
     this.data = data;
   }
+
   final ConstantPoolReader reader(final ConstantPool ¢) {
     return new ConstantPoolReader(new DataInputStream(new ByteArrayInputStream(data)), ¢);
   }

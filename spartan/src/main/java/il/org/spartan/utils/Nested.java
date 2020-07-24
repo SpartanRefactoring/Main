@@ -3,6 +3,7 @@ package il.org.spartan.utils;
 import java.util.stream.Stream;
 
 /** nested element in a hierarchical structure
+ *
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @author Ori Roth
  * @author Oren Afek
@@ -24,6 +25,7 @@ public interface Nested<T> extends Duplo<T> {
 
   interface Compound<T> extends Nested<T>, Duplo.Compound<T> {
     Nested<T> parent();
+
     @Override default Iterable<Duplo<T>> components() {
       return a.singleton.list(parent());
     }

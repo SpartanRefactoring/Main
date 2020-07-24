@@ -16,6 +16,7 @@ public class AllClasses {
         @Override public void visitFile(final File ¢) {
           System.out.println(Filename.path2class(¢.getAbsolutePath(), root));
         }
+
         @Override public void visitZipEntry(final String entryName, final InputStream __) {
           forget.it(__);
           System.out.println(Filename.path2class(entryName, root));

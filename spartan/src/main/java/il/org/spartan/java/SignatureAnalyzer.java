@@ -11,10 +11,12 @@ public class SignatureAnalyzer {
     forget.em(new Object[] { fileName });
     return new SignatureAnalyzer();
   }
+
   public static SignatureAnalyzer ofReader(final StringReader ¢) {
     forget.em(new Object[] { ¢ });
     return new SignatureAnalyzer();
   }
+
   public static SignatureAnalyzer ofString(final String ¢) {
     forget.em(new Object[] { ¢ });
     return new SignatureAnalyzer();

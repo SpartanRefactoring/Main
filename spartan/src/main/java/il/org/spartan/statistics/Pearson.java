@@ -7,6 +7,7 @@ import il.org.spartan.xy.WeightedLeastSquares;
 public enum Pearson {
   ;
   /** Computes the Pearson rho rank correlation coefficient of two data arrays.
+   *
    * @param x first data array
    * @param y second data array
    * @return Returns Spearman's rank correlation coefficient for the two arrays,

@@ -15,6 +15,7 @@ public enum Tandem {
       }
     }, ";");
   }
+
   public static String arrays(final double[] x, final int[] y) {
     return Separate.by(() -> new RangeIterator<>(worst(x, y)) {
       @Override public String value() {
@@ -22,6 +23,7 @@ public enum Tandem {
       }
     }, ";");
   }
+
   public static String arrays(final int[] x, final double[] y) {
     return Separate.by(() -> new RangeIterator<>(worst(x, y)) {
       @Override public String value() {
@@ -29,6 +31,7 @@ public enum Tandem {
       }
     }, ";");
   }
+
   public static String arrays(final int[] x, final int[] y) {
     return Separate.by(() -> new RangeIterator<>(worst(x, y)) {
       @Override public String value() {
@@ -36,21 +39,27 @@ public enum Tandem {
       }
     }, ";");
   }
+
   static int worst(final double[] a1, final double[] a2) {
     return Math.max(a1.length, a2.length);
   }
+
   static int worst(final double[] a1, final int[] a2) {
     return Math.max(a1.length, a2.length);
   }
+
   static int worst(final int[] a1, final double[] a2) {
     return Math.max(a1.length, a2.length);
   }
+
   static int worst(final int[] a1, final int[] a2) {
     return Math.max(a1.length, a2.length);
   }
+
   static int worst(final int[] a1, final Object[] a2) {
     return Math.max(a1.length, a2.length);
   }
+
   static int worst(final Object[] a1, final Object[] a2) {
     return Math.max(a1.length, a2.length);
   }

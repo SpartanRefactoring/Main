@@ -6,18 +6,20 @@ import fluent.ly.separate;
 import il.org.spartan.Separator;
 
 /** TODO Yossi Gil Document Classn
+ *
  * @author Yossi Gil
  * @since 2016-12-25 */
-@FunctionalInterface
-public interface TableRenderer {
+@FunctionalInterface public interface TableRenderer {
   enum builtin implements TableRenderer {
     TXT, TEX {
       @Override public String afterHeader() {
         return "\\midrule" + NL;
       }
+
       @Override public String afterTable() {
         return "\\bottomrule" + NL;
       }
+
     // @formatter:off
 			@Override
 			public String arraySeparator() {
@@ -33,26 +35,30 @@ public interface TableRenderer {
       @Override public String beforeTable() {
         return "\\toprule" + NL;
       }
+
       @Override public String nil() {
         return "$\\#$";
       }
+
       @Override public String recordEnd() {
         return " \\\\" + NL;
       }
+
       @Override public String recordSeparator() {
         return "\t&\t";
       }
+
       @Override public String render(final Statistic ¢) {
         switch (¢) {
-          case Σ:
-            return "\\hfill$\\Sum$";
-          case σ:
-            return "\\hfill$\\sigma$";
-          case max:
-          case min:
-            return "\\hfill$\\" + super.render(¢) + "$";
-          default:
-            return "\\hfill" + super.render(¢);
+        case Σ:
+          return "\\hfill$\\Sum$";
+        case σ:
+          return "\\hfill$\\sigma$";
+        case max:
+        case min:
+          return "\\hfill$\\" + super.render(¢) + "$";
+        default:
+          return "\\hfill" + super.render(¢);
         }
       }
     },
@@ -60,9 +66,11 @@ public interface TableRenderer {
       @Override public String afterHeader() {
         return "\\hline" + NL;
       }
+
       @Override public String afterTable() {
         return "\\hline" + NL;
       }
+
     // @formatter:off
 			@Override
 			public String arraySeparator() {
@@ -78,9 +86,11 @@ public interface TableRenderer {
       @Override public String beforeTable() {
         return "\\hline" + NL;
       }
+
       @Override public String footerEnd() {
         return "\\\\" + NL;
       }
+
       @Override public String recordSeparator() {
         return "\t&\t";
       }
@@ -105,9 +115,11 @@ public interface TableRenderer {
           $ += "--- |";
         return $ + NL;
       }
+
       @Override public String afterTable() {
         return NL;
       }
+
     // @formatter:off
 			@Override
 			public String beforeTable() {
@@ -143,18 +155,23 @@ public interface TableRenderer {
   default String cellReal(final Double ¢) {
     return ¢.longValue() != ¢.doubleValue() ? ¢ + "" : cellInt(Long.valueOf(¢.longValue()));
   }
+
   static String empty() {
     return "";
   }
+
   static String tab() {
     return "\t";
   }
+
   default String afterFooter() {
     return empty();
   }
+
   default String afterHeader() {
     return empty();
   }
+
   default String afterTable() {
     return empty();
   }
@@ -220,15 +237,19 @@ public interface TableRenderer {
   default String recordBegin() {
     return empty();
   }
+
   default String recordEnd() {
     return NL;
   }
+
   default String recordSeparator() {
     return tab();
   }
+
   default String render(final Statistic ¢) {
     return ¢ + "";
   }
+
   default String renderRow(final Collection<Object> values) {
     final StringBuilder $ = new StringBuilder(recordBegin());
     final Separator s = new Separator(recordSeparator());
@@ -239,7 +260,9 @@ public interface TableRenderer {
                     : λ instanceof Double ? cellReal((Double) λ) : λ));
     return $ + recordEnd();
   }
+
   void setHeaderCount(int size);
+
   default String stringField(final String value) {
     return value;
   }

@@ -40,6 +40,7 @@ public enum SystemProperty {
     for (final String ¢ : objectsToStrings(System.getProperties().keySet()))
       System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
+
   private static TreeSet<String> objectsToStrings(final Set<Object> ¢) {
     return ¢.stream().map(λ -> (String) λ).collect(Collectors.toCollection(TreeSet::new));
   }
@@ -49,9 +50,11 @@ public enum SystemProperty {
   SystemProperty() {
     key = name().toLowerCase().replace('_', '.');
   }
+
   public String value() {
     return StringUtils.visualize(value(System.getProperties()));
   }
+
   public String value(final Properties ¢) {
     return ¢.getProperty(key);
   }

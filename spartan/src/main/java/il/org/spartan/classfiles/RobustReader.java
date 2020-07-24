@@ -15,6 +15,7 @@ public class RobustReader {
   protected static DataInputStream asDataInputStream(final InputStream ¢) {
     return ¢ == null ? null : new DataInputStream(¢);
   }
+
   protected static FileInputStream asFileInputStream(final File $) {
     if ($ == null)
       return null;
@@ -32,21 +33,28 @@ public class RobustReader {
   public RobustReader(final DataInputStream inner) {
     this.inner = inner;
   }
+
   /** Instantiate {@link RobustReader} from a given {@link File}
+   *
    * @param f an arbitrary file object */
   public RobustReader(final File f) {
     this(asFileInputStream(f));
   }
+
   /** Instantiate {@link RobustReader}.
+   *
    * @param is */
   public RobustReader(final InputStream is) {
     this(asDataInputStream(is));
   }
+
   /** Instantiate {@link RobustReader}.
+   *
    * @param fileName an arbitrary file name */
   public RobustReader(final String fileName) {
     this(new File(fileName));
   }
+
   public final void close() {
     if (inner != null)
       try {
@@ -55,9 +63,11 @@ public class RobustReader {
         recordError(¢);
       }
   }
+
   public final boolean hasErrors() {
     return !errors.isEmpty();
   }
+
   public final double readDouble() {
     if (inner == null)
       return 0;
@@ -67,6 +77,7 @@ public class RobustReader {
       return recordError($);
     }
   }
+
   public final float readFloat() {
     if (inner == null)
       return 0;
@@ -76,6 +87,7 @@ public class RobustReader {
       return recordError($);
     }
   }
+
   public final int readInt() {
     if (inner == null)
       return 0;
@@ -85,6 +97,7 @@ public class RobustReader {
       return recordError($);
     }
   }
+
   public final long readLong() {
     if (inner == null)
       return 0;
@@ -94,6 +107,7 @@ public class RobustReader {
       return recordError($);
     }
   }
+
   public final int readUnsignedByte() {
     if (inner == null)
       return 0;
@@ -103,6 +117,7 @@ public class RobustReader {
       return recordError($);
     }
   }
+
   public final int readUnsignedShort() {
     if (inner == null)
       return 0;
@@ -112,6 +127,7 @@ public class RobustReader {
       return recordError($);
     }
   }
+
   public final String readUTF() {
     if (inner == null)
       return "";
@@ -122,10 +138,12 @@ public class RobustReader {
       return null;
     }
   }
+
   public final void skipBytes(final int i) {
     for (int ¢ = 0; ¢ < i; ++¢)
       readUnsignedByte();
   }
+
   protected final byte[] readBytes(final byte[] $) {
     if (inner == null)
       return new byte[0];
@@ -133,10 +151,12 @@ public class RobustReader {
       left -= readBytes($, $.length - left, left);
     return $;
   }
+
   protected int recordError(final Exception ¢) {
     errors.add(¢);
     return 0;
   }
+
   int readBytes(final byte[] $, final int offset, final int howMany) {
     try {
       return inner.read($, offset, howMany);

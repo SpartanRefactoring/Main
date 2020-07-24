@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.Reader;
 
 /** Forwards all tokens from a {@link RawTokenizer} to a {@link TokenProcessor}
+ *
  * @author Yossi Gil
  * @since 2011-11-19 */
 public final class TokenFeeder {
@@ -16,13 +17,16 @@ public final class TokenFeeder {
   public TokenFeeder(final File f, final TokenProcessor processor) throws FileNotFoundException {
     this(new Tokenizer(f), processor);
   }
+
   public TokenFeeder(final Reader r, final TokenProcessor processor) {
     this(new Tokenizer(r), processor);
   }
+
   public TokenFeeder(final Tokenizer tokenizer, final TokenProcessor processor) {
     this.tokenizer = tokenizer;
     this.processor = processor;
   }
+
   public TokenFeeder go() {
     processor.before();
     for (Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())

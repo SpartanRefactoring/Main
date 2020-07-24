@@ -21,9 +21,11 @@ public class CFG {
         return $;
     return null;
   }
+
   private static long unsigned2signed(final long i) {
     return i & 0xffff;
   }
+
   private static long unsigned2signed_w(final long i) {
     return i & 0xfffffff;
   }
@@ -35,9 +37,11 @@ public class CFG {
     this.codes = codes;
     generateGraph();
   }
+
   public int cyclomaticComplexity() {
     return g.countEdges() - g.vertices().size() + 1;
   }
+
   public void generateGraph() {
     final MultiMap<Long, Long> jumps2targets = new MultiMap<>();
     final Map<Long, Set<Long>> subroutine2rets = new HashMap<>();
@@ -56,6 +60,7 @@ public class CFG {
         builder.newEdge(offset2block(basicBlocks, sub), offset2block(basicBlocks, ret));
     g = builder.build();
   }
+
   @Override public String toString() {
     String $ = "";
     for (final Vertex<BasicBlock> ¢ : vertices())
@@ -65,10 +70,13 @@ public class CFG {
         $ += "edge: " + v.e().endOffset + ", " + v2.e().startOffset + "\n";
     return $;
   }
+
   public ImmutableArrayList<Vertex<BasicBlock>> vertices() {
     return g.vertices();
   }
-  @SuppressWarnings("boxing") private void findJumpsAndTargets(final MultiMap<Long, Long> jumps2targets, final Map<Long, Set<Long>> subroutine2rets) {
+
+  @SuppressWarnings("boxing") private void findJumpsAndTargets(final MultiMap<Long, Long> jumps2targets,
+      final Map<Long, Set<Long>> subroutine2rets) {
     long offset = 0;
     try (BufferDataInputStream r = new BufferDataInputStream(codes)) {
       for (;;) {
@@ -79,65 +87,67 @@ public class CFG {
           throw new RuntimeException();
         long targetOffset;
         switch (i.opCode) {
-          case IFEQ:
-          case IFGE:
-          case IFGT:
-          case IFLE:
-          case IFLT:
-          case IFNE:
-          case IFNonNull:
-          case IFNULL:
-          case IF_ACMPEQ:
-          case IF_ACMPNE:
-          case IF_ICMPEQ:
-          case IF_ICMPGE:
-          case IF_ICMPGT:
-          case IF_ICMPLE:
-          case IF_ICMPLT:
-          case IF_ICMPNE:
-            targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
-            jumps2targets.put(offset, targetOffset);
-            jumps2targets.put(offset, offset + 1 + i.size());
-            break;
-          case GOTO:
-            targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
-            jumps2targets.put(offset, targetOffset);
-            break;
-          case JSR:
-            targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
-            jumps2targets.put(offset, targetOffset);
-            Set<Long> retsFromSubroutine;
-            if (subroutine2rets.containsKey(targetOffset))
-              retsFromSubroutine = subroutine2rets.get(targetOffset);
-            else {
-              retsFromSubroutine = new HashSet<>();
-              subroutine2rets.put(targetOffset, retsFromSubroutine);
-            }
-            retsFromSubroutine.add(offset + i.size());
-            break;
-          case GOTO_W:
-            targetOffset = unsigned2signed_w(offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
-            jumps2targets.put(offset, targetOffset);
-            break;
-          case JSR_W:
-            targetOffset = unsigned2signed_w(offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
-            jumps2targets.put(offset, targetOffset);
-            if (subroutine2rets.containsKey(targetOffset))
-              retsFromSubroutine = subroutine2rets.get(targetOffset);
-            else {
-              retsFromSubroutine = new HashSet<>();
-              subroutine2rets.put(targetOffset, retsFromSubroutine);
-            }
-            retsFromSubroutine.add(offset + i.size());
-            break;
-          case LOOKUPSWITCH:
-          case TABLESWITCH:
-            jumps2targets.put(offset, unsigned2signed_w(offset + i.defaultOffset));
-            for (final int o : i.offsets)
-              jumps2targets.put(offset, unsigned2signed_w(o + offset));
-            break;
-          default:
-            break;
+        case IFEQ:
+        case IFGE:
+        case IFGT:
+        case IFLE:
+        case IFLT:
+        case IFNE:
+        case IFNonNull:
+        case IFNULL:
+        case IF_ACMPEQ:
+        case IF_ACMPNE:
+        case IF_ICMPEQ:
+        case IF_ICMPGE:
+        case IF_ICMPGT:
+        case IF_ICMPLE:
+        case IF_ICMPLT:
+        case IF_ICMPNE:
+          targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
+          jumps2targets.put(offset, targetOffset);
+          jumps2targets.put(offset, offset + 1 + i.size());
+          break;
+        case GOTO:
+          targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
+          jumps2targets.put(offset, targetOffset);
+          break;
+        case JSR:
+          targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
+          jumps2targets.put(offset, targetOffset);
+          Set<Long> retsFromSubroutine;
+          if (subroutine2rets.containsKey(targetOffset))
+            retsFromSubroutine = subroutine2rets.get(targetOffset);
+          else {
+            retsFromSubroutine = new HashSet<>();
+            subroutine2rets.put(targetOffset, retsFromSubroutine);
+          }
+          retsFromSubroutine.add(offset + i.size());
+          break;
+        case GOTO_W:
+          targetOffset = unsigned2signed_w(
+              offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
+          jumps2targets.put(offset, targetOffset);
+          break;
+        case JSR_W:
+          targetOffset = unsigned2signed_w(
+              offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
+          jumps2targets.put(offset, targetOffset);
+          if (subroutine2rets.containsKey(targetOffset))
+            retsFromSubroutine = subroutine2rets.get(targetOffset);
+          else {
+            retsFromSubroutine = new HashSet<>();
+            subroutine2rets.put(targetOffset, retsFromSubroutine);
+          }
+          retsFromSubroutine.add(offset + i.size());
+          break;
+        case LOOKUPSWITCH:
+        case TABLESWITCH:
+          jumps2targets.put(offset, unsigned2signed_w(offset + i.defaultOffset));
+          for (final int o : i.offsets)
+            jumps2targets.put(offset, unsigned2signed_w(o + offset));
+          break;
+        default:
+          break;
         }
         offset = r.position();
       }
@@ -145,6 +155,7 @@ public class CFG {
       note.bug(e);
     }
   }
+
   @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks(final MultiMap<Long, Long> jumps2targets,
       final Graph.Builder<BasicBlock> b) {
     final Set<BasicBlock> $ = new HashSet<>();
@@ -191,12 +202,15 @@ public class CFG {
     long endOffset;
 
     @Override public boolean equals(final Object ¢) {
-      return ¢ == this || ¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType())
-          && endOffset == ((BasicBlock) ¢).endOffset && startOffset == ((BasicBlock) ¢).startOffset;
+      return ¢ == this
+          || ¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType())
+              && endOffset == ((BasicBlock) ¢).endOffset && startOffset == ((BasicBlock) ¢).startOffset;
     }
+
     @Override public int hashCode() {
       return (int) (startOffset + 31 * (endOffset + 31 * (getOuterType().hashCode() + 31)));
     }
+
     private CFG getOuterType() {
       return CFG.this;
     }

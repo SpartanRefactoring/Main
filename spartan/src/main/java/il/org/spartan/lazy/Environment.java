@@ -54,32 +54,40 @@ import il.org.spartan.reap.Recipe;
  * <code><b>implements</b></code> this interface should be ok.
  * <ol>
  * apply
+ *
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 public interface Environment {
   static <T, A> Binder1<T, A> bind(final Function1<T, A> ¢) {
     return new Property<T>().bind(¢);
   }
+
   static <T, A1, A2> Binder2<T, A1, A2> bind(final Function2<T, A1, A2> ¢) {
     return new Property<T>().bind(¢);
   }
+
   static <T, A1, A2, A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> ¢) {
     return new Property<T>().bind(¢);
   }
+
   static <T, A1, A2, A3, A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> ¢) {
     return new Property<T>().bind(¢);
   }
+
   static <T> Property<T> function(final Function0<T> ¢) {
     return new Property<T>().ϑ(¢);
   }
-  /** A factory method of class {@link Property} returning an undefined value
-   * for a cell
+
+  /** A factory method of class {@link Property} returning an undefined value for
+   * a cell
+   *
    * @param <T> JD
    * @return newly created instance of {@link Property} containing null value of
    *         the type parameter */
   static <T> Property<T> undefined() {
     return new Property<>();
   }
+
   /** A factory method of class {@link Property} of an {@link Integer} as in
    *
    * <pre>
@@ -91,6 +99,7 @@ public interface Environment {
   static Property<Boolean> value(final boolean ¢) {
     return new Property<>(Boolean.valueOf(¢));
   }
+
   /** A factory method of class {@link Property} of an {@link Integer} as in
    *
    * <pre>
@@ -102,6 +111,7 @@ public interface Environment {
   static Property<Integer> value(final int ¢) {
     return new Property<>(Integer.valueOf(¢));
   }
+
   /** A factory method for class {@link Ingredient} as in
    *
    * <pre>
@@ -109,14 +119,13 @@ public interface Environment {
    * </pre>
    *
    * @param <T> JD
-   * @param ¢ JD
+   * @param ¢   JD
    * @return newly created instance of {@link Property} */
   static <T> Property<T> value(final T ¢) {
     return new Property<>(¢);
   }
 
-  @SuppressWarnings("static-method")
-  interface ____META {
+  @SuppressWarnings("static-method") interface ____META {
     class TEST {
       private static final String EMPTY = "";
       private static final int FIRST_MAGIC_NUMBER = 1729;
@@ -144,8 +153,10 @@ public interface Environment {
         world = value(WORLD);
         separator = value(SEPARATOR);
         emptyString = value(EMPTY);
-        helloWorld = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
+        helloWorld = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator,
+            world);
       }
+
       @Test public void seriesA0() {
         azzert.that(hello.¢(), iz(HELLO));
         azzert.isNull(nullProperty);
@@ -153,22 +164,27 @@ public interface Environment {
         azzert.isNull(undefinedProperty.¢());
         azzert.that(emptyString.¢(), iz(EMPTY));
       }
+
       @Test public void seriesA1() {
         azzert.that(hello.¢(), iz(HELLO));
         hello.undefine();
         azzert.isNull(hello.ϑ);
         azzert.isNull(hello.¢());
       }
+
       @Test public void seriesA2() {
         azzert.that(hello.¢(), iz(HELLO));
         hello.set(WORLD);
         azzert.that(hello.¢(), iz(WORLD));
       }
+
       @Test public void seriesA3() {
         azzert.that(helloWorld.¢(), iz(HELLO + SEPARATOR + WORLD));
-        helloWorld.bind((final String ¢1, final String ¢2, final String ¢3, final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
+        helloWorld.bind((final String ¢1, final String ¢2, final String ¢3, final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4))
+            .to(hello, world, hello, world);
         azzert.that(helloWorld.¢(), iz(HELLO + WORLD + HELLO + WORLD));
       }
+
       @Test public void seriesA4() {
         azzert.that(supplierCalls, is(0));
         azzert.that(integer.version(), is(0L));
@@ -194,14 +210,17 @@ public interface Environment {
         azzert.that(integer.get(), is(SECOND_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
       }
+
       @Test public void seriesA5() {
         azzert.that(helloWorld.prerequisites.size(), is(3));
         azzert.that(helloWorld.dependents, empty());
         azzert.that(helloWorld.version, is(0L));
         azzert.nay(helloWorld.updated());
       }
+
       @Test public void seriesA6() {
-        final Property<String> $ = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
+        final Property<String> $ = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello,
+            separator, world);
         azzert.that($.prerequisites.size(), is(3));
         azzert.that($.dependents, empty());
         azzert.that($.version, is(0L));
@@ -231,12 +250,15 @@ public interface Environment {
         azzert.aye($.updated());
         azzert.that(helloWorld.get(), iz(WORLD + SEPARATOR + WORLD));
       }
+
       @Test public void seriesA7() {
         //
       }
+
       @Test public void seriesA8() {
         //
       }
+
       @Test public void seriesA9() {
         final Property<String> a = value(EMPTY);
         azzert.aye(a.dependents.isEmpty()).andAye(a.prerequisites.isEmpty());
@@ -258,23 +280,19 @@ public interface Environment {
     }
   }
 
-  @FunctionalInterface
-  interface Binder1<T, A> {
+  @FunctionalInterface interface Binder1<T, A> {
     Property<T> to(Property<A> ¢);
   }
 
-  @FunctionalInterface
-  interface Binder2<T, A1, A2> {
+  @FunctionalInterface interface Binder2<T, A1, A2> {
     Property<T> to(Property<A1> ¢1, Property<A2> ¢2);
   }
 
-  @FunctionalInterface
-  interface Binder3<T, A1, A2, A3> {
+  @FunctionalInterface interface Binder3<T, A1, A2, A3> {
     Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3);
   }
 
-  @FunctionalInterface
-  interface Binder4<T, A1, A2, A3, A4> {
+  @FunctionalInterface interface Binder4<T, A1, A2, A3, A4> {
     Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3, Property<A4> ¢4);
   }
 
@@ -284,6 +302,7 @@ public interface Environment {
    * property typically depends on other properties, which may either valued, or
    * computed, and hence depending on yet other properties. A change to a
    * property's value is triggers invalidates all properties that depend on it.
+   *
    * @param <T> type of value of this property
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
@@ -308,30 +327,36 @@ public interface Environment {
     private boolean frozen;
 
     /** Instantiates this class. */
-    public Property() {}
+    public Property() {
+    }
+
     /** Instantiates this class.
+     *
      * @param ϑ JD */
     public Property(final Function0<? extends T> ϑ) {
       this.ϑ = ϑ;
     }
+
     /** Instantiates this class.
+     *
      * @param t initial cached value */
     public Property(final T t) {
       cache(t);
     }
-    /** @return current value stored in this instance, recomputed if
-     *         necessary */
+
+    /** @return current value stored in this instance, recomputed if necessary */
     @Override public T ¢() {
       update();
       return cache();
     }
+
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
+     *
      * @param <A> argument's type
-     * @param ¢ a one argument function that returns a new value for this
-     *        instance
-     * @return a function with one argument named {@link Binder#to(Object)}
-     *         which when applied
+     * @param ¢   a one argument function that returns a new value for this instance
+     * @return a function with one argument named {@link Binder#to(Object)} which
+     *         when applied
      *         <ol>
      *         <li>changes the current instance
      *         <li>returns <code><b>this</b></code>
@@ -340,13 +365,14 @@ public interface Environment {
     public Property<T> bind(final Function0<T> ¢) {
       return ϑ(() -> ¢.¢());
     }
+
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
+     *
      * @param <A> argument's type
-     * @param f a one argument function that returns a new value for this
-     *        instance
-     * @return a function with one argument named {@link Binder#to(Object)}
-     *         which when applied
+     * @param f   a one argument function that returns a new value for this instance
+     * @return a function with one argument named {@link Binder#to(Object)} which
+     *         when applied
      *         <ol>
      *         <li>changes the current instance
      *         <li>returns <code><b>this</b></code>
@@ -355,52 +381,59 @@ public interface Environment {
     public <A> Binder1<T, A> bind(final Function1<T, A> f) {
       return ¢ -> ϑ(() -> f.ϑ(¢.¢()), ¢);
     }
+
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking two arguments
+     *
      * @param <A1> 1st argument's type
      * @param <A2> 2nd argument's type
-     * @param a a two argument function that returns a new value for this
-     *        instance
+     * @param a    a two argument function that returns a new value for this
+     *             instance
      * @return a function with two arguments named {@link Binder2#to} which when
      *         applied changes the current instance returning
      *         <code><b>this</b></code> */
     public <A1, A2> Binder2<T, A1, A2> bind(final Function2<T, A1, A2> a) {
       return (¢1, ¢2) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
     }
+
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking four arguments
+     *
      * @param <A1> 1st argument's type
      * @param <A2> 2nd argument's type
      * @param <A3> 3rd argument's type
-     * @param a a one argument function that returns a new value for this
-     *        instance
-     * @return a function with four arguments named {@link #toString()} which
-     *         when applied changes the current instance and returning
+     * @param a    a one argument function that returns a new value for this
+     *             instance
+     * @return a function with four arguments named {@link #toString()} which when
+     *         applied changes the current instance and returning
      *         <code><b>this</b></code> */
     public <A1, A2, A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> a) {
       return (¢1, ¢2, ¢3) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
     }
+
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking four arguments
+     *
      * @param <A1> 1st argument's type
      * @param <A2> 2nd argument's type
      * @param <A3> 3rd argument's type
      * @param <A4> 4th argument's type
-     * @param a a one argument function that returns a new value for this
-     *        instance
-     * @return a function with four arguments named {@link #toString()} which
-     *         when applied changes the current instance and returning
+     * @param a    a one argument function that returns a new value for this
+     *             instance
+     * @return a function with four arguments named {@link #toString()} which when
+     *         applied changes the current instance and returning
      *         <code><b>this</b></code> */
     public <A1, A2, A3, A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> a) {
       return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
     }
+
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
+     *
      * @param <A> argument's type
-     * @param ¢ a one argument function that returns a new value for this
-     *        instance
-     * @return a function with one argument named {@link Binder#to(Object)}
-     *         which when applied
+     * @param ¢   a one argument function that returns a new value for this instance
+     * @return a function with one argument named {@link Binder#to(Object)} which
+     *         when applied
      *         <ol>
      *         <li>changes the current instance
      *         <li>returns <code><b>this</b></code>
@@ -412,10 +445,12 @@ public interface Environment {
       ingredients(this);
       return this;
     }
+
     /** @return last value computed or set for this instance. */
     public final T cache() {
       return cache;
     }
+
     @Override @SuppressWarnings("unchecked") public Property<T> clone() {
       try {
         return (Property<T>) super.clone();
@@ -423,21 +458,25 @@ public interface Environment {
         throw new RuntimeException(¢);
       }
     }
+
     public void freeze() {
       frozen = true;
     }
+
     public T freezeGet() {
       freeze();
       final T $ = get();
       melt();
       return $;
     }
-    /** @return current value stored in this instance, recomputed if
-     *         necessary */
+
+    /** @return current value stored in this instance, recomputed if necessary */
     public T get() {
       return ¢();
     }
+
     /** Add another property on which this instance depends
+     *
      * @param ¢ JD
      * @return <code><b>this</b></code> */
     public Property<T> ingredient(final Property<?> ¢) {
@@ -445,7 +484,9 @@ public interface Environment {
       run(() -> prerequisites.add(¢)).unless(prerequisites.contains(this));
       return this;
     }
+
     /** Add another property on which this instance depends
+     *
      * @param ps JD
      * @return <code><b>this</b></code> */
     public Property<T> ingredients(final Property<?>... ps) {
@@ -453,16 +494,21 @@ public interface Environment {
         ingredient(¢);
       return this;
     }
+
     public void melt() {
       frozen = false;
     }
+
     /** Used for fluent API; sets the current value of this instance
+     *
      * @param ¢ a no-arguments function that returns a value for this instance
      * @return <code><b>this</b></code> */
     public Property<T> of(final Function0<T> ¢) {
       return ϑ(¢);
     }
+
     /** Used for fluent API; sets the current value of this instance
+     *
      * @param ¢ JD
      * @return <code><b>this</b></code>* */
     public Property<T> of(final T ¢) {
@@ -472,27 +518,34 @@ public interface Environment {
       prerequisites.clear();
       return this;
     }
+
     public Property<T> push(@SuppressWarnings("unused") final Function0<T> __) {
       return this;
     }
+
     public Property<T> push(@SuppressWarnings("unused") final T __) {
       return this;
     }
-    /** forcibly set the value stored in this instance, ignoring the function
-     * used for computing it, and marks this instance as updated with respect to
-     * all prerequisites.
+
+    /** forcibly set the value stored in this instance, ignoring the function used
+     * for computing it, and marks this instance as updated with respect to all
+     * prerequisites.
+     *
      * @param ¢ JD
      * @return <code><b>this</b></code> */
     public T set(final T ¢) {
       version = latestPrequisiteVersion() + 1;
       return cache(¢);
     }
+
     /** puts this instance in an undefined state
+     *
      * @return <code><b>this</b></code> */
     public Property<T> undefine() {
       cache(null);
       return this;
     }
+
     public void update() {
       if (frozen || updated())
         return;
@@ -509,6 +562,7 @@ public interface Environment {
       }
       frozen = false;
     }
+
     /** @return <code><b>true</b></code> <em>iff</em> the value in this cell is
      *         updated with respect to all its prerequisites */
     public boolean updated() {
@@ -521,19 +575,24 @@ public interface Environment {
           return false;
       return true;
     }
+
     /** @return version of this instance */
     public long version() {
       return version;
     }
+
     T cache(@SuppressWarnings("hiding") final T cache) {
       return this.cache = cache;
     }
+
     final long latestDependentVersion() {
       return maxVersion(dependents);
     }
+
     long latestPrequisiteVersion() {
       return maxVersion(prerequisites);
     }
+
     /** @param ϑ a no-arguments function that returns a value for this instance
      * @param cs instances on which the cell depends
      * @return <code><b>this</b></code> */

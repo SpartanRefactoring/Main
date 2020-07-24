@@ -13,9 +13,9 @@ import il.org.spartan.streotypes.Instantiable;
 
 /** A class to generate a CSV (comma separated values) file, by writing into it
  * a sequence of {@link CSVLine} records.
+ *
  * @author Yossi Gil, 2008/06/20 */
-@Instantiable
-public class CSVWriter {
+@Instantiable public class CSVWriter {
   private static FileWriter open(final File $) {
     try {
       return new FileWriter($);
@@ -35,14 +35,18 @@ public class CSVWriter {
     inner = new OutputStreamWriter(System.out);
     fileName = "";
   }
+
   /** Create a new instance, writing into a given named file
+   *
    * @param fileName the name of the output file */
   public CSVWriter(final String fileName) {
     this.fileName = fileName;
     file = new File(fileName);
     inner = open(file);
   }
+
   /** Close the file after completion. No further writes are allowed.
+   *
    * @return fileName */
   public String close() {
     try {
@@ -52,23 +56,30 @@ public class CSVWriter {
     }
     return fileName;
   }
+
   public File file() {
     return file;
   }
+
   public String fileName() {
     return fileName;
   }
+
   /** Find the common header of all CSV lines written to this file.
+   *
    * @return the header of the first line written (all further lines must
    *         agree) */
   public String header() {
     return header;
   }
+
   public void write(final AbstractStringProperties ¢) {
     writeln(¢.line());
   }
-  /** Write a new CSV line into the file. All CSV lines written into the file
-   * must have the exact same header.
+
+  /** Write a new CSV line into the file. All CSV lines written into the file must
+   * have the exact same header.
+   *
    * @param cl the CSV line to be written */
   public void write(final CSVLine cl) {
     // TODO: Yossi, I can not find this function. Had it been removed/renamed.
@@ -79,8 +90,10 @@ public class CSVWriter {
       writeln(header = cl.header());
     writeln(cl.line());
   }
+
   /** Same as {@link #write(CSVLine)}, except that the file buffer is flushed
    * after successful write.
+   *
    * @param cl the CSV line to be written */
   public void writeFlush(final CSVLine cl) {
     try {
@@ -90,6 +103,7 @@ public class CSVWriter {
       ¢.printStackTrace();
     }
   }
+
   void writeln(final String s) {
     try {
       inner.write(s);

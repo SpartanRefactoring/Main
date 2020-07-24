@@ -13,6 +13,7 @@ class OutputStreamRedirector extends Thread {
     this.to = to;
     start();
   }
+
   @Override public void run() {
     try {
       for (int nextChar = from.read(); nextChar != -1; nextChar = from.read())

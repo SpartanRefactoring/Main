@@ -11,10 +11,12 @@ import fluent.ly.separate;
 import il.org.spartan.Separator;
 
 /** TODO Yossi Gil Document Classn
+ *
  * @author Yossi Gil
  * @since 2016-12-25 */
 public class TableWriter implements Closeable {
   /** Create a new instance, writing into a given named file
+   *
    * @param basePath the name of the output file
    * @throws IOException */
   public TableWriter(final TableRenderer renderer, final String basePath) throws IOException {
@@ -24,6 +26,7 @@ public class TableWriter implements Closeable {
     writer = new FileWriter(file);
     write(renderer.beforeTable());
   }
+
   public void write(final String s) {
     try {
       writer.write(s);
@@ -51,6 +54,7 @@ public class TableWriter implements Closeable {
       throw new RuntimeException(¢);
     }
   }
+
   public void write(final Map<String, Object> ¢) {
     if (shouldPrintHeader) {
       shouldPrintHeader = false;
@@ -58,6 +62,7 @@ public class TableWriter implements Closeable {
     }
     writeData(¢);
   }
+
   public void writeFooter(final Map<String, Object> ¢) {
     if (!footerPrinted) {
       write(renderer.beforeFooter());
@@ -65,15 +70,18 @@ public class TableWriter implements Closeable {
     }
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
+
   private void writeData(final Map<String, Object> ¢) {
     write(renderer.recordBegin() + separate.these(¢.values()).by(renderer.recordSeparator()) + renderer.recordEnd());
   }
+
   private void writeHeader(final Map<String, Object> ¢) {
     renderer.setHeaderCount(¢.size());
     write(renderer.beforeHeader() + //
         renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //
         renderer.afterHeader());
   }
+
   private String writeHeaderInner(final Map<String, Object> m) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuilder $ = new StringBuilder();

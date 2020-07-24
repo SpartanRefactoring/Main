@@ -323,12 +323,15 @@ public enum OpCode {
   OpCode() {
     this(0);
   }
+
   OpCode(final int bytes) {
     size = bytes;
   }
+
   public boolean invalid() {
     return size < 0;
   }
+
   Instruction readContent(final BufferDataInputStream s) throws IOException {
     final short[] $ = new short[size];
     for (int ¢ = 0; ¢ < size; ++¢)
@@ -349,33 +352,42 @@ public enum OpCode {
       this.defaultOffset = defaultOffset;
       this.offsets = offsets;
     }
+
     public Instruction(final OpCode opCode, final short[] args) {
       this.opCode = opCode;
       this.args = args;
       defaultOffset = 0;
       offsets = null;
     }
+
     public short[] args() {
       return args;
     }
+
     public boolean invalid() {
       return opCode.invalid();
     }
+
     public boolean isFieldAccessInstruction() {
       return opCode == GETFIELD || opCode == PUTFIELD;
     }
+
     public boolean isInvokeInstruction() {
       return opCode == INVOKEINTERFACE || opCode == INVOKESPECIAL || opCode == INVOKEVIRTUAL;
     }
+
     public boolean isNewInstruction() {
       return opCode == NEW;
     }
+
     public boolean isStaticFieldAccessInstruction() {
       return opCode == GETSTATIC || opCode == PUTSTATIC;
     }
+
     public boolean isStaticMethodInvocation() {
       return opCode == INVOKESTATIC;
     }
+
     public int size() {
       return opCode.size;
     }

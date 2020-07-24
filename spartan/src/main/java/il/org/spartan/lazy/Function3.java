@@ -2,15 +2,16 @@
 package il.org.spartan.lazy;
 
 /** A {@link FunctionalInterface} encapsulating a function with three arguments
- * @param <T> type of the function result
+ *
+ * @param <T>  type of the function result
  * @param <A1> type of the 1st argument
  * @param <A2> type of the 2nd argument
  * @param <A3> type of the 3rd argument
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-@FunctionalInterface
-public interface Function3<T, A1, A2, A3> {
+@FunctionalInterface public interface Function3<T, A1, A2, A3> {
   /** Encapsulated function
+   *
    * @param ¢1 1st argument
    * @param ¢2 2nd argument
    * @param ¢3 3rd argument

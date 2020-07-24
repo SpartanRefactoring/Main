@@ -11,6 +11,7 @@ import java.util.HashMap;
  * <li>function {@link #contains(String)} is used to check if an element is in
  * the table.
  * </ol>
+ *
  * @author Yossi Gil
  * @since 21/08/2007 */
 public class StringIntMap extends HashMap<String, Integer> {
@@ -19,9 +20,11 @@ public class StringIntMap extends HashMap<String, Integer> {
   public boolean contains(final String key) {
     return super.containsKey(key);
   }
+
   public int get(final String key) {
     return super.get(key).intValue();
   }
+
   public void put(final String key, final int value) {
     super.put(key, Integer.valueOf(value));
   }

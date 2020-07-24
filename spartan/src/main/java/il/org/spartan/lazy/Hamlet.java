@@ -9,8 +9,7 @@ import org.junit.Test;
 
 import fluent.ly.azzert;
 
-@SuppressWarnings("boxing")
-public class Hamlet implements Environment {
+@SuppressWarnings("boxing") public class Hamlet implements Environment {
   private final Property<Boolean> $ = function(init());
   private final Function0<Boolean> permanent = () -> !$.get();
 
@@ -24,10 +23,12 @@ public class Hamlet implements Environment {
     azzert.that(third + "", is("false"));
     azzert.that(fourth + "", is("true"));
   }
+
   private Boolean first() {
     $.ϑ(permanent, $);
     return Boolean.FALSE;
   }
+
   private Function0<Boolean> init() {
     return () -> first();
   }

@@ -9,18 +9,19 @@ import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */
-@SuppressWarnings("static-method")
-public class BooleanHistoryTest {
+@SuppressWarnings("static-method") public class BooleanHistoryTest {
   @Test public void addSize() {
     final BooleanHistory h = new BooleanHistory(10);
     h.add(true);
     azzert.that(h.size(), is(1));
   }
+
   @Test public void countEmpty() {
     final BooleanHistory h = new BooleanHistory(10);
     azzert.that(h.count(true), is(0));
     azzert.that(h.count(false), is(0));
   }
+
   @Test public void countFalseLoop() {
     final BooleanHistory h = new BooleanHistory(10);
     for (int i = 0; i < 1000; ++i) {
@@ -31,6 +32,7 @@ public class BooleanHistoryTest {
       azzert.that(h.count(false), is(m));
     }
   }
+
   @Test public void countFalseTrivial() {
     final BooleanHistory h = new BooleanHistory(10);
     h.add(false);
@@ -38,6 +40,7 @@ public class BooleanHistoryTest {
     azzert.that(h.count(false), is(2));
     azzert.that(h.count(true), is(0));
   }
+
   @Test public void countTrueLoop() {
     final BooleanHistory h = new BooleanHistory(10);
     for (int i = 0; i < 1000; ++i) {
@@ -48,6 +51,7 @@ public class BooleanHistoryTest {
       azzert.that(h.count(true), is(m));
     }
   }
+
   @Test public void countTrueTrivial() {
     final BooleanHistory h = new BooleanHistory(10);
     h.add(true);
@@ -55,9 +59,11 @@ public class BooleanHistoryTest {
     azzert.that(h.count(true), is(2));
     azzert.that(h.count(false), is(0));
   }
+
   @Test public void createSize() {
     azzert.that(new BooleanHistory(10).size(), is(0));
   }
+
   @Test public void maxSize() {
     final BooleanHistory h = new BooleanHistory(10);
     for (int ¢ = 0; ¢ < 1000; ++¢) {

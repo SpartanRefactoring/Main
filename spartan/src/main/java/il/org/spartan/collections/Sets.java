@@ -13,16 +13,19 @@ public enum Sets {
       $.add(¢);
     return $;
   }
+
   public static <T extends Collection<E>, E> T addAll(final T $, final E[] src) {
     for (final E ¢ : src)
       $.add(¢);
     return $;
   }
+
   public static <E> Set<E> intersection(final Collection<E> lhs, final Collection<E> rhs) {
     final Set<E> $ = new HashSet<>(lhs);
     $.retainAll(rhs);
     return $;
   }
+
   public static <E> Set<E> union(final Collection<E> lhs, final Collection<E> rhs) {
     final Set<E> $ = new HashSet<>(lhs);
     $.addAll(rhs);

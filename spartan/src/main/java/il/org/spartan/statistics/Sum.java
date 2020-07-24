@@ -12,8 +12,7 @@ import il.org.spartan.streotypes.Utility;
 
 /** @author Yossi Gil
  * @since 2011-01-08 */
-@Utility
-public enum Sum {
+@Utility public enum Sum {
   ;
   public static double sum(final double... ds) {
     double $ = 0;
@@ -21,18 +20,21 @@ public enum Sum {
       $ += ¢;
     return $;
   }
+
   public static double sum(final double[] t, final int i, final int n) {
     double $ = 0;
     for (int j = i; j < i + n; ++j)
       $ += t[j];
     return $;
   }
+
   public static double sum(final int i, final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += pow(¢, i);
     return $;
   }
+
   public static double sum2(final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
@@ -40,20 +42,22 @@ public enum Sum {
     return $;
   }
 
-  @SuppressWarnings("static-method")
-  public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     @Test public void fullSum() {
       Assert.assertEquals(21, sum(of.doubles(0.0, 1, 2, 3, 4, 5, 6)), 1E-5);
     }
+
     @Test public void partialSum() {
       Assert.assertEquals(9.0, sum(of.doubles(0, 1, 2, 3, 4, 5, 6.000000), 2, 3), 1E-5);
     }
+
     @Test public void sum1() {
       final double vs[] = { 5, 20, 40, 80, 100 };
       Assert.assertEquals(5, sum(0, vs), 1E-8);
       Assert.assertEquals(245, sum(1, vs), 1E-8);
       Assert.assertEquals(49, mean(vs), 1E-8);
     }
+
     @Test public void sumN() {
       final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(5, sum(0, vs), 1E-8);

@@ -10,14 +10,17 @@ public class Multiplicative2 extends Sequence {
   public Multiplicative2() {
     this(Sequence.MAX_VALUE, DEFAULT_STEP);
   }
+
   public Multiplicative2(final double step) {
     this(Sequence.MAX_VALUE, step);
   }
+
   public Multiplicative2(final int threshold, final double step) {
     super(threshold);
     reset();
     this.step = Math.pow(2, step);
   }
+
   @Override public Multiplicative2 advance() {
     final int previous = current;
     current *= step;
@@ -26,6 +29,7 @@ public class Multiplicative2 extends Sequence {
       current = highestOneBit(current);
     return this;
   }
+
   @Override public Multiplicative2 reset() {
     current = 1;
     return this;

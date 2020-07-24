@@ -14,6 +14,7 @@ import java.util.Collection;
  * to set the visitation range, and the
  * {@link il.org.spartan.files.visitors.FileSystemVisitor.Action} to be carried
  * for each visited file.
+ *
  * @see ClassFilesClasspathVisitor
  * @author Yossi Gil
  * @since 11/07/2007 */
@@ -23,12 +24,15 @@ public class ClassFilesVisitor extends FileSystemVisitor {
   public ClassFilesVisitor(final File[] from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
+
   public ClassFilesVisitor(final Iterable<String> from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
+
   public ClassFilesVisitor(final String from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
+
   public ClassFilesVisitor(final String[] from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }

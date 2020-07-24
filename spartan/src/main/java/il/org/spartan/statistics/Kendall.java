@@ -15,37 +15,44 @@ import il.org.spartan.streotypes.Utility;
 
 /** Provides services for computing the Kendall's tau metric for similarity
  * between rankings.
+ *
  * @author Yossi Gil
  * @since Dec 6, 2009 */
-@Utility
-public enum Kendall {
+@Utility public enum Kendall {
   ;
   static final boolean FAST = true;
 
   public static Charectristics makeCharectristics(final double xs[]) {
     return makeCharectristics(xs, seq(xs.length));
   }
+
   public static Charectristics makeCharectristics(final double xs[], final double ys[]) {
     return new Charectristics(xs, ys);
   }
+
   public static double tau(final double ys[]) {
     return tau(seq(ys.length), ys);
   }
+
   /** [[SuppressWarningsSpartan]] */
   public static double tau(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     return pairs(xs.length) * computeS(xs, ys, xs.length) / 1.;
   }
+
   /** Compute Kendall's tau coefficient for a ranking of the integers 0,...,n
+   *
    * @param xs arbitrary values of the first ranking
    * @param ys
    * @return the Kendall tau coefficient of these two rankings. */
   public static double tau(final Iterable<Double> xs, final Iterable<Double> ys) {
     return tau(Iterables.toArray(xs), Iterables.toArray(ys));
   }
+
   public static double tauB(final double ys[]) {
     return tauB(seq(ys.length), ys);
   }
+
   public static double tauB(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     final List<Double> $ = new ArrayList<>(), Ys = new ArrayList<>();
@@ -56,6 +63,7 @@ public enum Kendall {
       }
     return tauB_pruned(Iterables.toArray($), Iterables.toArray(Ys));
   }
+
   /** [[SuppressWarningsSpartan]] */
   static int compueS(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
@@ -69,6 +77,7 @@ public enum Kendall {
             --$;
     return $;
   }
+
   /** [[SuppressWarningsSpartan]] */
   static int compueS(final int[] xs, final int[] ys) {
     ___.require(xs.length == ys.length);
@@ -82,15 +91,18 @@ public enum Kendall {
             --$;
     return $;
   }
+
   static int pairs(final int ¢) {
     ___.nonnegative(¢);
     return ¢ * (¢ - 1) / 2;
   }
+
   static int sigma(final double[] ¢) {
     final double[] $ = ¢.clone();
     Arrays.sort($);
     return sigmaSortedArray($);
   }
+
   static int sigmaSortedArray(final double[] ds) {
     int $ = 0;
     for (int i = 0; i < ds.length;) {
@@ -106,6 +118,7 @@ public enum Kendall {
     }
     return $;
   }
+
   private static int computeS(final double[] xs, final double[] ys, final int n) {
     int $ = 0, nd = 0;
     for (int i = 0; i < n; ++i)
@@ -116,6 +129,7 @@ public enum Kendall {
           ++nd;
     return $ - nd;
   }
+
   private static double tauB_pruned(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     final int $ = xs.length, pairs = pairs($);
@@ -137,9 +151,11 @@ public enum Kendall {
     public Charectristics(final double xs[], final double ys[]) {
       this(valid(xs, ys), Kendall.tauB(xs, ys));
     }
+
     public Charectristics(final double xs[], final double ys[], final double tau) {
       this(valid(xs, ys), tau);
     }
+
     public Charectristics(final int n, final double tau) {
       this.tau = tau;
       this.n = n;

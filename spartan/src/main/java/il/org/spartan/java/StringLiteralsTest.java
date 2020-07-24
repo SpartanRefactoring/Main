@@ -9,8 +9,7 @@ import org.junit.Test;
 
 import fluent.ly.azzert;
 
-@SuppressWarnings("static-method")
-public class StringLiteralsTest {
+@SuppressWarnings("static-method") public class StringLiteralsTest {
   static Token toToken(final String s) {
     try {
       final RawTokenizer J = new RawTokenizer(new StringReader(s));
@@ -21,6 +20,7 @@ public class StringLiteralsTest {
       return Token.EOF;
     }
   }
+
   @Test public void test_simple_literal() {
     azzert.that(toToken("\"abcd\""), is(Token.STRING_LITERAL));
   }

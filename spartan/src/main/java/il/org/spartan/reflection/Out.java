@@ -13,9 +13,11 @@ public class Out {
   public static void out(final String ¢) {
     System.out.print(¢);
   }
+
   public static void out(final String name, final boolean v) {
     System.out.printf("%s = %b\n", name, idiomatic.box(v));
   }
+
   public static void out(final String name, final Collection<Object> a) {
     assert name != null;
     if (a == null || a.isEmpty())
@@ -32,12 +34,15 @@ public class Out {
           System.out.printf("\t%2d) %s\n", idiomatic.box(n), ¢);
     }
   }
+
   public static void out(final String name, final int a) {
     System.out.printf("%s = %d\n", name, idiomatic.box(a));
   }
+
   public static void out(final String name, final Object a) {
     System.out.printf((a == null ? "No" : "%s =") + " %s\n", name, a);
   }
+
   public static void out(final String name, final Object[] os) {
     assert name != null;
     if (os == null || os.length <= 0)

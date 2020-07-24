@@ -25,8 +25,7 @@ import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since 16/05/2011 */
-@RunWith(Theories.class)
-@SuppressWarnings("static-method")
+@RunWith(Theories.class) @SuppressWarnings("static-method")
 //
 public class TestNoOther {
   @DataPoints public static File[] javaFiles() throws IOException {
@@ -38,6 +37,7 @@ public class TestNoOther {
     }).go();
     return Iterables.toArray($, File.class);
   }
+
   public static String read(final File f) throws IOException {
     final char[] $ = new char[(int) f.length()];
     try (FileReader x = new FileReader(f)) {
@@ -45,6 +45,7 @@ public class TestNoOther {
       return String.valueOf(Arrays.copyOf($, n));
     }
   }
+
   public static void write(final File f, final String text) throws IOException {
     try (Writer w = new FileWriter(f)) {
       w.write(text);
@@ -56,10 +57,12 @@ public class TestNoOther {
   @Test public void brace_brace_newline() {
     azzert.that(TokenAsIs.stringToString("{}\n"), is("{}\n"));
   }
+
   @Theory public void fullTokenization(final File ¢) throws IOException {
     System.err.println("Testing " + ¢);
     azzert.that(TokenAsIs.fileToString(¢), is(read(¢)));
   }
+
   @Test public void some_method() {
     final String s = Separate.nl(
         //
@@ -74,9 +77,11 @@ public class TestNoOther {
         "  ");
     azzert.that(TokenAsIs.stringToString(s), is(s));
   }
+
   @Test public void unicode() {
     azzert.that(TokenAsIs.stringToString("יוסי") + "", is("יוסי"));
   }
+
   @Test public void unicodeFileAgainstFileOutput() throws IOException {
     final String s = TokenAsIs.fileToString(fin);
     final File fout = new File(fin.getPath() + ".out");
@@ -84,9 +89,11 @@ public class TestNoOther {
     azzert.that(read(fout), is(s));
     azzert.that(read(fout), is(read(fin)));
   }
+
   @Test public void unicodeFileAgainstString() throws IOException {
     azzert.that(TokenAsIs.fileToString(fin), is(read(fin)));
   }
+
   @Test public void unicodeFileLenth() throws IOException {
     assert fin.length() > TokenAsIs.fileToString(fin).length();
   }

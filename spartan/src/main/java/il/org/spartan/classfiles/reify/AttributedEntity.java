@@ -9,12 +9,14 @@ public class AttributedEntity extends NamedEntity {
     super(name);
     this.attributes = attributes;
   }
+
   public final AttributeInfo findAttribute(final String attributeName) {
     for (final AttributeInfo $ : attributes)
       if (attributeName.equals($.name))
         return $;
     return null;
   }
+
   public final boolean hasNo(final String attributeName) {
     return findAttribute(attributeName) == null;
   }

@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
  * <p>
  * Visitation functions are first invoked on all members, and only then it
  * recurses to members of inner classes.
+ *
  * @author Yossi Gil
  * @since 04/08/2007 */
 public final class ReflectionTraversal {
@@ -23,21 +24,25 @@ public final class ReflectionTraversal {
   public final Visitor visitor;
 
   /** Setup the traversal pattern
-   * @param clazz where should traversal start, must not be
-   *        <code><b>null</b></code> .
+   *
+   * @param clazz   where should traversal start, must not be
+   *                <code><b>null</b></code> .
    * @param visitor what should be done at each node, must not be
-   *        <code><b>null</b></code>. */
+   *                <code><b>null</b></code>. */
   public ReflectionTraversal(final Class<?> clazz, final Visitor visitor) {
     assert clazz != null;
     assert visitor != null;
     this.clazz = clazz;
     this.visitor = visitor;
   }
+
   /** initiate the traversal
+   *
    * @return sum of all visit functions on all visited object */
   public int go() {
     return go(clazz);
   }
+
   private int go(final Class<?> from) {
     assert from != null;
     // Visit the class itself
@@ -59,8 +64,11 @@ public final class ReflectionTraversal {
 
   public interface Visitor {
     int visit(Class<?> c);
+
     int visit(Constructor<?> c);
+
     int visit(Field f);
+
     int visit(Method m);
   }
 }

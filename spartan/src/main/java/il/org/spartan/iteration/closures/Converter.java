@@ -5,6 +5,7 @@ package il.org.spartan.iteration.closures;
  * create such a pointer, create a subclass that implements this interface
  * (typically as an anonymous class), giving an implementation to function
  * {@link #__}, and then pass an instance of this subclass class.
+ *
  * @author Yossi Gil.
  * @param <F> type of values that the function takes
  * @param <T> type of values that the function returns */

@@ -12,6 +12,7 @@ public class MapUtil {
   public static <K> void addToValue(final Map<K, Integer> m, final K key, final int val) {
     m.put(key, (m.get(key) != null ? m.get(key) : Integer.valueOf(0)) + val);
   }
+
   public static <K, V> Iterator<K> keysIterator(final Map<K, V> m) {
     return new Iterator<>() {
       Iterator<Map.Entry<K, V>> inner = m.entrySet().iterator();
@@ -19,14 +20,17 @@ public class MapUtil {
       @Override public boolean hasNext() {
         return inner.hasNext();
       }
+
       @Override public K next() {
         return inner.next().getKey();
       }
+
       @Override public void remove() {
         inner.remove();
       }
     };
   }
+
   public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(final Map<K, V> m) {
     final List<Map.Entry<K, V>> list = new ArrayList<>(m.entrySet());
     Collections.sort(list, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));
@@ -35,6 +39,7 @@ public class MapUtil {
       $.put(¢.getKey(), ¢.getValue());
     return $;
   }
+
   public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueReverse(final Map<K, V> m) {
     final List<Map.Entry<K, V>> list = new ArrayList<>(m.entrySet());
     Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
