@@ -20,11 +20,9 @@ public final class Int {
     return Integer.valueOf(inner);
   }
   /** @param ¢ JD
-   * @return */
+   * @return a newly created instance initialized to the parameter*/
   public static Int valueOf(final int ¢) {
-    final Int $ = new Int();
-    $.inner = ¢;
-    return $;
+    return new  Int(¢);
   }
   public void step() {
     ++inner;
