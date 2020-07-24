@@ -3,6 +3,7 @@ package fluent.ly;
 
 import java.util.*;
 
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
@@ -36,7 +37,7 @@ public enum has {
    * @param os an unknown number of objects
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
-  @SafeVarargs public static <T> boolean nil(final T o, final T... os) {
+  @SafeVarargs public static <T> boolean nil(final @Nullable T o, final T... os) {
     if (o == null || os == null)
       return true;
     for (final Object ¢ : os)

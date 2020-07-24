@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import org.jetbrains.annotations.Nullable;
+
 import fluent.ly.*;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
@@ -67,7 +69,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    * @since 2017-03-10 */
   static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
-      @Override public R fire() {
+      @Override public @Nullable R fire() {
         c.accept(current());
         return null;
       }

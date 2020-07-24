@@ -2,6 +2,9 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.jetbrains.annotations.Nullable;
+
 /** Organizes objects of the __ parameter in a tree, supplying a
  * {@link #descendants()} of all objects contained in a sub-tree. Object of the
  * __ parameter may present on all nodes on of this tree, including inner nodes.
@@ -54,7 +57,7 @@ public interface Recursive<T> extends Duplo<T> {
     @Override default Merge<E> merge() {
       return (self, others) -> {
         Stream<E> $ = Stream.empty();
-        for (final Duplo<E> ¢ : others)
+        for (final @NonNull Duplo<E> ¢ : others)
           $ = Stream.concat(¢.fullStream(), $);
         return self == null ? $ : Stream.concat($, Stream.of(self));
       };
@@ -70,7 +73,7 @@ public interface Recursive<T> extends Duplo<T> {
     @Override default Merge<E> merge() {
       return (self, others) -> {
         Stream<E> $ = self == null ? Stream.empty() : Stream.of(self);
-        for (final Duplo<E> ¢ : others)
+        for (final @NonNull Duplo<E> ¢ : others)
           $ = Stream.concat($, ¢.fullStream());
         return $;
       };
