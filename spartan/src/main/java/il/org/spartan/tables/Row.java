@@ -52,8 +52,8 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
 	/**
 	 * Add a key and a {@code boolean} value to this instance
 	 * 
-	 * @param key The key to be added; must not be {@code null @param value The
-	 *            value associated with the key @return {@code this}
+	 * @param key   The key to be added; must not be {@code null}
+	 * @param value The value associated with the key @return {@code this}
 	 */
 	public final Self col(final String key, final boolean value) {
 		return col(key, value + "");
@@ -83,8 +83,8 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
 	/**
 	 * Add a key and an {@code int} value to this instance
 	 * 
-	 * @param key The key to be added; must not be {@code null @param value The
-	 *            value associated with the key @return {@code this}
+	 * @param key   The key to be added; must not be {@code null}
+	 * @param value The value associated with the key @return {@code this}
 	 */
 	public Self col(final String key, final int value) {
 		return col(key, value + "");
@@ -93,9 +93,9 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
 	/**
 	 * Add a key and a general {@link Object} value to this instance
 	 * 
-	 * @param key The key to be added; must not be {@code null; must not be
-	 *        {@code null @param value The value associated with the key @return
-	 *            {@code this}
+	 * @param key   The key to be added; must not be {@code null};
+	 * @param value The value associated with the key; must not be {@code null}
+	 * @return {@code this}
 	 */
 	public final Self col(final String key, final Integer value) {
 		return value == null ? col(key) : col(key, value.intValue());
