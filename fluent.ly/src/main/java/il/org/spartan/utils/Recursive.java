@@ -3,7 +3,6 @@ package il.org.spartan.utils;
 import java.util.stream.*;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Organizes objects of the __ parameter in a tree, supplying a
  * {@link #descendants()} of all objects contained in a sub-tree. Object of the
