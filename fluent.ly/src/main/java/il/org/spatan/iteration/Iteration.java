@@ -1,6 +1,6 @@
 package il.org.spatan.iteration;
 
-import fluent.ly.*;
+import fluent.ly.forget;
 
 /** @param <T> Type over which we shall iterate * @author Yossi Gil
  * @since 01/05/2011 */

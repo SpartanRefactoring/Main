@@ -1,7 +1,10 @@
 package il.org.spartan.collections;
 
-import java.util.*;
-import java.util.Map.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class ChainStringToIntFunctionegerMap {
   public Map<String, Integer> inner = new HashMap<>();

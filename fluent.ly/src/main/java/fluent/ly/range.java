@@ -1,7 +1,9 @@
 package fluent.ly;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /** A fluent API implementation for range
  * @author Dor Ma'ayan

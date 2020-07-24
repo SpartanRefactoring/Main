@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 

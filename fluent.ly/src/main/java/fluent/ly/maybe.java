@@ -1,7 +1,5 @@
 package fluent.ly;
 
-import org.junit.*;
-
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD
  * @since @{year}-@{month}-@{day} */

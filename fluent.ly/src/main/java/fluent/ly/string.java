@@ -1,9 +1,15 @@
 package fluent.ly;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.nonnegative;
+import static fluent.ly.___.positive;
+import static fluent.ly.___.require;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /** A bunch of string functions.
  * @author Yossi Gil */

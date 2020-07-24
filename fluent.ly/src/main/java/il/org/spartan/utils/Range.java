@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.*;
+import java.util.List;
 
 /** An immutable integral range, representing all integers between
  * {@link #from}, up to, but not including, {@link #to}, i.e.,

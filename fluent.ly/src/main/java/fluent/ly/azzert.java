@@ -1,17 +1,39 @@
 package fluent.ly;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.cantBeNull;
+import static il.org.spartan.Utils.compressSpaces;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hamcrest.*;
-import org.hamcrest.core.*;
-import org.hamcrest.number.*;
-import org.jetbrains.annotations.*;
-import org.junit.*;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.Factory;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.AnyOf;
+import org.hamcrest.core.CombinableMatcher;
+import org.hamcrest.core.DescribedAs;
+import org.hamcrest.core.Every;
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsAnything;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsInstanceOf;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
+import org.hamcrest.core.IsSame;
+import org.hamcrest.core.StringContains;
+import org.hamcrest.core.StringEndsWith;
+import org.hamcrest.core.StringStartsWith;
+import org.hamcrest.number.OrderingComparison;
+import org.jetbrains.annotations.Contract;
+import org.junit.Assert;
 
-import il.org.spartan.*;
-import let.*;
+import il.org.spartan.Wrapper;
+import let.it;
 
 /** Extends {@link org.junit.Assert} with more assertion for equality
  * comparisons. If the comparison yields a "not-equal" result, a JUnit assertion

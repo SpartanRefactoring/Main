@@ -1,7 +1,7 @@
 /** Copyright */
 package il.org.spatan.iteration;
 
-import il.org.spartan.iterables.iterables.*;
+import il.org.spartan.iterables.iterables.ReadonlyIterator;
 
 /** An array {@linkplain "http://en.wikipedia.org/wiki/Adapter_pattern Adapter"}
  * adjusting it to the {@link Iterable} interface.

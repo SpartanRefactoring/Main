@@ -4,8 +4,6 @@ import static fluent.ly.azzert.is;
 
 import org.junit.Test;
 
-import fluent.ly.___;
-import fluent.ly.azzert;
 import il.org.spartan.utils.Tab;
 
 /** A JUnit test class for the enclosing class.

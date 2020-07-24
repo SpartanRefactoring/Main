@@ -1,6 +1,7 @@
 package fluent.ly;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 /** A utility class, offering a collection of function to unbox arrays and
  * collection of the boxed versions of the primitive types. The input of each

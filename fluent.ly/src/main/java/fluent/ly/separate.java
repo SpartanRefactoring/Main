@@ -1,18 +1,14 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static il.org.spartan.Utils.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.Utils.cantBeNull;
 
-import static fluent.ly.azzert.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
-
-import org.junit.*;
-
-import an.*;
-import il.org.spartan.*;
+import il.org.spartan.Separator;
 
 /** A utilities library functions that take an array or a collection, and return
  * a {@link String} composed by the elements of this collection, separated by a

@@ -1,18 +1,20 @@
 package fluent.ly;
 
-import static org.junit.Assert.*;
+import static fluent.ly.string.sprintf;
 
-import static fluent.ly.string.*;
-
-import org.junit.*;
-
-import fluent.ly.___.Bug.*;
-import fluent.ly.___.Bug.Assertion.*;
-import fluent.ly.___.Bug.Assertion.Value.*;
-import fluent.ly.___.Bug.Assertion.Value.Numerical.*;
-import fluent.ly.___.Bug.Assertion.Variant;
-import fluent.ly.___.Bug.Assertion.Variant.*;
-import fluent.ly.___.Bug.Contract.*;
+import fluent.ly.___.Bug.Assertion.Invariant;
+import fluent.ly.___.Bug.Assertion.Reachability;
+import fluent.ly.___.Bug.Assertion.Value.NonNull;
+import fluent.ly.___.Bug.Assertion.Value.Numerical.Negative;
+import fluent.ly.___.Bug.Assertion.Value.Numerical.NonNan;
+import fluent.ly.___.Bug.Assertion.Value.Numerical.NonNegative;
+import fluent.ly.___.Bug.Assertion.Value.Numerical.NonPositive;
+import fluent.ly.___.Bug.Assertion.Value.Numerical.Positive;
+import fluent.ly.___.Bug.Assertion.Variant.Nondecreasing;
+import fluent.ly.___.Bug.Assertion.Variant.Underflow;
+import fluent.ly.___.Bug.Contract.Postcondition;
+import fluent.ly.___.Bug.Contract.Precondition;
+import fluent.ly.___.Bug.Invariantable;
 
 /** A simple implementation of design by contract services. Violations are
  * reported to <code>System.err</code>. Error descriptions are passed by a

@@ -4,7 +4,6 @@ import static fluent.ly.azzert.is;
 
 import org.junit.Test;
 
-import fluent.ly.azzert;
 import il.org.spartan.utils.Accumulator;
 import il.org.spartan.utils.Accumulator.Counter;
 

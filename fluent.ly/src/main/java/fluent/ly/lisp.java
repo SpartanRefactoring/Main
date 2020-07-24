@@ -1,9 +1,9 @@
 package fluent.ly;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Stream;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Contract;
 
 /** @noinspection unused */
 public interface lisp {

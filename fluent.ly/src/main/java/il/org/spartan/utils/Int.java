@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import fluent.ly.*;
+import fluent.ly.forget;
 
 /** A poor man's approximation of a mutable int, which is so much more
  * convenient than {@link Integer}

@@ -1,6 +1,6 @@
 package il.org.spatan.iteration;
 
-import java.util.*;
+import java.util.Iterator;
 
 public class ArrayIterator<T> implements Iterator<T> {
   public static <E> Iterator<E> make(final E[] ¢) {

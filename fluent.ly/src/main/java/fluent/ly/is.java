@@ -1,10 +1,12 @@
 /** Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package fluent.ly;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Contract;
 
 /** @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-04-23 */

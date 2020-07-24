@@ -1,17 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static org.junit.Assert.*;
-
-import static fluent.ly.azzert.*;
-
-import java.util.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import an.empty;
-import org.junit.*;
-
-import il.org.spartan.*;
+import il.org.spartan.Utils;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.

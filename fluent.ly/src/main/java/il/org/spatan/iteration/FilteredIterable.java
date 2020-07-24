@@ -1,7 +1,7 @@
 package il.org.spatan.iteration;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Iterator;
+import java.util.function.Predicate;
 
 /** Makes a filtered version of a stream (realized by the {@link Iterable}
  * interface). Only those elements of the stream which satisfy a given boolean

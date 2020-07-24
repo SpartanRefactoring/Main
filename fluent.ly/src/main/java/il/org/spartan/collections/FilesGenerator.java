@@ -1,9 +1,12 @@
 package il.org.spartan.collections;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
 
-import fluent.ly.*;
+import fluent.ly.as;
 
 /** Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.

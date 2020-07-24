@@ -1,10 +1,10 @@
 package fluent.ly;
 
-import java.util.function.*;
+import java.util.function.Function;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.nil.*;
+import fluent.ly.nil.U;
 
 public class TestFluent_nil {
   static String helloString = "Hello";

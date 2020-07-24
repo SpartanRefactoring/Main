@@ -1,6 +1,6 @@
 package fluent.ly;
 
-import fluent.ly.the.*;
+import fluent.ly.the.first;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like

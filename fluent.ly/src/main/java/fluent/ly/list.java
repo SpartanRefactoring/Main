@@ -1,9 +1,10 @@
 package fluent.ly;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.UnaryOperator;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Boxer;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

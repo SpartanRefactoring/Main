@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import java.util.*;
+import java.util.Collection;
 
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD

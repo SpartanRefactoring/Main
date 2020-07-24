@@ -1,6 +1,6 @@
 package let;
 
-import java.util.*;
+import java.util.Stack;
 
 public class it<T> {
   private static Stack<Object> stack = new Stack<>();

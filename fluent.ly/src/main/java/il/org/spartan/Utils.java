@@ -1,16 +1,27 @@
 package il.org.spartan;
 
-import static org.junit.Assert.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.isNull;
+import static org.junit.Assert.assertArrayEquals;
 
-import static fluent.ly.azzert.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
 
-import java.io.*;
-import java.util.*;
-import java.util.function.*;
+import org.junit.Test;
 
-import org.junit.*;
-
-import fluent.ly.*;
+import fluent.ly.accumulate;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import fluent.ly.idiomatic;
+import fluent.ly.the;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.

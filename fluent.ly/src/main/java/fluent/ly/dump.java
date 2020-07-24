@@ -1,9 +1,14 @@
 package fluent.ly;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-import il.org.spartan.*;
+import il.org.spartan.ReflectionAnalyzer;
 
 /** A class to print all properties of an arbitrary object which can be
  * retrieved by getters methods (i.e., getXXX()) methods and boolean inspection

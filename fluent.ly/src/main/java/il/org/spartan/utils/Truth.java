@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.function.*;
+import java.util.function.BooleanSupplier;
 
 import fluent.ly.forget;
 

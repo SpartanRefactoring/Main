@@ -1,15 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import static il.org.spartan.Utils.*;
-import static org.junit.Assert.*;
-
-import java.util.*;
-
-import org.junit.*;
-
-import an.*;
-import fluent.ly.*;
+import java.util.Iterator;
 
 /** No values in an 'enum' used as name space for a collection of 'static'
  * functions.

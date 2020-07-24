@@ -1,6 +1,6 @@
 package fluent.ly;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
 /** A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b></code>. Main purpose is for

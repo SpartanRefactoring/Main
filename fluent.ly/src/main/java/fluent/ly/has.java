@@ -1,10 +1,9 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import java.util.*;
+import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
-import org.junit.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.

@@ -1,15 +1,19 @@
 package fluent.ly;
 
-import static fluent.ly.___.*;
-import static fluent.ly.idiomatic.*;
+import static fluent.ly.___.positive;
+import static fluent.ly.idiomatic.eval;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Predicate;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Contract;
 
-import an.*;
-import let.*;
+import an.iterable;
+import let.it;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

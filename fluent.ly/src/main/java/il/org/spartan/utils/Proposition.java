@@ -1,10 +1,12 @@
 package il.org.spartan.utils;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.function.BooleanSupplier;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import fluent.ly.*;
+import fluent.ly.as;
 
 /*** Third lecture:
  * <ol>

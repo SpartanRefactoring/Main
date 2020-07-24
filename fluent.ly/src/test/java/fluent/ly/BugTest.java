@@ -4,24 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import fluent.ly.___.Bug.Variant;
 import fluent.ly.___.Bug.Assertion;
-import fluent.ly.___.Bug.Assertion.Invariant;
-import fluent.ly.___.Bug.Assertion.Reachability;
 import fluent.ly.___.Bug.Assertion.Value;
-import fluent.ly.___.Bug.Assertion.Value.NonNull;
 import fluent.ly.___.Bug.Assertion.Value.Numerical;
-import fluent.ly.___.Bug.Assertion.Value.Numerical.Negative;
-import fluent.ly.___.Bug.Assertion.Value.Numerical.NonNegative;
-import fluent.ly.___.Bug.Assertion.Value.Numerical.NonPositive;
-import fluent.ly.___.Bug.Assertion.Value.Numerical.Positive;
 import fluent.ly.___.Bug.Assertion.Variant.Initial;
 import fluent.ly.___.Bug.Assertion.Variant.Nondecreasing;
 import fluent.ly.___.Bug.Assertion.Variant.Underflow;
-import fluent.ly.___.Bug.Assertion.Variant.Initial;
 import fluent.ly.___.Bug.Contract;
-import fluent.ly.___.Bug.Contract.Postcondition;
-import fluent.ly.___.Bug.Contract.Precondition;
+import fluent.ly.___.Bug.Variant;
 
 @SuppressWarnings("static-method")
 public class BugTest {

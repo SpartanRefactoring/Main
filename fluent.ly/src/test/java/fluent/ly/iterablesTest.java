@@ -6,9 +6,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import an.iterable;
-import fluent.ly.azzert;
-import fluent.ly.count;
-import fluent.ly.the;
 
 //
 /** A static nested class hosting unit tests for the nesting class Unit test

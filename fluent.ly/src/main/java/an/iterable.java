@@ -1,6 +1,6 @@
 package an;
 
-import java.util.*;
+import java.util.Iterator;
 
 public interface iterable {
   /** <code>singleton</code>
