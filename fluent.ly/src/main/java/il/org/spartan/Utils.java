@@ -386,7 +386,7 @@ public interface Utils {
         isNull(mustBeNull(null));
         azzert.fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        azzert.aye("", true);
+        azzert.aye(e + "", true);
       }
     }
     @Test public void mustBeNullOfNonNull() {
@@ -394,7 +394,7 @@ public interface Utils {
         mustBeNull(new Object());
         azzert.fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        azzert.aye("", true);
+        azzert.aye(e + "", true);
       }
     }
     @Test public void quoteEmptyString() {
