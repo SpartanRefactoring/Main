@@ -20,7 +20,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * {@link EventMapper#eventMap}. Used to inspect the collected data, rather
    * than update it. */
   public static <E extends Enum<E>> EventMapperFunctor<E, Map<E, Object>, Object> inspectorOf(final E ¢) {
-    return new EventMapperFunctor<E, Map<E, Object>, Object>(¢) {
+    return new EventMapperFunctor<>(¢) {
       @Override public void update(final Map<E, Object> ¢1) {
         consumer.accept(¢1);
       }

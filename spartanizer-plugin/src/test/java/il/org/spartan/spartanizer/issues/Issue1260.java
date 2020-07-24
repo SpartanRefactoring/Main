@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("static-method")
 public class Issue1260 {
   @Test public void list() {
-    final ReduceCollectionsAdd<Integer, List<Integer>> r = new ReduceCollectionsAdd<Integer, List<Integer>>() {
+    final ReduceCollectionsAdd<Integer, List<Integer>> r = new ReduceCollectionsAdd<>() {
       // TODO Oran.--should the class be made non-abstract?
     };
     azzert.that(IntStream.range(1, 31).boxed().collect(Collectors.toList()), is(r.reduce(IntStream.range(1, 11).boxed().collect(Collectors.toList()),

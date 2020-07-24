@@ -115,7 +115,7 @@ public class ASTTrotter extends ASTVisitor {
   private int total;
 
   public <N extends ASTNode> Hookable<N> on(final Class<N> c) {
-    return new Hookable<N>() {
+    return new Hookable<>() {
       @Override public Hookable<N> hook(final Rule<N, Object> ¢) {
         hookClassOnRule(c, ¢);
         return this;

@@ -58,7 +58,7 @@ public final class Namespace implements Environment {
     return this;
   }
   private Iterable<Environment> ancestors() {
-    return () -> new Iterator<Environment>() {
+    return () -> new Iterator<>() {
       Environment next = Namespace.this;
 
       @Override public boolean hasNext() {
@@ -345,7 +345,7 @@ public final class Namespace implements Environment {
     return has(identifier) || children.stream().anyMatch(λ -> λ.contains(identifier));
   }
   public static Iterable<String> namesGenerator(final SimpleType t) {
-    return () -> new Iterator<String>() {
+    return () -> new Iterator<>() {
       final String base = abbreviate.variableName(t);
       int n = -1;
 

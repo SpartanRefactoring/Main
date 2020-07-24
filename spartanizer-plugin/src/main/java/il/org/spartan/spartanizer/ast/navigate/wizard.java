@@ -42,7 +42,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
   @SuppressWarnings({ "unchecked", "serial" }) Map<Class<? extends ASTNode>, Integer> //
-  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+  classToNodeType = new LinkedHashMap<>() {
     {
       for (int nodeType = 1;; ++nodeType)
         try {

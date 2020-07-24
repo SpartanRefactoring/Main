@@ -19,7 +19,7 @@ public interface ancestors {
     return $;
   }
   static Iterable<ASTNode> of(final ASTNode n) {
-    return () -> new Iterator<ASTNode>() {
+    return () -> new Iterator<>() {
       ASTNode next = n;
 
       @Override public boolean hasNext() {

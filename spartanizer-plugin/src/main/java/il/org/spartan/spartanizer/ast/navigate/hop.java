@@ -27,7 +27,7 @@ public interface hop {
    *         Use case: Counting the number of Expressions among a given
    *         ASTNode's ancestors */
   static Iterable<ASTNode> ancestors(final ASTNode ¢) {
-    return () -> new Iterator<ASTNode>() {
+    return () -> new Iterator<>() {
       ASTNode current = ¢;
 
       @Override public boolean hasNext() {

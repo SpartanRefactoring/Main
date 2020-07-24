@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.engine.*;
 public enum find {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
-    return new Operand<N>() {
+    return new Operand<>() {
       @Override public N under(final ASTNode ¢) {
         return the.firstOf(descendants.whoseClassIs(c).from(¢));
       }

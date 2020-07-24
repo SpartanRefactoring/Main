@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
-  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
+  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<>() {
     {
       for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
         add(¢);
@@ -39,7 +39,7 @@ public interface type {
       }
     }
   };
-  Collection<String> valueTypes = new LinkedHashSet<String>(type.boxedTypes) {
+  Collection<String> valueTypes = new LinkedHashSet<>(type.boxedTypes) {
     static final long serialVersionUID = -0x134495F1CC662D60L;
     {
       for (final String ¢ : new String[] { "String" }) {
@@ -221,7 +221,7 @@ public interface type {
     ;
     private static final String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
-    static final Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
+    static final Map<String, implementation> types = new LinkedHashMap<>() {
       static final long serialVersionUID = -0x702EDE52D8CBFF3AL;
       {
         for (final Certain ¢ : Certain.values()) {

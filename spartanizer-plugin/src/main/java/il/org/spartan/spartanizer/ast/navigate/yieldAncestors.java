@@ -74,7 +74,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       this.until = until;
     }
     public Iterable<ASTNode> ancestors(final SimpleName n) {
-      return () -> new Iterator<ASTNode>() {
+      return () -> new Iterator<>() {
         ASTNode next = n;
 
         @Override public boolean hasNext() {

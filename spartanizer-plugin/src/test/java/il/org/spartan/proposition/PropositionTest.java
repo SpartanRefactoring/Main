@@ -229,7 +229,7 @@ public class PropositionTest {
     azzert.that(T.or(X, X).reduce(javaReducer), is("(T || X || X)"));
   }
   @Test public void d1() {
-    azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
+    azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<>(new ReduceStringConcatenate()) {
       @Override protected String map(final BooleanSupplier ¢) {
         return ¢ + "";
       }
@@ -283,7 +283,7 @@ public class PropositionTest {
     B8 = B2_OR_B1 = B2.or(B1);
   }
   @Test public void z() {
-    azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
+    azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<>(new ReduceStringConcatenate()) {
       @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
         return "";
       }

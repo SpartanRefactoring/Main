@@ -27,7 +27,7 @@ public enum TipperFactory {
   private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description,
       final Option... os) {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
-    return new UserDefinedTipper<Block>() {
+    return new UserDefinedTipper<>() {
       static final long serialVersionUID = 0x428682F150219098L;
 
       @Override public Tip tip(final Block n) {
@@ -71,7 +71,7 @@ public enum TipperFactory {
    * @return {@link UserDefinedTipper} */
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement, final String description) {
     final Matcher $ = Matcher.patternMatcher(pattern, replacement);
-    return new UserDefinedTipper<N>() {
+    return new UserDefinedTipper<>() {
       static final long serialVersionUID = 0x22BF0E55D353CA68L;
 
       @Override public String description(@SuppressWarnings("unused") final N __) {
