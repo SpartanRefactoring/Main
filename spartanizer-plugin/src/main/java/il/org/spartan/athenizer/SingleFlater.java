@@ -90,7 +90,7 @@ public final class SingleFlater {
     disabling.scan(root);
     final List<Operation<?>> operations = an.empty.list();
     root.accept(new DispatchingVisitor() {
-      @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
+      @Override  protected <N extends ASTNode> boolean go(final N n) {
         setNode(n);
         if (!inSelection(n) || usesDisabling && disabling.on(n))
           return true;

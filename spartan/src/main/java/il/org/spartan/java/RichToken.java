@@ -48,7 +48,7 @@ public class RichToken {
     public Factory(final RawTokenizer tokenizer) {
       this.tokenizer = tokenizer;
     }
-    @SuppressWarnings("synthetic-access") public RichToken make(final Token ¢) {
+     public RichToken make(final Token ¢) {
       return new RichToken(tokenizer, ¢);
     }
   }

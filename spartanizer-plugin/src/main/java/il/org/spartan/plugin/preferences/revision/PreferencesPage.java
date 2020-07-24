@@ -198,7 +198,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-        @SuppressWarnings("synthetic-access") void onSelection() {
+         void onSelection() {
           final int i = getList().getSelectionIndex();
           if (i < 0)
             return;
@@ -224,7 +224,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-        @SuppressWarnings("synthetic-access") void onSelection() {
+         void onSelection() {
           final int i = getList().getSelectionIndex();
           if (i >= 0)
             onConfigure.accept(elements.get(i).getValue());
@@ -235,7 +235,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         ableButton = null;
       });
       getList().addSelectionListener(new SelectionListener() {
-        @Override @SuppressWarnings("synthetic-access") public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        @Override  public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           final int i = getList().getSelectionIndex();
           if (i >= 0 && isAble != null)
             if (isAble.apply(elements.get(i).getValue()).booleanValue()) {
@@ -336,7 +336,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
     private void commitSelf() {
       new Job("Applying preferences changes") {
-        @Override @SuppressWarnings("synthetic-access") protected IStatus run(final IProgressMonitor m) {
+        @Override  protected IStatus run(final IProgressMonitor m) {
           m.beginTask("Applying preferences changes", preferences2.keySet().size());
           for (final IProject p : preferences2.keySet()) {
             if (preferences2.get(p) != null)

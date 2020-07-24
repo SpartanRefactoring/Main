@@ -14,7 +14,7 @@ public final class ClassInfo extends ConstantPoolEntity {
   public static ClassInfo make(final Class<?> ¢) {
     return make(CLASSFILES.open(¢));
   }
-  @SuppressWarnings("synthetic-access") public static AttributedEntity make(final DataInputStream ¢) {
+   public static AttributedEntity make(final DataInputStream ¢) {
     return new Builder(¢).go();
   }
   public static ClassInfo make(final File ¢) {

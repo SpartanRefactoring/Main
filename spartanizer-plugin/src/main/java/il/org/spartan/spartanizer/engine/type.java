@@ -133,7 +133,7 @@ public interface type {
   }
   // TODO Matteo: Nano-pattern of values: not implemented
   /** @return the type object of the expression */
-  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
+   static type of(final Expression ¢) {
     return inner.get(¢);
   }
   default Certain asPrimitiveCertain() {

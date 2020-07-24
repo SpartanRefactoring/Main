@@ -69,7 +69,7 @@ public class OperationListEditor extends ListEditor {
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
-      @SuppressWarnings("synthetic-access") void onSelection() {
+       void onSelection() {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
@@ -91,7 +91,7 @@ public class OperationListEditor extends ListEditor {
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
-      @SuppressWarnings("synthetic-access") void onSelection() {
+       void onSelection() {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
@@ -154,7 +154,7 @@ public class OperationListEditor extends ListEditor {
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
-      @SuppressWarnings("synthetic-access") void onSelection() {
+       void onSelection() {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
@@ -178,7 +178,7 @@ public class OperationListEditor extends ListEditor {
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
       }
-      @SuppressWarnings("synthetic-access") void onSelection() {
+       void onSelection() {
         final int i = getList().getSelectionIndex();
         if (i >= 0)
           onConfigure.accept(elements_list.get(i).getValue()); // perform the on
@@ -192,7 +192,7 @@ public class OperationListEditor extends ListEditor {
       ableButton = null;
     });
     getList().addSelectionListener(new SelectionListener() {
-      @Override @SuppressWarnings("synthetic-access") public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+      @Override  public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         final int i = getList().getSelectionIndex();
         final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
         if (i >= 0)

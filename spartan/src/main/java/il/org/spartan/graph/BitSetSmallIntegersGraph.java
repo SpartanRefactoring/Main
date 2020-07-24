@@ -76,7 +76,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
       neighbors[j].set(i);
       return union(i, j);
     }
-    @SuppressWarnings("synthetic-access") //
+     //
     public BitSetSmallIntegersGraph go() {
       return new BitSetSmallIntegersGraph(neighbors, countArcs(), component, nodes);
     }

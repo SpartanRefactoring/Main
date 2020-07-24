@@ -75,7 +75,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     public Builder connect(final short i, final short j) {
       return add(i).add(j).append(i, j).append(j, i).union(i, j);
     }
-    @SuppressWarnings("synthetic-access") //
+     //
     public MatrixSmallIntegersGraph go() {
       return new MatrixSmallIntegersGraph(neighbors, countArcs(), component, nodes);
     }

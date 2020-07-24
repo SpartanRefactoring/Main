@@ -392,12 +392,12 @@ public final class ConstantPool {
       this.nameAndTypeIndex = nameAndTypeIndex;
     }
     /** @return the class constant. */
-    @SuppressWarnings("synthetic-access") //
+     //
     public ClassConstant getClassConstant() {
       return (ClassConstant) pool[classIndex];
     }
     /** @return the name-and-type constant. */
-    @SuppressWarnings("synthetic-access") //
+     //
     public NameAndTypeConstant getNameAndType() {
       return (NameAndTypeConstant) pool[nameAndTypeIndex];
     }
@@ -471,7 +471,7 @@ public final class ConstantPool {
     /** Return a UTF8 representation of a specific entry in the constants' pool
      * @param ¢ where to look for this entry?
      * @return a UTF8 representation of the content of this entry */
-    @SuppressWarnings("synthetic-access") //
+     //
     final String getUTF8(final int ¢) {
       return !(pool[¢] instanceof UTF8) ? null : ((UTF8) pool[¢]).value;
     }
