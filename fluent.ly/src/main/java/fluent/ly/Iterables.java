@@ -47,7 +47,7 @@ public interface Iterables {
     return $;
   }
 
-  static <@Nullable T> boolean before(final Iterable<T> ts, final T t1, final T t2) {
+  static <T> boolean before(final Iterable<T> ts, final @NonNull T t1, final @NonNull T t2) {
     boolean seen = false;
     for (final T ¢ : ts) {
       if (!seen && t1.equals(¢))

@@ -10,7 +10,7 @@ import il.org.spartan.collections.ImmutableArrayList;
  * @author Yossi Gil
  * @since Dec 9, 2011
  * @param <E> type of elements stored in each vertex */
-public class Vertex<@Nullable E> {
+public class Vertex<E> {
   private final E e;
   private final ImmutableArrayList<Vertex<E>> incoming;
   private final ImmutableArrayList<Vertex<E>> outgoing;

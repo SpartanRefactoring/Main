@@ -10,8 +10,7 @@ import il.org.spartan.classfiles.reify.OpCode.Instruction;
 public class SimplifiedCode {
   private static boolean isRelevant(final Instruction ¢) {
     switch (¢.opCode) {
-    case GETFIELD:
-    case GETSTATIC:
+    case GETFIELD, GETSTATIC:
     case INVOKEDYNAMIC:
     case INVOKEINTERFACE:
     case INVOKESPECIAL:

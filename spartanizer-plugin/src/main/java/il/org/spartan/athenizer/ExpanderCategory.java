@@ -1,37 +1,46 @@
 package il.org.spartan.athenizer;
 
+import java.util.Optional;
 import java.util.stream.*;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.preference.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
 
-/** Classification of Expanders
+/**
+ * Classification of Expanders
+ * 
  * @author Raviv Rachmiel
- * @since 24-12-16 */
-@FunctionalInterface
-public interface ExpanderCategory {
+ * @since 24-12-16
+ */
+@FunctionalInterface public interface ExpanderCategory {
   String description();
-  /** Returns the preference group to which the tipper belongs to. This method
+
+  /**
+   * Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
    * ExpanderGroup TODO Roth, add - {@link ExpanderGroup} when you make the
    * expander preferencesResources
-   * @return preference group this tipper belongs to */
+   * 
+   * @return preference group this tipper belongs to
+   */
   default ExpanderGroup tipperGroup() {
     return ExpanderGroup.find(this);
   }
+
   default ExpanderGroup ExpanderGroup() {
     return ExpanderGroup.find(this);
   }
+
   static String getLabel(final Class<? extends ExpanderCategory> ¢) {
     return English.name(¢);
   }
 
   // TODO Roth, to preferences?
-  @FunctionalInterface
-  interface Nominal extends ExpanderCategory {
+  @FunctionalInterface interface Nominal extends ExpanderCategory {
     String label = "Nominal";
   }
 
@@ -66,14 +75,19 @@ public interface ExpanderCategory {
     Explanation(ExpanderCategory.Explanation.class), //
     Ternarization(ExpanderCategory.Ternarization.class), //
     ;
-    public static ExpanderGroup find(final ExpanderCategory ¢) {
-      return find(¢.getClass());
+
+    @SuppressWarnings("null") public static @Nullable ExpanderGroup find(final ExpanderCategory ¢) {
+      Optional<ExpanderGroup> find = find(¢.getClass());
+      return find.orElse(null);
     }
+
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
-    private static @Nullable ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
-      return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
+
+    @SuppressWarnings("null") private static Optional<@NonNull ExpanderGroup> find(
+        final Class<? extends ExpanderCategory> ¢) {
+      return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst();
     }
 
     private final Class<? extends ExpanderCategory> clazz;
@@ -85,6 +99,7 @@ public interface ExpanderCategory {
       id = clazz.getCanonicalName();
       label = ExpanderCategory.getLabel(clazz);
     }
+
     public boolean isEnabled() {
       return Plugin.plugin() == null || store().getBoolean(id);
     }

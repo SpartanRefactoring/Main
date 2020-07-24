@@ -6,6 +6,7 @@ import org.junit.Test;
 
 /** @author Dor Ma'ayan
  * @since 2018-12-19 */
+  @SuppressWarnings("static-method")
 public class ConsolidateAssertionsTest {
   @Test public void test1() {
     trimmingOf("assert a; assert b;")//

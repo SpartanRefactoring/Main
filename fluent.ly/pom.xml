@@ -23,11 +23,11 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
+		<!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
 		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>javax.annotation-api</artifactId>
-			<version>1.3.2</version>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>16.0.1</version>
 		</dependency>
 
 		<dependency>

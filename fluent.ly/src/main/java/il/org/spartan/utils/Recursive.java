@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 import org.eclipse.jdt.annotation.NonNull;
 
 
+
 /**
  * Organizes objects of the __ parameter in a tree, supplying a
  * {@link #components()} of all objects contained in a sub-tree. Object of the

@@ -28,11 +28,11 @@ public interface nil {
     return null;
   }
 
-  @SuppressWarnings("unused") static <T> T ignoring(final double __) {
+  @SuppressWarnings("unused") static <@Nullable T> T ignoring(final double __) {
     return null;
   }
 
-  @SuppressWarnings("unused") static <T> @Nullable T ignoring(final long __) {
+  @SuppressWarnings("unused") static <@Nullable T> T ignoring(final long __) {
     return null;
   }
 

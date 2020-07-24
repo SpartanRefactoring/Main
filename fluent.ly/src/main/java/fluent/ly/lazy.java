@@ -2,6 +2,8 @@ package fluent.ly;
 
 import java.util.function.Supplier;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b></code>. Main purpose is for
@@ -23,7 +25,7 @@ public interface lazy<T> extends Supplier<T> {
   static <T> lazy<T> get(final Supplier<T> ¢) {
     return new lazy<>() {
       /** Cached value; invalid cache if {@code null} */
-      T $;
+      @Nullable T $;
 
       /**
        * No need to be {@code synchronized} to make it thread safe. Instance is always

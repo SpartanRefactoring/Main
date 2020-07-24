@@ -1,5 +1,7 @@
 package il.org.spartan;
 
+import java.util.Objects;
+
 /**
  * A generic wrapper classes which can store and retrieve values of any type.
  *
@@ -11,7 +13,7 @@ public class Wrapper<T> {
   protected T inner;
 
   /** Instantiates this class */
-  public Wrapper() {
+  @SuppressWarnings("null") public Wrapper() {
     this(null);
   }
 
@@ -38,7 +40,7 @@ public class Wrapper<T> {
    *         returns <code><b>true</b></code> for the wrapped objects.
    */
   public boolean equals(final Wrapper<?> ¢) {
-    return inner == null ? ¢.inner == null : inner.equals(¢.inner);
+    return Objects.equals(inner, ¢.inner); 
   }
 
   /** @return value wrapped in this object. */
@@ -47,7 +49,7 @@ public class Wrapper<T> {
   }
 
   @Override public int hashCode() {
-    return inner == null ? 0 : inner.hashCode();
+    return Objects.hash(inner); 
   }
 
   /** set current value */

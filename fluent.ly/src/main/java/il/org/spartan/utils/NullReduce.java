@@ -1,5 +1,7 @@
 package il.org.spartan.utils;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * Provides null value for {@link #reduce()}
  *
@@ -7,7 +9,9 @@ package il.org.spartan.utils;
  * @since 2017
  */
 public abstract class NullReduce<T> extends Reduce<T> {
-  @Override public final T reduce() {
-    return null;
-  }
+	@SuppressWarnings("null")
+	@Override
+	public final T reduce() {
+		return null;
+	}
 }

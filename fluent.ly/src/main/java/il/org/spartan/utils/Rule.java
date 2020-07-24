@@ -46,7 +46,7 @@ import fluent.ly.note;
  * {@link Stream} of nested instances, which is an singleton of {@code this} if
  * the instance is atomic, or include any number of instances, including
  * <li><b>Descriptive qualities:</b> {@link #examples()}, {@link #akas()},
- * {@link #describe(Object)}, {@link #description(Object)}, and more.
+ * {@link #describe}, {@link #description}, and more.
  * </ol>
  * <p>
  * Note: In sub-classes the sub-interfaces methods marked {@code @}{@link Check}
@@ -313,7 +313,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    * @since 2017-03-13
    */
   abstract class Stateful<T, R> implements Rule<T, R> {
-    public @Nullable T current;
+    public T current;
 
     @Override public final R apply(final T ¢) {
       if (!ready())
