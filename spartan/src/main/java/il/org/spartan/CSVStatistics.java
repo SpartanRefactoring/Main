@@ -33,8 +33,7 @@ public class CSVStatistics extends CSVLine.Ordered {
    * @param baseName the name of the files into which statistics should be
    *        written; if this name ends with ".csv", this extension is removed.
    * @param keysHeader the name of the column in which the names of the
-   *        numerical columns in the principal file
-   * @throws IOException */
+   *        numerical columns in the principal file*/
   public CSVStatistics(final String baseName, final String keysHeader) {
     assert baseName != null;
     assert keysHeader != null;
