@@ -4,9 +4,12 @@ package il.org.spartan;
 // TODO: I commented this import. Had it been renamed?
 
 // import static fluent.ly.___.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Instantiable;
 
 /** A class to generate a CSV (comma separated values) file, by writing into it
  * a sequence of {@link CSVLine} records.

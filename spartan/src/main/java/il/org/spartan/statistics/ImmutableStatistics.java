@@ -1,10 +1,10 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.bench.Unit.*;
+import static il.org.spartan.bench.Unit.RELATIVE;
 
-import java.util.*;
+import java.util.Arrays;
 
-import il.org.spartan.bench.*;
+import il.org.spartan.bench.Unit;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */

@@ -1,8 +1,9 @@
 package il.org.spartan;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import fluent.ly.*;
+import fluent.ly.separate;
 
 /** @author Yossi Gil
  * @since Apr 8, 2012 */

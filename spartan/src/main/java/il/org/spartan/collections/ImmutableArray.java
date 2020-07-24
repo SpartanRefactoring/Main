@@ -1,9 +1,12 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.collections;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Canopy;
+import il.org.spartan.streotypes.Immutable;
+import il.org.spartan.streotypes.Instantiable;
 
 /** An immutable array of any reference type.
  * @param <T> Type of elements stored in the array.

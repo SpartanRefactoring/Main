@@ -1,20 +1,30 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.reap;
 
-import static fluent.ly.azzert.*;
-import static fluent.ly.idiomatic.*;
-import static il.org.spartan.Utils.*;
-import static java.lang.Math.*;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.idiomatic.run;
+import static il.org.spartan.Utils.cantBeNull;
+import static java.lang.Math.max;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.reap.Cookbook.Internal.*;
-import il.org.spartan.reap.Cookbook.Recipe.*;
+import fluent.ly.azzert;
+import fluent.ly.idiomatic;
+import il.org.spartan.reap.Cookbook.Internal.$$Function;
+import il.org.spartan.reap.Cookbook.Internal.$$Function2;
+import il.org.spartan.reap.Cookbook.Internal.$$RecipeMaker;
+import il.org.spartan.reap.Cookbook.Internal.Function2;
+import il.org.spartan.reap.Cookbook.Recipe.NullRobust;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Cell}s. A {@link Cell} is either an

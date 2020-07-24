@@ -1,8 +1,8 @@
 package il.org.spartan.java;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.nothing;
 
-import fluent.ly.*;
+import fluent.ly.Iterables;
 
 public abstract class TokenProcessor {
   @SuppressWarnings("static-method") protected void after() {

@@ -1,8 +1,9 @@
 package il.org.spartan.reflection;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
-import fluent.ly.*;
+import fluent.ly.as;
 
 public class ClassPredicates {
   public static boolean hasMutableFields(final Class<?> c) {

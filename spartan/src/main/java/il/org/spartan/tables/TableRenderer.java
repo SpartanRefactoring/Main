@@ -1,9 +1,9 @@
 package il.org.spartan.tables;
 
-import java.util.*;
+import java.util.Collection;
 
-import fluent.ly.*;
-import il.org.spartan.*;
+import fluent.ly.separate;
+import il.org.spartan.Separator;
 
 /** TODO Yossi Gil Document Classn
  * @author Yossi Gil

@@ -1,7 +1,13 @@
 package il.org.spartan.classfiles;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /** @author Yossi Gil
  * @since 11 November 2011 */

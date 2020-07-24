@@ -1,13 +1,13 @@
 package il.org.spartan.statistics;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertEquals;
 
-import java.math.*;
+import java.math.BigInteger;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 /** nested element in a hierarchical structure
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

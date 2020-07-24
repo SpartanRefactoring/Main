@@ -1,6 +1,6 @@
 package il.org.spartan.reflection;
 
-import fluent.ly.*;
+import fluent.ly.dump;
 
 public enum ReflectionAnalyzer {
   ;

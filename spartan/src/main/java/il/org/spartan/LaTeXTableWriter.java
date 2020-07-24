@@ -1,9 +1,17 @@
 package il.org.spartan;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Formatter;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import fluent.ly.*;
-import il.org.spartan.Aggregator.*;
+import fluent.ly.Iterables;
+import fluent.ly.idiomatic;
+import il.org.spartan.Aggregator.Aggregation;
 
 /** import static il.org.spartan.utils.Box.*; import java.util.*; import
  * il.org.spartan.iteration.Iterables; import il.org.spartan.Aggregator.*; /**

@@ -1,8 +1,8 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.files.visitors;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Collection;
 
 /** A class realizing a traversal of the file system, where the traversal is
  * restricted to <code>.class</code> files only

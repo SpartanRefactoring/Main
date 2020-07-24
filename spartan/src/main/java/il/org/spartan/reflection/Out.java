@@ -1,9 +1,10 @@
 package il.org.spartan.reflection;
 
-import java.util.*;
+import java.util.Collection;
 
 import fluent.ly.idiomatic;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Once;
+import il.org.spartan.utils.Separate;
 
 public class Out {
   static final int MAX_FIRST = 20;

@@ -1,6 +1,7 @@
 package il.org.spartan.reflection;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /** This class realizes a memory model for Java objects, as per the following
  * rules.

@@ -1,10 +1,10 @@
 package il.org.spartan.classfiles.reify;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since 28 November 2011 */

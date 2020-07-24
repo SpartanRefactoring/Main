@@ -1,13 +1,35 @@
 package il.org.spartan.java;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.java.Token.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.java.Token.ANNOTATION;
+import static il.org.spartan.java.Token.AT_INTERFACE;
+import static il.org.spartan.java.Token.BLOCK_COMMENT;
+import static il.org.spartan.java.Token.CHARACTER_LITERAL;
+import static il.org.spartan.java.Token.DOC_COMMENT;
+import static il.org.spartan.java.Token.EMPTY_BLOCK_COMMENT;
+import static il.org.spartan.java.Token.EOF;
+import static il.org.spartan.java.Token.IDENTIFIER;
+import static il.org.spartan.java.Token.LINE_COMMENT;
+import static il.org.spartan.java.Token.MULT;
+import static il.org.spartan.java.Token.NL;
+import static il.org.spartan.java.Token.NL_BLOCK_COMMENT;
+import static il.org.spartan.java.Token.NL_DOC_COMMENT;
+import static il.org.spartan.java.Token.PARTIAL_BLOCK_COMMENT;
+import static il.org.spartan.java.Token.PARTIAL_DOC_COMMENT;
+import static il.org.spartan.java.Token.SPACE;
+import static il.org.spartan.java.Token.STRING_LITERAL;
+import static il.org.spartan.java.Token.UNTERMINATED_BLOCK_COMMENT;
+import static il.org.spartan.java.Token.UNTERMINATED_CHARACTER_LITERAL;
+import static il.org.spartan.java.Token.UNTERMINATED_DOC_COMMENT;
+import static il.org.spartan.java.Token.UNTERMINATED_STRING_LITERAL;
+import static il.org.spartan.java.Token.__public;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 @SuppressWarnings("static-method")
 //

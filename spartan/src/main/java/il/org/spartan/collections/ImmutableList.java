@@ -1,7 +1,11 @@
 package il.org.spartan.collections;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /** A collection class that allows addition, counting, iteration, but noting
  * else.

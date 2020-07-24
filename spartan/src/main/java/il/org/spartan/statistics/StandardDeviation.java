@@ -1,9 +1,11 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.statistics.Mean.*;
-import static il.org.spartan.statistics.Sum.*;
+import static il.org.spartan.statistics.Mean.destructiveMoment;
+import static il.org.spartan.statistics.Mean.shift;
+import static il.org.spartan.statistics.Sum.sum;
+import static il.org.spartan.statistics.Sum.sum2;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Utility;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */

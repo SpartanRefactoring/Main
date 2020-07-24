@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles;
 
-import java.io.*;
+import java.io.File;
 
 /** A collection of functions representing the translation of class names to
  * path and vice versa.

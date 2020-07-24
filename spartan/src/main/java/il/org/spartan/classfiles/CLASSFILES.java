@@ -1,11 +1,18 @@
 package il.org.spartan.classfiles;
 
-import java.io.*;
-import java.util.*;
-import java.util.zip.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.streotypes.Utility;
+import il.org.spartan.utils.Separate;
 
 /** A utility class, serving as a façade to {@link CLASSPATH}, {@link JRE},
  * {@link EXTENSIONPATH}, {@link ZipFile} and {@link File} providing a unified

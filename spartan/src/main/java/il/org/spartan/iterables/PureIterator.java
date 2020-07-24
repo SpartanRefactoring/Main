@@ -1,15 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.Utils.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.Utils.cantBeNull;
+import static il.org.spartan.Utils.mustBeNull;
 
-import java.util.*;
+import java.util.Iterator;
 
-import org.eclipse.jdt.annotation.*;
-import org.junit.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** A kind of {@link Iterator} which does not support the rarely used
  * {@link #remove} operation and saves the user, i.e., who ever chooses to

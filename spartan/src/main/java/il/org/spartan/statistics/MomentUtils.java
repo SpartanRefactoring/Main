@@ -1,6 +1,7 @@
 package il.org.spartan.statistics;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 /** @author Yossi Gil
  * @since 31 ביול 2011 */

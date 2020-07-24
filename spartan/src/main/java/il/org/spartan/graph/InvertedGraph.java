@@ -1,6 +1,6 @@
 package il.org.spartan.graph;
 
-import il.org.spartan.collections.*;
+import il.org.spartan.collections.ImmutableArrayList;
 
 /** Provides an inverse perspective on a graph, i.e., inverts the direction of
  * all edges in it.

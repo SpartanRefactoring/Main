@@ -1,11 +1,15 @@
 package il.org.spartan.graph;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.ensure;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
+import java.util.concurrent.ArrayBlockingQueue;
 
-import il.org.spartan.collections.*;
+import il.org.spartan.collections.ImmutableArrayList;
 
 /** An abstract representation of an immutable directed graph
  * @param <E> type of elements stored in this graph

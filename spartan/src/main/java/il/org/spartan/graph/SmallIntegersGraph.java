@@ -1,6 +1,6 @@
 package il.org.spartan.graph;
 
-import il.org.spartan.collections.*;
+import il.org.spartan.collections.Integers;
 
 /** @author Yossi Gil
  * @since Apr 19, 2012 */

@@ -1,6 +1,6 @@
 package il.org.spartan.statistics;
 
-import il.org.spartan.xy.*;
+import il.org.spartan.xy.WeightedLeastSquares;
 
 /** @author Yossi Gil
  * @since Apr 21, 2012 */

@@ -1,12 +1,16 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.classfiles;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.streotypes.Utility;
+import il.org.spartan.utils.Separate;
 
 /** A class representing the location on the file system of the <em>Java Runtime
  * Environment</em> (JRE), that is the standard Java library.

@@ -1,8 +1,8 @@
 package il.org.spartan.classfiles;
 
-import static il.org.spartan.strings.StringUtils.*;
+import static il.org.spartan.strings.StringUtils.esc;
 
-import java.util.*;
+import java.util.TreeSet;
 
 /** A representation of the system global CLASSPATH.
  * @author Yossi Gil

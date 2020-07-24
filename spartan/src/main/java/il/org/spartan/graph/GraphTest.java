@@ -1,17 +1,36 @@
 package il.org.spartan.graph;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.graph.GraphsSamplesGenerator.*;
+import static fluent.ly.azzert.hasItem;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.graph.GraphsSamplesGenerator.make1Clique;
+import static il.org.spartan.graph.GraphsSamplesGenerator.make2Clique;
+import static il.org.spartan.graph.GraphsSamplesGenerator.make3By3;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeAll;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeAloofNodeAndAloofCycle;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeCFGExample;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeChainABCDEF;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeDiamond;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeInvertedTree;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeInvertedTreeWithLoops;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeOneTwoThreeTrianble;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeSingleEdge;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeSingletonLoop;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeTree;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeTreeWithLoops;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeTwoAloofNodes;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeTwoConnectedPairs;
+import static il.org.spartan.graph.GraphsSamplesGenerator.makeWikiExample;
 import static org.junit.Assert.assertEquals;
 
-import java.util.*;
+import java.util.Iterator;
 
-import org.eclipse.jdt.annotation.*;
-import org.junit.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.collections.*;
-import il.org.spatan.iteration.*;
+import fluent.ly.Iterables;
+import fluent.ly.azzert;
+import il.org.spartan.collections.ImmutableArrayList;
+import il.org.spatan.iteration.NamedEntity;
 
 @SuppressWarnings("static-method")
 public class GraphTest {

@@ -1,12 +1,16 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.___.*;
-import static fluent.ly.azzert.*;
+import static fluent.ly.___.nonnegative;
+import static fluent.ly.___.sure;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.___;
+import fluent.ly.azzert;
+import fluent.ly.box;
+import il.org.spartan.utils.Pair;
+import il.org.spartan.utils.Triple;
 
 /** @author Yossi Gil
  * @since 29/05/2011 */

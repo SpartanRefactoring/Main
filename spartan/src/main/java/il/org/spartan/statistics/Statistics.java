@@ -1,10 +1,13 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.statistics.MomentUtils.*;
+import static il.org.spartan.statistics.MomentUtils.sqr;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import fluent.ly.*;
+import fluent.ly.Iterables;
+import fluent.ly.idiomatic;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */

@@ -1,6 +1,6 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.java.Token.Category.*;
+import static il.org.spartan.java.Token.Category.IGNORE;
 
 /** @author Yossi Gil
  * @since 2011-11-19 */

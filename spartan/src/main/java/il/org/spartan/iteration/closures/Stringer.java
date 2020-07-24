@@ -1,6 +1,6 @@
 package il.org.spartan.iteration.closures;
 
-import static il.org.spartan.strings.StringUtils.*;
+import static il.org.spartan.strings.StringUtils.wrap;
 
 /** An interface supplying a function object pointer, where the function return
  * value is {@link String}. To create such a pointer, create a subclass that

@@ -1,7 +1,8 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.bench;
 
-import il.org.spartan.statistics.*;
+import il.org.spartan.statistics.ImmutableStatistics;
+import il.org.spartan.statistics.Statistics;
 
 /** Ad hoc implementation before we use Apache common
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>

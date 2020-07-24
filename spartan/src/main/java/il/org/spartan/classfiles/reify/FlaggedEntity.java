@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Modifier;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */

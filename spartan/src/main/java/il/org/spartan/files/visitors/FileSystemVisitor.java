@@ -1,14 +1,22 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.files.visitors;
 
-import java.io.*;
-import java.util.*;
-import java.util.zip.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
-import fluent.ly.*;
-import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
-import il.org.spartan.files.visitors.FindClassFile.*;
-import il.org.spartan.strings.*;
+import fluent.ly.Iterables;
+import fluent.ly.forget;
+import il.org.spartan.files.visitors.FileSystemVisitor.Action.StopTraversal;
+import il.org.spartan.files.visitors.FindClassFile.Searcher;
+import il.org.spartan.strings.Suffixed;
 
 /** A class realizing a file system traversal algorithm, including delving into
  * archives such as ZIP and JAR files.

@@ -1,8 +1,8 @@
 package il.org.spartan.bench.operations;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
 
-import il.org.spartan.bench.*;
+import il.org.spartan.bench.Stopwatch;
 
 /** A typed procedure with no arguments, which is also suitable for time
  * measurement, i.e., its execution time is sufficiently greater than the time

@@ -1,11 +1,12 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.reap;
 
-import static fluent.ly.idiomatic.*;
-import static il.org.spartan.Utils.*;
+import static fluent.ly.idiomatic.run;
+import static il.org.spartan.Utils.cantBeNull;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 /** A cell that may depend on others.
  * @param <T> JD

@@ -1,6 +1,7 @@
 package il.org.spartan.sequence;
 
-import fluent.ly.*;
+import fluent.ly.___;
+import fluent.ly.as;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

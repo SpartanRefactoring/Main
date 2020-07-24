@@ -1,8 +1,8 @@
 package il.org.spartan.strings;
 
-import fluent.ly.*;
-import il.org.spartan.iterables.iterables.*;
-import il.org.spartan.utils.*;
+import fluent.ly.box;
+import il.org.spartan.iterables.iterables.RangeIterator;
+import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since Apr 27, 2012 */

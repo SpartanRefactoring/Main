@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
+import java.io.DataInputStream;
 
 public final class BufferDataInputStream extends DataInputStream {
   private final BufferInputStream inner;

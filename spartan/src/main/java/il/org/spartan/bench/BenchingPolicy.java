@@ -1,14 +1,19 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.bench.Unit.*;
+import static il.org.spartan.bench.Unit.MINUTE;
+import static il.org.spartan.bench.Unit.SECOND;
+import static il.org.spartan.bench.Unit.thousands;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.bench.LogBook.*;
-import il.org.spartan.bench.operations.*;
-import il.org.spartan.sequence.*;
+import fluent.ly.___;
+import il.org.spartan.Log;
+import il.org.spartan.bench.LogBook.Consolidation;
+import il.org.spartan.bench.operations.Bencheon;
+import il.org.spartan.bench.operations.NamedOperation;
+import il.org.spartan.bench.operations.Operation;
+import il.org.spartan.sequence.Multiplicative;
+import il.org.spartan.sequence.Sequence;
 
 /** Defines a set of policies for timing an operation.
  * @author Yossi Gil

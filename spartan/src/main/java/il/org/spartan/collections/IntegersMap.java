@@ -1,11 +1,14 @@
 package il.org.spartan.collections;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.comparesEqualTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-import java.util.*;
+import java.util.Arrays;
 
-import fluent.ly.*;
-import fluent.ly.___.Bug.*;
+import fluent.ly.___.Bug.Invariantable;
+import fluent.ly.as;
+import fluent.ly.azzert;
 
 /** An unsorted map of integers.
  * <p>

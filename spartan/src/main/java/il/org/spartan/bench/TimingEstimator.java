@@ -1,14 +1,16 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.___.*;
-import static il.org.spartan.bench.Unit.*;
-import static il.org.spartan.strings.StringUtils.*;
+import static fluent.ly.___.nonnegative;
+import static fluent.ly.___.positive;
+import static il.org.spartan.bench.Unit.PERCENT;
+import static il.org.spartan.bench.Unit.thousands;
+import static il.org.spartan.strings.StringUtils.delta;
 
-import java.util.*;
+import java.util.IdentityHashMap;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.bench.operations.*;
+import fluent.ly.as;
+import il.org.spartan.Log;
+import il.org.spartan.bench.operations.Operation;
 
 /** Manages estimates on the runtime of {@link Operation}s. Duties include:
  * <ol>

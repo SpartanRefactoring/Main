@@ -1,8 +1,14 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.statistics.MomentUtils.*;
+import static il.org.spartan.statistics.MomentUtils.correctedSd;
+import static il.org.spartan.statistics.MomentUtils.pow;
+import static il.org.spartan.statistics.MomentUtils.sd;
+import static il.org.spartan.statistics.MomentUtils.sdCorrection;
+import static il.org.spartan.statistics.MomentUtils.skewenessCorrection;
+import static il.org.spartan.statistics.MomentUtils.skewness;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 /** @author Yossi Gil
  * @since 2011-08-2 */

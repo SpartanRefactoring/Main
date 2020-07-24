@@ -1,15 +1,17 @@
 package il.org.spartan.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertEquals;
 
-import java.util.*;
+import java.util.Random;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.xy.*;
+import fluent.ly.___;
+import fluent.ly.azzert;
+import il.org.spartan.collections.IntsArray;
+import il.org.spartan.xy.XYSeries;
 
 /** @author Yossi Gil
  * @since Feb 26, 2012 */

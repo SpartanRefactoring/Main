@@ -1,10 +1,12 @@
 package il.org.spartan.classfiles.reify;
 
-import static java.lang.annotation.RetentionPolicy.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.annotation.Retention;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /** @author Yossi Gil
  * @since 28 November 2011 */

@@ -1,16 +1,20 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.strings;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.strings.RE.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.strings.RE.anyNumberOfReluctant;
+import static il.org.spartan.strings.RE.group;
+import static il.org.spartan.strings.RE.ignoreCase;
 
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.streotypes.Immutable;
+import il.org.spartan.streotypes.Instantiable;
+import il.org.spartan.utils.Separate;
 
 /** A representation of an HTML tag, capable of wrapping a given {@link String}.
  * @author Yossi Gil, the Technion.

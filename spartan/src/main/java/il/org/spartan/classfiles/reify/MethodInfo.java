@@ -1,10 +1,10 @@
 package il.org.spartan.classfiles.reify;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Method;
 
-import fluent.ly.*;
-import il.org.spartan.classfiles.reify.TypeInfo.*;
-import il.org.spartan.utils.*;
+import fluent.ly.Iterables;
+import il.org.spartan.classfiles.reify.TypeInfo.MethodType;
+import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */

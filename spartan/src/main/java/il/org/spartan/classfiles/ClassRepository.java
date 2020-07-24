@@ -1,16 +1,29 @@
 package il.org.spartan.classfiles;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.fail;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.zip.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.Iterables;
+import fluent.ly.___;
+import fluent.ly.azzert;
+import il.org.spartan.utils.Separate;
 
 /**
  * A data structure representing a Java-like CLASSPATH, i.e., a collection of

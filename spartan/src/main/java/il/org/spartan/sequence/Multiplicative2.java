@@ -1,6 +1,6 @@
 package il.org.spartan.sequence;
 
-import static java.lang.Integer.*;
+import static java.lang.Integer.highestOneBit;
 import static java.lang.Math.max;
 
 public class Multiplicative2 extends Sequence {

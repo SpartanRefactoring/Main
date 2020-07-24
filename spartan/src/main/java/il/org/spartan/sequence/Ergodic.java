@@ -1,10 +1,14 @@
 package il.org.spartan.sequence;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
-import fluent.ly.*;
-import il.org.spartan.external.*;
-import il.org.spartan.utils.*;
+import fluent.ly.Iterables;
+import fluent.ly.unbox;
+import il.org.spartan.external.External;
+import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since 24 ביול 2011 */

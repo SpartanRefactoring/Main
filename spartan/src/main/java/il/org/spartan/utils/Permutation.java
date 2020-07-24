@@ -1,12 +1,13 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.nonnegative;
+import static fluent.ly.___.require;
 
-import java.math.*;
-import java.util.*;
+import java.math.BigInteger;
+import java.util.Random;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Utility;
 
 /** A collection of utility function to generate permutations.
  * @author Yossi Gil,

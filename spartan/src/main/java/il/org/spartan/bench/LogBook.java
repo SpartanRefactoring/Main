@@ -1,21 +1,53 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.___.*;
-import static fluent.ly.azzert.*;
-import static il.org.spartan.bench.LogBook.Consolidation.*;
-import static il.org.spartan.bench.Unit.*;
-import static il.org.spartan.strings.StringUtils.*;
+import static fluent.ly.___.ensure;
+import static fluent.ly.___.require;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.bench.LogBook.Consolidation.BOTH;
+import static il.org.spartan.bench.LogBook.Consolidation.ENDS;
+import static il.org.spartan.bench.LogBook.Consolidation.LIST;
+import static il.org.spartan.bench.LogBook.Consolidation.SUMMARY;
+import static il.org.spartan.bench.Unit.BYTES;
+import static il.org.spartan.bench.Unit.DOUBLE;
+import static il.org.spartan.bench.Unit.MILLISECONDS;
+import static il.org.spartan.bench.Unit.NANOSECONDS;
+import static il.org.spartan.bench.Unit.RELATIVE;
+import static il.org.spartan.strings.StringUtils.atod;
+import static il.org.spartan.strings.StringUtils.atoi;
+import static il.org.spartan.strings.StringUtils.isDouble;
+import static il.org.spartan.strings.StringUtils.isInt;
+import static il.org.spartan.strings.StringUtils.signum;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.statistics.*;
-import il.org.spartan.utils.*;
+import fluent.ly.Iterables;
+import fluent.ly.azzert;
+import fluent.ly.idiomatic;
+import fluent.ly.the;
+import il.org.spartan.statistics.ImmutableStatistics;
+import il.org.spartan.statistics.RealStatistics;
+import il.org.spartan.statistics.Statistics;
+import il.org.spartan.utils.Accumulator;
 import il.org.spartan.utils.Accumulator.Counter;
+import il.org.spartan.utils.Tab;
 
 /** Represents an experiments log-book, that is a repository which stores a
  * collection of measurements carried out in a scientific experiment, or a

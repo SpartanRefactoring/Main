@@ -1,10 +1,15 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.strings.StringUtils.*;
+import static il.org.spartan.strings.StringUtils.esc;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
-import fluent.ly.*;
+import fluent.ly.___;
 
 public class Tokenizer {
   public static Reader reader(final File ¢) throws FileNotFoundException {

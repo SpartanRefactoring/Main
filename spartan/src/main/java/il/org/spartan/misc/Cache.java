@@ -1,7 +1,10 @@
 package il.org.spartan.misc;
 
-import java.util.*;
-import java.util.Map.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /** A generic class realizing a cached buffer of elements of an arbitrary kind,
  * but indexed by {@link String}s. If a fetched element is not in the cache,

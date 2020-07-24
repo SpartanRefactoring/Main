@@ -1,9 +1,9 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.strings;
 
-import java.util.*;
+import java.util.Collection;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Utility;
 
 /** A utility class with functions to escape special HTML characters in a
  * {@link String}, before including it in an HTML page.

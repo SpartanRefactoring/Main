@@ -1,12 +1,14 @@
 package il.org.spartan.xy;
 
-import static il.org.spartan.statistics.MomentUtils.*;
-import static java.lang.Double.*;
+import static il.org.spartan.statistics.MomentUtils.sqr;
+import static java.lang.Double.isInfinite;
+import static java.lang.Double.isNaN;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import an.array.*;
-import il.org.spartan.utils.*;
+import an.array.of;
+import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since February 22, 2012 */

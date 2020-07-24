@@ -1,12 +1,12 @@
 package il.org.spartan.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
+import java.io.StringReader;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since 19 November 2011 */

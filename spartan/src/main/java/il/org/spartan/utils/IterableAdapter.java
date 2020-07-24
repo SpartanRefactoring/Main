@@ -1,11 +1,13 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.require;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Canopy;
+import il.org.spartan.streotypes.Instantiable;
 
 /** An {@link Iterable} interface to an {@link Enumeration} using the
  * <b>Adapter</b> design pattern.

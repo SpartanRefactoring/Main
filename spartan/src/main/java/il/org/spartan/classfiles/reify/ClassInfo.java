@@ -1,12 +1,19 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import il.org.spartan.classfiles.*;
-import il.org.spartan.classfiles.reify.ConstantPool.*;
-import il.org.spartan.collections.*;
+import il.org.spartan.classfiles.CLASSFILES;
+import il.org.spartan.classfiles.RobustReader;
+import il.org.spartan.classfiles.reify.ConstantPool.ClassConstant;
+import il.org.spartan.collections.MapUtil;
 
 /** An in memory representation of a class file.
  * @author Yossi Gil */

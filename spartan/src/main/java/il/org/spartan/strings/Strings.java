@@ -1,6 +1,6 @@
 package il.org.spartan.strings;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /** Typedef for a list of strings.
  * @author Yossi Gil

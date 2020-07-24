@@ -1,16 +1,22 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan;
 
-import java.util.*;
-import java.util.Map.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import fluent.ly.*;
-import il.org.spartan.Aggregator.*;
-import il.org.spartan.Aggregator.Aggregation.*;
-import il.org.spartan.external.*;
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
-import il.org.spartan.utils.Separate.*;
+import fluent.ly.___;
+import fluent.ly.idiomatic;
+import il.org.spartan.Aggregator.Aggregation;
+import il.org.spartan.Aggregator.Aggregation.FormatSpecifier;
+import il.org.spartan.external.External;
+import il.org.spartan.streotypes.Canopy;
+import il.org.spartan.streotypes.Instantiable;
+import il.org.spartan.utils.Accumulator;
+import il.org.spartan.utils.Separate;
+import il.org.spartan.utils.Separate.F;
 
 /** Create a line in an "Comma Separated Values" format from a sequence of named
  * values.

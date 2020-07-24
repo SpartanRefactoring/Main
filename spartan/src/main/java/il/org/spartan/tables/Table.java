@@ -1,12 +1,20 @@
 package il.org.spartan.tables;
 
-import java.io.*;
-import java.util.*;
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import an.*;
-import fluent.ly.*;
-import il.org.spartan.statistics.*;
-import il.org.spartan.utils.*;
+import an.iterable;
+import fluent.ly.as;
+import fluent.ly.box;
+import fluent.ly.cCamelCase;
+import fluent.ly.separate;
+import fluent.ly.system;
+import fluent.ly.the;
+import il.org.spartan.statistics.RealStatistics;
+import il.org.spartan.utils.Int;
 
 /** A relation is just another name for a table that contains elements of __
  * {@link Record}. This class provides fluent API for generating tables,

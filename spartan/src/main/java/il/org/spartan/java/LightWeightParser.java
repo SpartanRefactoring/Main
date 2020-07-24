@@ -1,6 +1,11 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.java.Token.*;
+import static il.org.spartan.java.Token.AT_INTERFACE;
+import static il.org.spartan.java.Token.IDENTIFIER;
+import static il.org.spartan.java.Token.LBRACE;
+import static il.org.spartan.java.Token.__class;
+import static il.org.spartan.java.Token.__enum;
+import static il.org.spartan.java.Token.__interface;
 
 public class LightWeightParser {
   private static boolean in(final Token t, final Token[] ts) {

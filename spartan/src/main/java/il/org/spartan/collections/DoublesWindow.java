@@ -1,13 +1,13 @@
 package il.org.spartan.collections;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertEquals;
 
-import java.util.*;
+import java.util.EmptyStackException;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** Manage a window of doubles of a certain size, supporting
  * {@link #add(double)} operations in such a fashion that the oldest value

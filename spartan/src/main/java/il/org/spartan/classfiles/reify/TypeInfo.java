@@ -1,8 +1,10 @@
 package il.org.spartan.classfiles.reify;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Separate;
 
 public abstract class TypeInfo {
   public static TypeInfo makeArrayOf(final TypeInfo ¢) {

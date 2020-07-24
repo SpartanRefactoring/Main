@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.reap;
 
-import fluent.ly.*;
+import fluent.ly.idiomatic;
 
 /** cell which does not depend on others
  * @param <T> JD

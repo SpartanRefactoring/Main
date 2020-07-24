@@ -1,6 +1,6 @@
 package il.org.spartan.statistics;
 
-import java.util.*;
+import java.util.Arrays;
 
 /** @author Yossi Gil
  * @since Apr 21, 2012 */

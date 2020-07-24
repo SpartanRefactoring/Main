@@ -1,14 +1,17 @@
 package il.org.spartan.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import an.*;
-import an.array.*;
-import fluent.ly.*;
-import il.org.spartan.xy.*;
+import an.array;
+import an.array.of;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import fluent.ly.the;
+import il.org.spartan.xy.XYSeries;
 
 /** @author Yossi Gil
  * @since Apr 27, 2012 */

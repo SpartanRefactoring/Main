@@ -1,9 +1,11 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.collections;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.sure;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Canopy;
+import il.org.spartan.streotypes.Classical;
+import il.org.spartan.streotypes.Immutable;
 
 /** /** An immutable map, associating an <code><b>int</b></code> value with each
  * value of an enumerated type.

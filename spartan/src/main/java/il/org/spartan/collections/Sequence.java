@@ -1,10 +1,10 @@
 package il.org.spartan.collections;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Iterator;
 
-import il.org.spartan.utils.*;
-import il.org.spatan.iteration.*;
+import il.org.spartan.utils.Stringify;
+import il.org.spatan.iteration.ArrayIterator;
 
 /** An immutable collection of elements. Once construction is completed no new
  * elements can be added to the collections, nor can elements be removed from

@@ -1,12 +1,12 @@
 package il.org.spartan.classfiles.reify;
 
-import static fluent.ly.unbox.*;
+import static fluent.ly.unbox.it;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import fluent.ly.idiomatic;
-import il.org.spartan.classfiles.*;
-import il.org.spartan.collections.*;
+import il.org.spartan.classfiles.RobustReader;
+import il.org.spartan.collections.IntsArray;
 
 /** A representation of an entry in the constant pool array.
  * @author Yossi Gil */

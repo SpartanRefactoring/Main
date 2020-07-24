@@ -1,13 +1,14 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertEquals;
 
-import java.text.*;
+import java.text.DecimalFormat;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
+import fluent.ly.idiomatic;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2010 */

@@ -1,9 +1,9 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.strings;
 
-import java.io.*;
+import java.io.File;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Utility;
 
 /** A <b>utility</b> class, providing services of determining whether a
  * {@link String} or a {@link File} is suffixed by a given {@link String}, or

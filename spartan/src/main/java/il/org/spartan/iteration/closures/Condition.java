@@ -1,6 +1,6 @@
 package il.org.spartan.iteration.closures;
 
-import fluent.ly.*;
+import fluent.ly.forget;
 
 /** An interface representing a boolean function taking single argument boolean.
  * @param <Argument> Type of argument

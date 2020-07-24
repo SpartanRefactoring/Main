@@ -1,6 +1,6 @@
 package il.org.spartan.collections;
 
-import java.util.*;
+import java.util.HashMap;
 
 /** A map of {@link String} to the type <code><b>int</b></code>, similar to the
  * standard implementation of {@link HashMap} except that:

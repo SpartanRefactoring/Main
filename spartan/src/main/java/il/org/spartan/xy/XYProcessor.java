@@ -1,16 +1,17 @@
 package il.org.spartan.xy;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.misc.LinearAlgebra.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.misc.LinearAlgebra.isReal;
 import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.*;
+import org.junit.Test;
 
-import an.array.*;
-import fluent.ly.*;
-import il.org.spartan.collections.*;
+import an.array.of;
+import fluent.ly.___;
+import fluent.ly.azzert;
+import il.org.spartan.collections.DoublesArray;
 
 /** An interface for processing a sequence of X-Y points
  * @author Yossi Gil

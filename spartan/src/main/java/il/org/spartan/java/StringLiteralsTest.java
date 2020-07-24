@@ -1,12 +1,13 @@
 package il.org.spartan.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 @SuppressWarnings("static-method")
 public class StringLiteralsTest {

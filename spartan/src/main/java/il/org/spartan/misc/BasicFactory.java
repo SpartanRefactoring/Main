@@ -1,6 +1,7 @@
 package il.org.spartan.misc;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /** This cache class allows a value to be retrieved by either by a String key or
  * by another value. If the key object was used in the past, the returned value

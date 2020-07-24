@@ -1,11 +1,15 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import fluent.ly.is;
+import fluent.ly.prune;
+import fluent.ly.separate;
 
 public interface beginning {
   String COMMA = ",";

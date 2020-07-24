@@ -1,12 +1,13 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.text;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.Utils.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.Utils.cantBeNull;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
+import fluent.ly.separate;
 
 /** A trivial utility module with functions to scatter a text into an array of
  * lines, and, conversely, gather an array of lines into text. Scattering and

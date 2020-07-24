@@ -1,10 +1,11 @@
 package il.org.spartan.strings;
 
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Separate;
 
 public class RE {
   public static String all(final String ¢) {

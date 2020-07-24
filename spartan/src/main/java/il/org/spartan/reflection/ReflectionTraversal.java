@@ -1,6 +1,8 @@
 package il.org.spartan.reflection;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /** A class realizing a recursive traversal of a reflection {@link Class}
  * object, applying the appropriate function supplied by a {@link Visitor} to

@@ -1,10 +1,15 @@
 package il.org.spartan.classfiles.reify;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-import il.org.spartan.classfiles.reify.ClassInfo.*;
-import il.org.spartan.classfiles.reify.ConstantPool.*;
-import il.org.spartan.classfiles.reify.OpCode.*;
+import il.org.spartan.classfiles.reify.ClassInfo.LinkComponents;
+import il.org.spartan.classfiles.reify.ConstantPool.ClassConstant;
+import il.org.spartan.classfiles.reify.ConstantPool.FieldReference;
+import il.org.spartan.classfiles.reify.ConstantPool.MemberReference;
+import il.org.spartan.classfiles.reify.OpCode.Instruction;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */

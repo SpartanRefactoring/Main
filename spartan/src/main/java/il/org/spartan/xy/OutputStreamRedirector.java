@@ -1,6 +1,8 @@
 package il.org.spartan.xy;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 
 class OutputStreamRedirector extends Thread {
   private final InputStream from;

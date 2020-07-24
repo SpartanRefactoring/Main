@@ -1,9 +1,9 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
+import java.io.DataInputStream;
 
-import il.org.spartan.classfiles.*;
-import il.org.spartan.classfiles.reify.ConstantPool.*;
+import il.org.spartan.classfiles.RobustReader;
+import il.org.spartan.classfiles.reify.ConstantPool.ClassConstant;
 
 /** @author Yossi Gil
  * @since 26 November 2011 */

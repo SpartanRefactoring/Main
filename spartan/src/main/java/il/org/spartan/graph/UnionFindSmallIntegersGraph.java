@@ -1,8 +1,9 @@
 package il.org.spartan.graph;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.copyOf;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.BitSet;
 
 /** @author Yossi Gil
  * @since Apr 19, 2012 */

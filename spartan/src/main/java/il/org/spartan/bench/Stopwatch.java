@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import fluent.ly.*;
+import fluent.ly.___;
 
 /** @author Yossi Gil
  * @since 01/05/2011 */

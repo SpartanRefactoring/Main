@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import il.org.spartan.*;
+import il.org.spartan.CSVLineWriter;
 
 /** Print out all Unicode characters that are pseudo-letters, and demonstrate
  * class {@link CSVLineWriter}

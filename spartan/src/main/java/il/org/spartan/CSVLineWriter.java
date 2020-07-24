@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import java.io.*;
+import java.io.File;
 
 /** Combines {@link CSVWriter} and {@link CSVLine}, to make it easy to write to
  * a CSV file.

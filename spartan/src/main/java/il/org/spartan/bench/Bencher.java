@@ -1,6 +1,8 @@
 package il.org.spartan.bench;
 
-import il.org.spartan.bench.operations.*;
+import il.org.spartan.bench.operations.Bencheon;
+import il.org.spartan.bench.operations.NamedOperation;
+import il.org.spartan.bench.operations.Operation;
 
 public class Bencher extends LogBook.Mutable {
   private static final long serialVersionUID = 1;

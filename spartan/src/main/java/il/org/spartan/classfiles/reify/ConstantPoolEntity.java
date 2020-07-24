@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import il.org.spartan.classfiles.reify.ClassInfo.*;
+import il.org.spartan.classfiles.reify.ClassInfo.Builder;
 
 /** @author Yossi Gil
  * @since 25 November 2011 */

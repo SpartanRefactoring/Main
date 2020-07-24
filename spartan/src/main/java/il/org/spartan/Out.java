@@ -1,8 +1,8 @@
 package il.org.spartan;
 
-import java.util.*;
+import java.util.Collection;
 
-import fluent.ly.*;
+import fluent.ly.separate;
 
 public class Out {
   static final int MAX_FIRST = 20;

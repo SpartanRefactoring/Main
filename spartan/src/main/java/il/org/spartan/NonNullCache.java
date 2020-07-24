@@ -1,12 +1,12 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.Utils.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.Utils.sqr;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b></code>.

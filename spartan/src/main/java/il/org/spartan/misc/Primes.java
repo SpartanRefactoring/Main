@@ -1,14 +1,14 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.*;
+import java.util.Random;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.*;
+import fluent.ly.azzert;
+import il.org.spartan.CSVStatistics;
 
 /** Primality testing and generation of primes.
  * @author Yossi Gil

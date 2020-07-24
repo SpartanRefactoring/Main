@@ -1,12 +1,15 @@
 package il.org.spartan.graph;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.graph.Graph.*;
+import fluent.ly.azzert;
+import il.org.spartan.graph.Graph.Builder;
 
 public class GraphsSamplesGenerator {
   public static Graph<String> make1By2Clique() {

@@ -1,10 +1,12 @@
 package il.org.spartan.xy;
 
-import static fluent.ly.Iterables.*;
-import static il.org.spartan.misc.LinearAlgebra.*;
+import static fluent.ly.Iterables.seq;
+import static il.org.spartan.misc.LinearAlgebra.add;
+import static il.org.spartan.misc.LinearAlgebra.max;
+import static il.org.spartan.misc.LinearAlgebra.product;
 
-import il.org.spartan.misc.*;
-import il.org.spartan.xy.XYProcessor.*;
+import il.org.spartan.misc.LinearAlgebra;
+import il.org.spartan.xy.XYProcessor.Gatherer;
 
 /** /**
  * @author Yossi Gil

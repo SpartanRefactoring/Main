@@ -1,15 +1,17 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.Separate.*;
+import fluent.ly.azzert;
+import fluent.ly.prune;
+import il.org.spartan.streotypes.Utility;
+import il.org.spartan.utils.Separate.F;
 
 /** A <b>Utility Class</b> providing services of converting a collection or an
  * array into a {@link String}, with means for omitting <code><b>null</b></code>

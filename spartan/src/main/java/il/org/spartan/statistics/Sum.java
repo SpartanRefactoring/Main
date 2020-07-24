@@ -1,12 +1,14 @@
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.Mean.mean;
-import static il.org.spartan.statistics.MomentUtils.*;
+import static il.org.spartan.statistics.MomentUtils.pow;
+import static il.org.spartan.statistics.MomentUtils.sqr;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import an.array.*;
-import il.org.spartan.streotypes.*;
+import an.array.of;
+import il.org.spartan.streotypes.Utility;
 
 /** @author Yossi Gil
  * @since 2011-01-08 */

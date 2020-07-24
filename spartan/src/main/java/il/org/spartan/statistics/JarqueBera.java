@@ -1,10 +1,11 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.statistics.Kurtosis.*;
-import static il.org.spartan.statistics.MomentUtils.*;
-import static il.org.spartan.statistics.Skewness.*;
+import static il.org.spartan.statistics.Kurtosis.kurtosisNormalizedVector;
+import static il.org.spartan.statistics.MomentUtils.normalize;
+import static il.org.spartan.statistics.MomentUtils.sqr;
+import static il.org.spartan.statistics.Skewness.skewnessNormalizedVector;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Utility;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */

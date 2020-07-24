@@ -1,8 +1,8 @@
 package il.org.spartan.graph;
 
-import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
 
-import il.org.spartan.collections.*;
+import il.org.spartan.collections.ImmutableArrayList;
 
 /** A basic graph decorator, which does nothing except for delegating all its
  * missions to an encapsulated {@link AbstractGraph}. To be used as base class

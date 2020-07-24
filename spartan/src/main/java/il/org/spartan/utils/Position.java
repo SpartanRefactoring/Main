@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.io.*;
+import java.io.Serializable;
 
 /** Represents a position in a file, including a column and line number.
  * @author Yossi Gil <yogi@cs.technion.ac.il> 13/06/2007 */

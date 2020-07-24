@@ -1,13 +1,17 @@
 package il.org.spartan.graph;
 
-import static fluent.ly.azzert.*;
-import static java.util.Arrays.*;
+import static fluent.ly.azzert.is;
+import static java.util.Arrays.binarySearch;
+import static java.util.Arrays.copyOf;
+import static java.util.Arrays.sort;
+import static org.junit.Assert.assertSame;
 
-import java.util.*;
+import java.util.Arrays;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
+import fluent.ly.defaults;
 
 /** An immutable undirected graph whose nodes are short integers in the range
  * 0..N where N is small, with the compact representation of an array of size N

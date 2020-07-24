@@ -1,6 +1,8 @@
 package il.org.spartan.collections;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /** Set operations implemented as a state-less class, with just static
  * methods. */

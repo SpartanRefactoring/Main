@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.bench;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Instantiable;
 
 /** A class serving as stopwatch for measuring runtime of programs. To start a
  * stop watch, create an instance of this class. Method {@link #peep()} can be

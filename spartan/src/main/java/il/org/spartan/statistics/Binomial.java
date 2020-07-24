@@ -1,6 +1,6 @@
 package il.org.spartan.statistics;
 
-import java.math.*;
+import java.math.BigInteger;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

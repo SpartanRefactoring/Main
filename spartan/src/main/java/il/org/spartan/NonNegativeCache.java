@@ -1,10 +1,10 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.Utils.*;
+import static fluent.ly.azzert.assertEquals;
+import static il.org.spartan.Utils.sqr;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** A class for lazy, memoizing evaluation of integers.
  * @author Yossi Gil

@@ -1,8 +1,8 @@
 package il.org.spartan.java;
 
-import java.io.*;
+import java.io.StringReader;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** @author Yossi Gil
  * @since 19 November 2011 */

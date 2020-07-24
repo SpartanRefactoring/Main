@@ -1,6 +1,8 @@
 package il.org.spartan.collections;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.nonnegative;
+import static fluent.ly.___.require;
+import static fluent.ly.___.sure;
 
 /** A collection of functions and data structures pertaining to the
  * representation of a set of small non-negative integers as a bit mask. Each

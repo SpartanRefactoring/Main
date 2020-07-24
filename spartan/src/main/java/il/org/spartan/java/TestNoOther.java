@@ -1,18 +1,27 @@
 package il.org.spartan.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
 
-import org.junit.*;
-import org.junit.experimental.theories.*;
-import org.junit.runner.*;
+import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
-import fluent.ly.*;
-import il.org.spartan.files.visitors.*;
-import il.org.spartan.files.visitors.FileSystemVisitor.*;
-import il.org.spartan.utils.*;
+import fluent.ly.Iterables;
+import fluent.ly.azzert;
+import il.org.spartan.files.visitors.FileSystemVisitor.PlainFileOnlyAction;
+import il.org.spartan.files.visitors.JavaFilesVisitor;
+import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since 16/05/2011 */

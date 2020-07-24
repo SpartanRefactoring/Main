@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.fail;
 
 /** A utility class, serving as the system global manager of the policy of
  * stopping execution due to "Design By Contract" bugs.

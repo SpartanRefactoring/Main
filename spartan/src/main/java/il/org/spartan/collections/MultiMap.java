@@ -1,9 +1,13 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.collections;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Canopy;
 
 /** import static il.org.spartan.utils.Box.*; import java.util.*; import
  * java.util.Map.*; import il.org.spartan.utils.*; /** import

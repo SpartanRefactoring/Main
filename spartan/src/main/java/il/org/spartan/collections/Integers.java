@@ -1,10 +1,13 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.collections;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.comparesEqualTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-import fluent.ly.*;
-import fluent.ly.___.Bug.*;
+import fluent.ly.___.Bug.Invariantable;
+import fluent.ly.as;
+import fluent.ly.azzert;
 
 /** An unsorted set of integers supporting the basic set operations:
  * {@link #add} , {@link #contains} and {@link #remove}.

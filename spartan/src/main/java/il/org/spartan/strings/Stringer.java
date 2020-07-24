@@ -1,10 +1,12 @@
 package il.org.spartan.strings;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.streotypes.Antiexample;
+import il.org.spartan.utils.Separate;
+import il.org.spartan.utils.Separator;
 
 /** An immutable class, whose various constructors concatenate the string value
  * of a list of items, optionally separated by a separator.

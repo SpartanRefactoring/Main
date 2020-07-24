@@ -1,13 +1,15 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.files.visitors;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
-import fluent.ly.*;
-import il.org.spartan.files.visitors.FileSystemVisitor.*;
-import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
-import il.org.spartan.streotypes.*;
-import il.org.spartan.strings.*;
+import fluent.ly.forget;
+import il.org.spartan.files.visitors.FileSystemVisitor.Action;
+import il.org.spartan.files.visitors.FileSystemVisitor.Action.StopTraversal;
+import il.org.spartan.streotypes.Application;
+import il.org.spartan.strings.Parenthesize;
 
 /** A program to search for a ".class" file in the file system.
  * @author Yossi Gil Mar 29, 2007 */

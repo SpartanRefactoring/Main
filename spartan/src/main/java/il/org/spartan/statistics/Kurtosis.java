@@ -1,9 +1,9 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.statistics.Mean.*;
-import static il.org.spartan.statistics.StandardDeviation.*;
+import static il.org.spartan.statistics.Mean.moment;
+import static il.org.spartan.statistics.StandardDeviation.normalize;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Utility;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */

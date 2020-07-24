@@ -1,13 +1,20 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.unreachable;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Arrays;
 
-import fluent.ly.*;
-import il.org.spartan.streotypes.*;
+import fluent.ly.___.Bug;
+import fluent.ly.dump;
+import il.org.spartan.streotypes.Instantiable;
 
 /** A general purpose implementation of the <b>Memento Design Pattern</b> using
  * object serialization

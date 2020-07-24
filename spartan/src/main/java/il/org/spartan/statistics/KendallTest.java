@@ -1,12 +1,12 @@
 package il.org.spartan.statistics;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.*;
+import org.junit.Test;
 
-import an.array.*;
-import fluent.ly.*;
+import an.array.of;
+import fluent.ly.azzert;
 
 @SuppressWarnings("static-method")
 public class KendallTest {

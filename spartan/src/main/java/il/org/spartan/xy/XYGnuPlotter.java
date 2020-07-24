@@ -1,12 +1,15 @@
 package il.org.spartan.xy;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import fluent.ly.idiomatic;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since February 13, 2012 */

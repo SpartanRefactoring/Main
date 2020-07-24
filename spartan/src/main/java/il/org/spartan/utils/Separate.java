@@ -1,13 +1,14 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.strings.StringUtils.*;
+import static il.org.spartan.strings.StringUtils.esc;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Map;
+import java.util.function.Function;
 
-import fluent.ly.*;
-import il.org.spartan.streotypes.*;
+import fluent.ly.idiomatic;
+import fluent.ly.prune;
+import il.org.spartan.streotypes.Utility;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this

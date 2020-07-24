@@ -1,8 +1,11 @@
 package il.org.spartan.java;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 
-import fluent.ly.*;
+import fluent.ly.forget;
+import fluent.ly.the;
 
 /** @author Yossi Gil
  * @since 2011-11-19 */

@@ -1,11 +1,11 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.tables;
 
-import java.util.*;
+import java.util.LinkedHashMap;
 
-import fluent.ly.*;
-import il.org.spartan.external.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import il.org.spartan.external.External;
+import il.org.spartan.utils.Accumulator;
 
 /** Represents a row of a {@link Table}
  * @param <Self> uses for fluent API, __ of subclass

@@ -1,10 +1,12 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.reap;
 
-import static java.lang.Math.*;
+import static java.lang.Math.max;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
 
 /** A cell stores a value of some type (which is passed by parameter). A cell
  * may be either {@link Ingredient} or {@link Recipe}. A computed cell typically

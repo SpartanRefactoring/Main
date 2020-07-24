@@ -1,8 +1,10 @@
 package il.org.spartan.collections;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Misc {
   public static boolean compareWithStream(final String s, final InputStream is) {

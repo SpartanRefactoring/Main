@@ -1,11 +1,21 @@
 package il.org.spartan.utils;
 
-import static fluent.ly.___.*;
+import static fluent.ly.___.unreachable;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Antiexample;
 
 /** Static methods for I/O related operations */
 @Antiexample

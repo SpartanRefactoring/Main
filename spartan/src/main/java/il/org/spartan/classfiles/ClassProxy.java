@@ -1,12 +1,17 @@
 package il.org.spartan.classfiles;
 
-import java.io.*;
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.net.*;
-import java.security.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.net.URL;
+import java.security.ProtectionDomain;
 
-import il.org.spartan.classfiles.reify.*;
+import il.org.spartan.classfiles.reify.ClassInfo;
 
 /** An enhanced representation of the reflective information found in the
  * standard library {@link Class}, providing information found in the constants'

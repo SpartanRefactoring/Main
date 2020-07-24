@@ -1,6 +1,7 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 
 public class AttributeInfo {
   public final String name;

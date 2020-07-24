@@ -1,11 +1,16 @@
 package il.org.spartan.graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
-import il.org.spartan.collections.*;
-import il.org.spartan.streotypes.*;
+import il.org.spartan.collections.ImmutableArrayList;
+import il.org.spartan.streotypes.Immutable;
 
 /** A simple reference compact implementation of a {@link AbstractGraph} of
  * arbitrary objects, using a {@Codex} and Java arrays.

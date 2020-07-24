@@ -1,9 +1,11 @@
 package il.org.spartan.utils;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-import il.org.spartan.strings.*;
+import il.org.spartan.strings.StringUtils;
 
 public enum SystemProperty {
   FILE_SEPARATOR, //

@@ -1,11 +1,13 @@
 package il.org.spartan.classfiles;
 
-import java.io.*;
-import java.net.*;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
-import fluent.ly.*;
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import il.org.spartan.streotypes.Utility;
+import il.org.spartan.utils.Separate;
 
 /** A representation of the system global CLASSPATH.
  * @author Yossi Gil

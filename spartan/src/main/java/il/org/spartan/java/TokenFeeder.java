@@ -1,8 +1,10 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.java.Token.*;
+import static il.org.spartan.java.Token.EOF;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Reader;
 
 /** Forwards all tokens from a {@link RawTokenizer} to a {@link TokenProcessor}
  * @author Yossi Gil

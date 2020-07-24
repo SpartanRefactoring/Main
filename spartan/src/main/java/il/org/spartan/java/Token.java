@@ -1,11 +1,21 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.java.Token.Category.*;
-import static il.org.spartan.java.Token.Kind.*;
+import static il.org.spartan.java.Token.Category.ALPHANUMERIC;
+import static il.org.spartan.java.Token.Category.ANY;
+import static il.org.spartan.java.Token.Category.IGNORE;
+import static il.org.spartan.java.Token.Category.PUNCTUATIONAL;
+import static il.org.spartan.java.Token.Kind.COMMENT;
+import static il.org.spartan.java.Token.Kind.ID;
+import static il.org.spartan.java.Token.Kind.KEYWORD;
+import static il.org.spartan.java.Token.Kind.LITERAL;
+import static il.org.spartan.java.Token.Kind.NONCODE;
+import static il.org.spartan.java.Token.Kind.OPERATOR;
+import static il.org.spartan.java.Token.Kind.PUNCTUATION;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Separate;
 
 public enum Token {
   // Literals:

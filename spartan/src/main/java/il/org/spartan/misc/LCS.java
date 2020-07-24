@@ -1,15 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
 
-import static fluent.ly.azzert.*;
-import static java.lang.Math.*;
+import static fluent.ly.azzert.is;
+import static java.lang.Math.max;
 
-import java.util.*;
+import java.util.Arrays;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.text.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import il.org.spartan.text.Lines;
 
 /** Utility functions for computing the "Longest Common Subsequence" for two
  * textual files. Similar to the famous "diff" utility, particularly when used

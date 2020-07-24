@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Instantiable;
 
 /** A class representing a separator string, which can be used for separating
  * elements of a sequence while printing it, without special case treatment of

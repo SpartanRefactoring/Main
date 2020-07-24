@@ -1,13 +1,18 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-import fluent.ly.*;
-import il.org.spartan.classfiles.reify.OpCode.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.graph.*;
-import il.org.spartan.graph.Graph.*;
+import fluent.ly.note;
+import il.org.spartan.classfiles.reify.OpCode.Instruction;
+import il.org.spartan.collections.ImmutableArrayList;
+import il.org.spartan.collections.MultiMap;
+import il.org.spartan.graph.Graph;
+import il.org.spartan.graph.Graph.Builder;
+import il.org.spartan.graph.Vertex;
 
 public class CFG {
   @SuppressWarnings("boxing") private static BasicBlock offset2block(final Set<BasicBlock> bs, final Long offset) {

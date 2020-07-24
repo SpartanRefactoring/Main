@@ -1,7 +1,10 @@
 package il.org.spartan.reflection;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /** This class computes the deep size of any object. */
 public class DeepSize {

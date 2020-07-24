@@ -1,8 +1,16 @@
 package il.org.spartan;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * This class realize the CSV specification, by comprising methods for

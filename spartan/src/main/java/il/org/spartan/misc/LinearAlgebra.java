@@ -1,14 +1,18 @@
 package il.org.spartan.misc;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.assertEquals;
+import static fluent.ly.azzert.is;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import an.array.*;
-import fluent.ly.*;
-import il.org.spartan.statistics.*;
+import an.array.of;
+import fluent.ly.azzert;
+import il.org.spartan.statistics.MomentUtils;
+import il.org.spartan.statistics.Sum;
 
 /** Offers a number of operations on two dimensional matrices and vectors. A
  * <i>vector</i> is simply an array of <code><b>double</b></code>s. Such an

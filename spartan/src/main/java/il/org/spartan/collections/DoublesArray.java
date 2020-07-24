@@ -1,6 +1,6 @@
 package il.org.spartan.collections;
 
-import java.util.*;
+import java.util.Arrays;
 
 /** A <href a=http://en.wikipedia.org/wiki/Dynamic_array>growable array</a> of
  * <code><b>double</b></code>s.

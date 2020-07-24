@@ -1,10 +1,11 @@
 package il.org.spartan.sequence;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

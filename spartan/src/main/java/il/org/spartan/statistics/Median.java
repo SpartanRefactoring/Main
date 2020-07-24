@@ -1,9 +1,12 @@
 package il.org.spartan.statistics;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.streotypes.*;
+import fluent.ly.Iterables;
+import fluent.ly.idiomatic;
+import il.org.spartan.streotypes.Utility;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */

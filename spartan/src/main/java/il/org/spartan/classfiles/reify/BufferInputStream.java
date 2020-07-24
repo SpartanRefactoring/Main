@@ -16,9 +16,10 @@
  * any questions. */
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
-import fluent.ly.*;
+import fluent.ly.___;
 
 /** A sane re-implementation of {@link ByteArrayInputStream}.
  * @author Yossi Gil */

@@ -1,11 +1,11 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.strings;
 
-import java.util.*;
+import java.util.Collection;
 
-import fluent.ly.*;
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import fluent.ly.prune;
+import il.org.spartan.streotypes.Utility;
+import il.org.spartan.utils.Separate;
 
 /** A utility class providing library functions that take an array or a
  * collection of objects, and return a parenthesized {@link String} of the non-

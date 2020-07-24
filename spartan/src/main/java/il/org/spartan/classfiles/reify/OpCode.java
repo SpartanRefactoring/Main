@@ -1,12 +1,14 @@
 package il.org.spartan.classfiles.reify;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.___;
+import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since 26 November 2011 */

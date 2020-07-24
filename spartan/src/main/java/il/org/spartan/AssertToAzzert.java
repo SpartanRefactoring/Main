@@ -1,9 +1,10 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.not;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** Fluent API
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>

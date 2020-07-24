@@ -1,8 +1,9 @@
 package il.org.spartan.strings;
 
-import static il.org.spartan.strings.StringUtils.*;
+import static il.org.spartan.strings.StringUtils.esc;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import fluent.ly.idiomatic;
 

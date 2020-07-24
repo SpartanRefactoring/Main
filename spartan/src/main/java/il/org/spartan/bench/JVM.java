@@ -1,10 +1,17 @@
 package il.org.spartan.bench;
 
-import java.lang.management.*;
-import java.util.*;
+import java.lang.management.ClassLoadingMXBean;
+import java.lang.management.CompilationMXBean;
+import java.lang.management.GarbageCollectorMXBean;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryManagerMXBean;
+import java.lang.management.MemoryUsage;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.dump;
+import il.org.spartan.utils.Separate;
+import il.org.spartan.utils.Separator;
 
 /* Records some characteristics of the JVM state.
  *

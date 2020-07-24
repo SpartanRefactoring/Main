@@ -1,9 +1,10 @@
 package il.org.spartan.classfiles.reify;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spatan.iteration.*;
+import fluent.ly.Iterables;
+import il.org.spatan.iteration.CharIterator;
 
 public class TypedEntity extends ConstantPoolEntity {
   public static TypeInfo decode(final String descriptor) {

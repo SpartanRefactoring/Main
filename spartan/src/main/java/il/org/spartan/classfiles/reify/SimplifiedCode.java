@@ -1,10 +1,11 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.classfiles.reify.OpCode.*;
+import fluent.ly.note;
+import il.org.spartan.classfiles.reify.OpCode.Instruction;
 
 public class SimplifiedCode {
   private static boolean isRelevant(final Instruction ¢) {

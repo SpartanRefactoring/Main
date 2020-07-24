@@ -1,18 +1,22 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import static fluent.ly.azzert.*;
 import static fluent.ly.azzert.is;
-import static fluent.ly.idiomatic.*;
-import static java.lang.Math.*;
-import static org.hamcrest.Matchers.*;
+import static fluent.ly.azzert.iz;
+import static fluent.ly.idiomatic.run;
+import static java.lang.Math.max;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.reap.*;
+import fluent.ly.azzert;
+import il.org.spartan.reap.Ingredient;
+import il.org.spartan.reap.Recipe;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Property}s. A {@link Property} is either

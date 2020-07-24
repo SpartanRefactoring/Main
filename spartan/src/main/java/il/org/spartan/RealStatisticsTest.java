@@ -1,12 +1,13 @@
 package il.org.spartan;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.statistics.*;
+import fluent.ly.azzert;
+import il.org.spartan.statistics.ImmutableStatistics;
+import il.org.spartan.statistics.RealStatistics;
 
 @SuppressWarnings("static-method")
 public class RealStatisticsTest {

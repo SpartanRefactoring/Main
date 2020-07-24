@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import fluent.ly.*;
+import fluent.ly.box;
 
 public class AbstractRunRecord {
   protected int runs;

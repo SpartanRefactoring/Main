@@ -1,6 +1,6 @@
 package il.org.spartan.xy;
 
-import il.org.spartan.*;
+import il.org.spartan.CSVLineWriter;
 
 /** @author Yossi Gil
  * @since February 24, 2012 */

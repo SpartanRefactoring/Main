@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.files.visitors;
 
-import il.org.spartan.classfiles.*;
+import il.org.spartan.classfiles.CLASSPATH;
 
 /** A class realizing a file system traversal, similar to
  * {@link FileSystemVisitor}, except that the traversal is restricted to the

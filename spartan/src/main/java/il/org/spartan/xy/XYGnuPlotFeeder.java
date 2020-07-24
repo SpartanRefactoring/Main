@@ -1,6 +1,7 @@
 package il.org.spartan.xy;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 /** @author Yossi Gil
  * @since Mar 1, 2012 */

@@ -1,7 +1,7 @@
 package il.org.spartan.bench.operations;
 
-import fluent.ly.*;
-import il.org.spartan.bench.*;
+import fluent.ly.___;
+import il.org.spartan.bench.Stopwatch;
 
 /** @author Yossi Gil
  * @since 26/04/2011 */

@@ -1,10 +1,10 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.classfiles;
 
-import java.io.*;
+import java.io.File;
 
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.streotypes.Utility;
+import il.org.spartan.utils.Separate;
 
 @Utility
 public enum EXTENSIONPATH {

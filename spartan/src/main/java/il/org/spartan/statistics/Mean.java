@@ -1,11 +1,12 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.statistics.Skewness.*;
-import static il.org.spartan.statistics.Sum.*;
+import static il.org.spartan.statistics.Skewness.skewness;
+import static il.org.spartan.statistics.Sum.sum;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
-import il.org.spartan.streotypes.*;
+import il.org.spartan.streotypes.Utility;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */
