@@ -31,7 +31,7 @@ public class Table extends Row<Table> implements Closeable {
    *        TEX, TXT).
    * @author oran1248
    * @since 2017-04-21 */
-  @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
+  public Table(final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
     as.list(rs).forEach(r -> {
       try {

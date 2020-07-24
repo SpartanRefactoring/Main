@@ -100,7 +100,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
   }
 
-  @SuppressWarnings({ "static-method", "synthetic-access" }) //
+  @SuppressWarnings({ "static-method"}) //
   public static class TEST {
     private static final int PSEUDO_ZERO = 2 * Short.MAX_VALUE + 2;
 

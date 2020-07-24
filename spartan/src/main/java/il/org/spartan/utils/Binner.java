@@ -89,7 +89,7 @@ public class Binner {
     return new XYSeries(unbin(¢.x), ¢.y, ¢.dy);
   }
 
-  @SuppressWarnings({ "static-method", "synthetic-access" }) //
+  @SuppressWarnings({ "static-method"}) //
   public static class TEST {
     @Test public void binLongRandomArray() {
       final Random r = new Random(0);

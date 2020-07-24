@@ -122,7 +122,7 @@ public class OperationListEditor extends ListEditor {
       //comment out next command in order to get remove functionality:
         //removeFunctionality();
       }
-      @SuppressWarnings({ "unused", "synthetic-access" }) void removeFunctionality() {
+      @SuppressWarnings({ "unused"}) void removeFunctionality() {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
