@@ -280,7 +280,7 @@ public enum separate {
     }
   }
 
-  @SuppressWarnings({ "static-method", "synthetic-access" }) //
+  @SuppressWarnings({ "static-method" }) //
   public static class TEST {
     private static final Function<String, String> quote = λ -> "'" + λ + "'";
 
