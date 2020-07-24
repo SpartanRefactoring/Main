@@ -20,7 +20,7 @@ public class AlgebraicTranslator extends NominalTables {
   
   
   public boolean isLinearTest(MethodDeclaration m) {
-    Boolean check = false;
+    Boolean check = Boolean.FALSE;
     m.accept(new ASTVisitor() {
       
     });
