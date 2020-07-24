@@ -1,6 +1,5 @@
 package il.org.spartan.classfiles.reify;
 
-import static fluent.ly.box.*;
 import static fluent.ly.unbox.*;
 
 import java.util.*;

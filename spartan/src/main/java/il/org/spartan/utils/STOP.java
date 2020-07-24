@@ -3,8 +3,6 @@ package il.org.spartan.utils;
 
 import static fluent.ly.azzert.*;
 
-import il.org.spartan.streotypes.*;
-
 /** A utility class, serving as the system global manager of the policy of
  * stopping execution due to "Design By Contract" bugs.
  * @author Yossi Gil, 2008/06/20 */

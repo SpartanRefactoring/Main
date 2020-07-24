@@ -1,7 +1,5 @@
 package il.org.spartan.reflection;
 
-import static fluent.ly.box.*;
-
 import java.util.*;
 
 import fluent.ly.idiomatic;

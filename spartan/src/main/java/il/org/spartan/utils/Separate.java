@@ -1,7 +1,6 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static fluent.ly.box.*;
 import static il.org.spartan.strings.StringUtils.*;
 
 import java.util.*;

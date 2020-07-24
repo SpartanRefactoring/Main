@@ -1,7 +1,5 @@
 package il.org.spartan.statistics;
 
-import static fluent.ly.box.*;
-
 import java.util.*;
 
 import fluent.ly.*;

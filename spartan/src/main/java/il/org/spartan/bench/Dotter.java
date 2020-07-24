@@ -1,7 +1,5 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.box.*;
-
 import fluent.ly.idiomatic;
 
 /** @author Yossi Gil

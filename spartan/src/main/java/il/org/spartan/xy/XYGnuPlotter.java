@@ -1,6 +1,5 @@
 package il.org.spartan.xy;
 
-import static fluent.ly.box.*;
 import static java.lang.String.*;
 
 import java.io.*;
