@@ -154,17 +154,11 @@ public class Metrics{
   
   
   public static double avgDepth(final ASTNode ¢) {
-    if (bodySize(¢) !=0)
-      return (double) sumDepth(¢) / bodySize(¢);
-    else
-      return 0;
+    return bodySize(¢) !=0 ? (double) sumDepth(¢) / bodySize(¢) : 0;
   }
   
   public static double avgDepth2(final ASTNode ¢) {
-    if (bodySize(¢) !=0)
-      return (double) sumDepth2(¢) / bodySize(¢);
-    else
-      return 0;
+    return bodySize(¢) !=0 ? (double) sumDepth2(¢) / bodySize(¢) : 0;
   }
   
   
