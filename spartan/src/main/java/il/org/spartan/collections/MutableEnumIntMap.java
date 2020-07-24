@@ -30,7 +30,7 @@ public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
    *        <pre>
    *        MutableIntMap&lt;E&gt; mutableMap = new MutableIntMap&lt;E&gt;(E.values()[0]);
    *        </pre>
-  */
+   */
   public MutableEnumIntMap(final E dummy) {
     assert dummy != null;
     this.implementation = new int[dummy.getClass().getEnumConstants().length];

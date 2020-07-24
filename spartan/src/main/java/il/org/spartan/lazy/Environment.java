@@ -336,7 +336,7 @@ public interface Environment {
      *         <li>changes the current instance
      *         <li>returns <code><b>this</b></code>
      *         </ol>
-    */
+     */
     public Property<T> bind(final Function0<T> ¢) {
       return ϑ(() -> ¢.¢());
     }
@@ -351,7 +351,7 @@ public interface Environment {
      *         <li>changes the current instance
      *         <li>returns <code><b>this</b></code>
      *         </ol>
-    */
+     */
     public <A> Binder1<T, A> bind(final Function1<T, A> f) {
       return ¢ -> ϑ(() -> f.ϑ(¢.¢()), ¢);
     }
@@ -405,7 +405,7 @@ public interface Environment {
      *         <li>changes the current instance
      *         <li>returns <code><b>this</b></code>
      *         </ol>
-    */
+     */
     public Property<T> bind2(final Function0<T> ¢) {
       this.ϑ = (Function0<T>) () -> ¢.¢();
       prerequisites.clear();

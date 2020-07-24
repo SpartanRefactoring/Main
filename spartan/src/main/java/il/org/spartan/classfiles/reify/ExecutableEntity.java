@@ -55,8 +55,7 @@ public class ExecutableEntity extends TypedEntity {
     final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
-      final Instruction i = code.simplifiedCode.instructions().get(index);
+    for (final Instruction i : code.simplifiedCode.instructions()) {
       int cpIndex;
       if (!i.isInvokeInstruction())
         continue;
@@ -70,13 +69,11 @@ public class ExecutableEntity extends TypedEntity {
     final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
-      final Instruction i = code.simplifiedCode.instructions().get(index);
+    for (final Instruction i : code.simplifiedCode.instructions())
       if (i.opCode == OpCode.GETFIELD || i.opCode == OpCode.PUTFIELD) {
         final FieldReference fr = constantPool.getFieldReference(i.args()[1] | i.args()[0] << 8);
         $.add(fr.getClassConstant().getClassName() + ":" + fr.getNameAndType());
       }
-    }
     return $;
   }
   public int instructionCount() {
@@ -85,11 +82,9 @@ public class ExecutableEntity extends TypedEntity {
   public boolean isAccessed(final TypedEntity e, final String thisClassName) {
     if (code == null)
       return false;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
-      final Instruction i = code.simplifiedCode.instructions().get(index);
+    for (final Instruction i : code.simplifiedCode.instructions())
       if (i.isFieldAccessInstruction() && !i.isInvokeInstruction() && isAccessed(e, thisClassName, i))
         return true;
-    }
     return false;
   }
   @Attribute public int referencedFieldsCount() {
@@ -141,8 +136,7 @@ public class ExecutableEntity extends TypedEntity {
     for (final TypeInfo ¢ : type.components())
       ++getClassRefsByComponents(¢ + "")[LinkComponents.MethodDeclaration.ordinal()];
     if (code != null)
-      for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
-        final Instruction i = code.simplifiedCode.instructions().get(index);
+      for (final Instruction i : code.simplifiedCode.instructions()) {
         final int cpIndex = i.args()[1] | i.args()[0] << 8;
         int component = -1;
         switch (i.opCode) {

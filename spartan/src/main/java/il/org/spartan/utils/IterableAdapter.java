@@ -35,7 +35,7 @@ public final class IterableAdapter<T> implements Iterable<T> {
     this.implementation = implementation;
   }
   @Override public Iterator<T> iterator() {
-    return new Iterator<T>() {
+    return new Iterator<>() {
       @Override public boolean hasNext() {
         return implementation.hasMoreElements();
       }

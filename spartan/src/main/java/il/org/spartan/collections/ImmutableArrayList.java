@@ -253,7 +253,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * <p>
    * The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
    * @return an iterator over the elements in this list in proper sequence */
-  @Override  public Iterator<E> iterator() {
+  @Override public Iterator<E> iterator() {
     return new InternalIterator();
   }
   /** Returns the index of the last occurrence of the specified element in this

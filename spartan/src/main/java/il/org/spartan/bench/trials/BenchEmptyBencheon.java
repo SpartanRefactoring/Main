@@ -10,7 +10,7 @@ import il.org.spartan.bench.operations.Bencheon;
 public class BenchEmptyBencheon {
   private static final int trials = 100;
 
-  public static void main(final String args[]) throws Exception {
+  public static void main(final String args[]) {
     final LogBook.Mutable l = new LogBook.Mutable(BenchEmptyBencheon.class);
     final Bencheon b = new Bencheon("empty", 1) {
       @Override public Object call() {

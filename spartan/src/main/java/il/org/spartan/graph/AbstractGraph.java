@@ -67,7 +67,7 @@ public abstract class AbstractGraph<E> {
   /** A DFS pre-order iteration over the graph.
    * @return the vertices of the graph, in a pre-order, dfs scan. */
   public Iterable<Vertex<E>> preOrder() {
-    return () -> new Iterator<Vertex<E>>() {
+    return () -> new Iterator<>() {
       final Set<Vertex<E>> visited = new HashSet<>();
       final Set<Vertex<E>> unvisited = new HashSet<>();
       final Stack<Vertex<E>> stack = new Stack<>();
@@ -87,7 +87,7 @@ public abstract class AbstractGraph<E> {
         pending = findNext();
         return $;
       }
-      Vertex<E> findNext() {
+      private Vertex<E> findNext() {
         while (!stack.empty() || !unvisited.isEmpty()) {
           if (stack.empty())
             for (final Vertex<E> ¢ : unvisited) {
@@ -107,10 +107,10 @@ public abstract class AbstractGraph<E> {
         ensure(stack.empty());
         return null;
       }
-      boolean fresh(final Vertex<E> ¢) {
+      private boolean fresh(final Vertex<E> ¢) {
         return !visited.contains(¢);
       }
-      Vertex<E> visit(final Vertex<E> ¢) {
+      private Vertex<E> visit(final Vertex<E> ¢) {
         visited.add(¢);
         unvisited.remove(¢);
         return ¢;

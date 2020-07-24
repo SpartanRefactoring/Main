@@ -354,9 +354,8 @@ public class FileSystemVisitor {
     }
     /** A do-nothing function, ignoring its arguments
      * @param __ ignored
-     * @throws StopTraversal
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitZip(java.io.File) */
-    @Override public void visitZip(final File __) throws StopTraversal {
+    @Override public void visitZip(final File __) {
       forget.it(__);
     }
     /** A do-nothing function, ignoring its arguments

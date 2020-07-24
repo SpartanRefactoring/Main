@@ -64,7 +64,7 @@ public class SimplifiedCode {
             instructions.add(i);
           ++instructionsCount;
         }
-      } catch (IOException e) {
+      } catch (final IOException e) {
         note.bug(e);
       }
   }

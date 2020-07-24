@@ -50,7 +50,7 @@ import java.lang.reflect.Modifier;
  *     -> align result up to a multiple of 8
  * </pre>
  * </ol>
-*/
+ */
 public class ShallowSize {
   public static int arraySize(final int length) {
     return arraySize(length, referenceSize());

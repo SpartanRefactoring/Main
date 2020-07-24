@@ -11,7 +11,7 @@ public class BenchHashFunction {
   private static final int trials = 100;
   public static int size = 9;
 
-  public static void main(final String args[]) throws Exception {
+  public static void main(final String args[]) {
     final LogBook.Mutable l = new LogBook.Mutable(BenchHashFunction.class);
     final Hash h = new Hash();
     Log.deactivate();

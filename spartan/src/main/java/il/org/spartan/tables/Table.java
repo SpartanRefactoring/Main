@@ -103,7 +103,6 @@ public class Table extends Row<Table> implements Closeable {
     }
     return $;
   }
-
   @Override public Table col(final String key, final double value) {
     getRealStatistics(key).record(value);
     return super.col(key, value);
@@ -159,9 +158,11 @@ public class Table extends Row<Table> implements Closeable {
     put(null, ++length + "");
     return this;
   }
-  /* @formatter:off*/ @Override
+  /* @formatter:off */ @Override
 
-   protected Table self() { return this; } /*@formatter:on*/
+	protected Table self() {
+		return this;
+	} /* @formatter:on */
   private Table set(final List<Statistic> ¢) {
     return set(¢.toArray(new Statistic[¢.size()]));
   }

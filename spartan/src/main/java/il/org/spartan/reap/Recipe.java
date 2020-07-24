@@ -138,7 +138,7 @@ public class Recipe<T> extends Cell<T> {
     @Override public T get() {
       try {
         return super.get();
-      } catch (final NullPointerException x) {
+      } catch (@SuppressWarnings("unused") final NullPointerException x) {
         return null;
       }
     }

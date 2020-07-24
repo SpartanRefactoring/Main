@@ -148,6 +148,7 @@ public abstract class AbstractStringProperties {
         return ¢ == null ? "" : !¢.contains(delimiter()) ? ¢ : ¢.replaceAll(delimiter(), "\\" + delimiter());
       }
     };
+
     public String makeLine(final Iterable<String> ¢) {
       return lineBegin() + separate(¢) + lineEnd();
     }

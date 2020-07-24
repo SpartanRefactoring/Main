@@ -141,7 +141,7 @@ public class CFG {
         }
         offset = r.position();
       }
-    } catch (IOException e) {
+    } catch (final IOException e) {
       note.bug(e);
     }
   }
@@ -181,7 +181,7 @@ public class CFG {
       b.newVertex(currBlock);
       $.add(currBlock);
       return $;
-    } catch (IOException e) {
+    } catch (final IOException e) {
       return note.bug(e);
     }
   }

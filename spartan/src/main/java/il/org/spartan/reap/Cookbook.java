@@ -179,7 +179,6 @@ public interface Cookbook {
         return wrap.get();
       }
 
-      
       public static class TEST extends A {
         @Test public void sessionA00() {
           azzert.that(wrap(), is("<p>"));
@@ -235,7 +234,7 @@ public interface Cookbook {
             compute((final Integer i, final Character c) -> c + "(" + i + ")").from(value(Integer.valueOf(13)), value(Character.valueOf('f'))).get(),
             is("f(13)"));
       }
-      @Test  public void sessionA05() {
+      @Test public void sessionA05() {
         final Cell<Integer> x = value(Integer.valueOf(13));
         final Cell<Character> f = value(Character.valueOf('f'));
         final Cell<String> fx = cook(() -> f.get() + "(" + x.get() + ")");
@@ -774,7 +773,7 @@ public interface Cookbook {
           a.set(0xCAFE);
           azzert.aye(aPower02.updated());
         }
-        @Test  public void sessionG02() {
+        @Test public void sessionG02() {
           aPower02.set(0xDADA);
           assert aPower02.cache != null;
           azzert.that(aPower02.cache, is(0xDADA));
@@ -1073,7 +1072,7 @@ public interface Cookbook {
       @Override public T get() {
         try {
           return super.get();
-        } catch (final NullPointerException x) {
+        } catch (@SuppressWarnings("unused") final NullPointerException x) {
           return null;
         }
       }
@@ -1094,7 +1093,7 @@ public interface Cookbook {
       @Override T eval() {
         try {
           return super.eval();
-        } catch (final NullPointerException x) {
+        } catch (@SuppressWarnings("unused") final NullPointerException x) {
           return null;
         }
       }

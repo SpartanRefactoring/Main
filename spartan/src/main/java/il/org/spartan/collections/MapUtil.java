@@ -13,7 +13,7 @@ public class MapUtil {
     m.put(key, (m.get(key) != null ? m.get(key) : Integer.valueOf(0)) + val);
   }
   public static <K, V> Iterator<K> keysIterator(final Map<K, V> m) {
-    return new Iterator<K>() {
+    return new Iterator<>() {
       Iterator<Map.Entry<K, V>> inner = m.entrySet().iterator();
 
       @Override public boolean hasNext() {

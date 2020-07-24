@@ -155,7 +155,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
     /** The actual function to create the graph, defined by all associations
      * recorded so far.
      * @return the Graph object defined by the associations. */
-     public Graph<E> build() {
+    public Graph<E> build() {
       return new Graph<>(name, description, makeVerticesMap());
     }
     public int countEdges() {

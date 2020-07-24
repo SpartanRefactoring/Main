@@ -133,7 +133,7 @@ public enum CLASSFILES {
     final File $ = new File(where, canonicalFileName(className));
     try {
       return !$.exists() ? null : new FileInputStream($);
-    } catch (final FileNotFoundException __) {
+    } catch (@SuppressWarnings("unused") final FileNotFoundException __) {
       return null;
     }
   }
@@ -147,7 +147,7 @@ public enum CLASSFILES {
       /* for (final ZipEntry e : IterableAdapter.make(z.entries())) if
        * (e.getName().equals(fileName)) { zipsInUse.add(z); return
        * z.getInputStream(e); } z.close(); */
-    } catch (final IOException __) {
+    } catch (@SuppressWarnings("unused") final IOException __) {
       // Absorb (we do not care about errors)
       return null;
     }

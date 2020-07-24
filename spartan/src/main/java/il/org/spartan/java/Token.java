@@ -76,10 +76,10 @@ public enum Token {
   BLOCK_COMMENT(COMMENT), // Includes just the last line of the block comment.
   DOC_COMMENT(COMMENT), // Includes just the last line of the DOC comment.
   PARTIAL_BLOCK_COMMENT(COMMENT), // Returned for each line, except the last
-                                  // in
+  // in
   // a block comment.
   PARTIAL_DOC_COMMENT(COMMENT), // Returned for each line, except the last in
-                                // a
+  // a
   // doc comment.
   /** Returned for each new line occurring within a block comment: */
   NL_BLOCK_COMMENT(COMMENT),
@@ -93,6 +93,7 @@ public enum Token {
   EOF(NONCODE), //
   NL(NONCODE), //
   SPACE(NONCODE),;
+
   public static void main(final String argv[]) throws IOException {
     main(new RawTokenizer(new InputStreamReader(System.in)));
   }
@@ -143,6 +144,7 @@ public enum Token {
     LITERAL(ANY), //
     COMMENT(IGNORE), //
     NONCODE(IGNORE);
+
     public final Category category;
 
     Kind(final Category category) {

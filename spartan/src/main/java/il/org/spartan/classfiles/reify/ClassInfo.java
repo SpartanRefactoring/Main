@@ -21,7 +21,7 @@ public final class ClassInfo extends ConstantPoolEntity {
   public static ClassInfo make(final Class<?> ¢) {
     return make(CLASSFILES.open(¢));
   }
-   public static AttributedEntity make(final DataInputStream ¢) {
+  public static AttributedEntity make(final DataInputStream ¢) {
     return new Builder(¢).go();
   }
   public static ClassInfo make(final File ¢) {
@@ -458,6 +458,7 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   public enum Abstraction {
     ABSTRACT, FINAL, PLAIN;
+
     public static Abstraction abstraction(final ClassInfo ¢) {
       return ¢.isAbstract() ? ABSTRACT : ¢.isFinal() ? FINAL : PLAIN;
     }
@@ -567,6 +568,7 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   public enum Kind {
     INTERFACE, ANNOTATION, CLASS, ENUM;
+
     public static Kind kind(final ClassInfo ¢) {
       return ¢.isInterface() ? Kind.INTERFACE : ¢.isClass() ? Kind.CLASS : ¢.isEnum() ? Kind.ENUM : ¢.isAnnotation() ? Kind.ANNOTATION : null;
     }

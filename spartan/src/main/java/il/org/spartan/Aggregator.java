@@ -145,6 +145,7 @@ public class Aggregator {
         return "\\textbf{\\emph{M.A.D}}";
       }
     };
+
     public static FormatSpecifier COUNT() {
       return COUNT.format("%d");
     }

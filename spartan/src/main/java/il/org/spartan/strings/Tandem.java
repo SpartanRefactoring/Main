@@ -9,28 +9,28 @@ import il.org.spartan.utils.Separate;
 public enum Tandem {
   ;
   public static String arrays(final double[] x, final double[] y) {
-    return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
+    return Separate.by(() -> new RangeIterator<>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,6g:%,6g>", box.it(x[i()]), box.it(y[i()]));
       }
     }, ";");
   }
   public static String arrays(final double[] x, final int[] y) {
-    return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
+    return Separate.by(() -> new RangeIterator<>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,g:%,d>", box.it(x[i()]), box.it(y[i()]));
       }
     }, ";");
   }
   public static String arrays(final int[] x, final double[] y) {
-    return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
+    return Separate.by(() -> new RangeIterator<>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,d:%,g>", box.it(x[i()]), box.it(y[i()]));
       }
     }, ";");
   }
   public static String arrays(final int[] x, final int[] y) {
-    return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
+    return Separate.by(() -> new RangeIterator<>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,d:%,d>", box.it(x[i()]), box.it(y[i()]));
       }

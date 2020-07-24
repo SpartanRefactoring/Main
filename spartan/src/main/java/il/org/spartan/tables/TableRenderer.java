@@ -18,12 +18,18 @@ public interface TableRenderer {
       @Override public String afterTable() {
         return "\\bottomrule" + NL;
       }
-      // @formatter:off
-      @Override
-       public String arraySeparator() { return ", "; }
-      @Override
-       public String beforeFooter() { return "\\midrule" + NL; }
-    // @formatter:on
+    // @formatter:off
+			@Override
+			public String arraySeparator() {
+				return ", ";
+			}
+
+			@Override
+			public String beforeFooter() {
+				return "\\midrule" + NL;
+			}
+
+			// @formatter:on
       @Override public String beforeTable() {
         return "\\toprule" + NL;
       }
@@ -58,11 +64,17 @@ public interface TableRenderer {
         return "\\hline" + NL;
       }
     // @formatter:off
-    @Override
-     public String arraySeparator() { return ", "; }
-    @Override
-     public String beforeFooter() { return "\\hline" + NL; }
-  // @formatter:on
+			@Override
+			public String arraySeparator() {
+				return ", ";
+			}
+
+			@Override
+			public String beforeFooter() {
+				return "\\hline" + NL;
+			}
+
+			// @formatter:on
       @Override public String beforeTable() {
         return "\\hline" + NL;
       }
@@ -75,10 +87,16 @@ public interface TableRenderer {
     },
     CSV {
     // @formatter:off
-    @Override public String footerEnd() { return NL; }
-    @Override
-     public String recordSeparator() { return ","; }
-    // @formatter:on
+			@Override
+			public String footerEnd() {
+				return NL;
+			}
+
+			@Override
+			public String recordSeparator() {
+				return ",";
+			}
+			// @formatter:on
     },
     MARKDOWN {
       @Override public String afterHeader() {
@@ -90,16 +108,29 @@ public interface TableRenderer {
       @Override public String afterTable() {
         return NL;
       }
-      // @formatter:off
-      @Override public String beforeTable() { return NL; }
-      @Override
-       public String recordBegin() { return "|" ; }
-      @Override
-       public String recordEnd() { return " |" + NL; }
-      @Override
-       public String recordSeparator() { return " | "; }
-    // @formatter:on
+    // @formatter:off
+			@Override
+			public String beforeTable() {
+				return NL;
+			}
+
+			@Override
+			public String recordBegin() {
+				return "|";
+			}
+
+			@Override
+			public String recordEnd() {
+				return " |" + NL;
+			}
+
+			@Override
+			public String recordSeparator() {
+				return " | ";
+			}
+			// @formatter:on
     };
+
     static int lastSize;
 
     @Override public void setHeaderCount(final int size) {
@@ -129,34 +160,63 @@ public interface TableRenderer {
   }
   // @formatter:off
 
-  default String arraySeparator() { return "; "; }
+	default String arraySeparator() {
+		return "; ";
+	}
 
-  default String beforeFooter() { return empty(); }
+	default String beforeFooter() {
+		return empty();
+	}
 
-  default String beforeHeader() { return empty(); }
-  default String beforeTable() { return empty(); }
-  default String cellArray(final Object[] ¢) {
-    return separate.these(¢).by(arraySeparator());
-  }
+	default String beforeHeader() {
+		return empty();
+	}
 
-  default String cellInt(final Long ¢) { return ¢ + ""; }
+	default String beforeTable() {
+		return empty();
+	}
 
-  default String extension() {
-    return toString().toLowerCase();
-  }
+	default String cellArray(final Object[] ¢) {
+		return separate.these(¢).by(arraySeparator());
+	}
 
-  default String footerBegin() { return recordBegin();}
-  default String footerEnd() { return recordEnd();}
+	default String cellInt(final Long ¢) {
+		return ¢ + "";
+	}
 
-  default String footerSeparator() { return recordSeparator(); }
+	default String extension() {
+		return toString().toLowerCase();
+	}
 
-  default String headerLineBegin() { return recordBegin(); }
-  default String headerLineEnd() { return recordEnd(); }
+	default String footerBegin() {
+		return recordBegin();
+	}
 
-  default String headerSeparator() { return recordSeparator(); }
+	default String footerEnd() {
+		return recordEnd();
+	}
 
-  default String nil() { return "Nº"; }
-  // @formatter:on
+	default String footerSeparator() {
+		return recordSeparator();
+	}
+
+	default String headerLineBegin() {
+		return recordBegin();
+	}
+
+	default String headerLineEnd() {
+		return recordEnd();
+	}
+
+	default String headerSeparator() {
+		return recordSeparator();
+	}
+
+	default String nil() {
+		return "Nº";
+	}
+
+	// @formatter:on
   default String recordBegin() {
     return empty();
   }
@@ -174,8 +234,9 @@ public interface TableRenderer {
     final Separator s = new Separator(recordSeparator());
     values.forEach(λ -> $.append(s)
         .append(λ instanceof Object[] ? cellArray((Object[]) λ)
-            : λ instanceof Integer ? cellInt(Long.valueOf(((Integer) λ).intValue())) : λ instanceof Long ? cellInt((Long) λ) //
-                : λ instanceof Double ? cellReal((Double) λ) : λ));
+            : λ instanceof Integer ? cellInt(Long.valueOf(((Integer) λ).intValue()))
+                : λ instanceof Long ? cellInt((Long) λ) //
+                    : λ instanceof Double ? cellReal((Double) λ) : λ));
     return $ + recordEnd();
   }
   void setHeaderCount(int size);

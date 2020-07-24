@@ -17,7 +17,7 @@ public class StringLiteralsTest {
       final Token $ = J.next();
       azzert.that(J.next(), is(Token.EOF));
       return $;
-    } catch (final IOException E) {
+    } catch (@SuppressWarnings("unused") final IOException x) {
       return Token.EOF;
     }
   }

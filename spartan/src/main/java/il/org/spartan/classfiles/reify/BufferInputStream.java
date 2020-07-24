@@ -76,7 +76,7 @@ public class BufferInputStream extends InputStream {
   }
   @Override public synchronized long skip(long ¢) {
     if (¢ + position > length)
-      ¢ = length - position;
+      return skip(length - position);
     if (¢ < 0)
       return 0;
     position += ¢;

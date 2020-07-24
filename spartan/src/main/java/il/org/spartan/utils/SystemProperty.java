@@ -30,6 +30,7 @@ public enum SystemProperty {
   USER_REGION, //
   USER_TIMEZONE, //
   ;
+
   public static void main(final String[] args) throws RuntimeException {
     for (final SystemProperty ¢ : values()) {
       if (¢.value() == null)

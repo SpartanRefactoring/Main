@@ -113,7 +113,7 @@ public class CLASSPATH {
     for (int i = 0; i < path.length; ++i)
       try {
         $[i] = new File(path[i]).toURI().toURL();
-      } catch (final MalformedURLException __) {
+      } catch (@SuppressWarnings("unused") final MalformedURLException __) {
         // Ignore
       }
     return new URLClassLoader($);

@@ -30,7 +30,7 @@ public class ImmutableArray<T> implements Iterable<T> {
     return implementation[¢];
   }
   @Override public Iterator<T> iterator() {
-    return new Iterator<T>() {
+    return new Iterator<>() {
       int i;
 
       @Override public boolean hasNext() {

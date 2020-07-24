@@ -305,12 +305,13 @@ public enum OpCode {
   IMPDEP1(-1), // 254 (0xFE)
   IMPDEP2(-1), // 255 (0xFF)
   ;
+
   public static Instruction read(final BufferDataInputStream $) {
     if ($.eof())
       return null;
     try {
       return OpCode.values()[$.readUnsignedByte()].readContent($);
-    } catch (final EOFException e) {
+    } catch (@SuppressWarnings("unused") final EOFException e) {
       return null;
     } catch (final IOException ¢) {
       throw new CorruptClassFile(¢);
