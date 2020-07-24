@@ -47,13 +47,11 @@ public class AllTestClasses extends TestTables {
             table.col("Project", path).col("TestClassName", className) //
                 // .col("TestClass", map.get("TestClass").get(i)) //
                 .nl();
-            try {
               File file = new File(initialPath + path + "/" + className + ".txt");
               file.getParentFile().mkdirs();
-              FileWriter writer = new FileWriter(file, false);
-              PrintWriter output = new PrintWriter(writer);
+            try (
+              FileWriter writer = new FileWriter(file, false); PrintWriter output = new PrintWriter(writer)) {
               output.print(classCode);
-              output.close();
             } catch (Exception x) {
               // TODO Auto-generated catch block
               x.printStackTrace();
