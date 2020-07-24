@@ -46,7 +46,7 @@ public class FilesGenerator {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
     final Iterator<String> $ = as.list(directory.list()).iterator();
-    return new Iterator<File>() {
+    return new Iterator<>() {
       File next;
 
       @Override public boolean hasNext() {

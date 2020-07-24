@@ -44,7 +44,7 @@ public enum as {
   public static Iterable<Integer> asIterable(final Integer... is) {
     // Create an object of a new <em>anonymous</em> class that
     // <code><b>implements</b></code> {@link Iterable}
-    return () -> new Iterator<Integer>() {
+    return () -> new Iterator<>() {
       int current;
 
       @Override public boolean hasNext() {
@@ -56,7 +56,7 @@ public enum as {
     };
   }
   public static Iterable<Integer> asIterableLambda(final Integer... is) {
-    return () -> new Iterator<Integer>() {
+    return () -> new Iterator<>() {
       int current;
 
       @Override public boolean hasNext() {
@@ -159,7 +159,7 @@ public enum as {
     return Utils.cantBeNull($.toArray(new String[$.size()]));
   }
   static Iterable<Integer> asIterableEssence(final Integer... is) {
-    return () -> new Iterator<Integer>() {
+    return () -> new Iterator<>() {
       int current;
 
       @Override public boolean hasNext() {

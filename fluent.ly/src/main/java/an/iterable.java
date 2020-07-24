@@ -16,7 +16,7 @@ public interface iterable {
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter */
   @SafeVarargs static <T> Iterable<T> over(final T... ts) {
-    return () -> new Iterator<T>() {
+    return () -> new Iterator<>() {
       int current;
 
       @Override public boolean hasNext() {

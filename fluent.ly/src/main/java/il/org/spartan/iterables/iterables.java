@@ -102,7 +102,7 @@ public enum iterables {
       this.t = t;
     }
     @Override public Iterator<T> iterator() {
-      return new iterables.ReadonlyIterator<T>() {
+      return new iterables.ReadonlyIterator<>() {
         @Override public boolean hasNext() {
           return t != null;
         }

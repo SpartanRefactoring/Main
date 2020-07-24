@@ -18,7 +18,7 @@ import java.util.function.*;
  * @since 2017-03-10 */
 public interface lazy<T> extends Supplier<T> {
   static <T> lazy<T> get(final Supplier<T> ¢) {
-    return new lazy<T>() {
+    return new lazy<>() {
       /** Cached value; invalid cache if {@code null} */
       T $;
 

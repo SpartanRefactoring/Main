@@ -157,7 +157,7 @@ public interface Iterables {
     };
   }
   static <F, T> Iterable<T> make(final F[] fs, final Function<F, T> f) {
-    return () -> new iterables.ReadonlyIterator<T>() {
+    return () -> new iterables.ReadonlyIterator<>() {
       int current;
 
       @Override public boolean hasNext() {
@@ -173,7 +173,7 @@ public interface Iterables {
    * @return an {@link Iterable} yields the {@link Integer}s in the range 0
    *         through the value of the parameter. */
   static Iterable<Integer> make(final int i) {
-    return () -> new iterables.ReadonlyIterator<Integer>() {
+    return () -> new iterables.ReadonlyIterator<>() {
       int position;
 
       @Override public boolean hasNext() {
@@ -185,7 +185,7 @@ public interface Iterables {
     };
   }
   static <F, T> Iterable<T> make(final Iterable<F> fs, final Function<F, T> f) {
-    return () -> new iterables.ReadonlyIterator<T>() {
+    return () -> new iterables.ReadonlyIterator<>() {
       final Iterator<F> inner = fs.iterator();
 
       @Override public boolean hasNext() {

@@ -12,7 +12,7 @@ public interface accumulate<T, C extends Collection<T>> {
    * @param <C> JD
    * @param c JD */
   static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
-    return new accumulate<T, C>() {
+    return new accumulate<>() {
       @Override public accumulate<T, C> add(final T ¢) {
         if (¢ == null)
           return this;

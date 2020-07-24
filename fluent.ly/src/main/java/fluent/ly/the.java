@@ -94,7 +94,7 @@ public interface the {
     return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
   }
   static <T> Iterable<T> lastOf(final Iterable<T> ¢) {
-    return () -> new Iterator<T>() {
+    return () -> new Iterator<>() {
       final Iterator<T> $ = ¢.iterator();
       {
         $.next();
