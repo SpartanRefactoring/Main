@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @since 2017-10-16 */
 public class TaxonomyTable extends NominalTables {
-  @SuppressWarnings("boxing") public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
+  @SuppressWarnings("boxing") public static void main(final String[] args) throws Exception {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("#Files", 0);
     map.put("#Tests", 0);

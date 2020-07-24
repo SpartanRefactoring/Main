@@ -12,7 +12,7 @@ import il.org.spartan.tables.*;
  * @author Dor Ma'ayan
  * @since 2017-05-18 */
 public class MetricsTable extends NominalTables {
-  @SuppressWarnings("boxing") public static void main(final String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+  @SuppressWarnings("boxing") public static void main(final String[] args) {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("if", 0);
     map.put("for", 0);

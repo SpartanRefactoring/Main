@@ -12,7 +12,7 @@ import il.org.spartan.tables.*;
  * @author Dor Ma'ayan
  * @since 2017-10-6 */
 public class FunctionsDeepInspection extends NominalTables {
-  @SuppressWarnings("boxing") public static void main(final String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+  @SuppressWarnings("boxing") public static void main(final String[] args) {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("MethodDeclaration", 0);
     map.put("0-Arguments", 0);

@@ -13,7 +13,7 @@ import il.org.spartan.tables.*;
  * @author Dor Ma'ayan
  * @since 2017-05-18 */
 public class Table_Class_Field_Names extends NominalTables {
-  public static void main(final String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+  public static void main(final String[] args) {
     namePrevelance = new HashMap<>();
     new GrandVisitor(args) {
       {
