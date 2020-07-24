@@ -224,7 +224,7 @@ public interface wizard {
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
-   * Each of the parameters may be {@code null; a {@code null is only equal
+   * Each of the parameters may be {@code null; a {@code null} is only equal
    * to{@code null
    * @param n1 JD
    * @param n2 JD
@@ -251,7 +251,7 @@ public interface wizard {
    * Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
-   * Each of the parameters may be {@code null; a {@code null is only equal
+   * Each of the parameters may be {@code null; a {@code null} is only equal
    * to{@code null
    * @param n1 JD
    * @param n2 JD

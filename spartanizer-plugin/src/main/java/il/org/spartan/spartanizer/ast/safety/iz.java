@@ -245,7 +245,7 @@ public interface iz {
   static boolean conditionalOr(final InfixExpression ¢) {
     return ¢ != null && ¢.getOperator() == CONDITIONAL_OR;
   }
-  /** Determine whether a node is a "specific", i.e., {@code null or {@code this}
+  /** Determine whether a node is a "specific", i.e., {@code null} or {@code this}
    * or literal. @param x JD @return whether the parameter is a "specific" */
   static boolean constant(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
@@ -770,7 +770,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, NORMAL_ANNOTATION);
   }
   /** Determine whether a node is the
-   * {@code null keyword @param pattern JD @return whether it is the {@code null
+   * {@code null} keyword @param pattern JD @return whether it is the {@code null
    *         literal */
   static boolean nullLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, NULL_LITERAL);
@@ -781,7 +781,7 @@ public interface iz {
   static boolean numberLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, NUMBER_LITERAL);
   }
-  /** Determine whether a node is {@code this} or {@code null @param x JD @return
+  /** Determine whether a node is {@code this} or {@code null} @param x JD @return
               * whether the parameter is a block statement */
   static boolean numericLiteral(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL);
@@ -1015,7 +1015,7 @@ public interface iz {
   static boolean thisLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, THIS_EXPRESSION);
   }
-  /** Determine whether a node is {@code this} or {@code null @param x JD @return
+  /** Determine whether a node is {@code this} or {@code null} @param x JD @return
               * whether the parameter is a block statement */
   static boolean thisOrNull(final Expression ¢) {
     return iz.nodeTypeIn(¢, NULL_LITERAL, THIS_EXPRESSION);

@@ -357,7 +357,7 @@ public class Toolbox {
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
    * @param pattern JD
    * @return first {@link Tipper} for which the parameter is within scope, or
-   *         {@code null if no such {@link Tipper} is found. @ */
+   *         {@code null} if no such {@link Tipper} is found. @ */
   public <N extends ASTNode> Tipper<N> firstTipper(final N ¢) {
     return firstTipper(¢, get(¢));
   }

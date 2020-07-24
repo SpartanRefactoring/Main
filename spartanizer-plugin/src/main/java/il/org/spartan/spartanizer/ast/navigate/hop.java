@@ -70,7 +70,7 @@ public interface hop {
   /** Find the last statement residing under a given {@link Statement}
    * @param ¢ JD
    * @return last statement residing under a given {@link Statement}, or
-   *         {@code null if not such sideEffects exists. */
+   *         {@code null} if not such sideEffects exists. */
   static Statement lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
   }

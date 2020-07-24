@@ -60,7 +60,7 @@ public interface idiomatic {
    * of {@link Exception} thrown by {@link Producer#λ()}
    * @param <T> JD
    * @param $ JD
-   * @return result of invoking the parameter, or {@code null if an
+   * @return result of invoking the parameter, or {@code null} if an
    *         exception occurred. */
   static <T> T katching(final Producer<T> $) {
     try {
