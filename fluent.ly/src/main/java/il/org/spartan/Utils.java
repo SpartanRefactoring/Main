@@ -375,7 +375,7 @@ public interface Utils {
         cantBeNull(null);
         azzert.fail("AssertionError expected prior to this line.");
       } catch (final AssertionError e) {
-        azzert.aye("", true);
+        azzert.aye(e + "", true);
       }
     }
     @Test public void cantBeNullTypical() {
