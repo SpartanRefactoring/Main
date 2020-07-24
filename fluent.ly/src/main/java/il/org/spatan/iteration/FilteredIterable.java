@@ -22,7 +22,7 @@ public abstract class FilteredIterable<T> implements Predicate<T>, Iterable<T> {
    * @return true, if and only if, this element is to be passed through. */
   @Override public abstract boolean test(T t);
   @Override public final Iterator<T> iterator() {
-    return new Iterator<T>() {
+    return new Iterator<>() {
       T pending;
       boolean hasNext = true;
       final Iterator<? extends T> iterator = iterable.iterator();
@@ -38,7 +38,7 @@ public abstract class FilteredIterable<T> implements Predicate<T>, Iterable<T> {
         advance();
         return $;
       }
-      void advance() {
+      private void advance() {
         while (iterator.hasNext())
           if (test(pending = iterator.next()))
             return;
