@@ -1,18 +1,30 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
-import java.io.*;
-import java.util.*;
+import java.util.HashMap;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.BreakStatement;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ContinueStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.tables.*;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.tables.Table;
 
 /** Generates a table of the class fields
  * @author Dor Ma'ayan
  * @since 2017-05-18 */
 public class MetricsTable extends NominalTables {
-  @SuppressWarnings("boxing") public static void main(final String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+  @SuppressWarnings("boxing") public static void main(final String[] args) {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("if", 0);
     map.put("for", 0);

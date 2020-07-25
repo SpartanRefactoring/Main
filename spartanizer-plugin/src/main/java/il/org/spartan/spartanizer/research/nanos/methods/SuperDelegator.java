@@ -1,16 +1,21 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.parametersNames;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.research.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.navigate.analyze;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
 
 /** Method delegating to super
  * @author Ori Marcovitch */

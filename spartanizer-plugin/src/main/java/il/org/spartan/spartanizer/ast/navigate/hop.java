@@ -27,7 +27,7 @@ public interface hop {
    *         Use case: Counting the number of Expressions among a given
    *         ASTNode's ancestors */
   static Iterable<ASTNode> ancestors(final ASTNode ¢) {
-    return () -> new Iterator<ASTNode>() {
+    return () -> new Iterator<>() {
       ASTNode current = ¢;
 
       @Override public boolean hasNext() {
@@ -70,7 +70,7 @@ public interface hop {
   /** Find the last statement residing under a given {@link Statement}
    * @param ¢ JD
    * @return last statement residing under a given {@link Statement}, or
-   *         {@code null if not such sideEffects exists. */
+   *         {@code null} if not such sideEffects exists. */
   static Statement lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
   }

@@ -1,15 +1,18 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.fail;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.testing.TestUtilsAll.assertSimilar;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.azzert;
+import fluent.ly.has;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.cmdline.good.InteractiveSpartanizer;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"

@@ -1,8 +1,8 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Small fix of bloatingOf()
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}

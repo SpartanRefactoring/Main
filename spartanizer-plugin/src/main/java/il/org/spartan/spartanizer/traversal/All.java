@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.traversal;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 
 /** TODO Yossi Gil: document class 
  * 

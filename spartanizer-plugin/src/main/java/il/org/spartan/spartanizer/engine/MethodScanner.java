@@ -35,7 +35,7 @@ public abstract class MethodScanner {
   /** @return List of available statements. Updates the current statement and
    *         the current index while looping. */
   public Iterable<Statement> statements() {
-    return () -> new Iterator<Statement>() {
+    return () -> new Iterator<>() {
       final Iterator<Statement> i = availableStatements().iterator();
 
       @Override public boolean hasNext() {

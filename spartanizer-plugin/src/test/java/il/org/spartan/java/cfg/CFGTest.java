@@ -108,7 +108,7 @@ public class CFGTest {
             .outs("a = f(f(x))").contains("int a = f(f(x));") //
             .outs("int a = f(f(x));").contains("b") //
             .outs("b").contains("f(b)");
-    ;
+    
   }
   @Test public void CastExpression() {
     cfg("int a = (int)f();") //

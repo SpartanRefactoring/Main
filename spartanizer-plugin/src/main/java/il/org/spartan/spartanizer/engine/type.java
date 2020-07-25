@@ -1,27 +1,108 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
-import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
-import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.elze;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.from;
+import static il.org.spartan.spartanizer.ast.navigate.step.operand;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static il.org.spartan.spartanizer.ast.navigate.step.to;
+import static il.org.spartan.spartanizer.ast.navigate.step.token;
+import static il.org.spartan.spartanizer.engine.type.Odd.Types.NOTHING;
+import static il.org.spartan.spartanizer.engine.type.Odd.Types.NULL;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.BOOLEAN;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.BYTE;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.CHAR;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.DOUBLE;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.FLOAT;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.INT;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.LONG;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.SHORT;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.STRING;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.ALPHANUMERIC;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.BOOLEANINTEGRAL;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.INTEGRAL;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.NUMERIC;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSERT_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.BOOLEAN_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.CAST_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.CHARACTER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.CONDITIONAL_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.IF_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.POSTFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_NAME;
+import static org.eclipse.jdt.core.dom.ASTNode.STRING_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_FRAGMENT;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LEFT_SHIFT;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_SIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.COMPLEMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.DECREMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.INCREMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.NOT;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.java.namespace.*;
+import fluent.ly.as;
+import fluent.ly.is;
+import fluent.ly.separate;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.ast.safety.property;
+import il.org.spartan.spartanizer.engine.type.Primitive;
+import il.org.spartan.spartanizer.engine.type.Primitive.Certain;
+import il.org.spartan.spartanizer.engine.type.Primitive.Uncertain;
+import il.org.spartan.spartanizer.java.NumericLiteralClassifier;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.java.namespace.Environment;
+import il.org.spartan.spartanizer.java.namespace.Namespace;
 
 /** An interface for fluent api, used to determine the type of an expression
  * from it's structure and context. Use type.get to find the type of an
@@ -31,7 +112,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
-  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
+  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<>() {
     {
       for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
         add(¢);
@@ -39,7 +120,7 @@ public interface type {
       }
     }
   };
-  Collection<String> valueTypes = new LinkedHashSet<String>(type.boxedTypes) {
+  Collection<String> valueTypes = new LinkedHashSet<>(type.boxedTypes) {
     static final long serialVersionUID = -0x134495F1CC662D60L;
     {
       for (final String ¢ : new String[] { "String" }) {
@@ -133,7 +214,7 @@ public interface type {
   }
   // TODO Matteo: Nano-pattern of values: not implemented
   /** @return the type object of the expression */
-  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
+   static type of(final Expression ¢) {
     return inner.get(¢);
   }
   default Certain asPrimitiveCertain() {
@@ -221,7 +302,7 @@ public interface type {
     ;
     private static final String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
-    static final Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
+    static final Map<String, implementation> types = new LinkedHashMap<>() {
       static final long serialVersionUID = -0x702EDE52D8CBFF3AL;
       {
         for (final Certain ¢ : Certain.values()) {

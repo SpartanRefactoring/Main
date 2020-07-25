@@ -1,15 +1,16 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.is.*;
+import static fluent.ly.is.in;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.engine.ExpressionComparator;
+import il.org.spartan.spartanizer.tipping.InfixExpressionSortingRest;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
  * taken to leave intact the use of {@link Operator#PLUS} for the concatenation

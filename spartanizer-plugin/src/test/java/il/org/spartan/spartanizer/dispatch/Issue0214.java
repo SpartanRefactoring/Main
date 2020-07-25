@@ -19,7 +19,7 @@ public final class Issue0214 {
   }
 
   private final Tipper<?> blockSimplify = new BlockSimplify();
-  private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
+  private final Tipper<?> tipper = new EagerTipper<>() {
     static final long serialVersionUID = 0x6E096C5D5235EC39L;
 
     @Override public String description() {

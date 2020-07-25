@@ -42,7 +42,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
   @SuppressWarnings({ "unchecked", "serial" }) Map<Class<? extends ASTNode>, Integer> //
-  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+  classToNodeType = new LinkedHashMap<>() {
     {
       for (int nodeType = 1;; ++nodeType)
         try {
@@ -224,7 +224,7 @@ public interface wizard {
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
-   * Each of the parameters may be {@code null; a {@code null is only equal
+   * Each of the parameters may be {@code null; a {@code null} is only equal
    * to{@code null
    * @param n1 JD
    * @param n2 JD
@@ -251,7 +251,7 @@ public interface wizard {
    * Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
-   * Each of the parameters may be {@code null; a {@code null is only equal
+   * Each of the parameters may be {@code null; a {@code null} is only equal
    * to{@code null
    * @param n1 JD
    * @param n2 JD
@@ -391,7 +391,7 @@ public interface wizard {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : subject.operand(¢).parenthesis();
   }
   static ASTParser parser(final int kind) {
-    final ASTParser $ = ASTParser.newParser(AST.JLS8);
+    final ASTParser $ = ASTParser.newParser(AST.JLS14);
     setBinding($);
     $.setKind(kind);
     final Map<String, String> options = JavaCore.getOptions();

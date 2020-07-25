@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** Fixture for testing enhanced for loops
  * @author Yossi Gil

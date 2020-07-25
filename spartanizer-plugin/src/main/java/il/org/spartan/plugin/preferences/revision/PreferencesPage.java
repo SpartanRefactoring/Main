@@ -1,35 +1,66 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.PAGE_DESCRIPTION;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TIPPER_CATEGORY_PREFIX;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.store;
+import static il.org.spartan.plugin.preferences.revision.XMLSpartan.NOTATION;
+import static java.util.stream.Collectors.toList;
 
-import static java.util.stream.Collectors.*;
-
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.core.runtime.jobs.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jface.preference.*;
-import org.eclipse.jface.util.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-import org.w3c.dom.*;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.ListEditor;
+import org.eclipse.jface.preference.RadioGroupFieldEditor;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.w3c.dom.Document;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.separate;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan.SpartanCategory;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan.SpartanElement;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan.SpartanTipper;
+import il.org.spartan.spartanizer.plugin.Eclipse;
+import il.org.spartan.spartanizer.plugin.Nature;
+import il.org.spartan.spartanizer.plugin.TipsOnOffToggle;
+import il.org.spartan.spartanizer.research.analyses.notation;
+import il.org.spartan.spartanizer.tippers.Names;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.utils.Bool;
 
 /** Revised global preferences page for the plugin.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -198,7 +229,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-        @SuppressWarnings("synthetic-access") void onSelection() {
+         void onSelection() {
           final int i = getList().getSelectionIndex();
           if (i < 0)
             return;
@@ -224,7 +255,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-        @SuppressWarnings("synthetic-access") void onSelection() {
+         void onSelection() {
           final int i = getList().getSelectionIndex();
           if (i >= 0)
             onConfigure.accept(elements.get(i).getValue());
@@ -235,7 +266,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         ableButton = null;
       });
       getList().addSelectionListener(new SelectionListener() {
-        @Override @SuppressWarnings("synthetic-access") public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        @Override  public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           final int i = getList().getSelectionIndex();
           if (i >= 0 && isAble != null)
             if (isAble.apply(elements.get(i).getValue()).booleanValue()) {
@@ -336,7 +367,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
     private void commitSelf() {
       new Job("Applying preferences changes") {
-        @Override @SuppressWarnings("synthetic-access") protected IStatus run(final IProgressMonitor m) {
+        @Override  protected IStatus run(final IProgressMonitor m) {
           m.beginTask("Applying preferences changes", preferences2.keySet().size());
           for (final IProject p : preferences2.keySet()) {
             if (preferences2.get(p) != null)

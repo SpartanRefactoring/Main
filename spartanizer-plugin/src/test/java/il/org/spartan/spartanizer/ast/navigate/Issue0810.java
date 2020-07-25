@@ -1,14 +1,18 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.java.sideEffects;
 
 /** Tests of {@link haz}
  * @author Netanel Felcher

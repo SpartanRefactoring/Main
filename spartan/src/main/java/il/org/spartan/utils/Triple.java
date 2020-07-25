@@ -4,14 +4,16 @@ public class Triple<First, Second, Third> extends Pair<First, Second> {
   public static <First, Second, Third> Triple<First, Second, Third> make(final First f, final Second s, final Third t) {
     return new Triple<>(f, s, t);
   }
+
   @SuppressWarnings("unchecked") //
   public static <First, Second, Third> //
-      Triple<First, Second, Third>[] //
+  Triple<First, Second, Third>[] //
       makeTriples(final int ¢) {
     return new Triple[¢];
   }
+
   public static <First, Second, Third> //
-      Triple<First, Second, Third>[] //
+  Triple<First, Second, Third>[] //
       makeTriples(final int i, final int m, final int k) {
     return Triple.makeTriples(i * k * m);
   }

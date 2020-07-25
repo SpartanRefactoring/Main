@@ -1,8 +1,9 @@
 package il.org.spartan.strings;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /** Typedef for a list of strings.
+ *
  * @author Yossi Gil
  * @since 01/05/2007 */
 public class Strings extends ArrayList<String> {
@@ -12,13 +13,17 @@ public class Strings extends ArrayList<String> {
   public Strings() {
     super(0);
   }
+
   /** Create a new list of strings from a single string.
+   *
    * @param s A string to initialize the list */
   public Strings(final String s) {
     super(1);
     add(s);
   }
+
   /** Create a new list of strings from a list of strings
+   *
    * @param s1 The first string to add to the list
    * @param s2 The second string to add to the list
    * @param ss The remaining strings to add to the list */

@@ -1,12 +1,16 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.classfiles;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
-import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.streotypes.Utility;
+import il.org.spartan.utils.Separate;
 
 /** A class representing the location on the file system of the <em>Java Runtime
  * Environment</em> (JRE), that is the standard Java library.
@@ -19,13 +23,14 @@ import il.org.spartan.utils.*;
  * <li>If the above fails, the system property "sun.boot.class.path" is fetched,
  * giving the JRE location in JVMs by Sun.
  * </ul>
+ *
  * @author Yossi Gil
  * @since 12/07/2007
  * @see CLASSPATH */
-@Utility
-public enum JRE {
+@Utility public enum JRE {
   ;
   /** retrieve the system's CLASSPATH
+   *
    * @return the content of the classpath, broken into array entries */
   public static List<File> asList() {
     try {
@@ -39,11 +44,13 @@ public enum JRE {
       return $;
     }
   }
+
   /** Obtain the CLASSPATH location used by the class loader of a given classes.
+   *
    * @param cs An array of classes
    * @return a list of files
-   * @throws IllegalArgumentException If the class loader of <code>c</code> is
-   *         not a URLClassLoader */
+   * @throws IllegalArgumentException If the class loader of <code>c</code> is not
+   *                                  a URLClassLoader */
   public static List<File> fromClass(final Class<?>... cs) throws IllegalArgumentException {
     final List<File> $ = new ArrayList<>();
     for (final Class<?> c : cs) {
@@ -59,7 +66,9 @@ public enum JRE {
     }
     return $;
   }
+
   /** Exercise this class, by printing the result of its principal function.
+   *
    * @param __ unused */
   public static void main(final String[] __) {
     System.out.println(Separate.by(asList(), "\n"));

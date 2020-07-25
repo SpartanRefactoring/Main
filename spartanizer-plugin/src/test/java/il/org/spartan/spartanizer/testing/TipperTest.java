@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.testing;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.issues.Issue1146;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** A class used for testing a specific tipper. To use this class, inherit it
  * and override tipper() to return the tipper you want to test, then use this

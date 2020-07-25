@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.LocalInitializedInlineIntoNext;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementToForInitializers;
 
 /** Tests of inline into next statement even if not last in block
  * @author Yossi Gil

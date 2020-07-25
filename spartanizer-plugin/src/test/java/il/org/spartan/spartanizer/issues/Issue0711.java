@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementTerminatingScope;
 
 /** Unit test for {@link LocalInitializedStatementTerminatingScope} this test
  * tests whether the bug mentioned in Issue0 711 had been fixed

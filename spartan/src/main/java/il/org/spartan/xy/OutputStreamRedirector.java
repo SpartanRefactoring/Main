@@ -1,6 +1,8 @@
 package il.org.spartan.xy;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 
 class OutputStreamRedirector extends Thread {
   private final InputStream from;
@@ -11,6 +13,7 @@ class OutputStreamRedirector extends Thread {
     this.to = to;
     start();
   }
+
   @Override public void run() {
     try {
       for (int nextChar = from.read(); nextChar != -1; nextChar = from.read())

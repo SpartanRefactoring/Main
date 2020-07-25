@@ -1,10 +1,8 @@
 package il.org.spartan.spartanizer.tippers.junit;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
-
-import il.org.spartan.spartanizer.tippers.*;
+import org.junit.Test;
 
 /** Unit tests for {@link ExpressionStatementAssertTrueFalse}
  * @author Yossi Gil // put your name here

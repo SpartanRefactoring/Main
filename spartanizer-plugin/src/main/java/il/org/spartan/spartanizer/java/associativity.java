@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.java;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import fluent.ly.*;
+import fluent.ly.is;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -12,7 +13,7 @@ import fluent.ly.*;
 public enum associativity {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Determine whether associativity is left-to-right
-   * @param o JD
+   * @param ¢ JD
    * @return whether the associativity of the parameter is left-to-right. */
   public static boolean isLeftToRight(final InfixExpression.Operator ¢) {
     return isRightToLeft(precedence.of(¢));

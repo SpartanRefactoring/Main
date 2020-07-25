@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.ui.*;
+import org.eclipse.ui.ISharedImages;
 
-import il.org.spartan.spartanizer.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.widget.WidgetContext;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
 
 /** Execute a pre-defined (in preferences page) cmd command
  * @author Yuval Simon

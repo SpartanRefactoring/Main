@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.analyses.analyzers;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Class to count statement inside a method before and after refactoring +
  * patterning

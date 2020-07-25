@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
-import java.util.concurrent.atomic.*;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicLong;
 
 /** An abstract listener taking events that may have any number of parameters of
  * any kind; default implementation is empty, override to specialize, or use

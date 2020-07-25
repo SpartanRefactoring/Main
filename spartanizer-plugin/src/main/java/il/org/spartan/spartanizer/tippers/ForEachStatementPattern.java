@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.Statement;
 
 /** A Pattern for ForEach Statement
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>

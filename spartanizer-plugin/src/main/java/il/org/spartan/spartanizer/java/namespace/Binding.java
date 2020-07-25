@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.traversal.Traversal.*;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.traversal.Traversal.__;
 
 /** Information about a variable in the environment - its {@link ASTNode}, its
  * parent's, its {@link __}, and which other variables does it hide. This class

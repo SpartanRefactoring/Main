@@ -1,23 +1,26 @@
 package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
-import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
+import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.excludeMethod;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.text.edits.MalformedTreeException;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.cmdline.nanos.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.nanos.LoopsStatistics;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.Int;
 
 /** Generates a table for analyzing loops distribution and nano pattern applied
  * to loops.

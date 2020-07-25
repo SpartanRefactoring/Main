@@ -1,6 +1,7 @@
 package il.org.spartan.reflection;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /** @author Yossi Gil
  * @since 28/07/2007 */

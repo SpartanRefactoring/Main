@@ -276,7 +276,7 @@ public enum make {
     return parser(JavaCore.createCompilationUnitFrom(¢));
   }
   /** Creates a parser for a given marked text.
-   * @param m JD
+   * @param ¢ JD
    * @return created parser */
   public ASTParser parser(final IMarker ¢) {
     return parser(makeAST.iCompilationUnit(¢));

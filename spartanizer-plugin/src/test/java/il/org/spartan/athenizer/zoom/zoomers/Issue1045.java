@@ -1,10 +1,10 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
+import il.org.spartan.athenizer.zoomers.ParenthesesBloater;
 
 /** Unit tests for {@link ParenthesesBloater} Issue #1045
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}

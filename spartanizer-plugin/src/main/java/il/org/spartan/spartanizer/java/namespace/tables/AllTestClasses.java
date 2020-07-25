@@ -1,16 +1,22 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.tables.Table;
 
 /** Filter projects which does not contain any Junit test (Dor Msc.)
  * @author Dor Ma'ayan
@@ -47,13 +53,11 @@ public class AllTestClasses extends TestTables {
             table.col("Project", path).col("TestClassName", className) //
                 // .col("TestClass", map.get("TestClass").get(i)) //
                 .nl();
-            try {
               File file = new File(initialPath + path + "/" + className + ".txt");
               file.getParentFile().mkdirs();
-              FileWriter writer = new FileWriter(file, false);
-              PrintWriter output = new PrintWriter(writer);
+            try (
+              FileWriter writer = new FileWriter(file, false); PrintWriter output = new PrintWriter(writer)) {
               output.print(classCode);
-              output.close();
             } catch (Exception x) {
               // TODO Auto-generated catch block
               x.printStackTrace();

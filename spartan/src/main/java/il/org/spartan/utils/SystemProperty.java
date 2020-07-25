@@ -1,9 +1,11 @@
 package il.org.spartan.utils;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-import il.org.spartan.strings.*;
+import il.org.spartan.strings.StringUtils;
 
 public enum SystemProperty {
   FILE_SEPARATOR, //
@@ -28,6 +30,7 @@ public enum SystemProperty {
   USER_REGION, //
   USER_TIMEZONE, //
   ;
+
   public static void main(final String[] args) throws RuntimeException {
     for (final SystemProperty ¢ : values()) {
       if (¢.value() == null)
@@ -37,6 +40,7 @@ public enum SystemProperty {
     for (final String ¢ : objectsToStrings(System.getProperties().keySet()))
       System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
+
   private static TreeSet<String> objectsToStrings(final Set<Object> ¢) {
     return ¢.stream().map(λ -> (String) λ).collect(Collectors.toCollection(TreeSet::new));
   }
@@ -46,9 +50,11 @@ public enum SystemProperty {
   SystemProperty() {
     key = name().toLowerCase().replace('_', '.');
   }
+
   public String value() {
     return StringUtils.visualize(value(System.getProperties()));
   }
+
   public String value(final Properties ¢) {
     return ¢.getProperty(key);
   }

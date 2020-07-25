@@ -1,27 +1,27 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.classfiles.reify.OpCode.*;
+import fluent.ly.note;
+import il.org.spartan.classfiles.reify.OpCode.Instruction;
 
 public class SimplifiedCode {
   private static boolean isRelevant(final Instruction ¢) {
     switch (¢.opCode) {
-      case GETFIELD:
-      case GETSTATIC:
-      case INVOKEDYNAMIC:
-      case INVOKEINTERFACE:
-      case INVOKESPECIAL:
-      case INVOKESTATIC:
-      case INVOKEVIRTUAL:
-      case NEW:
-      case PUTFIELD:
-      case PUTSTATIC:
-        return true;
-      default:
-        return false;
+    case GETFIELD, GETSTATIC:
+    case INVOKEDYNAMIC:
+    case INVOKEINTERFACE:
+    case INVOKESPECIAL:
+    case INVOKESTATIC:
+    case INVOKEVIRTUAL:
+    case NEW:
+    case PUTFIELD:
+    case PUTSTATIC:
+      return true;
+    default:
+      return false;
     }
   }
 
@@ -33,21 +33,26 @@ public class SimplifiedCode {
   public SimplifiedCode(final byte[] codes) {
     this.codes = codes;
   }
+
   public int cyclomaticComplexity() {
     return new CFG(codes).cyclomaticComplexity();
   }
+
   public List<Instruction> instructions() {
     parse();
     return instructions;
   }
+
   public int instructionsCount() {
     parse();
     return instructionsCount;
   }
+
   public int throwCount() {
     parse();
     return throwCount;
   }
+
   private void parse() {
     if (instructionsCount == 0)
       try (BufferDataInputStream r = new BufferDataInputStream(codes)) {
@@ -63,7 +68,7 @@ public class SimplifiedCode {
             instructions.add(i);
           ++instructionsCount;
         }
-      } catch (IOException e) {
+      } catch (final IOException e) {
         note.bug(e);
       }
   }

@@ -1,13 +1,16 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.utils.Proposition.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.utils.Proposition.F;
+import static il.org.spartan.utils.Proposition.OR;
+import static il.org.spartan.utils.Proposition.T;
+import static il.org.spartan.utils.Proposition.X;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.proposition.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.proposition.PropositionJavaNotation;
+import il.org.spartan.utils.Proposition;
 
 /** Proposition auto-simplifies tests
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>

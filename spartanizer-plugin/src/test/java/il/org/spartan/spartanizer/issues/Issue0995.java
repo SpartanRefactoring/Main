@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.BodyDeclarationModifiersSort;
 
 /** Unit tests for {@link BodyDeclarationModifiersSort.ofEnumConstant}
  * @author Yossi Gil // put your name here

@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.type;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("all")
 public final class AtomicConversionsTest {
   private byte b = (byte) hashCode();
   private final boolean b1 = getClass().equals(getClass());

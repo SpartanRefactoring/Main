@@ -1,10 +1,16 @@
 package il.org.spartan.spartanizer.ast.nodes.metrics;
 
-import java.util.*;
-import java.util.function.*;
-import org.eclipse.jdt.core.dom.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.function.ToIntFunction;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.SimpleName;
+
+import il.org.spartan.spartanizer.ast.navigate.step;
 
 /** A description of an abstract metric of an ASTNode
  * @author Yossi Gil
@@ -25,7 +31,7 @@ public abstract class Metric {
     return $;
   }
   
-  /** @param pattern JD
+  /** @param u JD
    * @return */
   public static ArrayList<String> dictionary_not_unique(final ASTNode u) {
     final ArrayList<String> $ = new ArrayList<>();

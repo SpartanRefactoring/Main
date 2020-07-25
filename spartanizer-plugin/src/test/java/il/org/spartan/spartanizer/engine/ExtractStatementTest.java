@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static org.hamcrest.collection.IsEmptyCollection.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.not;
+import static il.org.spartan.spartanizer.engine.parse.s;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.extract;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

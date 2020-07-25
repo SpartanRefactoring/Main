@@ -1,13 +1,16 @@
 package il.org.spartan.java.cfg;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-import org.junit.runner.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 /** TODO Roth: delete this file, an example
  * @author Ori Roth

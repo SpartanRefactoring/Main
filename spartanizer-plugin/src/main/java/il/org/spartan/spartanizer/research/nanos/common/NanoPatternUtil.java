@@ -1,17 +1,24 @@
 package il.org.spartan.spartanizer.research.nanos.common;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.nanos.*;
-import il.org.spartan.spartanizer.research.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.nanos.NanoPatternsConfiguration;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
 
 public interface NanoPatternUtil {
   static boolean excludeMethod(final MethodDeclaration ¢) {

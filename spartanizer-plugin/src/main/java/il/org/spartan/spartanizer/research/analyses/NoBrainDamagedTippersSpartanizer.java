@@ -1,9 +1,16 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.SwitchCase;
+import org.eclipse.jdt.core.dom.SwitchStatement;
 
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.cmdline.good.InteractiveSpartanizer;
+import il.org.spartan.spartanizer.tippers.MergeSwitchBranches;
+import il.org.spartan.spartanizer.tippers.RemoveRedundantSwitchCases;
+import il.org.spartan.spartanizer.tippers.RemoveRedundantSwitchContinue;
+import il.org.spartan.spartanizer.tippers.RemoveRedundantSwitchReturn;
+import il.org.spartan.spartanizer.tippers.SwitchBranchSort;
+import il.org.spartan.spartanizer.tippers.SwitchCaseLocalSort;
+import il.org.spartan.spartanizer.tippers.SwitchSingleCaseToIf;
 
 /** A spartanizer without heavy or buggy tippers
  * @author orimarco {@code marcovitch.ori@gmail.com}

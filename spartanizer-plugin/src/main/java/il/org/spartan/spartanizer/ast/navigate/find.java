@@ -1,16 +1,20 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.eq;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import java.util.List;
+import java.util.Objects;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.SimpleName;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.Recurser;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -18,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
 public enum find {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
-    return new Operand<N>() {
+    return new Operand<>() {
       @Override public N under(final ASTNode ¢) {
         return the.firstOf(descendants.whoseClassIs(c).from(¢));
       }

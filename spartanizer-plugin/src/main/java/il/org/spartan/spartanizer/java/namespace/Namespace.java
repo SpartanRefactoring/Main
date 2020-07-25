@@ -1,20 +1,72 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static il.org.spartan.spartanizer.java.namespace.definition.Kind.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.bodyDeclarations;
+import static il.org.spartan.spartanizer.ast.navigate.step.catchClauses;
+import static il.org.spartan.spartanizer.ast.navigate.step.enumConstants;
+import static il.org.spartan.spartanizer.ast.navigate.step.exception;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
+import static il.org.spartan.spartanizer.ast.navigate.step.resources;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.type;
+import static il.org.spartan.spartanizer.ast.navigate.step.types;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.annotation;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.catch¢;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.class¢;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.foreach;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.for¢;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.lambda;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.local;
+import static il.org.spartan.spartanizer.java.namespace.definition.Kind.try¢;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.namespace.definition.*;
-import il.org.spartan.spartanizer.research.analyses.*;
+import fluent.ly.separate;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.ast.safety.property;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.engine.nominal.abbreviate;
+import il.org.spartan.spartanizer.java.namespace.definition.Kind;
+import il.org.spartan.spartanizer.research.analyses.notation;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
  * the current node and delegate to the parent unless it is null.
@@ -58,7 +110,7 @@ public final class Namespace implements Environment {
     return this;
   }
   private Iterable<Environment> ancestors() {
-    return () -> new Iterator<Environment>() {
+    return () -> new Iterator<>() {
       Environment next = Namespace.this;
 
       @Override public boolean hasNext() {
@@ -345,7 +397,7 @@ public final class Namespace implements Environment {
     return has(identifier) || children.stream().anyMatch(λ -> λ.contains(identifier));
   }
   public static Iterable<String> namesGenerator(final SimpleType t) {
-    return () -> new Iterator<String>() {
+    return () -> new Iterator<>() {
       final String base = abbreviate.variableName(t);
       int n = -1;
 

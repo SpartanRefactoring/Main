@@ -132,7 +132,7 @@ public enum leonidasSays {
     }
     public void into(final String rrr) {
       final IDocument document = new Document(wrapCode(string));
-      final ASTParser parser = ASTParser.newParser(AST.JLS8);
+      final ASTParser parser = ASTParser.newParser(AST.JLS14);
       parser.setSource(document.get().toCharArray());
       final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
@@ -233,7 +233,7 @@ public enum leonidasSays {
     }
     public void into(final String expected) {
       final IDocument document = new Document(wrapCode(string));
-      final ASTParser parser = ASTParser.newParser(AST.JLS8);
+      final ASTParser parser = ASTParser.newParser(AST.JLS14);
       parser.setSource(document.get().toCharArray());
       final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
       final ASTRewrite r = ASTRewrite.create(cu.getAST());

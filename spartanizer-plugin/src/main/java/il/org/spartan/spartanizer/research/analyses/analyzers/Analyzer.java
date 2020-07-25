@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.research.analyses.analyzers;
 
-import java.text.*;
-import java.util.*;
+import java.text.DecimalFormat;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 /** Analyzer base class
  * @author Ori Marcovitch

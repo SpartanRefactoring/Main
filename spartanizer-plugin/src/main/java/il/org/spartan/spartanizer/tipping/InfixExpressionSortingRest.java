@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.tipping;
 
-import static fluent.ly.lisp.*;
+import static fluent.ly.lisp.chop;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.extract;
 
 /** Yossi Gil Document Class
  * @author Yossi Gil

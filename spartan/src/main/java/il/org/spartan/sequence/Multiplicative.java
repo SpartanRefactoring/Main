@@ -14,14 +14,17 @@ public class Multiplicative extends Sequence {
   public Multiplicative() {
     this(Sequence.MAX_VALUE, DEFAULT_STEP);
   }
+
   public Multiplicative(final double step) {
     this(Sequence.MAX_VALUE, step);
   }
+
   public Multiplicative(final int threshold, final double step) {
     super(threshold);
     reset();
     this.step = Math.pow(2, step);
   }
+
   @Override public Multiplicative advance() {
     final int prev = current;
     current *= step;
@@ -29,6 +32,7 @@ public class Multiplicative extends Sequence {
       ++current;
     return this;
   }
+
   @Override public Multiplicative reset() {
     current = 1;
     return this;

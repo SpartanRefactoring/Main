@@ -1,14 +1,16 @@
 package fluent.ly;
 
-import java.util.*;
+import java.util.Collection;
 
-public class out {
+public class to {
   public static void out(final String ¢) {
     System.out.print(¢);
   }
+
   public static void out(final String name, final boolean b) {
     System.out.printf("%s = %b\n", name, Boolean.valueOf(b));
   }
+
   public static void out(final String name, final Collection<Object> os) {
     assert name != null;
     if (os == null || os.isEmpty()) {
@@ -20,7 +22,7 @@ public class out {
       return;
     }
     System.out.printf("Total of %d %s:\n", Integer.valueOf(os.size()), name);
-    int n = 0;
+    var n = 0;
     for (final Object ¢ : os) {
       if (++n > dump.MAX_FIRST && n <= os.size() - dump.MAX_LAST) {
         System.out.print("\t...\n");
@@ -29,12 +31,15 @@ public class out {
       System.out.printf("\t%2d) %s\n", Integer.valueOf(n), ¢);
     }
   }
+
   public static void out(final String name, final int i) {
     System.out.printf("%s = %d\n", name, Integer.valueOf(i));
   }
+
   public static void out(final String name, final Object a) {
     System.out.printf((a == null ? "No" : "%s =") + " %s\n", name, a);
   }
+
   public static void out(final String name, final Object[] os) {
     assert name != null;
     if (os == null || os.length <= 0)

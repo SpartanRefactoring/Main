@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.testing;
 
-import org.eclipse.text.edits.*;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** Testing utils for expanders Issue #961
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}

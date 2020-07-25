@@ -1,19 +1,30 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
+import java.util.List;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.Statement;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import fluent.ly.is;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /** takes care of of multiplicative terms with minus symbol in them.
  * <p>
@@ -26,7 +37,7 @@ public enum eliminate {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
-   * @param ¢ JD {@code null if not such sideEffects exists.
+   * @param ¢ JD {@code null} if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement(final Statement $) {

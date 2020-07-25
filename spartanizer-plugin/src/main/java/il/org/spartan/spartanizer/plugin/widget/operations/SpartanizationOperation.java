@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.SpartanizationHandler;
+import il.org.spartan.spartanizer.plugin.widget.ConfigurationsMap;
+import il.org.spartan.spartanizer.plugin.widget.WidgetContext;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
 
 /** spartanizes code Issue#1228
  * @author tomerdragucki

@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.utils.Int;
 
 /** Test case for class {@link Int}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>

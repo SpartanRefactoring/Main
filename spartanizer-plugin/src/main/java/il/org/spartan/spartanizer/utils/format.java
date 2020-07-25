@@ -1,13 +1,18 @@
 package il.org.spartan.spartanizer.utils;
 
-import java.text.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.formatter.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.formatter.CodeFormatter;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
 
-import fluent.ly.*;
+import fluent.ly.note;
+import fluent.ly.safe;
 
 /** Fluet API library for formatting things
  * @author Ori Marcovitch

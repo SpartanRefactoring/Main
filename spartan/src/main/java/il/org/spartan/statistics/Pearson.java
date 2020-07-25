@@ -1,12 +1,13 @@
 package il.org.spartan.statistics;
 
-import il.org.spartan.xy.*;
+import il.org.spartan.xy.WeightedLeastSquares;
 
 /** @author Yossi Gil
  * @since Apr 21, 2012 */
 public enum Pearson {
   ;
   /** Computes the Pearson rho rank correlation coefficient of two data arrays.
+   *
    * @param x first data array
    * @param y second data array
    * @return Returns Spearman's rank correlation coefficient for the two arrays,

@@ -1,12 +1,12 @@
 package il.org.spartan.athenizer;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.List;
+import java.util.function.Function;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.athenizer.SingleFlater.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.athenizer.SingleFlater.Operation;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** A provider of matching {@link Tipper} for an {@link ASTNode}.
  * @author Ori Roth {@code ori.rothh@gmail.com}

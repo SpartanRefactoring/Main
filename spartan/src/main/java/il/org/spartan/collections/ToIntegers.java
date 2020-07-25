@@ -1,9 +1,12 @@
 package il.org.spartan.collections;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.comparesEqualTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-import fluent.ly.*;
-import fluent.ly.___.Bug.*;
+import fluent.ly.___.Bug.Invariantable;
+import fluent.ly.as;
+import fluent.ly.azzert;
 
 /** An unsorted map of any entry to integers.
  * <p>
@@ -12,6 +15,7 @@ import fluent.ly.___.Bug.*;
  * of two, and is doubled when the load goes above {@link #MAX_LOAD}; capacity
  * is halved when the load drops below {@value #MIN_LOAD}. When the fraction of
  * removed keys goes below {@link #REMOVE_LOAD}, the table is rehashed.
+ *
  * @param <E> type of keys
  * @author Yossi Gil
  * @since December 2011 */
@@ -26,10 +30,12 @@ public final class ToIntegers<E> {
     $ ^= $ >>> 12 ^ $ >>> 20;
     return $ ^ $ >>> 4 ^ $ >>> 7;
   }
+
   private static <E> E[] allocate(final int ¢) {
     @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
     return $;
   }
+
   private static int roundUp(final int ¢) {
     int $ = 1;
     while ($ < ¢)
@@ -48,58 +54,73 @@ public final class ToIntegers<E> {
   public ToIntegers() {
     this(MIN_CAPACITY);
   }
+
   /** Instantiate this class, using a given size for the hash table.
-   * @param initialCapacity suggests a hash table size, will be rounded up to
-   *        the next power of two. */
+   *
+   * @param initialCapacity suggests a hash table size, will be rounded up to the
+   *                        next power of two. */
   public ToIntegers(final int initialCapacity) {
     reset(Math.max(MIN_CAPACITY, roundUp(initialCapacity)));
   }
+
   /** What's the underlying table size?
+   *
    * @return the hash table size (always a power of two) */
   public int capacity() {
     return data.length;
   }
+
   /** Remove all elements from this set, preserving capacity.
+   *
    * @return <code><b>this</b>/code> */
   public ToIntegers<E> clear() {
     return reset(capacity());
   }
+
   /** Determine whether a given key is in this set.
+   *
    * @param key an arbitrary key
-   * @return <code><b>true</b></code> if, and only if, the parameter is
-   *         contained in this set. */
+   * @return <code><b>true</b></code> if, and only if, the parameter is contained
+   *         in this set. */
   public boolean contains(final E key) {
     return location(key) >= 0;
   }
+
   /** Check whether an array of integers is contained in this set.
+   *
    * @param ns an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
    *         are contained in this set */
-  public boolean contains(final E... ns) {
+  @SafeVarargs public final boolean contains(final E... ns) {
     for (final E n : ns)
       if (!contains(n))
         return false;
     return true;
   }
+
   /** Check whether this object is disjoint from an array of integers
+   *
    * @param ns an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
    *         from the set of elements in the parameter */
-  public boolean disjoint(final E... ns) {
+  @SafeVarargs public final boolean disjoint(final E... ns) {
     for (final E n : ns)
       if (contains(n))
         return false;
     return true;
   }
+
   public int[] get(final E keys[]) {
     final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
   }
+
   public int get(final E key) {
     return values[location(key)];
   }
+
   public int increment(final E key) {
     final int $ = location(key);
     if ($ >= 0)
@@ -112,6 +133,7 @@ public final class ToIntegers<E> {
       rehash(data.length << 1);
     return 1;
   }
+
   /** @param key
    * @return <code>this</code> */
   public ToIntegers<E> init(final E key) {
@@ -128,7 +150,9 @@ public final class ToIntegers<E> {
       rehash(data.length << 1);
     return this;
   }
+
   /** What are all values stored in this object?
+   *
    * @return an array of all elements in this set. */
   public E[] keys() {
     final E[] $ = allocate(size);
@@ -137,6 +161,7 @@ public final class ToIntegers<E> {
         $[j++] = data[¢];
     return $;
   }
+
   public ToIntegers<E> put(final E key, final int value) {
     final int location = location(key);
     if (location >= 0)
@@ -151,12 +176,16 @@ public final class ToIntegers<E> {
       rehash(data.length << 1);
     return this;
   }
+
   /** Recreate the table, inserting all elements in it afresh.
+   *
    * @return <code><b>this</b>/code> */
   public ToIntegers<E> rehash() {
     return rehash(capacity());
   }
+
   /** Remove an element from this set, it is in it
+   *
    * @param e some integer to be removed from the set
    * @return <code><b>this</b>/code> */
   public ToIntegers<E> remove(final E e) {
@@ -169,7 +198,9 @@ public final class ToIntegers<E> {
     return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
         : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
   }
+
   /** Remove an array of integers to this set, if they are in it.
+   *
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
   public ToIntegers<E> remove(final int... is) {
@@ -177,16 +208,19 @@ public final class ToIntegers<E> {
       remove(¢);
     return this;
   }
+
   /** How many elements are there in this set?
+   *
    * @return the number of values in the set. */
   public int size() {
     return size;
   }
-  /** Find the index in the hash table into which the parameter could be
-   * inserted.
+
+  /** Find the index in the hash table into which the parameter could be inserted.
+   *
    * @param e some value
-   * @return -1 if the parameter is in the table already, otherwise, the index
-   *         at which it could be safely inserted. */
+   * @return -1 if the parameter is in the table already, otherwise, the index at
+   *         which it could be safely inserted. */
   int find(final E e) {
     for (int $ = -1, ¢ = hash(e), t = 0;; ¢ += ++t) {
       ¢ &= data.length - 1;
@@ -198,7 +232,9 @@ public final class ToIntegers<E> {
         return -1;
     }
   }
+
   /** Find the index in the hash table of the parameter
+   *
    * @param e some integer
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
@@ -211,8 +247,10 @@ public final class ToIntegers<E> {
         return $;
     }
   }
-  /** resize internal storage to the specified capacity, which must be a power
-   * of two.
+
+  /** resize internal storage to the specified capacity, which must be a power of
+   * two.
+   *
    * @param newCapacity new initialCapacity for the internal array
    * @return <code><b>this</b>/code> */
   private ToIntegers<E> rehash(final int newCapacity) {
@@ -225,6 +263,7 @@ public final class ToIntegers<E> {
       put(keys[¢], oldValues[¢]);
     return this;
   }
+
   private ToIntegers<E> reset(final int capacity) {
     data = allocate(capacity);
     occupied = new boolean[capacity];
@@ -234,7 +273,7 @@ public final class ToIntegers<E> {
     return this;
   }
 
-  @SuppressWarnings({ "synthetic-access", "boxing" }) //
+  @SuppressWarnings({ "boxing" }) //
   public final class INVARIANT implements Invariantable {
     @Override public void check() {
       azzert.that(size, lessThanOrEqualTo(capacity()));
@@ -251,6 +290,7 @@ public final class ToIntegers<E> {
         if (placeholder[¢])
           assert occupied[¢];
     }
+
     private int count(final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)

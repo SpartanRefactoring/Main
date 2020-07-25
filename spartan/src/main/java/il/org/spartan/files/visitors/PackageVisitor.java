@@ -9,12 +9,14 @@ package il.org.spartan.files.visitors;
  * traversal actions, and then the inherited function {@link #go()} to conduct
  * the actual traversal.
  * <p>
+ *
  * @author Yossi Gil
  * @since 11/07/2007 */
 public class PackageVisitor extends ClasspathVisitor {
   /** Create a new visitor object to scan the class path.
+   *
    * @param action a non-<code><b>null</b></code> specifying what to do in each
-   *        visited directory.
+   *               visited directory.
    * @see #go() */
   public PackageVisitor(final DirectoryOnlyAction action) {
     super(action);

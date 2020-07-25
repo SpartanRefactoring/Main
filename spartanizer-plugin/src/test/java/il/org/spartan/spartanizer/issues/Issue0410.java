@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.EXPRESSION_LOOK_ALIKE;
+import static il.org.spartan.spartanizer.ast.navigate.GuessedContext.find;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.GuessedContext;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
 
 /** Test class for {@link GuessedContext} .
  * @since 2016 */

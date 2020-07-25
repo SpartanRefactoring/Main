@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.tables.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Tippers;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.tables.Table;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.

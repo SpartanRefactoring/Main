@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import fluent.ly.*;
+import fluent.ly.box;
 
 public class AbstractRunRecord {
   protected int runs;
@@ -10,12 +10,15 @@ public class AbstractRunRecord {
   public long grossTime() {
     return grossTime;
   }
+
   public long netTime() {
     return netTime;
   }
+
   public int runs() {
     return runs;
   }
+
   @Override public String toString() {
     return String.format("runs=%d, netTime=%s, grossTime=%s, efficacy=%s", //
         box.it(runs), //

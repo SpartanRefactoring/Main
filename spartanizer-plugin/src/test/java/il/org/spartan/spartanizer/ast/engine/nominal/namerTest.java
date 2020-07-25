@@ -1,13 +1,17 @@
 package il.org.spartan.spartanizer.ast.engine.nominal;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static fluent.ly.azzert.equalTo;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.engine.parse.t;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import fluent.ly.cCamelCase;
+import fluent.ly.separate;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.engine.nominal.abbreviate;
 
 /** A test suite for class {@link cCamelCase}
  * @author Yossi Gil

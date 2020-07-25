@@ -1,11 +1,26 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.AssignmentUpdateAndSameUpdate;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.InfixAdditionEvaluate;
+import il.org.spartan.spartanizer.tippers.LocalInitializedReturnExpression;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementReturnVariable;
+import il.org.spartan.spartanizer.tippers.LocalInitializedUnusedRemove;
+import il.org.spartan.spartanizer.tippers.LocalInitializedUpdateAssignment;
+import il.org.spartan.spartanizer.tippers.LocalUninitializedAssignment;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameReturnToDollar;
+import il.org.spartan.spartanizer.tippers.TwoDeclarationsIntoOne;
 
 /** Tests for the GitHub issue thus numbered
  * @author Dan Abramovich

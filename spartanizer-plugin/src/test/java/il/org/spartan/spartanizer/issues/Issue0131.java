@@ -1,11 +1,25 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BreakStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.ForFiniteConvertReturnToBreak;
+import il.org.spartan.spartanizer.tippers.IfStatementBlockSequencerBlockSameSequencer;
+import il.org.spartan.spartanizer.tippers.IfThenOrElseIsCommandsFollowedBySequencer;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementToForInitializers;
+import il.org.spartan.spartanizer.tippers.LocalInitializedUnusedRemove;
+import il.org.spartan.spartanizer.tippers.SequencerNotLastInBlock;
+import il.org.spartan.spartanizer.tippers.TwoDeclarationsIntoOne;
+import il.org.spartan.spartanizer.tippers.WhileFiniteReturnToBreak;
 
 /** @author Yossi Gil
  * @since 2016 */

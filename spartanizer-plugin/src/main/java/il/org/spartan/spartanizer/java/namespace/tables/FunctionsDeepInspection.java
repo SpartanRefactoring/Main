@@ -1,18 +1,21 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
-import java.io.*;
-import java.util.*;
+import java.util.HashMap;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.tables.*;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.tables.Table;
 
 /** Generates a table of the class fields
  * @author Dor Ma'ayan
  * @since 2017-10-6 */
 public class FunctionsDeepInspection extends NominalTables {
-  @SuppressWarnings("boxing") public static void main(final String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+  @SuppressWarnings("boxing") public static void main(final String[] args) {
     final HashMap<String, Integer> map = new HashMap<>();
     map.put("MethodDeclaration", 0);
     map.put("0-Arguments", 0);

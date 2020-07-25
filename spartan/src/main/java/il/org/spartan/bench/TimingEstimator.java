@@ -1,14 +1,16 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.___.*;
-import static il.org.spartan.bench.Unit.*;
-import static il.org.spartan.strings.StringUtils.*;
+import static fluent.ly.___.nonnegative;
+import static fluent.ly.___.positive;
+import static il.org.spartan.bench.Unit.PERCENT;
+import static il.org.spartan.bench.Unit.thousands;
+import static il.org.spartan.strings.StringUtils.delta;
 
-import java.util.*;
+import java.util.IdentityHashMap;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.bench.operations.*;
+import fluent.ly.as;
+import il.org.spartan.Log;
+import il.org.spartan.bench.operations.Operation;
 
 /** Manages estimates on the runtime of {@link Operation}s. Duties include:
  * <ol>
@@ -18,6 +20,7 @@ import il.org.spartan.bench.operations.*;
  * that the timing estimate is stable;
  * <li>caching these estimates
  * <ol>
+ *
  * @author Yossi Gil
  * @since 2011-08-04 */
 public class TimingEstimator {
@@ -28,22 +31,26 @@ public class TimingEstimator {
   /** Factory method retrieving the {@link TimingEstimator} associated with a
    * given {@link Operation}, creating a new such object when no association was
    * previously done.
+   *
    * @param ¢ arbitrary operation
    * @return the {@link TimingEstimator} associated with the parameter */
   public static TimingEstimator estimator(final Operation ¢) {
     final TimingEstimator $ = estimators.get(¢);
     return $ != null ? $ : makeEstimator(¢);
   }
+
   /** Execute a given operation a specified number of times, updating the time
    * estimate associated with it. Garbage collection cycles during the execution
-   * are considered failure, in which case, the estimate is not updated.
-   * However, JIT execution during execution shall provoke a rerun, until an
-   * execution in which class {@link JVM} cannot detect a JIT intervention.
-   * @param o an arbitrary operation
+   * are considered failure, in which case, the estimate is not updated. However,
+   * JIT execution during execution shall provoke a rerun, until an execution in
+   * which class {@link JVM} cannot detect a JIT intervention.
+   *
+   * @param o    an arbitrary operation
    * @param runs number of executions */
   public static void run(final Operation o, final int runs) {
     estimator(o).run(runs);
   }
+
   private static TimingEstimator makeEstimator(final Operation ¢) {
     final TimingEstimator $ = new TimingEstimator(¢);
     estimators.put(¢, $);
@@ -60,16 +67,19 @@ public class TimingEstimator {
   private TimingEstimator(final Operation o) {
     this.o = o;
   }
+
   /** @return current estimate, measured in nano-seconds, of the runtime of the
    *         underlying operation. */
   public double estimate() {
     return Double.isNaN(estimate) ? 1 : estimate;
   }
-  /** Make a candid attempt to execute the underlying operation a specified
-   * number of times, updating its current time estimate. Garbage collection
-   * cycles during the execution are considered failure, but any JIT execution
-   * during the run shall provoke a rerun, until an execution in which class
-   * {@link JVM} cannot detect a JIT execution.
+
+  /** Make a candid attempt to execute the underlying operation a specified number
+   * of times, updating its current time estimate. Garbage collection cycles
+   * during the execution are considered failure, but any JIT execution during the
+   * run shall provoke a rerun, until an execution in which class {@link JVM}
+   * cannot detect a JIT execution.
+   *
    * @param runs how many times should the underlying operation be executed
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
@@ -110,9 +120,10 @@ public class TimingEstimator {
       return $;
     }
   }
-  /** Make a candid attempt to execute the underlying operation a specified
-   * number of times, updating its current time estimate, while trying to defeat
-   * errors due to <i>both</i> garbage collection cycles and JIT meddling.
+
+  /** Make a candid attempt to execute the underlying operation a specified number
+   * of times, updating its current time estimate, while trying to defeat errors
+   * due to <i>both</i> garbage collection cycles and JIT meddling.
    * <p>
    * JIT execution during the run shall provoke a rerun, until an execution in
    * which class {@link JVM} cannot detect a JIT execution.
@@ -123,7 +134,8 @@ public class TimingEstimator {
    * <p>
    * Observe that if the number of runs is sufficiently large, a garbage
    * collection cycle will always occur during the execution.
-   * @param runs how many times should the underlying operation be executed
+   *
+   * @param runs   how many times should the underlying operation be executed
    * @param trials number of trials to defeat garbage collection
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
@@ -137,25 +149,28 @@ public class TimingEstimator {
     }
     return null;
   }
+
   /** @return <code><b>true</b></code> <i>iff</i> recent runs indicate that the
    *         current estimate is stable. */
   public boolean steady() {
     return consecutiveStable > MIN_CONSECUTIVE_STABLE;
   }
+
   @Override public String toString() {
     return String.format(//
         "Total:  %s\n" + //
-            "Useful: %s\n" + //
-            "Efficiency: runs=%s netTime=%s grossTime=%s\n" + //
-            "Estimate=%s", //
+        "Useful: %s\n" + //
+        "Efficiency: runs=%s netTime=%s grossTime=%s\n" + //
+        "Estimate=%s", //
         totalRuns, //
         usefulRuns, //
         Unit.formatRelative(usefulRuns.runs(), totalRuns.runs()), //
         Unit.formatRelative(usefulRuns.netTime(), totalRuns.netTime()), //
         Unit.formatRelative(usefulRuns.grossTime(), totalRuns.grossTime()), //
         Unit.NANOSECONDS.format(estimate) //
-    );
+        );
   }
+
   private void updateEstimate(final double update) {
     ++n;
     if (Double.isNaN(estimate)) {

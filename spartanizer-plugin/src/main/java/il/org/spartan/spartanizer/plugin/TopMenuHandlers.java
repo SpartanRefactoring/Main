@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2.6 */
 public class TopMenuHandlers extends AbstractHandler {
   @SuppressWarnings({ "serial",
-      "unchecked" }) public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
+      "unchecked" }) public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<>() {
         {
           put("il.org.spartan.SpartanizeSelection", e -> {
             final Selection s = Selection.Util.current();

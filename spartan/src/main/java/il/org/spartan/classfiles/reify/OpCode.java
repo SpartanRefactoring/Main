@@ -1,12 +1,14 @@
 package il.org.spartan.classfiles.reify;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.___;
+import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since 26 November 2011 */
@@ -303,12 +305,13 @@ public enum OpCode {
   IMPDEP1(-1), // 254 (0xFE)
   IMPDEP2(-1), // 255 (0xFF)
   ;
+
   public static Instruction read(final BufferDataInputStream $) {
     if ($.eof())
       return null;
     try {
       return OpCode.values()[$.readUnsignedByte()].readContent($);
-    } catch (final EOFException e) {
+    } catch (@SuppressWarnings("unused") final EOFException e) {
       return null;
     } catch (final IOException ¢) {
       throw new CorruptClassFile(¢);
@@ -320,12 +323,15 @@ public enum OpCode {
   OpCode() {
     this(0);
   }
+
   OpCode(final int bytes) {
     size = bytes;
   }
+
   public boolean invalid() {
     return size < 0;
   }
+
   Instruction readContent(final BufferDataInputStream s) throws IOException {
     final short[] $ = new short[size];
     for (int ¢ = 0; ¢ < size; ++¢)
@@ -346,33 +352,42 @@ public enum OpCode {
       this.defaultOffset = defaultOffset;
       this.offsets = offsets;
     }
+
     public Instruction(final OpCode opCode, final short[] args) {
       this.opCode = opCode;
       this.args = args;
       defaultOffset = 0;
       offsets = null;
     }
+
     public short[] args() {
       return args;
     }
+
     public boolean invalid() {
       return opCode.invalid();
     }
+
     public boolean isFieldAccessInstruction() {
       return opCode == GETFIELD || opCode == PUTFIELD;
     }
+
     public boolean isInvokeInstruction() {
       return opCode == INVOKEINTERFACE || opCode == INVOKESPECIAL || opCode == INVOKEVIRTUAL;
     }
+
     public boolean isNewInstruction() {
       return opCode == NEW;
     }
+
     public boolean isStaticFieldAccessInstruction() {
       return opCode == GETSTATIC || opCode == PUTSTATIC;
     }
+
     public boolean isStaticMethodInvocation() {
       return opCode == INVOKESTATIC;
     }
+
     public int size() {
       return opCode.size;
     }

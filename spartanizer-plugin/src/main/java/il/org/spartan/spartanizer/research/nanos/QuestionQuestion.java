@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
 
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternContainer;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** X == null ? Y : Z
  * @author orimarco {@code marcovitch.ori@gmail.com}

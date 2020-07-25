@@ -1,10 +1,14 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.type;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Type;
 
-import fluent.ly.*;
+import fluent.ly.is;
 
 /** Fluent API.
  * @author Yossi Gil

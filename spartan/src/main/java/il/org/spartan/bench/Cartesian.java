@@ -1,12 +1,16 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.___.*;
-import static fluent.ly.azzert.*;
+import static fluent.ly.___.nonnegative;
+import static fluent.ly.___.sure;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.___;
+import fluent.ly.azzert;
+import fluent.ly.box;
+import il.org.spartan.utils.Pair;
+import il.org.spartan.utils.Triple;
 
 /** @author Yossi Gil
  * @since 29/05/2011 */
@@ -14,9 +18,11 @@ public class Cartesian {
   public static <S> Pair<Integer, S>[] makeObliqueProduct(final int[] is, final S[] ss) {
     return makeObliqueProduct(box.it(is), ss);
   }
+
   public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct(final int[] is, final S[] ss, final T[] ts) {
     return makeObliqueProduct(box.it(is), ss, ts);
   }
+
   public static <R, S> Pair<R, S>[] makeObliqueProduct(final R[] rs, final S[] ss) {
     final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
     int n = 0;
@@ -38,6 +44,7 @@ public class Cartesian {
     ___.sure(n == $.length);
     return $;
   }
+
   public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct(final R[] rs, final S[] ss, final T[] ts) {
     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
@@ -67,12 +74,15 @@ public class Cartesian {
     sure(n == $.length);
     return $;
   }
+
   public static <S> Pair<Integer, S>[] makeProduct(final int[] is, final S[] ss) {
     return makeProduct(box.it(is), ss);
   }
+
   public static <S, T> Triple<Integer, S, T>[] makeProduct(final int[] is, final S[] ss, final T[] ts) {
     return makeProduct(box.it(is), ss, ts);
   }
+
   public static <R, S> Pair<R, S>[] makeProduct(final R[] rs, final S[] ss) {
     final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
     int n = 0;
@@ -81,6 +91,7 @@ public class Cartesian {
         $[n++] = new Pair<>(r, ¢);
     return $;
   }
+
   public static <R, S, T> Triple<R, S, T>[] makeProduct(final R[] rs, final S[] ss, final T[] ts) {
     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
@@ -92,14 +103,15 @@ public class Cartesian {
     return $;
   }
 
-  @SuppressWarnings("static-method")
-  public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     @Test public void makeArray000() {
       azzert.that(makeObliqueProduct(new Object[0], new Object[0], new Object[0]).length, is(0));
     }
+
     @Test public void makeArray111() {
       azzert.that(makeObliqueProduct(new Object[1], new Object[1], new Object[1]).length, is(1));
     }
+
     @Test public void makeArray3_13_19() {
       azzert.that(makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length, is(702));
     }

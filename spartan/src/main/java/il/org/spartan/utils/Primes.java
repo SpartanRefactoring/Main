@@ -1,10 +1,10 @@
 package il.org.spartan.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** @author Yossi Gil
  * @since Mar 1, 2012 */
@@ -29,11 +29,13 @@ public class Primes {
     @Test public void firstIsTwo() {
       azzert.that(new Primes().next(), is(2));
     }
+
     @Test public void secondIsThree() {
       final Primes p = new Primes();
       p.next();
       azzert.that(p.next(), is(3));
     }
+
     @Test public void thirdIsFive() {
       final Primes p = new Primes();
       p.next();

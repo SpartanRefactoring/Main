@@ -22,15 +22,17 @@ package il.org.spartan.strings;
  * </pre>
  *
  * return <code><b>false</b></code>.
+ *
  * @author Yossi Gil, the Technion.
  * @since 24/08/2008 */
 public enum Prefixed {
   ;
   /** Determine whether a string starts with any one of the supplied suffixes.
-   * @param s a string to examine
+   *
+   * @param s        a string to examine
    * @param prefixes a list of potential extensions
-   * @return <code><b>true</b></code> <em>iff</em> <code>s</code> starts with
-   *         any one of the supplied prefixes.. */
+   * @return <code><b>true</b></code> <em>iff</em> <code>s</code> starts with any
+   *         one of the supplied prefixes.. */
   public static boolean by(final String s, final String... prefixes) {
     for (final String prefix : prefixes)
       if (s.startsWith(prefix))

@@ -5,15 +5,17 @@
  * @since Sep 8, 2016 */
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static fluent.ly.azzert.greaterThan;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.lessThan;
+import static il.org.spartan.spartanizer.engine.parse.e;
 
-import java.util.*;
+import java.util.Comparator;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class SpecificityTest {

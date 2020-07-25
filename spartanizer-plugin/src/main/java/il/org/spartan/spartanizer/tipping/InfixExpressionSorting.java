@@ -5,9 +5,10 @@
  * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tipping;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
 abstract class InfixExpressionSorting extends ReplaceCurrentNode<InfixExpression> {
   private static final long serialVersionUID = 0x2668E59207E2D70CL;

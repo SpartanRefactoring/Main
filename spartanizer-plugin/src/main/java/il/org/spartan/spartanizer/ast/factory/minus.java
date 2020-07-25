@@ -18,7 +18,7 @@ public enum minus {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
-   * @param ¢ JD {@code null if not such sideEffects exists.
+   * @param ¢ JD {@code null} if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement(final Statement $) {

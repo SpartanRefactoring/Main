@@ -1,18 +1,24 @@
 package il.org.spartan.graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
-import il.org.spartan.collections.*;
-import il.org.spartan.streotypes.*;
+import il.org.spartan.collections.ImmutableArrayList;
+import il.org.spartan.streotypes.Immutable;
 
 /** A simple reference compact implementation of a {@link AbstractGraph} of
  * arbitrary objects, using a {@Codex} and Java arrays.
+ *
  * @param <E> type of elements stored in this graph
  * @author Yossi Gil
  * @since 2011-11-11 */
-public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
+public class Graph<E> extends AbstractGraph<E> {
   private static <E> ImmutableArrayList<Vertex<E>> makeSinks(final ImmutableArrayList<Vertex<E>> v) {
     final ArrayList<Vertex<E>> $ = new ArrayList<>();
     for (final Vertex<E> ¢ : v)
@@ -20,6 +26,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
         $.add(¢);
     return ImmutableArrayList.make($);
   }
+
   private static <E> ImmutableArrayList<Vertex<E>> makeSources(final ImmutableArrayList<Vertex<E>> v) {
     final ArrayList<Vertex<E>> $ = new ArrayList<>();
     for (final Vertex<E> ¢ : v)
@@ -38,11 +45,13 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
   public Graph(final Graph<E> other) {
     this(other.name(), other.description(), other.map);
   }
+
   /** This <code><b>private</b></code> constructor is used internally by the
    * factory class {@link Builder}, which provides the sole means for
    * Instantiating this class.
+   *
    * @param name
-   * @param map An array of vertices */
+   * @param map  An array of vertices */
   private Graph(final String name, final String description, final Map<E, Vertex<E>> map) {
     this.name = name;
     this.description = description;
@@ -51,40 +60,52 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
     sources = makeSources(vertices);
     sinks = makeSinks(vertices);
   }
-  /* (non-Javadoc)
+
+  /*
+   * (non-Javadoc)
    *
    * @see il.org.spartan.metrics.AbstractGraph#contains(il.ac.technion.cs
-   * .ssdl.metrics.Vertex) */
+   * .ssdl.metrics.Vertex)
+   */
   @Override public boolean contains(final E ¢) {
     return map.containsKey(¢);
   }
+
   @Override public String description() {
     return description;
   }
+
   public boolean hasEdge(final Vertex<E> from, final Vertex<E> to) {
     for (final Vertex<E> ¢ : from.outgoing())
       if (¢ == to)
         return true;
     return false;
   }
+
   @Override public String name() {
     return name;
   }
+
   @Override public ImmutableArrayList<Vertex<E>> sinks() {
     return sinks;
   }
+
   @Override public int sinksCount() {
     return sinks.size();
   }
+
   @Override public ImmutableArrayList<Vertex<E>> sources() {
     return sources;
   }
+
   @Override public int sourcesCount() {
     return sources.size();
   }
+
   @Override public Vertex<E> vertex(final E ¢) {
     return map.get(¢);
   }
+
   @Override public ImmutableArrayList<Vertex<E>> vertices() {
     return vertices;
   }
@@ -96,11 +117,13 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
     private static <E> HashSet<E> emptySet() {
       return new HashSet<>();
     }
+
     private static <E> void fill(final Map<E, Vertex<E>> m, final Vertex<E>[] vs, final HashSet<E> es) {
       int i = 0;
       for (final E ¢ : es)
         vs[i++] = m.get(¢);
     }
+
     @SuppressWarnings("unchecked") //
     private static <E> Vertex<E>[] newVertexArray(final int size) {
       return new Vertex[size];
@@ -116,26 +139,33 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
     public Builder() {
       this("");
     }
+
     public Builder(final Graph<E> g) {
       this(g.name(), g.description());
       addGraph(g);
     }
+
     public Builder(final Graph<E> g, final String name, final String description) {
       this(name, description);
       addGraph(g);
     }
+
     public Builder(final String name) {
       this(name, "");
     }
+
     /** Instantiate this class, while supplying a name for the graph to be built
-     * @param name the name of the graph to be built
+     *
+     * @param name        the name of the graph to be built
      * @param description the description of the graph to be built */
     public Builder(final String name, final String description) {
       this.name = name;
       this.description = description;
     }
-    /** Merges into the currently built graph all edges and vertices in the
-     * supplied graph.
+
+    /** Merges into the currently built graph all edges and vertices in the supplied
+     * graph.
+     *
      * @param g an arbitrary graph
      * @return <code><b>this</b></code> */
     public Builder<E> addGraph(final Graph<E> g) {
@@ -147,51 +177,63 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
             newEdge(v.e(), u.e());
       return this;
     }
+
     /** The actual function to create the graph, defined by all associations
      * recorded so far.
+     *
      * @return the Graph object defined by the associations. */
-    @SuppressWarnings("synthetic-access") public Graph<E> build() {
+    public Graph<E> build() {
       return new Graph<>(name, description, makeVerticesMap());
     }
+
     public int countEdges() {
       return edges.size();
     }
+
     public boolean hasEdge(final E from, final E to) {
       return edges.contains(new BuildingEdge<>(from, to));
     }
-    /** Records multiple unidirectional associations between a set of a "from"
-     * data elements, and a single, "to" data element. If any of the data
-     * elements is not present in the graph, it is added as well.
-     * @param to the target of the associations.
+
+    /** Records multiple unidirectional associations between a set of a "from" data
+     * elements, and a single, "to" data element. If any of the data elements is not
+     * present in the graph, it is added as well.
+     *
+     * @param to    the target of the associations.
      * @param froms the sources of the associations
      * @return <code><b>this</b></code> */
-    public Builder<E> incoming(final E to, final E... froms) {
+    @SafeVarargs public final Builder<E> incoming(final E to, final E... froms) {
       for (final E from : froms)
         newEdge(from, to);
       return this;
     }
-    /** Records a unidirectional association between two data elements- later to
-     * be shown as an edge of the graph. This function also records the
-     * existence of the these two data elements.
+
+    /** Records a unidirectional association between two data elements- later to be
+     * shown as an edge of the graph. This function also records the existence of
+     * the these two data elements.
+     *
      * @param from association starts here
-     * @param to association ends here
+     * @param to   association ends here
      * @return <code><b>this</b></code> */
     @NonNull public Builder<E> newEdge(final E from, final E to) {
       newVertex(from).newVertex(to);
       edges.add(new BuildingEdge<>(from, to));
       return this;
     }
-    /** Records the presence of multiple data elements. To be used mainly for
-     * cases in which these data element may not participate in any association.
+
+    /** Records the presence of multiple data elements. To be used mainly for cases
+     * in which these data element may not participate in any association.
+     *
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    public Builder<E> newSelfLoops(final E... es) {
+    @SafeVarargs public final Builder<E> newSelfLoops(final E... es) {
       for (final E ¢ : es)
         newEdge(¢, ¢);
       return this;
     }
-    /** Records the presence of a new data element, to be used for cases in
-     * which the data element may not participate in any association.
+
+    /** Records the presence of a new data element, to be used for cases in which
+     * the data element may not participate in any association.
+     *
      * @param ¢ a data element.
      * @return <code><b>this</b></code> */
     public Builder<E> newVertex(final E ¢) {
@@ -199,27 +241,31 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
       incoming.put(¢, Builder.emptySet());
       return this;
     }
-    /** Records the presence of multiple data elements. To be used mainly for
-     * cases in which these data elements may not participate in any
-     * association.
+
+    /** Records the presence of multiple data elements. To be used mainly for cases
+     * in which these data elements may not participate in any association.
+     *
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    public Builder<E> newVertices(final E... es) {
+    @SafeVarargs public final Builder<E> newVertices(final E... es) {
       for (final E ¢ : es)
         newVertex(¢);
       return this;
     }
-    /** Records multiple unidirectional associations between a "from" data
-     * element, and a set of "to" data elements. If any of the data elements is
-     * not present in the graph, it is added as well.
+
+    /** Records multiple unidirectional associations between a "from" data element,
+     * and a set of "to" data elements. If any of the data elements is not present
+     * in the graph, it is added as well.
+     *
      * @param from the source of the associations
-     * @param tos the targets of the associations.
+     * @param tos  the targets of the associations.
      * @return <code><b>this</b></code> */
-    public Builder<E> outgoing(final E from, final E... tos) {
+    @SafeVarargs public final Builder<E> outgoing(final E from, final E... tos) {
       for (final E to : tos)
         newEdge(from, to);
       return this;
     }
+
     private Map<E, Vertex<E>> makeVerticesMap() {
       // Phase I: Determine vertex set, and record mappings.
       for (final BuildingEdge<E> ¢ : edges) {
@@ -243,8 +289,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
       return $;
     }
 
-    @Immutable
-    private static class BuildingEdge<E> {
+    @Immutable private static class BuildingEdge<E> {
       public E from;
       public E to;
 
@@ -252,13 +297,16 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
         this.from = from;
         this.to = to;
       }
+
       @Override public boolean equals(final Object ¢) {
         @SuppressWarnings("unchecked") final BuildingEdge<E> $ = (BuildingEdge<E>) ¢;
         return from.equals($.from) && to.equals($.to);
       }
+
       @Override public int hashCode() {
         return to.hashCode() ^ from.hashCode() >>> 1;
       }
+
       @Override public String toString() {
         return "<" + from + "," + to + ">";
       }

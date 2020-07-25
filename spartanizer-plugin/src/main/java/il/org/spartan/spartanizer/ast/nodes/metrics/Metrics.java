@@ -8,6 +8,7 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.Essence;
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -154,17 +155,11 @@ public class Metrics{
   
   
   public static double avgDepth(final ASTNode ¢) {
-    if (bodySize(¢) !=0)
-      return (double) sumDepth(¢) / bodySize(¢);
-    else
-      return 0;
+    return bodySize(¢) !=0 ? (double) sumDepth(¢) / bodySize(¢) : 0;
   }
   
   public static double avgDepth2(final ASTNode ¢) {
-    if (bodySize(¢) !=0)
-      return (double) sumDepth2(¢) / bodySize(¢);
-    else
-      return 0;
+    return bodySize(¢) !=0 ? (double) sumDepth2(¢) / bodySize(¢) : 0;
   }
   
   

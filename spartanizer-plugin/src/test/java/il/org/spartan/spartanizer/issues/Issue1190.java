@@ -1,14 +1,17 @@
 package il.org.spartan.spartanizer.issues;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.plugin.TextualTraversals;
+import il.org.spartan.utils.FileUtils;
 
 /** Batch testing - run the spartanizer on itself with no errors
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>

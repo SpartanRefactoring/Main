@@ -1,11 +1,32 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
@@ -22,7 +43,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
-   *         {@code null if there is no such statement. */
+   *         {@code null} if there is no such statement. */
   static AssertStatement assertStatement(final ASTNode ¢) {
     return instanceOf(AssertStatement.class).in(¢);
   }
@@ -30,7 +51,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
-   *         {@code null if there is no such statement. */
+   *         {@code null} if there is no such statement. */
   static ForStatement forStatement(final ASTNode ¢) {
     return instanceOf(ForStatement.class).in(¢);
   }
@@ -38,7 +59,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
-   *         {@code null if there is no such statement. */
+   *         {@code null} if there is no such statement. */
   static IfStatement ifStatement(final ASTNode ¢) {
     return instanceOf(IfStatement.class).in(¢);
   }
@@ -46,7 +67,7 @@ public interface findFirst {
    * given node, as found in the usual visitation order.
    * @param n JD
    * @return first {@link InfixExpression} representing an addition under the
-   *         parameter given node, or {@code null if no such value
+   *         parameter given node, or {@code null} if no such value
    *         could be found. */
   static InfixExpression infixPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
@@ -96,7 +117,7 @@ public interface findFirst {
    * visit of the tree rooted a the parameter.
    * @param pattern JD
    * @return first such node encountered in a visit of the tree rooted a the
-   *         parameter, or {@code null */
+   *         parameter, or {@code null} */
   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
     return instanceOf(VariableDeclarationFragment.class).in(¢);
   }
@@ -104,7 +125,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
-   *         {@code null if there is no such statement. */
+   *         {@code null} if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {
     return instanceOf(WhileStatement.class).in(¢);
   }

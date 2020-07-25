@@ -1,8 +1,7 @@
 package il.org.spartan.java.cfg;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Implementation of Alist for the CFG
  * @author Dor Ma'ayan
@@ -35,7 +34,7 @@ public class AList<T> {
 
   private class Entry {
     private final String key;
-    private final List<T> value = new ArrayList<>();;
+    private final List<T> value = new ArrayList<>();
 
     public Entry(String key) {
       this.key = key;

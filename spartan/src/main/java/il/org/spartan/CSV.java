@@ -1,8 +1,16 @@
 package il.org.spartan;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /** This class realize the CSV specification, by comprising methods for
  * manipulating CSV files. e.g. 1, 2, 3 4, 5, 6 The class supports string arrays
@@ -11,6 +19,7 @@ import java.util.*;
  * This is a simplified version of the CSV specification, each record must be a
  * single line. Within are some other useful auxiliary functions for string
  * manipulations.
+ *
  * @author Oren Rubin */
 public enum CSV {
   ;
@@ -18,6 +27,7 @@ public enum CSV {
 
   /** Combine the given array of Class objects values into a comma separated
    * string.
+   *
    * @param cs Input array
    * @return Combined string
    * @see #splitToClasses(String) */
@@ -27,10 +37,12 @@ public enum CSV {
       $[¢] = cs[¢] == null ? null : cs[¢].getName();
     return combine($);
   }
+
   /** Combine the given array into a comma separated string. Each element is
    * escaped, so commas inside the elements cannot do not collide with the
    * separating commas.
-   * @param <T> type of array elements
+   *
+   * @param <T>   type of array elements
    * @param parts Input array
    * @return Combined string
    * @see CSV#escape(String) */
@@ -42,10 +54,12 @@ public enum CSV {
       $.append(sep + escape(¢ == null ? null : ¢ + ""));
     return $ + "";
   }
+
   /** Combine the given array of enum values into a comma separated string. Each
    * array element is first converted into a string using its name() method and
    * then is escaped.
-   * @param <T> type of array elements
+   *
+   * @param <T>   type of array elements
    * @param parts Input array
    * @return Combined string
    * @see CSV#escape(String) */
@@ -55,7 +69,9 @@ public enum CSV {
       $[¢] = parts[¢] == null ? null : parts[¢].name();
     return combine($);
   }
+
   /** Escape the given input
+   *
    * @param s Input string
    * @return Escaped form of the input */
   public static String escape(final String s) {
@@ -64,34 +80,52 @@ public enum CSV {
     final int len = s.length();
     final StringBuilder $ = new StringBuilder(len);
     for (final char ¢ : s.toCharArray())
-      $.append(¢ == '\\' ? "\\\\" : ¢ == '\n' ? "\\n" : ¢ == '\r' ? "\\r" : ¢ == '\t' ? "\\t" : ¢ == ',' ? "\\." : ¢);
+      $.append(switch (¢) {
+      case '\\' -> "\\\\";
+      case '\n' -> "\\n";
+      case '\r' -> "\\r";
+      case '\t' -> "\\t";
+      case '.' -> "\\.";
+      default -> ¢ + "";
+      });
     return $ + "";
   }
+
   /** Read a CSV file.
+   *
    * @param ¢ Input file
    * @return A two dimensional array of strings
    * @throws IOException some problem with file 'filename' */
   public static String[][] load(final File ¢) throws IOException {
-    return load(new FileReader(¢));
+    try (FileReader r = new FileReader(¢)) {
+      return load(r);
+    }
   }
+
   /** Read a CSV file from the given Reader object.
+   *
    * @param r input reader
    * @return a two dimensional array of strings */
   public static String[][] load(final Reader r) {
     final ArrayList<String[]> $ = new ArrayList<>(20);
-    for (final Scanner ¢ = new Scanner(r); ¢.hasNext();)
-      $.add(split(¢.nextLine()));
+    try (final Scanner ¢ = new Scanner(r)) {
+      while (¢.hasNext())
+        $.add(split(¢.nextLine()));
+    }
     return $.toArray(new String[$.size()][]);
   }
+
   public static void save(final File f, final String[][] data) throws IOException {
     try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
       pw.print(toCsv(data));
     }
   }
+
   /** Split a comma separated string into an array of enum values.
-   * @param <T> Type of enum class
+   *
+   * @param <T>   Type of enum class
    * @param clazz Class object of T
-   * @param s Input string
+   * @param s     Input string
    * @return Array of T */
   public static <T extends Enum<T>> T[] split(final Class<T> clazz, final String s) {
     final String[] ss = split(s);
@@ -100,7 +134,9 @@ public enum CSV {
       $[¢] = ss[¢] == null ? null : Enum.valueOf(clazz, ss[¢]);
     return $;
   }
+
   /** Split a comma separated string into its sub parts
+   *
    * @param s input string
    * @return Array of sub parts, in their original order */
   public static String[] split(final String s) {
@@ -117,7 +153,9 @@ public enum CSV {
       from = to + 1;
     }
   }
+
   /** Split a comma separated string into an array of classes.
+   *
    * @param s input string
    * @return Array of T */
   public static Class<?>[] splitToClasses(final String s) {
@@ -133,6 +171,7 @@ public enum CSV {
       }
     return $;
   }
+
   public static String toCsv(final String[][] data) {
     final StringWriter $ = new StringWriter();
     final PrintWriter pw = new PrintWriter($);
@@ -145,7 +184,9 @@ public enum CSV {
     pw.flush();
     return $ + "";
   }
+
   /** Unescape the given input
+   *
    * @param s Input string
    * @return Unescaped string */
   public static String unescape(final String s) {
@@ -165,22 +206,22 @@ public enum CSV {
       }
       faceValue = true;
       switch (c) {
-        case 'n':
-          $.append("\n");
-          break;
-        case 'r':
-          $.append("\r");
-          break;
-        case 't':
-          $.append("\t");
-          break;
-        case '.':
-          $.append(",");
-          break;
-        case '\\':
-          $.append("\\");
-          break;
-        default:
+      case 'n':
+        $.append("\n");
+        break;
+      case 'r':
+        $.append("\r");
+        break;
+      case 't':
+        $.append("\t");
+        break;
+      case '.':
+        $.append(",");
+        break;
+      case '\\':
+        $.append("\\");
+        break;
+      default:
       }
     }
     return $ + "";

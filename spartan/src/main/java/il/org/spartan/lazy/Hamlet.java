@@ -1,15 +1,15 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.lazy;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.lazy.Environment.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.lazy.Environment.function;
+import static il.org.spartan.lazy.Environment.value;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
-@SuppressWarnings("boxing")
-public class Hamlet implements Environment {
+@SuppressWarnings("boxing") public class Hamlet implements Environment {
   private final Property<Boolean> $ = function(init());
   private final Function0<Boolean> permanent = () -> !$.get();
 
@@ -23,10 +23,12 @@ public class Hamlet implements Environment {
     azzert.that(third + "", is("false"));
     azzert.that(fourth + "", is("true"));
   }
+
   private Boolean first() {
     $.ϑ(permanent, $);
     return Boolean.FALSE;
   }
+
   private Function0<Boolean> init() {
     return () -> first();
   }

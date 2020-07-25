@@ -1,8 +1,9 @@
 package il.org.spartan.reflection;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
-import fluent.ly.*;
+import fluent.ly.as;
 
 public class ClassPredicates {
   public static boolean hasMutableFields(final Class<?> c) {
@@ -12,9 +13,11 @@ public class ClassPredicates {
     final Class<?> $ = c.getSuperclass();
     return $ != null && hasMutableFields($);
   }
+
   public static boolean isImmutable(final Class<?> ¢) {
     return !¢.isEnum() && nFields(¢) > 0 && !hasMutableFields(¢);
   }
+
   public static int nFields(final Class<?> c) {
     int $ = 0;
     for (final Field ¢ : c.getDeclaredFields())

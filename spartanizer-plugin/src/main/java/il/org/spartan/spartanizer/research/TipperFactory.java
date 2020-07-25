@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.research;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.Matcher.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.research.Matcher.Option;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** Factory to create tippers out of user strings! Much easier to implement
  * tippers with. <br>
@@ -27,7 +28,7 @@ public enum TipperFactory {
   private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description,
       final Option... os) {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
-    return new UserDefinedTipper<Block>() {
+    return new UserDefinedTipper<>() {
       static final long serialVersionUID = 0x428682F150219098L;
 
       @Override public Tip tip(final Block n) {
@@ -71,7 +72,7 @@ public enum TipperFactory {
    * @return {@link UserDefinedTipper} */
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement, final String description) {
     final Matcher $ = Matcher.patternMatcher(pattern, replacement);
-    return new UserDefinedTipper<N>() {
+    return new UserDefinedTipper<>() {
       static final long serialVersionUID = 0x22BF0E55D353CA68L;
 
       @Override public String description(@SuppressWarnings("unused") final N __) {

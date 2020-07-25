@@ -1,11 +1,21 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.java.Token.Category.*;
-import static il.org.spartan.java.Token.Kind.*;
+import static il.org.spartan.java.Token.Category.ALPHANUMERIC;
+import static il.org.spartan.java.Token.Category.ANY;
+import static il.org.spartan.java.Token.Category.IGNORE;
+import static il.org.spartan.java.Token.Category.PUNCTUATIONAL;
+import static il.org.spartan.java.Token.Kind.COMMENT;
+import static il.org.spartan.java.Token.Kind.ID;
+import static il.org.spartan.java.Token.Kind.KEYWORD;
+import static il.org.spartan.java.Token.Kind.LITERAL;
+import static il.org.spartan.java.Token.Kind.NONCODE;
+import static il.org.spartan.java.Token.Kind.OPERATOR;
+import static il.org.spartan.java.Token.Kind.PUNCTUATION;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Separate;
 
 public enum Token {
   // Literals:
@@ -14,11 +24,13 @@ public enum Token {
   __boolean, __byte, __short, __int, __long, __char, __float, __double, __void, __package, // package_declaration
   __import, // import_declaration
   // Modifiers:
-  __public, __protected, __private, __static, __abstract, __final, __native, __synchronized, __transient, __volatile, __strictfp,
+  __public, __protected, __private, __static, __abstract, __final, __native, __synchronized, __transient, __volatile,
+  __strictfp,
   // Type generators:
   __class, __interface, __enum, __extends, __implements, __throws, __this, __super, // explicit_constructor_invocation
   // Control flow:
-  __if, __else, __switch, __case, __default, __do, __while, __for, __break, __continue, __return, __throw, __try, __catch, __finally,
+  __if, __else, __switch, __case, __default, __do, __while, __for, __break, __continue, __return, __throw, __try,
+  __catch, __finally,
   // Operators:
   __instanceof, __new, __assert, __const, __goto, AT_INTERFACE(KEYWORD), ANNOTATION(ID),
   // Other identifiers:
@@ -66,10 +78,10 @@ public enum Token {
   BLOCK_COMMENT(COMMENT), // Includes just the last line of the block comment.
   DOC_COMMENT(COMMENT), // Includes just the last line of the DOC comment.
   PARTIAL_BLOCK_COMMENT(COMMENT), // Returned for each line, except the last
-                                  // in
+  // in
   // a block comment.
   PARTIAL_DOC_COMMENT(COMMENT), // Returned for each line, except the last in
-                                // a
+  // a
   // doc comment.
   /** Returned for each new line occurring within a block comment: */
   NL_BLOCK_COMMENT(COMMENT),
@@ -83,9 +95,11 @@ public enum Token {
   EOF(NONCODE), //
   NL(NONCODE), //
   SPACE(NONCODE),;
+
   public static void main(final String argv[]) throws IOException {
     main(new RawTokenizer(new InputStreamReader(System.in)));
   }
+
   private static void main(final RawTokenizer tokenizer) throws IOException {
     for (;;) {
       final Token t = tokenizer.next();
@@ -95,7 +109,7 @@ public enum Token {
           "kind=" + t.kind, //
           "Category=" + t.kind.category, //
           "error=" + t.isError)//
-      );
+          );
       if (t == EOF)
         return;
     }
@@ -107,16 +121,20 @@ public enum Token {
   Token() {
     this(KEYWORD);
   }
+
   Token(final Kind kind) {
     this(kind, false);
   }
+
   Token(final Kind kind, final boolean isError) {
     this.kind = kind;
     this.isError = isError;
   }
+
   public boolean isError() {
     return isError;
   }
+
   public boolean isNL() {
     return this == NL || this == NL_BLOCK_COMMENT || this == NL_DOC_COMMENT;
   }
@@ -133,6 +151,7 @@ public enum Token {
     LITERAL(ANY), //
     COMMENT(IGNORE), //
     NONCODE(IGNORE);
+
     public final Category category;
 
     Kind(final Category category) {

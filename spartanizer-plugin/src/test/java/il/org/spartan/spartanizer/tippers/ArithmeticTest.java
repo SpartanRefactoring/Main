@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.atomic;
 
 /** * Unit tests for Arithmetic Operations Calculations
  * @author Dor Ma'ayan <code><dor.d.ma [at] gmail.com></code>

@@ -1,6 +1,7 @@
 package il.org.spartan.classfiles.reify;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 
 public class AttributeInfo {
   public final String name;
@@ -10,6 +11,7 @@ public class AttributeInfo {
     this.name = name;
     this.data = data;
   }
+
   final ConstantPoolReader reader(final ConstantPool ¢) {
     return new ConstantPoolReader(new DataInputStream(new ByteArrayInputStream(data)), ¢);
   }

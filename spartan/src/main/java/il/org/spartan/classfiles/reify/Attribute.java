@@ -1,20 +1,22 @@
 package il.org.spartan.classfiles.reify;
 
-import static java.lang.annotation.RetentionPolicy.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.annotation.Retention;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /** @author Yossi Gil
  * @since 28 November 2011 */
-@Retention(RUNTIME)
-public @interface Attribute {
+@Retention(RUNTIME) public @interface Attribute {
   class Content {
     public final String name;
     public final String value;
 
     /** Instantiate {@link Content}.
+     *
      * @param value JD
      * @param name */
     public Content(final String name, final String value) {
@@ -31,9 +33,11 @@ public @interface Attribute {
           $.add(new Content(¢.getName(), value(target, ¢)));
       return $;
     }
+
     private static boolean isAttribute(final Method ¢) {
       return ¢.getAnnotation(Attribute.class) != null;
     }
+
     private static String value(final Object target, final Method m) {
       try {
         return m.invoke(target) + "";

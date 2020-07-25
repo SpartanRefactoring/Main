@@ -1,7 +1,7 @@
 package il.org.spartan.bench.operations;
 
-import fluent.ly.*;
-import il.org.spartan.bench.*;
+import fluent.ly.___;
+import il.org.spartan.bench.Stopwatch;
 
 /** @author Yossi Gil
  * @since 26/04/2011 */
@@ -9,18 +9,22 @@ public abstract class Bencheon extends NamedOperation {
   public final int size;
 
   /** Instantiate {@link Bencheon}.
+   *
    * @param name name of this object
    * @param size size parameter of this object */
   public Bencheon(final String name, final int size) {
     super(name);
     this.size = size;
   }
+
   public void beforeAllRuns() {
     // Empty
   }
+
   public void beforeEachRun() {
     // Empty
   }
+
   public long netRunTime(final int runs) {
     final long $ = beforeEachMethodTime(runs), begin = System.nanoTime();
     for (int ¢ = 0; ¢ < runs; ++¢) {
@@ -29,6 +33,7 @@ public abstract class Bencheon extends NamedOperation {
     }
     return System.nanoTime() - $ - begin;
   }
+
   @Override public final Stopwatch netTime(final Stopwatch netTime) {
     beforeAllRuns();
     beforeEachRun();
@@ -37,6 +42,7 @@ public abstract class Bencheon extends NamedOperation {
     netTime.stop();
     return netTime;
   }
+
   @Override public final Stopwatch netTime(final Stopwatch netTime, final int runs) {
     beforeAllRuns();
     long $;
@@ -45,12 +51,14 @@ public abstract class Bencheon extends NamedOperation {
     while ($ <= 0);
     return netTime.setTime($).setRuns(runs);
   }
+
   public final void run(final int runs) {
     for (int ¢ = 0; ¢ < runs; ++¢) {
       beforeEachRun();
       call();
     }
   }
+
   long beforeEachMethodTime(final int runs) {
     final long $ = System.nanoTime();
     for (int ¢ = 0; ¢ < runs; ++¢)
@@ -62,18 +70,22 @@ public abstract class Bencheon extends NamedOperation {
     public Core(final String name, final int size) {
       super(name, size);
     }
+
     @Override public final void beforeAllRuns() {
       //
     }
+
     @Override public final void beforeEachRun() {
       //
     }
+
     @Override public long netRunTime(final int runs) {
       final long $ = System.nanoTime();
       for (int ¢ = 0; ¢ < runs; ++¢)
         call();
       return System.nanoTime() - $;
     }
+
     @Override final long beforeEachMethodTime(final int runs) {
       return 0;
     }
@@ -84,6 +96,7 @@ public abstract class Bencheon extends NamedOperation {
     public Empty() {
       super("Empty", 1);
     }
+
     @Override public Void call() {
       return null;
     }
@@ -91,6 +104,7 @@ public abstract class Bencheon extends NamedOperation {
 
   /** A dummy {@link Bencheon}, which does nothing but wait for the specified
    * period of times.
+   *
    * @author Yossi Gil
    * @since 31/05/2011 */
   public static final class Exact extends Bencheon {
@@ -104,6 +118,7 @@ public abstract class Bencheon extends NamedOperation {
     public final int run;
 
     /** Instantiate {@link Exact}.
+     *
      * @param beforeAllRuns
      * @param beforeEachRun
      * @param run */
@@ -113,12 +128,15 @@ public abstract class Bencheon extends NamedOperation {
       this.beforeEachRun = beforeEachRun;
       this.run = run;
     }
+
     @Override public void beforeAllRuns() {
       sleep(beforeAllRuns);
     }
+
     @Override public void beforeEachRun() {
       sleep(beforeEachRun);
     }
+
     @Override public Void call() {
       sleep(run);
       return null;
@@ -136,6 +154,7 @@ public abstract class Bencheon extends NamedOperation {
     public Hash() {
       super("Hash", 1);
     }
+
     @Override public Void call() {
       a = hash(++a);
       return null;

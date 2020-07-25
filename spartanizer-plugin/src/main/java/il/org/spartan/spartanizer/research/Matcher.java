@@ -107,7 +107,6 @@ public final class Matcher {
   //
   /** Tries to match a pattern <b>p</b> to a given ASTNode <b>n</b>, using<br>
    * the matching rules. For more info about these rules, see .
-   * @param p pattern to match against.
    * @param ¢ ASTNode
    * @return True iff <b>n</b> matches the pattern <b>p</b>. */
   public boolean matches(final ASTNode ¢) {

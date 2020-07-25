@@ -1,19 +1,20 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import fluent.ly.*;
-import il.org.spartan.bench.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.library.*;
-import il.org.spartan.utils.*;
-import junit.framework.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.bench.Dotter;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.external.External;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.utils.FileUtils;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

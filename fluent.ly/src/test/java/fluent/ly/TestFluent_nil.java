@@ -1,10 +1,10 @@
 package fluent.ly;
 
-import java.util.function.*;
+import java.util.function.Function;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.nil.*;
+import fluent.ly.nil.U;
 
 public class TestFluent_nil {
   static String helloString = "Hello";
@@ -12,6 +12,7 @@ public class TestFluent_nil {
   @Test public void t1() {
     nil.cautiously(State::getName).on(Address::getState).on(Customer::getAddress).on(californiaCustomer);
   }
+
   @Test public void t() {
     final Integer i1 = nil.guardingly(String::length).on(helloString);
     azzert.that(i1, azzert.is(5));
@@ -24,7 +25,7 @@ public class TestFluent_nil {
     azzert.isNull(i3);
     nil.guardingly(State::getName).on(null);
     nil.guardingly(State::getName).on(californiaCustomer.getAddress().getState());
-    final U<String, State> g = nil.cautiously(State::getName);
+    var g = nil.cautiously(State::getName);
     assert g != null;
     final Function<Address, State> f2 = Address::getState;
     assert f2 != null;
@@ -51,8 +52,18 @@ public class TestFluent_nil {
   final Customer nullStateCustomer = () -> () -> null;
   final Customer nullStateCustomer1 = () -> () -> null;
 
-  //@formatter:off
-  interface Address { State getState(); }
-  interface Customer { Address getAddress(); }
-  interface State {default String getName() { return null; } }
+  // @formatter:off
+  interface Address {
+    State getState();
+  }
+
+  interface Customer {
+    Address getAddress();
+  }
+
+  interface State {
+    default String getName() {
+      return null;
+    }
+  }
 }

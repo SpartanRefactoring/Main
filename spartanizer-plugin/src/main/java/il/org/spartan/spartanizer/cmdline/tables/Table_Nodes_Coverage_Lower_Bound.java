@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
 /** Generates table presenting lower bound on {@link ASTNode}s coverage
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -1,23 +1,30 @@
 package il.org.spartan.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Set;
+import java.util.TreeSet;
 
-import org.junit.*;
-import org.junit.experimental.theories.*;
-import org.junit.runner.*;
+import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
-import fluent.ly.*;
-import il.org.spartan.files.visitors.*;
-import il.org.spartan.files.visitors.FileSystemVisitor.*;
-import il.org.spartan.utils.*;
+import fluent.ly.Iterables;
+import fluent.ly.azzert;
+import il.org.spartan.files.visitors.FileSystemVisitor.PlainFileOnlyAction;
+import il.org.spartan.files.visitors.JavaFilesVisitor;
+import il.org.spartan.utils.Separate;
 
 /** @author Yossi Gil
  * @since 16/05/2011 */
-@RunWith(Theories.class)
-@SuppressWarnings("static-method")
+@RunWith(Theories.class) @SuppressWarnings("static-method")
 //
 public class TestFullTokenization {
   @DataPoints public static File[] javaFiles() throws IOException {
@@ -29,11 +36,13 @@ public class TestFullTokenization {
     }).go();
     return Iterables.toArray($, File.class);
   }
+
   public static String read(final File ¢) throws IOException {
     try (FileReader $ = new FileReader(¢);) {
       return String.valueOf($.read(new char[(int) ¢.length()]));
     }
   }
+
   public static void write(final File f, final String text) throws IOException {
     try (Writer w = new FileWriter(f)) {
       w.write(text);
@@ -45,9 +54,11 @@ public class TestFullTokenization {
   @Test public void brace_brace_newline() {
     azzert.that(TokenAsIs.stringToString("{}\n"), is("{}\n"));
   }
+
   @Theory public void fullTokenization(final File ¢) throws IOException {
     azzert.that(TokenAsIs.fileToString(¢), is(read(¢)));
   }
+
   @Test public void some_method() {
     final String s = Separate.nl(
         //
@@ -62,9 +73,11 @@ public class TestFullTokenization {
         "  ");
     azzert.that(TokenAsIs.stringToString(s), is(s));
   }
+
   @Test public void unicode() {
     azzert.that(TokenAsIs.stringToString("יוסי"), is("יוסי"));
   }
+
   @Test public void unicodeFileAgainstFileOutput() throws IOException {
     final String s = TokenAsIs.fileToString(fin);
     final File fout = new File(fin.getPath() + ".out");
@@ -72,9 +85,11 @@ public class TestFullTokenization {
     azzert.that(read(fout), is(s));
     azzert.that(read(fout), is(read(fin)));
   }
+
   @Test public void unicodeFileAgainstString() throws IOException {
     azzert.that(TokenAsIs.fileToString(fin), is(read(fin)));
   }
+
   @Test public void unicodeFileLenth() throws IOException {
     assert fin.length() > TokenAsIs.fileToString(fin).length();
   }

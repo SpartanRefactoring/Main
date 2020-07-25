@@ -1,8 +1,9 @@
 package il.org.spartan.sequence;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import fluent.ly.*;
+import fluent.ly.___;
 
 /** @author Yossi Gil
  * @param <T>
@@ -15,6 +16,7 @@ public class History<T> {
     ___.positive(n);
     this.n = n;
   }
+
   void add(final T ¢) {
     inner.add(¢);
     while (inner.size() > n)

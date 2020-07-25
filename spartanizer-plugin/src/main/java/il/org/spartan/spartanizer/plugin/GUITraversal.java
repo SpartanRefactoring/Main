@@ -1,27 +1,45 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.utils.fault.*;
+import static il.org.spartan.utils.fault.done;
+import static il.org.spartan.utils.fault.dump;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.ltk.ui.refactoring.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.CompositeChange;
+import org.eclipse.ltk.core.refactoring.Refactoring;
+import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.ltk.ui.refactoring.RefactoringWizardOpenOperation;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IMarkerResolution;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.Selfie;
+import fluent.ly.note;
+import fluent.ly.zero;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.Ranger;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.tipping.Tips;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.spartanizer.traversal.TraversalTapper;
+import il.org.spartan.spartanizer.traversal.TraversalTickingTapper;
+import il.org.spartan.utils.Range;
 
 /** base class for all GUI applicators contains common functionality. The class
  * combines this features: GUI, including extension of and the ability to
@@ -201,8 +219,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     }
     return traversal.rewriteCount();
   }
-  /** @param pm a progress monitor in which to display the progress of the
-   *        refactoring
+  /** 
    * @param ¢ the marker for which the refactoring needs to system
    * @return a RefactoringStatus
    * @throws CoreException the JDT core throws it */

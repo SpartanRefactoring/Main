@@ -1,11 +1,14 @@
 package il.org.spartan.collections;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.comparesEqualTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-import java.util.*;
+import java.util.Arrays;
 
-import fluent.ly.*;
-import fluent.ly.___.Bug.*;
+import fluent.ly.___.Bug.Invariantable;
+import fluent.ly.as;
+import fluent.ly.azzert;
 
 /** An unsorted map of integers.
  * <p>
@@ -14,6 +17,7 @@ import fluent.ly.___.Bug.*;
  * of two, and is doubled when the load goes above {@link #MAX_LOAD}; capacity
  * is halved when the load drops below {@value #MIN_LOAD}. When the fraction of
  * removed keys goes below {@link #REMOVE_LOAD}, the table is rehashed.
+ *
  * @author Yossi Gil
  * @since December 2010 */
 public final class IntegersMap {
@@ -25,6 +29,7 @@ public final class IntegersMap {
   static int hash(final int ¢) {
     return ¢ ^ ¢ >>> 12 ^ ¢ >>> 20 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 4 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 7;
   }
+
   private static int roundUp(final int ¢) {
     int $ = 1;
     while ($ < ¢)
@@ -43,30 +48,40 @@ public final class IntegersMap {
   public IntegersMap() {
     this(MIN_CAPACITY);
   }
+
   /** Instantiate this class, using a given size for the hash table.
-   * @param initialCapacity suggests a hash table size, will be rounded up to
-   *        the next power of two. */
+   *
+   * @param initialCapacity suggests a hash table size, will be rounded up to the
+   *                        next power of two. */
   public IntegersMap(final int initialCapacity) {
     reset(Math.max(MIN_CAPACITY, roundUp(initialCapacity)));
   }
+
   /** What's the underlying table size?
+   *
    * @return the hash table size (always a power of two) */
   public int capacity() {
     return data.length;
   }
+
   /** Remove all elements from this set, preserving capacity.
+   *
    * @return <code><b>this</b>/code> */
   public IntegersMap clear() {
     return reset(capacity());
   }
+
   /** Determine whether a given value is in this set.
+   *
    * @param ¢ an arbitrary integer
-   * @return <code><b>true</b></code> if, and only if, the parameter is
-   *         contained in this set. */
+   * @return <code><b>true</b></code> if, and only if, the parameter is contained
+   *         in this set. */
   public boolean contains(final int ¢) {
     return location(¢) >= 0;
   }
+
   /** Check whether an array of integers is contained in this set.
+   *
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
    *         are contained in this set */
@@ -76,7 +91,9 @@ public final class IntegersMap {
         return false;
     return true;
   }
+
   /** Check whether this object is disjoint from an array of integers
+   *
    * @param is an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
    *         from the set of elements in the parameter */
@@ -86,15 +103,18 @@ public final class IntegersMap {
         return false;
     return true;
   }
+
   public int[] get(final int keys[]) {
     final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
   }
+
   public int get(final int key) {
     return values[location(key)];
   }
+
   public int increment(final int key) {
     final int $ = location(key);
     if ($ >= 0)
@@ -107,6 +127,7 @@ public final class IntegersMap {
       rehash(data.length << 1);
     return 1;
   }
+
   /** @param key
    * @return <code>this</code> */
   public IntegersMap init(final int key) {
@@ -123,7 +144,9 @@ public final class IntegersMap {
       rehash(data.length << 1);
     return this;
   }
+
   /** What are all values stored in this object?
+   *
    * @return an array of all elements in this set. */
   public int[] keys() {
     final int[] $ = new int[size];
@@ -131,9 +154,12 @@ public final class IntegersMap {
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];
     return $;
-  }/* What are all values stored in this object?
-    *
-    * @return an array of all elements in this set. */
+  }/*
+   * What are all values stored in this object?
+   *
+   * @return an array of all elements in this set.
+   */
+
   public IntegersMap put(final int key, final int value) {
     final int location = location(key);
     if (location >= 0)
@@ -148,12 +174,16 @@ public final class IntegersMap {
       rehash(data.length << 1);
     return this;
   }
+
   /** Recreate the table, inserting all elements in it afresh.
+   *
    * @return <code><b>this</b>/code> */
   public IntegersMap rehash() {
     return rehash(capacity());
   }
+
   /** Remove an array of integers to this set, if they are in it.
+   *
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
   public IntegersMap remove(final int... is) {
@@ -161,7 +191,9 @@ public final class IntegersMap {
       remove(¢);
     return this;
   }
+
   /** Remove an element from this set, it is in it
+   *
    * @param n some integer to be removed from the set
    * @return <code><b>this</b>/code> */
   public IntegersMap remove(final int n) {
@@ -174,21 +206,25 @@ public final class IntegersMap {
     return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
         : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
   }
+
   /** How many elements are there in this set?
+   *
    * @return the number of values in the set. */
   public int size() {
     return size;
   }
+
   public int[] sortedKeys() {
     final int[] $ = keys();
     Arrays.sort($);
     return $;
   }
-  /** Find the index in the hash table into which the parameter could be
-   * inserted.
+
+  /** Find the index in the hash table into which the parameter could be inserted.
+   *
    * @param i some integer
-   * @return -1 if the parameter is in the table already, otherwise, the index
-   *         at which it could be safely inserted. */
+   * @return -1 if the parameter is in the table already, otherwise, the index at
+   *         which it could be safely inserted. */
   int find(final int i) {
     for (int $ = -1, ¢ = hash(i), t = 0;; ¢ += ++t) {
       ¢ &= data.length - 1;
@@ -200,7 +236,9 @@ public final class IntegersMap {
         return -1;
     }
   }
+
   /** Find the index in the hash table of the parameter
+   *
    * @param i some integer
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
@@ -213,8 +251,10 @@ public final class IntegersMap {
         return $;
     }
   }
-  /** resize internal storage to the specified capacity, which must be a power
-   * of two.
+
+  /** resize internal storage to the specified capacity, which must be a power of
+   * two.
+   *
    * @param newCapacity new initialCapacity for the internal array
    * @return <code><b>this</b>/code> */
   private IntegersMap rehash(final int newCapacity) {
@@ -226,6 +266,7 @@ public final class IntegersMap {
       put(keys[¢], oldValues[¢]);
     return this;
   }
+
   private IntegersMap reset(final int capacity) {
     data = new int[capacity];
     occupied = new boolean[capacity];
@@ -235,7 +276,7 @@ public final class IntegersMap {
     return this;
   }
 
-  @SuppressWarnings({ "synthetic-access", "boxing" }) //
+  @SuppressWarnings({ "boxing" }) //
   public final class INVARIANT implements Invariantable {
     @Override public void check() {
       azzert.that(size, lessThanOrEqualTo(capacity()));
@@ -252,6 +293,7 @@ public final class IntegersMap {
         if (placeholder[¢])
           assert occupied[¢];
     }
+
     private int count(final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)

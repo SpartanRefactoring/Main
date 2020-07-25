@@ -1,19 +1,24 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.plugin.Eclipse.*;
+import static il.org.spartan.spartanizer.plugin.Eclipse.runAsynchronouslyInUIThread;
 
-import java.lang.reflect.*;
-import java.util.*;
-import java.util.function.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.function.Function;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.ui.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.ui.IMarkerResolution;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.note;
+import fluent.ly.separate;
+import fluent.ly.the;
+import il.org.spartan.utils.Bool;
+import il.org.spartan.utils.Int;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link GUIApplicator} as its applicator.

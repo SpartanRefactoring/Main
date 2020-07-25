@@ -1,17 +1,34 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.equinox.app.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 
-import fluent.ly.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
+import fluent.ly.___;
+import fluent.ly.forget;
+import fluent.ly.note;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.utils.FileUtils;
 
 /** An {@link IApplication} extension entry point, allowing execution of ***
  * @author Ori Marcovitch
@@ -49,7 +66,7 @@ final class BindingFun implements IApplication {
     for (final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))
       try {
         final ICompilationUnit u = openCompilationUnit(f);
-        final ASTParser parser = ASTParser.newParser(AST.JLS8);
+        final ASTParser parser = ASTParser.newParser(AST.JLS14);
         parser.setResolveBindings(true);
         parser.setSource(u);
         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);

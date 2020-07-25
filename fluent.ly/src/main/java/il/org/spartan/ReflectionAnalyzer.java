@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import fluent.ly.*;
+import fluent.ly.dump;
 
 class A {
   {
@@ -32,14 +32,16 @@ public enum ReflectionAnalyzer {
       @Override public boolean equals(final Object other) {
         return super.equals(other);
       }
+
       @Override public int hashCode() {
         return super.hashCode();
       }
     }.getClass());
   }
+
   public static String toBinary(final int value) {
-    String $ = "";
-    for (int mask = 1; mask != 0; mask <<= 1)
+    var $ = "";
+    for (var mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;
     return $;
   }

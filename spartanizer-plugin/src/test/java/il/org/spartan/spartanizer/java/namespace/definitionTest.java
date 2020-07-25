@@ -1,22 +1,39 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
-import java.lang.annotation.*;
-import java.util.*;
-import java.util.function.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.Initializer;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.*;
-import il.org.spartan.spartanizer.meta.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.annotees;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.InterfaceInAnEnum;
+import il.org.spartan.spartanizer.meta.MetaFixture;
+import il.org.spartan.utils.fault;
 
 /** @formatter:off */
 @Target(ElementType.TYPE) @annotation @interface annotation { /**/ }
@@ -31,7 +48,7 @@ import il.org.spartan.utils.*;
 public class definitionTest extends MetaFixture {
   @field private final Initializer initializer = find(Initializer.class);
   @field private final TypeDeclaration clazz = find(TypeDeclaration.class);
-  @field private final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<String, MarkerAnnotation>() {
+  @field private final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<>() {
     @field static final long serialVersionUID = 1;
     {
       put("@Test", null);

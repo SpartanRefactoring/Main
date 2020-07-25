@@ -1,23 +1,87 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.is.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static fluent.ly.is.in;
+import static il.org.spartan.spartanizer.ast.navigate.extract.allOperands;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.dimensions;
+import static il.org.spartan.spartanizer.ast.navigate.step.elze;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.expressions;
 import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.initializer;
+import static il.org.spartan.spartanizer.ast.navigate.step.initializers;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.operand;
 import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static il.org.spartan.spartanizer.ast.navigate.step.updaters;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_INITIALIZER;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.BOOLEAN_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.CAST_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.CHARACTER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.CONDITIONAL_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.CONSTRUCTOR_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.CREATION_REFERENCE;
+import static org.eclipse.jdt.core.dom.ASTNode.EMPTY_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.EXPRESSION_METHOD_REFERENCE;
+import static org.eclipse.jdt.core.dom.ASTNode.FIELD_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.INSTANCEOF_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.LAMBDA_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.POSTFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.PRIMITIVE_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.QUALIFIED_NAME;
+import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_NAME;
+import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.STRING_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_CONSTRUCTOR_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_FIELD_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_METHOD_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_METHOD_REFERENCE;
+import static org.eclipse.jdt.core.dom.ASTNode.THIS_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_METHOD_REFERENCE;
+import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_EXPRESSION;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.COMPLEMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.MINUS;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.NOT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import java.util.stream.Stream;
 
-import java.util.stream.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.ArrayAccess;
+import org.eclipse.jdt.core.dom.ArrayCreation;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import fluent.ly.is;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.utils.Bool;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil
