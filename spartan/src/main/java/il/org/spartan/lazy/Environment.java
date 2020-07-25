@@ -353,7 +353,6 @@ public interface Environment {
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
      *
-     * @param <A> argument's type
      * @param ¢   a one argument function that returns a new value for this instance
      * @return a function with one argument named {@link Binder#to(Object)} which
      *         when applied
@@ -362,6 +361,7 @@ public interface Environment {
      *         <li>returns <code><b>this</b></code>
      *         </ol>
      */
+
     public Property<T> bind(final Function0<T> ¢) {
       return ϑ(() -> ¢.¢());
     }
@@ -430,7 +430,6 @@ public interface Environment {
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
      *
-     * @param <A> argument's type
      * @param ¢   a one argument function that returns a new value for this instance
      * @return a function with one argument named {@link Binder#to(Object)} which
      *         when applied
