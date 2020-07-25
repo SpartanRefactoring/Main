@@ -20,8 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
  * should the new interface be called?
  * <li>Create a new interface that unifies {@link Nested} and {@link Recursive},
  * to be called what?
- * <li>Re-implement class {@link Environment} using the diamond hierarchy that
- * you are
  * <li>Revise material on design patterns. Do you think interface names should
  * be changed? How? Write your answer as JavaDOC: don't bother with formatting.
  * <li>Otherwise, don't touch any documentation, before you attend the JavaDOC

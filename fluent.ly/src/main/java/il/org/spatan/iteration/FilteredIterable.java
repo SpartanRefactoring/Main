@@ -3,6 +3,8 @@ package il.org.spatan.iteration;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * Makes a filtered version of a stream (realized by the {@link Iterable}
  * interface). Only those elements of the stream which satisfy a given boolean
@@ -31,7 +33,7 @@ public abstract class FilteredIterable<T> implements Predicate<T>, Iterable<T> {
 
   @Override public final Iterator<T> iterator() {
     return new Iterator<>() {
-      T pending;
+      @SuppressWarnings("null") T pending;
       boolean hasNext = true;
       final Iterator<? extends T> iterator = iterable.iterator();
       {

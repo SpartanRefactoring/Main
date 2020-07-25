@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ import java.util.*;
 public enum Essence {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void main(final String[] args) {
-    for (final Scanner ¢ = new Scanner(System.in);;) {
+    try (final Scanner ¢ = new Scanner(System.in)) {
       System.out.print("Enter some code: ");
       System.out.println(Essence.of(¢.nextLine()));
     }

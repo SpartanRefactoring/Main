@@ -5,7 +5,7 @@ import static fluent.ly.azzert.is;
 import org.junit.Test;
 
 import fluent.ly.azzert;
-import il.org.spartan.spartanizer.java.Essence;
+import il.org.spartan.Essence;
 
 /** TODO Shay Segal please add a description
  * @author Shay Segal

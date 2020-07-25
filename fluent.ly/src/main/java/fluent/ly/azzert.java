@@ -121,7 +121,7 @@ public class azzert extends org.junit.Assert {
     assertCollectionsEqual("", c1, c2);
   }
 
-  public static <T> void assertCollectionsEqual(final Collection<T> ts1, final T[] ts2) {
+  public static <T> void collectionsEqual(final Collection<T> ts1, final T[] ts2) {
     assertCollectionsEqual("", ts1, Arrays.asList(ts2));
   }
 

@@ -25,81 +25,42 @@ import fluent.ly.note;
  * An abstract interface defining tippers, bloaters, and light weight pattern
  * search, logging, computing statistics, etc.
  * <p>
- * A rule is a {@link Function} that is augmented with:
+ * A rule is a {@link Function} augmented with:
  * <ol>
- * <li><b>Typestate semantics:</b> Protocol is call to @{@link Check}
- * {@link #check(Object)}, and only then @{@link Apply} {@link #apply(Object)}.
+ * <li><b>Typestate semantics:</b> Protocol is call to the {@link Check} method
+ * {@link #check(Object)}, and only then @{@link Apply} {@link #apply}.
  * <p>
  * The order of method application must follow match the regular expression
  * {@code (CC*A?)*}. This order is enforced by {@link Rule.Stateful} that, when
  * possible, should be extended by clients.
  * <p>
  * An instance can thus be in one of two states:
- * <ol>
+ * <ul>
  * <li>{@link #ready()}, which is the state after {@code @}{@link Check} method
  * call, and a prerequisite for @{@link Apply} method call.</li>
  * <li>not {@link #ready()}, which is the initial state, and the state after
  * a @{@link Apply} method call. .</li>
- * </ol>
+ * </ul>
  * <li><b>Aggregation:</b> An instance of this class may be atomic, or compound,
- * i.e., implementing {@link Recursive}. Method {@link #descendants()} returns a
- * {@link Stream} of nested instances, which is an singleton of {@code this} if
- * the instance is atomic, or include any number of instances, including
+ * i.e., implementing {@link Recursive}. Method
+ * {@link Recursive.Compound#children()} returns a {@link Stream} of nested
+ * instances, which is an singleton of {@code this} if the instance is atomic,
+ * or include any number of instances.
  * <li><b>Descriptive qualities:</b> {@link #examples()}, {@link #akas()},
- * {@link #describe}, {@link #description}, and more.
+ * {@link #examples}, {@link #description}, and more.
  * </ol>
- * <p>
  * Note: In sub-classes the sub-interfaces methods marked {@code @}{@link Check}
  * and {@code @}{@link Apply} are often overridden and marked {@code final},
- * while delegating to another (typically {@code abstract}) method. This other
+ * while delegating to another (typically {@code abstract}) method. These other
  * methods should be marked as either {@code @}{@link Apply} or
  * {@code @}{@link Check}.
- * <p>
- * <li>List of descriptive qualities requires re-thinking.
- * <li>Convert {@code @}{@link Check} and {@code @}{@link Apply} into a single
- * annotation, that takes an {@code enum} defined to include all state .
- * <li>No method other than {@link #check(Object)} should be allowed to take
- * parameters.
- * </nl>
- *
+ * 
  * @param <T> type of elements for which the rule is applicable
  * @param <R> type of result of applying this rule
  * @author Yossi Gil
  * @since 2017-03-10
  */
 public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
-  @Override default Rule<T, R> self() {
-    return this;
-  }
-
-  /**
-   * Gives the ability to perform an action on object {@code T} t, only if
-   * predicate(t) takes place.
-   * 
-   * @param <T> type of elements for which the rule is applicable
-   * @param <R> type of result of applying this rule
-   * @param p   a predicate
-   * @return a lambda of type {@link OnApplicator}
-   * @author Yossi Gil
-   * @since 2017-03-10
-   */
-  static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
-    return c -> new Rule.Stateful<>() {
-      @Override public @Nullable R fire() {
-        c.accept(current());
-        return null;
-      }
-
-      @Override public boolean ok(final T ¢) {
-        return p.test(¢);
-      }
-    };
-  }
-
-  interface OnApplicator<T, R> {
-    Rule<T, R> go(Consumer<T> c);
-  }
-
   /**
    * {@code afterCheck} functions supply a fluent API for:<br>
    * 1. performing an action after {@link Rule#check}<br>
@@ -141,9 +102,11 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   @Override @Apply R apply(T ¢);
 
   /**
-   * {@code beforeCheck} functions supply a fluent API for: 1. performing an
-   * action before {@link Rule#check}<br>
-   * 2. add a prerequisite to check before {@link Rule#check}
+   * {@code beforeCheck} functions supply a fluent API for:
+   * <ol>
+   * <li>performing an action before {@link Rule#check}
+   * <li>add a prerequisite to check before {@link Rule#check}
+   * </ol>
    * 
    * @author oran1248
    * @since 2017-04-21
@@ -177,6 +140,8 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    */
   @Check boolean check(T n);
 
+  T current();
+
   default String description() {
     return format("%s/[%s]%s=", //
         English.name(Rule.class), //
@@ -191,10 +156,12 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     return new Examples();
   }
 
-  T current();
-
   default boolean ready() {
     return current() != null;
+  }
+
+  @Override default Rule<T, R> self() {
+    return this;
   }
 
   /** Should not be overridden */
@@ -209,6 +176,30 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
 
   default String verbObject() {
     return format(verb(), current());
+  }
+
+  /**
+   * Gives the ability to perform an action on object {@code T} t, only if
+   * predicate(t) takes place.
+   * 
+   * @param <T> type of elements for which the rule is applicable
+   * @param <R> type of result of applying this rule
+   * @param p   a predicate
+   * @return a lambda of type {@link OnApplicator}
+   * @author Yossi Gil
+   * @since 2017-03-10
+   */
+  static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
+    return c -> new Rule.Stateful<>() {
+      @Override public @Nullable R fire() {
+        c.accept(current());
+        return null;
+      }
+
+      @Override public boolean ok(final T ¢) {
+        return p.test(¢);
+      }
+    };
   }
 
   @Documented @Inherited @Target(ElementType.METHOD)
@@ -254,6 +245,10 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       this.inner = inner;
     }
 
+    @Override public R apply(final T ¢) {
+      return inner.apply(¢);
+    }
+
     @SuppressWarnings({ "static-method", "unused" }) public Void before(final String key, final Object... arguments) {
       return null;
     }
@@ -264,10 +259,6 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
 
     @Override public T current() {
       return inner.current();
-    }
-
-    @Override public R apply(final T ¢) {
-      return inner.apply(¢);
     }
   }
 
@@ -303,6 +294,10 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     }
   }
 
+  interface OnApplicator<T, R> {
+    Rule<T, R> go(Consumer<T> c);
+  }
+
   /**
    * Default implementation of {@link Rule},
    * 
@@ -332,6 +327,18 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       return $;
     }
 
+    @Override public final boolean check(final T ¢) {
+      return ok(current = ¢);
+    }
+
+    @Override public final T current() {
+      return current;
+    }
+
+    public abstract @Nullable R fire();
+
+    public abstract boolean ok(T n);
+
     private R badTypeState(final String reason, final Object... os) {
       return note.bug(this, new IllegalStateException(//
           format(//
@@ -343,17 +350,5 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       )//
       );
     }
-
-    @Override public final boolean check(final T ¢) {
-      return ok(current = ¢);
-    }
-
-    public abstract @Nullable R fire();
-
-    @Override public final T current() {
-      return current;
-    }
-
-    public abstract boolean ok(T n);
   }
 }

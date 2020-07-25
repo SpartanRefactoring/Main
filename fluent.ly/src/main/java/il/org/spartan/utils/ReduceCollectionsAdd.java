@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.Collection;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 /**
  * TODO Yossi Gil: document class
  *

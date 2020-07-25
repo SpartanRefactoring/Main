@@ -8,6 +8,7 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.Essence;
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

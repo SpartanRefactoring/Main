@@ -181,7 +181,7 @@ public enum as {
 
   /**
    * Converts a value, which can be either a <code><b>null</b></code> or
-   * references to valid instances, into a {@link @NonNull}
+   * references to valid instances, into a {@link NonNull}
    *
    * @param $ some value
    * @return parameter, after bing to a non-null string.

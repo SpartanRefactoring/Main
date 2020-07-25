@@ -147,62 +147,36 @@ public interface English {
   }
 
   static String pronounce(final char ¢) {
-    if (Character.isUpperCase(¢))
-      return pronounce(Character.toLowerCase(¢));
+    return Character.isUpperCase(¢) ? pronounce(Character.toLowerCase(¢)):
     switch (¢) {
-      case 'a':
-        return "aey";
-      case 'b':
-        return "bee";
-      case 'c':
-        return "see";
-      case 'd':
-        return "dee";
-      case 'e':
-        return "eae";
-      case 'f':
-        return "eff";
-      case 'g':
-        return "gee";
-      case 'h':
-        return "eitch";
-      case 'i':
-        return "eye";
-      case 'j':
-        return "jay";
-      case 'k':
-        return "kay";
-      case 'l':
-        return "ell";
-      case 'm':
-        return "em";
-      case 'n':
-        return "en";
-      case 'o':
-        return "oh";
-      case 'p':
-        return "pee";
-      case 'q':
-        return "queue";
-      case 'r':
-        return "ar";
-      case 's':
-        return "ess";
-      case 't':
-        return "tee";
-      case 'u':
-        return "you";
-      case 'v':
-        return "vee";
-      case 'x':
-        return "exx";
-      case 'y':
-        return "why";
-      case 'z':
-        return "zee";
-      default:
-        return "some character";
-    }
+      case 'a'-> "aey";
+      case 'b'-> "bee";
+      case 'c'-> "see";
+      case 'd'-> "dee";
+      case 'e'-> "eae";
+      case 'f'-> "eff";
+      case 'g'-> "gee";
+      case 'h'-> "eitch";
+      case 'i'-> "eye";
+      case 'j'-> "jay";
+      case 'k'-> "kay";
+      case 'l'-> "ell";
+      case 'm'-> "em";
+      case 'n'-> "en";
+      case 'o'-> "oh";
+      case 'p'-> "pee";
+      case 'q'-> "queue";
+      case 'r'-> "ar";
+      case 's'-> "ess";
+      case 't'-> "tee";
+      case 'u'-> "you";
+      case 'v'-> "vee";
+      case 'w'-> "doubleyou";
+      case 'x'-> "exx";
+      case 'y'-> "why";
+      case 'z'-> "zee";
+      default-> "some character";
+    };
   }
 
   static String repeat(final int i, final char c) {

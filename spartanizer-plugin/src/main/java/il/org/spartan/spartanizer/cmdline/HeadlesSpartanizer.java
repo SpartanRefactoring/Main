@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import fluent.ly.as;
 import fluent.ly.note;
+import il.org.spartan.Essence;
 import il.org.spartan.external.External;
 import il.org.spartan.spartanizer.ast.factory.makeAST;
 import il.org.spartan.spartanizer.ast.navigate.countOf;
@@ -26,7 +27,6 @@ import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
 import il.org.spartan.spartanizer.ast.safety.az;
 import il.org.spartan.spartanizer.ast.safety.iz;
 import il.org.spartan.spartanizer.cmdline.tables.Table_Summary;
-import il.org.spartan.spartanizer.java.Essence;
 import il.org.spartan.spartanizer.plugin.TextualTraversals;
 import il.org.spartan.spartanizer.traversal.Traversal;
 import il.org.spartan.tables.Table;
