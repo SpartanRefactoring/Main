@@ -29,7 +29,7 @@ public abstract class ___ {
   /**
    * Exercise the {@link Invariantable#check()}
    * 
-   * @param v a Invariantable object whose invariant should be checked
+   * @param ¢ an object whose invariant should be checked
    */
   public static void check(final Invariantable ¢) {
     ¢.check();

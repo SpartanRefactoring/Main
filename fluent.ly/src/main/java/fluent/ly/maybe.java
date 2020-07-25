@@ -1,16 +1,13 @@
 package fluent.ly;
 
-/**
- * @author Yossi Gil <Yossi.Gil@GMail.COM>
- * @param <T> JD
- * @since @{year}-@{month}-@{day}
- */
-public class maybe<T> {
-  public static <T> maybe<T> no() {
-    return new maybe<>();
+import org.eclipse.jdt.annotation.Nullable;
+
+public class maybe<@Nullable T> {
+  public static <T> maybe<@Nullable T> no() {
+    return new maybe<>(null);
   }
 
-  public static <T> maybe<T> yes(final T ¢) {
+  public static <T> maybe<@Nullable T> yes(final T ¢) {
     return new maybe<>(¢);
   }
 
@@ -23,10 +20,6 @@ public class maybe<T> {
    */
   public maybe(final T inner) {
     this.inner = inner;
-  }
-
-  private maybe() {
-    inner = null;
   }
 
   public maybe<T> clear() {
@@ -46,7 +39,6 @@ public class maybe<T> {
     return inner != null;
   }
 
-  /** @param inner TODO document this parameter */
   public maybe<T> set(final T inner) {
     this.inner = inner;
     return this;

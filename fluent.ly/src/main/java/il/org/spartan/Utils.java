@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.junit.Test;
 
 import fluent.ly.accumulate;
@@ -33,35 +34,35 @@ import fluent.ly.the;
 public interface Utils {
   String WHITES = "(?m)\\s+";
 
-  static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
+  static <T, C extends Collection<T>> C add(final @NonNull C $, final Iterable<? extends T> ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C add(final C $, final T... ts) {
+  @SafeVarargs static <T, C extends Collection<T>> C add(final @NonNull C $, final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(final @NonNull C $, final Collection<? extends T>... tss) {
     for (final Collection<? extends T> ¢ : tss)
       if (¢ != null)
         $.addAll(¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(final @NonNull C $, final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ¢ : tss)
       if (¢ != null)
         add($, ¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(final @NonNull C $, final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         add($, ¢);
@@ -447,9 +448,9 @@ public interface Utils {
      * @param <FS> JD
      * @param s    JD
      */
-    public <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
+    public <FS extends Iterable<? extends F>> Iterable<T> to(final @NonNull FS s) {
       final List<T> $ = new ArrayList<>();
-      for (final F ¢ : s)
+      for (var ¢ : s)
         if (¢ != null)
           $.add(function.apply(¢));
       return $;

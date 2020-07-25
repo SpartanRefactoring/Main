@@ -35,7 +35,7 @@ public enum prune {
    *
    * @param <T> JD
    * @param <C> JD
-   * @param ¢   JD
+   * @param $   JD
    */
   public static <T, C extends Collection<T>> C nils(final C $) {
     for (final Iterator<T> ¢ = $.iterator(); ¢.hasNext();)

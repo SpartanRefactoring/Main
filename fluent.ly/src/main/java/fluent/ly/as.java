@@ -192,7 +192,7 @@ public enum as {
 
   /**
    * Converts a {@link String}, which can be either a <code><b>null</b></code> or
-   * an actual String, into a {@link @NonNull} String.
+   * an actual String, into a {@code @}{@link NonNull} String.
    *
    * @param $ some value
    * @return parameter, after bing to a non-null string.
