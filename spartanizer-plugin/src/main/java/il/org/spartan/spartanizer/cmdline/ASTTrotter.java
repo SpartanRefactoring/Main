@@ -104,6 +104,10 @@ public class ASTTrotter extends ASTVisitor {
   @SuppressWarnings("boxing") 
   protected void record(final String summary) {
     System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
+    if (a)
+    	f();
+    if (b) 
+    	f();
   }
   
   @SuppressWarnings("static-method") 
