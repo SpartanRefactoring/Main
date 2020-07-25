@@ -27,7 +27,7 @@ import il.org.spartan.utils.Accumulator.Last;
 
   @Test public void emptyAdds() {
     final Accumulator.Last c = new Last();
-    for (int ¢ = 0; ¢ < 19; ++¢)
+    for (var ¢ = 0; ¢ < 19; ++¢)
       c.add(¢);
     c.add(11);
     azzert.that(c.value(), is(11));

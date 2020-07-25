@@ -41,8 +41,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>boolean</b></code>s.
    */
   public static boolean[] it(final Boolean[] bs) {
-    final boolean[] $ = new boolean[bs.length];
-    for (int ¢ = 0; ¢ < bs.length; ++¢)
+    final var $ = new boolean[bs.length];
+    for (var ¢ = 0; ¢ < bs.length; ++¢)
       $[¢] = bs[¢].booleanValue();
     return $;
   }
@@ -58,8 +58,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>byte</b></code>s.
    */
   public static byte[] it(final Byte[] bs) {
-    final byte[] $ = new byte[bs.length];
-    for (int ¢ = 0; ¢ < bs.length; ++¢)
+    final var $ = new byte[bs.length];
+    for (var ¢ = 0; ¢ < bs.length; ++¢)
       $[¢] = bs[¢].byteValue();
     return $;
   }
@@ -76,8 +76,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>char</b></code>s.
    */
   public static char[] it(final Character[] cs) {
-    final char[] $ = new char[cs.length];
-    for (int ¢ = 0; ¢ < cs.length; ++¢)
+    final var $ = new char[cs.length];
+    for (var ¢ = 0; ¢ < cs.length; ++¢)
       $[¢] = cs[¢].charValue();
     return $;
   }
@@ -90,8 +90,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>short</b></code>s.
    */
   public static short[] it(final Collection<Short> ss) {
-    final short[] $ = new short[ss.size()];
-    int i = 0;
+    final var $ = new short[ss.size()];
+    var i = 0;
     for (final Short v : ss)
       $[i++] = v.shortValue();
     return $;
@@ -109,8 +109,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>double</b></code>s.
    */
   public static double[] it(final Double[] ds) {
-    final double[] $ = new double[ds.length];
-    for (int ¢ = 0; ¢ < ds.length; ++¢)
+    final var $ = new double[ds.length];
+    for (var ¢ = 0; ¢ < ds.length; ++¢)
       $[¢] = ds[¢].floatValue();
     return $;
   }
@@ -127,8 +127,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>float</b></code>s.
    */
   public static float[] it(final Float[] fs) {
-    final float[] $ = new float[fs.length];
-    for (int ¢ = 0; ¢ < fs.length; ++¢)
+    final var $ = new float[fs.length];
+    for (var ¢ = 0; ¢ < fs.length; ++¢)
       $[¢] = fs[¢].floatValue();
     return $;
   }
@@ -145,8 +145,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>int</b></code>s.
    */
   public static int[] it(final Integer[] is) {
-    final int[] $ = new int[is.length];
-    for (int ¢ = 0; ¢ < is.length; ++¢)
+    final var $ = new int[is.length];
+    for (var ¢ = 0; ¢ < is.length; ++¢)
       $[¢] = is[¢].intValue();
     return $;
   }
@@ -166,8 +166,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>long</b></code>s.
    */
   public static long[] it(final Long[] ls) {
-    final long[] $ = new long[ls.length];
-    for (int ¢ = 0; ¢ < ls.length; ++¢)
+    final var $ = new long[ls.length];
+    for (var ¢ = 0; ¢ < ls.length; ++¢)
       $[¢] = ls[¢].longValue();
     return $;
   }
@@ -184,8 +184,8 @@ public enum unbox {
    * @return an equivalent array of <code><b>short</b></code>s.
    */
   public static short[] it(final Short[] ss) {
-    final short[] $ = new short[ss.length];
-    for (int ¢ = 0; ¢ < ss.length; ++¢)
+    final var $ = new short[ss.length];
+    for (var ¢ = 0; ¢ < ss.length; ++¢)
       $[¢] = ss[¢].shortValue();
     return $;
   }

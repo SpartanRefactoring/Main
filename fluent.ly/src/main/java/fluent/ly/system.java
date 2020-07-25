@@ -25,7 +25,7 @@ public interface system {
     if (isWindows())
       return null;
     try {
-      final Process $ = Runtime.getRuntime().exec(new String[] { "/bin/bash", "-c", shellCommand });
+      final var $ = Runtime.getRuntime().exec(new String[] { "/bin/bash", "-c", shellCommand });
       if ($ != null)
         return dumpOutput($);
     } catch (final IOException ¢) {
@@ -47,7 +47,7 @@ public interface system {
     if (isWindows())
       return $;
     try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
-      for (String line = in.readLine(); line != null; line = in.readLine())
+      for (var line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
     } catch (final IOException ¢) {
       note.io(¢, $ + "");
@@ -129,12 +129,12 @@ public interface system {
    *         sequence of calls through methods in A, which ended in the call to m.
    */
   static String myCallerFullClassName() {
-    final StackTraceElement[] trace = new Throwable().getStackTrace();
-    int i = 0;
+    final var trace = new Throwable().getStackTrace();
+    var i = 0;
     for (; i < trace.length; ++i)
       if (!trace[i].getClassName().equals(trace[0].getClassName()))
         break;
-    for (int $ = i; $ < trace.length; ++$)
+    for (var $ = i; $ < trace.length; ++$)
       if (!trace[$].getClassName().equals(trace[i].getClassName()))
         return trace[$].getClassName();
     return new Object().getClass().getEnclosingClass().getCanonicalName();
@@ -142,8 +142,8 @@ public interface system {
 
   /** @return the name of the class from which this method was called. */
   static String myFullClassName() {
-    final StackTraceElement[] $ = new Throwable().getStackTrace();
-    for (int ¢ = 1; ¢ < $.length; ++¢)
+    final var $ = new Throwable().getStackTrace();
+    for (var ¢ = 1; ¢ < $.length; ++¢)
       if (!$[¢].getClassName().equals($[0].getClassName()))
         return $[¢].getClassName();
     return new Object().getClass().getEnclosingClass().getCanonicalName();
@@ -164,7 +164,7 @@ public interface system {
   }
 
   static String read(final Scanner ¢) {
-    String $ = "";
+    var $ = "";
     while (¢.hasNext()) // Can be Nano?
       $ += "\n" + ¢.nextLine();
     return $;
@@ -175,7 +175,7 @@ public interface system {
   }
 
   static String runScript(final Process p) throws IOException {
-    try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
+    try (var s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
       for (final StringBuilder $ = new StringBuilder();; $.append(¢))
         if ((¢ = r.readLine()) == null)

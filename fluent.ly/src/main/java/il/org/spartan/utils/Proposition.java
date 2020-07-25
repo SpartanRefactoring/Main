@@ -224,7 +224,7 @@ public interface Proposition extends BooleanSupplier {
     }
 
     protected void simplify() {
-      final List<BooleanSupplier> newInner = stream().map(λ -> {
+      final var newInner = stream().map(λ -> {
         if (!getClass().isInstance(λ))
           return Stream.of(λ);
         if (((Some) λ).toString != null)

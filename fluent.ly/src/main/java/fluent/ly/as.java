@@ -123,8 +123,8 @@ public enum as {
    * @return an array of <code><b>int</b></code>. representing the input.
    */
   public static int[] ints(final List<Integer> is) {
-    final int[] $ = new int[is.size()];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new int[is.size()];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = is.get(¢).intValue();
     return $;
   }

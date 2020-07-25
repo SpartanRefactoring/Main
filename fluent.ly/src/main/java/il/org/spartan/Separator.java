@@ -38,7 +38,7 @@ public final class Separator {
   public static String separateBy(final int[] is, final String between) {
     if (is.length == 0)
       return "";
-    String $ = "";
+    var $ = "";
     final Separator s = new Separator(between);
     for (final int ¢ : is)
       $ += s + (Integer.valueOf(¢) + "");

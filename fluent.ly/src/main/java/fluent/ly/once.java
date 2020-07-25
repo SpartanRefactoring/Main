@@ -20,7 +20,7 @@ public class once {
   }
 
   @Override public String toString() {
-    final String $ = value;
+    final var $ = value;
     value = null;
     return $;
   }

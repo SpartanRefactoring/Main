@@ -40,7 +40,7 @@ public class PruneTest1 {
   }
 
   @Test public void nullsPruneSparseCollectionContents() {
-    final String[] a = prune.nils(sparseCollection.get()).toArray(new String[3]);
+    final var a = prune.nils(sparseCollection.get()).toArray(new String[3]);
     assertEquals("A", a[0]);
     assertEquals("B", a[1]);
     assertEquals("C", a[2]);

@@ -38,7 +38,7 @@ public interface nil {
 
   interface Operand<T> extends Supplier<T> {
     default <R> Operand<R> to(final Function<T, R> f) {
-      final T t = Operand.this.get();
+      final var t = Operand.this.get();
       final @Nullable R $ = t == null ? null : f.apply(t);
       return () -> $;
     }

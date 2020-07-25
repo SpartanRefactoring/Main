@@ -39,7 +39,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
   }
 
   private R reduce(final And a) {
-    R $ = ante(a);
+    var $ = ante(a);
     for (int size = a.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(a.inner.get(¢)));
       if (¢ < size - 1)
@@ -57,7 +57,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
   }
 
   private R reduce(final Or o) {
-    R $ = ante(o);
+    var $ = ante(o);
     for (int size = o.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(o.inner.get(¢)));
       if (¢ < size - 1)

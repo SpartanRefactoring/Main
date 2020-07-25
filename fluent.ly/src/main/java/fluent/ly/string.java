@@ -97,15 +97,15 @@ public enum string {
     if (s == null)
       return "(null)";
     final StringBuilder $ = new StringBuilder(s.length());
-    for (int ¢ = 0; ¢ < s.length(); ++¢)
+    for (var ¢ = 0; ¢ < s.length(); ++¢)
       $.append(esc(s.charAt(¢)));
     return $ + "";
   }
 
   public static String expandLeadingTabs(final String s) {
     assert s != null;
-    for (String $ = s;;) {
-      final String newValue = $.replaceAll("(?m)^([\t]*)\t", "$1    ");
+    for (var $ = s;;) {
+      final var newValue = $.replaceAll("(?m)^([\t]*)\t", "$1    ");
       if ($.equals(newValue))
         return $;
       $ = newValue;
@@ -118,7 +118,7 @@ public enum string {
 
   public static String fill(final int i, final String s) {
     final StringBuilder $ = new StringBuilder();
-    for (int ¢ = 0; ¢ < i; ++¢)
+    for (var ¢ = 0; ¢ < i; ++¢)
       $.append(s);
     return $ + "";
   }
@@ -267,8 +267,8 @@ public enum string {
       return "";
     if (a.size() == 1)
       return "1 " + singular + ": " + a.iterator().next() + "\n";
-    String $ = a.size() + " " + plural + ":\n";
-    int n = 0;
+    var $ = a.size() + " " + plural + ":\n";
+    var n = 0;
     final once ellipsis = new once("\t...\n");
     for (final Object ¢ : a) {
       ++n;
@@ -301,7 +301,7 @@ public enum string {
    */
   public static String repeat(final int i, final String s) {
     final StringBuffer $ = new StringBuffer();
-    for (int ¢ = 0; ¢ < i; ++¢)
+    for (var ¢ = 0; ¢ < i; ++¢)
       $.append(s);
     return $ + "";
   }
@@ -322,7 +322,7 @@ public enum string {
         return args[0];
       default:
         final Object $[] = new Object[args.length - 1];
-        for (int ¢ = 1; ¢ < args.length; ++¢)
+        for (var ¢ = 1; ¢ < args.length; ++¢)
           $[¢ - 1] = args[¢];
         return String.format(args[0], $) + "";
     }
@@ -344,7 +344,7 @@ public enum string {
   public static List<String> toLines(final String s) throws IOException {
     final List<String> $ = new ArrayList<>();
     for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
-      final String line = br.readLine();
+      final var line = br.readLine();
       if (line == null)
         return $;
       $.add(line);

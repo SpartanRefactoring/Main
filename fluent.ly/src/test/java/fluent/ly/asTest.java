@@ -28,12 +28,12 @@ import org.junit.Test;
   }
 
   @Test public void asIntArraySimple() {
-    final int[] is = as.intArray(100, 200, 200, 12, 13, 0);
+    final var is = as.intArray(100, 200, 200, 12, 13, 0);
     assertArrayEquals(is, as.ints(as.ilist(is)));
   }
 
   @Test public void asListSimple() {
-    final List<Integer> is = as.ilist(12, 13, 14);
+    final var is = as.ilist(12, 13, 14);
     azzert.that(is.get(0), is(fluent.ly.box.it(12)));
     azzert.that(is.get(1), is(fluent.ly.box.it(13)));
     azzert.that(is.get(2), is(fluent.ly.box.it(14)));

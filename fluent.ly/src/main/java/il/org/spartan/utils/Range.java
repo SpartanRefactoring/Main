@@ -103,7 +103,7 @@ public class Range {
    */
   public void pruneIncluders(final List<? extends Range> rs) {
     for (;;) {
-      final Range r = findIncludedIn(rs);
+      final var r = findIncludedIn(rs);
       if (r == null)
         return;
       rs.remove(r);

@@ -54,7 +54,7 @@ public class FilesGenerator {
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
-    final Iterator<String> $ = as.list(directory.list()).iterator();
+    final var $ = as.list(directory.list()).iterator();
     return new Iterator<>() {
       File next;
 
@@ -62,7 +62,7 @@ public class FilesGenerator {
         for (;;) {
           if (!$.hasNext())
             return false;
-          final String name = $.next();
+          final var name = $.next();
           if (name == null)
             continue;
           next = new File(directory, name);
@@ -157,7 +157,7 @@ public class FilesGenerator {
         for (;;) {
           if (stack.isEmpty())
             return false;
-          final Iterator<File> currentIterator = stack.peek();
+          final var currentIterator = stack.peek();
           if (currentIterator == null || !currentIterator.hasNext()) {
             stack.pop();
             continue;

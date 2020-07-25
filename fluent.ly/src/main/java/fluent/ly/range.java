@@ -100,7 +100,7 @@ public class range {
         @Override public Integer next() {
           if (!hasNext())
             throw new NoSuchElementException();
-          final int $ = next;
+          final var $ = next;
           next += step;
           return Integer.valueOf($);
         }
@@ -159,7 +159,7 @@ public class range {
   }
 
   static Infinite infiniteFrom(final int ¢, final int ¢2) {
-    final Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
+    final var $ = makeFrom(¢).new Infinite().infiniteRange();
     $.step(¢2);
     return $;
   }

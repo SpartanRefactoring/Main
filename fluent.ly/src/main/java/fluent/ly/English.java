@@ -201,7 +201,7 @@ public interface English {
   static String trim(final String s) {
     if (s == null)
       return null;
-    final String[] $ = s.split("\n");
+    final var $ = s.split("\n");
     IntStream.range(0, $.length).forEach(λ -> $[λ] = trimAbsolute($[λ], TRIM_THRESHOLD, TRIM_SUFFIX));
     return String.join("\n", $);
   }

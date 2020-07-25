@@ -27,7 +27,7 @@ public class separateTest {
   }
 
   @Test public final void byArrayString() {
-    azzert.that(separate.these(new String[] { "Hello", "World" }).by(", "), is("Hello, World"));
+    azzert.that(separate.these("Hello", "World").by(", "), is("Hello, World"));
   }
 
   @Test public final void byArrayStringUsingLiterals() {
@@ -91,7 +91,7 @@ public class separateTest {
     assert f != null : "Function literals should never by null.";
     final Collection<String> c = as.list("Hello", "World");
     azzert.that(c.size(), is(2));
-    final Iterable<String> ts = f.to(c);
+    final var ts = f.to(c);
     azzert.that(count.of(ts), is(2));
     azzert.that(separate.these(ts).by(' '), is("'Hello' 'World'"));
   }
@@ -158,7 +158,7 @@ public class separateTest {
   }
 
   @Test public final void byTArrayChar() {
-    azzert.that(separate.these(new String[] { "Hello", "World" }).by(','), is("Hello,World"));
+    azzert.that(separate.these("Hello", "World").by(','), is("Hello,World"));
   }
 
   @Test public final void nlIterableOfString() {
@@ -170,15 +170,15 @@ public class separateTest {
   }
 
   @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
-    final SeparationSubject these = separate.these();
+    final var these = separate.these();
     assert these != null : null;
     final Iterable<?> os = these.os;
     assert os != null : null;
     azzert.aye(is.empty(os));
-    final String[] ss = as.strings(os);
+    final var ss = as.strings(os);
     assert ss != null : null;
     azzert.zero(ss.length);
-    final String[] noWhites = prune.whites(ss);
+    final var noWhites = prune.whites(ss);
     azzert.zero(noWhites.length);
     azzert.that(SeparationSubject.separateBy(noWhites, " "), is(""));
   }
@@ -196,11 +196,11 @@ public class separateTest {
   }
 
   @Test public void separateBySpaceMultipleIterator() {
-    azzert.that(separate.separateBySpaces(as.list(new String[] { "X", "Y", "Z" })), is("X Y Z"));
+    azzert.that(separate.separateBySpaces(as.list("X", "Y", "Z")), is("X Y Z"));
   }
 
   @Test public void separateBySpaceOnIteator() {
-    azzert.that(separate.separateBySpaces(as.list(new String[] { "Hello", "World " })), is("Hello World "));
+    azzert.that(separate.separateBySpaces(as.list("Hello", "World ")), is("Hello World "));
   }
 
   @Test public void separateBySpaceOnSingletonIteator() {
@@ -256,10 +256,10 @@ public class separateTest {
   }
 
   @Test public final void theseOfNoItemsl() {
-    azzert.aye(is.empty(separate.these(new String[] {}).os));
+    azzert.aye(is.empty(separate.these().os));
   }
 
   @Test public final void theseOfNoItemslSpaceSeparated() {
-    azzert.that(separate.these(new String[] {}).bySpaces(), is(""));
+    azzert.that(separate.these().bySpaces(), is(""));
   }
 }

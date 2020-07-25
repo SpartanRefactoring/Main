@@ -25,7 +25,7 @@ import il.org.spartan.utils.Accumulator.Counter;
 
   @Test public void emptyAdds() {
     final Accumulator.Counter c = new Counter();
-    for (int ¢ = 0; ¢ < 19; ++¢)
+    for (var ¢ = 0; ¢ < 19; ++¢)
       c.add();
     azzert.that(c.value(), is(19));
   }

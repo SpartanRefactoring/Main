@@ -21,7 +21,7 @@ public class LongestCommonSubsequence {
     as = tide.clean(a).toCharArray();
     bs = tide.clean(b).toCharArray();
     length = new int[as.length][];
-    for (int ¢ = 0; ¢ < as.length; ++¢)
+    for (var ¢ = 0; ¢ < as.length; ++¢)
       Arrays.fill(length[¢] = new int[bs.length], -1);
   }
 

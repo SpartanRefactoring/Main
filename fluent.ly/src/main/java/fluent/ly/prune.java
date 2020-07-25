@@ -38,7 +38,7 @@ public enum prune {
    * @param $   JD
    */
   public static <T, C extends Collection<T>> C nils(final C $) {
-    for (final Iterator<T> ¢ = $.iterator(); ¢.hasNext();)
+    for (final var ¢ = $.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
     return $;

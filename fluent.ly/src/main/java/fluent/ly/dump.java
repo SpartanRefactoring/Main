@@ -32,8 +32,8 @@ public class dump {
       return String.format("No %s\n", name);
     if (os.size() == 1)
       return String.format("Only 1 %s: %s\n", name, os.iterator().next());
-    String $ = String.format("Total of %d %s:\n", Integer.valueOf(os.size()), name);
-    int n = 0;
+    var $ = String.format("Total of %d %s:\n", Integer.valueOf(os.size()), name);
+    var n = 0;
     for (final Object ¢ : os) {
       if (++n > MAX_FIRST && n <= os.size() - MAX_LAST)
         $ += "\t...\n";
@@ -64,12 +64,12 @@ public class dump {
    * @return a textual description of the parameter
    */
   public static String of(final Class<?> ¢) {
-    String $ = "\n\n--IDENTIFICATION--\n" + entry("Simple Name", ¢.getSimpleName())
+    var $ = "\n\n--IDENTIFICATION--\n" + entry("Simple Name", ¢.getSimpleName())
         + entry("Canonical Name", ¢.getCanonicalName()) + entry("Name", ¢.getName()) + entry("toString", ¢ + "")
         + entry("super class", ¢.getSuperclass()) + entry("generic super class", ¢.getGenericSuperclass())
         + entry("class", ¢.getClass()) + entry("component type", ¢.getComponentType())
         + entry("class loader", ¢.getClassLoader()) + "--MODIFIERS--\n";
-    final int flags = ¢.getModifiers();
+    final var flags = ¢.getModifiers();
     $ += entry("Package", ¢.getPackage()) + entry("Modifiers (decimal form)", flags)
         + entry("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags)) + entry("IsSynthetic", ¢.isSynthetic())
         + entry("IsPrimitive", ¢.isPrimitive()) + entry("IsFinal", Modifier.isFinal(flags))
@@ -92,7 +92,7 @@ public class dump {
   }
 
   public static <T> String of(final List<T> ts, final String... ss) {
-    String $ = "Exploring list";
+    var $ = "Exploring list";
     for (final String ¢ : ss)
       $ += ¢;
     for (final T ¢ : ts)
@@ -101,14 +101,14 @@ public class dump {
   }
 
   public static String of(final Object os[], final String... ss) {
-    String $ = "";
+    var $ = "";
     for (final String ¢ : ss)
       $ += ¢;
     return $ + entry("elements", os);
   }
 
   @SuppressWarnings("unchecked") public static String of(final Object o, final String... ss) {
-    String $ = "";
+    var $ = "";
     for (final String ¢ : ss)
       $ += ¢;
     if (o == null)
@@ -120,7 +120,7 @@ public class dump {
     for (final Method m : c.getMethods()) {
       if (m.getParameterTypes().length != 0)
         continue;
-      String name = m.getName();
+      var name = m.getName();
       if ("getClass".equals(name) || "toString".equals(name))
         continue;
       if (name.matches("^get[A-Z].*$"))
@@ -132,7 +132,7 @@ public class dump {
       else if (!name.matches("^to[A-Z].*$"))
         continue;
       try {
-        final Object oo = m.invoke(o);
+        final var oo = m.invoke(o);
         if (oo == null) {
           $ += entry(name, "null");
           continue;

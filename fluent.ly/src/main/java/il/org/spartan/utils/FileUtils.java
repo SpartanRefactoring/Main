@@ -50,11 +50,11 @@ public class FileUtils {
    * @throws IOException in case of error
    */
   public static String read(final File f) throws IOException {
-    final String ls = System.getProperty("line.separator");
+    final var ls = System.getProperty("line.separator");
     System.err.println(ls.compareTo("\n"));
     final StringBuilder $ = new StringBuilder();
     try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
-      for (String line = reader.readLine(); line != null; line = reader.readLine())
+      for (var line = reader.readLine(); line != null; line = reader.readLine())
         $.append(line).append(ls);
     }
     return $ + "";

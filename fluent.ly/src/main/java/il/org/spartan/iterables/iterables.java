@@ -24,7 +24,7 @@ public enum iterables {
     }
 
     @Override public T next() {
-      final T $ = value();
+      final var $ = value();
       ++i;
       return $;
     }
@@ -76,7 +76,7 @@ public enum iterables {
         }
 
         @Override public T next() {
-          final T $ = t;
+          final var $ = t;
           t = null;
           return $;
         }

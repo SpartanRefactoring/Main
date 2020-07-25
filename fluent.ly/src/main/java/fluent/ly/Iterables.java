@@ -48,7 +48,7 @@ public interface Iterables {
   }
 
   static <T> boolean before(final Iterable<T> ts, final @NonNull T t1, final @NonNull T t2) {
-    boolean seen = false;
+    var seen = false;
     for (final T ¢ : ts) {
       if (!seen && t1.equals(¢))
         seen = true;
@@ -75,7 +75,7 @@ public interface Iterables {
    * @return the number of elements in this iterable
    */
   static <T> int count(final Iterable<? extends T> ts) {
-    int $ = 0;
+    var $ = 0;
     for (@SuppressWarnings("unused") final T __ : ts)
       ++$;
     return $;
@@ -88,28 +88,28 @@ public interface Iterables {
    * @return the number of elements in the stream which are equal to the parameter
    */
   static <T> int count(final Iterable<? extends T> ts, final T t) {
-    int $ = 0;
+    var $ = 0;
     for (final T candidate : ts)
       $ += as.bit(isEqual(t, candidate));
     return $;
   }
 
   static <T> int count(final Iterable<T> ts, final Predicate<T> p) {
-    int $ = 0;
+    var $ = 0;
     for (final T ¢ : ts)
       $ += as.bit(p.test(¢));
     return $;
   }
 
   static <T> int count(final T[] ts, final Predicate<T> p) {
-    int $ = 0;
+    var $ = 0;
     for (final T ¢ : ts)
       $ += as.bit(p.test(¢));
     return $;
   }
 
   static <@Nullable T> T get(final Iterable<T> ts, final int i) {
-    int j = 0;
+    var j = 0;
     for (final T $ : ts)
       if (++j > i)
         return $;
@@ -125,7 +125,7 @@ public interface Iterables {
    *         if not found.
    */
   static int index(final int j, final int[] is) {
-    int $ = 0;
+    var $ = 0;
     for (final int ¢ : is) {
       if (¢ == j)
         return $;
@@ -144,7 +144,7 @@ public interface Iterables {
    *         -1 if not found.
    */
   static <T> int index(final T t, final Iterable<? extends T> ts) {
-    int $ = 0;
+    var $ = 0;
     for (final T __ : ts) {
       if (t == __)
         return $;
@@ -154,7 +154,7 @@ public interface Iterables {
   }
 
   static <T> int[] indices(final Collection<? extends T> ts, final Predicate<T> p) {
-    final int[] $ = new int[ts.size()];
+    final var $ = new int[ts.size()];
     int i = 0, position = 0;
     for (final T ¢ : ts) {
       if (p.test(¢))
@@ -165,7 +165,7 @@ public interface Iterables {
   }
 
   static <T> void iterate(final T[] ts, final Iteration<T> what) {
-    for (int ¢ = 0; ¢ < ts.length; ++¢) {
+    for (var ¢ = 0; ¢ < ts.length; ++¢) {
       what.prolog(ts[¢]);
       if (¢ < ts.length - 1)
         what.next(ts[¢], ts[¢ + 1]);
@@ -177,7 +177,7 @@ public interface Iterables {
   }
 
   static int[] make(final BitSet s) {
-    final int[] $ = new int[s.cardinality()];
+    final var $ = new int[s.cardinality()];
     for (int ¢ = 0, value = s.nextSetBit(0); value >= 0; value = s.nextSetBit(value + 1))
       $[¢++] = value;
     return $;
@@ -262,7 +262,7 @@ public interface Iterables {
   }
 
   static <E> Iterable<E> reverse(final Iterable<E> in) {
-    final List<E> $ = toList(in);
+    final var $ = toList(in);
     Collections.reverse($);
     return $;
   }
@@ -301,8 +301,8 @@ public interface Iterables {
    *         parameter.
    */
   static double[] seq(final int i) {
-    final double[] $ = new double[i];
-    for (int ¢ = 0; ¢ < i; ++¢)
+    final var $ = new double[i];
+    for (var ¢ = 0; ¢ < i; ++¢)
       $[¢] = ¢;
     return $;
   }
@@ -320,16 +320,16 @@ public interface Iterables {
   }
 
   static String[] toArray(final Collection<String> ss) {
-    final String[] $ = new String[ss.size()];
-    int i = 0;
+    final var $ = new String[ss.size()];
+    var i = 0;
     for (final String ¢ : ss)
       $[i++] = ¢;
     return $;
   }
 
   static <E> E[] toArray(final Iterable<? extends E> in, final Class<E> clazz) {
-    final List<E> $ = toList(in);
-    @SuppressWarnings("unchecked") final E[] __ = (E[]) Array.newInstance(clazz, $.size());
+    final var $ = toList(in);
+    @SuppressWarnings("unchecked") final var __ = (E[]) Array.newInstance(clazz, $.size());
     return $.toArray(__);
   }
 
@@ -338,8 +338,8 @@ public interface Iterables {
   }
 
   static double[] toArray(final List<Double> ds) {
-    final double[] $ = new double[ds.size()];
-    int i = 0;
+    final var $ = new double[ds.size()];
+    var i = 0;
     for (final Double ¢ : ds)
       $[i++] = it(¢);
     return $;
@@ -368,14 +368,14 @@ public interface Iterables {
   }
 
   static String toString(final Iterable<String> items, final String sep) {
-    String $ = "";
+    var $ = "";
     for (final String ¢ : items)
       $ += ¢ + sep;
     return $;
   }
 
   static String toString(final Set<Entry<String, String>> entrySet, final String sep) {
-    String $ = "";
+    var $ = "";
     for (final Entry<String, String> ¢ : entrySet)
       $ += ¢ + sep;
     return $;

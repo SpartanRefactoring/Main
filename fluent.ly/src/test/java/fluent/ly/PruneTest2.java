@@ -59,7 +59,7 @@ import org.junit.Test;
   }
 
   @Test public void testPruneSparseCollectionContents() {
-    final String[] a = prune.nils(sparseCollection).toArray(new String[3]);
+    final var a = prune.nils(sparseCollection).toArray(new String[3]);
     azzert.that(a[0], is("A"));
     azzert.that(a[1], is("B"));
     azzert.that(a[2], is("C"));

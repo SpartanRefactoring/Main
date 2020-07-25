@@ -2,7 +2,7 @@ package fluent.ly;
 
 public interface count {
   static <T> int of(final Iterable<T> ts) {
-    int $ = 0;
+    var $ = 0;
     for (@SuppressWarnings("unused") final T __ : ts)
       ++$;
     return $;
@@ -16,7 +16,7 @@ public interface count {
    * @return number of items the given iterable yields.
    */
   static <T> int notNull(final Iterable<T> ts) {
-    int $ = 0;
+    var $ = 0;
     if (ts != null)
       for (final T ¢ : ts)
         $ += as.bit(¢ != null);

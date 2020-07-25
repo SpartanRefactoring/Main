@@ -22,7 +22,7 @@ public class to {
       return;
     }
     System.out.printf("Total of %d %s:\n", Integer.valueOf(os.size()), name);
-    int n = 0;
+    var n = 0;
     for (final Object ¢ : os) {
       if (++n > dump.MAX_FIRST && n <= os.size() - dump.MAX_LAST) {
         System.out.print("\t...\n");

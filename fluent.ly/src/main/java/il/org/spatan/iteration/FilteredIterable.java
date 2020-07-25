@@ -43,7 +43,7 @@ public abstract class FilteredIterable<T> implements Predicate<T>, Iterable<T> {
       }
 
       @Override public T next() {
-        final T $ = pending;
+        final var $ = pending;
         advance();
         return $;
       }

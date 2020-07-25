@@ -56,7 +56,7 @@ public class Tab {
    * @return the previous tabulation string.
    */
   public String begin() {
-    final String $ = toString();
+    final var $ = toString();
     more();
     return $;
   }

@@ -23,7 +23,7 @@ public enum file {
 
   private static void rename(final String from, final String to) {
     file.delete(to);
-    final Path source = Paths.get(from);
+    final var source = Paths.get(from);
     try {
       Files.move(source, source.resolveSibling(to));
     } catch (final IOException ¢) {

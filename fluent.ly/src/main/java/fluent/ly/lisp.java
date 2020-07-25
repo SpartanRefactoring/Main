@@ -95,7 +95,7 @@ public interface lisp {
   }
 
   static <T> List<T> chopLast(final List<T> ¢) {
-    final List<T> $ = as.list(¢);
+    final var $ = as.list(¢);
     $.remove($.size() - 1);
     return $;
   }
@@ -123,7 +123,7 @@ public interface lisp {
   static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
     if (i1 >= $.size() || i2 >= $.size())
       return $;
-    final T t = $.get(i1);
+    final var t = $.get(i1);
     replace($, $.get(i2), i1);
     replace($, t, i2);
     return $;

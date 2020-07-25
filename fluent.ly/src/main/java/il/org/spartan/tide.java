@@ -14,7 +14,7 @@ public interface tide {
    * @return parameter, with all redundant spaces removes from it
    */
   static String clean(final String javaCodeFragment) {
-    String $ = javaCodeFragment//
+    var $ = javaCodeFragment//
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
         .replaceAll("^\\s", "") // Opening whites
         .replaceAll("\\s$", "") // Closing whites

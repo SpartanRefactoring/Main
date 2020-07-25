@@ -79,7 +79,7 @@ public interface Utils {
    * @return newly created array
    */
   static <T> T[] append(final T[] ts, final T t) {
-    final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
+    final var $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
   }
@@ -182,7 +182,7 @@ public interface Utils {
    * @return parameter, with all redundant spaces removed from it
    */
   static String compressSpaces(final String javaCodeFragment) {
-    String $ = javaCodeFragment.replaceAll("(?m)\\s+", " ").replaceAll("^\\s", "").replaceAll("\\s$", "");
+    var $ = javaCodeFragment.replaceAll("(?m)\\s+", " ").replaceAll("^\\s", "").replaceAll("\\s$", "");
     for (final String operator : new String[] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">",
         ">=", "!=", "==", "<", "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
       $ = $.replaceAll(WHITES + operator, operator).replaceAll(operator + WHITES, operator);
@@ -214,7 +214,7 @@ public interface Utils {
    * @return newly created array
    */
   static <T> T[] delete(final T[] ts, final int i) {
-    final T[] $ = Arrays.copyOf(ts, ts.length - 1);
+    final var $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
@@ -300,7 +300,7 @@ public interface Utils {
    * @return parameter after all such occurrences are removed.
    */
   static String removePrefix(final String s, final String prefix) {
-    for (String $ = s;; $ = $.substring(prefix.length()))
+    for (var $ = s;; $ = $.substring(prefix.length()))
       if (!$.startsWith(prefix))
         return $;
   }
@@ -313,7 +313,7 @@ public interface Utils {
    * @return parameter after all such occurrences are removed.
    */
   static String removeSuffix(final String s, final String suffix) {
-    for (String $ = s;; $ = $.substring(0, $.length() - suffix.length()))
+    for (var $ = s;; $ = $.substring(0, $.length() - suffix.length()))
       if (!$.endsWith(suffix))
         return $;
   }
@@ -412,7 +412,7 @@ public interface Utils {
    * @param j   index of another cell
    */
   static <T> void swap(final T[] ts, final int i, final int j) {
-    final T t = ts[i];
+    final var t = ts[i];
     ts[i] = ts[j];
     ts[j] = t;
   }
@@ -468,8 +468,8 @@ public interface Utils {
    */
   @SuppressWarnings("static-method") class TEST {
     public static Integer[] intToIntFunctionegers(final int... is) {
-      final Integer[] $ = new Integer[is.length];
-      for (int ¢ = 0; ¢ < is.length; ++¢)
+      final var $ = new Integer[is.length];
+      for (var ¢ = 0; ¢ < is.length; ++¢)
         $[¢] = fluent.ly.box.it(is[¢]);
       return $;
     }
@@ -539,19 +539,19 @@ public interface Utils {
     }
 
     @Test public void swapDegenerate() {
-      final String[] ss = as.array("A", "B", "C", "D");
+      final var ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 1);
       assertArrayEquals(as.array("A", "B", "C", "D"), ss);
     }
 
     @Test public void swapTypical() {
-      final String[] ss = as.array("A", "B", "C", "D");
+      final var ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 2);
       assertArrayEquals(as.array("A", "C", "B", "D"), ss);
     }
 
     @Test public void swapTypicalCase() {
-      final Integer[] $ = intToIntFunctionegers(29, 1, 60);
+      final var $ = intToIntFunctionegers(29, 1, 60);
       swap($, 0, 1);
       assertArrayEquals(intToIntFunctionegers(1, 29, 60), $);
     }

@@ -325,8 +325,8 @@ public interface idiomatic {
    *         the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Boolean[] box(final boolean bs[]) {
-    final Boolean[] $ = new Boolean[bs.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Boolean[bs.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(bs[¢]);
     return $;
   }
@@ -351,8 +351,8 @@ public interface idiomatic {
    *         value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Byte[] box(final byte bs[]) {
-    final Byte[] $ = new Byte[bs.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Byte[bs.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(bs[¢]);
     return $;
   }
@@ -378,8 +378,8 @@ public interface idiomatic {
    *         the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Character[] box(final char cs[]) {
-    final Character[] $ = new Character[cs.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Character[cs.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(cs[¢]);
     return $;
   }
@@ -405,8 +405,8 @@ public interface idiomatic {
    *         the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Double[] box(final double ds[]) {
-    final Double[] $ = new Double[ds.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Double[ds.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ds[¢]);
     return $;
   }
@@ -431,8 +431,8 @@ public interface idiomatic {
    *         the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Float[] box(final float fs[]) {
-    final Float[] $ = new Float[fs.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Float[fs.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(fs[¢]);
     return $;
   }
@@ -457,8 +457,8 @@ public interface idiomatic {
    *         the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Integer[] box(final int... is) {
-    final Integer[] $ = new Integer[is.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Integer[is.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(is[¢]);
     return $;
   }
@@ -483,8 +483,8 @@ public interface idiomatic {
    *         value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Long[] box(final long ls[]) {
-    final Long[] $ = new Long[ls.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Long[ls.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ls[¢]);
     return $;
   }
@@ -509,8 +509,8 @@ public interface idiomatic {
    *         the boxed value of the <tt>i</tt><em>th</em> of the parameter
    */
   static Short[] box(final short ss[]) {
-    final Short[] $ = new Short[ss.length];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
+    final var $ = new Short[ss.length];
+    for (var ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ss[¢]);
     return $;
   }

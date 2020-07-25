@@ -20,7 +20,7 @@ public class Boxer<Inner> {
       return true;
     if (¢ == null || getClass() != ¢.getClass())
       return false;
-    @SuppressWarnings("unchecked") final Boxer<Inner> $ = (Boxer<Inner>) ¢;
+    @SuppressWarnings("unchecked") final var $ = (Boxer<Inner>) ¢;
     return equals($);
   }
 

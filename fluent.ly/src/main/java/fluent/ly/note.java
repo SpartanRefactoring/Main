@@ -37,7 +37,7 @@ public interface note {
   Stack<Level> levels = new Stack<>();
 
   Logger logger = anonymous.ly(() -> {
-    final Logger $ = Logger.getGlobal();
+    final var $ = Logger.getGlobal();
     final ConsoleHandler handler = new ConsoleHandler();
     handler.setLevel(Level.ALL);
     $.addHandler(handler);
@@ -167,7 +167,7 @@ public interface note {
   static <T> T logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
-    final Object[] nos = new Object[os.length + 2];
+    final var nos = new Object[os.length + 2];
     System.arraycopy(os, 0, nos, 2, os.length);
     nos[0] = t + "";
     nos[1] = (w + "").trim();

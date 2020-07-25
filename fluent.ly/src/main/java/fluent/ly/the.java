@@ -52,7 +52,7 @@ public interface the {
    */
   static <T> ArrayList<T> first(final Iterable<T> ts, final int n) {
     final ArrayList<T> $ = new ArrayList<>();
-    int i = 0;
+    var i = 0;
     for (final T ¢ : ts) {
       $.add(¢);
       if (++i == n)
@@ -67,7 +67,7 @@ public interface the {
 
   static <T> @Nullable T first(final Iterator<T> t, final Predicate<T> p) {
     while (t.hasNext()) {
-      final T $ = t.next();
+      final var $ = t.next();
       if (p.test($))
         return $;
     }
@@ -164,7 +164,7 @@ public interface the {
    * @return largest of the parameters
    */
   static int max(final int a, final int... is) {
-    int $ = a;
+    var $ = a;
     for (final int ¢ : is)
       $ = Math.max($, ¢);
     return $;
@@ -178,7 +178,7 @@ public interface the {
    * @return smallest of the parameters
    */
   static int min(final int a, final int... is) {
-    int $ = a;
+    var $ = a;
     for (final int ¢ : is)
       $ = Math.min($, ¢);
     return $;
@@ -217,7 +217,7 @@ public interface the {
   static <T> T previous(final T t, final List<T> ts) {
     if (ts == null)
       return null;
-    final int $ = ts.indexOf(t);
+    final var $ = ts.indexOf(t);
     return $ < 1 ? null : ts.get($ - 1);
   }
 
@@ -234,7 +234,7 @@ public interface the {
   }
 
   static <T> List<T> rest(final T t, final Iterable<T> ts) {
-    boolean add = false;
+    var add = false;
     final List<T> $ = an.empty.list();
     for (final T x : ts)
       if (add)
@@ -259,7 +259,7 @@ public interface the {
   }
 
   static <T> List<T> tailOf(final List<T> ¢) {
-    final List<T> $ = as.list(¢);
+    final var $ = as.list(¢);
     $.remove(the.firstOf($));
     return $;
   }
