@@ -86,7 +86,7 @@ public interface the {
     return ¢.length > 0 ? ¢[0] : null;
   }
 
-  @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
+  @SuppressWarnings("null") @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
 

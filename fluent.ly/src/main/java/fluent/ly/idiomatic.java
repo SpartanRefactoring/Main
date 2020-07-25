@@ -48,7 +48,7 @@ public interface idiomatic {
    * @condition the condition to use prior to taking this value;
    * @return the parameter if condition holds, otherwise, null <code>incase</code>
    */
-  static <T> T incase(final boolean condition, final T t) {
+  static <T> @Nullable T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
 

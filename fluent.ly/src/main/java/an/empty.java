@@ -31,7 +31,7 @@ public enum empty {
       }
 
       @Override public T next() {
-        return null;
+        throw new IllegalStateException("Called next() on an empty list");
       }
     };
   }

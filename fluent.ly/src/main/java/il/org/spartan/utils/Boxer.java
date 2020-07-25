@@ -1,5 +1,7 @@
 package il.org.spartan.utils;
 
+import java.util.Objects;
+
 /**
  * TODO Yossi Gil: document class
  *
@@ -15,25 +17,17 @@ public class Boxer<Inner> {
       throw new IllegalArgumentException();
   }
 
-  @Override public boolean equals(final Object ¢) {
-    if (¢ == this)
-      return true;
-    if (¢ == null || getClass() != ¢.getClass())
-      return false;
-    @SuppressWarnings("unchecked") final var $ = (Boxer<Inner>) ¢;
-    return equals($);
-  }
-
-  protected boolean equals(final Boxer<Inner> other) {
-    if (inner == null) {
-      if (other.inner != null)
-        return false;
-    } else if (!inner.equals(other.inner))
-      return false;
-    return true;
-  }
-
   @Override public int hashCode() {
-    return 31 + (inner == null ? 0 : inner.hashCode());
+    return Objects.hash(inner);
+  }
+
+  @Override public boolean equals(final Object o) {
+    if (this == o)
+      return true;
+    if (o == null)
+      return false;
+    if (getClass() != o.getClass())
+      return false;
+    return Objects.equals(inner, ((Boxer<?>) o).inner);
   }
 }

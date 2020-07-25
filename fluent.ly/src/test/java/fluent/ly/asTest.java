@@ -3,8 +3,6 @@ package fluent.ly;
 import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertArrayEquals;
 
-import java.util.List;
-
 import org.junit.Test;
 
 // No values in an 'enum' which serves as a name space for a collection of

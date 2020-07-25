@@ -160,7 +160,7 @@ public enum as {
    * @param $   what to covert
    * @return result parameter, converted into a {@link List}
    */
-  @SafeVarargs public static <T> @NonNull List<T> list(final T... $) {
+  @SuppressWarnings("null") @SafeVarargs public static <T> @NonNull List<T> list(final T... $) {
     return Arrays.asList($).stream().collect(Collectors.toList());
   }
 

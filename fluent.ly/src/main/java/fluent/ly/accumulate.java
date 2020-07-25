@@ -3,6 +3,7 @@ package fluent.ly;
 
 import java.util.Collection;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -17,7 +18,7 @@ public interface accumulate<T, C extends Collection<T>> {
    * @param <C> JD
    * @param c   JD
    */
-  static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
+  static <T, @NonNull C extends Collection<T>> accumulate<T, C> to(final C c) {
     return new accumulate<>() {
       @Override public accumulate<T, C> add(final @NotNull T ¢) {
         if (¢ == null)

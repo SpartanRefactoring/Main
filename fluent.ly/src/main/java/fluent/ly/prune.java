@@ -6,8 +6,9 @@ import static il.org.spartan.Utils.cantBeNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
+
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * A <b>Utility class</b> providing functions to remove <code><b>null</b></code>
@@ -37,7 +38,7 @@ public enum prune {
    * @param <C> JD
    * @param $   JD
    */
-  public static <T, C extends Collection<T>> C nils(final C $) {
+  public static <T, C extends Collection<T>> C nils(final @NonNull C $) {
     for (final var ¢ = $.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
