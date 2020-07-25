@@ -41,8 +41,7 @@ public class TestNoOther {
   public static String read(final File f) throws IOException {
     final char[] $ = new char[(int) f.length()];
     try (FileReader x = new FileReader(f)) {
-      final int n = x.read($);
-      return String.valueOf(Arrays.copyOf($, n));
+      return String.valueOf(Arrays.copyOf($, x.read($)));
     }
   }
 

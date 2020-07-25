@@ -108,7 +108,7 @@ public enum CSV {
    * @return a two dimensional array of strings */
   public static String[][] load(final Reader r) {
     final ArrayList<String[]> $ = new ArrayList<>(20);
-    try (final Scanner ¢ = new Scanner(r)) {
+    try (Scanner ¢ = new Scanner(r)) {
       while (¢.hasNext())
         $.add(split(¢.nextLine()));
     }

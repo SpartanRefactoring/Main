@@ -8,7 +8,6 @@ import static il.org.spartan.Utils.mustBeNull;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.junit.Test;
 
 import fluent.ly.azzert;

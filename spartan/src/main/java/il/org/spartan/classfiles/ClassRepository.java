@@ -104,18 +104,17 @@ public class ClassRepository implements Iterable<String> {
    * @param jarFile fill path to a jar file
    * @param result  List where scanned files are stored */
   private static void addFromArchive(final String jarFile, final ArrayList<String> result) {
-    if (!new File(jarFile).exists())
-      return;
-    try (ZipFile zipFile = new ZipFile(jarFile)) {
-      for (final Enumeration<? extends ZipEntry> entries = zipFile.entries(); entries.hasMoreElements();) {
-        final ZipEntry ze = entries.nextElement();
-        final NameDotSuffix nds = new NameDotSuffix(ze);
-        if (nds.suffixIs(DOT_CLASS))
-          result.add(nds.name);
+    if (new File(jarFile).exists())
+      try (ZipFile zipFile = new ZipFile(jarFile)) {
+        for (final Enumeration<? extends ZipEntry> entries = zipFile.entries(); entries.hasMoreElements();) {
+          final ZipEntry ze = entries.nextElement();
+          final NameDotSuffix nds = new NameDotSuffix(ze);
+          if (nds.suffixIs(DOT_CLASS))
+            result.add(nds.name);
+        }
+      } catch (final IOException ¢) {
+        throw new RuntimeException("Damaged zip file: " + jarFile, ¢);
       }
-    } catch (final IOException ¢) {
-      throw new RuntimeException("Damaged zip file: " + jarFile, ¢);
-    }
   }
 
   private static String concat(final String path, final String name) {

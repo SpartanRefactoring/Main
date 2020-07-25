@@ -1,8 +1,6 @@
 package il.org.spartan.graph;
 
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import il.org.spartan.collections.ImmutableArrayList;
 
 /** A representation of an immutable vertex in an immutable graph

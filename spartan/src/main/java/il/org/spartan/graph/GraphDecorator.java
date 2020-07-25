@@ -1,7 +1,5 @@
 package il.org.spartan.graph;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import il.org.spartan.collections.ImmutableArrayList;
 
 /** A basic graph decorator, which does nothing except for delegating all its

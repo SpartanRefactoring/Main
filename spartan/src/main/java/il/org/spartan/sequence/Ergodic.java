@@ -74,25 +74,23 @@ public class Ergodic {
   private static double[] makeDouble(final int i, final List<Double> $) {
     for (;;) {
       if ($.size() >= i)
-        break;
+        return null;
       final Double d = selectDouble($);
       if (d == null)
         return unbox.it($.toArray(new Double[$.size()]));
       $.add(d);
     }
-    return null;
   }
 
   private static int[] makeInt(final int n, final List<Integer> $) {
     for (;;) {
       if ($.size() >= n)
-        break;
+        return null;
       final Integer i = select($);
       if (i == null)
         return unbox.it($);
       $.add(i);
     }
-    return null;
   }
 
   private static Integer mid(final List<Integer> is, final int i) {

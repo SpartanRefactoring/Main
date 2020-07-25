@@ -161,7 +161,7 @@ public class CFG {
     final Set<BasicBlock> $ = new HashSet<>();
     long offset = 0;
     BasicBlock currBlock = null;
-    try (final BufferDataInputStream r = new BufferDataInputStream(codes)) {
+    try (BufferDataInputStream r = new BufferDataInputStream(codes)) {
       for (;;) {
         final Instruction i = OpCode.read(r);
         if (i == null)
