@@ -35,7 +35,7 @@ public interface singleton {
    * @since Oct 19, 2009
    * @param <T> JD
    */
-  public static <T> Iterable<T> iterator(final T ¢) {
+  static <T> Iterable<T> iterator(final T ¢) {
     return new Iterable<>() {
       @Nullable T t = ¢;
 

@@ -25,7 +25,7 @@ public class TestFluent_nil {
     azzert.isNull(i3);
     nil.guardingly(State::getName).on(null);
     nil.guardingly(State::getName).on(californiaCustomer.getAddress().getState());
-    final U<String, State> g = nil.cautiously(State::getName);
+    var g = nil.cautiously(State::getName);
     assert g != null;
     final Function<Address, State> f2 = Address::getState;
     assert f2 != null;
