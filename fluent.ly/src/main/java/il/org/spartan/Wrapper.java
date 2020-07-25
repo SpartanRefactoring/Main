@@ -40,7 +40,7 @@ public class Wrapper<T> {
    *         returns <code><b>true</b></code> for the wrapped objects.
    */
   public boolean equals(final Wrapper<?> ¢) {
-    return Objects.equals(inner, ¢.inner); 
+    return Objects.equals(inner, ¢.inner);
   }
 
   /** @return value wrapped in this object. */
@@ -49,7 +49,7 @@ public class Wrapper<T> {
   }
 
   @Override public int hashCode() {
-    return Objects.hash(inner); 
+    return Objects.hash(inner);
   }
 
   /** set current value */

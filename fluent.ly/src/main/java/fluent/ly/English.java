@@ -147,35 +147,34 @@ public interface English {
   }
 
   static String pronounce(final char ¢) {
-    return Character.isUpperCase(¢) ? pronounce(Character.toLowerCase(¢)):
-    switch (¢) {
-      case 'a'-> "aey";
-      case 'b'-> "bee";
-      case 'c'-> "see";
-      case 'd'-> "dee";
-      case 'e'-> "eae";
-      case 'f'-> "eff";
-      case 'g'-> "gee";
-      case 'h'-> "eitch";
-      case 'i'-> "eye";
-      case 'j'-> "jay";
-      case 'k'-> "kay";
-      case 'l'-> "ell";
-      case 'm'-> "em";
-      case 'n'-> "en";
-      case 'o'-> "oh";
-      case 'p'-> "pee";
-      case 'q'-> "queue";
-      case 'r'-> "ar";
-      case 's'-> "ess";
-      case 't'-> "tee";
-      case 'u'-> "you";
-      case 'v'-> "vee";
-      case 'w'-> "doubleyou";
-      case 'x'-> "exx";
-      case 'y'-> "why";
-      case 'z'-> "zee";
-      default-> "some character";
+    return Character.isUpperCase(¢) ? pronounce(Character.toLowerCase(¢)) : switch (¢) {
+      case 'a' -> "aey";
+      case 'b' -> "bee";
+      case 'c' -> "see";
+      case 'd' -> "dee";
+      case 'e' -> "eae";
+      case 'f' -> "eff";
+      case 'g' -> "gee";
+      case 'h' -> "eitch";
+      case 'i' -> "eye";
+      case 'j' -> "jay";
+      case 'k' -> "kay";
+      case 'l' -> "ell";
+      case 'm' -> "em";
+      case 'n' -> "en";
+      case 'o' -> "oh";
+      case 'p' -> "pee";
+      case 'q' -> "queue";
+      case 'r' -> "ar";
+      case 's' -> "ess";
+      case 't' -> "tee";
+      case 'u' -> "you";
+      case 'v' -> "vee";
+      case 'w' -> "doubleyou";
+      case 'x' -> "exx";
+      case 'y' -> "why";
+      case 'z' -> "zee";
+      default -> "some character";
     };
   }
 

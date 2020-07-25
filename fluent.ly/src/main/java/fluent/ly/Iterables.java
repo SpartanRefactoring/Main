@@ -26,6 +26,7 @@ import il.org.spatan.iteration.CharIterator;
 import il.org.spatan.iteration.FilteredIterable;
 import il.org.spatan.iteration.IterableArray;
 import il.org.spatan.iteration.Iteration;
+
 public interface Iterables {
   static <T, @NonNull C extends Collection<T>> C addAll(final C $, final @NonNull Iterable<? extends T> ts) {
     for (final T ¢ : ts)
