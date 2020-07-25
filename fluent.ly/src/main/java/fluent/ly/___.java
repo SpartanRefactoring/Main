@@ -2,6 +2,7 @@ package fluent.ly;
 
 import static fluent.ly.string.sprintf;
 
+import fluent.ly.___.Bug;
 import fluent.ly.___.Bug.Assertion.Invariant;
 import fluent.ly.___.Bug.Assertion.Reachability;
 import fluent.ly.___.Bug.Assertion.Value.NonNull;

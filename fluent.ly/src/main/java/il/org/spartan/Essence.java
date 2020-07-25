@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import java.util.*;
+import java.util.Scanner;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

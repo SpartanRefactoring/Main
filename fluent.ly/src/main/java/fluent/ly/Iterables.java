@@ -20,7 +20,6 @@ import java.util.function.Predicate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-
 import il.org.spartan.iterables.iterables;
 import il.org.spatan.iteration.CharIterable;
 import il.org.spatan.iteration.CharIterator;
