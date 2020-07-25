@@ -32,20 +32,18 @@ public class NonLinearTests extends NominalTables {
 	static boolean isJunitAnnotation(List<String> annotations) {
 		String[] anno = { "After", "AfterClass", "Before", "BeforeClass" };
 		List<String> annoList = Arrays.asList(anno);
-		for (String s : annotations) {
+		for (String s : annotations)
 			if (annoList.contains(s))
 				return true;
-		}
 		return false;
 	}
 
 	static boolean isIgnoredTest(List<String> annotations) {
 		String[] anno = { "Ignore" };
 		List<String> annoList = Arrays.asList(anno);
-		for (String s : annotations) {
+		for (String s : annotations)
 			if (annoList.contains(s))
 				return true;
-		}
 		return false;
 	}
 

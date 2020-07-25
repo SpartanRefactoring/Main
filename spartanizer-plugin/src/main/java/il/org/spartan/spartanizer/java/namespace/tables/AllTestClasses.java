@@ -46,24 +46,20 @@ public class AllTestClasses extends TestTables {
       }
       public void summarize(final String path) {
         initializeWriter();
-        if (!map.get("TestClassName").isEmpty()) {
-          for (int i = 0; i < map.get("TestClassName").size(); i++) {
-            String className = map.get("TestClassName").get(i);
-            String classCode = map.get("TestClass").get(i);
-            table.col("Project", path).col("TestClassName", className) //
-                // .col("TestClass", map.get("TestClass").get(i)) //
-                .nl();
-              File file = new File(initialPath + path + "/" + className + ".txt");
-              file.getParentFile().mkdirs();
-            try (
-              FileWriter writer = new FileWriter(file, false); PrintWriter output = new PrintWriter(writer)) {
-              output.print(classCode);
-            } catch (Exception x) {
-              // TODO Auto-generated catch block
-              x.printStackTrace();
-            }
-          }
-        }
+        if (!map.get("TestClassName").isEmpty())
+			for (int i = 0; i < map.get("TestClassName").size(); i++) {
+				String className = map.get("TestClassName").get(i);
+				String classCode = map.get("TestClass").get(i);
+				table.col("Project", path).col("TestClassName", className).nl();
+				File file = new File(initialPath + path + "/" + className + ".txt");
+				file.getParentFile().mkdirs();
+				try (FileWriter writer = new FileWriter(file, false);
+						PrintWriter output = new PrintWriter(writer)) {
+					output.print(classCode);
+				} catch (Exception x) {
+					x.printStackTrace();
+				}
+			}
       }
       void initializeWriter() {
         if (table == null)

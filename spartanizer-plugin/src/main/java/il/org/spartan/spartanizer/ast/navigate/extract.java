@@ -653,9 +653,8 @@ public enum extract {
     if (n == null)
       return an.empty.list();
     List<ImportDeclaration> $ = new ArrayList<>();
-    for (Object o : n.imports()) {
-      $.add(az.importDeclaration(o));
-    }
+    for (Object o : n.imports())
+		$.add(az.importDeclaration(o));
     return $;
   }
   public static List<String> identifiers(final Name ¢) {

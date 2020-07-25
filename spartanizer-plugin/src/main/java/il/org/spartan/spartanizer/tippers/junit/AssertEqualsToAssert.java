@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.categories.Category;
 /** @author Dor Ma'ayan
  * @since 2018-12-19 */
 public class AssertEqualsToAssert extends ReplaceCurrentNode<MethodInvocation> implements Category.Idiomatic {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   public static boolean arePrimitives(final Expression e1, final Expression e2) {
     return type.isDouble(e1) || type.isInt(e1) || type.isLong(e1) || //

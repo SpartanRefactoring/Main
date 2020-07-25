@@ -54,19 +54,15 @@ public class SmellsDetector extends TestTables {
       }
       public void summarize(final String path) {
         initializeWriter();
-        if (!map.get("TestClassName").isEmpty()) {
-          for (int i = 0; i < map.get("TestClassName").size(); i++) {
-            String className = map.get("TestClassName").get(i);
-            if (mapMethods.containsKey(className) && !mapMethods.get(className).isEmpty()) {
-              for (int j = 0; j < mapMethods.get(className).size(); j++) {
-                String methodName = mapMethods.get(className).get(j);
-                table.col("Project", path).col("TestClassName", className) //
-                    .col("MethodName", methodName)//
-                    .nl();
-              }
-            }
-          }
-        }
+        if (!map.get("TestClassName").isEmpty())
+			for (int i = 0; i < map.get("TestClassName").size(); i++) {
+				String className = map.get("TestClassName").get(i);
+				if (mapMethods.containsKey(className) && !mapMethods.get(className).isEmpty())
+					for (int j = 0; j < mapMethods.get(className).size(); j++) {
+						String methodName = mapMethods.get(className).get(j);
+						table.col("Project", path).col("TestClassName", className).col("MethodName", methodName).nl();
+					}
+			}
       }
       void initializeWriter() {
         if (table == null)
@@ -91,9 +87,8 @@ public class SmellsDetector extends TestTables {
                 if (annotations.contains("Test")
                     || (iz.typeDeclaration(m.getParent()) && az.typeDeclaration(m.getParent()).getSuperclassType() != null
                         && az.typeDeclaration(m.getParent()).getSuperclassType().toString().equals("TestCase"))) {
-                  if (!mapMethods.containsKey(extract.name(x))) {
-                    mapMethods.put(extract.name(x), new ArrayList<>());
-                  }
+                  if (!mapMethods.containsKey(extract.name(x)))
+					mapMethods.put(extract.name(x), new ArrayList<>());
                   mapMethods.get(extract.name(x)).add(extract.name(m));
                 }
                 return true;

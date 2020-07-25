@@ -692,43 +692,39 @@ public class RawTokenizer {
       int zzAttributes = zzAttrL[zzState];
       if ((zzAttributes & 1) == 1)
         zzAction = zzState;
-      zzForAction: {
-        while (true) {
-          if (zzCurrentPosL < zzEndReadL) {
-            zzInput = Character.codePointAt(zzBufferL, zzCurrentPosL, zzEndReadL);
-            zzCurrentPosL += Character.charCount(zzInput);
-          } else if (zzAtEOF) {
+      zzForAction: while (true) {
+        if (zzCurrentPosL < zzEndReadL) {
+          zzInput = Character.codePointAt(zzBufferL, zzCurrentPosL, zzEndReadL);
+          zzCurrentPosL += Character.charCount(zzInput);
+        } else if (zzAtEOF) {
+          zzInput = YYEOF;
+          break zzForAction;
+        } else {
+          zzCurrentPos = zzCurrentPosL;
+          zzMarkedPos = zzMarkedPosL;
+          final boolean eof = zzRefill();
+          zzCurrentPosL = zzCurrentPos;
+          zzMarkedPosL = zzMarkedPos;
+          zzBufferL = zzBuffer;
+          zzEndReadL = zzEndRead;
+          if (eof) {
             zzInput = YYEOF;
             break zzForAction;
           } else {
-            // store back cached positions
-            zzCurrentPos = zzCurrentPosL;
-            zzMarkedPos = zzMarkedPosL;
-            final boolean eof = zzRefill();
-            // get translated positions and possibly new buffer
-            zzCurrentPosL = zzCurrentPos;
-            zzMarkedPosL = zzMarkedPos;
-            zzBufferL = zzBuffer;
-            zzEndReadL = zzEndRead;
-            if (eof) {
-              zzInput = YYEOF;
-              break zzForAction;
-            } else {
-              zzInput = Character.codePointAt(zzBufferL, zzCurrentPosL, zzEndReadL);
-              zzCurrentPosL += Character.charCount(zzInput);
-            }
+            zzInput = Character.codePointAt(zzBufferL, zzCurrentPosL, zzEndReadL);
+            zzCurrentPosL += Character.charCount(zzInput);
           }
-          final int zzNext = zzTransL[zzRowMapL[zzState] + zzCMapL[zzInput]];
-          if (zzNext == -1)
+        }
+        final int zzNext = zzTransL[zzRowMapL[zzState] + zzCMapL[zzInput]];
+        if (zzNext == -1)
+          break zzForAction;
+        zzState = zzNext;
+        zzAttributes = zzAttrL[zzState];
+        if ((zzAttributes & 1) == 1) {
+          zzAction = zzState;
+          zzMarkedPosL = zzCurrentPosL;
+          if ((zzAttributes & 8) == 8)
             break zzForAction;
-          zzState = zzNext;
-          zzAttributes = zzAttrL[zzState];
-          if ((zzAttributes & 1) == 1) {
-            zzAction = zzState;
-            zzMarkedPosL = zzCurrentPosL;
-            if ((zzAttributes & 8) == 8)
-              break zzForAction;
-          }
         }
       }
       // store back cached position
@@ -736,19 +732,13 @@ public class RawTokenizer {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
         switch (zzLexicalState) {
-        case YYINITIAL: {
-          return EOF;
-        }
+        case YYINITIAL: return EOF;
         case 116:
           break;
-        case RESET: {
-          return EOF;
-        }
+        case RESET: return EOF;
         case 117:
           break;
-        case SCAN_CODE: {
-          return EOF;
-        }
+        case SCAN_CODE: return EOF;
         case 118:
           break;
         case SCAN_STRING_LITERAL: {
@@ -794,53 +784,35 @@ public class RawTokenizer {
         }
         case 75:
           break;
-        case 2: {
-          return UNKNOWN_CHARACTER;
-        }
+        case 2: return UNKNOWN_CHARACTER;
         case 76:
           break;
-        case 3: {
-          return NL;
-        }
+        case 3: return NL;
         case 77:
           break;
-        case 4: {
-          return SPACE;
-        }
+        case 4: return SPACE;
         case 78:
           break;
-        case 5: {
-          try {
-            return Token.valueOf("_" + yytext());
-          } catch (final IllegalArgumentException e) {
-            return IDENTIFIER;
-          }
-        }
+        case 5: try {
+              return Token.valueOf("_" + yytext());
+            } catch (final IllegalArgumentException e) {
+              return IDENTIFIER;
+            }
         case 79:
           break;
-        case 6: {
-          return INTEGER_LITERAL;
-        }
+        case 6: return INTEGER_LITERAL;
         case 80:
           break;
-        case 7: {
-          return DOT;
-        }
+        case 7: return DOT;
         case 81:
           break;
-        case 8: {
-          return MINUS;
-        }
+        case 8: return MINUS;
         case 82:
           break;
-        case 9: {
-          return DIV;
-        }
+        case 9: return DIV;
         case 83:
           break;
-        case 10: {
-          return MULT;
-        }
+        case 10: return MULT;
         case 84:
           break;
         case 11: {
@@ -855,104 +827,64 @@ public class RawTokenizer {
         }
         case 86:
           break;
-        case 13: {
-          return LPAREN;
-        }
+        case 13: return LPAREN;
         case 87:
           break;
-        case 14: {
-          return RPAREN;
-        }
+        case 14: return RPAREN;
         case 88:
           break;
-        case 15: {
-          return LBRACE;
-        }
+        case 15: return LBRACE;
         case 89:
           break;
-        case 16: {
-          return RBRACE;
-        }
+        case 16: return RBRACE;
         case 90:
           break;
-        case 17: {
-          return LBRACK;
-        }
+        case 17: return LBRACK;
         case 91:
           break;
-        case 18: {
-          return RBRACK;
-        }
+        case 18: return RBRACK;
         case 92:
           break;
-        case 19: {
-          return SEMICOLON;
-        }
+        case 19: return SEMICOLON;
         case 93:
           break;
-        case 20: {
-          return COMMA;
-        }
+        case 20: return COMMA;
         case 94:
           break;
-        case 21: {
-          return EQ;
-        }
+        case 21: return EQ;
         case 95:
           break;
-        case 22: {
-          return GT;
-        }
+        case 22: return GT;
         case 96:
           break;
-        case 23: {
-          return LT;
-        }
+        case 23: return LT;
         case 97:
           break;
-        case 24: {
-          return NOT;
-        }
+        case 24: return NOT;
         case 98:
           break;
-        case 25: {
-          return COMP;
-        }
+        case 25: return COMP;
         case 99:
           break;
-        case 26: {
-          return QUESTION;
-        }
+        case 26: return QUESTION;
         case 100:
           break;
-        case 27: {
-          return COLON;
-        }
+        case 27: return COLON;
         case 101:
           break;
-        case 28: {
-          return AND;
-        }
+        case 28: return AND;
         case 102:
           break;
-        case 29: {
-          return OR;
-        }
+        case 29: return OR;
         case 103:
           break;
-        case 30: {
-          return PLUS;
-        }
+        case 30: return PLUS;
         case 104:
           break;
-        case 31: {
-          return XOR;
-        }
+        case 31: return XOR;
         case 105:
           break;
-        case 32: {
-          return MOD;
-        }
+        case 32: return MOD;
         case 106:
           break;
         case 33: {
@@ -1017,24 +949,16 @@ public class RawTokenizer {
         }
         case 116:
           break;
-        case 43: {
-          return DOUBLE_LITERAL;
-        }
+        case 43: return DOUBLE_LITERAL;
         case 117:
           break;
-        case 44: {
-          return FLOAT_LITERAL;
-        }
+        case 44: return FLOAT_LITERAL;
         case 118:
           break;
-        case 45: {
-          return MINUSMINUS;
-        }
+        case 45: return MINUSMINUS;
         case 119:
           break;
-        case 46: {
-          return MINUSEQ;
-        }
+        case 46: return MINUSEQ;
         case 120:
           break;
         case 47: {
@@ -1049,89 +973,55 @@ public class RawTokenizer {
         }
         case 122:
           break;
-        case 49: {
-          return DIVEQ;
-        }
+        case 49: return DIVEQ;
         case 123:
           break;
-        case 50: {
-          return MULTEQ;
-        }
+        case 50: return MULTEQ;
         case 124:
           break;
-        case 51: {
-          return ANNOTATION;
-        }
+        case 51: return ANNOTATION;
         case 125:
           break;
-        case 52: {
-          return EQEQ;
-        }
+        case 52: return EQEQ;
         case 126:
           break;
-        case 53: {
-          return GTEQ;
-        }
+        case 53: return GTEQ;
         case 127:
           break;
-        case 54: {
-          return RSHIFT;
-        }
+        case 54: return RSHIFT;
         case 128:
           break;
-        case 55: {
-          return LTEQ;
-        }
+        case 55: return LTEQ;
         case 129:
           break;
-        case 56: {
-          return LSHIFT;
-        }
+        case 56: return LSHIFT;
         case 130:
           break;
-        case 57: {
-          return NOTEQ;
-        }
+        case 57: return NOTEQ;
         case 131:
           break;
-        case 58: {
-          return ANDEQ;
-        }
+        case 58: return ANDEQ;
         case 132:
           break;
-        case 59: {
-          return ANDAND;
-        }
+        case 59: return ANDAND;
         case 133:
           break;
-        case 60: {
-          return OREQ;
-        }
+        case 60: return OREQ;
         case 134:
           break;
-        case 61: {
-          return OROR;
-        }
+        case 61: return OROR;
         case 135:
           break;
-        case 62: {
-          return PLUSEQ;
-        }
+        case 62: return PLUSEQ;
         case 136:
           break;
-        case 63: {
-          return PLUSPLUS;
-        }
+        case 63: return PLUSPLUS;
         case 137:
           break;
-        case 64: {
-          return XOREQ;
-        }
+        case 64: return XOREQ;
         case 138:
           break;
-        case 65: {
-          return MODEQ;
-        }
+        case 65: return MODEQ;
         case 139:
           break;
         case 66: {
@@ -1152,34 +1042,22 @@ public class RawTokenizer {
         }
         case 142:
           break;
-        case 69: {
-          return RSHIFTEQ;
-        }
+        case 69: return RSHIFTEQ;
         case 143:
           break;
-        case 70: {
-          return URSHIFT;
-        }
+        case 70: return URSHIFT;
         case 144:
           break;
-        case 71: {
-          return LSHIFTEQ;
-        }
+        case 71: return LSHIFTEQ;
         case 145:
           break;
-        case 72: {
-          return EMPTY_BLOCK_COMMENT;
-        }
+        case 72: return EMPTY_BLOCK_COMMENT;
         case 146:
           break;
-        case 73: {
-          return URSHIFTEQ;
-        }
+        case 73: return URSHIFTEQ;
         case 147:
           break;
-        case 74: {
-          return AT_INTERFACE;
-        }
+        case 74: return AT_INTERFACE;
         case 148:
           break;
         default:

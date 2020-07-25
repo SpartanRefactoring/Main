@@ -273,7 +273,7 @@ public final class ToIntegers<E> {
     return this;
   }
 
-  @SuppressWarnings({ "boxing" }) //
+  @SuppressWarnings("boxing")
   public final class INVARIANT implements Invariantable {
     @Override public void check() {
       azzert.that(size, lessThanOrEqualTo(capacity()));

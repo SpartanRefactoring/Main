@@ -75,7 +75,7 @@ public class CFG {
     return g.vertices();
   }
 
-  @SuppressWarnings({ "boxing" }) private void findJumpsAndTargets(final MultiMap<Long, Long> jumps2targets,
+  @SuppressWarnings("boxing") private void findJumpsAndTargets(final MultiMap<Long, Long> jumps2targets,
       final Map<Long, Set<Long>> subroutine2rets) {
     long offset = 0;
     try (BufferDataInputStream r = new BufferDataInputStream(codes)) {

@@ -42,9 +42,8 @@ public class AllProjects extends NominalTables {
       }
       public void summarize(final String path) {
         initializeWriter();
-        if (map.get("#Tests") != 0) {
-          table.col("Project", path).nl();
-        }
+        if (map.get("#Tests") != 0)
+			table.col("Project", path).nl();
       }
       void initializeWriter() {
         if (table == null)
@@ -58,9 +57,8 @@ public class AllProjects extends NominalTables {
               List<String> annotations = extract.annotations(x).stream().map(a -> a.getTypeName().getFullyQualifiedName())
                   .collect(Collectors.toList());
               if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
-                  && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
-                map.put("#Tests", map.get("#Tests") + 1);
-              }
+                  && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase")))
+				map.put("#Tests", map.get("#Tests") + 1);
             }
             return true;
           }

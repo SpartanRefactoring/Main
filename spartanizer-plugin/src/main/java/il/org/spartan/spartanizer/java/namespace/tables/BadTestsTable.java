@@ -30,10 +30,9 @@ public class BadTestsTable extends NominalTables {
   static boolean isJunitAnnotation(List<String> annotations) {
     String[] anno = { "After", "AfterClass", "Before", "BeforeClass" };
     List<String> annoList = Arrays.asList(anno);
-    for (String s : annotations) {
-      if (annoList.contains(s))
-        return true;
-    }
+    for (String s : annotations)
+		if (annoList.contains(s))
+			return true;
     return false;
   }
   //
@@ -44,10 +43,9 @@ public class BadTestsTable extends NominalTables {
   static boolean isIgnoredTest(List<String> annotations) {
     String[] anno = { "Ignore" };
     List<String> annoList = Arrays.asList(anno);
-    for (String s : annotations) {
-      if (annoList.contains(s))
-        return true;
-    }
+    for (String s : annotations)
+		if (annoList.contains(s))
+			return true;
     return false;
   }
   @SuppressWarnings("boxing") public static void main(final String[] args) {
@@ -103,16 +101,17 @@ public class BadTestsTable extends NominalTables {
       }
       public void summarize(final String path) {
         initializeWriter();
-        if (map.get("#Tests") != 0) {
-          table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests")).col("#JavaAsserts", map.get("#JavaAsserts"))
-              .col("#JunitAsserts", map.get("#JunitAsserts")).col("#assertArrayEquals", map.get("#assertArrayEquals"))
-              .col("#assertEquals", map.get("#assertEquals")).col("#assertNotEquals", map.get("#assertNotEquals"))
-              .col("#assertNotNull", map.get("#assertNotNull")).col("#assertNotSame", map.get("#assertNotSame"))
-              .col("#assertNull", map.get("#assertNull")).col("#assertSame", map.get("#assertSame"))
-              .col("#assertTrueGood", map.get("#assertTrueGood")).col("#assertFalseGood", map.get("#assertFalseGood"))
-              .col("#assertTrueBad", map.get("#assertTrueBad")).col("#assertFalseBad", map.get("#assertFalseBad")).col("#fail", map.get("#fail"))
-              .col("#NeedFix", map.get("#NeedFix")).nl();
-        }
+        if (map.get("#Tests") != 0)
+			table.col("Project", path).col("#Files", map.get("#Files")).col("#Tests", map.get("#Tests"))
+					.col("#JavaAsserts", map.get("#JavaAsserts")).col("#JunitAsserts", map.get("#JunitAsserts"))
+					.col("#assertArrayEquals", map.get("#assertArrayEquals"))
+					.col("#assertEquals", map.get("#assertEquals")).col("#assertNotEquals", map.get("#assertNotEquals"))
+					.col("#assertNotNull", map.get("#assertNotNull")).col("#assertNotSame", map.get("#assertNotSame"))
+					.col("#assertNull", map.get("#assertNull")).col("#assertSame", map.get("#assertSame"))
+					.col("#assertTrueGood", map.get("#assertTrueGood"))
+					.col("#assertFalseGood", map.get("#assertFalseGood"))
+					.col("#assertTrueBad", map.get("#assertTrueBad")).col("#assertFalseBad", map.get("#assertFalseBad"))
+					.col("#fail", map.get("#fail")).col("#NeedFix", map.get("#NeedFix")).nl();
       }
       void initializeWriter() {
         if (table == null)
@@ -143,20 +142,18 @@ public class BadTestsTable extends NominalTables {
                       map.put("#JunitAsserts", map.get("#JunitAsserts") + 1);
                       MethodInvocation m = az.methodInvocation(az.expressionStatement(z).getExpression());
                       String s = m.getName().getIdentifier();
-                      if (s.equals("assertTrue") || s.equals("assertFalse")) {
-                        if (m.arguments().size() == 1) {
-                          
-                          map.put("#" + s + "Good", map.get("#" + s + "Good") + 1);
-                          if (isNeedFix(az.astNode(m.arguments().get(0))))
-                            map.put("#NeedFix", map.get("#NeedFix") + 1);
-                        } else {
-                          map.put("#" + s + "Bad", map.get("#" + s + "Bad") + 1);
-                          if (isNeedFix(az.astNode(m.arguments().get(1))))
-                            map.put("#NeedFix", map.get("#NeedFix") + 1);
-                        }
-                      } else {
-                        map.put("#" + s, map.get("#" + s) + 1);
-                      }
+                      if (s.equals("assertTrue") || s.equals("assertFalse"))
+						if (m.arguments().size() == 1) {
+							map.put("#" + s + "Good", map.get("#" + s + "Good") + 1);
+							if (isNeedFix(az.astNode(m.arguments().get(0))))
+								map.put("#NeedFix", map.get("#NeedFix") + 1);
+						} else {
+							map.put("#" + s + "Bad", map.get("#" + s + "Bad") + 1);
+							if (isNeedFix(az.astNode(m.arguments().get(1))))
+								map.put("#NeedFix", map.get("#NeedFix") + 1);
+						}
+					else
+						map.put("#" + s, map.get("#" + s) + 1);
                       counter.step();
                     }
                     return true;

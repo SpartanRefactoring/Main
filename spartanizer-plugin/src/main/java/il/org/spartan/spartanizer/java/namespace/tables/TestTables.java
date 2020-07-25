@@ -16,20 +16,16 @@ public class TestTables {
 
   static boolean isJunit4(CompilationUnit c) {
     List<ImportDeclaration> imports = extract.imports(c);
-    for (ImportDeclaration i : imports) {
-      if (i.getName().getFullyQualifiedName().contains("org.junit") && !isJunit5(c)) {
-        return true;
-      }
-    }
+    for (ImportDeclaration i : imports)
+		if (i.getName().getFullyQualifiedName().contains("org.junit") && !isJunit5(c))
+			return true;
     return false;
   }
   static boolean isJunit5(CompilationUnit c) {
     List<ImportDeclaration> imports = extract.imports(c);
-    for (ImportDeclaration i : imports) {
-      if (i.getName().getFullyQualifiedName().contains("org.junit.jupiter")) {
-        return true;
-      }
-    }
+    for (ImportDeclaration i : imports)
+		if (i.getName().getFullyQualifiedName().contains("org.junit.jupiter"))
+			return true;
     return false;
   }
 }

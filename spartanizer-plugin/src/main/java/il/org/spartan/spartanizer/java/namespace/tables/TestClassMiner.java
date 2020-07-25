@@ -145,42 +145,34 @@ public class TestClassMiner extends TestTables {
       
       public void summarize(final String path) {
         initializeWriter();
-        for (String className : classNames) {
-          table.col("Project", path).col("TestClassName", className)
-          .col("No. Methods", totalMethodsMapCounter.get(className))
-          .col("Vocabulary", vocabularyCounter.get(className))
-          .col("Word", wordCounter.get(className))
-          .col("Strings", stringLiteralsMapCounter.get(className))
-          .col("Numeric Literals", numericLiteralsMapCounter.get(className))
-          .col("Comments", commentsMapCounter.get(className))
-          .col("Special", specialCounter.get(className))
-          .col("Non Whithe Characters", nonWhiteCounter.get(className))
-          .col("No. Method Invoctions", methodInvocationMapCounter.get(className))
-          .col("No. Field Access", fieldAccessMapCounter.get(className))
-          .col("No. Primitives", primitivesMapCounter.get(className))
-          .col("AST size", astSize.get(className))
-          .col("Max Depth", maximaldepthCounter.get(className))
-          .col("Avg Depth", avgDephsMapCounter.get(className))
-          .col("Avg Depth Squared", avgDephsMapCounter2.get(className))
-          .col("Deg2", deg2MapCounter.get(className))
-          .col("DegPerm", degPermMapCounter.get(className))
-          .col("Dexterity", dexterityCounter.get(className))
-          .col("No. Expressions", expressionCounter.get(className))
-          .col("No. Try", tryMapCounter.get(className))
-          .col("No. Catch", catchMapCounter.get(className))
-          .col("No. Loop", loopMapCounter.get(className))
-          .col("No. Break", breakMapCounter.get(className))
-          .col("No. Continue", continueMapCounter.get(className))
-          .col("No. Conditions", conditionsMapCounter.get(className))
-          .col("No. Else", elseMapCounter.get(className))
-          .col("No. &&", conjunctionMapCounter.get(className))
-          .col("No. ||", disjunctionMapCounter.get(className))
-          .col("No. Ternary", ternaryMapCounter.get(className))
-          .col("Bad API", badApiMapCounter.get(className))
-          .col("Junit", junitassertionMapCounter.get(className))
-          .col("Hamcrest", hamcrestMapCounter.get(className))
-          .col("Mockito", mockitoMapCounter.get(className)).nl();
-        }
+        for (String className : classNames)
+			table.col("Project", path).col("TestClassName", className)
+					.col("No. Methods", totalMethodsMapCounter.get(className))
+					.col("Vocabulary", vocabularyCounter.get(className)).col("Word", wordCounter.get(className))
+					.col("Strings", stringLiteralsMapCounter.get(className))
+					.col("Numeric Literals", numericLiteralsMapCounter.get(className))
+					.col("Comments", commentsMapCounter.get(className)).col("Special", specialCounter.get(className))
+					.col("Non Whithe Characters", nonWhiteCounter.get(className))
+					.col("No. Method Invoctions", methodInvocationMapCounter.get(className))
+					.col("No. Field Access", fieldAccessMapCounter.get(className))
+					.col("No. Primitives", primitivesMapCounter.get(className)).col("AST size", astSize.get(className))
+					.col("Max Depth", maximaldepthCounter.get(className))
+					.col("Avg Depth", avgDephsMapCounter.get(className))
+					.col("Avg Depth Squared", avgDephsMapCounter2.get(className))
+					.col("Deg2", deg2MapCounter.get(className)).col("DegPerm", degPermMapCounter.get(className))
+					.col("Dexterity", dexterityCounter.get(className))
+					.col("No. Expressions", expressionCounter.get(className))
+					.col("No. Try", tryMapCounter.get(className)).col("No. Catch", catchMapCounter.get(className))
+					.col("No. Loop", loopMapCounter.get(className)).col("No. Break", breakMapCounter.get(className))
+					.col("No. Continue", continueMapCounter.get(className))
+					.col("No. Conditions", conditionsMapCounter.get(className))
+					.col("No. Else", elseMapCounter.get(className)).col("No. &&", conjunctionMapCounter.get(className))
+					.col("No. ||", disjunctionMapCounter.get(className))
+					.col("No. Ternary", ternaryMapCounter.get(className))
+					.col("Bad API", badApiMapCounter.get(className))
+					.col("Junit", junitassertionMapCounter.get(className))
+					.col("Hamcrest", hamcrestMapCounter.get(className)).col("Mockito", mockitoMapCounter.get(className))
+					.nl();
       }
       void initializeWriter() {
         if (table == null)
@@ -225,12 +217,10 @@ public class TestClassMiner extends TestTables {
 
               x.accept(new ASTVisitor() {
                 @Override public boolean visit(final ExpressionStatement a) {
-                  if (iz.assertStatement(a)) {
-                    javaAssertionsCounter.step();
-                  }
-                  if (iz.junitAssert(a) || iz.hamcrestAssert(a) || iz.mockitoVerify(a) || iz.assertStatement(a)) {
-                    assertionCounter.step();
-                  }
+                  if (iz.assertStatement(a))
+					javaAssertionsCounter.step();
+                  if (iz.junitAssert(a) || iz.hamcrestAssert(a) || iz.mockitoVerify(a) || iz.assertStatement(a))
+					assertionCounter.step();
                   if (iz.hamcrestAssert(a) || a.getExpression().toString().contains("assertThat("))
                     hamcrestCounter.step();
                   if (iz.mockitoVerify(a))
@@ -240,12 +230,10 @@ public class TestClassMiner extends TestTables {
                     for (Expression e : el) {
                       if ((iz.infixExpression(e) && (az.infixExpression(e).getOperator().toString().equals("==")
                           || az.infixExpression(e).getOperator().toString().equals("!=")))
-                          || a.getExpression().toString().contains("System.out.print")) {
-                        badApiCounter.step();
-                      }
-                      if (iz.prefixExpression(e) && az.prefixExpression(e).getOperator().toString().equals("!")) {
-                        badApiCounter.step();
-                      }
+                          || a.getExpression().toString().contains("System.out.print"))
+						badApiCounter.step();
+                      if (iz.prefixExpression(e) && az.prefixExpression(e).getOperator().toString().equals("!"))
+						badApiCounter.step();
                       e.accept(new ASTVisitor(true) {
                         @Override public boolean visit(final MethodInvocation t) {
                           if (t.getName().toString().equals("equals"))
@@ -278,12 +266,10 @@ public class TestClassMiner extends TestTables {
                 
                 @Override public boolean visit(final InfixExpression e) {
                   for (Operator o : extract.allOperators(e)) {
-                    if (o == Operator.CONDITIONAL_AND) {
-                      conjunctionCounter.step();
-                     }
-                    if (o == Operator.CONDITIONAL_OR) {
-                      disjunctionCounter.step();
-                     }
+                    if (o == Operator.CONDITIONAL_AND)
+						conjunctionCounter.step();
+                    if (o == Operator.CONDITIONAL_OR)
+						disjunctionCounter.step();
                  }
                   return true;
               }

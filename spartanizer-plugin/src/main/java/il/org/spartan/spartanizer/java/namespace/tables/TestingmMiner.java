@@ -95,20 +95,18 @@ public class TestingmMiner extends TestTables {
       }
       public void summarize(final String path) {
         initializeWriter();
-        for (String method : testMethods) {
-          table.col("Project", path).col("MethodName", method).col("#Assrtions", assertionMapCounter.get(method))
-              .col("#Conditions", ifElseMapCounter.get(method)).col("#TryCatch", tryCatchMapCounter.get(method))
-              .col("#Loop", loopMapCounter.get(method)).col("#Throws", throwsExceptionMapCounter.get(method))
-              .col("#Statements", statementMapCounter.get(method)).col("#Tokens", totalTokensMapCounter.get(method))
-              .col("#Hamcrest", hamcrestMapCounter.get(method)).col("#Mockito", mockitoMapCounter.get(method))
-              .col("#BadApi", badApiMapCounter.get(method)).col("#LOC", LOCCounter.get(method))
-              .col("#Expressions", expressionCounter.get(method)).col("#Depth", depthCounter.get(method))
-              .col("#Vocabulary", vocabularyCounter.get(method)).col("#Understandability", subTreeCouner.get(method))
-              .col("#BodySize", bodySizeCounter.get(method))
-              .col("#Dexterity", dexterityCounter.get(method))
-              .col("#NonWhiteCharacters", nonWhiteCounter.get(method))
-              .nl();          
-        }
+        for (String method : testMethods)
+			table.col("Project", path).col("MethodName", method).col("#Assrtions", assertionMapCounter.get(method))
+					.col("#Conditions", ifElseMapCounter.get(method)).col("#TryCatch", tryCatchMapCounter.get(method))
+					.col("#Loop", loopMapCounter.get(method)).col("#Throws", throwsExceptionMapCounter.get(method))
+					.col("#Statements", statementMapCounter.get(method))
+					.col("#Tokens", totalTokensMapCounter.get(method)).col("#Hamcrest", hamcrestMapCounter.get(method))
+					.col("#Mockito", mockitoMapCounter.get(method)).col("#BadApi", badApiMapCounter.get(method))
+					.col("#LOC", LOCCounter.get(method)).col("#Expressions", expressionCounter.get(method))
+					.col("#Depth", depthCounter.get(method)).col("#Vocabulary", vocabularyCounter.get(method))
+					.col("#Understandability", subTreeCouner.get(method)).col("#BodySize", bodySizeCounter.get(method))
+					.col("#Dexterity", dexterityCounter.get(method))
+					.col("#NonWhiteCharacters", nonWhiteCounter.get(method)).nl();
           
       }
       void initializeWriter() {
@@ -119,107 +117,113 @@ public class TestingmMiner extends TestTables {
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new ASTVisitor() {
           @Override public boolean visit(final TypeDeclaration x) {
-            if (isJunit4(¢) || isJunit5(¢)) {
-              x.accept(new ASTVisitor(true) {
-                @SuppressWarnings("boxing") @Override public boolean visit(final MethodDeclaration m) {
-                  List<String> annotations = extract.annotations(m).stream().map(a -> a.getTypeName().getFullyQualifiedName())
-                      .collect(Collectors.toList());
-                  if (annotations.contains("Test")) {
-                    testMethods.add(extract.name(x) + "." + extract.name(m));
-                  }
-                                    
-                  // Define per test method counters
-                  final Int assertionCounter = new Int();
-                  final Int ifElseCounter = new Int();
-                  final Int tryCatchCounter = new Int();
-                  final Int loopCounter = new Int();
-                  final Int hamcrestCounter = new Int();
-                  final Int mockitoCounter = new Int();
-                  final Int badApiCounter = new Int();
-                  final int throwsExceptionCounter = m.thrownExceptionTypes().size();
-                  final int statementCounter = extract.statements(m.getBody()).size();
-                  int totalTokenCounter = 0;
-                  if (m.getBody() != null) {
-                    totalTokenCounter = Metrics.tokens(m.getBody().toString());
-                  }
-                  // Traverse over the test method AST
-                  m.accept(new ASTVisitor() {
-                    @Override public boolean visit(final ExpressionStatement a) {
-                      if (iz.junitAssert(a) || iz.hamcrestAssert(a) || iz.mockitoVerify(a) || iz.assertStatement(a)) {
-                        assertionCounter.step();
-                      }
-                      if (iz.hamcrestAssert(a) || a.getExpression().toString().contains("assertThat("))
-                        hamcrestCounter.step();
-                      if (iz.mockitoVerify(a))
-                        mockitoCounter.step();
-                      if (iz.trueFalseAssertion(a)) {
-                        List<Expression> el = extract.methodInvocationArguments(az.methodInvocation(a.getExpression()));
-                        for (Expression e : el) {
-                          if ((iz.infixExpression(e) && (az.infixExpression(e).getOperator().toString().equals("==")
-                              || az.infixExpression(e).getOperator().toString().equals("!=")))
-                              || a.getExpression().toString().contains("System.out.print")) {
-                            badApiCounter.step();
-                          }
-                          if (iz.prefixExpression(e) && az.prefixExpression(e).getOperator().toString().equals("!")) {
-                            badApiCounter.step();
-                          }
-                          e.accept(new ASTVisitor(true) {
-                            @Override public boolean visit(final MethodInvocation t) {
-                              if (t.getName().toString().equals("equals"))
-                                badApiCounter.step();
-                              return true;
-                            }
-                          });
-                        }
-                      }
-                      return true;
-                    }
-                    @Override public boolean visit(final IfStatement a) {
-                      ifElseCounter.step();
-                      return true;
-                    }
-                    @Override public boolean visit(final TryStatement a) {
-                      tryCatchCounter.step();
-                      return true;
-                    }
-                    @Override public boolean visit(final ForStatement a) {
-                      loopCounter.step();
-                      return true;
-                    }
-                    @Override public boolean visit(final WhileStatement a) {
-                      loopCounter.step();
-                      return true;
-                    }
-                    @Override public boolean visit(final EnhancedForStatement a) {
-                      loopCounter.step();
-                      return true;
-                    }
-                  });
-                  // Then, put the local counters in the global map before analyzing the next
-                  // method
-                  assertionMapCounter.put(extract.name(x) + "." + extract.name(m), assertionCounter.get());
-                  ifElseMapCounter.put(extract.name(x) + "." + extract.name(m), ifElseCounter.get());
-                  tryCatchMapCounter.put(extract.name(x) + "." + extract.name(m), tryCatchCounter.get());
-                  loopMapCounter.put(extract.name(x) + "." + extract.name(m), loopCounter.get());
-                  throwsExceptionMapCounter.put(extract.name(x) + "." + extract.name(m), throwsExceptionCounter);
-                  hamcrestMapCounter.put(extract.name(x) + "." + extract.name(m), hamcrestCounter.get());
-                  mockitoMapCounter.put(extract.name(x) + "." + extract.name(m), mockitoCounter.get());
-                  badApiMapCounter.put(extract.name(x) + "." + extract.name(m), badApiCounter.get());
-                  statementMapCounter.put(extract.name(x) + "." + extract.name(m), statementCounter);
-                  totalTokensMapCounter.put(extract.name(x) + "." + extract.name(m), totalTokenCounter);
-                  expressionCounter.put(extract.name(x) + "." + extract.name(m), Metrics.countExpressions(m));
-                  depthCounter.put(extract.name(x) + "." + extract.name(m), Metrics.depth(m));
-                  vocabularyCounter.put(extract.name(x) + "." + extract.name(m), Metrics.vocabulary(m));
-                  subTreeCouner.put(extract.name(x) + "." + extract.name(m), Metrics.subtreeUnderstandability(m));
-                  bodySizeCounter.put(extract.name(x) + "." + extract.name(m), Metrics.bodySize(m));
-                  dexterityCounter.put(extract.name(x) + "." + extract.name(m), Metrics.dexterity(m));
-                  LOCCounter.put(extract.name(x) + "." + extract.name(m), countOf.lines(m));
-                  nonWhiteCounter.put(extract.name(x) + "." + extract.name(m), countOf.nonWhiteCharacters(m));
-               
-                  return true;
-                }
-              });
-            }
+            if (isJunit4(¢) || isJunit5(¢))
+				x.accept(new ASTVisitor(true) {
+					@SuppressWarnings("boxing")
+					@Override
+					public boolean visit(final MethodDeclaration m) {
+						List<String> annotations = extract.annotations(m).stream()
+								.map(a -> a.getTypeName().getFullyQualifiedName()).collect(Collectors.toList());
+						if (annotations.contains("Test"))
+							testMethods.add(extract.name(x) + "." + extract.name(m));
+						final Int assertionCounter = new Int();
+						final Int ifElseCounter = new Int();
+						final Int tryCatchCounter = new Int();
+						final Int loopCounter = new Int();
+						final Int hamcrestCounter = new Int();
+						final Int mockitoCounter = new Int();
+						final Int badApiCounter = new Int();
+						final int throwsExceptionCounter = m.thrownExceptionTypes().size();
+						final int statementCounter = extract.statements(m.getBody()).size();
+						int totalTokenCounter = 0;
+						if (m.getBody() != null)
+							totalTokenCounter = Metrics.tokens(m.getBody().toString());
+						m.accept(new ASTVisitor() {
+							@Override
+							public boolean visit(final ExpressionStatement a) {
+								if (iz.junitAssert(a) || iz.hamcrestAssert(a) || iz.mockitoVerify(a)
+										|| iz.assertStatement(a))
+									assertionCounter.step();
+								if (iz.hamcrestAssert(a) || a.getExpression().toString().contains("assertThat("))
+									hamcrestCounter.step();
+								if (iz.mockitoVerify(a))
+									mockitoCounter.step();
+								if (iz.trueFalseAssertion(a)) {
+									List<Expression> el = extract
+											.methodInvocationArguments(az.methodInvocation(a.getExpression()));
+									for (Expression e : el) {
+										if ((iz.infixExpression(e)
+												&& (az.infixExpression(e).getOperator().toString().equals("==")
+														|| az.infixExpression(e).getOperator().toString().equals("!=")))
+												|| a.getExpression().toString().contains("System.out.print"))
+											badApiCounter.step();
+										if (iz.prefixExpression(e)
+												&& az.prefixExpression(e).getOperator().toString().equals("!"))
+											badApiCounter.step();
+										e.accept(new ASTVisitor(true) {
+											@Override
+											public boolean visit(final MethodInvocation t) {
+												if (t.getName().toString().equals("equals"))
+													badApiCounter.step();
+												return true;
+											}
+										});
+									}
+								}
+								return true;
+							}
+
+							@Override
+							public boolean visit(final IfStatement a) {
+								ifElseCounter.step();
+								return true;
+							}
+
+							@Override
+							public boolean visit(final TryStatement a) {
+								tryCatchCounter.step();
+								return true;
+							}
+
+							@Override
+							public boolean visit(final ForStatement a) {
+								loopCounter.step();
+								return true;
+							}
+
+							@Override
+							public boolean visit(final WhileStatement a) {
+								loopCounter.step();
+								return true;
+							}
+
+							@Override
+							public boolean visit(final EnhancedForStatement a) {
+								loopCounter.step();
+								return true;
+							}
+						});
+						assertionMapCounter.put(extract.name(x) + "." + extract.name(m), assertionCounter.get());
+						ifElseMapCounter.put(extract.name(x) + "." + extract.name(m), ifElseCounter.get());
+						tryCatchMapCounter.put(extract.name(x) + "." + extract.name(m), tryCatchCounter.get());
+						loopMapCounter.put(extract.name(x) + "." + extract.name(m), loopCounter.get());
+						throwsExceptionMapCounter.put(extract.name(x) + "." + extract.name(m), throwsExceptionCounter);
+						hamcrestMapCounter.put(extract.name(x) + "." + extract.name(m), hamcrestCounter.get());
+						mockitoMapCounter.put(extract.name(x) + "." + extract.name(m), mockitoCounter.get());
+						badApiMapCounter.put(extract.name(x) + "." + extract.name(m), badApiCounter.get());
+						statementMapCounter.put(extract.name(x) + "." + extract.name(m), statementCounter);
+						totalTokensMapCounter.put(extract.name(x) + "." + extract.name(m), totalTokenCounter);
+						expressionCounter.put(extract.name(x) + "." + extract.name(m), Metrics.countExpressions(m));
+						depthCounter.put(extract.name(x) + "." + extract.name(m), Metrics.depth(m));
+						vocabularyCounter.put(extract.name(x) + "." + extract.name(m), Metrics.vocabulary(m));
+						subTreeCouner.put(extract.name(x) + "." + extract.name(m), Metrics.subtreeUnderstandability(m));
+						bodySizeCounter.put(extract.name(x) + "." + extract.name(m), Metrics.bodySize(m));
+						dexterityCounter.put(extract.name(x) + "." + extract.name(m), Metrics.dexterity(m));
+						LOCCounter.put(extract.name(x) + "." + extract.name(m), countOf.lines(m));
+						nonWhiteCounter.put(extract.name(x) + "." + extract.name(m), countOf.nonWhiteCharacters(m));
+						return true;
+					}
+				});
             return true;
           }
         });

@@ -36,19 +36,17 @@ public class TestingTable extends NominalTables {
   static boolean isJunitAnnotation(List<String> annotations) {
     String[] anno = { "After", "AfterClass", "Before", "BeforeClass" };
     List<String> annoList = Arrays.asList(anno);
-    for (String s : annotations) {
-      if (annoList.contains(s))
-        return true;
-    }
+    for (String s : annotations)
+		if (annoList.contains(s))
+			return true;
     return false;
   }
   static boolean isIgnoredTest(List<String> annotations) {
     String[] anno = { "Ignore" };
     List<String> annoList = Arrays.asList(anno);
-    for (String s : annotations) {
-      if (annoList.contains(s))
-        return true;
-    }
+    for (String s : annotations)
+		if (annoList.contains(s))
+			return true;
     return false;
   }
   @SuppressWarnings({ "boxing", "unused" }) public static void main(final String[] args) throws Exception, UnsupportedEncodingException {
@@ -133,12 +131,10 @@ public class TestingTable extends NominalTables {
       @Override public boolean visit(final CompilationUnit ¢) {
         map.put("#Files", map.get("#Files") + 1);
         List<ImportDeclaration> imports = extract.imports(¢);
-        for (ImportDeclaration i : imports) {
-          if (i.getName().getFullyQualifiedName().equals("org.mockito.Mockito")) {
-            if (map.get("UsingMockito?") == 0)
-              map.put("UsingMockito?", 1);
-          }
-        }
+        for (ImportDeclaration i : imports)
+			if (i.getName().getFullyQualifiedName().equals("org.mockito.Mockito"))
+				if (map.get("UsingMockito?") == 0)
+					map.put("UsingMockito?", 1);
         ¢.accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration x) {
             if (x != null) {
@@ -173,9 +169,8 @@ public class TestingTable extends NominalTables {
                       map.put("#JunitAsserts", map.get("#JunitAsserts") + 1);
                       counter.step();
                     }
-                    if (iz.hamcrestAssert(s)) {
-                      map.put("#HamcrestAsserts", map.get("#HamcrestAsserts") + 1);
-                    }
+                    if (iz.hamcrestAssert(s))
+						map.put("#HamcrestAsserts", map.get("#HamcrestAsserts") + 1);
                     return true;
                   }
                   /** handle Returns */

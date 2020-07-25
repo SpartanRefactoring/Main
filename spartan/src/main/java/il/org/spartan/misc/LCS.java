@@ -114,7 +114,7 @@ public class LCS {
     return max(length(i - 1, j), max(length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j])));
   }
 
-  @SuppressWarnings({ "static-method" }) //
+  @SuppressWarnings("static-method")
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
     private static String[] chars2Lines(final String s) {

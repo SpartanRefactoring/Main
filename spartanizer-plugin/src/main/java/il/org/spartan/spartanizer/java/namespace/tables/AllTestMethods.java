@@ -51,32 +51,20 @@ public class AllTestMethods extends TestTables {
       }
       public void summarize(final String path) {
         initializeWriter();
-        if (!map.get("TestClassName").isEmpty()) {
-          for (int i = 0; i < map.get("TestClassName").size(); i++) {
-            String className = map.get("TestClassName").get(i);
-            if (mapMethods.containsKey(className) && !mapMethods.get(className).isEmpty()) {
-              for (int j = 0; j < mapMethods.get(className).size(); j++) {
-                String methodName = mapMethods.get(className).get(j);
-                String methodCode = mapMethodsCode.get(className).get(j);
-                table.col("Project", path).col("TestClassName", className) //
-                    .col("MethodName", methodName)//
-                    .nl();
-                try {
-                  // File file = new File(initialPath + path + "/" + className + "/" + methodName
-                  // + ".txt");
-                  // file.getParentFile().mkdirs();
-                  // FileWriter writer = new FileWriter(file, false);
-                  // PrintWriter output = new PrintWriter(writer);
-                  // output.print(methodCode);
-                  // output.close();
-                } catch (Exception x) {
-                  // TODO Auto-generated catch block
-                  x.printStackTrace();
-                }
-              }
-            }
-          }
-        }
+        if (!map.get("TestClassName").isEmpty())
+			for (int i = 0; i < map.get("TestClassName").size(); i++) {
+				String className = map.get("TestClassName").get(i);
+				if (mapMethods.containsKey(className) && !mapMethods.get(className).isEmpty())
+					for (int j = 0; j < mapMethods.get(className).size(); j++) {
+						String methodName = mapMethods.get(className).get(j);
+						String methodCode = mapMethodsCode.get(className).get(j);
+						table.col("Project", path).col("TestClassName", className).col("MethodName", methodName).nl();
+						try {
+						} catch (Exception x) {
+							x.printStackTrace();
+						}
+					}
+			}
       }
       void initializeWriter() {
         if (table == null)

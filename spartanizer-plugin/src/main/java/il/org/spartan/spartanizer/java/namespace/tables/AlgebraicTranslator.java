@@ -85,11 +85,8 @@ public class AlgebraicTranslator extends NominalTables {
 								if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent())
 										&& az.typeDeclaration(x.getParent()).getSuperclassType() != null
 										&& az.typeDeclaration(x.getParent()).getSuperclassType().toString()
-												.equals("TestCase"))) {
-									// This is real test!
+												.equals("TestCase")))
 									testCounter.step();
-									//
-								}
 							}
 							return true;
 						}
