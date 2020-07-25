@@ -1,6 +1,6 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import org.eclipse.core.runtime.preferences.*;
+import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 
 /** This class is called by Eclipse when the plugin is first loaded and has no
  * default preference values. These are set by the values specified here.

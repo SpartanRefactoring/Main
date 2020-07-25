@@ -1,11 +1,11 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import org.eclipse.jface.preference.*;
+import org.eclipse.jface.preference.IPreferenceStore;
 
-import fluent.ly.*;
-import il.org.spartan.athenizer.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import il.org.spartan.athenizer.ExpanderCategory;
+import il.org.spartan.spartanizer.plugin.Plugin;
+import il.org.spartan.utils.Bool;
 
 /** TODO Daniel Mittelman please add a description
  * @author Daniel Mittelman

@@ -254,8 +254,8 @@ public class FileSystemVisitor {
       for (final String name : d.list())
         if (name != null)
           recurse(new File(d, name));
-    } catch (final Action.StopTraversal __) {
-      // do not visit children of this directory
+    } catch (final Action.StopTraversal t) {
+    	forget.it(t);
     }
   }
 

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
+import java.util.Stack;
 
 /** A simple stack, to be extended with more delegators, in the unlikely event
  * that the need arises.

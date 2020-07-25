@@ -1,14 +1,18 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.StringLiteral;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Concat some strings to one string {@code
  * "abcde"

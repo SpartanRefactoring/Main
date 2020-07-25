@@ -5,11 +5,11 @@
  * @since Oct 19, 2016 */
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static il.org.spartan.spartanizer.engine.parse.e;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.sideEffects;
 
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class sideEffectsTest {

@@ -1,18 +1,57 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.removeDuplicates;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.condition;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.from;
+import static il.org.spartan.spartanizer.ast.navigate.step.initializers;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
+import static il.org.spartan.spartanizer.ast.navigate.step.receiver;
+import static il.org.spartan.spartanizer.ast.navigate.step.resources;
+import static il.org.spartan.spartanizer.ast.navigate.step.to;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
-import java.util.*;
-import java.util.stream.*;
+import org.eclipse.jdt.core.dom.ASTMatcher;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.DoStatement;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.InstanceofExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.plugin.*;
+import fluent.ly.as;
+import fluent.ly.is;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.plugin.GUIApplicator;
 
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.

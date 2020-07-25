@@ -1,10 +1,15 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static java.lang.System.*;
+import static java.lang.System.out;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-import il.org.spartan.spartanizer.annotation.*;
+import il.org.spartan.spartanizer.annotation.Begin;
+import il.org.spartan.spartanizer.annotation.End;
+import il.org.spartan.spartanizer.annotation.InOrderFlatENV;
+import il.org.spartan.spartanizer.annotation.NestedENV;
+import il.org.spartan.spartanizer.annotation.OutOfOrderFlatENV;
 
 /** tests for class {@link Environment}
  * @author Yossi Gil

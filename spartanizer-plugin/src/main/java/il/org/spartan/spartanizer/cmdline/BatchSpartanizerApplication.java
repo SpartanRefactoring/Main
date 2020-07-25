@@ -1,25 +1,43 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.tide.*;
+import static il.org.spartan.tide.clean;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.equinox.app.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
+import fluent.ly.___;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.Essence;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.cmdline.good.InteractiveSpartanizer;
 import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
+import il.org.spartan.utils.FileUtils;
 
 /** Scans files named by outputFolder, forget test files, and collect
  * statistics. It does everything BatchSpartanizer does, but using the

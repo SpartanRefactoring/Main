@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.nominal.guessName;
 
 /** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon

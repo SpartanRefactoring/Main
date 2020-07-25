@@ -1,10 +1,14 @@
 package il.org.spartan.spartanizer.tipping.categories;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
-import fluent.ly.*;
-import il.org.spartan.*;
+import fluent.ly.English;
+import fluent.ly.Selfie;
+import fluent.ly.anonymous;
+import fluent.ly.note;
+import il.org.spartan.Wrapper;
 
 /** Runtime reification of sub-interfaces of {@link Category}, it is a rewrite
  * of the defunct {@link TipperGroup}.

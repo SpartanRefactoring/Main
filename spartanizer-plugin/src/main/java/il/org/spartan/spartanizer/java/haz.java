@@ -92,7 +92,7 @@ public enum haz {
     return !extract.annotations(¢).isEmpty();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static boolean anyStatements(final MethodDeclaration ¢) {
     return ¢ != null && statements(¢) != null && !statements(¢).isEmpty();
   }
@@ -101,7 +101,7 @@ public enum haz {
   }
   /** Determines whether the method's return __ is boolean.
    * @param ¢ method
-   * @return */
+   */
   public static boolean booleanReturnType(final MethodDeclaration ¢) {
     return ¢ != null && returnType(¢) != null && iz.booleanType(returnType(¢));
   }
@@ -130,7 +130,7 @@ public enum haz {
     return ns.stream().anyMatch(λ -> s.equals(identifier(λ)));
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static boolean expression(final MethodInvocation ¢) {
     return ¢ != null && step.expression(¢) != null;
   }
@@ -200,7 +200,7 @@ public enum haz {
     }.test(ss);
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static boolean methods(final AbstractTypeDeclaration ¢) {
     return step.methods(¢) != null && !step.methods(¢).isEmpty();
   }

@@ -4,6 +4,7 @@ import static fluent.ly.azzert.is;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ import org.junit.Test;
 @SuppressWarnings({ "static-method" }) public class PruneTest2 {
   final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
   final String[] NonNullArray = { "1", "2", "4" };
-  private ArrayList<String> sparseCollection;
+  private ArrayList<@Nullable String> sparseCollection;
 
   @Before public void initSparseCollection() {
     sparseCollection = new ArrayList<>();

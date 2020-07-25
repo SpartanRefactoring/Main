@@ -1,13 +1,21 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.idiomatic.*;
+import static fluent.ly.idiomatic.eval;
+import static fluent.ly.idiomatic.take;
 
-import java.util.*;
+import java.util.Objects;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.internal.corext.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IMethodBinding;
+import org.eclipse.jdt.core.dom.IPackageBinding;
+import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.internal.corext.dom.Bindings;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.containing;
 
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>

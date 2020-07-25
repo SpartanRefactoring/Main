@@ -1,20 +1,26 @@
 package il.org.spartan.spartanizer.tipping;
 
-import static java.lang.reflect.Modifier.*;
+import static java.lang.reflect.Modifier.isAbstract;
 
-import java.io.*;
-import java.lang.reflect.*;
+import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
-import il.org.spartan.utils.Examples.*;
+import fluent.ly.English;
+import fluent.ly.cCamelCase;
+import fluent.ly.nil;
+import fluent.ly.note;
+import fluent.ly.separate;
+import il.org.spartan.spartanizer.plugin.Builder;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
+import il.org.spartan.utils.Examples.Converter;
+import il.org.spartan.utils.Rule;
 
 /** A tipper is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A tipper is so small that it is

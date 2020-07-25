@@ -1,16 +1,24 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedModifiers;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.Modifier;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.tippers.ModifierRedundant;
 
 /** Manager of modifiers's redundancy
  * @author Yossi Gil

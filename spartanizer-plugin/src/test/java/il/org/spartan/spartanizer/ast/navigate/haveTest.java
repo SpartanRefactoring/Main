@@ -1,14 +1,14 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.parse;
 
 /** Tests for {@link have} , regarding issue #807
  * @author Kfir Marx

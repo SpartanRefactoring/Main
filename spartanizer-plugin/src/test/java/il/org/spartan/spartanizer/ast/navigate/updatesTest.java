@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.parse;
 
 /** Yossi Gil: tests {@link compute#updatedVariables }
  * @author Yossi Gil

@@ -1,27 +1,41 @@
 package il.org.spartan.athenizer;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.internal.ui.javaeditor.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.jface.text.source.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.text.edits.*;
-import org.eclipse.ui.texteditor.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.JFaceTextUtil;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
+import org.eclipse.text.edits.TextEditGroup;
+import org.eclipse.ui.texteditor.ITextEditor;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.research.Matcher.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import fluent.ly.robust;
+import il.org.spartan.spartanizer.ast.navigate.Ranger;
+import il.org.spartan.spartanizer.plugin.Eclipse;
+import il.org.spartan.spartanizer.plugin.WrappedCompilationUnit;
+import il.org.spartan.spartanizer.research.Matcher.Option;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.DispatchingVisitor;
+import il.org.spartan.spartanizer.traversal.disabling;
+import il.org.spartan.utils.Boxer;
+import il.org.spartan.utils.Range;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
  * @author Ori Roth {@code ori.rothh@gmail.com}

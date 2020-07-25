@@ -1,15 +1,20 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.preference.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.preference.FieldEditor;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.box;
+import fluent.ly.forget;
+import il.org.spartan.utils.Int;
 
 /** A {@link FieldEditor} designed to store multiple controls within a group
  * panel widget, to be used in conjunction with an

@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.research.codeclones;
 
-import java.io.*;
+import java.io.File;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.research.analyses.NoBrainDamagedTippersSpartanizer;
+import il.org.spartan.utils.FileUtils;
 
 /** Spartanaize a given folder
  * @author oran1248

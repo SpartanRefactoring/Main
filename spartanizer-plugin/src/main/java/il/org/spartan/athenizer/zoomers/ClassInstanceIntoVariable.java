@@ -1,17 +1,23 @@
 package il.org.spartan.athenizer.zoomers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.athenizer.zoom.zoomers.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.athenizer.zoom.zoomers.Issue0978;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.namespace.scope;
+import il.org.spartan.spartanizer.tipping.CarefulTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** new Z(); >> Z z1 = new Z(); {@link Issue0978}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}

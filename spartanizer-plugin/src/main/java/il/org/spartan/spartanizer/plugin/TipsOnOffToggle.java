@@ -1,12 +1,18 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.append;
+import static il.org.spartan.Utils.delete;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.runtime.CoreException;
 
-import fluent.ly.*;
+import fluent.ly.note;
+import fluent.ly.range;
 
 /** A command handler which toggles the spartanization nature
  * @see IHandler

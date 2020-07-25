@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /** Ignored arithmetic tests of issue 92 (arithmetic simplification) are moved
  * here.

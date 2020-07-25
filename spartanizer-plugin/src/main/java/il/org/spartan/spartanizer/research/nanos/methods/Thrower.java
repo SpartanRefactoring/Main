@@ -1,14 +1,15 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** Method that does nothing but throwing exception
  * @author Ori Marcovitch */

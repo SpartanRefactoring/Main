@@ -1,17 +1,25 @@
 package il.org.spartan.spartanizer.cmdline.runnables;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.SimpleType;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.box;
+import fluent.ly.note;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.engine.nominal.abbreviate;
+import il.org.spartan.utils.FileUtils;
 
 /** Demonstrates iteration through files.
  * @year 2015

@@ -1,17 +1,17 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.iz;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.cons;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.parse;
 
 /** Tests for {@Link InfixAdditionZero}
  * @author Yossi Gil

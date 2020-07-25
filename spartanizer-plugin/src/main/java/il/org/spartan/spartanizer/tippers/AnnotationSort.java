@@ -1,22 +1,31 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedModifiers;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.typeName;
+import static java.util.stream.Collectors.toList;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
 
 /** TODO kobybs please add a description
  * @author kobybs

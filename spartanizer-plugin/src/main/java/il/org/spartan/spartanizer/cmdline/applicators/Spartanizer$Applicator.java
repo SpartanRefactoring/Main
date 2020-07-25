@@ -49,7 +49,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
   /** Apply the spartanization to a selection of CompilationUnits
    * @param u
    * @param forTrueConditionRemove
-   * @return */
+   */
   public boolean apply(final AbstractSelection<?> __) {
     final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
     for (final WrappedCompilationUnit w : list) {
@@ -120,7 +120,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
   }
   /** Rewrite CompilationUnit
    * @param ¢
-   * @return */
+   */
   public ASTRewrite createRewrite(final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     consolidateTips($, ¢);

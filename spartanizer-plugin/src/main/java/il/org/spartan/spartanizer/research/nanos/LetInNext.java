@@ -1,20 +1,32 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.initializer;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.Inliner;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tippers.LocalInitializedInlineIntoNext;
+import il.org.spartan.spartanizer.tipping.GoToNextStatement;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** Assignment then returnStatement or ExpressionsStatement using it, where the
  * assignment could not be inlined

@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.parametersNames;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import fluent.ly.separate;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** sequence of parameters which occur few times together in a method
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -1,14 +1,15 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.cmdline.tables.visitors.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
+import fluent.ly.safe;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.tables.visitors.TableNanosCoverage;
+import il.org.spartan.spartanizer.research.MethodRecord;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.tables.Table;
 
 /** Old table presenting touched methods (%)
  * @author orimarco {@code marcovitch.ori@gmail.com} Infix

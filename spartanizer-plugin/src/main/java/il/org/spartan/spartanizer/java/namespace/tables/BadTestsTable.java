@@ -121,27 +121,27 @@ public class BadTestsTable extends NominalTables {
     }.visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new ASTVisitor() {
-          @Override public boolean visit(final MethodDeclaration x) {
-            if (x != null) {
-              List<String> annotations = extract.annotations(x).stream().map(a -> a.getTypeName().getFullyQualifiedName())
+          @Override public boolean visit(final MethodDeclaration d) {
+            if (d != null) {
+              List<String> annotations = extract.annotations(d).stream().map(a -> a.getTypeName().getFullyQualifiedName())
                   .collect(Collectors.toList());
-              if (annotations.contains("Test") || (iz.typeDeclaration(x.getParent()) && az.typeDeclaration(x.getParent()).getSuperclassType() != null
-                  && az.typeDeclaration(x.getParent()).getSuperclassType().toString().equals("TestCase"))) {
+              if (annotations.contains("Test") || (iz.typeDeclaration(d.getParent()) && az.typeDeclaration(d.getParent()).getSuperclassType() != null
+                  && az.typeDeclaration(d.getParent()).getSuperclassType().toString().equals("TestCase"))) {
                 // This is real test!
                 final Int counter = new Int(); // asseerts counter
                 map.put("#Tests", map.get("#Tests") + 1);
-                x.accept(new ASTVisitor() {
+                d.accept(new ASTVisitor() {
                   /** handle regular assert */
-                  @Override public boolean visit(final AssertStatement x) {
+                  @Override public boolean visit(final AssertStatement s) {
                     map.put("#JavaAsserts", map.get("#JavaAsserts") + 1);
                     counter.step();
                     return true;
                   }
                   /** handle JunitAssert */
-                  @Override public boolean visit(final ExpressionStatement x) {
-                    if (iz.junitAssert(x)) {
+                  @Override public boolean visit(final ExpressionStatement z) {
+                    if (iz.junitAssert(z)) {
                       map.put("#JunitAsserts", map.get("#JunitAsserts") + 1);
-                      MethodInvocation m = az.methodInvocation(az.expressionStatement(x).getExpression());
+                      MethodInvocation m = az.methodInvocation(az.expressionStatement(z).getExpression());
                       String s = m.getName().getIdentifier();
                       if (s.equals("assertTrue") || s.equals("assertFalse")) {
                         if (m.arguments().size() == 1) {

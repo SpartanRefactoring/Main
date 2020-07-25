@@ -110,7 +110,7 @@ public enum find {
   }
   /** like the other one but for a list
    * @param ns
-   * @return */
+   */
   public static <N extends ASTNode> String singleAtomicDifference(final List<N> ns) {
     if (ns.size() < 2)
       return null;

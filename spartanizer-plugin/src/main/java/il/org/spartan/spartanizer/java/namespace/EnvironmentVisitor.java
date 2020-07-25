@@ -1,18 +1,46 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.catchClauses;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static java.util.stream.Collectors.toList;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map.Entry;
 
-import java.util.*;
-import java.util.Map.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.DoStatement;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.utils.MapEntry;
 
 /** Three groups of visitors here: 1. Non-declarations with a name. 2.
  * Non-declarations without a name. 3. Actual Declarations. First two groups are

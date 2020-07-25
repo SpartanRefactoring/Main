@@ -1,26 +1,66 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static il.org.spartan.utils.FileUtils.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.elze;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static il.org.spartan.utils.FileUtils.readFromFile;
+import static il.org.spartan.utils.FileUtils.writeToFile;
+import static org.eclipse.jdt.core.dom.ASTNode.BREAK_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.CONTINUE_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.RETURN_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.THROW_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.copySubtree;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
-import java.io.*;
-import java.util.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CharacterLiteral;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.find;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.Inliner;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.java.NumericLiteralClassifier;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementToForInitializers;
+import il.org.spartan.utils.Bool;
 
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil

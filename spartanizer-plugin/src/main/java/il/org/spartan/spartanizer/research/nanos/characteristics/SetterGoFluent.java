@@ -1,20 +1,35 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
+import static il.org.spartan.spartanizer.ast.navigate.step.returnType;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.research.TipperFactory;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

@@ -1,17 +1,30 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.equinox.app.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import fluent.ly.forget;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.utils.FileUtils;
 
 /** Like FolderASTVisitor but with binding. Needs to be run as an Application,
  * which is not fun at all. Not ready yet.

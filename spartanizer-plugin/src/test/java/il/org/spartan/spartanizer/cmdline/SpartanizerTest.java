@@ -1,14 +1,27 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.modifiers;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.NormalAnnotation;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.forget;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
 
 /** Test for our test classes and methods pruner
  * @author Matteo Orrù

@@ -1,18 +1,21 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.appendFile;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.blank;
 
-import java.io.*;
-import java.lang.reflect.*;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.util.*;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
 
 /** Find all loops not matched by a nano pattern
  * @author orimarco <marcovitch.ori@gmail.com>

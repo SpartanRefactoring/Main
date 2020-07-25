@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.tipping.categories;
 
-import java.util.*;
+import java.util.Set;
 
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.traversal.*;
+import il.org.spartan.spartanizer.plugin.Builder;
+import il.org.spartan.spartanizer.traversal.Toolboxes;
 
 /** Classification of tippers
  * @author Yossi Gil

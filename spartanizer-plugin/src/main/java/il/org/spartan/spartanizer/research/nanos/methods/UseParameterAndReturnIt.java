@@ -1,12 +1,16 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
+import static il.org.spartan.spartanizer.ast.navigate.step.returnType;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

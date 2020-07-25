@@ -1,19 +1,23 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import fluent.ly.not;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.engine.nominal.JohnDoe;
+import il.org.spartan.spartanizer.java.namespace.Environment;
+import il.org.spartan.spartanizer.java.namespace.Namespace;
+import il.org.spartan.spartanizer.research.analyses.notation;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
+import il.org.spartan.utils.Examples;
 
 /** Tested by {@link Issue1115}
  * @author Yossi Gil

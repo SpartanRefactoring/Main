@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Test "Bug in remove else" as discussed in Issue #352
  * @author Tomer Dragucki

@@ -1,21 +1,33 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import fluent.ly.lisp;
+import fluent.ly.not;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.issues.Issue1105;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
 
 /** Tested by {@link Issue1105}
  * @author Yossi Gil

@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.research.nanos.common;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Block;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.research.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.research.TipperFactory;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
 
 /** List that can contain {@link NanoPatternTipper<Block>}
  * @author orimarco {@code marcovitch.ori@gmail.com}

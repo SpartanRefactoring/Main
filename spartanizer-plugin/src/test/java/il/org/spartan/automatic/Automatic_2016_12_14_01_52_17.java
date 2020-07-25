@@ -1,8 +1,8 @@
 package il.org.spartan.automatic;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Auto generated
  * @author Ori Roth

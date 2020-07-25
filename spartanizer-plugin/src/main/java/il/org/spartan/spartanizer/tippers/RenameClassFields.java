@@ -1,14 +1,20 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.tipping.EagerTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
 
 /** Rename class field to the Type name in the following cases: - The type of
  * the field is unique in the class - The field is private and or the class is

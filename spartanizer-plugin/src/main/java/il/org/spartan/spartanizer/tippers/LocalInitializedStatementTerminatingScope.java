@@ -1,23 +1,38 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.penultimateIn;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.is;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.remove;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.Coupling;
+import il.org.spartan.spartanizer.engine.Inliner;
+import il.org.spartan.spartanizer.engine.Inliner.InlinerWithValue;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.java.sideEffects;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil

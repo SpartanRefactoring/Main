@@ -1,6 +1,8 @@
 package il.org.spartan.athenizer;
 
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.plugin.AbstractSelection;
+import il.org.spartan.spartanizer.plugin.Applicator;
+import il.org.spartan.spartanizer.plugin.WrappedCompilationUnit;
 
 /** A generic application that makes changes in java code. Being use by the
  * {@link Applicator}.

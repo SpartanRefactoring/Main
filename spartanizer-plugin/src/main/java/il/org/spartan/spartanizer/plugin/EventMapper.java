@@ -1,9 +1,17 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Int;
 
 /** A {@link Listener} that listen to {@link event}s. Maps both the recorders
  * and the results to the events. The recorders can be {@link Function}s,

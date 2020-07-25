@@ -1,14 +1,22 @@
 package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.research.util.measure;
+import il.org.spartan.utils.FileUtils;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}

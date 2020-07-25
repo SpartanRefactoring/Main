@@ -1,7 +1,9 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import org.junit.*;
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
+
+import org.junit.Ignore;
+import org.junit.Test;
 
 /** TODO dormaayn: document class
  * @author dormaayn

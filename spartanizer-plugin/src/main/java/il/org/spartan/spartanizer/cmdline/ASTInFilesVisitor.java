@@ -1,27 +1,54 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static org.eclipse.jdt.core.dom.ASTNode.ANONYMOUS_CLASS_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.CONSTRUCTOR_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.LAMBDA_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_CONSTRUCTOR_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_METHOD_INVOCATION;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-import java.io.*;
-import java.lang.invoke.*;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.bench.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.library.*;
-import il.org.spartan.utils.*;
-import junit.framework.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.system;
+import fluent.ly.the;
+import il.org.spartan.bench.Dotter;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.external.External;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
+import il.org.spartan.utils.Bool;
+import il.org.spartan.utils.FileUtils;
+import il.org.spartan.utils.Rule;
+import il.org.spartan.utils.¢;
+import junit.framework.Test;
 
 /** Parse and AST visit all Java files under a given path.
  * <p>
@@ -182,8 +209,8 @@ public class ASTInFilesVisitor {
   /** Check whether given string containing Java code contains {@link Test}
    * annotations
    * <p>
-   * @param function
-   * @return */
+   * @param javaCode
+   */
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     final Bool $ = new Bool();
@@ -211,7 +238,7 @@ public class ASTInFilesVisitor {
   /** Determines whether a file is production code, using the heuristic that
    * production code does not contain {@code @}{@link Test} annotations
    * <p>
-   * @return */
+   */
   public static boolean productionCode(@¢ final File $) {
     try {
       return !containsTestAnnotation(FileUtils.read($));

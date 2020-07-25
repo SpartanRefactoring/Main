@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.traversal;
 
-import java.io.*;
-import java.util.*;
+import java.io.ObjectStreamClass;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.junit.Assert;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Test that all tippers in {@link Toolboxes} doesn't have a serialVersionUID
  * equals to 1L (default) and that they're all different- Issue #1285

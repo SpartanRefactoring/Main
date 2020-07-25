@@ -1,14 +1,17 @@
 package il.org.spartan.spartanizer.research.utils;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.List;
+import java.util.function.Predicate;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Javadoc;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.research.util.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
 
 /** Tests of {@link research.util}
  * @author AnnaBel7

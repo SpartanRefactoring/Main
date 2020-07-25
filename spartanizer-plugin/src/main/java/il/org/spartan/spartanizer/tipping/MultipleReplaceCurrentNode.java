@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.tipping;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
+import fluent.ly.range;
+import fluent.ly.the;
 
 /** MultipleReplaceCurrentNode replaces multiple nodes in current statement with
  * multiple nodes (or a single node).

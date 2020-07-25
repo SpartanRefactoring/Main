@@ -1,22 +1,37 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import static il.org.spartan.tide.*;
+import static il.org.spartan.tide.clean;
 
-import java.io.*;
-import java.util.stream.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
+import fluent.ly.as;
+import fluent.ly.box;
+import fluent.ly.note;
+import fluent.ly.separate;
+import fluent.ly.system;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.Essence;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
 import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
+import il.org.spartan.utils.FileUtils;
 
 /** Scans files named by outputFolder, forget test files, and collect
  * statistics.

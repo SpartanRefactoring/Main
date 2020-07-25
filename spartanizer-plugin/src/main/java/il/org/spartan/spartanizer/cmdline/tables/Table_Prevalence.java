@@ -1,19 +1,24 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import static il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.*;
+import static il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.rExternal;
+import static il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.rInternal;
+import static il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.rMethod;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.text.edits.MalformedTreeException;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.RIndicesVisitor;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.util.AnnotationCleanerVisitor;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.Int;
 
 /** Generates a table that shows for every nano it's prevalence in corpus
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -1,12 +1,15 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
 import il.org.spartan.Essence;
-import il.org.spartan.spartanizer.java.*;
 
 /** Tests {@link Essence#stringRemove}
  * <p>

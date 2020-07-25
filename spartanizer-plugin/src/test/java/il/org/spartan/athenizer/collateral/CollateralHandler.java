@@ -1,9 +1,11 @@
 package il.org.spartan.athenizer.collateral;
 
-import org.eclipse.core.commands.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 
-import il.org.spartan.athenizer.*;
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.athenizer.Application;
+import il.org.spartan.athenizer.BloaterGUIApplicator;
+import il.org.spartan.spartanizer.plugin.Applicator;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloaterGUIApplicator} as an {@link Applicator} and {@link Augmenter}

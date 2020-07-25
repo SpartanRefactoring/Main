@@ -1,13 +1,16 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.lessThan;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.tippers.AnnotationRemoveSingletonArrray;
+import il.org.spartan.spartanizer.tippers.AnnotationSort;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

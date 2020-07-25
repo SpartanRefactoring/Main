@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.utils.tdd.*;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.utils.tdd.determineIf;
 
 /** see issue #718 for more details
  * @author Oren Afek

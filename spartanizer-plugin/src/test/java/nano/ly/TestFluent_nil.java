@@ -1,12 +1,13 @@
 package nano.ly;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.function.*;
+import java.util.function.Function;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
+import fluent.ly.nil;
 
 public class TestFluent_nil {
   static String helloString = "Hello";

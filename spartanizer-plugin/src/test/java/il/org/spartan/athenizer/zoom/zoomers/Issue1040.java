@@ -1,13 +1,14 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.meta.*;
-import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
+import il.org.spartan.spartanizer.testing.TestUtilsBloating;
 
 /** Example for using givesWithBinding(String p, String f) from class
  * {@link TestUtilsBloating} .

@@ -1,13 +1,18 @@
 package il.org.spartan.spartanizer.cmdline.applicators;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Function;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.plugin.AbstractSelection;
+import il.org.spartan.spartanizer.plugin.Applicator;
+import il.org.spartan.spartanizer.plugin.WrappedCompilationUnit;
+import il.org.spartan.utils.Int;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
@@ -83,7 +88,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
   /** @param ¢ JD
-   * @return */
+   */
   @Override public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;

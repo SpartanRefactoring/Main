@@ -1,14 +1,18 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.function.*;
+import java.util.function.Function;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.ui.*;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.ui.ISharedImages;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import fluent.ly.is;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.plugin.widget.ConfigurationsMap;
+import il.org.spartan.spartanizer.plugin.widget.WidgetContext;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
 
 /** A widget operation that cleans projects
  * @author Niv Shalmon

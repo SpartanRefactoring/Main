@@ -1,14 +1,30 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.fields;
+import static il.org.spartan.spartanizer.ast.navigate.step.modifiers;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.utils.Bool;
+import il.org.spartan.utils.Int;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

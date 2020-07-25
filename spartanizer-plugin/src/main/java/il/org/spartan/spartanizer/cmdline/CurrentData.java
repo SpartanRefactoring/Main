@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 
 /**
  * TODO Matteo Orru': document class 

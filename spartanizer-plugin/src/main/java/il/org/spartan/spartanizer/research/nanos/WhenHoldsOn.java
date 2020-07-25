@@ -1,24 +1,32 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.ast.navigate.find.*;
+import static il.org.spartan.spartanizer.ast.navigate.find.differsInSingleAtomic;
+import static il.org.spartan.spartanizer.ast.navigate.find.differsInSingleExpression;
+import static il.org.spartan.spartanizer.ast.navigate.find.findSingleExpressionDifferences;
+import static il.org.spartan.spartanizer.ast.navigate.find.singleAtomicDifference;
+import static il.org.spartan.spartanizer.ast.navigate.find.singleAtomicDifferences;
+import static il.org.spartan.spartanizer.ast.navigate.find.singleExpressionDifference;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static java.util.stream.Collectors.toList;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
+import java.util.List;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.research.analyses.notation;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>

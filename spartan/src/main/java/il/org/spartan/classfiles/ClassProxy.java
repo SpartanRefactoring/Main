@@ -12,6 +12,7 @@ import java.lang.reflect.TypeVariable;
 import java.net.URL;
 import java.security.ProtectionDomain;
 
+import fluent.ly.nil;
 import il.org.spartan.classfiles.reify.ClassInfo;
 
 /** An enhanced representation of the reflective information found in the
@@ -418,8 +419,8 @@ public class ClassProxy<T> {
   @Override public String toString() {
     try {
       return clazz() + "";
-    } catch (final ClassNotFoundException __) {
-      return null;
+    } catch (final ClassNotFoundException x) {
+      return nil.forgetting(x);
     }
   }
 

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import fluent.ly.falze;
 import il.org.spartan.streotypes.Antiexample;
 import il.org.spartan.streotypes.Utility;
 import il.org.spartan.utils.Once;
@@ -137,8 +138,8 @@ import il.org.spartan.utils.Once;
     try {
       Double.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
-      return false;
+    } catch (final NumberFormatException x) {
+      return falze.forgetting(x);
     }
   }
 
@@ -146,8 +147,8 @@ import il.org.spartan.utils.Once;
     try {
       Float.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
-      return false;
+    } catch (final NumberFormatException x) {
+        return falze.forgetting(x);
     }
   }
 
@@ -155,8 +156,8 @@ import il.org.spartan.utils.Once;
     try {
       Integer.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
-      return false;
+    } catch (final NumberFormatException x) {
+        return falze.forgetting(x);
     }
   }
 
@@ -164,8 +165,8 @@ import il.org.spartan.utils.Once;
     try {
       Long.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
-      return false;
+    } catch (final NumberFormatException x) {
+        return falze.forgetting(x);
     }
   }
 

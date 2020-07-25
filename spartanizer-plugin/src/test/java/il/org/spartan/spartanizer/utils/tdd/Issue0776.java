@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author Yevgenia Shandalov

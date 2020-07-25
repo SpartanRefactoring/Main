@@ -1,15 +1,19 @@
 package il.org.spartan.spartanizer.traversal;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.anonymous;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.tipping.categories.Taxon;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import fluent.ly.nil;
 import il.org.spartan.streotypes.Instantiable;
 
 /** A class to generate a CSV (comma separated values) file, by writing into it
@@ -20,7 +21,7 @@ import il.org.spartan.streotypes.Instantiable;
     try {
       return new FileWriter($);
     } catch (final IOException ¢) {
-      return null;
+      return nil.forgetting(¢);
     }
   }
 

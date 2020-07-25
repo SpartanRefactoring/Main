@@ -1,22 +1,29 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.is.*;
+import static fluent.ly.is.in;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.engine.nominal.JohnDoe;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.research.analyses.notation;
+import il.org.spartan.spartanizer.tipping.EagerTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil

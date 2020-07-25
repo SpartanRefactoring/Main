@@ -1,9 +1,12 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.cmdline.ASTTrotter;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
 
 public class BucketMethods extends GrandVisitor {
   public static void main(final String[] args) {

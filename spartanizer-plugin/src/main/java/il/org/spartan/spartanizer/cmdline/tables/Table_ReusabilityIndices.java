@@ -1,16 +1,31 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.spartanizer.java.namespace.Vocabulary;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.Int;
 
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil

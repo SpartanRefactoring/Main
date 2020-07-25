@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.testing.TipperTest;
+import il.org.spartan.spartanizer.tippers.LocalUninitializedAssignment;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** TODO Yuval Simon: document class
  * @author Yuval Simon

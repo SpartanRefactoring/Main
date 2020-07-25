@@ -1,20 +1,24 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import an.*;
-import fluent.ly.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.library.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import an.empty;
+import fluent.ly.as;
+import fluent.ly.note;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
+import il.org.spartan.spartanizer.plugin.AbstractSelection;
+import il.org.spartan.spartanizer.plugin.WrappedCompilationUnit;
+import il.org.spartan.utils.FileUtils;
 
 /** Selection useful to deal with projects using the command line
  * @author Matteo Orru'
@@ -64,7 +68,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     }
     /** @param path
      * @author Matteo Orru'
-     * @return */
+     */
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
       // final List<WrappedCompilationUnit> cuList = an.empty.list();
       // for (final File ¢ : new FilesGenerator(".java").from(path))
@@ -75,7 +79,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     }
     /** @param path
      * @author Matteo Orru'
-     * @return */
+     */
      public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(
         final String path) {
       return new CommandLineSelection(az.stream(new FilesGenerator(".java").from(path)).filter(λ -> !FileHeuristics.isTestFile(λ))

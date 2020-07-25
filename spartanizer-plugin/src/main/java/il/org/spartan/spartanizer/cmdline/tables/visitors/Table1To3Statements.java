@@ -1,23 +1,37 @@
 package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.Stack;
+import java.util.TreeMap;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
+import fluent.ly.forget;
+import fluent.ly.safe;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.MethodRecord;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
+import il.org.spartan.spartanizer.research.util.measure;
+import il.org.spartan.spartanizer.tipping.TraversalMonitor;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.tables.Table;
 
 /** Table representing coverage for methods with 1 to 3 statements
  * @deprecated

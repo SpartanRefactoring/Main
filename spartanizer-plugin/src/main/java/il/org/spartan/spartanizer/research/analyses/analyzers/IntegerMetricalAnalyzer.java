@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.research.analyses.analyzers;
 
-import java.util.*;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Int;
 
 /** Class to count statement inside a method before and after refactoring +
  * patterning

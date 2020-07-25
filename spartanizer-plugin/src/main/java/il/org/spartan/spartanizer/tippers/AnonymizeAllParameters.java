@@ -1,17 +1,20 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.factory.misc.*;
+import static il.org.spartan.spartanizer.ast.factory.misc.rename;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.spartanizer.utils.tdd.*;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.tipping.EagerTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
+import il.org.spartan.spartanizer.utils.tdd.getAll;
 
 /** Anonyze all the relevant parameters in the method declaration </br>
  * For example transform: </br>

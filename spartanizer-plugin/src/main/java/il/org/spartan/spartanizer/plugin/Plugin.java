@@ -1,23 +1,34 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_AUTO_ACTIVISION_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_AUTO_ACTIVISION_VALUE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_REVERT_METHOD_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_REVERT_METHOD_VALUE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.store;
 
-
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.core.runtime.jobs.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.plugin.*;
-import org.osgi.framework.*;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ui.IStartup;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.BundleContext;
 
-
-import fluent.ly.*;
-import il.org.spartan.athenizer.*;
-import il.org.spartan.plugin.preferences.revision.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import fluent.ly.note;
+import fluent.ly.robust;
+import il.org.spartan.athenizer.InflateHandler;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources;
+import il.org.spartan.plugin.preferences.revision.WidgetPreferences;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperationPoint;
 
 
 /** TODO Artium Nihamkin please add a description

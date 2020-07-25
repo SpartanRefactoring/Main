@@ -1,21 +1,28 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.type;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import fluent.ly.is;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.issues.Issue1012;
+import il.org.spartan.spartanizer.tipping.GoToNextStatement;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
 
 /** Test case is {@link Issue1012} Issue #1012 Convert: {@code
  * int a = 0;

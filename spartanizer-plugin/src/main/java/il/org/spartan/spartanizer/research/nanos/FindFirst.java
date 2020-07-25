@@ -1,18 +1,19 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.research.TipperFactory.statementsPattern;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** There are actually few forms of FindFirst<br>
  * If none, can return null,some default value or throw. <br>

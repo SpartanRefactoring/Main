@@ -1,11 +1,16 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.Statement;
 
 /** An empty {@code enum} with a variety of {@code public
  * static} functions for restructuring expressions.

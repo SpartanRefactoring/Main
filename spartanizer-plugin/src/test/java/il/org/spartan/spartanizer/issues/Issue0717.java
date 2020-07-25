@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.issues;
 
-import java.util.*;
+import java.util.Random;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.utils.tdd.*;
+import fluent.ly.range;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.utils.tdd.determineIf;
 
 /** see Issue0 #717 for more details
  * @author Lidia Piatigorski

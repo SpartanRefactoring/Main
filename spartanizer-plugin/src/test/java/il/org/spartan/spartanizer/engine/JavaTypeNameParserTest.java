@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.nominal.JavaTypeNameParser;
+import il.org.spartan.spartanizer.engine.nominal.JohnDoe;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class JavaTypeNameParserTest {

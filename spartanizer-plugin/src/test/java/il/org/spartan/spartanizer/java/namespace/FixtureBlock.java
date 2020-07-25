@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.io.*;
+import java.io.IOException;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** Fixture for testing plain for testing statements in a block.
  * @author Yossi Gil

@@ -1,18 +1,39 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedOperands;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static java.util.stream.Collectors.toList;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.ThrowStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.java.precedence;
 
 /** Contains subclasses and tools to build expressions and sideEffects
  * @author Yossi Gil

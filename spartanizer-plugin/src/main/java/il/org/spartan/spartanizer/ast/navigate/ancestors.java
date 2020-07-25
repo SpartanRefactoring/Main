@@ -1,11 +1,14 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
 /** {@link Iterable} over the ancestors of a given node.
  * @author Yossi Gil

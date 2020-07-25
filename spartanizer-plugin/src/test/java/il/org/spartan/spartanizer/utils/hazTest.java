@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static il.org.spartan.spartanizer.engine.parse.s;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.haz;
 
 /** Unit tests for {@link haz}
  * @author Yossi Gil

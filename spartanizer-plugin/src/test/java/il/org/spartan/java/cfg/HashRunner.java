@@ -1,12 +1,16 @@
 package il.org.spartan.java.cfg;
 
-import java.lang.reflect.*;
-import java.util.*;
-import java.util.stream.*;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.builder.*;
-import org.junit.runners.*;
-import org.junit.runners.model.*;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.junit.runners.BlockJUnit4ClassRunner;
+import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.InitializationError;
+import org.junit.runners.model.Statement;
 
 /** TODO Roth: document class TODO Roth: move to appropriate package
  * @author Ori Roth

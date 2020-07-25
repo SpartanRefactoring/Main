@@ -1,12 +1,15 @@
 package il.org.spartan.spartanizer.research.analyses.analyzers;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.utils.Int;
 
 /** Class for averaging whatever about methods before and after refactoring +
  * patterning

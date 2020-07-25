@@ -191,7 +191,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return Eclipse.newSubMonitor(getProgressMonitor());
   }
   /** @param iCompilationUnit the compilationUnit to set
-   * @return */
+   */
   public GUITraversal iCompilationUnit(final ICompilationUnit ¢) {
     iCompilationUnit = ¢;
     return self();

@@ -1,16 +1,18 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.java.namespace.scope;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
 
 /** Remove unused local
  * @author Yossi Gil

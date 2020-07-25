@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
-import java.util.*;
+import java.util.Map;
 
-import il.org.spartan.tables.*;
+import il.org.spartan.tables.Table;
 
 /** @author Dor Ma'ayan
  * @since 2017-05-18 */

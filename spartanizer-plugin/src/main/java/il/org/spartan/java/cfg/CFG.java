@@ -1,13 +1,15 @@
 package il.org.spartan.java.cfg;
 
-import static il.org.spartan.java.cfg.CFG.Edges.*;
+import static il.org.spartan.java.cfg.CFG.Edges.beginnings;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.property;
 
 /** The main class of the CFG implementation
  * @author Dor Ma'ayan

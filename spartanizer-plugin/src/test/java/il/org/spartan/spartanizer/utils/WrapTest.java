@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.containsString;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.nullValue;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jface.text.Document;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

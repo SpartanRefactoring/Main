@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import il.org.spartan.spartanizer.annotations.*;
+import il.org.spartan.spartanizer.annotations.FlatEnvUse;
+import il.org.spartan.spartanizer.annotations.Id;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

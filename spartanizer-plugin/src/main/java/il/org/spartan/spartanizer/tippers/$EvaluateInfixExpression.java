@@ -1,20 +1,27 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.DOUBLE;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.INT;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.LONG;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.REMAINDER;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Common strategy of all evaluators$EvaluateExpression
  * @author Yossi Gil

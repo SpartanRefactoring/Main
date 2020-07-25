@@ -5,13 +5,17 @@
  * @since Oct 16, 2016 */
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.NodeFinder;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
 
 public class TrackerSelection extends Selection {
   ASTNode track;

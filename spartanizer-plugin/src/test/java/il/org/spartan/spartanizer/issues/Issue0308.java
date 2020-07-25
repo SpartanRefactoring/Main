@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Test cases for validating that centification works properly with try/catch
  * statements

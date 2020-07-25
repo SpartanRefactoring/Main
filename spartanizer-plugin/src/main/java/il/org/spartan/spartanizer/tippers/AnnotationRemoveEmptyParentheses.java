@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.values;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.NormalAnnotation;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Removes the parentheses from annotations that do not take arguments,
  * converting {@code @Override()}> to {@code @Override}>

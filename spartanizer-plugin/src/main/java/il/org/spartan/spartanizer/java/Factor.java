@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /** @see Term
  * @author Yossi Gil

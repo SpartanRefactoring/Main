@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.research.classifier.patterns;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ForStatement;
 
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** ForEachEnhanced examples
  * @author Ori Marcovitch

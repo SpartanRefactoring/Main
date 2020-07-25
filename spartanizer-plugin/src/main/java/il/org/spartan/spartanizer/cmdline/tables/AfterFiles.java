@@ -1,29 +1,44 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.javadoc;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.writeFile;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.Stack;
+import java.util.TreeMap;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.analyses.util.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import fluent.ly.safe;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.MethodRecord;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.analyses.util.Count;
+import il.org.spartan.spartanizer.research.analyses.util.NanoPatternRecord;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
+import il.org.spartan.spartanizer.research.util.measure;
+import il.org.spartan.spartanizer.tipping.TraversalMonitor;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.file;
 
 /** Generates files after nano spartanization+replacing
  * @author Ori Marcovitch

@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.utils.Rule;
 
 public class ExpressionChain {
   public static void main(final String[] args) {

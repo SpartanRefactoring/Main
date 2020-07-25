@@ -1,14 +1,18 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.text.edits.MalformedTreeException;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.tables.*;
+import fluent.ly.forget;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.util.AnnotationCleanerVisitor;
+import il.org.spartan.tables.Table;
 
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco {@code marcovitch.ori@gmail.com}

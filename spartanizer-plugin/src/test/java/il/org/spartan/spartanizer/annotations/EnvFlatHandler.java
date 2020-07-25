@@ -1,14 +1,19 @@
 package il.org.spartan.spartanizer.annotations;
 
-import java.util.*;
-import java.util.Map.*;
+import java.util.LinkedHashSet;
+import java.util.Map.Entry;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.NormalAnnotation;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.engine.ENVTestEngineAbstract;
+import il.org.spartan.spartanizer.java.namespace.Binding;
 
 /** TODO Dan Greenstein please add a description Implements the handler of
  * flatEnv outer annotation. * @author Dan Greenstein

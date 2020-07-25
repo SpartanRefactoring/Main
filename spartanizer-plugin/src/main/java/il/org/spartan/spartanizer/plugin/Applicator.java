@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.applicators.*;
+import fluent.ly.English;
+import il.org.spartan.spartanizer.cmdline.applicators.CommandLine$Applicator;
 
 /** Configurable applicator.
  * @author Ori Roth

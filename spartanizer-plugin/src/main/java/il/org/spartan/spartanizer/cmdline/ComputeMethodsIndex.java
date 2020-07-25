@@ -1,15 +1,18 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
+import il.org.spartan.CSVLineWriter;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
 
 /** Compute reusabilty index for methods Meanwhile just computes the index of
  * tokens for methods...

@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.greaterThanOrEqualTo;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.type.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.type.Primitive;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class LiteralParserTest {

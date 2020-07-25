@@ -1,18 +1,18 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.ast.navigate.step.types;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.tdd.*;
+import fluent.ly.azzert;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.utils.tdd.getAll;
 
 /** see issue #713 for more details
  * @author Inbal Zukerman

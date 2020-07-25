@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
 
 /** Tests {@link HoldsOrReturn}
  * @author orimarco {@code marcovitch.ori@gmail.com}

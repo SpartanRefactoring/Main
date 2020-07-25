@@ -1,16 +1,28 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.operand;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.research.TipperFactory;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Bool;
 
 /** replaces for loops with ranges
  * @author Dan Abramovich

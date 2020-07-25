@@ -35,7 +35,7 @@ import il.org.spartan.spartanizer.ast.safety.iz;
  * @since 2015-07-28 */
 public interface findFirst {
   /** @param ¢ JD
-   * @return */
+   */
   static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode ¢) {
     return instanceOf(AbstractTypeDeclaration.class).in(¢);
   }
@@ -109,7 +109,7 @@ public interface findFirst {
     };
   }
   /** @param ¢ JD
-   * @return */
+   */
   static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return instanceOf(TypeDeclaration.class).in(¢);
   }
@@ -130,32 +130,32 @@ public interface findFirst {
     return instanceOf(WhileStatement.class).in(¢);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static ExpressionStatement expressionStatement(final ASTNode ¢) {
     return instanceOf(ExpressionStatement.class).in(¢);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static Block block(final ASTNode ¢) {
     return instanceOf(Block.class).in(¢);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static InfixExpression infixExpression(final ASTNode ¢) {
     return instanceOf(InfixExpression.class).in(¢);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static TryStatement tryStatement(final ASTNode ¢) {
     return instanceOf(TryStatement.class).in(¢);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static BooleanLiteral booleanLiteral(final ASTNode ¢) {
     return instanceOf(BooleanLiteral.class).in(¢);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static FieldAccess fieldAccess(final ASTNode ¢) {
     return instanceOf(FieldAccess.class).in(¢);
   }

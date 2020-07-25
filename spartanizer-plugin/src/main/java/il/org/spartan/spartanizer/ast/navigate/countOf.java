@@ -1,16 +1,26 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.Utils.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.Utils.removeWhites;
+import static il.org.spartan.spartanizer.ast.navigate.step.elze;
+import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
+import static org.eclipse.jdt.core.dom.ASTNode.DO_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.EMPTY_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.ENHANCED_FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.IF_STATEMENT;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Comment;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.utils.Int;
 
 /** Various metrics, which can be written fluent API style with this __'s name
  * prefix.
@@ -88,7 +98,7 @@ public interface countOf {
   }
   /** Exclude comments and import package statement from the content.
    * @param root
-   * @return */
+   */
   static int noImportsNoComments(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor(true) {

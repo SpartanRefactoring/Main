@@ -5,9 +5,9 @@
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.utils.tdd;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 @SuppressWarnings("static-method")
 public class Issue0774 {

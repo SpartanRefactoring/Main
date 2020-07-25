@@ -1,11 +1,14 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.InfixAdditionSort;
+import il.org.spartan.spartanizer.tippers.InfixMultiplicationByOne;
+import il.org.spartan.spartanizer.tippers.InfixPlusEmptyString;
+import il.org.spartan.spartanizer.tippers.InfixTermsZero;
 
 /** Unit tests for {@link InfixTermsZero}
  * @author Niv Shalmon

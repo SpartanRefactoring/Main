@@ -1,16 +1,19 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.lisp.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static fluent.ly.lisp.chop;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.plugin.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.plugin.Wizard;
 
 /** Expands terms of * or / expressions without reordering.
  * <p>

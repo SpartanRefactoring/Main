@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.factory.remove;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.java.sideEffects;
+import il.org.spartan.utils.Examples;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

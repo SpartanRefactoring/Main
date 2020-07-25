@@ -1,16 +1,23 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.equalTo;
+import static fluent.ly.azzert.hasItem;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static il.org.spartan.spartanizer.engine.parse.i;
+import static il.org.spartan.spartanizer.engine.parse.t;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.engine.nominal.abbreviate;
+import il.org.spartan.spartanizer.engine.nominal.guessName;
+import il.org.spartan.spartanizer.java.precedence;
 
 /** Tests of {@link ThisClass#thatFunction}
  * @author Yossi Gil

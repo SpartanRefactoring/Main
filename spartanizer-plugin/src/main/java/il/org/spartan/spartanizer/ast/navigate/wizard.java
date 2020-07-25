@@ -1,39 +1,94 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.lisp.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static fluent.ly.lisp.chop;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.ast.navigate.step.elze;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
 import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
 import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
+import static org.eclipse.jdt.core.dom.ASTNode.BREAK_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.CONTINUE_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.DO_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.ENHANCED_FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.IF_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.LABELED_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.RETURN_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.THROW_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.WHILE_STATEMENT;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import java.io.File;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.compiler.IProblem;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BreakStatement;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ContinueStatement;
+import org.eclipse.jdt.core.dom.DoStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.LabeledStatement;
+import org.eclipse.jdt.core.dom.Message;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.ThrowStatement;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.compiler.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.ast.safety.iz.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.range;
+import fluent.ly.the;
+import fluent.ly.zero;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.ast.factory.cons;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.flatten;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.ast.safety.iz.literal;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.java.precedence;
+import il.org.spartan.spartanizer.plugin.Wizard;
+import il.org.spartan.spartanizer.tippers.FieldInitializedSerialVersionUIDToHexadecimal;
+import il.org.spartan.utils.Bool;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.fault;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
@@ -279,7 +334,7 @@ public interface wizard {
    * element, -1 is returned.
    * @param es1
    * @param es2
-   * @return */
+   */
   @SuppressWarnings("boxing") static int findSingleDifference(final List<? extends ASTNode> es1, final List<? extends ASTNode> es2) {
     int $ = -1;
     for (final Integer ¢ : range.from(0).to(es1.size()))

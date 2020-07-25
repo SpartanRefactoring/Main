@@ -1,24 +1,29 @@
 package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.Comparator;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.cmdline.nanos.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.research.nanos.methods.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.nanos.NanoPatternsOccurencesStatisticsLight;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
+import il.org.spartan.spartanizer.research.nanos.methods.HashCodeMethod;
+import il.org.spartan.spartanizer.research.nanos.methods.ToStringMethod;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.tables.Table;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -1,13 +1,16 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
-import java.lang.invoke.*;
-import java.util.function.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.utils.Rule;
 
 public class PrintAllInterfaces {
   public static void main(final String[] args) {

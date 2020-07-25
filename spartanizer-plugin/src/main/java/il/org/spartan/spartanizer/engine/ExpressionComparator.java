@@ -1,18 +1,22 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.removeWhites;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Comparator;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
+import fluent.ly.has;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.java.specificity;
 
 /** Various methods for comparing
  * @author Yossi Gil

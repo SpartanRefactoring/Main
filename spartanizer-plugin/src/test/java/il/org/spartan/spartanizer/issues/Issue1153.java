@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.traversal.*;
+import il.org.spartan.spartanizer.tippers.FieldInitializedSerialVersionUIDToHexadecimal;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.spartanizer.traversal.Toolboxes;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

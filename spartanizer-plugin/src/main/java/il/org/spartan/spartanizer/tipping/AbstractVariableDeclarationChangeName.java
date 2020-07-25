@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.tipping;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.ast.navigate.containing;
+import il.org.spartan.spartanizer.engine.collect;
 
 /** A parent tipper for changing variables names
  * @author Ori Roth

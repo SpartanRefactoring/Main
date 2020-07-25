@@ -1,14 +1,16 @@
 package il.org.spartan.athenizer;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.athenizer.SingleFlater.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
+import fluent.ly.the;
+import il.org.spartan.athenizer.SingleFlater.Operation;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.spartanizer.traversal.Toolboxes;
 
 /** a wrapper for the original tippers configuration
  * @author Raviv Rachmiel

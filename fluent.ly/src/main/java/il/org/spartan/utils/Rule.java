@@ -331,7 +331,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       return ok(current = ¢);
     }
 
-    @Override public final T current() {
+    @Override public final @Nullable T current() {
       return current;
     }
 

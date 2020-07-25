@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.cmdline.applicators.*;
+import il.org.spartan.spartanizer.cmdline.applicators.CommandLineApplicator;
 
 /** TODO Matteo Orru' please add a description
  * @author Matteo Orru'

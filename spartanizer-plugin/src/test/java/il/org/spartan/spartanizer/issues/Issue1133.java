@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.AssignmentAndUpdateAssignmentToSame;
 
 /** Test of {@link AssignmentAndUpdateAssignmentToSame}
  * @author Yossi Gil

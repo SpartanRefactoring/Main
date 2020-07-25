@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** tests of ParameterBool according to issue 872
  * @author kobybs

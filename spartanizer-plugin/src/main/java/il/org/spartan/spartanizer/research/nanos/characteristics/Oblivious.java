@@ -1,16 +1,21 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.fieldDeclarationsNames;
+import static il.org.spartan.spartanizer.ast.navigate.step.parametersNames;
+import static java.util.stream.Collectors.toSet;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.ast.navigate.analyze;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** Method which is independent on he parameters
  * @author Ori Marcovitch */

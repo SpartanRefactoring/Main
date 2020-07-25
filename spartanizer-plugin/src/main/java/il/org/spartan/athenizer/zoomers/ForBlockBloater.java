@@ -1,19 +1,22 @@
 package il.org.spartan.athenizer.zoomers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.athenizer.zoom.zoomers.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import fluent.ly.box;
+import il.org.spartan.athenizer.zoom.zoomers.Issue0975;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.tippers.ForStatementPattern;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
 
 /** converts for(condition)statement to for(condition){statement} Issue #975
  * {@link Issue0975}

@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclaration;
 
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.tipping.AbstractVariableDeclarationChangeName;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
+import il.org.spartan.utils.Examples;
 
 /** Replaces name of variables named "_" into "__"
  * @author Ori Roth

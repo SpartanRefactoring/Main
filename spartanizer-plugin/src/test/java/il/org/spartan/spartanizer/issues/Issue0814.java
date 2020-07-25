@@ -1,13 +1,18 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.engine.MethodExplorer;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.tippers.AssignmentAndReturn;
 
 /** see issue #814 for more details
  * @author yaelAmitay

@@ -1,24 +1,46 @@
 package il.org.spartan.spartanizer.engine;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.to;
+import static il.org.spartan.spartanizer.ast.navigate.step.type;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.commonAncestor;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.BOOLEAN_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.CAST_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.CHARACTER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.FIELD_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.LAMBDA_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.QUALIFIED_NAME;
+import static org.eclipse.jdt.core.dom.ASTNode.SIMPLE_NAME;
+import static org.eclipse.jdt.core.dom.ASTNode.STRING_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.THIS_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_LITERAL;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.List;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ArrayCreation;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.java.sideEffects;
+import il.org.spartan.utils.Int;
 
 /** Encapsulates the operation of replacing a variable with an expression in a
  * certain location.

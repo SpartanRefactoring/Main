@@ -1,22 +1,49 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.views.markers.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IMember;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.ISourceRange;
+import org.eclipse.jdt.core.ISourceReference;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.NodeFinder;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.markers.MarkerItem;
 
-import an.*;
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import an.empty;
+import fluent.ly.English;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection

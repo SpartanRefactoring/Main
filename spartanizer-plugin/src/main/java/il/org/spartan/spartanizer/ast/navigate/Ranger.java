@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jface.text.ITextSelection;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import il.org.spartan.utils.Range;
+import il.org.spartan.utils.UnderConstruction;
 
 /** A utility class for for dealing with {@link Range} in the context of JDT
  * types.

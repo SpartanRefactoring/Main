@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** This is a unit test for a bug (issue 445) in {@link WhileNextReturnToWhile}
  * of previously failed tests. Related to {@link Issue0311} and

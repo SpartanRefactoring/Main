@@ -1,17 +1,27 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Proposition.*;
+import static il.org.spartan.utils.Proposition.not;
 
-import java.util.function.*;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.not;
+import fluent.ly.yes;
+import il.org.spartan.spartanizer.ast.navigate.Ranger;
+import il.org.spartan.spartanizer.ast.navigate.containing;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.tipping.CarefulTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.utils.Examples;
+import il.org.spartan.utils.Proposition;
+import il.org.spartan.utils.Range;
 
 /** An abstract class that all the specific pattern classes inherits from.
  * Containing fluent API for constructing a logic tree of prerequisites.

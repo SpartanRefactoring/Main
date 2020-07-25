@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import fluent.ly.box;
 import il.org.spartan.Aggregator.Aggregation.FormatSpecifier;
 import il.org.spartan.statistics.RealStatistics;
 
@@ -213,7 +214,7 @@ public class Aggregator {
 
     public String retreive(final RealStatistics $, final String format) {
       try {
-        return String.format(format, fluent.ly.box.it(retreive($)));
+        return String.format(format, box.it(retreive($)));
       } catch (final ArithmeticException e) {
         return ""; //
       }

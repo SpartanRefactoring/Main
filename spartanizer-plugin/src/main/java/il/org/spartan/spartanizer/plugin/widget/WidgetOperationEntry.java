@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
-import java.io.*;
-import java.util.*;
+import java.io.ObjectStreamClass;
+import java.io.Serializable;
+import java.util.Map;
 
 /** A widget operation with it's configuration
  * @author Niv Shalmon

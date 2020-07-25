@@ -1,22 +1,34 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.annotations;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.expressions;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedModifiers;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
+import static il.org.spartan.spartanizer.ast.navigate.step.values;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.ArrayInitializer;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.NormalAnnotation;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.engine.nominal.JohnDoe;
+import il.org.spartan.spartanizer.research.analyses.notation;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNodeSpanning;
+import il.org.spartan.spartanizer.tipping.categories.Nominal;
 
 /** Rename unused parameter to double underscore "__" VariableChangeName instead
  * of ReplaceCurrentNodeSpanning

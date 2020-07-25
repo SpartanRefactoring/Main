@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.Statement;
 
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** An abstract pattern for <code>if() {} else if() {}</code>
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>

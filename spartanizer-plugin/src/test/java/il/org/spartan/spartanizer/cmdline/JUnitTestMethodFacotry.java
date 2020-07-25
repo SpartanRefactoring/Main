@@ -1,29 +1,49 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
-import static java.lang.String.*;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.escapeQuotes;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.essence;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.removeComments;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.squeeze;
+import static java.lang.String.format;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.text.edits.MalformedTreeException;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.English;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.theSpartanizer;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.research.ASTutils;
+import il.org.spartan.spartanizer.testing.OperandBloating;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.utils.format;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -71,7 +91,7 @@ public enum JUnitTestMethodFacotry {
   }
   /** Separate the string to lines
    * @param ¢ string to linify
-   * @return */
+   */
   private static String linify(final String ¢) {
     String $ = "";
     try (Scanner scanner = new Scanner(¢)) {

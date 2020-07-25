@@ -1,18 +1,21 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.WhileStatement;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.LocalUninitializedDead;
+import il.org.spartan.spartanizer.tippers.WhileDeadRemove;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Various tests upgraded from an old class replaced by
  * {@link LocalUninitializedDead}

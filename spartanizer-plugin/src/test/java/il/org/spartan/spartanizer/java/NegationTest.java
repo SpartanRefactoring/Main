@@ -1,14 +1,18 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static il.org.spartan.spartanizer.engine.parse.i;
+import static il.org.spartan.spartanizer.engine.parse.p;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.minus;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.ast.navigate.step;
 
 /** A test suite for class {@link minus}
  * @author Yossi Gil

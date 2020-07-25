@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.research.analyses.analyzers.*;
-import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.research.analyses.analyzers.IntegerMetricalAnalyzer;
+import il.org.spartan.spartanizer.research.util.measure;
 
 /** Class to count statement inside a method before and after refactoring +
  * patterning

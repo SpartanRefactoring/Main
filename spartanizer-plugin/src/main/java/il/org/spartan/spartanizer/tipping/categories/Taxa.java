@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.tipping.categories;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.LinkedHashSet;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Toolbox;
 
 /** A set of {@link Taxa}
  * @author Yossi Gil

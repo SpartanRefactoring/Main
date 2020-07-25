@@ -1,15 +1,20 @@
 package il.org.spartan.spartanizer.cmdline.library;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.utils.*;
-import junit.framework.*;
+import fluent.ly.box;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.cmdline.ASTTrotter;
+import il.org.spartan.utils.Bool;
+import il.org.spartan.utils.FileUtils;
+import il.org.spartan.utils.¢;
+import junit.framework.Test;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -85,7 +90,7 @@ public interface FileHeuristics {
    * annotations
    * <p>
    * @param function
-   * @return */
+   */
   static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     final Bool $ = new Bool();
@@ -103,7 +108,7 @@ public interface FileHeuristics {
   /** Determines whether a file is production code, using the heuristic that
    * production code does not contain {@code @}{@link Test} annotations
    * <p>
-   * @return */
+   */
   static boolean productionCode(@¢ final File $) {
     try {
       return !containsTestAnnotation(FileUtils.read($));

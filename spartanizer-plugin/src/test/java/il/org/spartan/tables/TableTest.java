@@ -1,10 +1,14 @@
 package il.org.spartan.tables;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import fluent.ly.cCamelCase;
+import fluent.ly.separate;
+import fluent.ly.the;
 
 /** Unit test for {@link Table#classToNormalizedFileName(String)}
  * @author Yossi Gil

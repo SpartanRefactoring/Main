@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.cmdline.tables.visitors.*;
-import il.org.spartan.tables.*;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.tables.visitors.Table_SummaryForPaper;
+import il.org.spartan.tables.Table;
 
 /** Write the number of test methods
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}

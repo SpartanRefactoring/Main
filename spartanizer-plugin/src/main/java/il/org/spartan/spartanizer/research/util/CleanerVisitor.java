@@ -1,6 +1,10 @@
 package il.org.spartan.spartanizer.research.util;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.BlockComment;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.jdt.core.dom.LineComment;
 
 /** A visitor to clean a tree of all comments and imports
  * @author Ori Marcovitch

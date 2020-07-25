@@ -1,20 +1,27 @@
 package il.org.spartan.spartanizer.cmdline.nanos;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.research.nanos.*;
-import il.org.spartan.spartanizer.research.nanos.characteristics.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.namespace.Vocabulary;
+import il.org.spartan.spartanizer.research.nanos.LetInNext;
+import il.org.spartan.spartanizer.research.nanos.characteristics.MyArguments;
+import il.org.spartan.spartanizer.research.util.measure;
+import il.org.spartan.spartanizer.utils.format;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
  * @author orimarco {@code marcovitch.ori@gmail.com}

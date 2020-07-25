@@ -1,12 +1,17 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.cmdline.JUnitTestMethodFacotry;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameReturnToDollar;
+import il.org.spartan.spartanizer.tippers.ParenthesizedRemoveExtraParenthesis;
+import il.org.spartan.spartanizer.tippers.TwoDeclarationsIntoOne;
 
 /** Tests of GitHub issue thus numbered
  * <p>

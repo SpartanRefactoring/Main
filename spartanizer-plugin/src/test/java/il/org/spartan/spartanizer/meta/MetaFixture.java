@@ -1,24 +1,57 @@
 package il.org.spartan.spartanizer.meta;
 
-import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.bodyDeclarations;
+import static il.org.spartan.spartanizer.ast.navigate.step.types;
+import static il.org.spartan.spartanizer.java.namespace.Vocabulary.mangle;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.io.File;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.ArrayInitializer;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.eclipse.jdt.core.dom.StringLiteral;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.ancestors;
+import il.org.spartan.spartanizer.ast.navigate.annotees;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.java.namespace.Environment;
+import il.org.spartan.spartanizer.java.namespace.FixtureBlock;
+import il.org.spartan.spartanizer.java.namespace.FixtureCatchBlock;
+import il.org.spartan.spartanizer.java.namespace.FixtureEnhancedFor;
+import il.org.spartan.spartanizer.java.namespace.FixtureFinally;
+import il.org.spartan.spartanizer.java.namespace.FixturePlainFor;
+import il.org.spartan.spartanizer.java.namespace.KnowsTest;
+import il.org.spartan.spartanizer.java.namespace.NamespaceTest;
+import il.org.spartan.spartanizer.java.namespace.Vocabulary;
+import il.org.spartan.spartanizer.java.namespace.definitionTest;
+import il.org.spartan.spartanizer.java.namespace.knows;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.fault;
 
 /** An abstract class that allows a class to apply testing on its own code. To
  * use, extend it. See examples of current extenders to see how.

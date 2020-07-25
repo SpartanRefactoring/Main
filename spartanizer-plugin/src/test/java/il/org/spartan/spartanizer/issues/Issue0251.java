@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.WhileStatement;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.java.sideEffects;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.WhileToForUpdaters;
 
 /** Checking that the tipper of removing unmeaningful statements from blocks is
  * working properly

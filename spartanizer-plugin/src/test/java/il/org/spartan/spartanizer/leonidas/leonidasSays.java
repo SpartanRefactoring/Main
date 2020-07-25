@@ -1,25 +1,41 @@
 package il.org.spartan.spartanizer.leonidas;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.fail;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.Essence;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.GuessedContext;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.research.Matcher;
+import il.org.spartan.spartanizer.research.TipperFactory;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.utils.Bool;
 
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>

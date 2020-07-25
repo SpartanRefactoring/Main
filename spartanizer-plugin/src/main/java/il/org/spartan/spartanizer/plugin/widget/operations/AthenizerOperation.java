@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.function.*;
+import java.util.function.Function;
 
-import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.graphics.ImageData;
 
-import il.org.spartan.athenizer.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import il.org.spartan.athenizer.InflateHandler;
+import il.org.spartan.spartanizer.plugin.widget.ConfigurationsMap;
+import il.org.spartan.spartanizer.plugin.widget.WidgetContext;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
 
 /** zoom in code from widget operation Issue #1229
  * @author Raviv Rachmiel

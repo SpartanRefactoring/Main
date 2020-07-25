@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Arrays;
+import java.util.function.BiFunction;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.Type;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.research.analyses.notation;
 
 /** Contains methods for renaming return variables, parameters, etc.
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>

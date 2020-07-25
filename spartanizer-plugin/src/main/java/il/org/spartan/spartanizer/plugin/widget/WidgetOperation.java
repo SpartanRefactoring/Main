@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
-import java.io.*;
-import java.util.function.*;
+import java.io.Serializable;
+import java.util.function.Function;
 
-import org.eclipse.swt.graphics.*;
-import org.eclipse.ui.*;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.ui.PlatformUI;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.plugin.Dialogs;
 
 /** Operation, image, description etc. of a widget button.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

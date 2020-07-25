@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Test Class For Issue #1014 (Eliminate conditional continue before last
  * statement in loop)

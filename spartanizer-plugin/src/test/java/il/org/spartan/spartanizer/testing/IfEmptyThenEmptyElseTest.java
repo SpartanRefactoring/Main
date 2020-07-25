@@ -1,20 +1,26 @@
 package il.org.spartan.spartanizer.testing;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.greaterThan;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.iz;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.TextEdit;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.tippers.IfEmptyThenEmptyElse;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** Unit tests for {@link IfEmptyThenEmptyElse}
  * @author Yossi Gil

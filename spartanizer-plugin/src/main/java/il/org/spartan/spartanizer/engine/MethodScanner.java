@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.step;
 
 /** A utility class used to scan statements of a {@link MethodDeclaration}.
  * @author Ori Roth

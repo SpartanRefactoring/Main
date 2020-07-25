@@ -1,15 +1,21 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.HashSet;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.research.analyses.analyzers.*;
-import il.org.spartan.spartanizer.research.util.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.research.analyses.analyzers.Analyze;
+import il.org.spartan.spartanizer.research.analyses.analyzers.AnalyzerOptions;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
 
 /** File utils
  * @author Ori Marcovitch
@@ -73,7 +79,7 @@ public enum Files {
   /** Clean {@link cu} from any comments, javadoc, importDeclarations,
    * packageDeclarations and FieldDeclarations.
    * @param cu
-   * @return */
+   */
   private static ASTNode clean(final ASTNode cu) {
     cu.accept(new CleanerVisitor());
     return cu;

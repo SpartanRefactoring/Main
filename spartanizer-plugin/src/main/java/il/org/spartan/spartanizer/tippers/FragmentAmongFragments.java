@@ -1,14 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.engine.collect;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

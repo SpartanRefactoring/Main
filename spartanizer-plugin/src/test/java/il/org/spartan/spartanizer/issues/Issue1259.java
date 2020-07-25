@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import java.util.logging.*;
+import java.util.logging.Level;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tippers.AssignmentAndAssignmentOfSameValue;
+import il.org.spartan.spartanizer.tippers.ConstructorRenameParameters;
+import il.org.spartan.spartanizer.tipping.TraversalMonitor;
 
 /** Test case for bug in {@link AssignmentAndAssignmentOfSameValue}
  * @author Yuval Simon

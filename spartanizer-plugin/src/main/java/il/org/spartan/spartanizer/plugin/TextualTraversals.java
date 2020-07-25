@@ -1,14 +1,20 @@
 package il.org.spartan.spartanizer.plugin;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.core.runtime.AssertionFailedException;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.tables.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.spartanizer.traversal.TraversalTapper;
+import il.org.spartan.tables.Table;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

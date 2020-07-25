@@ -1,11 +1,20 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.InfixAdditionEvaluate;
+import il.org.spartan.spartanizer.tippers.InfixAdditionSort;
+import il.org.spartan.spartanizer.tippers.InfixMultiplicationSort;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementTerminatingScope;
+import il.org.spartan.spartanizer.tippers.LocalInitializedUnusedRemove;
+import il.org.spartan.spartanizer.tippers.ParenthesizedRemoveExtraParenthesis;
+import il.org.spartan.spartanizer.tippers.TwoDeclarationsIntoOne;
 
 /** @author Yossi Gil
  * @since 2014-07-10 */

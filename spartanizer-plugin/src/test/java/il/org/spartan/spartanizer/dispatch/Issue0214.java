@@ -1,13 +1,19 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.anyOf;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.nullValue;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.tippers.BlockSimplify;
+import il.org.spartan.spartanizer.tipping.EagerTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** TDD: Unit tests for {@link Tipper#myActualOperandsClass()}
  * @author Yossi Gil

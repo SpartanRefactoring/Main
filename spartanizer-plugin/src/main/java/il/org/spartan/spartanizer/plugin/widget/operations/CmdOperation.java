@@ -1,15 +1,26 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import static java.awt.MouseInfo.*;
+import static java.awt.MouseInfo.getPointerInfo;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
 
-import il.org.spartan.spartanizer.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.widget.WidgetContext;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
 
 /** Widget operation that opens a text window to execute a cmd commmand
  * @author Yuval Simon

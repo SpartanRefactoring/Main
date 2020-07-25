@@ -187,7 +187,7 @@ import il.org.spartan.utils.Bool;
 public interface iz {
   interface literal {
     /** @param ¢ JD
-     * @return */
+     */
     static boolean classInstanceCreation(final ASTNode ¢) {
       return ¢ != null && iz.nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
     }
@@ -197,7 +197,7 @@ public interface iz {
       return iz.literal(¢, false);
     }
     /** @param ¢ JD
-     * @return */
+     */
     static boolean fieldAccess(final Expression ¢) {
       return ¢ != null && iz.nodeTypeEquals(¢, FIELD_ACCESS);
     }
@@ -238,7 +238,7 @@ public interface iz {
   }
   /** Ceck if an ASTNode is an Array Acess
    * @param ¢ JD
-   * @return */
+   */
   static boolean arrayAccess(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, ARRAY_ACCESS);
   }
@@ -255,7 +255,7 @@ public interface iz {
     return ¢ instanceof ASTNode;
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean atomic(final ASTNode ¢) {
     return iz.name(¢) || iz.literal(¢);
   }
@@ -301,7 +301,7 @@ public interface iz {
     return false;
   }
   /** @param subject JD
-   * @return */
+   */
   static boolean blockRequired(final IfStatement ¢) {
     return blockRequiredInReplacement(¢, ¢);
   }
@@ -331,7 +331,7 @@ public interface iz {
     return iz.nodeTypeIn(¢, BOOLEAN_LITERAL, NULL_LITERAL);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean booleanType(final Type ¢) {
     return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
   }
@@ -345,7 +345,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, BREAK_STATEMENT);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean castExpression(final ASTNode ¢) {
     return ¢ instanceof CastExpression;
   }
@@ -435,7 +435,7 @@ public interface iz {
     return iz.nodeTypeIn(¢, INFIX_EXPRESSION, PREFIX_EXPRESSION, POSTFIX_EXPRESSION, ASSIGNMENT);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean continueStatement(final ASTNode ¢) {
     return ¢ instanceof ContinueStatement;
   }
@@ -564,7 +564,7 @@ public interface iz {
     return ¢.getText().replaceAll("[\\s*]", "").isEmpty();
   }
   /** @param x JD
-   * @return */
+   */
   static boolean emptyBlock(final Block x) {
     return statements(x) == null || statements(x).isEmpty();
   }
@@ -610,7 +610,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, EXPRESSION_STATEMENT);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean fieldAccess(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, FIELD_ACCESS);
   }
@@ -651,7 +651,7 @@ public interface iz {
   static boolean forStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, FOR_STATEMENT);
   }
-  /** @param with /** @return */
+  /** @param with /**/
   @SuppressWarnings("all") static boolean fragile(final Expression with) {
     // TODO Yossi Gil Auto-generated method stub for fragile
     if (new Object().hashCode() != 0)
@@ -711,7 +711,7 @@ public interface iz {
     return iz.nodeTypeEquals(c, INITIALIZER);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean instanceofExpression(final Expression ¢) {
     return ¢ instanceof InstanceofExpression;
   }
@@ -776,7 +776,7 @@ public interface iz {
     };
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean labeledStatement(final ASTNode ¢) {
     return ¢ instanceof LabeledStatement;
   }
@@ -971,7 +971,7 @@ public interface iz {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == op.MINUS1;
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean primitiveType(final Type ¢) {
     return ¢ instanceof PrimitiveType;
   }
@@ -1139,7 +1139,7 @@ public interface iz {
     return ¢ != null && iz.nodeTypeEquals(¢, SUPER_CONSTRUCTOR_INVOCATION);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean superMethodInvocation(final Expression ¢) {
     return ¢ instanceof SuperMethodInvocation;
   }
@@ -1159,7 +1159,7 @@ public interface iz {
     return ¢ instanceof SynchronizedStatement;
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean thisExpression(final Expression ¢) {
     return ¢ instanceof ThisExpression;
   }
@@ -1178,12 +1178,12 @@ public interface iz {
     return iz.nodeTypeEquals(¢, TRY_STATEMENT);
   }
   /** @param ¢ JDs
-   * @return */
+   */
   static boolean type(final ASTNode ¢) {
     return ¢ instanceof Type;
   }
   /** @param ¢ JDs
-   * @return */
+   */
   static boolean typeDeclaration(final ASTNode ¢) {
     return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
   }
@@ -1191,7 +1191,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, TYPE_DECLARATION_STATEMENT);
   }
   /** @param ¢ JDs
-   * @return */
+   */
   static boolean unionType(final ASTNode ¢) {
     return ¢ != null && iz.nodeTypeEquals(¢, UNION_TYPE);
   }
@@ -1267,7 +1267,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static boolean voidType(final Type ¢) {
     return iz.primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
   }

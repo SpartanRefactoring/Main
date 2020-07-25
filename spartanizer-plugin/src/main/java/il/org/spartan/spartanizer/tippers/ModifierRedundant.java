@@ -1,22 +1,33 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedModifiers;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toSet;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
-import java.util.*;
-import java.util.function.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.navigate.ModifiersRedundancy;
+import il.org.spartan.spartanizer.ast.navigate.containing;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.tipping.CarefulTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** convert {@code abstract</b> <b>interface</b>a{}</code> to
  * {@code interface</b> a{}</code>, etc.

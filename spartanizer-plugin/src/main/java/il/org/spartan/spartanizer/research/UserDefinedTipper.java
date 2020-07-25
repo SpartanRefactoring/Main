@@ -5,10 +5,10 @@ package il.org.spartan.spartanizer.research;
  * @author Ori Marcovitch
  *
  * @since 2016 */
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
     implements Category.Nanos {

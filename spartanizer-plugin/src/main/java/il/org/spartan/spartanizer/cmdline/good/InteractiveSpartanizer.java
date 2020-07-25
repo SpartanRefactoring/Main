@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import java.util.*;
+import java.util.Scanner;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.navigate.GuessedContext;
+import il.org.spartan.spartanizer.plugin.TextualTraversals;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

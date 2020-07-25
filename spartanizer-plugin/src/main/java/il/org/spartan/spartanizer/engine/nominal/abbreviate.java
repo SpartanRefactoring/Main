@@ -1,14 +1,32 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.typeArguments;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.IntersectionType;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NameQualifiedType;
+import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.PrimitiveType;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.QualifiedType;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.UnionType;
+import org.eclipse.jdt.core.dom.WildcardType;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.as;
+import fluent.ly.cCamelCase;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.utils.fault;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

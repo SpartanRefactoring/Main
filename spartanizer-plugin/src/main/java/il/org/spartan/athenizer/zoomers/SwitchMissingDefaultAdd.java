@@ -1,13 +1,15 @@
 package il.org.spartan.athenizer.zoomers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.SwitchCase;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.athenizer.zoom.zoomers.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.athenizer.zoom.zoomers.Issue1159;
+import il.org.spartan.spartanizer.tippers.Switch;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
 
 /** examples in {@link #examples} test case is {@link Issue1159}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>

@@ -1,10 +1,13 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 
-import fluent.ly.*;
+import fluent.ly.note;
 
 /** Collects widget operation extensions.
  * @author Ori Roth

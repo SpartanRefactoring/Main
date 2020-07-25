@@ -1,16 +1,16 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.nullProgressMonitor;
+import static java.util.stream.Collectors.toList;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 /** Couples together {@link CompilationUnit} and its {@link ICompilationUnit}.
  * @author Ori Roth

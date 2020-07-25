@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedOperands;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.ltk.ui.refactoring.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.ltk.core.refactoring.Refactoring;
+import org.eclipse.ltk.ui.refactoring.RefactoringWizard;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.forget;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 /** Relic;
  * @author Artium Nihamkin

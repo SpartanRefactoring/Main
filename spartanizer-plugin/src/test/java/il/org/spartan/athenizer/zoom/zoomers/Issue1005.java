@@ -1,8 +1,8 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Test case for {@link PrefixToPostfix}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}

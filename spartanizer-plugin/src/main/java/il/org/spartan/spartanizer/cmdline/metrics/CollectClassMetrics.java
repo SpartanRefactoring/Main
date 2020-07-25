@@ -1,17 +1,19 @@
 package il.org.spartan.spartanizer.cmdline.metrics;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.plugin.TextualTraversals;
+import il.org.spartan.utils.FileUtils;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil

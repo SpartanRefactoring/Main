@@ -1,14 +1,14 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.tippers.InfixExpressionConcatentateCompileTime;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author RoeyMaor

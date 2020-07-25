@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** Base class for all tests for method patterns
  * @author Ori Marcovitch

@@ -1,13 +1,17 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
-import fluent.ly.*;
-import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.applicators.*;
-import il.org.spartan.spartanizer.cmdline.runnables.*;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.external.External;
+import il.org.spartan.spartanizer.cmdline.CommandLineSelection;
+import il.org.spartan.spartanizer.cmdline.applicators.CommandLine$Applicator;
+import il.org.spartan.spartanizer.cmdline.applicators.CommandLineApplicator;
+import il.org.spartan.spartanizer.cmdline.applicators.Spartanizer$Applicator;
+import il.org.spartan.spartanizer.cmdline.runnables.ReportGenerator;
 
 /** A configurable version of the HeadlessSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}

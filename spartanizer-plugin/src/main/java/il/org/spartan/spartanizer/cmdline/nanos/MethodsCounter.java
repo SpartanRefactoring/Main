@@ -1,19 +1,23 @@
 package il.org.spartan.spartanizer.cmdline.nanos;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.utils.*;
+import fluent.ly.forget;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
+import il.org.spartan.spartanizer.research.util.measure;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.file;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}

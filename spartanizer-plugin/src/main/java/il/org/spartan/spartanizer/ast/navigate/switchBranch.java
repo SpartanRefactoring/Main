@@ -1,20 +1,27 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static java.util.Comparator.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.toList;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.IntStream;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SwitchCase;
+import org.eclipse.jdt.core.dom.SwitchStatement;
 
-import java.util.*;
-import java.util.stream.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /**
  * TODO YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also

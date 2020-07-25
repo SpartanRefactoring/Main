@@ -1,15 +1,15 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
 
 /** TODO Shimon Azulay please add a description
  * @author Shimon Azulay

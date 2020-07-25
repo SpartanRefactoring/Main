@@ -1,17 +1,25 @@
 package il.org.spartan.spartanizer.research;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.parametersTypes;
+import static java.util.stream.Collectors.toList;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.function.BiConsumer;
 
-import java.util.*;
-import java.util.function.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.utils.tdd.*;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.java.haz;
+import il.org.spartan.spartanizer.utils.tdd.enumerate;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.

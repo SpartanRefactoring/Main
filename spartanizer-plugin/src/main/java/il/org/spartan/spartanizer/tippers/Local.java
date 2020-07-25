@@ -1,18 +1,19 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -29,7 +30,7 @@ public abstract class Local extends FragmentAmongFragments {
    * fragments which are not live in the containing
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this
    * containing node is eliminated as well.
-   * @return */
+   */
   protected final ASTRewrite eliminateFragment(final ASTRewrite $, final TextEditGroup g) {
     final List<VariableDeclarationFragment> live = remainingSiblings();
     if (live.isEmpty())

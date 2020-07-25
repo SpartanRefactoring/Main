@@ -1,7 +1,8 @@
 package il.org.spartan.proposition;
 
-import il.org.spartan.utils.*;
-import il.org.spartan.utils.Proposition.*;
+import il.org.spartan.utils.Proposition;
+import il.org.spartan.utils.Proposition.And;
+import il.org.spartan.utils.Proposition.Or;
 
 /** Render {@link Proposition} using Java/C/C++ notation.
  * @author Yossi Gil

@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.research.nanos.methods.*;
-import il.org.spartan.spartanizer.research.nanos.methods.Down.*;
+import il.org.spartan.spartanizer.research.nanos.methods.Down.Caster;
+import il.org.spartan.spartanizer.research.nanos.methods.Up;
 
 /** Tests {@link Caster}
  * @author Ori Marcovitch */

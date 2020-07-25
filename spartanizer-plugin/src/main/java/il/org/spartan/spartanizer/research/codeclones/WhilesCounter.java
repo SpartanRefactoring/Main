@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.research.codeclones;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
 
 /** TODO oran1248: document class
  * @author oran1248

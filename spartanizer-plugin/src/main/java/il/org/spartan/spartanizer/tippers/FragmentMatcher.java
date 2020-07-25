@@ -1,8 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.haz;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>

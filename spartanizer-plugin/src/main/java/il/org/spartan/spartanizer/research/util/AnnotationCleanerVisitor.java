@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.research.util;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.value;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
 
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /** \@{"a","b"} to @{a}
  * @author orimarco {@code marcovitch.ori@gmail.com}

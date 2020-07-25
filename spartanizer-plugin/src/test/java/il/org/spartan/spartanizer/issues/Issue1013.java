@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Test Class for the Bug described on Issue #1013
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}

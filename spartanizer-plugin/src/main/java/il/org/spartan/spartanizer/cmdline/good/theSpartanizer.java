@@ -1,16 +1,23 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
+import fluent.ly.note;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.DispatchingVisitor;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
 
 /** Simple no-gimmicks singleton service that does the simple job of applying a
  * {@link Toolbox} {@link #once(String)}, {@link #twice(String)},

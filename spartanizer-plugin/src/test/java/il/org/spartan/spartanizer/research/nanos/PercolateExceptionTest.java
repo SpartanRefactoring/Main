@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.junit.Test;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}

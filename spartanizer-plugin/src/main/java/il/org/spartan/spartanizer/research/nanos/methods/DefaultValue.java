@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** @nano a method which is empty or contains one statement which return a
  *       default value of some __.

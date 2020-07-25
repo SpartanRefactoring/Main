@@ -5,15 +5,15 @@
  * @since Oct 7, 2016 */
 package il.org.spartan.spartanizer.ast.engine;
 
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.eq;
+import static il.org.spartan.spartanizer.engine.parse.e;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class wizardTest {

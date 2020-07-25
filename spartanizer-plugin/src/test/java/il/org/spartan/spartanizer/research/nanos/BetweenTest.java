@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /** Between nano
  * @author Ori Marcovitch

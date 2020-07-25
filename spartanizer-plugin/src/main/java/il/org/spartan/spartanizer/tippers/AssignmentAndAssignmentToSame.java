@@ -1,21 +1,29 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.from;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.to;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.Inliner;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.issues.Issue1133;
+import il.org.spartan.spartanizer.java.sideEffects;
+import il.org.spartan.spartanizer.tipping.GoToNextStatement;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.Examples;
 
 /** See {@link #examples()} for documentation
  * <p>

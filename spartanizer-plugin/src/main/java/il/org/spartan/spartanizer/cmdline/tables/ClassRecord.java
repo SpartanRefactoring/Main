@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.research.util.measure;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}

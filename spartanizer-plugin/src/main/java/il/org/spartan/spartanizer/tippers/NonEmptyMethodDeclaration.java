@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.haz;
 
 /** A nonempty method declaration
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>

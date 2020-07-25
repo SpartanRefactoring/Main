@@ -1,14 +1,20 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.Statement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementTerminatingScope;
 
 /** Let x in S <br>
  * {@link Assignment} followed by {@link ExpressionStatement} or

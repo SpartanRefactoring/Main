@@ -1,19 +1,26 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.iz;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.Coupling;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementTerminatingScope;
+import il.org.spartan.utils.fault;
 
 /** Unit test for {@link LocalInitializedStatementTerminatingScope} for the case
  * of inlining into the expression of an enhanced for

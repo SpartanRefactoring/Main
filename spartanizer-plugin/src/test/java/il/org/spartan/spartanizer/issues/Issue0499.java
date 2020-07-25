@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.LambdaRenameSingleParameterToLambda;
+import il.org.spartan.spartanizer.tippers.ParameterAnonymize;
 
 /** Checking that a bug with centification in Lambda Expression was fixed
  * @author Dor Ma'ayan

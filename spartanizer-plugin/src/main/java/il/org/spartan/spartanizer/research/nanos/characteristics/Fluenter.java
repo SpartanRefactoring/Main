@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** Fluent method characteristic
  * @author Ori Marcovitch

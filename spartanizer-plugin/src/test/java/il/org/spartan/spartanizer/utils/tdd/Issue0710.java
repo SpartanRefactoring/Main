@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author David Cohen

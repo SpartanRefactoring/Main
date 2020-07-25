@@ -1,18 +1,37 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.Collection;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.IntStream;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.equinox.app.*;
-import org.eclipse.jdt.core.*;
-import fluent.ly.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+
+import fluent.ly.___;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.range;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.plugin.GUITraversal;
+import il.org.spartan.utils.FileUtils;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
  * plug-in from the command line.

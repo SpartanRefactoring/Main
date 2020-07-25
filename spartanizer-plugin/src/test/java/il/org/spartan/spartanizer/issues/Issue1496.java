@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.IfEmptyThen;
+import il.org.spartan.spartanizer.tippers.IfStatementBlockSequencerBlockSameSequencer;
 
 /** Test case for bug in exclusion
  * manager({@link IfStatementBlockSequencerBlockSameSequencer},

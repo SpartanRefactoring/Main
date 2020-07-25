@@ -1,22 +1,31 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.containsString;
+import static fluent.ly.azzert.instanceOf;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.testing.TestOperand;
+import il.org.spartan.spartanizer.testing.trim;
+import il.org.spartan.spartanizer.tippers.ClassInstanceCreationBoxedValueTypes;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** Unit tests for {@link ClassInstanceCreation}
  * @author Yossi Gil

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 
 /** To say that a certain name is recognized in a certain definition.
  * @author Yossi Gil

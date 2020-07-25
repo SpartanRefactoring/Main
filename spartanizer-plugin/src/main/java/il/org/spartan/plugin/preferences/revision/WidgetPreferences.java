@@ -1,14 +1,27 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.store;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
-import il.org.spartan.spartanizer.plugin.widget.operations.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperationEntry;
+import il.org.spartan.spartanizer.plugin.widget.operations.AthenizerOperation;
+import il.org.spartan.spartanizer.plugin.widget.operations.CleanOperation;
+import il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation;
+import il.org.spartan.spartanizer.plugin.widget.operations.GitPullOperation;
+import il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation;
+import il.org.spartan.spartanizer.plugin.widget.operations.SpartanizationOperation;
 
 /** An empty enum for fluent programing. Manages the preferences for the Spartan
  * Widget.

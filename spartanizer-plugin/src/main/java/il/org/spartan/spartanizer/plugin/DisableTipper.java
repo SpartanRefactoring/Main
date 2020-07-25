@@ -1,17 +1,18 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.note;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Disable tipper, removing it from XML file.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

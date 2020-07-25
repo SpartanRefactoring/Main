@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
-import org.eclipse.jface.text.*;
-import org.junit.*;
+import org.eclipse.jface.text.Document;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
 
 /** TODO Dan Greenstein please add a description
  * @author Dan Greenstein

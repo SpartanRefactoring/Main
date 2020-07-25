@@ -1,15 +1,18 @@
 package il.org.spartan.spartanizer.issues;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.athenizer.zoomers.*;
-import il.org.spartan.spartanizer.meta.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.as;
+import il.org.spartan.athenizer.zoomers.LocalInitializedCollection;
+import il.org.spartan.spartanizer.meta.MetaFixture;
+import il.org.spartan.spartanizer.testing.BloaterTest;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Tests for {@link LocalInitializedCollection} see github issue thus numbered
  * for more info

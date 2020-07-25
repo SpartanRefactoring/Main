@@ -1,9 +1,12 @@
 package il.org.spartan.java.cfg;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
 /** A class which describe and allows basic operations over Nodes of the CFG
  * @author Ori Roth

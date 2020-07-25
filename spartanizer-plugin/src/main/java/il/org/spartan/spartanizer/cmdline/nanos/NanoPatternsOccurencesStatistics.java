@@ -1,15 +1,17 @@
 package il.org.spartan.spartanizer.cmdline.nanos;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.nodeType;
 
-import java.util.*;
+import java.util.HashMap;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
+import fluent.ly.box;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.Pair;
 
 /** Collects statistics about nano occurrences
  * @author orimarco <marcovitch.ori@gmail.com>

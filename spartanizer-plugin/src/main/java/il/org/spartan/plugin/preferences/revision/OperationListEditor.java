@@ -1,21 +1,29 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import java.io.*;
-import java.util.*;
+import java.io.ObjectStreamClass;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
-import java.util.function.*;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.ListEditor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
 
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.preference.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import fluent.ly.as;
+import fluent.ly.separate;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperationEntry;
 
 /** A widget containing a list of projects and some buttons. Used to configure
  * specific operations. "configure" button is used to open a dialog, allowing

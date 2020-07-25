@@ -23,7 +23,7 @@ abstract class Analyzer<T> {
   /** If parameter is integer, removes the .0. <br>
    * If parameter is double, leaves only 2 first digits.
    * @param ¢
-   * @return */
+   */
   static String tidy(final double ¢) {
     final double $ = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     return $ != Math.floor($) ? $ + "" : asInt($);

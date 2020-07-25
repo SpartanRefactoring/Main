@@ -1,15 +1,19 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.idiomatic.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static fluent.ly.idiomatic.eval;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.type;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Replace {@code (double)X} by {@code 1.*X}
  * @author Alex Kopzon

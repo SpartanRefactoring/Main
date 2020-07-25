@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.utils;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static fluent.ly.azzert.iz;
+import static il.org.spartan.spartanizer.engine.parse.t;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.parse;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class intoTest {

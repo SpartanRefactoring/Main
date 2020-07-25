@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.DoWhileEmptyBlockToEmptyStatement;
+import il.org.spartan.spartanizer.tippers.ForEmptyBlockToEmptyStatement;
+import il.org.spartan.spartanizer.tippers.WhileEmptyBlockToEmptyStatement;
 
 /** See GitHub issue with thus numbered unit test for
  * {@link ForEmptyBlockToEmptyStatement},

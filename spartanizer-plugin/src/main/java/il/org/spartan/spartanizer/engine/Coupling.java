@@ -1,13 +1,20 @@
 package il.org.spartan.spartanizer.engine;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.condition;
+import static il.org.spartan.spartanizer.ast.navigate.step.updaters;
+import static org.eclipse.jdt.core.dom.ASTNode.ANONYMOUS_CLASS_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.DO_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.LAMBDA_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.WHILE_STATEMENT;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.Statement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 public enum Coupling {
   IFF, IMPLIED, INDEPENDENT,;

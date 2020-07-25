@@ -1,8 +1,12 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.EmptyStatement;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.SimpleName;
 
-import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.analyses.notation;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a

@@ -1,22 +1,41 @@
 package il.org.spartan.spartanizer.ast.nodes.metrics;
 
-import static il.org.spartan.tide.*;
+import static il.org.spartan.tide.clean;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.StringReader;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.StringLiteral;
 
 import il.org.spartan.Essence;
-import il.org.spartan.java.*;
-import il.org.spartan.java.Token.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.java.Token;
+import il.org.spartan.java.Token.Kind;
+import il.org.spartan.java.Tokenizer;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.ast.safety.property;
+import il.org.spartan.spartanizer.engine.Recurser;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.utils.Int;
 
 public class Metrics{
 
@@ -298,7 +317,7 @@ public class Metrics{
 
   /** measures metrics from root to node
    * @param n
-   * @return */
+   */
   public static int nodeUnderstandability(final ASTNode n) {
     final Int depth = new Int();
     final Stack<Int> siblings = new Stack<>();
@@ -330,7 +349,7 @@ public class Metrics{
 
   /** measure the total U in the subtree
    * @param n
-   * @return */
+   */
   public static int subtreeUnderstandability(final ASTNode n) {
     final Int depth = new Int();
     final Stack<Int> siblings = new Stack<>();
@@ -353,7 +372,7 @@ public class Metrics{
 
   /** measure the total U in the subtree
    * @param n
-   * @return */
+   */
   public static int subtreeUnderstandability2(final ASTNode n) {
     final Int depth = new Int();
     final Stack<Int> variables = new Stack<>();

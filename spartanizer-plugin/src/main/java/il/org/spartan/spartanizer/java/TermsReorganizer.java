@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.subject;
 
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil

@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.testing.TipperTest;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Tests for {@link BlockSingletonEliminate} see thus numbered github issue for
  * more info

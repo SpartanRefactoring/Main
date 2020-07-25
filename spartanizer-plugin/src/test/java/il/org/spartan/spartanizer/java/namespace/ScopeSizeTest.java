@@ -1,19 +1,22 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
-import org.junit.runners.Parameterized.*;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.meta.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.annotees;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

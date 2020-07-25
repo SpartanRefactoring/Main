@@ -1,14 +1,18 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.azzert.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.mockito.Mockito.*;
+import static fluent.ly.azzert.is;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

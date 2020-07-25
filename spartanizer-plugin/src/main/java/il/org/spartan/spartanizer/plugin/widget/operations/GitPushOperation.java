@@ -1,10 +1,14 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import org.eclipse.jgit.api.*;
-import org.eclipse.jgit.api.errors.*;
-import org.eclipse.jgit.transport.*;
-import org.eclipse.ui.*;
-import static org.eclipse.jgit.transport.RemoteRefUpdate.Status.*;
+import static org.eclipse.jgit.transport.RemoteRefUpdate.Status.OK;
+import static org.eclipse.jgit.transport.RemoteRefUpdate.Status.UP_TO_DATE;
+
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.transport.PushResult;
+import org.eclipse.jgit.transport.RemoteRefUpdate;
+import org.eclipse.ui.ISharedImages;
 
 /** Git push command.
  * @author Ori Roth

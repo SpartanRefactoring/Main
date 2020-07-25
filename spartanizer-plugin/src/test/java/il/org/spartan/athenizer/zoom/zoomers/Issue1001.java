@@ -1,12 +1,12 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
-import il.org.spartan.spartanizer.meta.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.athenizer.zoomers.AssignmentOperatorBloater;
+import il.org.spartan.spartanizer.meta.MetaFixture;
+import il.org.spartan.spartanizer.testing.BloaterTest;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Unit test for {@link AssignmentOperatorBloater}.
  * @author Ori Roth {@code ori.rothh@gmail.com}

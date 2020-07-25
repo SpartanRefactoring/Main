@@ -1,19 +1,30 @@
 package il.org.spartan.spartanizer.utils;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.mockito.Mockito.*;
+import static fluent.ly.azzert.equalTo;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static il.org.spartan.spartanizer.engine.parse.i;
+import static il.org.spartan.spartanizer.engine.parse.s;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER_EQUALS;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.Type;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.nominal.abbreviate;
 
 /** A test suite for class {@link step}
  * @author Yossi Gil

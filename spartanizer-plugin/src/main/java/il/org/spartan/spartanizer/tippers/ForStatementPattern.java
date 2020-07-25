@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.Statement;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.step;
 
 /** Pattern for For Statement
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>

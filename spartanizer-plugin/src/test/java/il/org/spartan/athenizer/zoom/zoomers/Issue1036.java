@@ -1,12 +1,13 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import java.util.*;
+import java.util.List;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** Test class for issue #1036
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}

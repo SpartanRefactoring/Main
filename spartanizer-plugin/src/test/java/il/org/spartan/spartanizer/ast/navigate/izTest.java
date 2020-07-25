@@ -1,19 +1,39 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static org.eclipse.jdt.core.dom.ASTNode.CHARACTER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.THIS_EXPRESSION;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER_EQUALS;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import org.eclipse.jdt.core.dom.ArrayInitializer;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.EmptyStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /** Test class for class {@link iz}
  * @author Yossi Gil, Aviad Cohen, Noam Yefet

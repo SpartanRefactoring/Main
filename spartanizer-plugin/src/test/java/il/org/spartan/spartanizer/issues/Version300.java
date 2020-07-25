@@ -1,23 +1,47 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
-import static org.hamcrest.collection.IsEmptyCollection.*;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static fluent.ly.azzert.not;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.engine.parse.s;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.logging.Level;
 
-import java.util.logging.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import fluent.ly.box;
+import fluent.ly.note;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.navigate.compute;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.cmdline.good.theSpartanizer;
+import il.org.spartan.spartanizer.tippers.AssignmentToFromInfixIncludingTo;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.IfDeadRemove;
+import il.org.spartan.spartanizer.tippers.IfEmptyThenEmptyElse;
+import il.org.spartan.spartanizer.tippers.IfTrueOrFalse;
+import il.org.spartan.spartanizer.tippers.InfixMultiplicationSort;
+import il.org.spartan.spartanizer.tippers.LocalInitializedUnusedRemove;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameReturnToDollar;
+import il.org.spartan.spartanizer.tippers.PrefixNotPushdown;
+import il.org.spartan.spartanizer.tippers.RemoveRedundantSwitchReturn;
+import il.org.spartan.spartanizer.tipping.TraversalMonitor;
+import il.org.spartan.utils.UnderConstruction;
+import il.org.spartan.utils.fault;
 
 /** Misc unit tests with no better other place for version 3.00
  * @author Yossi Gil

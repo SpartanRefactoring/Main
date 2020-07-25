@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Test Class for Issue #884
  * @author Dor Ma'ayan

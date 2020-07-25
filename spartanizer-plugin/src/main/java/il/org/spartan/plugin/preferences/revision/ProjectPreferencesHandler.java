@@ -1,36 +1,79 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.formatter.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.jface.window.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.ltk.ui.refactoring.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.formatter.CodeFormatter;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.window.Window;
+import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.DocumentChange;
+import org.eclipse.ltk.core.refactoring.Refactoring;
+import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.ltk.ui.refactoring.RefactoringWizardOpenOperation;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolTip;
-import org.eclipse.text.edits.*;
-import org.eclipse.ui.dialogs.*;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.ReplaceEdit;
+import org.eclipse.text.edits.TextEdit;
+import org.eclipse.ui.dialogs.CheckedTreeSelectionDialog;
 
-import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
-import il.org.spartan.utils.Example.*;
+import fluent.ly.lazy;
+import fluent.ly.note;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan.SpartanCategory;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan.SpartanElement;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan.SpartanTipper;
+import il.org.spartan.spartanizer.plugin.Dialogs;
+import il.org.spartan.spartanizer.plugin.Eclipse;
+import il.org.spartan.spartanizer.plugin.Selection;
+import il.org.spartan.spartanizer.plugin.Wizard;
+import il.org.spartan.utils.Example;
+import il.org.spartan.utils.Example.Converts;
+import il.org.spartan.utils.Examples;
 
 /** An handler for project configuration. User configuration is saved in a
  * designated XML file, see {@link XMLSpartan}.
@@ -147,7 +190,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         return !(parentElement instanceof SpartanCategory) ? null : ((SpartanCategory) parentElement).getChildren();
       }
     });
-    $.setTitle("Spartanization Preferences");
+    return getDialog(m, $);
+  }
+private static SpartanPreferencesDialog getDialog(final Map<SpartanCategory, SpartanElement[]> m,
+		final SpartanPreferencesDialog $) {
+	$.setTitle("Spartanization Preferences");
     $.setMessage("Choose the tippers you would like to use:\n(Tip: double click a tipper to see usage examples)");
     $.setEmptyListMessage("No tippers available... something went totally wrong!");
     $.setContainerMode(true);
@@ -159,7 +206,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setHelpAvailable(false);
     $.setComparator(new ViewerComparator(String::compareToIgnoreCase));
     return $;
-  }
+}
 
   /** Dialog used for the plugin's preferences change by the user.
    * @author Ori Roth {@code ori.rothh@gmail.com}

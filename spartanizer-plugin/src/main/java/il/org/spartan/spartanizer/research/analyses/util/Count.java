@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.utils.tdd.*;
-import il.org.spartan.utils.*;
+import fluent.ly.safe;
+import il.org.spartan.spartanizer.utils.tdd.enumerate;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.Pair;
 
 /** Counting utility
  * @author Ori Marcovitch

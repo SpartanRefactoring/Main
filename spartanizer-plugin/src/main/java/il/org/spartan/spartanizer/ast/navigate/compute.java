@@ -1,25 +1,54 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.ast.navigate.step.operand;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static il.org.spartan.spartanizer.ast.navigate.step.to;
+import static il.org.spartan.spartanizer.ast.navigate.step.token;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.jdt.core.dom.ASTNode.ANONYMOUS_CLASS_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.DO_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.ENHANCED_FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.LAMBDA_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.PREFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.SWITCH_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_DECLARATION_STATEMENT;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.DIVIDE;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.TIMES;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.DECREMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.INCREMENT;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.ThisExpression;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
-import java.util.*;
-import java.util.stream.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.is;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.safety.ASTMapReducer;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.nominal.guessName;
+import il.org.spartan.utils.UnderConstruction;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

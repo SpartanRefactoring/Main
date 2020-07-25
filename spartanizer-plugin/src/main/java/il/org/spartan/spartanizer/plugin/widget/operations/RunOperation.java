@@ -1,13 +1,19 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.debug.core.*;
-import org.eclipse.ui.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationType;
+import org.eclipse.debug.core.ILaunchManager;
+import org.eclipse.ui.ISharedImages;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.plugin.widget.ConfigurationsMap;
+import il.org.spartan.spartanizer.plugin.widget.WidgetContext;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
 
 /** Runs predefined run/debug configuration.
  * @author Ori Roth

@@ -1,16 +1,18 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.util.*;
-import java.util.Map.*;
+import java.util.LinkedHashSet;
+import java.util.Map.Entry;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jface.text.Document;
+import org.junit.Before;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.annotations.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.annotations.EnvFlatHandler;
+import il.org.spartan.spartanizer.annotations.EnvNestedHandler;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.utils.MapEntry;
 
 /** TODO Dan Greenstein please add a description
  * @author Dan Greenstein

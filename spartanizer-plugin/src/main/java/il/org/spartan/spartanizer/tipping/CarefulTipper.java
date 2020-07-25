@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tipping;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
 /** A {@link Tipper} in which {@link #tip(ASTNode)} is invoked only if
  * {@link #check(ASTNode)} returns true. However, in such cases

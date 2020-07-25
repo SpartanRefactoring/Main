@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.traversal;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TraversalTappers implements TraversalTapper {
   public TraversalTappers pop() {

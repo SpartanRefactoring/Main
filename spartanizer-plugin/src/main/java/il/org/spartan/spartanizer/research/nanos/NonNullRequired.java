@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.nullCheck;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.IfStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** Like {@link NotNullAssumed} but in the beginning of a method.
  * @author orimarco {@code marcovitch.ori@gmail.com}

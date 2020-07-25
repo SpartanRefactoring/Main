@@ -1,18 +1,27 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

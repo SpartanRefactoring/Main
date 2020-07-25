@@ -1,16 +1,19 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.athenizer.zoomers.StatementExtractParameters;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** Test case for {@link StatementExtractParameters}
  * @author Yuval Simon

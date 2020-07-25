@@ -1,8 +1,16 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import org.eclipse.jgit.api.*;
-import org.eclipse.jgit.api.errors.*;
-import org.eclipse.ui.*;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.errors.CanceledException;
+import org.eclipse.jgit.api.errors.DetachedHeadException;
+import org.eclipse.jgit.api.errors.InvalidConfigurationException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.api.errors.RefNotFoundException;
+import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.ui.ISharedImages;
 
 /** Git pull command.
  * @author Ori Roth

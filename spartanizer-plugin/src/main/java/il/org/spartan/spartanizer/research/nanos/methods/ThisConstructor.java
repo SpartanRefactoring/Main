@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** Constructor just delegating to another
  * @author orimarco {@code marcovitch.ori@gmail.com}

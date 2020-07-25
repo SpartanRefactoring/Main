@@ -1,21 +1,30 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.Utils.penultimateIn;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.is;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.containing;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.engine.Coupling;
+import il.org.spartan.spartanizer.engine.Inliner;
+import il.org.spartan.spartanizer.engine.collect;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.java.sideEffects;
+import il.org.spartan.spartanizer.tippers.$FragmentAndStatement;
 
 /** *
  * @author Matteo Orru'

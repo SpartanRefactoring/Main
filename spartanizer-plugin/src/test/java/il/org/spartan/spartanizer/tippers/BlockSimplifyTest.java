@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** Unit tests for {@link NameYourClassHere}
  * @author Yossi Gil

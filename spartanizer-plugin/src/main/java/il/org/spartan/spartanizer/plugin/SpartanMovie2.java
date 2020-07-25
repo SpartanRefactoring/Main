@@ -1,18 +1,30 @@
 package il.org.spartan.spartanizer.plugin;
 
 import java.util.List;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.ide.*;
-import org.eclipse.ui.progress.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.progress.IProgressService;
+import org.eclipse.ui.progress.UIJob;
 
-import fluent.ly.*;
+import fluent.ly.note;
+import fluent.ly.range;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.
@@ -73,7 +85,7 @@ public class SpartanMovie2 extends AbstractHandler {
        * be made.
        * @author Ori Roth
        * @param howMuch
-       * @return */
+       */
       boolean sleep(final double howMuch) {
         try {
           Thread.sleep((int) (1000 * howMuch));
@@ -120,7 +132,7 @@ public class SpartanMovie2 extends AbstractHandler {
    * made.
    * @author Ori Roth
    * @param howMuch
-   * @return */
+   */
   static boolean sleep(final double howMuch) {
     try {
       Thread.sleep((int) (1000 * howMuch));

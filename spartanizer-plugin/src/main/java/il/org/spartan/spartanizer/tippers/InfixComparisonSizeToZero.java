@@ -1,20 +1,39 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.is.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static fluent.ly.is.in;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.receiver;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.GREATER_EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.LESS_EQUALS;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.NOT_EQUALS;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IMethodBinding;
+import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.factory.cons;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.containing;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.BindingUtils;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.utils.fault;
 
 /** Converts {@code x.size()==0} to {@code x.isEmpty()}, {@code x.size()!=0 }
  * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to

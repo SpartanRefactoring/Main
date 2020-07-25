@@ -1,14 +1,15 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.text.*;
-import java.util.stream.*;
+import java.text.DecimalFormat;
+import java.util.stream.IntStream;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.azzert;
+import il.org.spartan.utils.Int;
 
 /** Test class for {@link English}
  * @author yonzarecki

@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.java;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** Checking the associativity function
  * @author Dor Ma'yan

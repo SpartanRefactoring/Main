@@ -1,16 +1,33 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.CurrentData;
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.spartanizer.cmdline.Tapper;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.Int;
 
 /** Generates a table of the class fields
  * @author Dor Ma'ayan
@@ -145,50 +162,50 @@ public class TestingTable extends NominalTables {
                 map.put("#Tests", map.get("#Tests") + 1);
                 x.accept(new ASTVisitor() {
                   /** handle regular assert */
-                  @Override public boolean visit(final AssertStatement x) {
+                  @Override public boolean visit(final AssertStatement s) {
                     map.put("#JavaAsserts", map.get("#JavaAsserts") + 1);
                     counter.step();
                     return true;
                   }
                   /** handle JunitAssert */
-                  @Override public boolean visit(final ExpressionStatement x) {
-                    if (iz.junitAssert(x)) {
+                  @Override public boolean visit(final ExpressionStatement s) {
+                    if (iz.junitAssert(s)) {
                       map.put("#JunitAsserts", map.get("#JunitAsserts") + 1);
                       counter.step();
                     }
-                    if (iz.hamcrestAssert(x)) {
+                    if (iz.hamcrestAssert(s)) {
                       map.put("#HamcrestAsserts", map.get("#HamcrestAsserts") + 1);
                     }
                     return true;
                   }
                   /** handle Returns */
-                  @Override public boolean visit(final ReturnStatement x) {
+                  @Override public boolean visit(final ReturnStatement s) {
                     map.put("#ReturnStatements", map.get("#ReturnStatements") + 1);
                     irregulars.step();
                     return true;
                   }
                   /** handle Returns */
-                  @Override public boolean visit(final IfStatement x) {
+                  @Override public boolean visit(final IfStatement s) {
                     map.put("#IfStatements", map.get("#IfStatements") + 1);
                     irregulars.step();
                     return true;
                   }
-                  @Override public boolean visit(final ForStatement x) {
+                  @Override public boolean visit(final ForStatement s) {
                     map.put("#TestLoops", map.get("#TestLoops") + 1);
                     irregulars.step();
                     return true;
                   }
-                  @Override public boolean visit(final WhileStatement x) {
+                  @Override public boolean visit(final WhileStatement s) {
                     map.put("#TestLoops", map.get("#TestLoops") + 1);
                     irregulars.step();
                     return true;
                   }
-                  @Override public boolean visit(final EnhancedForStatement x) {
+                  @Override public boolean visit(final EnhancedForStatement s) {
                     map.put("#TestLoops", map.get("#TestLoops") + 1);
                     irregulars.step();
                     return true;
                   }
-                  @Override public boolean visit(final TryStatement x) {
+                  @Override public boolean visit(final TryStatement s) {
                     map.put("#TryCatch", map.get("#TryCatch") + 1);
                     irregulars.step();
                     return true;

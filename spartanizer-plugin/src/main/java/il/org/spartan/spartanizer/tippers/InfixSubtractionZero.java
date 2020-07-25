@@ -1,21 +1,25 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.lisp.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static fluent.ly.lisp.chop;
+import static fluent.ly.lisp.cons;
+import static il.org.spartan.spartanizer.ast.navigate.hop.operands;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
+import java.util.List;
 
-import static il.org.spartan.spartanizer.ast.navigate.hop.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.cons;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Replace {@code X-0} by {@code X} and {@code 0-X} by {@code -X}
  * @author Alex Kopzon

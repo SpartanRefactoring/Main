@@ -1,20 +1,23 @@
 package il.org.spartan.spartanizer.cmdline.runnables;
 
-import static il.org.spartan.tide.*;
+import static il.org.spartan.tide.clean;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.ToIntFunction;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import fluent.ly.as;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.Essence;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metric;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
 import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.plugin.Listener;
 
 /** Configurable Report that uses {@link Listener.S}
  * @author Yossi Gil

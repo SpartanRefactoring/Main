@@ -1,14 +1,18 @@
 package il.org.spartan.java.cfg;
 
-import static il.org.spartan.java.cfg.CFG.Edges.*;
+import static il.org.spartan.java.cfg.CFG.Edges.incoming;
+import static il.org.spartan.java.cfg.CFG.Edges.outgoing;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.Wrapper;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** Testing utilities for {@link CFGTest}.
  * @author Ori Roth

@@ -1,21 +1,35 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
-import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.*;
-import java.util.function.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.graphics.Region;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.ui.*;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
-import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.*;
-import il.org.spartan.spartanizer.plugin.*;
+import fluent.ly.note;
+import il.org.spartan.plugin.preferences.revision.WidgetPreferences;
+import il.org.spartan.spartanizer.plugin.Dialogs;
+import il.org.spartan.spartanizer.plugin.Eclipse;
 
 /** Spartanizer widget.
  * @author Ori Roth {@code ori.rothh@gmail.com}

@@ -5,15 +5,29 @@
  * @since Dec 14, 2016 */
 package il.org.spartan.spartanizer.utils;
 
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.cmdline.JUnitTestMethodFacotry;
+import il.org.spartan.utils.Int;
 
 public enum LogToTest {
   ;

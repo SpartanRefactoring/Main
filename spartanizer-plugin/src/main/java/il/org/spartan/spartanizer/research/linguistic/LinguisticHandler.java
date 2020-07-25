@@ -1,15 +1,23 @@
 package il.org.spartan.spartanizer.research.linguistic;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.Name;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.ancestors;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.plugin.Eclipse;
+import il.org.spartan.spartanizer.plugin.Selection;
+import il.org.spartan.utils.UnderConstruction;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth

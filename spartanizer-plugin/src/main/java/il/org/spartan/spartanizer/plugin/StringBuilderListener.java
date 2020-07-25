@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.plugin.Listener.*;
+import static il.org.spartan.spartanizer.plugin.Listener.newId;
 
-import fluent.ly.*;
+import fluent.ly.as;
 import il.org.spartan.Separator;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.utils.Tab;
 
 /** A kind of {@link Listener} that records a long string of the message it got.
  * @author Yossi Gil

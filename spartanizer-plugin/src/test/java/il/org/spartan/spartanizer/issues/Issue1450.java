@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.junit.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import il.org.spartan.spartanizer.tippers.*;
+import org.junit.Test;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import il.org.spartan.spartanizer.tippers.ReturnDeadAssignment;
 
 /** Test case for bug in {@link ReturnDeadAssignment}
  * @author Yuval Simon

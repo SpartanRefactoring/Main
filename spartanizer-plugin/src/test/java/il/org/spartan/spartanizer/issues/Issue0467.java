@@ -5,9 +5,9 @@
  * @since Jan 6, 2017 */
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
 @SuppressWarnings("static-method")
 public class Issue0467 {

@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.research.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.research.util.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.research.util.measure;
 
 /** Tests {@link measure}
  * @author Ori Marcovitch */

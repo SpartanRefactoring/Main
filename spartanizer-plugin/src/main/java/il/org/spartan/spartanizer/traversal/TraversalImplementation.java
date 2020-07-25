@@ -1,17 +1,22 @@
 package il.org.spartan.spartanizer.traversal;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.util.function.*;
+import java.util.function.Consumer;
 
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import fluent.ly.English;
+import fluent.ly.note;
+import fluent.ly.robust;
+import il.org.spartan.spartanizer.ast.navigate.Ranger;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.utils.Range;
 
 /** Apply a {@link Toolbox} to a tree. Issues are
  * <ol>

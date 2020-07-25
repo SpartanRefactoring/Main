@@ -1,17 +1,25 @@
 package il.org.spartan.spartanizer.meta;
 
-import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.bodyDeclarations;
+import static il.org.spartan.spartanizer.ast.navigate.step.methods;
+import static il.org.spartan.spartanizer.ast.navigate.step.types;
+import static il.org.spartan.spartanizer.java.namespace.Vocabulary.mangle;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.forget;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.namespace.Vocabulary;
+import il.org.spartan.spartanizer.traversal.disabling;
+import il.org.spartan.utils.fault;
 
 /** Represents a test case, in conjunction with {@link ReflectiveTester}.
  * <p>

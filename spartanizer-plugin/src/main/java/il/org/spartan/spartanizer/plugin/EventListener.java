@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.function.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /** Listen to events, with an optional additional object. The events are defined
  * in received enum class.

@@ -1,21 +1,23 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedModifiers;
+import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.rank;
+import static java.util.stream.Collectors.toList;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.Modifier;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.java.IExtendedModifiersRank;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Sort the {@link Modifier}s of an entity by the order specified in
  * Modifier.class binary.

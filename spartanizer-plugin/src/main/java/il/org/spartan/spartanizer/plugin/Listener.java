@@ -20,7 +20,7 @@ public interface Listener {
 
   /** Create a new id for an event
    * @param ¢ notification details
-   * @return */
+   */
   static long newId() {
     return eventId.incrementAndGet();
   }

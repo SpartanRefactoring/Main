@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tipping.categories;
 
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** The {@link Category} of renaming, and renaming related {@link Tipper}s.
  * @author Yossi Gil

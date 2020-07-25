@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.list;
+import il.org.spartan.spartanizer.ast.navigate.step;
 
 /** @author Yossi Gil
  * @since 2017-04-25 */

@@ -1,18 +1,26 @@
 package il.org.spartan.spartanizer.testing;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.azzert;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.java.TermsCollector;
+import il.org.spartan.spartanizer.java.TermsExpander;
+import il.org.spartan.spartanizer.tippers.InfixAdditionSort;
+import il.org.spartan.spartanizer.tippers.InfixAdditionSubtractionExpand;
+import il.org.spartan.spartanizer.tippers.InfixMultiplicationSort;
 
 /** Unit tests for {@link misc#ADDITION_SORTER} .
  * @author Yossi Gil

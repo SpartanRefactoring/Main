@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.research.idiomatics;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.*;
+import java.util.List;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
+import fluent.ly.the;
 
 /** Created by yogi on 10/02/17. */
 @SuppressWarnings({ "javadoc", "static-method" })

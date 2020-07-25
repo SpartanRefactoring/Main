@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.cmdline.JUnitTestMethodFacotry;
+import il.org.spartan.spartanizer.testing.TestOperand;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.ForToForUpdaters;
 
 /** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon

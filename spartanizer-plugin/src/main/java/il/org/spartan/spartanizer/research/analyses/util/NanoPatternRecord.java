@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.research.MethodRecord;
+import il.org.spartan.spartanizer.research.util.measure;
 
 /** Collects statistics for a nano.
  * @author Ori Marcovitch */

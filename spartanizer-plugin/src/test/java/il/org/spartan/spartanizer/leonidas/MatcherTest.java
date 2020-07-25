@@ -1,14 +1,20 @@
 package il.org.spartan.spartanizer.leonidas;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.research.Matcher.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.research.Matcher.blockMatcher;
+import static il.org.spartan.spartanizer.research.Matcher.patternMatcher;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
 
 /** Tests {@link Matcher}
  * @author Ori Marcovitch

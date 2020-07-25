@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** tests of ParameterInt according to issue 871
  * @author kobybs

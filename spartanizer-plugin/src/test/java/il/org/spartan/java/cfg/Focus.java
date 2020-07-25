@@ -1,6 +1,7 @@
 package il.org.spartan.java.cfg;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /** TODO Roth: document class
  * TODO Roth: move to appropriate package

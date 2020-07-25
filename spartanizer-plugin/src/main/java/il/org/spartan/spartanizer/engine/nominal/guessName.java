@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import fluent.ly.is;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.utils.fault;
 
 /** Quick hack to guess the kind of stuff a name denotes based on cameCasing and
  * other conventions

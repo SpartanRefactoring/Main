@@ -1,29 +1,58 @@
 package il.org.spartan.athenizer.zoomers;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static org.eclipse.jdt.core.dom.ASTNode.ANONYMOUS_CLASS_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
+import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.CONDITIONAL_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.DO_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.ENHANCED_FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.EXPRESSION_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.LAMBDA_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_CONSTRUCTOR_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_DECLARATION_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.WHILE_STATEMENT;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
-
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.QualifiedName;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ImportRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.ast.safety.property;
+import il.org.spartan.spartanizer.java.namespace.scope;
+import il.org.spartan.spartanizer.plugin.Bindings;
+import il.org.spartan.spartanizer.tipping.CarefulTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** An expander to extract complex arguments from {@link Statement}: {@code
  * f(1 + a[b ? 1 : 2]);
@@ -212,7 +241,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * </code> and the {@link Type} {@code ? extends E[]} is considered as
    * {@link ArrayType} rather than {@link WildcardType}!
    * @param tipper
-   * @return */
+   */
   static Type fixWildCardType(final Type ret) {
     if (ret == null)
       return null;

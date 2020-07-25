@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import org.junit.*;
+import org.junit.Test;
 
 /** TODO Matteo Orru' please add a description
  * @author Matteo Orru'

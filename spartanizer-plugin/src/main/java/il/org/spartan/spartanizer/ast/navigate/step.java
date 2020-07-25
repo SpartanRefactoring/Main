@@ -156,7 +156,7 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static Block body(final LambdaExpression ¢) {
     return ¢ == null ? null : az.block(¢.getBody());
   }
@@ -164,7 +164,7 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
   /** @param ¢ JD
-   * @return */
+   */
   private static Block body(final SynchronizedStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
@@ -208,7 +208,7 @@ public enum step {
     return ¢ == null ? null : ¢.getExpression();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration ¢) {
     return bodyDeclarations(¢).stream() //
         .map(az::methodDeclaration) //
@@ -364,13 +364,13 @@ public enum step {
   }
   /** FieldDeclarations of __
    * @param ¢ JD
-   * @return */
+   */
   public static FieldDeclaration[] fieldDeclarations(final TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getFields();
   }
   /** FieldDeclarations names of __
    * @param ¢ JD
-   * @return */
+   */
   public static Collection<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
     return ¢ == null ? null : Stream.of(¢.getFields()).map(step::names).reduce(an.empty.list(), (x, y) -> {
       x.addAll(y);
@@ -500,7 +500,7 @@ public enum step {
     return $;
   }
   /** @param ¢ JD
-   * @return */
+   */
   private static Collection<String> methodNames(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : methods(¢).stream().map(step::name).map(step::identifier).collect(toList());
   }
@@ -512,7 +512,7 @@ public enum step {
     return $;
   }
   /** @param ¢ JD
-   * @return */
+   */
   @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? as.list(az.typeDeclaration(¢).getMethods())
@@ -522,13 +522,13 @@ public enum step {
                 : null;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static List<MethodDeclaration> methods(final AnonymousClassDeclaration ¢) {
     return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(Objects::nonNull).collect(toList());
   }
   /** get all methods
    * @param u JD
-   * @return */
+   */
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
@@ -555,7 +555,7 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static SimpleName name(final FieldAccess ¢) {
     return ¢ == null ? null : ¢.getName();
   }
@@ -581,7 +581,7 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static SimpleName name(final VariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
@@ -624,13 +624,13 @@ public enum step {
   }
   /** Expose the list of parameters names in a {@link MethodDeclaration}
    * @param d JD
-   * @return */
+   */
   public static List<String> parametersNames(final MethodDeclaration d) {
     return d == null ? null : step.parameters(d).stream().map(λ -> λ.getName() + "").collect(toList());
   }
   /** Expose the list of parameters types in a {@link MethodDeclaration}
    * @param ¢ JD
-   * @return */
+   */
   public static List<Type> parametersTypes(final MethodDeclaration ¢) {
     return step.parameters(¢).stream().map(step::type).collect(toList());
   }
@@ -658,7 +658,7 @@ public enum step {
   }
   /** Returns the return __ of the function
    * @param ¢ JD
-   * @return */
+   */
   public static Type returnType(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getReturnType2();
   }
@@ -702,7 +702,7 @@ public enum step {
     return ¢ == null ? null : ¢.statements();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static List<Statement> statements(final SynchronizedStatement ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
@@ -735,7 +735,7 @@ public enum step {
   }
   /** A little hack to get Type out of TypeDeclaration.
    * @param d JD
-   * @return */
+   */
   public static Type type(final AbstractTypeDeclaration d) {
     if (d == null)
       return null;
@@ -780,7 +780,7 @@ public enum step {
     return ¢ == null ? null : ¢.getType();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static Type type(final FieldDeclaration ¢) {
     return ¢ == null ? null : ¢.getType();
   }
@@ -794,7 +794,7 @@ public enum step {
     return ¢ == null ? null : ¢.getType();
   }
   /** @param p JD
-   * @return */
+   */
   public static Type type(final SingleVariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getType();
   }
@@ -805,7 +805,7 @@ public enum step {
     return ¢ == null ? null : ¢.getType();
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static Type type(final VariableDeclarationFragment ¢) {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
@@ -813,7 +813,7 @@ public enum step {
     return ¢ == null ? null : ¢.getType();
   }
   /** @param ¢ JD
-   * @return */
+   */
   @SuppressWarnings("unchecked")
   // public static Type __(final VariableDeclarationStatement ¢) {
   // return ¢ == null ? null : ¢.getType();

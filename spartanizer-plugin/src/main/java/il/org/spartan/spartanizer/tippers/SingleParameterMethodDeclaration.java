@@ -1,11 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Type;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.engine.nominal.JohnDoe;
 
 /** A single parameter method declaration pattern
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>

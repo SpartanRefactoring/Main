@@ -1,24 +1,31 @@
 package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.cmdline.nanos.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import fluent.ly.note;
+import fluent.ly.safe;
+import fluent.ly.system;
+import fluent.ly.unbox;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.nanos.NanoPatternsOccurencesStatistics;
+import il.org.spartan.spartanizer.research.Logger;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.Int;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}

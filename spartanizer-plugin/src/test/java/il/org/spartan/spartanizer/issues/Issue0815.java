@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.assertNotEquals;
+import static fluent.ly.azzert.fail;
+import static fluent.ly.azzert.is;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.engine.nominal.guessName;
 
 /** see issue #815 and #799 for more details
  * @author Oren Afek

@@ -1,30 +1,68 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static il.org.spartan.spartanizer.ast.safety.iz.*;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.body;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedOperands;
+import static il.org.spartan.spartanizer.ast.navigate.step.initializers;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.safety.iz.infixExpression;
+import static il.org.spartan.spartanizer.ast.safety.iz.simple;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.jdt.core.dom.ASTNode.ENHANCED_FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.IF_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.WHILE_STATEMENT;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Assignment.Operator;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CharacterLiteral;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.type.Primitive.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.is;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.GuessedContext;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.parse;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.engine.type.Primitive.Certain;
+import il.org.spartan.spartanizer.java.NumericLiteralClassifier;
+import il.org.spartan.spartanizer.java.precedence;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementWhile;
+import il.org.spartan.utils.fault;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -357,7 +395,7 @@ public enum make {
      * because host is a String concating InfixExpression and host is an infix
      * expression starting with a String
      * @param host
-     * @return */
+     */
     private boolean stringConcatingSafeIn(final ASTNode host) {
       if (!infixExpression(host))
         return false;

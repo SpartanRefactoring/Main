@@ -10,10 +10,10 @@ import il.org.spartan.utils.Separator;
 
 /** An immutable class, whose various constructors concatenate the string value
  * of a list of items, optionally separated by a separator.
- *
  * @author Yossi Gil (
  * @since 22/02/2006) */
-@Antiexample public class Stringer {
+@Antiexample
+public class Stringer {
   public static String compaq(final String s) {
     if (s == null)
       return null;
@@ -22,7 +22,6 @@ import il.org.spartan.utils.Separator;
       $ += Character.isSpaceChar(¢) ? "" : ¢ + "";
     return $;
   }
-
   /** Concatenate a prefix of a string with another string. The prefix is
    * determined by the value of <code>pos</code> parameter:
    * <ul>
@@ -31,7 +30,6 @@ import il.org.spartan.utils.Separator;
    * <li>Otherwise, the prefix is all the characters of <code>lhs</code> but the
    * last <code>pos</code> character.
    * </ul>
-   *
    * @param lhs Left hand side string
    * @param pos Position in the <code>lhs</code> string
    * @param rhs Right hand side string
@@ -39,11 +37,9 @@ import il.org.spartan.utils.Separator;
   public static String concatAt(final String lhs, final int pos, final String rhs) {
     return lhs.substring(0, pos >= 0 ? pos : lhs.length() + pos) + rhs;
   }
-
   /** Add leading zeros to a sequence of consecutive digits appearing at the
    * suffix of a String. This allows sorting to follow the natural order (i.e.:
    * abc2 should come before abc21).
-   *
    * @param s Input string
    * @return Fixed string derived from s */
   public static String fixNumericalSuffix(final String s) {
@@ -59,13 +55,10 @@ import il.org.spartan.utils.Separator;
       return s;
     final int firstDigitIndex = s.length() - $;
     return $ >= "0000000".length() ? s
-        : s.substring(0, firstDigitIndex) + "0000000".substring(0, "0000000".length() - $)
-        + s.substring(firstDigitIndex);
+        : s.substring(0, firstDigitIndex) + "0000000".substring(0, "0000000".length() - $) + s.substring(firstDigitIndex);
   }
-
   /** Return the largest prefix of a String the does not contain a certain
    * character.
-   *
    * @param s String whose prefix is to be taken
    * @param c The character that should not appear in the prefix
    * @return Prefix of s. If s does not contain the character c then s is
@@ -74,13 +67,12 @@ import il.org.spartan.utils.Separator;
     final int $ = s.indexOf(c);
     return s.substring(0, $ >= 0 ? $ : s.length());
   }
-
   /** @param <T> type of items in the list
    * @param begin the string starting the string representation.
-   * @param ts    the actual items in the list, method <code>toString()</code> is
-   *              used to compute obtain each item string represntation.
-   * @param sep   a string so separate these items
-   * @param end   a string terminating the string representation
+   * @param ts the actual items in the list, method <code>toString()</code> is
+   *        used to compute obtain each item string represntation.
+   * @param sep a string so separate these items
+   * @param end a string terminating the string representation
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   public static <T> String sequence(final String begin, final Iterable<T> ts, final String sep, final String end) {
@@ -91,13 +83,12 @@ import il.org.spartan.utils.Separator;
     $.append(end);
     return $ + "";
   }
-
   /** @param <T> type of items in the list
    * @param begin the string starting the string representation.
-   * @param ts    the actual items in the list, method <code>toString()</code> is
-   *              used to compute obtain each item string represntation.
-   * @param sep   a string so separate these items
-   * @param end   a string terminating the string representation
+   * @param ts the actual items in the list, method <code>toString()</code> is
+   *        used to compute obtain each item string represntation.
+   * @param sep a string so separate these items
+   * @param end a string terminating the string representation
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   public static <T> String sequence(final String begin, final T[] ts, final String sep, final String end) {
@@ -108,19 +99,17 @@ import il.org.spartan.utils.Separator;
     $.append(end);
     return $ + "";
   }
-
   /** @author Oren Rubin
-   * @param <T>   type of items in the list
+   * @param <T> type of items in the list
    * @param begin the string starting the string representation.
-   * @param ts    the actual items in the list, method <code>toString()</code> is
-   *              used to compute obtain each item string represntation.
-   * @param sep   a string so separate these items
-   * @param end   a string terminating the string representation
-   * @param c     class to customize conversions.
+   * @param ts the actual items in the list, method <code>toString()</code> is
+   *        used to compute obtain each item string represntation.
+   * @param sep a string so separate these items
+   * @param end a string terminating the string representation
+   * @param c class to customize conversions.
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
-  public static <T> String sequence(final String begin, final T[] ts, final String sep, final String end,
-      final Converter<T> c) {
+  public static <T> String sequence(final String begin, final T[] ts, final String sep, final String end, final Converter<T> c) {
     final StringBuilder $ = new StringBuilder(begin);
     final Separator s = new Separator(sep);
     for (final T ¢ : ts)
@@ -128,9 +117,7 @@ import il.org.spartan.utils.Separator;
     $.append(end);
     return $ + "";
   }
-
   /** Return the longest suffix of a String the starts with a certain character.
-   *
    * @param s String whose suffix is to be taken
    * @param c First character of the suffix.
    * @return Suffix of s. If s does not contain the character c then the empty
@@ -139,10 +126,8 @@ import il.org.spartan.utils.Separator;
     final int $ = s.indexOf(c);
     return $ < 0 ? "" : s.substring($);
   }
-
-  /** Generate a string specifying the values of all declared fields of the given
-   * object.
-   *
+  /** Generate a string specifying the values of all declared fields of the
+   * given object.
    * @param o Object to inspect
    * @return String representation of o */
   public static String toString(final Object o) {
@@ -169,8 +154,7 @@ import il.org.spartan.utils.Separator;
       b.append(s).append(¢);
     value = b + "";
   }
-
-  public <T> Stringer(final String separator, final String nullStr, final T... ts) {
+  @SafeVarargs public <T> Stringer(final String separator, final String nullStr, final T... ts) {
     final StringBuilder b = new StringBuilder();
     final Separator s = new Separator(separator);
     for (final T ¢ : ts) {
@@ -179,11 +163,9 @@ import il.org.spartan.utils.Separator;
     }
     value = b + "";
   }
-
-  public <T> Stringer(final String between, final T... ts) {
+  @SafeVarargs public <T> Stringer(final String between, final T... ts) {
     this(between, "null", ts);
   }
-
   @Override public String toString() {
     return value;
   }

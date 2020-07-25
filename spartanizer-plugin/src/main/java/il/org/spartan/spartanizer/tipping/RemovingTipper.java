@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.tipping;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
 /** An abstract tipping strategy that removes a node if
  * {@link RemovingTipper#prerequisite(ASTNode)} holds.

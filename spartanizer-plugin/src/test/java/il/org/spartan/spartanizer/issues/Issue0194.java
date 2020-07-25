@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.IfCommandsSequencerNoElseSingletonSequencer;
 
 /** Test for {@link IfCommandsSequencerNoElseSingletonSequencer}. Examine cases
  * where the last statement in the if statement then section is not an immediate

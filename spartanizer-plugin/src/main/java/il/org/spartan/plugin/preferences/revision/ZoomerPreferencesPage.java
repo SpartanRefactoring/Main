@@ -1,11 +1,20 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.WIDGET_SHORTCUT_METHOD_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.WIDGET_SHORTCUT_METHOD_VALUE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_AUTO_ACTIVISION_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_AUTO_ACTIVISION_ID_TEXT;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_PAGE_DESCRIPTION;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_REVERT_METHOD_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_REVERT_METHOD_TEXT;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.store;
 
-import org.eclipse.jface.preference.*;
-import org.eclipse.ui.*;
+import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.plugin.Plugin;
 
 /** Preferences page for Zoomer tool.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

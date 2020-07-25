@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 /** Fixture for testing plain for testing resources in try statement
  * @author Yossi Gil

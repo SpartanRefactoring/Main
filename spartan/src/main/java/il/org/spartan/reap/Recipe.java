@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import fluent.ly.nil;
+
 /** A cell that may depend on others.
  *
  * @param <T> JD
@@ -190,7 +192,7 @@ public class Recipe<T> extends Cell<T> {
       try {
         return super.eval();
       } catch (final NullPointerException x) {
-        return null;
+        return nil.forgetting(x);
       }
     }
   }

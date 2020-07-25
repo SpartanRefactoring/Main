@@ -1,11 +1,12 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.athenizer.zoomers.VariableDeclarationStatementSplit;
+import il.org.spartan.spartanizer.testing.BloaterTest;
+import il.org.spartan.spartanizer.testing.TestUtilsBloating;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Unit tests for {@link VariableDeclarationStatementSplit}
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}

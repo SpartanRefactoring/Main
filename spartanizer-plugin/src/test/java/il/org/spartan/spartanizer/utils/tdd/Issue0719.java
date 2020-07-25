@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 /** see issue #719 for more details
  * @author koralchapnik

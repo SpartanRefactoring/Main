@@ -1,10 +1,13 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.util.function.*;
+import java.util.function.Function;
 
-import il.org.spartan.spartanizer.cmdline.nanos.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.tables.*;
+import il.org.spartan.spartanizer.cmdline.nanos.CompilationUnitCoverageStatistics;
+import il.org.spartan.spartanizer.cmdline.nanos.NanoPatternsOccurencesStatistics;
+import il.org.spartan.spartanizer.cmdline.nanos.NanoPatternsOccurencesStatisticsLight;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.analyses.NoBrainDamagedTippersSpartanizer;
+import il.org.spartan.tables.Table;
 
 /** Base class for nano analysis
  * @author orimarco {@code marcovitch.ori@gmail.com}

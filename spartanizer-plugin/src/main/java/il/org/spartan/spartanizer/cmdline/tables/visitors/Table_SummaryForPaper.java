@@ -1,22 +1,32 @@
 package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toSet;
 
-import java.lang.reflect.*;
-import java.util.*;
-import java.util.stream.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.cmdline.tables.*;
-import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.tables.*;
+import fluent.ly.box;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.spartanizer.cmdline.tables.ClassRecord;
+import il.org.spartan.spartanizer.research.analyses.Nanonizer;
+import il.org.spartan.spartanizer.research.util.CleanerVisitor;
+import il.org.spartan.spartanizer.research.util.measure;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.tables.Table;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}

@@ -1,20 +1,32 @@
 package il.org.spartan.spartanizer.tipping;
 
-import static java.util.logging.Level.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static java.util.logging.Level.FINE;
+import static java.util.logging.Level.FINER;
+import static java.util.logging.Level.FINEST;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import java.text.*;
-import java.util.*;
-import java.util.logging.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.traversal.*;
+import fluent.ly.English;
+import fluent.ly.anonymous;
+import fluent.ly.as;
+import fluent.ly.box;
+import fluent.ly.cCamelCase;
+import fluent.ly.system;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.spartanizer.traversal.TraversalTapper;
 
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil

@@ -1,19 +1,29 @@
 package il.org.spartan.spartanizer.research.classifier;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.classifier.patterns.*;
-import il.org.spartan.spartanizer.research.nanos.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.cmdline.good.generalize;
+import il.org.spartan.spartanizer.research.TipperFactory;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.classifier.patterns.CopyArray;
+import il.org.spartan.spartanizer.research.classifier.patterns.ForEachEnhanced;
+import il.org.spartan.spartanizer.research.classifier.patterns.InitArray;
+import il.org.spartan.spartanizer.research.nanos.ForEach;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.utils.format;
+import il.org.spartan.utils.Int;
 
 /** NOT ACTIVE RIGHT NOW. <br>
  * NEED TO ADD CATEGORIES.

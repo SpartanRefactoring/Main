@@ -1,12 +1,16 @@
 package il.org.spartan.spartanizer.traversal;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.property;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

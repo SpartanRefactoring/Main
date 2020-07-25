@@ -1,24 +1,41 @@
 package il.org.spartan.athenizer.collateral;
 
-import static java.util.stream.Collectors.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.imports;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.types;
+import static java.util.stream.Collectors.toList;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.athenizer.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.athenizer.Application;
+import il.org.spartan.spartanizer.ast.navigate.Ranger;
+import il.org.spartan.spartanizer.plugin.AbstractSelection;
+import il.org.spartan.spartanizer.plugin.LibrariesManagement;
+import il.org.spartan.spartanizer.plugin.WrappedCompilationUnit;
+import il.org.spartan.utils.Range;
 
 /** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add

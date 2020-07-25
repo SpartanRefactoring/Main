@@ -1,22 +1,35 @@
 package il.org.spartan.spartanizer.traversal;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.ITypeRoot;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
+
+import fluent.ly.English;
+import fluent.ly.Selfie;
+import fluent.ly.cCamelCase;
+import il.org.spartan.plugin.preferences.revision.XMLSpartan;
 import il.org.spartan.spartanizer.cmdline.CurrentData;
-
-import java.util.*;
-
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.tipping.Tips;
+import il.org.spartan.tables.Table;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.Range;
 
 /** The interface of * {@link TraversalImplementation}, conducting a traversal
  * of an AST for two distinct purposes, {@link #collectTips(CompilationUnit)},

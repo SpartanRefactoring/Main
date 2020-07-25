@@ -1,17 +1,25 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.equalTo;
+import static fluent.ly.azzert.fail;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collections;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jface.text.Document;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
 
 /** Tests for makeAST, see issue #822 for more details
  * @author Amit Ohayon

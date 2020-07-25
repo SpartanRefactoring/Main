@@ -5,7 +5,7 @@
  * @since Sep 28, 2016 */
 package il.org.spartan.spartanizer.leonidas;
 
-import org.junit.*;
+import org.junit.Test;
 
 @SuppressWarnings("static-method")
 public class LeonidasTest {

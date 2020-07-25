@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-import org.eclipse.jface.text.*;
+import org.eclipse.jface.text.ITextSelection;
 
-import an.*;
+import an.empty;
 
 /** An abstract selection, containing files and possible text selection.
  * @author Ori Roth

@@ -1,12 +1,16 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.removeComments;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.squeeze;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import il.org.spartan.external.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.external.External;
+import il.org.spartan.spartanizer.cmdline.ASTInFilesVisitor;
+import il.org.spartan.spartanizer.cmdline.ASTTrotter;
+import il.org.spartan.spartanizer.cmdline.JUnitTestMethodFacotry;
+import il.org.spartan.spartanizer.plugin.TextualTraversals;
 
 /** This is a command line program, which can be thought of as a spartan
  * compiler. For each {@code .java} file it find, it encounters, it creates a

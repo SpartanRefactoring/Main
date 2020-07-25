@@ -1,11 +1,11 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
+import il.org.spartan.athenizer.zoomers.SwitchMissingDefaultAdd;
 
 /** test case for {@link SwitchMissingDefaultAdd}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>

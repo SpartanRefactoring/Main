@@ -1,14 +1,23 @@
 package il.org.spartan.spartanizer.research.idiomatics;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.factory.misc;
 
 /** An empty {@code enum} with a variety of {@code public
  * static} utility functions of reasonably wide use.
@@ -47,7 +56,7 @@ public interface idiomatic {
   }
   /* @param condition JD
    *
-   * @return */
+   */
   /** {@code incase}
    * @param <T> JD
    * @param condition
@@ -137,7 +146,7 @@ public interface idiomatic {
     return new ConditionHolder(¢);
   }
   /** @param condition JD
-   * @return */
+   */
   static Trigger then(final boolean condition) {
     return condition ? eval : tIgnore;
   }
@@ -250,11 +259,11 @@ public interface idiomatic {
   interface Trigger {
     /** @param <T> JD
      * @param t JD
-     * @return */
+     */
     <T> T eval(Supplier<T> t);
     /** @param <T> JD
      * @param $ JD
-     * @return */
+     */
     default <T> T eval(final T $) {
       return eval(() -> $);
     }
@@ -266,7 +275,7 @@ public interface idiomatic {
   /** A class to hold a collection which on, operations can be made, like map,
    * apply, reduce, ...
    * @param ¢
-   * @return */
+   */
   static <T, CT extends Collection<T>> CollectionHolder<T, CT> on(final CT ¢) {
     return new CollectionHolder<>(¢);
   }
@@ -299,7 +308,7 @@ public interface idiomatic {
 
   /** This is not good. java cannot infer types.
    * @param mapper
-   * @return */
+   */
   static <T, R> MapperLambdaHolder<T, R> mapp(final Function<T, R> mapper) {
     return new MapperLambdaHolder<>(mapper);
   }

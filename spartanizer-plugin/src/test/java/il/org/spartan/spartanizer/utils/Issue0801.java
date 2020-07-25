@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.utils;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.utils.Int;
 
 /** Test for GitHub issue thus numbered
  * @author David Cohen

@@ -1,23 +1,37 @@
 package il.org.spartan.spartanizer.testing;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.not;
+import static il.org.spartan.spartanizer.testing.TestUtilsAll.assertSimilar;
 
-import java.util.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.athenizer.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+
+import fluent.ly.azzert;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.tide;
+import il.org.spartan.athenizer.InflaterProvider;
+import il.org.spartan.athenizer.SingleFlater;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.JUnitTestMethodFacotry;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** Part of the test utils for bloaters\zoomers
  * @author Dor Ma'ayan
@@ -115,7 +129,7 @@ public class OperandBloating extends TestOperand {
   }
   /** @param $ java code
    * @param f tested method name. expanders will be applied only for this method
-   * @return */
+   */
   public OperandBloating givesWithBinding(final String $, final String f) {
     assert $ != null;
     final CompilationUnit u = az.compilationUnit(ast);
@@ -146,7 +160,7 @@ public class OperandBloating extends TestOperand {
    * @author Dor Ma'ayan
    * @since 19-01-2017
    * @param b
-   * @return */
+   */
   private static CompilationUnit rename(final CompilationUnit u) {
     if (u == null)
       return null;

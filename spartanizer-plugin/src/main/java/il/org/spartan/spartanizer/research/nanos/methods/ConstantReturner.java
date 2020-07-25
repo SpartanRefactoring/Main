@@ -1,9 +1,11 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import fluent.ly.lazy;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternContainer;
 
 /** @nano a method returns some constant
  * @author Ori Marcovitch

@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.traversal;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.ObjectStreamClass;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import fluent.ly.anonymous;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.utils.Examples;
 
 /** TODO Ori Roth document
  * @author Yossi Gil

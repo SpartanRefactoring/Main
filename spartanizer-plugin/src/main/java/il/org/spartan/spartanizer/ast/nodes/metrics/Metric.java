@@ -20,7 +20,7 @@ public abstract class Metric {
     return Metric.named(name).of(n);
   }
   /** @param pattern JD
-   * @return */
+   */
   public static Set<String> dictionary(final ASTNode u) {
     final Set<String> $ = new LinkedHashSet<>();
     u.accept(new ASTVisitor(true) {
@@ -32,7 +32,7 @@ public abstract class Metric {
   }
   
   /** @param u JD
-   * @return */
+   */
   public static ArrayList<String> dictionary_not_unique(final ASTNode u) {
     final ArrayList<String> $ = new ArrayList<>();
     u.accept(new ASTVisitor(true) {

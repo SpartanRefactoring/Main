@@ -1,30 +1,37 @@
 package il.org.spartan.spartanizer.cmdline.runnables;
 
-import static il.org.spartan.tide.*;
+import static il.org.spartan.tide.clean;
 
 /* Generates reports
  *
  * @author Matteo Orru'
  *
  * @since 2016 */
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.ToIntFunction;
+import java.util.stream.Stream;
 
-import java.io.*;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.applicators.*;
+import fluent.ly.as;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.Essence;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metric;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.cmdline.applicators.CommandLine$Applicator;
 import il.org.spartan.spartanizer.cmdline.library.FileHeuristics;
-import il.org.spartan.spartanizer.cmdline.metrics.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.cmdline.metrics.ASTNodeMetrics;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** Generator for reports
  * @author Matteo Orru'

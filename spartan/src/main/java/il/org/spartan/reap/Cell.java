@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import fluent.ly.nil;
+
 /** A cell stores a value of some type (which is passed by parameter). A cell
  * may be either {@link Ingredient} or {@link Recipe}. A computed cell typically
  * depends on other cells, which may either valued, or computed, and hence
@@ -68,7 +70,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     try {
       return (Cell<T>) super.clone();
     } catch (final CloneNotSupportedException e) {
-      return null;
+      return nil.forgetting(e);
     }
   }
 

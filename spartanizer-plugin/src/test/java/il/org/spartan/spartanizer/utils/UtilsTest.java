@@ -1,11 +1,17 @@
 package il.org.spartan.spartanizer.utils;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.Utils.*;
+import static fluent.ly.azzert.greaterThan;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.lessThan;
+import static il.org.spartan.Utils.compare;
+import static il.org.spartan.Utils.removePrefix;
+import static il.org.spartan.Utils.removeSuffix;
+import static il.org.spartan.Utils.removeWhites;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
+import fluent.ly.is;
 
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class UtilsTest {

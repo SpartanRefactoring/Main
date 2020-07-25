@@ -1,6 +1,7 @@
 package il.org.spartan.athenizer;
 
-import org.eclipse.core.commands.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 
 /** TODO Yuval Simon: document class
  * @author Yuval Simon

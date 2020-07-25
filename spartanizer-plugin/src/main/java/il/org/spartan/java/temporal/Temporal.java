@@ -1,6 +1,7 @@
 package il.org.spartan.java.temporal;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth

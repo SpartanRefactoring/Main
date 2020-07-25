@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /** TODO dormaayn: All tests regrading renaming (in the spartnizer)
  * @author Dor Ma'ayan

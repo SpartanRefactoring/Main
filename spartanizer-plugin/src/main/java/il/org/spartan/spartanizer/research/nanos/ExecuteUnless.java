@@ -1,19 +1,25 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.TryStatement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.as;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.navigate.yieldAncestors;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.research.UserDefinedTipper;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper;
+import il.org.spartan.spartanizer.tipping.Tip;
 
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
@@ -39,13 +45,13 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
   /** First order approximation - does statement reference non effective final
    * names? meanwhile we take care just assignments...
    * @param ¢ statement
-   * @return */
+   */
   private static boolean doesNotReferenceNonFinal(final IfStatement ¢) {
     return findFirst.instanceOf(Assignment.class).in(¢) == null;
   }
   /** First order approximation - does statement throw?
    * @param ¢ statement
-   * @return */
+   */
   private static boolean throwing(final Statement ¢) {
     if (yieldAncestors.untilClass(TryStatement.class).from(¢) != null)
       return true;

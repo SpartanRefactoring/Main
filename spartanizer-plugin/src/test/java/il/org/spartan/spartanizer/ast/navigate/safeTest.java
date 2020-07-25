@@ -5,9 +5,9 @@
  * @since Dec 19, 2016 */
 package il.org.spartan.spartanizer.ast.navigate;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.safe;
 
 @SuppressWarnings("static-method")
 public class safeTest {

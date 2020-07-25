@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.research.characteristics;
 
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.research.methods.*;
-import il.org.spartan.spartanizer.research.nanos.characteristics.*;
+import il.org.spartan.spartanizer.research.methods.JavadocerTest;
+import il.org.spartan.spartanizer.research.nanos.characteristics.MyArguments;
 
 /** Tests {@link MyArguments}
  * @author orimarco {@code marcovitch.ori@gmail.com}

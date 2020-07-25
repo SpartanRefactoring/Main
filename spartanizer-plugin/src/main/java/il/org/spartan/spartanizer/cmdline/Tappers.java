@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /** @formatter:on */
 class Tappers implements Tapper {

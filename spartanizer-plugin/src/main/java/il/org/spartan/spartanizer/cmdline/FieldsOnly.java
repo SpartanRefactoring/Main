@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 
 public class FieldsOnly {
   public static void main(final String[] args) {

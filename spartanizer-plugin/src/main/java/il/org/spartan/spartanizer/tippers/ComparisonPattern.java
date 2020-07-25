@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.op;
 
 /** matches {@code X1 <= X2}, {@code X1 < X2}, {@code X1 >= X2},
  * {@code X1 > X2}, {@code X1 == X2}, and {@code X1 != X2},

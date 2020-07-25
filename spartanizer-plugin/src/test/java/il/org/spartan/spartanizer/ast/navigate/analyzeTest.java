@@ -1,17 +1,21 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static java.util.stream.Collectors.toList;
 
-import static java.util.stream.Collectors.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclaration;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import fluent.ly.as;
+import fluent.ly.azzert;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
 
 /** TODO Vivian Shehadeh please add a description
  * @author Vivian Shehadeh

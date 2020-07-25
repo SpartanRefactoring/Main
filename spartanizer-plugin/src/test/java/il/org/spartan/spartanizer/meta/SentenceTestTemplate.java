@@ -1,26 +1,34 @@
 package il.org.spartan.spartanizer.meta;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.not;
+import static java.util.stream.Collectors.toList;
 
-import static java.util.stream.Collectors.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
-import java.util.*;
-import java.util.stream.*;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
-import org.junit.runners.Parameterized.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.azzert;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
+import il.org.spartan.spartanizer.issues.Issue1008;
+import il.org.spartan.spartanizer.testing.trim;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.spartanizer.traversal.disabling;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** A demo on testing with a {!@link {@link MetaFixture}
  * @author Yossi Gil

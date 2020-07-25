@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.testing;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.meta.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.issues.Issue1146;
+import il.org.spartan.spartanizer.meta.MetaFixture;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** A class used for testing a specific bloater. To use this class, inherit it
  * and override bloater() to return the bloater you want to test, then use this

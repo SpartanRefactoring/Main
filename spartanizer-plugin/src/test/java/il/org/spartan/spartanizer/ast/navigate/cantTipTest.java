@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.parse;
 
 /** Test for cantTip.java, see issue #822 for more details
  * @author Amit Ohayon

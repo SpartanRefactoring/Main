@@ -1,28 +1,67 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static fluent.ly.is.*;
-import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.iz;
+import static fluent.ly.azzert.not;
+import static fluent.ly.is.in;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static il.org.spartan.spartanizer.engine.ExpressionComparator.NODES_THRESHOLD;
+import static il.org.spartan.spartanizer.engine.ExpressionComparator.longerFirst;
+import static il.org.spartan.spartanizer.engine.ExpressionComparator.moreArguments;
+import static il.org.spartan.spartanizer.engine.parse.i;
+import static il.org.spartan.spartanizer.testing.TestUtilsAll.assertSimilar;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.countOpportunities;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.included;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.junit.*;
-
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.spartanizer.utils.*;
+import fluent.ly.azzert;
+import fluent.ly.has;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.testing.trim;
+import il.org.spartan.spartanizer.tippers.AssignmentAndAssignmentOfSameValue;
+import il.org.spartan.spartanizer.tippers.AssignmentAndAssignmentToSameKill;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.ForEmptyBlockToEmptyStatement;
+import il.org.spartan.spartanizer.tippers.IfAssignToFooElseAssignToFoo;
+import il.org.spartan.spartanizer.tippers.IfTrueOrFalse;
+import il.org.spartan.spartanizer.tippers.InfixAdditionSort;
+import il.org.spartan.spartanizer.tippers.InfixComparisonBooleanLiteral;
+import il.org.spartan.spartanizer.tippers.InfixComparisonSpecific;
+import il.org.spartan.spartanizer.tippers.InfixMultiplicationSort;
+import il.org.spartan.spartanizer.tippers.InfixSimplifyComparisionOfAdditions;
+import il.org.spartan.spartanizer.tippers.InfixSubtractionEvaluate;
+import il.org.spartan.spartanizer.tippers.LocalInitializedReturnExpression;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementTerminatingScope;
+import il.org.spartan.spartanizer.tippers.LocalUninitializedAssignmentToIt;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameReturnToDollar;
+import il.org.spartan.spartanizer.tippers.TernaryShortestFirst;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
 
 /** Unit tests for version 2.30
  * @author Yossi Gil

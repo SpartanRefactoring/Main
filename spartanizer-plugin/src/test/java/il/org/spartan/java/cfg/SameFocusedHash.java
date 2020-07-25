@@ -1,8 +1,8 @@
 package il.org.spartan.java.cfg;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
 
-import org.junit.runners.model.*;
+import org.junit.runners.model.FrameworkMethod;
 
 /** TODO Roth: document class
  * TODO Roth: move to appropriate package

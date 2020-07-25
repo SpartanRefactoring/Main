@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.parse;
 
 /** tests {@link extract#usedIdentifiers(Expression)}
  * @author Yossi Gil

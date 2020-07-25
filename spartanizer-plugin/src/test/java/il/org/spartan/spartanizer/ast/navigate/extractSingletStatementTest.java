@@ -5,16 +5,17 @@
  * @since Nov 26, 2016 */
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.parse.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.engine.parse.s;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Statement;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class extractSingletStatementTest {

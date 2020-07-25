@@ -1,19 +1,23 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.is.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static fluent.ly.is.in;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
+import static il.org.spartan.spartanizer.ast.navigate.step.operand;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.DECREMENT;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.INCREMENT;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.text.edits.TextEditGroup;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.tipping.GoToNextStatement;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** convert {@code
  * a = 3;

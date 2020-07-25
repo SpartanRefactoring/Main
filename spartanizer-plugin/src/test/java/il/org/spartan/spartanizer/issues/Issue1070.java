@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.RemoveRedundantSwitchContinue;
+import il.org.spartan.spartanizer.tippers.RemoveRedundantSwitchReturn;
 
 /** Test case for {@link RemoveRedundantSwitchReturn} and
  * {@link RemoveRedundantSwitchContinue}

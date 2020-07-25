@@ -1,18 +1,29 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.WIDGET_MAX_OPS;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.WIDGET_MAX_SIZE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.WIDGET_MIN_SIZE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.WIDGET_PAGE_DESCRIPTION;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.WIDGET_SHORTCUT_METHOD_ID;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.ZOOMER_REVERT_METHOD_VALUE;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.store;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map.*;
+import java.util.Map.Entry;
 
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.preference.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IntegerFieldEditor;
+import org.eclipse.jface.preference.ListEditor;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
 
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.Plugin;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperationEntry;
 
 /** The preferences page for the Athenizer Widget We read from store only at
  * listEditor creation time We write on every change both in the listEditor and

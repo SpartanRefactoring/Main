@@ -1,12 +1,35 @@
 package il.org.spartan.athenizer.zoomers;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import il.org.spartan.athenizer.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
+import il.org.spartan.athenizer.InflaterProvider;
+import il.org.spartan.spartanizer.tippers.ArrayAccessAndIncrement;
+import il.org.spartan.spartanizer.tippers.AssignmentAndAssignmentOfSameValue;
+import il.org.spartan.spartanizer.tippers.AssignmentToFromInfixIncludingTo;
+import il.org.spartan.spartanizer.tippers.BlockSingletonEliminate;
+import il.org.spartan.spartanizer.tippers.CastToLong2Multiply1L;
+import il.org.spartan.spartanizer.tippers.IfAssignToFooElseAssignToFoo;
+import il.org.spartan.spartanizer.tippers.IfExpressionStatementElseSimilarExpressionStatement;
+import il.org.spartan.spartanizer.tippers.IfReturnFooElseReturnBar;
+import il.org.spartan.spartanizer.tippers.IfThrowFooElseThrowBar;
+import il.org.spartan.spartanizer.tippers.LocalInitializedReturnExpression;
+import il.org.spartan.spartanizer.tippers.LocalInitializedStatementTerminatingScope;
+import il.org.spartan.spartanizer.tippers.LocalInitializedUnusedRemove;
+import il.org.spartan.spartanizer.tippers.LocalInitializedUpdateAssignment;
+import il.org.spartan.spartanizer.tippers.MergeSwitchBranches;
+import il.org.spartan.spartanizer.tippers.MethodInvocationToStringToEmptyStringAddition;
+import il.org.spartan.spartanizer.tippers.ParenthesizedRemoveExtraParenthesis;
+import il.org.spartan.spartanizer.tippers.PlusAssignToPostfix;
+import il.org.spartan.spartanizer.tippers.TernaryPushdown;
+import il.org.spartan.spartanizer.tippers.TernaryPushdownStrings;
+import il.org.spartan.spartanizer.tippers.TryMergeCatchers;
+import il.org.spartan.spartanizer.tippers.TwoDeclarationsIntoOne;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Toolbox;
 
 /** Bloaters and their matching tippers
  * @author Yuval Simon

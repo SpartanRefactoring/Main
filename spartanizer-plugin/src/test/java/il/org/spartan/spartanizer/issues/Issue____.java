@@ -1,13 +1,19 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static fluent.ly.azzert.greaterThan;
+import static fluent.ly.azzert.greaterThanOrEqualTo;
+import static fluent.ly.azzert.instanceOf;
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.lessThan;
+import static fluent.ly.azzert.lessThanOrEqualTo;
+import static fluent.ly.azzert.not;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import java.util.*;
+import java.util.List;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
+import fluent.ly.azzert;
 
 /** A template for unit tests for {@link NameYourClassHere} , can be used by:
  * <ul>

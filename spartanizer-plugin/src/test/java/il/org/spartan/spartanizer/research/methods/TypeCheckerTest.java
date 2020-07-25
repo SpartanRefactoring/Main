@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.research.nanos.methods.*;
+import il.org.spartan.spartanizer.research.nanos.methods.TypeChecker;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}

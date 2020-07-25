@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.issues;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.leonidas.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.cmdline.JUnitTestMethodFacotry;
+import il.org.spartan.spartanizer.leonidas.anonimizeTest;
 
 /** Failing test, originally from {@link anonimizeTest} .
  * @author Yossi Gil

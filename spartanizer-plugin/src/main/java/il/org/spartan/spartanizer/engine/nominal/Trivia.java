@@ -39,7 +39,7 @@ public enum Trivia {
   }
   /** escapes all "s
    * @param ¢
-   * @return */
+   */
   public static String escapeQuotes(final String ¢) {
     return ¢.replace("\"", "\\\"");
   }
@@ -49,7 +49,7 @@ public enum Trivia {
   /** This method fixes a bug from tide.clean which causes ^ to replaced with
    * [^]
    * @param ¢
-   * @return */
+   */
   static String fixTideClean(final String ¢) {
     return ¢.replaceAll("\\[\\^\\]", "\\^");
   }

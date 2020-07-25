@@ -1,10 +1,13 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import org.eclipse.jgit.api.*;
-import org.eclipse.jgit.api.errors.*;
-import org.eclipse.ui.*;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.api.errors.UnmergedPathsException;
+import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.ui.ISharedImages;
 
-import il.org.spartan.spartanizer.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.widget.ConfigurationsMap;
 
 /** Git pull command.
  * @author Ori Roth

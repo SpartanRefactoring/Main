@@ -1,14 +1,14 @@
 package il.org.spartan.athenizer;
 
 import java.util.Optional;
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jface.preference.*;
+import org.eclipse.jface.preference.IPreferenceStore;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.*;
+import fluent.ly.English;
+import il.org.spartan.spartanizer.plugin.Plugin;
 
 /**
  * Classification of Expanders

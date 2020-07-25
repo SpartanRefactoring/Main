@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.junit.*;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.utils.*;
+import fluent.ly.azzert;
+import fluent.ly.range;
+import il.org.spartan.utils.Int;
 
 /** Test cases for the fluent API of Range
  * @author Dor Ma'ayan

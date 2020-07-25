@@ -1,24 +1,45 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.elze;
+import static il.org.spartan.spartanizer.ast.navigate.step.expression;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static il.org.spartan.spartanizer.ast.navigate.step.then;
+import static il.org.spartan.spartanizer.ast.navigate.step.to;
+import static il.org.spartan.spartanizer.ast.navigate.step.type;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.eq;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.findSingleDifference;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.CLASS_INSTANCE_CREATION;
+import static org.eclipse.jdt.core.dom.ASTNode.FIELD_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.METHOD_INVOCATION;
+import static org.eclipse.jdt.core.dom.ASTNode.SUPER_METHOD_INVOCATION;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import java.util.List;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.factory.misc;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.engine.nominal.guessName;
+import il.org.spartan.spartanizer.java.precedence;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Pushdown a ternary as far down as possible
  * @year 2015

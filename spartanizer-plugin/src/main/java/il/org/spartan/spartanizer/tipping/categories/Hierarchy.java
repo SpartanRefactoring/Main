@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.tipping.categories;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
 /** Representation of a DAG`
  * @author Yossi Gil

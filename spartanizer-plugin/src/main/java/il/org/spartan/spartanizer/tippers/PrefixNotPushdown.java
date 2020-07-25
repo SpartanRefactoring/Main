@@ -1,22 +1,28 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.factory.subject.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.factory.subject.pair;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.ast.navigate.step.left;
 import static il.org.spartan.spartanizer.ast.navigate.step.operand;
+import static il.org.spartan.spartanizer.ast.navigate.step.right;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.applyDeMorgan;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_AND;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.CONDITIONAL_OR;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.factory.cons;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** pushes down "{@code !}", the negation operator as much as possible, using
  * the de-Morgan and other simplification rules.

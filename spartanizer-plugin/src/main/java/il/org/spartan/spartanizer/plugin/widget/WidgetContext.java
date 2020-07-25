@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.*;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.jdt.core.IJavaProject;
 
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.plugin.Selection;
 
 /** Widget button activation context. Useful context information to be used by
  * {@link WidgetOperation}. Also used to pass data between operations' phases.

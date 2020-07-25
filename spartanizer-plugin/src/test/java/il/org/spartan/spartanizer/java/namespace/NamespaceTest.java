@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 @SuppressWarnings("ALL")
 class NamespaceFixture {

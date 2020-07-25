@@ -1,10 +1,10 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
+import il.org.spartan.athenizer.zoomers.CasesSplit;
 
 /** Unit test for {@link CasesSplit}.
  * @author Ori Roth {@code ori.rothh@gmail.com}

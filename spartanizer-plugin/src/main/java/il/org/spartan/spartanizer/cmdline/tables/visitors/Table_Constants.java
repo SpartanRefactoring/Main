@@ -1,14 +1,14 @@
 package il.org.spartan.spartanizer.cmdline.tables.visitors;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.type;
 
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.tables.*;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.cmdline.good.DeprecatedFolderASTVisitor;
+import il.org.spartan.tables.Table;
 
 /** Generates a table, counting constants in repositories
  * @author orimarco {@code marcovitch.ori@gmail.com}

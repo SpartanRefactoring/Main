@@ -1,12 +1,17 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
+import java.util.stream.Stream;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.tables.*;
+import fluent.ly.box;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.tipping.categories.Category;
+import il.org.spartan.spartanizer.tipping.categories.Taxon;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.tables.Table;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.

@@ -1,18 +1,18 @@
 package il.org.spartan.spartanizer.java;
 
-import static fluent.ly.lisp.*;
+import static fluent.ly.lisp.chop;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.plugin.*;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.engine.type;
+import il.org.spartan.spartanizer.plugin.Wizard;
 
 /** Expands terms of +/- expressions without reordering, e.g., convert
  * {@code a + (b+c+(d-e))} into {@code a+b+c+d-e}

@@ -1,15 +1,19 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.make;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Replace {@code int i = +0} with {@code int i = 0}, {@code int i = +1} with
  * {@code int i = 1} {@code int i = +a} with {@code int i = a}, etc.

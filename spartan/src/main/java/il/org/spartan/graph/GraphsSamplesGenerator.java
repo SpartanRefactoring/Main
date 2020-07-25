@@ -69,7 +69,8 @@ public class GraphsSamplesGenerator {
     for (final Method m : c.getDeclaredMethods())
       if (Modifier.isStatic(m.getModifiers()) && m.getParameterTypes().length == 0 && m.getReturnType() == Graph.class)
         try {
-          $.add((Graph<String>) m.invoke(null));
+          @SuppressWarnings("unchecked") Graph<String> invoke = (Graph<String>) m.invoke(null);
+          $.add(invoke);
         } catch (final InvocationTargetException | IllegalAccessException | IllegalArgumentException ¢) {
           ¢.printStackTrace();
         }

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.cmdline.nanos;
 
-import java.util.*;
+import java.util.HashMap;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.research.analyses.util.*;
+import il.org.spartan.spartanizer.research.analyses.util.NanoPatternRecord;
 
 /** Map containing data about nano patterns occurences
  * @author orimarco <marcovitch.ori@gmail.com>

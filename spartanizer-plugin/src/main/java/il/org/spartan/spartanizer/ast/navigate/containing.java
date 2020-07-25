@@ -1,12 +1,22 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
+import static org.eclipse.jdt.core.dom.ASTNode.ANNOTATION_TYPE_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ANONYMOUS_CLASS_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.COMPILATION_UNIT;
+import static org.eclipse.jdt.core.dom.ASTNode.ENUM_CONSTANT_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ENUM_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_DECLARATION;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 
-import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
 
 /** An empty {@code interface} for fluent API. The name of this __ should say it
  * all: The name, followed by a dot, followed by a method name, should read like

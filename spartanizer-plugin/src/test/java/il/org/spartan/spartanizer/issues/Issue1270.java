@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.testing.TipperTest;
+import il.org.spartan.spartanizer.tippers.ParameterAbbreviate;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Unit test for {@link ParameterAbbreviate}.
  * @author Ori Roth

@@ -1,19 +1,27 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.net.*;
-import java.util.*;
-import java.util.function.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.resource.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 
-import fluent.ly.*;
+import fluent.ly.English;
+import fluent.ly.note;
 
 /** Utility class for dialogs management.
  * @author Ori Roth

@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.common.JavadocMarkerNanoPattern;
 
 /** Matches getter methods
  * @author Ori Marcovitch */

@@ -1,8 +1,10 @@
 package il.org.spartan.proposition;
 
-import java.util.function.*;
+import java.util.function.BooleanSupplier;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.Proposition;
+import il.org.spartan.utils.PropositionReducer;
+import il.org.spartan.utils.ReduceStringConcatenate;
 
 /** TODO
  * @author Yossi Gil

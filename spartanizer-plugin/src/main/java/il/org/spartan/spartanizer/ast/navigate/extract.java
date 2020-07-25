@@ -172,7 +172,7 @@ public enum extract {
    * <t><t> Bn <br>
    * Retrieves all If branches
    * @param ¢ JD
-   * @return */
+   */
   public static Collection<IfStatement> branches(final IfStatement ¢) {
     if (¢ == null)
       return null;
@@ -375,7 +375,7 @@ public enum extract {
   /** returns the else statement of the last if in an if else if else if else
    * sequence
    * @param ¢
-   * @return */
+   */
   public static Statement lastElse(final IfStatement ¢) {
     if (¢ == null)
       return null;

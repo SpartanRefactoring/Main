@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.AssignmentAndUpdateAssignmentToSame;
 
 /** Test class for issue 115 - XOR parsing bug with trimmingOf testing utility.
  * @since 2016 */

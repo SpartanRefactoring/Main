@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parameters;
 
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.tables.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+
+import il.org.spartan.spartanizer.cmdline.GrandVisitor;
+import il.org.spartan.tables.Table;
 
 public class TableMethodProperties {
   public static void main(final String[] args) {

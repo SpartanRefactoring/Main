@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.testing;
 
-import static fluent.ly.azzert.*;
+import static fluent.ly.azzert.is;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

@@ -1,18 +1,26 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.arguments;
+import static il.org.spartan.spartanizer.ast.navigate.step.identifier;
+import static il.org.spartan.spartanizer.ast.navigate.step.methodNames;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.compilationUnit;
+import static il.org.spartan.spartanizer.research.analyses.util.Files.inputFiles;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.io.*;
-import java.util.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.Pair;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

@@ -1,18 +1,128 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import static fluent.ly.idiomatic.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+import static fluent.ly.idiomatic.eval;
+import static il.org.spartan.spartanizer.ast.navigate.step.extendedModifiers;
+import static il.org.spartan.spartanizer.ast.navigate.step.initializers;
+import static il.org.spartan.spartanizer.ast.navigate.step.operand;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static org.eclipse.jdt.core.dom.ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_ACCESS;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_INITIALIZER;
+import static org.eclipse.jdt.core.dom.ASTNode.ARRAY_TYPE;
+import static org.eclipse.jdt.core.dom.ASTNode.ASSIGNMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.BLOCK;
+import static org.eclipse.jdt.core.dom.ASTNode.BOOLEAN_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.BREAK_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.DO_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.EMPTY_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.ENHANCED_FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.EXPRESSION_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.FIELD_DECLARATION;
+import static org.eclipse.jdt.core.dom.ASTNode.FOR_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.IF_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.INFIX_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.INSTANCEOF_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.LAMBDA_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.MEMBER_REF;
+import static org.eclipse.jdt.core.dom.ASTNode.PARENTHESIZED_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.RETURN_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.STRING_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.SWITCH_CASE;
+import static org.eclipse.jdt.core.dom.ASTNode.SWITCH_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.THROW_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.TYPE_DECLARATION_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_EXPRESSION;
+import static org.eclipse.jdt.core.dom.ASTNode.VARIABLE_DECLARATION_STATEMENT;
+import static org.eclipse.jdt.core.dom.ASTNode.WILDCARD_TYPE;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.NOT;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.Collection;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-import java.util.*;
-import java.util.stream.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.ArrayAccess;
+import org.eclipse.jdt.core.dom.ArrayInitializer;
+import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
+import org.eclipse.jdt.core.dom.BreakStatement;
+import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.ContinueStatement;
+import org.eclipse.jdt.core.dom.DoStatement;
+import org.eclipse.jdt.core.dom.EmptyStatement;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.Initializer;
+import org.eclipse.jdt.core.dom.InstanceofExpression;
+import org.eclipse.jdt.core.dom.IntersectionType;
+import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.MethodRef;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NameQualifiedType;
+import org.eclipse.jdt.core.dom.NormalAnnotation;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.PrimitiveType;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.QualifiedType;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.SwitchCase;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.SynchronizedStatement;
+import org.eclipse.jdt.core.dom.ThrowStatement;
+import org.eclipse.jdt.core.dom.TryStatement;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
+import org.eclipse.jdt.core.dom.UnionType;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.WhileStatement;
+import org.eclipse.jdt.core.dom.WildcardType;
 
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
+import fluent.ly.as;
+import fluent.ly.lisp;
+import fluent.ly.the;
+import fluent.ly.unbox;
+import il.org.spartan.spartanizer.ast.factory.copy;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -150,7 +260,7 @@ public enum az {
     return !iz.nodeTypeEquals($, BREAK_STATEMENT) ? null : (BreakStatement) $;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static CastExpression castExpression(final Expression ¢) {
     return ¢ == null || !iz.castExpression(¢) ? null : (CastExpression) ¢;
   }
@@ -177,7 +287,7 @@ public enum az {
     return iz.comparison($) ? $ : null;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return ¢ == null ? null : (CompilationUnit) ¢;
   }
@@ -189,7 +299,7 @@ public enum az {
     return !($ instanceof ConditionalExpression) ? null : (ConditionalExpression) $;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static ContinueStatement continueStatement(final ASTNode ¢) {
     return ¢ == null || !iz.continueStatement(¢) ? null : (ContinueStatement) ¢;
   }
@@ -210,7 +320,7 @@ public enum az {
     return !($ instanceof EnumConstantDeclaration) ? null : (EnumConstantDeclaration) $;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static EnumDeclaration enumDeclaration(final ASTNode ¢) {
     return !(¢ instanceof EnumDeclaration) ? null : (EnumDeclaration) ¢;
   }
@@ -232,7 +342,7 @@ public enum az {
     return $;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static FieldAccess fieldAccess(final ASTNode ¢) {
     return ¢ == null || !iz.fieldAccess(¢) ? null : (FieldAccess) ¢;
   }
@@ -374,12 +484,12 @@ public enum az {
     return eval(() -> (PrefixExpression) $).when($ instanceof PrefixExpression);
   }
   /** @param ¢ JD
-   * @return */
+   */
   static PrimitiveType primitiveType(final Type ¢) {
     return ¢ == null || !iz.primitiveType(¢) ? null : (PrimitiveType) ¢;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static QualifiedName qualifiedName(final ASTNode ¢) {
     return ¢ == null || !iz.qualifiedName(¢) ? null : (QualifiedName) ¢;
   }
@@ -440,7 +550,7 @@ public enum az {
     return !iz.superConstructorInvocation(¢) ? null : (SuperConstructorInvocation) ¢;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static SuperMethodInvocation superMethodInvocation(final Expression ¢) {
     return ¢ == null || !iz.superMethodInvocation(¢) ? null : (SuperMethodInvocation) ¢;
   }
@@ -451,7 +561,7 @@ public enum az {
     return !iz.nodeTypeEquals($, SWITCH_STATEMENT) ? null : (SwitchStatement) $;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static SynchronizedStatement synchronizedStatement(final ASTNode ¢) {
     return ¢ == null || !iz.synchronizedStatement(¢) ? null : (SynchronizedStatement) ¢;
   }
@@ -469,12 +579,12 @@ public enum az {
     return eval(() -> (TryStatement) $).when($ instanceof TryStatement);
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static Type type(final ASTNode ¢) {
     return ¢ == null || !iz.type(¢) ? null : (Type) ¢;
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
   }
@@ -508,7 +618,7 @@ public enum az {
     return az.variableDeclarationExpression(the.firstOf(initializers($)));
   }
   /** @param ¢ JD
-   * @return */
+   */
   public static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
     return ¢ == null || !iz.variableDeclarationStatement(¢) ? null : (VariableDeclarationStatement) ¢;
   }

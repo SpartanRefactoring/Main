@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import static il.org.spartan.external.External.Introspector.*;
+import static il.org.spartan.external.External.Introspector.extract;
+import static il.org.spartan.external.External.Introspector.usage;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.cmdline.runnables.*;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.cmdline.runnables.ReportGenerator;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru'

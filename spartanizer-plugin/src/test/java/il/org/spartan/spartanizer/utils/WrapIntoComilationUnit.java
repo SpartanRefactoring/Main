@@ -1,14 +1,17 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.removePrefix;
+import static il.org.spartan.Utils.removeSuffix;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jface.text.Document;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import fluent.ly.azzert;
+import fluent.ly.system;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.engine.nominal.Trivia;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a

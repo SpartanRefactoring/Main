@@ -1,23 +1,31 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static fluent.ly.lisp.*;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+import static fluent.ly.lisp.chop;
+import static il.org.spartan.spartanizer.ast.navigate.step.from;
+import static il.org.spartan.spartanizer.ast.navigate.step.operator;
+import static il.org.spartan.spartanizer.ast.navigate.step.to;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.eq;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.categories.*;
+import fluent.ly.as;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.factory.copy;
+import il.org.spartan.spartanizer.ast.factory.subject;
+import il.org.spartan.spartanizer.ast.navigate.hop;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.sideEffects;
+import il.org.spartan.spartanizer.tipping.ReplaceCurrentNode;
+import il.org.spartan.spartanizer.tipping.categories.Category;
 
 /** Replace {@code x = x # a } by {@code x #= a } where # can be any operator.
  * Tested in {@link Issue103}

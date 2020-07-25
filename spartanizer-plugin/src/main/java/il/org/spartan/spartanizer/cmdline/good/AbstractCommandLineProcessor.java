@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.cmdline.good;
 
-import java.io.*;
+import java.io.File;
 
-import fluent.ly.*;
-import il.org.spartan.external.*;
+import fluent.ly.as;
+import il.org.spartan.external.External;
 
 /** TODO Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>

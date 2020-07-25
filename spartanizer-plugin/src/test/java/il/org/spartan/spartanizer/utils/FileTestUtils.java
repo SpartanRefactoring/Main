@@ -1,11 +1,15 @@
 package il.org.spartan.spartanizer.utils;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Collection;
+import java.util.List;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.plugin.*;
+import fluent.ly.azzert;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.plugin.GUITraversal;
 
 /** An abstract representation of our test suite, which is represented in
  * directory tree.
@@ -39,7 +43,7 @@ public class FileTestUtils {
    * @param b
    * @param d
    * @param f
-   * @return */
+   */
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }

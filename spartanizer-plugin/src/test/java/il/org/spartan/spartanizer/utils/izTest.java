@@ -1,15 +1,17 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.engine.parse.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.core;
+import static il.org.spartan.spartanizer.engine.parse.e;
+import static org.eclipse.jdt.core.dom.ASTNode.CHARACTER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.NULL_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.NUMBER_LITERAL;
+import static org.eclipse.jdt.core.dom.ASTNode.THIS_EXPRESSION;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import org.junit.Test;
 
-import org.junit.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.ast.navigate.op;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.java.sideEffects;
 
 /** Test class for class {@link iz}
  * @author Yossi Gil

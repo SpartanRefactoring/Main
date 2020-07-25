@@ -1,6 +1,6 @@
 package il.org.spartan.athenizer;
 
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.plugin.GUIApplicator;
 
 /** Applicator for the Athens project.
  * @author Ori Roth

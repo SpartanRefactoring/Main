@@ -1,18 +1,25 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.nullProgressMonitor;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
+import org.eclipse.text.edits.UndoEdit;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
+import fluent.ly.azzert;
+import fluent.ly.dump;
+import il.org.spartan.tide;
+import il.org.spartan.spartanizer.ast.navigate.GuessedContext;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.DispatchingVisitor;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

@@ -1,22 +1,23 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.bloatingOf;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-import static java.util.stream.Collectors.*;
+import java.util.Collection;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
-import org.junit.runners.Parameterized.*;
-
-import fluent.ly.*;
-import il.org.spartan.athenizer.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.Example.*;
+import fluent.ly.English;
+import il.org.spartan.athenizer.InflaterProvider;
+import il.org.spartan.spartanizer.tippers.ExamplesTests;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import il.org.spartan.spartanizer.traversal.Toolbox;
+import il.org.spartan.utils.Example.Converts;
+import il.org.spartan.utils.Example.Ignores;
 
 /** Examples tests for bloaters.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

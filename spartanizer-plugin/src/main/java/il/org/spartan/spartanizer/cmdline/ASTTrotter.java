@@ -1,16 +1,22 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.nodeTypesCount;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.removeComments;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.squeeze;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
 
-import org.eclipse.jdt.core.dom.*;
-import an.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.good.*;
-import il.org.spartan.utils.*;
+import an.empty;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.cmdline.good.theSpartanizer;
+import il.org.spartan.utils.Rule;
 
 /** An almost fully compatible, but more sane version of {@link ASTVisitor}
  * @author Yossi Gil

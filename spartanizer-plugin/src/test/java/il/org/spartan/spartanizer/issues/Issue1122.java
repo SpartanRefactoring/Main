@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /** Test class for @link{ForWithEndingBreakToDoWhile}
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>

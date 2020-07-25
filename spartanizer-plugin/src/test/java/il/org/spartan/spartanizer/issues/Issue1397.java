@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.testing.TipperTest;
+import il.org.spartan.spartanizer.tippers.LocalInitializedArithmeticsInline;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** see issue 1397 on github for more info
  * @author Niv Shalmon

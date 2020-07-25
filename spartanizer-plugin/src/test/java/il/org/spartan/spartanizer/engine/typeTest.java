@@ -1,18 +1,39 @@
 package il.org.spartan.spartanizer.engine;
 
-import static fluent.ly.azzert.*;
-import static il.org.spartan.spartanizer.engine.type.*;
-import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
-import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
-import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
+import static fluent.ly.azzert.is;
+import static il.org.spartan.spartanizer.engine.type.baptize;
+import static il.org.spartan.spartanizer.engine.type.of;
+import static il.org.spartan.spartanizer.engine.type.Odd.Types.NOTHING;
+import static il.org.spartan.spartanizer.engine.type.Odd.Types.NULL;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.BOOLEAN;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.BYTE;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.CHAR;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.DOUBLE;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.FLOAT;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.INT;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.LONG;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.SHORT;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.STRING;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.ALPHANUMERIC;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.BOOLEANINTEGRAL;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.INTEGRAL;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.NUMERIC;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ArrayAccess;
+import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.traversal.Traversal.*;
+import fluent.ly.azzert;
+import fluent.ly.forget;
+import fluent.ly.the;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.engine.type.Axiom;
+import il.org.spartan.spartanizer.traversal.Traversal.__;
 
 /** unit tests for {@link __} , as well as tests for the types of certain
  * expression using {@link Axiom} .

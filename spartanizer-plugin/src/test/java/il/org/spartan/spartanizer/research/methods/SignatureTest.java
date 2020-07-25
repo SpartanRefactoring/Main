@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.research.nanos.methods.*;
+import il.org.spartan.spartanizer.research.nanos.methods.Empty;
+import il.org.spartan.spartanizer.research.nanos.methods.Signature;
 
 /** Tests {@link Empty}
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -1,16 +1,22 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
-import fluent.ly.*;
-import il.org.spartan.athenizer.*;
-import il.org.spartan.athenizer.zoomers.*;
-import il.org.spartan.spartanizer.tippers.*;
+import fluent.ly.note;
+import fluent.ly.the;
+import il.org.spartan.athenizer.InflateHandler;
+import il.org.spartan.athenizer.InflaterProvider;
+import il.org.spartan.athenizer.SingleFlater;
+import il.org.spartan.athenizer.zoomers.MethodDeclarationNameExpander;
+import il.org.spartan.athenizer.zoomers.MethodDeclarationNameShorter;
+import il.org.spartan.spartanizer.tippers.MethodDeclarationRenameSingleParameter;
 
 /** Some simple handlers to be used by the GUI.
  * @author Ori Roth

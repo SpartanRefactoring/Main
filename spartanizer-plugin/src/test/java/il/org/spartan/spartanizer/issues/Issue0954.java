@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.junit.*;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.LocalInitializedInlineIntoNext;
 
 /** A test case for {@link LocalInitializedInlineIntoNext}. See issue #954.
  * @author Ori Roth {@code ori.rothh@gmail.com}

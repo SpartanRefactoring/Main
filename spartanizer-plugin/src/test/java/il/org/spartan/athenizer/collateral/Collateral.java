@@ -1,6 +1,6 @@
 package il.org.spartan.athenizer.collateral;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
 /** Implementation of the collateral function: ₡. An identical copy of this
  * class should be present in the SpartanFeature project.

@@ -1,17 +1,19 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.junit.Test;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
+import fluent.ly.azzert;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.testing.TestOperand;
+import il.org.spartan.spartanizer.tipping.TraversalMonitor;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
 
 /** Tests of {@link TraversalMonitor}
  * @author AnnaBel7

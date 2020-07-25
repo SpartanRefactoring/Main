@@ -1,10 +1,14 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.fault;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

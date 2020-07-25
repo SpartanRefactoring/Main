@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
 
 /** Abstract Pattern of {@link PostfixExpression}
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>

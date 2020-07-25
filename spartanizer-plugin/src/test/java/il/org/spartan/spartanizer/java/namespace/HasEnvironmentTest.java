@@ -5,19 +5,22 @@
  * @since Jan 1, 2017 */
 package il.org.spartan.spartanizer.java.namespace;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.parent;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
-import org.junit.runners.Parameterized.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.meta.*;
+import fluent.ly.as;
+import fluent.ly.separate;
+import il.org.spartan.spartanizer.ast.navigate.descendants;
+import il.org.spartan.spartanizer.ast.navigate.wizard;
+import il.org.spartan.spartanizer.meta.MetaFixture;
 
 @RunWith(Parameterized.class)
 public class HasEnvironmentTest extends MetaFixture {

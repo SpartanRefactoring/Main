@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import fluent.ly.forget;
 import il.org.spartan.streotypes.Utility;
 import il.org.spartan.utils.Separate;
 
-/** A class representing the location on the file system of the <em>Java Runtime
+/**
+ * A class representing the location on the file system of the <em>Java Runtime
  * Environment</em> (JRE), that is the standard Java library.
  * <p>
  * Since Java does not yet have an API that provides this information the JRE
@@ -26,51 +28,60 @@ import il.org.spartan.utils.Separate;
  *
  * @author Yossi Gil
  * @since 12/07/2007
- * @see CLASSPATH */
-@Utility public enum JRE {
-  ;
-  /** retrieve the system's CLASSPATH
-   *
-   * @return the content of the classpath, broken into array entries */
-  public static List<File> asList() {
-    try {
-      return fromClass(Object.class);
-    } catch (final Throwable __) {
-      // Absorb this exception, let's try the other option...
-      final List<File> $ = new ArrayList<>();
-      final String cp = System.getProperty("sun.boot.class.path");
-      for (final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
-        $.add(new File(¢.nextToken()));
-      return $;
-    }
-  }
+ * @see CLASSPATH
+ */
+@Utility
+public enum JRE {
+	;
+	/**
+	 * retrieve the system's CLASSPATH
+	 *
+	 * @return the content of the classpath, broken into array entries
+	 */
+	public static List<File> asList() {
+		try {
+			return fromClass(Object.class);
+		} catch (final Throwable x) {
+			forget.it(x);
+			// Absorb this exception, let's try the other option...
+			final List<File> $ = new ArrayList<>();
+			final String cp = System.getProperty("sun.boot.class.path");
+			for (final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
+				$.add(new File(¢.nextToken()));
+			return $;
+		}
+	}
 
-  /** Obtain the CLASSPATH location used by the class loader of a given classes.
-   *
-   * @param cs An array of classes
-   * @return a list of files
-   * @throws IllegalArgumentException If the class loader of <code>c</code> is not
-   *                                  a URLClassLoader */
-  public static List<File> fromClass(final Class<?>... cs) throws IllegalArgumentException {
-    final List<File> $ = new ArrayList<>();
-    for (final Class<?> c : cs) {
-      final ClassLoader cl = c.getClassLoader();
-      if (!(cl instanceof URLClassLoader))
-        throw new IllegalArgumentException("Class loader is not a URLClassLoader. class=" + c.getName());
-      for (final URL url : ((URLClassLoader) cl).getURLs())
-        try {
-          $.add(new File(url.toURI()));
-        } catch (final URISyntaxException e) {
-          throw new IllegalArgumentException("I cannot obtain a file from url " + url);
-        }
-    }
-    return $;
-  }
+	/**
+	 * Obtain the CLASSPATH location used by the class loader of a given classes.
+	 *
+	 * @param cs An array of classes
+	 * @return a list of files
+	 * @throws IllegalArgumentException If the class loader of <code>c</code> is not
+	 *                                  a URLClassLoader
+	 */
+	public static List<File> fromClass(final Class<?>... cs) throws IllegalArgumentException {
+		final List<File> $ = new ArrayList<>();
+		for (final Class<?> c : cs) {
+			final ClassLoader cl = c.getClassLoader();
+			if (!(cl instanceof URLClassLoader))
+				throw new IllegalArgumentException("Class loader is not a URLClassLoader. class=" + c.getName());
+			for (final URL url : ((URLClassLoader) cl).getURLs())
+				try {
+					$.add(new File(url.toURI()));
+				} catch (final URISyntaxException e) {
+					throw new IllegalArgumentException(e + ": " + url);
+				}
+		}
+		return $;
+	}
 
-  /** Exercise this class, by printing the result of its principal function.
-   *
-   * @param __ unused */
-  public static void main(final String[] __) {
-    System.out.println(Separate.by(asList(), "\n"));
-  }
+	/**
+	 * Exercise this class, by printing the result of its principal function.
+	 *
+	 * @param __ unused
+	 */
+	public static void main(final String[] __) {
+		System.out.println(Separate.by(asList(), "\n"));
+	}
 }

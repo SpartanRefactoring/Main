@@ -1,19 +1,20 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.plugin.GUIApplicator.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.nullProgressMonitor;
+import static il.org.spartan.spartanizer.plugin.GUIApplicator.defaultApplicator;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import java.util.Arrays;
+import java.util.function.Consumer;
 
-import java.util.*;
-import java.util.function.*;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.ui.IMarkerResolution;
+import org.eclipse.ui.IMarkerResolutionGenerator;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.ui.*;
-
-import fluent.ly.*;
-import il.org.spartan.spartanizer.tipping.*;
+import fluent.ly.note;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.

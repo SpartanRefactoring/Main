@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.Expression;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.utils.Proposition;
 
 /** A pattern for ConditionalExpression (i.e ternary)
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>

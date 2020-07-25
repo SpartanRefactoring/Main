@@ -1,15 +1,17 @@
 package il.org.spartan.java.cfg;
 
-import static il.org.spartan.java.cfg.CFGTestUtil.*;
+import static il.org.spartan.java.cfg.CFGTestUtil.cfg;
+import static il.org.spartan.java.cfg.CFGTestUtil.contains;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.junit.Test;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.ast.navigate.step;
+import il.org.spartan.utils.UnderConstruction;
 
 /** Unit test for {@link CFG}.
  * Add here new tests for new ASTNodes using the same format

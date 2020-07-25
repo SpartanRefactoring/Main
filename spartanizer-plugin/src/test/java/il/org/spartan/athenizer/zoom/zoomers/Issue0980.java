@@ -1,11 +1,11 @@
 package il.org.spartan.athenizer.zoom.zoomers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.junit.Test;
 
-import il.org.spartan.athenizer.zoomers.*;
-import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.athenizer.zoomers.BooleanExpressionBloater;
+import il.org.spartan.spartanizer.testing.BloaterTest;
+import il.org.spartan.spartanizer.tipping.Tipper;
 
 /** Test Class for Expand boolean expressions
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}

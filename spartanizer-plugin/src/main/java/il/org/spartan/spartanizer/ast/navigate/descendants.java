@@ -1,10 +1,14 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.Statement;
 
 /** A class to search in the descendants of a given node. Based on
  * {@link yieldAncestors}

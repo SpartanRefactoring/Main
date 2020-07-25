@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.java;
 
-import java.util.stream.*;
+import java.util.stream.Stream;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Expression;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.ast.navigate.analyze;
+import il.org.spartan.spartanizer.ast.safety.az;
+import il.org.spartan.spartanizer.ast.safety.iz;
+import il.org.spartan.spartanizer.engine.type;
 
 /** Fluent API, determines whether an expression must be a string.
  * @author Yossi Gil

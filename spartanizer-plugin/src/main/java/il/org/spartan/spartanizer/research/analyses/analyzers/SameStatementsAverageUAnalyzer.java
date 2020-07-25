@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.analyses.analyzers;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

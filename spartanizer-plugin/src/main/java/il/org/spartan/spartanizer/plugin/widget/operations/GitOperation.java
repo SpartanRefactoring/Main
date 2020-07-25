@@ -1,13 +1,16 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.io.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jgit.api.*;
-import org.eclipse.jgit.lib.*;
-import org.eclipse.jgit.storage.file.*;
+import java.io.File;
 
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+
+import il.org.spartan.spartanizer.plugin.Dialogs;
+import il.org.spartan.spartanizer.plugin.widget.ConfigurationsMap;
+import il.org.spartan.spartanizer.plugin.widget.WidgetContext;
+import il.org.spartan.spartanizer.plugin.widget.WidgetOperation;
 
 /** Git pull command.
  * @author Ori Roth

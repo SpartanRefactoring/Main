@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.testing;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.utils.WrapIntoComilationUnit;
+import il.org.spartan.utils.Rule;
 
 public enum TestsUtilsSpartanizer {
   ;

@@ -1,11 +1,15 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
+import java.io.IOException;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import fluent.ly.*;
-import il.org.spartan.utils.Accumulator.*;
+import fluent.ly.system;
+import il.org.spartan.utils.Accumulator.Counter;
 
 /** TODO Matteo Orru': document class
  * @author Matteo Orru'

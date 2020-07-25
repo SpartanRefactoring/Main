@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.java.namespace.tables;
 
-import java.util.*;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.tables.*;
+import il.org.spartan.spartanizer.ast.navigate.extract;
+import il.org.spartan.tables.Table;
 
 /** @author Dor Ma'ayan
  * @since 2017-05-18 */

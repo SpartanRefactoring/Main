@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.trimmingOf;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.junit.Test;
 
 /** Tests {@link Max}
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -1,21 +1,25 @@
 package il.org.spartan.spartanizer.cmdline.metrics;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.text.edits.MalformedTreeException;
 
-import fluent.ly.*;
-import il.org.spartan.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.nodes.metrics.*;
-import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.traversal.*;
-import il.org.spartan.utils.*;
+import fluent.ly.as;
+import fluent.ly.note;
+import il.org.spartan.CSVStatistics;
+import il.org.spartan.collections.FilesGenerator;
+import il.org.spartan.spartanizer.ast.factory.makeAST;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.nodes.metrics.Metrics;
+import il.org.spartan.spartanizer.plugin.TextualTraversals;
+import il.org.spartan.spartanizer.tipping.Tip;
+import il.org.spartan.spartanizer.traversal.Traversal;
+import il.org.spartan.spartanizer.traversal.TraversalImplementation;
+import il.org.spartan.utils.FileUtils;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil

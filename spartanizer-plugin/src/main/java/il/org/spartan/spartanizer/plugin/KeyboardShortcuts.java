@@ -1,19 +1,26 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.commands.common.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.text.edits.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.texteditor.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.text.edits.DeleteEdit;
+import org.eclipse.text.edits.InsertEdit;
+import org.eclipse.text.edits.MultiTextEdit;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.texteditor.ITextEditor;
 
-import fluent.ly.*;
+import fluent.ly.note;
+import fluent.ly.the;
 
 /** A shortcut to textually insert a new special character/s.
  * @author Ori Roth {@code ori.rothh@gmail.com}

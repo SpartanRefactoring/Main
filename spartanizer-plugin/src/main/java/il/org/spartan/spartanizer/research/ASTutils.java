@@ -1,11 +1,17 @@
 package il.org.spartan.spartanizer.research;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jface.text.IDocument;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.Wrapper;
+import il.org.spartan.spartanizer.ast.navigate.GuessedContext;
+import il.org.spartan.spartanizer.ast.navigate.findFirst;
+import il.org.spartan.utils.fault;
 
 /** ASTNode trees utils
  * @author Ori Marcovitch */
