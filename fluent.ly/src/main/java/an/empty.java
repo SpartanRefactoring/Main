@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fluent.ly.azzert;
-import fluent.ly.the;
-
 /**
  * TODO Yossi Gil: document class
  *
@@ -19,10 +16,6 @@ import fluent.ly.the;
  */
 public enum empty {
   ;
-  public static void main(final String[] args) {
-    azzert.that(the.first.of("Hello")).is("H");
-  }
-
   public static <T> List<T> list() {
     return new ArrayList<>();
   }
